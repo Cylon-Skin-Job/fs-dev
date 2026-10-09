@@ -1,0 +1,10 @@
+{
+  "status": "READY_FOR_ORCHESTRATOR_REVIEW",
+  "builder_report_sha256": "be87e607c3ae234acddea53bad07f97fd2945f18e308bf6270cb7fd344f41b87",
+  "review_sha256": "ba1a50bdbd14cd51cfa16331a43dae94abda51c89a6c6d23cfe7a04aa34b7d3f",
+  "source_identity_sha256": "75c71b20ace2acd1d0fd8841c169a013fcb3f4806a42e11c6d84343aada0ba96",
+  "lifecycle_sha256": "467d46d3e303f8e4b1275da1c257a1425b66981ddb9208a19822fec0d9234af6",
+  "final_sealed_utc": "2026-10-07T16:09:38Z",
+  "product_hash_mismatches": [],
+  "diff_sha256": "588082b3eaa12ce18137afff587e044d157747e999fd86e5823b73dc34bfe0d9"
+}

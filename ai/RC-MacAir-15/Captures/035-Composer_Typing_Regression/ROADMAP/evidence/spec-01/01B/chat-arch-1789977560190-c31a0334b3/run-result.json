@@ -1,0 +1,172 @@
+{
+  "runId": "chat-arch-1789977560190-c31a0334b3",
+  "status": "failed",
+  "results": [
+    {
+      "id": "F1-PUBLIC-ROUTE",
+      "code": 0,
+      "signal": null,
+      "pid": 25033,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 5596
+    },
+    {
+      "id": "FAULT-SERVER-ADMISSION",
+      "code": 0,
+      "signal": null,
+      "pid": 25935,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 4223
+    },
+    {
+      "id": "FAULT-TRANSPORT-ACK",
+      "code": 0,
+      "signal": null,
+      "pid": 26542,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 4330
+    },
+    {
+      "id": "FAULT-SAVE-ACK",
+      "code": 0,
+      "signal": null,
+      "pid": 27169,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 4617
+    },
+    {
+      "id": "R1-F2-F3-COMPOSER",
+      "code": 0,
+      "signal": null,
+      "pid": 27841,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 222735
+    },
+    {
+      "id": "R2-NO-ENQUEUE",
+      "code": 0,
+      "signal": null,
+      "pid": 52674,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 6825
+    },
+    {
+      "id": "R3-LOST-ACK-STATUS",
+      "code": 0,
+      "signal": null,
+      "pid": 53717,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 7041
+    },
+    {
+      "id": "R3-RECONNECT-UI",
+      "code": 0,
+      "signal": null,
+      "pid": 54640,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 6802
+    },
+    {
+      "id": "R4-DISTINCT-ATTEMPTS",
+      "code": 0,
+      "signal": null,
+      "pid": 55555,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 10714
+    },
+    {
+      "id": "R4-DISTINCT-RECEIPTS",
+      "code": 0,
+      "signal": null,
+      "pid": 56930,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 10479
+    },
+    {
+      "id": "R4-LATE-DRAFT-RECOVERY",
+      "code": 0,
+      "signal": null,
+      "pid": 58244,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 29423
+    },
+    {
+      "id": "R4-DUPLICATE-MISMATCH",
+      "code": 0,
+      "signal": null,
+      "pid": 61752,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 7618
+    },
+    {
+      "id": "R5-R6-PUBLIC-ACTIONS",
+      "code": 0,
+      "signal": null,
+      "pid": 62740,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 36127
+    },
+    {
+      "id": "R5-DIAGNOSTIC-APPEND",
+      "code": 0,
+      "signal": null,
+      "pid": 67112,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 2827
+    },
+    {
+      "id": "R6-LIFETIME-BOUNDARIES",
+      "code": 0,
+      "signal": null,
+      "pid": 67455,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 2914
+    },
+    {
+      "id": "R9-INDICATOR-DISTINCTION",
+      "code": 1,
+      "signal": null,
+      "pid": 67817,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 18228
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "R9-INDICATOR-DISTINCTION exited 1",
+    "stack": "Error: R9-INDICATOR-DISTINCTION exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:361:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

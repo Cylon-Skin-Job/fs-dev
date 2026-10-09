@@ -1,0 +1,22 @@
+{
+  "runId": "chat-arch-1789978924462-3b6fe41633",
+  "status": "failed",
+  "results": [
+    {
+      "id": "R2-NO-ENQUEUE",
+      "code": 1,
+      "signal": null,
+      "pid": 4361,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 6849
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "R2-NO-ENQUEUE exited 1",
+    "stack": "Error: R2-NO-ENQUEUE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:368:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

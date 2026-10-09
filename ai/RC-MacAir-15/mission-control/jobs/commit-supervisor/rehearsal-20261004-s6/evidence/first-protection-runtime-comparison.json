@@ -1,0 +1,54 @@
+{
+  "at": "2026-10-04T16:09:42.595520+00:00",
+  "before": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-protection-pre-runtime.json",
+  "after": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-protection-post-runtime.json",
+  "protected_equal": {
+    "head": true,
+    "refs": true,
+    "index": true,
+    "source_build_caches": true,
+    "processes": true
+  },
+  "source_cache_leaves": 193,
+  "normal_alpha_process_count": 4,
+  "permitted_job_root_metadata_exclusions": [
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/",
+    "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/"
+  ],
+  "expected_metadata_delta_paths": [
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-watcher.json",
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-owner-checked-state.json.png",
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-ui-acceptance-command.json",
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-preinitializer-reset.json.png",
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-ui-acceptance.json.png",
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-preinitializer-reset-command.json",
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-owner-runtime-identity.json",
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-canonical-runtime-command.json",
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-watcher-command.json",
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-ui-acceptance.json",
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-protection-pre-runtime.json",
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-protection-pre-runtime-command.json",
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-preinitializer-reset.json",
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-owner-checked-state-command.json",
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-owner-checked-state.json"
+  ],
+  "unexpected": [],
+  "profile_inode_dev_existence_equal": {
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/Preferences": true,
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/Local State": true,
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server-data/fusion.db": true,
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server-data/fusion.db-wal": true,
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server.port": true,
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/Preferences": true,
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/Local State": true,
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server-data/fusion.db": true,
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server-data/fusion.db-wal": true,
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server.port": true,
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/data/fusion.db": true
+  },
+  "volatile_profile_hash_changes": [
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server-data/fusion.db",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/data/fusion.db"
+  ],
+  "limit": "Normal/Alpha running profiles are volatile: hashes qualified, inode/device/existence and exact4 process identities stable. No DB/user contents read or copied; no normal/Alpha/source build/cache/index/ref mutation."
+}

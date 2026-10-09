@@ -1,0 +1,15 @@
+{
+  "actor": "/root/s6_supervisor_candidate_1",
+  "started": "2026-10-04T16:04:49.236813+00:00",
+  "finished": "2026-10-04T16:04:49.919380+00:00",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "command": [
+    "node",
+    ".agents/skills/mc-commit-supervisor/tests/rehearsal_watcher_smoke.mjs",
+    "jobs/commit-supervisor/rehearsal-20261004-s6/runtime-config.json",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-watcher.json"
+  ],
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": ""
+}

@@ -1,0 +1,15 @@
+{
+  "at": "2026-09-26T11:56:59.497987+00:00",
+  "ownedProcesses": [
+    "97744 97732 /opt/homebrew/Cellar/node/25.6.1/bin/node /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/owned-case-supervisor.mjs chat-architecture-owner-chat-arch-1790423682032-5dffb37aad 97732 /var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790423682032-5dffb37aad-LxWgW6 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r1-sustained-electron.mjs chat-architecture-owner-chat-arch-1790423682032-5dffb37aad /Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790423682032-5dffb37aad /var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790423682032-5dffb37aad-LxWgW6 --early-only",
+    "97756 97744 /opt/homebrew/Cellar/node/25.6.1/bin/node /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r1-sustained-electron.mjs chat-architecture-owner-chat-arch-1790423682032-5dffb37aad /Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790423682032-5dffb37aad /var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790423682032-5dffb37aad-LxWgW6 --early-only",
+    "98497 97756 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron -r /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/playwright-core/lib/server/electron/loader.js --inspect=0 --remote-debugging-port=0 -r /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/early-lifecycle-preload.cjs /var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790423682032-5dffb37aad-LxWgW6/r1-sustained-stage/fusion-studio-client/electron/main.cjs --chat-architecture-token=chat-architecture-owner-chat-arch-1790423682032-5dffb37aad"
+  ],
+  "configuredCwd": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790423682032-5dffb37aad-LxWgW6/r1-sustained-stage/fusion-studio-client",
+  "resolvedCwd": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790423682032-5dffb37aad-LxWgW6/r1-sustained-stage/fusion-studio-client",
+  "f2ExchangesAlreadySeeded": 30,
+  "earlyTimelinePresent": false,
+  "ownedPidCwdLsof": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790423682032-5dffb37aad-LxWgW6/r1-sustained-stage/fusion-studio-client",
+  "nodeProcessCwdReadonlySameConfiguredDir": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790423682032-5dffb37aad-LxWgW6/r1-sustained-stage/fusion-studio-client",
+  "sourceGuard": "early-lifecycle-preload.cjs: ownedProcess.cwd()!==config.cwd before first record"
+}

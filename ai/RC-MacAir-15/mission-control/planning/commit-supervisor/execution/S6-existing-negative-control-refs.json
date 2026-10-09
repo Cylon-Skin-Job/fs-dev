@@ -1,0 +1,11 @@
+{
+  "kind": "READONLY_EXISTING_REFS_FOR_FUTURE_REHEARSAL_CONTROLS",
+  "at": "2026-10-04T14:03:29.579842+00:00",
+  "not_an_executable_control": true,
+  "source_head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "private_head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "private_existing_parent": "551a74313d099724cdb3d76ead04e940ae88f223",
+  "private_existing_target_ref": "refs/remotes/origin/agent/exact-workspace-paths",
+  "private_existing_target_id": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "scope": "No ref changed; future controls require actual second ownerwait and separate controller assignment."
+}

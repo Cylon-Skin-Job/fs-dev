@@ -1,0 +1,64 @@
+{
+  "state": "final review found validated event-waiter leak; repair and invalidated gates pending",
+  "manifestSha256": "4e2f5c80532ab71039c741a547a217a7d0ab426240657e604c18fe7915606761",
+  "checks": [
+    {
+      "gate": "backend",
+      "command": "node fusion-studio-client/e2e/chat-architecture/run.mjs --suite backend --mode enforce",
+      "status": "passed",
+      "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/integration-backend.log",
+      "exit": 0,
+      "runId": "chat-arch-1790253131962-5008f365f8"
+    },
+    {
+      "gate": "submit",
+      "command": "node fusion-studio-client/e2e/chat-architecture/run.mjs --suite submit --mode enforce",
+      "status": "passed",
+      "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/integration-submit.log",
+      "exit": 0,
+      "runId": "chat-arch-1790253190376-60a8513d32"
+    },
+    {
+      "gate": "actions",
+      "command": "node fusion-studio-client/e2e/chat-architecture/run.mjs --suite actions --mode enforce",
+      "status": "passed",
+      "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/integration-actions.log",
+      "exit": 0,
+      "runId": "chat-arch-1790253287502-4b95b9ae1e"
+    },
+    {
+      "gate": "build",
+      "command": "npm --prefix fusion-studio-client run build",
+      "status": "passed",
+      "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/integration-build.log",
+      "exit": 0
+    },
+    {
+      "gate": "server",
+      "command": "node fusion-studio-client/e2e/chat-architecture/owned-regression-launcher.mjs server-full",
+      "status": "passed",
+      "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/integration-server.log",
+      "exit": 0,
+      "runId": "server-full-1790253472674-bae51b98",
+      "suites": 213,
+      "testsPassed": 3174,
+      "testsSkipped": 1,
+      "nativePretest": true
+    }
+  ],
+  "sourceFiles": 104,
+  "retainedApplicableEvidence": {
+    "architectureLifecycle": {
+      "log": "05D/architecture-lifecycle-final-3.log",
+      "passed": 17,
+      "skip": 0,
+      "reason": "No source/runner change since final current17-case run; full final backend repeats architecture graph sensitivity."
+    },
+    "independentFailureRecovery": {
+      "log": "05D/orchestrator-f1-recovery.log",
+      "exit": 0
+    },
+    "skip": "Existing empty Kimi TODO placeholder; no new skips"
+  },
+  "historicalExecutionNote": "These postacceptance runs passed on4e2f5c80...; retained as raw evidence. Provider termination repair will invalidate affected product claims."
+}

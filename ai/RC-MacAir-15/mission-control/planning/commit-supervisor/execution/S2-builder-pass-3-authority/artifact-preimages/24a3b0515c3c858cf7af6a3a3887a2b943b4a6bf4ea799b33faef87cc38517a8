@@ -1,0 +1,4 @@
+interface:
+  display_name: "MC Code Review Orchestrator"
+  short_description: "Coordinate independent integration candidate review"
+  default_prompt: "Use $mc-code-review-orchestrator to review this assigned integration candidate and return its raw evidence and findings to the Commit Supervisor."

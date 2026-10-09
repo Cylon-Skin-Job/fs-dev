@@ -1,0 +1,18 @@
+{
+  "runId": "chat-arch-1790000973828-da06df4b5f",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R3-LOST-ACK-STATUS",
+      "code": 0,
+      "signal": null,
+      "pid": 54045,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 7397
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

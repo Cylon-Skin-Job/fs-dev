@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-04T13:08:32.694097+00:00",
+  "result": "PASS",
+  "freeze_sha256": "ecaa405bd30b1fb5bbe1ef44a0f271971c7fe72d55a833f7abb6bae8cdc8a7b5",
+  "owned_files": 1037,
+  "dependencies": 46,
+  "candidate_leaves": 126,
+  "mismatches": [],
+  "report": "provisional report matched frozen before terminal metadata update"
+}

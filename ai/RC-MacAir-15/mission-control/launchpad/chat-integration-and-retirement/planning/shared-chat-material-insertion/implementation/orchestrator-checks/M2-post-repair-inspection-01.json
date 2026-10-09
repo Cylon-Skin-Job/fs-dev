@@ -1,0 +1,12 @@
+{
+  "observed_at": "2026-10-07T17:06:56.698876+00:00",
+  "phase": "Root read-only post-repair inspection; own verification and acceptance pending",
+  "seal_sha256": "7177c3cc452e4391e3c5e31bb682532c358b7ade99e252a4cbc54b3029b82883",
+  "pre_repair_seal_sha256": "6d14d36dc325ac5501ac3e9bee3f26ad5eee0d4a380b7fea13b42952f5f87361",
+  "changed_product_paths_after_root_finding": [
+    "fusion-studio-client/e2e/support/chat-material-source-cases.ts",
+    "fusion-studio-client/src/components/chat/ChatDiagnosticDetails.tsx"
+  ],
+  "source_authority_mismatches": [],
+  "inspection": "Full M2-only diff already inspected before repair. Read current bounded handleAskAI and two new actual connected source cases. preparationFailed is local to exact click and suppresses destination feedback only after failed retrieval; actual resolveReport fixed unavailable state retained. New cases require message, disabled allcontrols, no report, unchangedowners/no prompt/create/warm and late-success remains unavailable. Own current-byte build/check and distinct independent acceptance remain required."
+}

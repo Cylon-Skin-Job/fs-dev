@@ -1,0 +1,116 @@
+{
+  "at": "2026-09-27T01:11:59.695534+00:00",
+  "runId": "chat-arch-1790471405317-953cbc1640",
+  "result": {
+    "runId": "chat-arch-1790471405317-953cbc1640",
+    "status": "failed",
+    "results": [
+      {
+        "id": "R9-45-MINUTE-SOAK",
+        "code": 1,
+        "signal": null,
+        "pid": 38842,
+        "timedOut": false,
+        "interrupted": false,
+        "leakedOwnedPids": [],
+        "elapsedMs": 33147
+      }
+    ],
+    "ownedRunRootRemoved": true,
+    "failure": {
+      "name": "Error",
+      "message": "R9-45-MINUTE-SOAK exited 1",
+      "stack": "Error: R9-45-MINUTE-SOAK exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:492:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+    }
+  },
+  "rootExists": false,
+  "recordedPids": [
+    {
+      "pid": 38830,
+      "exists": false
+    },
+    {
+      "pid": 38842,
+      "exists": false
+    },
+    {
+      "pid": 39651,
+      "exists": false
+    }
+  ],
+  "workloadStartedAt": null,
+  "windows": 0,
+  "cycles": 0,
+  "samples": 0,
+  "setupBootstrap": {
+    "requiredLifecycle": [
+      "screenshot:capture",
+      "screenshot:updated",
+      "screenshot:request",
+      "screenshot:data"
+    ],
+    "quietMs": 500,
+    "documentId": "441ab6e5-2b60-4a46-9236-88033c8c07bd",
+    "finalTrafficSequence": 897,
+    "lifecycle": [
+      {
+        "sequence": 894,
+        "atMs": 1630.7,
+        "direction": "outbound",
+        "type": "screenshot:capture"
+      },
+      {
+        "sequence": 895,
+        "atMs": 1635.3,
+        "direction": "inbound",
+        "type": "screenshot:updated"
+      },
+      {
+        "sequence": 896,
+        "atMs": 1635.5,
+        "direction": "outbound",
+        "type": "screenshot:request"
+      },
+      {
+        "sequence": 897,
+        "atMs": 1637.8,
+        "direction": "inbound",
+        "type": "screenshot:data"
+      }
+    ]
+  },
+  "focusPreparation": null,
+  "bootstrap": null,
+  "failure": {
+    "message": "R1 staged Electron focus unavailable after 48 attempts: {\"available\":true,\"focused\":false,\"visible\":true,\"minimized\":false,\"windowId\":1,\"url\":\"fusion-shell://app/\"}",
+    "stack": "Error: R1 staged Electron focus unavailable after 48 attempts: {\"available\":true,\"focused\":false,\"visible\":true,\"minimized\":false,\"windowId\":1,\"url\":\"fusion-shell://app/\"}\n    at establishFocusedWindow (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/window-focus.mjs:23:17)\n    at async prepareFinalSoakWindow (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/soak-preparation.mjs:12:26)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/soak-electron.mjs:133:44"
+  },
+  "ownedFocus": {
+    "pid": 39651,
+    "windowId": 1,
+    "events": [
+      {
+        "type": "installed",
+        "at": 1790471412230,
+        "focused": true,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      },
+      {
+        "type": "show",
+        "at": 1790471412291,
+        "focused": true,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      }
+    ],
+    "overflow": 0
+  },
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  }
+}

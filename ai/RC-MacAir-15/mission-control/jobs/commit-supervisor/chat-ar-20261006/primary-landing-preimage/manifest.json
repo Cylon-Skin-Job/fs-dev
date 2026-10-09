@@ -1,0 +1,185 @@
+{
+  "at": "2026-10-06T22:39:52.586799+00:00",
+  "repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "rows": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/.versions/2026-10-06-151426.md",
+      "kind": "absent",
+      "mode": null,
+      "sha256": null,
+      "bytes": 0
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/.versions/2026-10-06-151519.md",
+      "kind": "absent",
+      "mode": null,
+      "sha256": null,
+      "bytes": 0
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 2654,
+      "sha256": "b0b3a19ca50b7ef657f5429e8643a9f1aee75a6f72573d60482a2cc3ca915e5d",
+      "payload": "payloads/b0b3a19ca50b7ef657f5429e8643a9f1aee75a6f72573d60482a2cc3ca915e5d"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/.versions/2026-10-06-151426.md",
+      "kind": "absent",
+      "mode": null,
+      "sha256": null,
+      "bytes": 0
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/.versions/2026-10-06-151519.md",
+      "kind": "absent",
+      "mode": null,
+      "sha256": null,
+      "bytes": 0
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 4117,
+      "sha256": "45001a1860a4f92133b724d2c7e6077ae3e8162cb01006cf0b472a1c97ea4c50",
+      "payload": "payloads/45001a1860a4f92133b724d2c7e6077ae3e8162cb01006cf0b472a1c97ea4c50"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-10-06-151426.md",
+      "kind": "absent",
+      "mode": null,
+      "sha256": null,
+      "bytes": 0
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 42483,
+      "sha256": "ec38f18dc55ffb9d59f46683116aae158f2cf2643ae76a99a6f26df2d9f6d293",
+      "payload": "payloads/ec38f18dc55ffb9d59f46683116aae158f2cf2643ae76a99a6f26df2d9f6d293"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-10-06-151426.md",
+      "kind": "absent",
+      "mode": null,
+      "sha256": null,
+      "bytes": 0
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 7788,
+      "sha256": "9c5cfbecaf10e7db72586dd2bdcc83cb6d65db5874313f26c822c125e9dc9047",
+      "payload": "payloads/9c5cfbecaf10e7db72586dd2bdcc83cb6d65db5874313f26c822c125e9dc9047"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/.versions/2026-10-06-151426.md",
+      "kind": "absent",
+      "mode": null,
+      "sha256": null,
+      "bytes": 0
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 3664,
+      "sha256": "78a9d4aa551b312053796e83b94b69f218d6cfc4abc55f279d6e11329692cea4",
+      "payload": "payloads/78a9d4aa551b312053796e83b94b69f218d6cfc4abc55f279d6e11329692cea4"
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-component-registration.spec.ts",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 19529,
+      "sha256": "98b69fd8ebaeecadc1451e50dc62cd9176d0cf28f8a7aef67d0261916f8baec7",
+      "payload": "payloads/98b69fd8ebaeecadc1451e50dc62cd9176d0cf28f8a7aef67d0261916f8baec7"
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-composer-screenshot-menu.spec.ts",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 6070,
+      "sha256": "eb5a67b38448d2651d81d2e380d5e0540a08afee8e14c9be8f5cf4ebe2db234d",
+      "payload": "payloads/eb5a67b38448d2651d81d2e380d5e0540a08afee8e14c9be8f5cf4ebe2db234d"
+    },
+    {
+      "path": "fusion-studio-client/e2e/prompt-ownership.slice-c.spec.ts",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 26590,
+      "sha256": "df6a332dd0a44e5084b9c92151e60d2fd0d85c66daca026c582204de2f78b111",
+      "payload": "payloads/df6a332dd0a44e5084b9c92151e60d2fd0d85c66daca026c582204de2f78b111"
+    },
+    {
+      "path": "fusion-studio-client/e2e/threaded-chat-host.spec.ts",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 44660,
+      "sha256": "ec6802c336107d25e1b443a3bf3519a002eef7c86cf2ea8dc74d7fc839bafb27",
+      "payload": "payloads/ec6802c336107d25e1b443a3bf3519a002eef7c86cf2ea8dc74d7fc839bafb27"
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatSurface.tsx",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 3210,
+      "sha256": "affb2fb93af19aae6b0fe32f750a79da88f8495b29708705f4d871d61fce0df3",
+      "payload": "payloads/affb2fb93af19aae6b0fe32f750a79da88f8495b29708705f4d871d61fce0df3"
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 5910,
+      "sha256": "3ad0992ea7d90e0b8e8b83932aa9372680d4b4b0deaf102ff26aae64cec98071",
+      "payload": "payloads/3ad0992ea7d90e0b8e8b83932aa9372680d4b4b0deaf102ff26aae64cec98071"
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 5251,
+      "sha256": "839baa3ace36b3dec18994e8a233157eb79452a13596f37f95908959e48d1d41",
+      "payload": "payloads/839baa3ace36b3dec18994e8a233157eb79452a13596f37f95908959e48d1d41"
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/sideChatBridge.ts",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 11749,
+      "sha256": "58fc8025d108740713ffb37b12b60271f933ae1abca97f1b36d04d25b456747d",
+      "payload": "payloads/58fc8025d108740713ffb37b12b60271f933ae1abca97f1b36d04d25b456747d"
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 4791,
+      "sha256": "bf860e5b97d83a8cd46d054eb27a195e6db8760c3805bbc84cf1a7cd046d87e1",
+      "payload": "payloads/bf860e5b97d83a8cd46d054eb27a195e6db8760c3805bbc84cf1a7cd046d87e1"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat/side-chat-placements.ts",
+      "kind": "absent",
+      "mode": null,
+      "sha256": null,
+      "bytes": 0
+    },
+    {
+      "path": "fusion-studio-client/src/screenshots/chatScreenshotCapture.ts",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 5589,
+      "sha256": "bd34c041e9f8fa6cfc7a328633af7c53566045b1e6e6c55ee61617d030a89687",
+      "payload": "payloads/bd34c041e9f8fa6cfc7a328633af7c53566045b1e6e6c55ee61617d030a89687"
+    }
+  ],
+  "index_sha256": "8c2f62d2d71cc47a2c5ca767375290e860835e7eec19014f13b8f1475a1c26a4",
+  "source_head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "limits": "Only 23 owned working-file preimages/absences. No DB copies. Index copy is observation evidence, not authorization for a whole-index reset. Immediately-before-mutation current-byte/recovery/writer checks remain required."
+}

@@ -1,0 +1,27 @@
+{
+  "at": "2026-09-27T00:40:49.280286+00:00",
+  "repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "identities": {
+    "source": {
+      "entries": 1946,
+      "sha256": "467062ff7a638314c164c30f5900507a010a4084823dc72a9f90290404541fe1",
+      "mismatches": []
+    },
+    "build": {
+      "entries": 200,
+      "sha256": "6c06602b58f8dc0e4a9b1ed6588c5670b8e628b21044040a581e9e9d55f05234",
+      "mismatches": []
+    }
+  },
+  "ownedWorkloads": [],
+  "IOConsoleLocked": [
+    [
+      "",
+      "No"
+    ]
+  ],
+  "manualEnv": {
+    "FUSION_CHAT_ARCH_POST_SOAK_MANUAL_MS": null,
+    "FUSION_CHAT_ARCH_OWNER_FOREGROUND_MS": null
+  }
+}

@@ -4,7 +4,7 @@
  */
 
 import { useCallback, useState, useEffect, useMemo, useRef } from 'react';
-import type { ChatLinkAttachment } from '../lib/chat-file-links/file-link-types';
+import type { BeginChatMaterialSource } from '../lib/chat-material-source';
 import { createSendToChatAttachment } from '../lib/chat-file-links/send-to-chat-reference-label';
 import {
   useHoverIconModal,
@@ -28,11 +28,11 @@ interface ScreenshotItem {
 }
 
 interface ScreenshotsTriggerProps {
-  onAttach?: (attachment: ChatLinkAttachment) => void;
+  beginMaterial?: BeginChatMaterialSource;
   triggerVariant?: 'icon' | 'submenu';
 }
 
-export function ScreenshotsTrigger({ onAttach, triggerVariant = 'icon' }: ScreenshotsTriggerProps) {
+export function ScreenshotsTrigger({ beginMaterial, triggerVariant = 'icon' }: ScreenshotsTriggerProps) {
   const [screenshots, setScreenshots] = useState<Array<{ name: string; path: string }>>([]);
   const [loading, setLoading] = useState(false);
   const [popoverPos, setPopoverPos] = useState<{ left: number; bottom: number } | null>(null);
@@ -138,18 +138,19 @@ export function ScreenshotsTrigger({ onAttach, triggerVariant = 'icon' }: Screen
     close,
   } = useHoverIconModal({
     onOpen: handleOpen,
-    id: 'screenshots',
   });
 
   const visibleItems = useMemo(() => screenshotItems.slice(-20), [screenshotItems]);
 
   const handleSelect = useCallback((item: ScreenshotItem) => {
-    onAttach?.(createSendToChatAttachment({
+    const begin = beginMaterial?.();
+    if (begin?.status !== 'ready') return;
+    void begin.source.attachment(createSendToChatAttachment({
       panel: 'screenshots',
       relativePath: `Data/Screenshots/${item.name}`,
       absolutePath: item.path,
     }));
-  }, [onAttach]);
+  }, [beginMaterial]);
 
   const {
     selectedIndex,

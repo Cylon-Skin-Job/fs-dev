@@ -1,0 +1,1290 @@
+{
+  "kind": "FULL_FIELD_FACTS_WITH_BUILDER_PROPOSALS_NO_PRIOR_CLASSIFICATIONS",
+  "deviations": [
+    {
+      "id": "S6-D1",
+      "original_requirement": "Existing-ref disposable preparation with source preservation",
+      "actual": "Local no-hardlinks detached clone, private COW dependencies, separate public-created workspace/profile; replay all five accepted restart files only",
+      "reason_authority": "Explicit S6 preparation packet; clean HEAD isolates unrelated dirty watcher/server work",
+      "paths": [
+        "private-paths.json",
+        "current-private-paths.json",
+        "current-helper-replay.json",
+        "protection-before.json",
+        "initial-preservation-readback.json"
+      ],
+      "checks": "Fresh private build/canonical; 63077 dependency inode/link checks; source HEAD/index/refs/caches",
+      "effect": "Normal app/DB protected; clone committed history retained only as code baseline",
+      "risk": "Private disk cost and profile writes remain disposable",
+      "downstream": "Actual Supervisor uses exact private paths; takes its own current checkpoint",
+      "raw_source_hash": "fa61aff7be7d4a4db960a4e58f0c73340e24fd202b4996745cbe23e8a4aa7d0a",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-D2",
+      "original_requirement": "No real workspace/profile copy; ordinary runtime machine",
+      "actual": "Fresh migrations then remove dev seed before app; UI Create New Project/add/rename Custom; set machine through existing private configuration owner",
+      "reason_authority": "Reuse established public-shell bootstrap mechanics and chosen baseline owner",
+      "paths": [
+        "prepare_rehearsal_shell.mjs",
+        "public-bootstrap.json",
+        "current-canonical-raw/verified.json"
+      ],
+      "checks": "Exactly one private registry row; ordinary actual watcher event",
+      "effect": "Avoids registering R; ordinary MC-S6 proves namespace",
+      "risk": "Migration/bootstrap only runs once; refuses existing profile/workspace",
+      "downstream": "Future reproduction must follow one-shot recipe",
+      "raw_source_hash": "fa61aff7be7d4a4db960a4e58f0c73340e24fd202b4996745cbe23e8a4aa7d0a",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-D3",
+      "original_requirement": "Preserve exact deletion checkpoint inputs",
+      "actual": "Initial installer assumed nonexistent docs HEAD path, stopped after partial fixture install; use existing tracked HANDOFF.md and complete remaining private recovery leaves without overwriting app/state",
+      "reason_authority": "Bounded mechanical correction; no authority/code behavior change",
+      "paths": [
+        "fixture-install-attempt-1.log",
+        "fixture-install.json",
+        "install_rehearsal_fixture.py"
+      ],
+      "checks": "Public125 historical/126 current exact restoration",
+      "effect": "Current normal installer has correct baseline path",
+      "risk": "Partial attempt requires recorded manual completion; not independently replayed successful one-shot yet",
+      "downstream": "Fresh independent one-shot run now uses corrected installer; actual initial leaf inventory readback remains required",
+      "raw_source_hash": "fa61aff7be7d4a4db960a4e58f0c73340e24fd202b4996745cbe23e8a4aa7d0a",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-D4",
+      "original_requirement": "Actual Wiki public route readback",
+      "actual": "Duplicate article H1 strict selector failed; use first exact H1 matching title/body, preserve raw partial and successful attempts",
+      "reason_authority": "Observed baseline React title/body rendering",
+      "paths": [
+        "ui-attempt-1.log",
+        "public-ui-attempt-1-partial.json",
+        "rehearsal_ui_smoke.mjs",
+        "current-public-ui-observation.json"
+      ],
+      "checks": "Actual article text/navigation/reload screenshot and sustained connection",
+      "effect": "Changes locator only",
+      "risk": "Prose correctness remains fresh Wiki reviewer responsibility",
+      "downstream": "Actual runtime uses real article and original coverage",
+      "raw_source_hash": "fa61aff7be7d4a4db960a4e58f0c73340e24fd202b4996745cbe23e8a4aa7d0a",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-D5",
+      "original_requirement": "Private writable dependencies/cache only",
+      "actual": "Copied dependencies had private .tmp cache; deleted private .tmp then built from fresh cache; source193 ignored cache leaves unchanged",
+      "reason_authority": "Preparation cache isolation",
+      "paths": [
+        "preparation-build.log",
+        "preparation-clean-cache-build.log",
+        "initial-preservation-readback.json"
+      ],
+      "checks": "Both builds exit0; source cache hashes equal",
+      "effect": "Fresh private build reproducible",
+      "risk": "Existing baseline Vite mixed import/chunk-size warnings retained",
+      "downstream": "Warnings advisory; no unrelated production bundle refactor",
+      "raw_source_hash": "fa61aff7be7d4a4db960a4e58f0c73340e24fd202b4996745cbe23e8a4aa7d0a",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-D6",
+      "original_requirement": "Canonical owned cleanup; dependency gate stays current",
+      "actual": "Live S4 cleanup discovery race aborted after processes exited; stop confirmation retained, writer paused, responsible S4 builder repaired, root accepted; only changed accepted helper replayed, current evidence/checkpoints distinct",
+      "reason_authority": "Validated runtime defect routed through responsible builder; no S6 product helper edit",
+      "paths": [
+        "cleanup-attempt-1.log",
+        "cleanup-attempt-2.log",
+        "current-helper-replay.json",
+        "current-canonical-run.log",
+        "current-owned-runtime-stop.json"
+      ],
+      "checks": "Current17 regression/canonical actual stop and separate zero-owned readback",
+      "effect": "Current helper succeeds; old checkpoints never used to restore current helper",
+      "risk": "Old successful runtime/recovery are historical bytes; cannot certify current",
+      "downstream": "Actual Supervisor must use accepted repaired helper/current initial checkpoint",
+      "raw_source_hash": "fa61aff7be7d4a4db960a4e58f0c73340e24fd202b4996745cbe23e8a4aa7d0a",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-D7",
+      "original_requirement": "Preimages before replacement and exact new Wiki leaves",
+      "actual": "Two immutable supplemental union checkpoints declare actual timestamped versions absent before copy; retain complete PAGE bytes and restore newest-first before original",
+      "reason_authority": "Necessary original recovery integration",
+      "paths": [
+        "rehearsal_wiki_recovery_smoke.py",
+        "final-recovery/wiki-recovery-smoke.json"
+      ],
+      "checks": "Original refusal nonmutating; both supplements remove exact leaves; final original verify; Navigation unchanged",
+      "effect": "Proves version outputs recover with no original manifest rewrite",
+      "risk": "Actual Wiki writer must independently do this for its own real edit timestamps",
+      "downstream": "Actual job captures new original/supplements and preserves raw PAGE preimages",
+      "raw_source_hash": "fa61aff7be7d4a4db960a4e58f0c73340e24fd202b4996745cbe23e8a4aa7d0a",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-D8",
+      "original_requirement": "Visible labels/states/reset and supported wording per original intent",
+      "actual": "UI oracle now asserts exact three labels and checked flags each scenario, immediately after Reset and reload; accepts only known modes and resolved supported format for verdict modes",
+      "reason_authority": "Completes original authority external acceptance coverage",
+      "paths": [
+        "rehearsal_ui_smoke.mjs",
+        "current-public-ui-observation.json",
+        "current-ui-oracle-negatives.json",
+        "final-ui-validation-negatives.json"
+      ],
+      "checks": "Seeded numerical oracle fails; state/label observations pass; unsupported/missing mode/format refused",
+      "effect": "No final wording guessed; negative config explicitly preparation-only",
+      "risk": "Fixed/reset live behavior still unimplemented and must run later",
+      "downstream": "Actual resolved/fix controls and current corrected UI checked by Supervisor",
+      "raw_source_hash": "fa61aff7be7d4a4db960a4e58f0c73340e24fd202b4996745cbe23e8a4aa7d0a",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-D9",
+      "original_requirement": "Record actual write times and protected identities honestly",
+      "actual": "Templates synthetic timestamp; installed PAGE actual UTC; original hashes before bootstrap; extra DB inode/executable detail first captured after bootstrap before canonical; confirmed after-cleanup readback separate from one scheduled before completion confirmation",
+      "reason_authority": "Root requested stronger metadata; preserve timing limits instead of inventing evidence",
+      "paths": [
+        "fixture-install.json",
+        "protected-identity-before-canonical.json",
+        "current-protection-before.json",
+        "current-protection-after.json",
+        "current-protection-after-confirmed.json",
+        "current-preservation-summary.json"
+      ],
+      "checks": "Protected DB inode/dev and four process start/executable identities equal; volatile live Alpha/source DB hash drift raw recorded",
+      "effect": "No profile DB/cache replacement/signal; no user content inspection",
+      "risk": "Pre-bootstrap inode observation unavailable; hashes only for that earlier interval; naturally volatile hashes not claimed equal",
+      "downstream": "Actual Supervisor captures full current before/after metadata; retains limit",
+      "raw_source_hash": "fa61aff7be7d4a4db960a4e58f0c73340e24fd202b4996745cbe23e8a4aa7d0a",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "downstream_impact"
+    },
+    {
+      "id": "S6-D10",
+      "original_requirement": "Required skill validation available dependency",
+      "actual": "System and bundled Python lacked yaml; retained both failed logs, used already cached PyYAML read-only via PYTHONPATH with bytecode disabled",
+      "reason_authority": "No dependency/global configuration mutation or network install",
+      "paths": [
+        "current-skill-validation.log",
+        "current-skill-validation-bundled.log",
+        "current-skill-validation-cached.log"
+      ],
+      "checks": "quick_validate K exit0",
+      "effect": "Only interpreter dependency adapter",
+      "risk": "Cached dependency path machine-specific",
+      "downstream": "Recipe/check record exact adapter; no reviewer capability substitution",
+      "raw_source_hash": "fa61aff7be7d4a4db960a4e58f0c73340e24fd202b4996745cbe23e8a4aa7d0a",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-D11",
+      "original_requirement": "Complete supplemental recovery against prepared exact page paths",
+      "actual": "First new smoke assumed missing top-level article path and stopped before any mutation; corrected to actual 001-Checklist article tree and passed twice",
+      "reason_authority": "Mechanical path correction",
+      "paths": [
+        "current-wiki-recovery-smoke.log",
+        "current-wiki-recovery-smoke-attempt-2.log",
+        "final-wiki-recovery-smoke.log"
+      ],
+      "checks": "Two supplements/original exact final verify",
+      "effect": "No authority/content change remains",
+      "risk": "Raw failed attempt retained",
+      "downstream": "Actual runtime packets use readback exact paths",
+      "raw_source_hash": "fa61aff7be7d4a4db960a4e58f0c73340e24fd202b4996745cbe23e8a4aa7d0a",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-D12",
+      "original_requirement": "Source preservation while root coordinates later work",
+      "actual": "Current source sentinel readback detects new root-owned undispatched S4 Wiki assignment; preserved article unchanged. Root later transferred that deterministic article correction to final S6 closeout after actual proof",
+      "reason_authority": "Root coordination scope refinement only; not preparation permission",
+      "paths": [
+        "current-protection-before.json",
+        "current-protection-after-confirmed.json",
+        "current-preservation-summary.json"
+      ],
+      "checks": "12703 original current unowned leaves unchanged except newly recorded root assignment; 193cache and HEAD/index/refs equal",
+      "effect": "Root evidence creation distinctly recorded; no real Wiki prep edit",
+      "risk": "Later documentation modifies article and central facts under new preimages/gates",
+      "downstream": "Remain prep-only; root owns actual chain and later bounded closeout",
+      "raw_source_hash": "fa61aff7be7d4a4db960a4e58f0c73340e24fd202b4996745cbe23e8a4aa7d0a",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-FIRST-D1",
+      "original_criterion": "Every reused required check has exact commands/results/logs/current dependencies",
+      "actual_change": "Proportionately reran unchanged55Python/17Node suites when original raw logs lacked invocation receipts",
+      "reason_authority": "Installed workflow current-byte evidence and actual initial manager provenance inquiry",
+      "files": [
+        "jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-python-suite-command.json",
+        "jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-node-suite-command.json"
+      ],
+      "observable_effect": "Current complete raw invocation/result evidence passes55/17; no fixture/product change",
+      "checks": [
+        "55Python PASS",
+        "17Node PASS",
+        "35 source dependencies current"
+      ],
+      "risk": "Temporary disposable test processes only, with protected-profile zero-signal assertions; not live app success",
+      "downstream_consumer": "Current independent gates and owner packet",
+      "downstream_impact": "Closes check-provenance gap without relabeling earlier logs",
+      "raw_source_hash": "947bb50defc6ce89aacead6dc1f0f6ff2b809060dd07a26accc8601376fad248",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-FIRST-D2",
+      "original_criterion": "Fresh independent original-assignment handoff receives only original intent/current raw evidence, no author diagnoses/prior conclusions",
+      "actual_change": "Mixed worker-check file exposed assessment metadata; immutable command-only derivative created and invalid pass explicitly excluded",
+      "reason_authority": "Installed review independence contract and parent boundary inquiry; reviewer honest exposure receipt",
+      "files": [
+        "code-handoff-original-assignment.md",
+        "evidence/first-code-command-only.json",
+        "evidence/first-code-review-independence-correction.json"
+      ],
+      "observable_effect": "No source change or acceptance; fresh replacement gate required after actual terminal",
+      "checks": [
+        "exact eleven receipt value equality",
+        "original full-file hash/JSON-pointer provenance",
+        "actual reviewer exposure message"
+      ],
+      "risk": "Reviewer2 cannot certify clean-room acceptance",
+      "downstream_consumer": "Code handoff, settled Wiki, final review, owner packet",
+      "downstream_impact": "Invalid pass retained/excluded; fresh reviewer3 clean/current terminal supplies replacement independence, no criterion waiver",
+      "raw_source_hash": "947bb50defc6ce89aacead6dc1f0f6ff2b809060dd07a26accc8601376fad248",
+      "builder_proposed_classification": "downstream_impact"
+    },
+    {
+      "id": "S6-FIRST-R1",
+      "original_criterion": "Count incomplete tasks; 3\u21922\u21921\u21922/reload2/zero/all3",
+      "actual_change": "Replace total-row count with count of !completed at existing refresh seam",
+      "reason_authority": "Original released fixture intent, validated initial findings and bounded repair assignment",
+      "files": [
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js"
+      ],
+      "observable_effect": "Incomplete summary follows reversible completion; nine source scenarios and syntax pass",
+      "checks": [
+        "eleven raw receipts exit0",
+        "exact two-leaf delta / full128 preimages unchanged",
+        "live public-route proof later required"
+      ],
+      "risk": "Actual browser/reload/fullrestart proof pending; storage mechanics and stable IDs/labels/visible rows unchanged",
+      "downstream_consumer": "Checklist iframe, original three-page Wiki, independent handoff/final/runtime",
+      "downstream_impact": "Technical correction under settled intent; fresh code handoff still pending",
+      "raw_source_hash": "947bb50defc6ce89aacead6dc1f0f6ff2b809060dd07a26accc8601376fad248",
+      "builder_proposed_classification": "downstream_impact"
+    },
+    {
+      "id": "S6-FIRST-R2",
+      "original_criterion": "Root-resolved exact N remaining of 3",
+      "actual_change": "Append released of 3 to existing summary template",
+      "reason_authority": "Original released fixture intent, validated initial findings and bounded repair assignment",
+      "files": [
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js"
+      ],
+      "observable_effect": "Exact released text at all nine source samples and syntax pass",
+      "checks": [
+        "eleven raw receipts exit0",
+        "exact two-leaf delta / full128 preimages unchanged",
+        "live public-route proof later required"
+      ],
+      "risk": "Actual browser/reload/fullrestart proof pending; storage mechanics and stable IDs/labels/visible rows unchanged",
+      "downstream_consumer": "Checklist iframe, original three-page Wiki, independent handoff/final/runtime",
+      "downstream_impact": "Technical correction under settled intent; fresh code handoff still pending",
+      "raw_source_hash": "947bb50defc6ce89aacead6dc1f0f6ff2b809060dd07a26accc8601376fad248",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-FIRST-D3",
+      "original_criterion": "Installed roles execute under actual supported runtime and inherited root settings",
+      "actual_change": "Supported default roles explicitly load exact installed skill/TOML; capacity-error clean reviewer1 supplies no assessment and later fresh retry preserves same inherited settings",
+      "reason_authority": "Exact executable assignment and installed fallback/lifecycle contract",
+      "files": [
+        "activation-first-candidate.json",
+        "lifecycle-first-candidate.json",
+        "reviews/code-handoff-1-error.raw.json"
+      ],
+      "observable_effect": "Real role/procedure loading and agent lifecycle documented; no model/settings override or waived gate",
+      "checks": [
+        "pre-write acknowledgments",
+        "actual native child identities/terminal observations",
+        "exact installed skill/profile hashes"
+      ],
+      "risk": "Concrete root model/effort and native TOML loader are unexposed, not invented",
+      "downstream_consumer": "All gates and owner packet",
+      "downstream_impact": "Same root settings inherited on replacements; independent acceptance still required",
+      "raw_source_hash": "947bb50defc6ce89aacead6dc1f0f6ff2b809060dd07a26accc8601376fad248",
+      "builder_proposed_classification": "downstream_impact"
+    },
+    {
+      "id": "S6-FIRST-D4",
+      "original_criterion": "Complete candidate workflow includes actual public iframe/reload/fullrestart verification",
+      "actual_change": "Bounded leaf self-check executes exact-source VM/minimalDOM/inmemory-storage scenarios, with actual live proof allocated to later Supervisor runtime phase",
+      "reason_authority": "Original bounded repair assignment / installed separation of source self-check and successful live app",
+      "files": [
+        "workers/code-repair-1-scenarios.mjs",
+        "evidence/first-code-command-only.json"
+      ],
+      "observable_effect": "Source behavior/hydration checks pass; no mock or VM result claimed as app success",
+      "checks": [
+        "nine scenario samples",
+        "both module syntax exit0",
+        "later live criteria explicitly pending"
+      ],
+      "risk": "Actual UI integration unverified until later runtime proof",
+      "downstream_consumer": "Independent handoff/final and owner runtime",
+      "downstream_impact": "No criterion relaxed; later actual live proof mandatory before readiness",
+      "raw_source_hash": "947bb50defc6ce89aacead6dc1f0f6ff2b809060dd07a26accc8601376fad248",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-FIRST-R3",
+      "original_criterion": "Complete original completion/reversal/visible-row/count/reload/fullrestart documentation in existing Guide, retained root/Nav bytes/times, exclusive fullpreimage and exactsources/actualUTC metadata",
+      "actual_change": "Guide behavior prose rewritten, four owning exactcode paths/actual quotedUTC time added; complete596byte version created only after129union capture; useful links/prose retained",
+      "reason_authority": "Original approved fixture/Wiki obligations and established current code/restart owners",
+      "files": [
+        "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-080936.md",
+        "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md",
+        "workers/wiki-repair-1.md",
+        "workers/wiki-repair-1-commands.json",
+        "workers/wiki-repair-1-verify.py"
+      ],
+      "observable_effect": "Current guide explains all original reader facts; no source feature or navigation structure change",
+      "checks": [
+        "sixactualcommands exit0",
+        "complete129/all4354 exact2leaf delta",
+        "all50authorities/35suitedeps unchanged",
+        "gray-matter/source/link/preimage/retainedtime readbacks"
+      ],
+      "risk": "Actual built-in Wiki/browser/restart still mandatory later; timestamp certifies edit only",
+      "downstream_consumer": "Wiki readers, independent Wiki/final/runtime/owner gates",
+      "downstream_impact": "No new article/consolidation/retirement/generation needed; independent currentWiki acceptance remains pending",
+      "raw_source_hash": "947bb50defc6ce89aacead6dc1f0f6ff2b809060dd07a26accc8601376fad248",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "FINAL-PROCEDURE-01",
+      "original_criterion": "All Git reads use GIT_OPTIONAL_LOCKS=0",
+      "actual_change": "Initial pwd/root-discovery shell used git rev-parse --show-toplevel without the environment prefix",
+      "reason_authority": "Required read-only repository resolution; omitted prefix on initial call",
+      "files": "No files changed by rev-parse; only own review reports writable",
+      "observable_effect": "Repository root resolved; no index/ref mutation",
+      "checks": "All subsequent Git readbacks use GIT_OPTIONAL_LOCKS=0; protected/candidate refs and physical indexes match checkpoint after review",
+      "risk": "None evidenced for pure rev-parse; mandatory flag retained for subsequent inventory",
+      "downstream_consumer": "Supervisor review lifecycle",
+      "downstream_impact": "No candidate or required-check invalidation",
+      "raw_source_hash": "947bb50defc6ce89aacead6dc1f0f6ff2b809060dd07a26accc8601376fad248",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-FIRST-D5",
+      "original_criterion": "Supplemental actual current ownership/listener/profile-DB receipt must execute and preserve raw result",
+      "actual_change": "Job-only supplemental receipt script parse failed before execution due literal newline escaping; preserved failed source/raw exit1, corrected escaping and executed unique successful receipt",
+      "reason_authority": "Supervisor-owned additional read-only evidence under actual first-runtime scope",
+      "files": [
+        "first_runtime_identity-syntax-failed.mjs",
+        "first_runtime_identity.mjs",
+        "evidence/first-current-runtime-identity-command.json",
+        "evidence/first-current-runtime-identity-corrected-command.json",
+        "evidence/first-runtime-identity-script-correction.json"
+      ],
+      "observable_effect": "No candidate/app/process signal effect from failed parse; corrected actual receipt confirms current main/server/renderers/listeners, exact profile DB open and six selected processes",
+      "checks": [
+        "corrected Node exit0",
+        "current validateRuntime actual process inspection",
+        "profile DB lsof readback",
+        "protected normal/Alpha process/source sentinels unchanged"
+      ],
+      "risk": "Failure receipt cannot supply ownership proof; successful unique corrected receipt supplies it",
+      "downstream_consumer": "Supervisor runtime acceptance and first owner packet",
+      "downstream_impact": "No source/Wiki/gate dependency changed; original live canonical evidence and strict successful UI retained",
+      "raw_source_hash": "947bb50defc6ce89aacead6dc1f0f6ff2b809060dd07a26accc8601376fad248",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "FIX-XY-CODE-D1",
+      "original_criterion": "Original draft label Draft report; revised X supersedes only that label, retaining draft identity and all original semantics.",
+      "actual_change": "Changed draft visible label to Review report; review/send IDs and labels remain unchanged.",
+      "reason_authority": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-original-authority.md and C/planning/commit-supervisor/execution/S6-fix-xy-event.json /X.",
+      "files": [
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js"
+      ],
+      "effect": "Current hydration and checkbox writes still use draft/review/send.",
+      "checks": "39 current-source samples, original numerical/reversal/reload/all-states oracles; two syntax checks; four-delta readback.; actual evidence/fix-xy-runtime-acceptance.json exact current commands/observations",
+      "risk": "Actual revised public UI, reset immediate persistence/reload, canonical preinitializer reset and built-in Wiki verified; disposable fixture only, no production adoption.",
+      "downstream_consumer": "Checklist iframe, Checklist Guide, fresh code/Wiki/final/runtime gates.",
+      "raw_source_hash": "144c172856b90cdbc23c6cc5f631da6068b5a17b6963b05a74bea5e61fea1647",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "FIX-XY-CODE-D2",
+      "original_criterion": "Y requires Reset completion to uncheck all retained rows, update exact summary, persist immediately and survive ordinary reload.",
+      "actual_change": "Added one native Reset button, explicit view callback, reset mutation in existing controller and reused persistCompletion for both completion and reset. Added variable-backed local button CSS.",
+      "reason_authority": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-code-1-assignment.md and C/planning/commit-supervisor/execution/S6-fix-xy-event.json /Y; existing controller owns private fixture completion state/localStorage.",
+      "files": [
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js",
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js",
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css",
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html"
+      ],
+      "effect": "Each reset click persists [] once and synchronously renders allfalse/3 remaining of 3, retaining logical rows/IDs/labels; no listener accumulation across refresh.",
+      "checks": "Two-checked reset/reload; idempotent reset; postreset completion/reversal; all eight completion masks reset and reload; current-source module and HTML/style wiring checks.; actual evidence/fix-xy-runtime-acceptance.json exact current commands/observations",
+      "risk": "Actual revised public UI, reset immediate persistence/reload, canonical preinitializer reset and built-in Wiki verified; disposable fixture only, no production adoption.",
+      "downstream_consumer": "Bounded Wiki rewrite and actual public-route/reset/restart smoke.",
+      "raw_source_hash": "144c172856b90cdbc23c6cc5f631da6068b5a17b6963b05a74bea5e61fea1647",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "FIX-XY-CODE-D3",
+      "original_criterion": "Installed named worker procedure/profile with root inherited model/effort and verified effective permissions.",
+      "actual_change": "Used assigned supported default fallback; explicitly read and acknowledged exact installed SKILL and TOML developer instructions.",
+      "reason_authority": "Assignment plus session-contract.md Runtime and portability permits supported default with explicit exact paths.",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-checks.json"
+      ],
+      "effect": "Leaf scope retained; no children/external reviewers; effective danger-full-access/never came from host developer instructions, not local config inference.",
+      "checks": "Actual CWD, source/private Git roots, parent assignment and collaboration inventory; all loaded revisions recorded.",
+      "risk": "Native TOML loader/concrete model/effort values are not exposed and no such assertion is made.",
+      "downstream_consumer": "Manager lifecycle and fresh independent handoff.",
+      "raw_source_hash": "144c172856b90cdbc23c6cc5f631da6068b5a17b6963b05a74bea5e61fea1647",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "FIX-XY-CODE-D4",
+      "original_criterion": "Meaningful current-source self-check plus retained valid required55/17 evidence; actual successful runtime must be real.",
+      "actual_change": "Added unique VM/minimal-DOM/in-memory-storage scenario and read-only postflight helpers. Historical35 listed entries have30 unique paths; historical55 reuse did not bind all executed Python discovery/import/fixture/review_packet/Wiki parser inputs. Those original claims remain historical qualified successful invocations. Current55 uses a newly executed discovery run with complete unique before/after bindings and actual Node coverage.",
+      "reason_authority": "Leaf assignment explicitly separates current-source checks from later Supervisor actual runtime and directs rerun only invalidated checks.",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-scenarios.mjs",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-postflight.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-commands.json"
+      ],
+      "effect": "39 source scenarios, two syntax commands and exact four-delta readback remain current. Current Python55 exit0/OK: 3808 unique dependencies equal before/after, all55 expected test names executed, all82 actual file:// JavaScript modules prebound. Retained Node17 has11 unique current local source bindings.",
+      "checks": "Immutable code-command-only derivative /0-/3; evidence/fix-xy-python-current-2-bindings.json, exact current-2 raw invocation/start/finish/cwd/exit/stdout/stderr plus pre2/post2; evidence/fix-xy-node17-current-bindings.json.",
+      "risk": "Original55-only reuse provenance is incomplete and cannot certify current55. Current standard-runtime/support dependency bindings and disposable fixtures do not certify actual product UI/runtime. Retained Node17 executable binary history was not independently bound; current selection is supplied, historical source bytes match.",
+      "downstream_consumer": "Fresh current all5 manager/reviewer must inspect new exact check provenance and limits; actual canonical/runtime gates remain required.",
+      "raw_source_hash": "144c172856b90cdbc23c6cc5f631da6068b5a17b6963b05a74bea5e61fea1647",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "downstream_impact"
+    },
+    {
+      "id": "FIX-XY-CODE-D5",
+      "original_criterion": "Every Git invocation uses GIT_OPTIONAL_LOCKS=0.",
+      "actual_change": "Initial orientation command pwd; git rev-parse --show-toplevel omitted the environment flag. Every later Git read and snapshot invocation explicitly used the flag; no Git write operation occurred.",
+      "reason_authority": "Procedural oversight disclosed; revision-only command performed before mutation.",
+      "files": [],
+      "effect": "Source and candidate index/ref/config fingerprints remain identical to fixed-first after repair; no index refresh/write observed.",
+      "checks": "Final read-only snapshot-state protected/ref equality and source index file f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966.",
+      "risk": "No observed state impact; this note cannot retroactively change the initial invocation.",
+      "downstream_consumer": "Manager procedural accounting; independent gate unaffected.",
+      "raw_source_hash": "144c172856b90cdbc23c6cc5f631da6068b5a17b6963b05a74bea5e61fea1647",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "FIX-XY-WIKI-D6",
+      "original_criterion": "Guide must explain revised label and Reset while retaining every original fact, full exclusive version and actual quoted UTC metadata; root/Navigation exact bytes and times retained.",
+      "actual_change": "Rewrote only existing Guide; added index.html as direct native-button source owner. Created exact declared .versions/2026-10-04-095624.md with complete1620-byte previous Guide SHAa3d372eb before replacement. Current Guide SHA5f093725, quoted2026-10-04T17:06:34Z.",
+      "reason_authority": "Original authority plus X/Y Wiki steering and new immutable130 union declared absent version before creation.",
+      "files": [
+        "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md",
+        "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-095624.md"
+      ],
+      "effect": "Current reader facts updated in place; complete first fixed Guide retained; root/Navigation remain exact bytes/mtime/authoredtime.",
+      "checks": "Five raw source/document commands: public130 verification,114-dependency precheck, exclusive full preimage/write with recheck, full130 comparison and YAML/source/link checks, actual client gray-matter parse.; actual evidence/fix-xy-runtime-acceptance.json exact current commands/observations",
+      "risk": "Actual revised public UI, reset immediate persistence/reload, canonical preinitializer reset and built-in Wiki verified; disposable fixture only, no production adoption.",
+      "downstream_consumer": "Fresh original-three-page gate, different final all5 gate and actual Wiki navigation/reload.",
+      "raw_source_hash": "144c172856b90cdbc23c6cc5f631da6068b5a17b6963b05a74bea5e61fea1647",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "FIX-XY-WIKI-D7",
+      "original_criterion": "Installed Wiki worker procedure/profile under manager-assigned bounded leaf reuse.",
+      "actual_change": "Supported default leaf explicitly loaded exact installed Wiki Repair SKILL/TOML developer instructions plus complete assigned methods; no children.",
+      "reason_authority": "Exact leaf assignment and session/Supervisor integration fallback contracts.",
+      "files": [
+        "workers/fix-xy-wiki-1.md"
+      ],
+      "effect": "Actual CWD, host danger-full-access/never, root inheritance/no overrides acknowledged; native loader/concrete settings unexposed.",
+      "checks": "Loaded current revisions and prewrite identity acknowledgment; mechanical full candidate boundaries.",
+      "risk": "No native named-profile loader claim is available.",
+      "downstream_consumer": "Supervisor actual lifecycle and fresh independent gate.",
+      "raw_source_hash": "144c172856b90cdbc23c6cc5f631da6068b5a17b6963b05a74bea5e61fea1647",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "downstream_impact"
+    },
+    {
+      "id": "FIX-XY-WIKI-D8",
+      "original_criterion": "All Git reads require GIT_OPTIONAL_LOCKS=0.",
+      "actual_change": "Wiki leaf sole initial revision-only git rev-parse root discovery omitted explicit environment; subsequent helper/runner calls explicitly supply it.",
+      "reason_authority": "Worker disclosed procedural oversight; no Git write operation requested.",
+      "files": [],
+      "effect": "No observed source/candidate index/ref/config change; exact pre/post integrity readbacks retained.",
+      "checks": "Full130 prewrite verification and later index/ref/config equality.",
+      "risk": "Read-only environment omission cannot be retroactively removed.",
+      "downstream_consumer": "Supervisor procedural accounting; current gate dependencies remain explicit.",
+      "raw_source_hash": "144c172856b90cdbc23c6cc5f631da6068b5a17b6963b05a74bea5e61fea1647",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "downstream_impact"
+    },
+    {
+      "id": "FIX-XY-SUPERVISOR-D9",
+      "original_criterion": "Actual newly installed Commit Supervisor entry/profile with exact instructions and effective settings.",
+      "actual_change": "Supported default actual runtime actor explicitly loaded exact installed Supervisor SKILL/TOML developer instructions, CWD verified and host settings acknowledged.",
+      "reason_authority": "Exact root executable assignment explicitly directs supported default fallback; host named profile unavailable.",
+      "files": [
+        "activation-fix-xy.json",
+        "lifecycle-fix-xy.json"
+      ],
+      "effect": "Bounded Supervisor process and authorized children; root inheritance/no overrides; concrete model/effort/native loader metadata remain unexposed.",
+      "checks": "Prewrite loading/identity acknowledgement and actual native predecessor terminal observation.",
+      "risk": "No fabricated native-loader/settings metadata.",
+      "downstream_consumer": "Second actual owner wait and root-observed native terminal.",
+      "raw_source_hash": "144c172856b90cdbc23c6cc5f631da6068b5a17b6963b05a74bea5e61fea1647",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "downstream_impact"
+    },
+    {
+      "id": "FIX-XY-SUPERVISOR-D10",
+      "original_criterion": "Actual revised UI keeps original reversal/reload/all0/all3 and proves Reset immediate persistence/reload plus canonical reset before initializer.",
+      "actual_change": "Unique job-local immutable live helper derivative retains original reversal shell reload before Reset, adds actual iframe localStorage [] assertion and revised Guide checks. Separate pre-restart helper requires priortrue/false/false/count2; separate postrestart helper requires revised labels/allfalse/count3 before initializer.",
+      "reason_authority": "Original runtime criteria plus X/Y label/reset; source inspection showed maintained helper fix mode needed explicit retained reversal reload observation.",
+      "files": [
+        "fix_xy_live_smoke.mjs",
+        "fix_xy_live_readback.mjs",
+        "fix_xy_pre_restart_readback.mjs"
+      ],
+      "effect": "Installed helpers remain unchanged; actual UI/server/CDP used later with stricter current oracles.",
+      "checks": "Source read/syntax commands; actual runtime remains later mandatory.; actual evidence/fix-xy-runtime-acceptance.json exact current commands/observations",
+      "risk": "Actual revised public UI, reset immediate persistence/reload, canonical preinitializer reset and built-in Wiki verified; disposable fixture only, no production adoption.",
+      "downstream_consumer": "Different final review and Supervisor actual runtime; current hashes pinned separately.",
+      "raw_source_hash": "144c172856b90cdbc23c6cc5f631da6068b5a17b6963b05a74bea5e61fea1647",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "FIX-XY-SUPERVISOR-D11",
+      "original_criterion": "Protect source/unowned caches/index/refs and normal/Alpha, while preserving assigned root E and Supervisor J writes.",
+      "actual_change": "Initial entry comparison excluding only J flagged13 authorized root E records. Corrected comparison explicitly excludes entire assigned E and J; raw snapshots retained.",
+      "reason_authority": "Root owns disjoint E coordination/control records under exact assignment; our candidate-only effects do not own E.",
+      "files": [
+        "evidence/fix-xy-entry-protection-comparison.json"
+      ],
+      "effect": "Comparison scope aligns with authorized concurrent writers; no observed outside-J/E/source-cache/index/ref/protected-process change.",
+      "checks": "Retained entry and first protection raw snapshots; explicit excluded namespaces and outside differences recorded.; evidence/fix-xy-runtime-protection-comparison.json outsideJ/E unchanged and whole20tests separately pre/post bound",
+      "risk": "Authorized E/J writes are not protection failures; scope correction does not hide outside differences.",
+      "downstream_consumer": "Fresh pre/post runtime protection comparisons with exact same namespaces.",
+      "raw_source_hash": "144c172856b90cdbc23c6cc5f631da6068b5a17b6963b05a74bea5e61fea1647",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "FIX-XY-SUPERVISOR-D12",
+      "original_criterion": "Preserve immutable historical predecessor and make current return fields consistent.",
+      "actual_change": "First historical checkpoint has return IN_PROGRESS and return_state COMMIT_READY_WAITING_OWNER, preserved exactly. Actual native first terminal supplied; unique current successor checkpoint uses aligned return/return_state.",
+      "reason_authority": "Exact root confirms actual first native terminal before labeled X/Y; preserving first history prohibits retroactive rewriting.",
+      "files": [
+        "checkpoint-fix-xy.json"
+      ],
+      "effect": "Historical alias discrepancy disclosed without reopening intake or treating intentional wait as interrupted execution.",
+      "checks": "Historical checkpoint/packet hashes and native terminal evidence; current unique checkpoint readback.",
+      "risk": "Readers must use actual first native terminal and qualified history rather than the old alias alone.",
+      "downstream_consumer": "Current second owner operation packet and later separately authorized recovery.",
+      "raw_source_hash": "144c172856b90cdbc23c6cc5f631da6068b5a17b6963b05a74bea5e61fea1647",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "FIX-XY-REVIEW-D13",
+      "original_criterion": "Fresh read-only original-three-page reviewer, all Git reads optional-lock-free, exact current dependencies and no prior diagnoses.",
+      "actual_change": "Reviewer disclosed initial revision-only Git root read without explicit GIT_OPTIONAL_LOCKS=0 and one corrected in-memory comparison helper error; subsequent current readbacks succeeded. Read-only VM source verification reproduced39 samples;55/17 retained, no runtime or file writes.",
+      "reason_authority": "Procedural disclosures in actual fresh native terminal; original affected review permits independent source mechanics.",
+      "files": [],
+      "effect": "No observed source/candidate index/ref/config/files/profile effects; current130/58/config/status/35 dependency equality recorded.",
+      "checks": "Fresh terminal direct metadata/link/preimage/recovery/current-state checks and read-only source scenario exit0.",
+      "risk": "Initial invocation omission preserved honestly; corrected in-memory error does not replace final successful readback.",
+      "downstream_consumer": "Supervisor classification and different fresh final current coverage; no prior gate verdict supplied to final manager.",
+      "raw_source_hash": "144c172856b90cdbc23c6cc5f631da6068b5a17b6963b05a74bea5e61fea1647",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "downstream_impact"
+    },
+    {
+      "id": "FIX-XY-SUPERVISOR-D14",
+      "original_criterion": "Required checks carry actual discovery/import/executed support dependencies, current source bytes, selected runtime identity, exact raw invocation/time/exit/log binding. Historical receipts remain immutable.",
+      "actual_change": "Created unique dependency capture helpers; conservatively bound all nine local Python files, discovered55 names, Python standard runtime, Wiki CLI/server support, gray-matter/optional package graph, esprima, selected executables and source Git metadata. V8 coverage established every executed JavaScript module. First closure diagnostic found an absent optional sqlite3 driver; second closure treated static conditional absences explicitly; current-1 successful55 trace found esprima missing from prebindings; current-2 prebound it and repeated55 with all82 modules bound.",
+      "reason_authority": "Workflow Evidence reuse and exact current check provenance under bounded Supervisor assignment; check-only evidence repair, no product/source/Wiki/runtime/control mutation.",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/python_suite_js_dependencies.mjs",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/python_suite_js_dependencies_v2.mjs",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/python_suite_js_dependencies_v3.mjs",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/python_suite_bindings.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/python_suite_bindings_v2.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-python-current-2-bindings.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-node17-current-bindings.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-check-protection-comparison.json"
+      ],
+      "effect": "Current55 actual pass supplies renewed current provenance. Historical first55/current-1 passes and diagnostic receipts preserved; no historical drift or test failure asserted. No candidate130/index/ref/config or outside-J/E/source caches/protected process changes occurred.",
+      "checks": "Exact current-2 command receipt exit0/55; pre2/post2 3808 unique hashes/modes equal; V8 82 actual files all bound; Node17 source closure fingerprints all historical equal; source/protection readbacks outside entire assigned J/E unchanged.",
+      "risk": "Static conditional missing driver branches are not executed successes. Bound generated fixture literals describe disposable temporary state, not product readiness. Python/Node checks do not replace revised actual canonical app/runtime gate.",
+      "downstream_consumer": "Fresh new final manager and independent all5 reviewer; later mandatory actual runtime and precise second owner packet.",
+      "raw_source_hash": "144c172856b90cdbc23c6cc5f631da6068b5a17b6963b05a74bea5e61fea1647",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "FIX-XY-REVIEW-D15",
+      "original_criterion": "Fresh final reviewer receives no prior manager/author assessments or correctness observations; disregard cannot restore consumed independence. Actual raw/native terminals retained before replacement.",
+      "actual_change": "Manager2 sent an interim no-material-finding assessment plus evaluated V8/source observations; immediate disregard correction followed. Supervisor withheld the gate and required exact message/raw preservation and actual insufficient-evidence/native END. A different fresh manager3/reviewer uses original/current/raw/neutral technicalv2 only and strict logistics-only messages.",
+      "reason_authority": "Original executable successor independence packaging, installed review-manager fresh-gate rule, exact final2 assignment and actual ordered messages; root separately validated breach. Root assessment is excluded from fresh gate.",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-manager-2.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-manager-2-lifecycle.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-reviewer-2.raw.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-final2-terminal-and-neutral-current.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-final-review-assignment-3.md"
+      ],
+      "effect": "Invalid final2 acceptance withheld; no materially clean independent final pass counted. Source130/index/status/config and current55/17 dependencies unchanged; no product defect inferred.",
+      "checks": "Direct actual FINAL_ANSWER and own exact-prefix native completed manager+child; exact ordered messages retained; rawchild9abe3ae8\u2026 and finalmanager773fa1f0\u2026 read; current3808/11 equal before fresh dispatch.",
+      "risk": "Consumed assessment cannot be removed by instruction; historical observations cannot supply replacement review correctness.",
+      "downstream_consumer": "Different fresh finalmanager3/all5, then mandatory runtime and second precise owner wait.",
+      "finding": "FINAL2-INDEPENDENCE-001 / F-ALL5-02",
+      "severity": "material for final review independence",
+      "confidence": "high from direct exact messages",
+      "raw_source_hash": "144c172856b90cdbc23c6cc5f631da6068b5a17b6963b05a74bea5e61fea1647",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "FIX-XY-FINAL-MANAGER3-D15",
+      "original_criterion": "Read complete required dependency metadata without dumping baseline/package inventories; preserve bounded useful output.",
+      "actual_change": "Several early metadata-inspection snippets printed nested inventories/path sets, producing truncated tool output. Later inspections used targeted source chunks, selected fields and exact programmatic all-record comparisons.",
+      "reason_authority": "Manager read-only inspection/output-scoping oversight; executable assignment explicitly prohibits inventory dumping.",
+      "files": [],
+      "effect": "Transient oversized tool output only; no candidate/source/profile or evidence mutation. Required local source reads and full current fingerprint/discovery/import/V8 comparisons were separately completed.",
+      "checks": "All130/77/1 final fingerprints; all3808 support equality; exact55 raw names;82 executed modules;11 Node source paths; all original recovery payloads and required local/direct support reads.",
+      "risk": "The noisy/truncated outputs do not establish exhaustive source coverage by themselves; only completed targeted reads and exact successful comparison results support this report.",
+      "downstream_consumer": "Supervisor procedural accounting; no remaining source gate or runtime requirement is waived.",
+      "raw_source_hash": "144c172856b90cdbc23c6cc5f631da6068b5a17b6963b05a74bea5e61fea1647",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "downstream_impact"
+    },
+    {
+      "id": "FIX-XY-FINAL-MANAGER3-D16",
+      "original_criterion": "Read-only comparison helpers must use actual source schemas and valid paths.",
+      "actual_change": "One in-memory helper initially used a tuple load return as a dict; one narrow zsh glob search had no matches; one index comparison initially compared absent record with empty new-version index. Each was corrected through actual API/schema or explicit paths and exact existing/full-index checks. Final report prewrite readback initially expected null for detached identity, whose exact schema uses empty string; actual symbolic-ref exit1/empty output and identity empty string were then matched.",
+      "reason_authority": "Routine read-only inspection errors, corrected without rerunning effectful suites or touching candidate state.",
+      "files": [],
+      "effect": "Failed/overstrict transient inspection output, followed by successful comparisons; no writes or runtime effects.",
+      "checks": "Actual load signature read; all four unions/preparation payloads validated; six authorized differences; existing index/flags and exact full index/status bytes match.",
+      "risk": "Initial error output is not successful verification; the corrected successful readbacks are the evidence.",
+      "downstream_consumer": "Supervisor procedural accounting and current review provenance.",
+      "raw_source_hash": "144c172856b90cdbc23c6cc5f631da6068b5a17b6963b05a74bea5e61fea1647",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "FIX-XY-SUPERVISOR-D16",
+      "original_criterion": "Actual canonical current runtime process/profile identity and complete current source/check/protection before/after bindings must be retained.",
+      "actual_change": "Created immutable job-local runtime identity helper parameterized by actual verified run path and runtime integrity helper that permits only predeclared watcher2 creation. Installed helpers and product/source files remain unchanged.",
+      "reason_authority": "Assigned mandatory revised runtime/readback and predeclared private watcher2; inherited first runtime identity helper was bound to first run.",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix_xy_runtime_identity.mjs",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix_xy_runtime_integrity.py"
+      ],
+      "effect": "New run-DlzcE3 actual selected6-process tree/listeners/DB readback; all77/config/3808/11/whole20 and source/candidate indices/refs equal; sole watcher2 owned/status delta.",
+      "checks": "Runtime identity syntax and actual exit0; integrity pre/post actual exit0; raw current identity and bridge persisted.",
+      "risk": "Readbacks are timestamped live evidence, not authority for future process control or profile restoration; profile/DB is outside code recovery archive.",
+      "downstream_consumer": "Precise second owner packet and separately authorized root controls/recovery.",
+      "raw_source_hash": "144c172856b90cdbc23c6cc5f631da6068b5a17b6963b05a74bea5e61fea1647",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "FIX-XY-SUPERVISOR-D17",
+      "original_criterion": "Keep bounded output compact and inspect required records completely.",
+      "actual_change": "An archive filename discovery included payload inventory and was truncated; one combined process identity read was truncated. Corrected by selected schema reads and separately reading full current process identity; guessed external owner/preparation paths were absent and not used.",
+      "reason_authority": "Supervisor read-only output/path selection oversight during runtime archive preparation.",
+      "files": [],
+      "effect": "Transient noisy/failed read output only; no candidate/source/profile change from these reads.",
+      "checks": "Actual fixed and union owned-paths configurations read; full runtime identity reread; exact successful archive capture/verify and source/protection bindings used.",
+      "risk": "Truncated discovery is not verification or source coverage; no inventory dump is used as acceptance evidence.",
+      "downstream_consumer": "Owner packet provenance and procedural accounting.",
+      "raw_source_hash": "144c172856b90cdbc23c6cc5f631da6068b5a17b6963b05a74bea5e61fea1647",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "downstream_impact"
+    },
+    {
+      "id": "FIX-XY-SUPERVISOR-D18",
+      "original_criterion": "Actual canonical private build/restart exit0 and real revised smoke required.",
+      "actual_change": "Canonical build retained gray-matter eval, mixed dynamic/static import and >500kB chunk warnings; Electron console-message deprecation also logged. No product/build configuration change made.",
+      "reason_authority": "Established canonical restart command in bounded private candidate; warnings are observed current output, outside X/Y repair scope.",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-canonical-runtime-command.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-runtime-raw-files/launch.log"
+      ],
+      "effect": "Actual build/restart exit0 RUNTIME_VERIFIED; revised UI/Reset/Wiki/connection/watcher passed. Generic server/renderer logs limit diagnostic detail; direct actual UI/process/DB evidence supplies criteria.",
+      "checks": "Exact actual current command/time/exit plus preinitializer/UI/current identity/watcher/protection source bridge.",
+      "risk": "Warnings remain; they do not establish an observed X/Y acceptance failure and cannot be treated as full production readiness.",
+      "downstream_consumer": "Second owner packet fixture runtime limits.",
+      "raw_source_hash": "144c172856b90cdbc23c6cc5f631da6068b5a17b6963b05a74bea5e61fea1647",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "NC-D1",
+      "original_criterion": "Load installed named role/CWD/effective settings before writes",
+      "actual_change": "Supported default fallback, exact SKILL/TOML explicit loading",
+      "reason_authority": "Executable assignment and portability contract",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/activation.json"
+      ],
+      "observable_effect": "Bounded actor identity/settings acknowledged",
+      "checks": "Actual CWD/roots; current SKILL/profile hashes; host permissions",
+      "risk": "Native named-loader/concrete settings unexposed",
+      "downstream_consumer": "Root lifecycle/S6 acceptance",
+      "raw_source_hash": "b992b17f158acea1c98bb959ca1a964211fd3e5d446bf7eef05357ad0325333f",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "downstream_impact"
+    },
+    {
+      "id": "NC-D2",
+      "original_criterion": "Every Git read uses GIT_OPTIONAL_LOCKS=0",
+      "actual_change": "First root-only rev-parse omitted flag; all subsequent Git reads disable optional locks",
+      "reason_authority": "Procedural oversight, no retroactive correction",
+      "files": [],
+      "observable_effect": "No observed source index/ref drift",
+      "checks": "Source physical index matches frozen f37b... and before/after exact",
+      "risk": "Cannot reconstruct a pre-first-read physical snapshot",
+      "downstream_consumer": "Procedural accounting",
+      "raw_source_hash": "b992b17f158acea1c98bb959ca1a964211fd3e5d446bf7eef05357ad0325333f",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "NC-D3",
+      "original_criterion": "Required source content/evidence read completely",
+      "actual_change": "Some grouped outputs/inventories exceeded display budgets; required contract/source portions reread or identity JSON traversed in memory",
+      "reason_authority": "Bounded read-only output correction",
+      "files": [],
+      "observable_effect": "No source writes; full current authority readset retained",
+      "checks": "Read coverage; whole JSON fingerprint comparisons",
+      "risk": "Native lifecycle payload display was large; not retrospective correctness certification",
+      "downstream_consumer": "Root read coverage",
+      "raw_source_hash": "b992b17f158acea1c98bb959ca1a964211fd3e5d446bf7eef05357ad0325333f",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "NC-D4",
+      "original_criterion": "Actual syntax diagnostic must fail on faulted current controller",
+      "actual_change": "Default Node25 file check exit0; explicit module stdin check same exact hash exit1",
+      "reason_authority": "Module file semantics and root explicitly authorized same-byte diagnostic correction",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/fault-node-check.command.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/fault-module-check.command.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/node-selection.json"
+      ],
+      "observable_effect": "Initial false-success evidence retained, actual injected fault parsed as SyntaxError",
+      "checks": "Exact argv/CWD/executable/version/input hash/stdout/stderr/exit",
+      "risk": "Default file invocation cannot certify syntax; no broad Node causation claim",
+      "downstream_consumer": "S6 actual negative diagnostic/current readiness",
+      "raw_source_hash": "b992b17f158acea1c98bb959ca1a964211fd3e5d446bf7eef05357ad0325333f",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "NC-D5",
+      "original_criterion": "Observer inspection completes without overwriting records",
+      "actual_change": "First helper assertion failed after default diagnostic; unique observer-v2 resumes with new raw prefix",
+      "reason_authority": "Preserve failed receipt/history; no candidate writes",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/observer.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/observer-v2.py"
+      ],
+      "observable_effect": "Completed four controls after correction",
+      "checks": "inspection.json; immutable initial command receipts",
+      "risk": "Helper failure not gate success",
+      "downstream_consumer": "Root evidence",
+      "raw_source_hash": "b992b17f158acea1c98bb959ca1a964211fd3e5d446bf7eef05357ad0325333f",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "NC-D6",
+      "original_criterion": "Use exact first Wiki recovery folder",
+      "actual_change": "Two guessed names absent; exact first-wiki-1 then inspected",
+      "reason_authority": "Read-only locator correction",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/first-wiki-recovery-readback.json"
+      ],
+      "observable_effect": "129 union/117 payloads independently validated",
+      "checks": "Exact manifest36c99...; both full versions",
+      "risk": "Earlier absent guesses remain preserved",
+      "downstream_consumer": "Recovery/S6",
+      "raw_source_hash": "b992b17f158acea1c98bb959ca1a964211fd3e5d446bf7eef05357ad0325333f",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "NC-D7",
+      "original_criterion": "Protection raw bytes and identity claims distinguished",
+      "actual_change": "Two live protected DB hashes/sizes/mtimes changed; exact identities preserved",
+      "reason_authority": "Already-running normal/Alpha processes; observer performed no DB/profile/app effects",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/protection-comparison.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/zero-observer-mutation-proof.json"
+      ],
+      "observable_effect": "No claim of protected DB byte equality; before/after values retained",
+      "checks": "Dev/inode/existence/kind/mode equal; all8 sampled process identities equal; private461 bytes equal",
+      "risk": "Cannot infer protected live DB content preservation from stat identity",
+      "downstream_consumer": "Root protection assessment",
+      "raw_source_hash": "b992b17f158acea1c98bb959ca1a964211fd3e5d446bf7eef05357ad0325333f",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "NC-D8",
+      "original_criterion": "Keep whole source status raw and own record exclusions explicit",
+      "actual_change": "Source status adds authorized observer N and root E records",
+      "reason_authority": "Disjoint assignment ownership",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/before-source-status.stdout",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/after-source-status.stdout"
+      ],
+      "observable_effect": "NUL-safe raw state retained, exact outside E/J status/11977 source leaves equal",
+      "checks": "zero-observer-mutation-proof",
+      "risk": "Whole source status raw bytes legitimately differ; cannot label global status exact",
+      "downstream_consumer": "Root concurrent record accounting",
+      "raw_source_hash": "b992b17f158acea1c98bb959ca1a964211fd3e5d446bf7eef05357ad0325333f",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "NC-D9",
+      "original_criterion": "Actual previous writers terminal and no schedule",
+      "actual_change": "Native current subtree observed completed; retired prior leaf terminals retained by predecessor lifecycle",
+      "reason_authority": "Assignment prior terminal transfer and independent native list",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/lifecycle-fix-xy.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/lifecycle.json"
+      ],
+      "observable_effect": "No conflicting current writer or matching schedule",
+      "checks": "Native list returns seven completed; predecessor records four retired actors complete; all5 automations paused",
+      "risk": "Native listing no longer exposes every retired historical child; no invented direct observation of removed entries",
+      "downstream_consumer": "Root actor ledger/S6",
+      "raw_source_hash": "b992b17f158acea1c98bb959ca1a964211fd3e5d446bf7eef05357ad0325333f",
+      "downstream_impact": "Retain the stated limits and exact raw provenance at separate full-S6/whole-SPEC acceptance; no publication authority supplied.",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "I1-D1",
+      "original_criterion": "Exact installed role loading, actual CWD/host/root inheritance acknowledged",
+      "actual_change": "Supported default agent explicitly loaded exact SKILL/TOML full contracts",
+      "reason_authority": "Assignment supported fallback and session portability contract",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/activation.json"
+      ],
+      "observable_effect": "No override/settings change; current identity is actual native runtime child",
+      "checks": [
+        "Hashes, actual CWD/root/permissions and collaboration inventory"
+      ],
+      "risk": "Concrete model/effort/native loader metadata unexposed",
+      "downstream_consumer_impact": "Root and successor must retain fallback fact",
+      "owner": "/root/s6_supervisor_interruption_1",
+      "raw_source_hash": "2c0672f229289b6226697c3efebfe800743913e2b78ded10ad58676f392ceaec",
+      "downstream_impact": "Root and successor must retain fallback fact",
+      "builder_proposed_classification": "downstream_impact"
+    },
+    {
+      "id": "I1-D2",
+      "original_criterion": "Private runtime stop before new snapshot; protect normal/Alpha by current ownership",
+      "actual_change": "Maintained actual stop completed for six freshly observed exact owned P/profile processes",
+      "reason_authority": "Original S6 end-rehearsal boundary plus first-turn assignment",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/owned-stop.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/actual-owned-stop.command.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/stop-comparison.json"
+      ],
+      "observable_effect": "Private tree/listeners absent; code/Wiki/workspace flush deltas empty",
+      "checks": [
+        "Full before/after process/UID/start/entry/exe/CWD/env/listener raw, protected four/13 equal"
+      ],
+      "risk": "Disposable private profile shutdown effects remain outside code restore",
+      "downstream_consumer_impact": "Successor inherits completed stop; verify absence, never replay stale PID termination",
+      "owner": "/root/s6_supervisor_interruption_1",
+      "raw_source_hash": "2c0672f229289b6226697c3efebfe800743913e2b78ded10ad58676f392ceaec",
+      "downstream_impact": "Successor inherits completed stop; verify absence, never replay stale PID termination",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "I1-D3",
+      "original_criterion": "Exact fixed130 captured after stop; earlier manifests/preimages immutable",
+      "actual_change": "New public fixed-checkpoint with current actor owner and actual root transfer/historical inactive owners",
+      "reason_authority": "Original S1 schema and explicit recovery ownership note",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/fixed-checkpoint/owned-paths.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/fixed-checkpoint/recovery/manifest.json"
+      ],
+      "observable_effect": "130 owned/4355 full baseline/119 payloads exactly equal latest fixed input; distinct manifest namespace",
+      "checks": [
+        "Public capture/verify and full owned/base/index/worktree equality"
+      ],
+      "risk": "Code checkpoint excludes profile/DB/cache effects",
+      "downstream_consumer_impact": "Fresh successor derives receipt owner/path set from this immutable manifest, active_actor separately",
+      "owner": "/root/s6_supervisor_interruption_1",
+      "raw_source_hash": "2c0672f229289b6226697c3efebfe800743913e2b78ded10ad58676f392ceaec",
+      "downstream_impact": "Fresh successor derives receipt owner/path set from this immutable manifest, active_actor separately",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "I1-D4",
+      "original_criterion": "Only two exact private input leaves; explicitly permitted private test-only staging",
+      "actual_change": "Staged binary zero/0xff value, then distinct unstaged binary; created declared-absent future leaf",
+      "reason_authority": "Exact FIRST interruption assignment, no actual publication authority",
+      "files": [
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-inputs/checkpoint.bin",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-inputs/future-addition.txt"
+      ],
+      "observable_effect": "Exactly two entry deltas, sole index delta binary; all other owned/unrelated/ref state exact",
+      "checks": [
+        "One literal private git add with ALL inherited GIT_* stripped; raw blob/readback/guard"
+      ],
+      "risk": "Candidate current match and readiness intentionally false until actual recovery",
+      "downstream_consumer_impact": "Successor must execute separately activated guarded collision/restore from saved expected state",
+      "owner": "/root/s6_supervisor_interruption_1",
+      "raw_source_hash": "2c0672f229289b6226697c3efebfe800743913e2b78ded10ad58676f392ceaec",
+      "downstream_impact": "Successor must execute separately activated guarded collision/restore from saved expected state",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "I1-D5",
+      "original_criterion": "Preserve normal/Alpha storage; avoid unearned live DB byte-equality claims",
+      "actual_change": "Recorded protected11 identity equality and exact natural hash/stat deltas",
+      "reason_authority": "Original runtime limits and active profile evidence",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/final-preservation-proof.json"
+      ],
+      "observable_effect": "Protected roots/tree identity unchanged; no DB/profile copy/restore",
+      "checks": [
+        "dev/inode/existence/kind/mode equality, raw before/after samples"
+      ],
+      "risk": "Active protected DB sizes/hashes/mtimes may naturally change",
+      "downstream_consumer_impact": "Root/S6 closeout must qualify live-storage preservation",
+      "owner": "/root/s6_supervisor_interruption_1",
+      "raw_source_hash": "2c0672f229289b6226697c3efebfe800743913e2b78ded10ad58676f392ceaec",
+      "downstream_impact": "Root/S6 closeout must qualify live-storage preservation",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "I1-D6",
+      "original_criterion": "Capture exact raw evidence and avoid replay after ambiguous tool completion",
+      "actual_change": "Initial shell wrapper yielded after10seconds; only output was surfaced. Inspected completed stop/after snapshot/comparison files without rerunning stop",
+      "reason_authority": "Preserve uncertain actual outcome first; installed successor no replay rule",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/actual-owned-stop.command.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/stop-comparison.json"
+      ],
+      "observable_effect": "Actual maintained stop exit0 proven by saved command and completed readback; no repeated effect",
+      "checks": [
+        "Complete raw command receipt and comparison assertions, final owned-tree absence"
+      ],
+      "risk": "Initial shell session identifier was not surfaced; no claim about nonexistent forced crash",
+      "downstream_consumer_impact": "Successor retains real completed stop rather than repeating it",
+      "owner": "/root/s6_supervisor_interruption_1",
+      "raw_source_hash": "2c0672f229289b6226697c3efebfe800743913e2b78ded10ad58676f392ceaec",
+      "downstream_impact": "Successor retains real completed stop rather than repeating it",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "I1-D7",
+      "original_criterion": "Full current source reads and unique record ownership",
+      "actual_change": "Oversized read outputs were shortened and required source portions reread; all writes stayed in unique N aside from authorized two inputs",
+      "reason_authority": "Bounded first-turn evidence capture",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/preservation.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/process-readback.mjs"
+      ],
+      "observable_effect": "No original evidence or source/procedure edits; raw process environments retained locally",
+      "checks": [
+        "Original J1224/source11977/cache193 exact, archive/readback equality"
+      ],
+      "risk": "Full raw process environment records may contain local environment data; never publish as part of this rehearsal",
+      "downstream_consumer_impact": "Root uses bounded factual evidence; no Git publication authority",
+      "owner": "/root/s6_supervisor_interruption_1",
+      "raw_source_hash": "2c0672f229289b6226697c3efebfe800743913e2b78ded10ad58676f392ceaec",
+      "downstream_impact": "Root uses bounded factual evidence; no Git publication authority",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "R1-D1",
+      "original_criterion": "Exact installed role/CWD/permissions/root inheritance loading",
+      "actual_change": "Supported default runtime explicitly loaded exact SKILL/TOML/contracts/standards",
+      "reason_authority": "Bound assignment and session portability contract",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/activation.json"
+      ],
+      "observable_effect": "No model/effort override or host configuration change",
+      "checks": [
+        "Current source hashes, verified actual CWD/separate roots, native identity"
+      ],
+      "risk": "Concrete model/effort/native loader metadata unexposed",
+      "downstream_consumer_impact": "Root closeout retains actual fallback and loader limit",
+      "owner": "/root/s6_supervisor_recovery_1",
+      "raw_source_hash": "2133d2085d71180a1df1b45c80e2c8684ceefc39215e3574b03ecdaab239fbad",
+      "downstream_impact": "Root closeout retains actual fallback and loader limit",
+      "builder_proposed_classification": "downstream_impact"
+    },
+    {
+      "id": "R1-D2",
+      "original_criterion": "Use public helpers while preserving all original immutable archives and prior guards",
+      "actual_change": "Unique public-controls jobs contain exact copied immutable manifest/sidecar/payload sets; only their mutable guards/readbacks are consumed",
+      "reason_authority": "Public CLI exposes only default <job>/restore-guard.json. Root explicitly authorized exact control copies through direct native message; no new capture",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/public-control-copy-equality.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/public-controls",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/saved-fixed-fresh-guard.json"
+      ],
+      "observable_effect": "Original owners/repo/scopes/hashes retained; every old guard and all1844 earlier job leaves remain in place unchanged",
+      "checks": [
+        "Exclusive copy byte/mode/mtime equality, actual public restore/verify, original namespace verify after every restore"
+      ],
+      "risk": "Copies have different physical inodes; original archive and guard identities remain exact",
+      "downstream_consumer_impact": "Root/S6 gate must distinguish control namespaces from immutable original checkpoints; no installed capability change",
+      "owner": "/root/s6_supervisor_recovery_1",
+      "raw_source_hash": "2133d2085d71180a1df1b45c80e2c8684ceefc39215e3574b03ecdaab239fbad",
+      "downstream_impact": "Root/S6 gate must distinguish control namespaces from immutable original checkpoints; no installed capability change",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "R1-D3",
+      "original_criterion": "Read current contracts and schedule facts without guessing runtime dependencies",
+      "actual_change": "Initial system python3 read-only inspection failed to import tomllib; inspection then used available python3.12 -B",
+      "reason_authority": "Installed predecessor command/runtime and Python3.12 support already available; no install/config change",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/diagnostic-attempts.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/independent-entry-inspection.json"
+      ],
+      "observable_effect": "First attempt made no candidate/source/profile writes; complete subsequent inspection succeeded",
+      "checks": [
+        "Original tool exception retained;104 full raw JSON records/78 command payload receipts independently parsed/readback"
+      ],
+      "risk": "Default python3 cannot run this tomllib inspection",
+      "downstream_consumer_impact": "Root/successor uses the recorded Python3.12 executable; not a product defect",
+      "owner": "/root/s6_supervisor_recovery_1",
+      "raw_source_hash": "2133d2085d71180a1df1b45c80e2c8684ceefc39215e3574b03ecdaab239fbad",
+      "downstream_impact": "Root/successor uses the recorded Python3.12 executable; not a product defect",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "R1-D4",
+      "original_criterion": "Protect all current normal/Alpha identities using UID/start/exe/entry/CWD/environment/profile facts",
+      "actual_change": "An initial local comparator expected cwd in every systemProcesses descendant record and stopped. Corrected extraction uses actual saved ps/lsof/environment fields for all13",
+      "reason_authority": "Some non-renderer helpers are not pre-enriched by systemProcesses; raw per-PID observations already exist",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/entry_inspection.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/independent-entry-inspection.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/diagnostic-attempts.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/final-preservation-proof.json"
+      ],
+      "observable_effect": "No effect or signal occurred; protected identities agree in five actual current samples",
+      "checks": [
+        "Exact13 UID/start/command/CWD/executable/machine/profile/ancestry comparisons; current private tree/listeners absent"
+      ],
+      "risk": "Raw full environment records remain local and may contain sensitive environmental values",
+      "downstream_consumer_impact": "Root inspects bounded normalized identity facts; no remote publication authorized",
+      "owner": "/root/s6_supervisor_recovery_1",
+      "raw_source_hash": "2133d2085d71180a1df1b45c80e2c8684ceefc39215e3574b03ecdaab239fbad",
+      "downstream_impact": "Root inspects bounded normalized identity facts; no remote publication authorized",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "R1-D5",
+      "original_criterion": "Prove public collision refusal nonmutating for candidate/source scope",
+      "actual_change": "After actual REFUSED, a local raw whole-source-porcelain equality assertion stopped because new recovery-1 receipts appeared. Corrected only the proof using exact J/E NUL-safe exclusions",
+      "reason_authority": "Root explicitly directed correction using assigned J/E records plus all outside leaves/staged entries/physical index/ref/config; no new authority",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/collision_and_fixed.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/continue_fixed.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/collision-nonmutation-proof.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/diagnostic-attempts.json"
+      ],
+      "observable_effect": "Full candidate4355/physical index/guard unchanged during refusal; source11977/index/flags/refs unchanged. Existing refusal was retained and not replayed; only known collision bytes undone",
+      "checks": [
+        "Before/after full relevant state equality, NUL-safe status with exact source J/E exclusions, full raw candidate/source stage/flags/config/ref/remotes/reflogs/physical indexes"
+      ],
+      "risk": "Whole source porcelain differs legitimately from evidence records; it must not be represented as byte-identical",
+      "downstream_consumer_impact": "Root/outer gates retain the failed proof and qualified successful correction; actual helper refusal passed",
+      "owner": "/root/s6_supervisor_recovery_1",
+      "raw_source_hash": "2133d2085d71180a1df1b45c80e2c8684ceefc39215e3574b03ecdaab239fbad",
+      "downstream_impact": "Root/outer gates retain the failed proof and qualified successful correction; actual helper refusal passed",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "R1-D6",
+      "original_criterion": "Fully inspect required bound sources/raw facts with bounded outputs",
+      "actual_change": "Oversized output requests truncated; required document sections were reread in smaller calls, and full raw JSON/command/payload structures were independently parsed and compared",
+      "reason_authority": "Read-only evidence scale; no source rewrite or lost raw receipts",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/activation.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/independent-entry-inspection.json"
+      ],
+      "observable_effect": "Full original governing contracts/standards and recovery state inspected; source/old evidence preserved",
+      "checks": [
+        "104 full raw predecessor JSON structures,78 raw commands, six archive/payload validation sets,165 current authority hashes"
+      ],
+      "risk": "Large raw structures were programmatically inspected rather than all echoed into the conversation",
+      "downstream_consumer_impact": "Root retains full saved raw files for its separate inspection; no prior verdict replaces raw verification",
+      "owner": "/root/s6_supervisor_recovery_1",
+      "raw_source_hash": "2133d2085d71180a1df1b45c80e2c8684ceefc39215e3574b03ecdaab239fbad",
+      "downstream_impact": "Root retains full saved raw files for its separate inspection; no prior verdict replaces raw verification",
+      "builder_proposed_classification": "downstream_impact"
+    },
+    {
+      "id": "R1-D7",
+      "original_criterion": "Verify saved interrupted binary index/work bytes independently",
+      "actual_change": "Saved initial staged OID/full current state matched before mutation; actual immutable staged object bytes were separately read after original restore. Actual working preimage was saved before collision",
+      "reason_authority": "Content-addressed saved OID remains available in private candidate; explicit time qualification retained",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/saved-interrupted-raw-bytes-validation.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/saved-interrupted-stage-blob-readback.command.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/collision-known-original.bin"
+      ],
+      "observable_effect": "Actual38-byte staged and50-byte work values independently match predecessor raw hex/hashes, differ and contain0/ff",
+      "checks": [
+        "Saved initial actual index OID match, actual git cat-file blob receipt, raw work preimage hash/hex"
+      ],
+      "risk": "Stage-byte readback is subsequent; it is not described as a contemporaneous pre-control cat-file command",
+      "downstream_consumer_impact": "Root/S6 gate keeps exact timing and immutable-OID derivation separate from original stage/work restoration",
+      "owner": "/root/s6_supervisor_recovery_1",
+      "raw_source_hash": "2133d2085d71180a1df1b45c80e2c8684ceefc39215e3574b03ecdaab239fbad",
+      "downstream_impact": "Root/S6 gate keeps exact timing and immutable-OID derivation separate from original stage/work restoration",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "R1-D8",
+      "original_criterion": "Preserve protected live storage without claiming stable active DB content",
+      "actual_change": "All11 storage identities unchanged; normal/Alpha DB hash/stat deltas recorded separately",
+      "reason_authority": "Original runtime ownership/recovery boundary; no protected/profile/live-server DB copy/restore permitted",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/initial.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/after-original.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/final-preservation-proof.json"
+      ],
+      "observable_effect": "Protected app roots/descendants unchanged, private disposable profile bytes/metadata unchanged throughout this turn",
+      "checks": [
+        "Existence/kind/mode/dev/inode equality and raw before/after metadata/hash samples"
+      ],
+      "risk": "Running protected DBs naturally changed size/hash/mtime; no byte-stability claim",
+      "downstream_consumer_impact": "Root/closeout reports process and storage boundaries, not database content equality",
+      "owner": "/root/s6_supervisor_recovery_1",
+      "raw_source_hash": "2133d2085d71180a1df1b45c80e2c8684ceefc39215e3574b03ecdaab239fbad",
+      "downstream_impact": "Root/closeout reports process and storage boundaries, not database content equality",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-CLOSEOUT-D1",
+      "original_criterion": "S6 final deployment/MC-T09 facts and source-correct documentation; expected product paths are advisory",
+      "actual_change": "Six current central record surfaces and exact canonical restart PAGE + one exclusive complete-preimage version; former undispatched S4 article author scope assigned to S6 closeout",
+      "reason_authority": "Active bounded root closeout assignment and S6-closeout-wiki-ownership contract; no product/helper/test/fixture/runtime behavior expansion",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/.versions/2026-10-04-141458.md"
+      ],
+      "observable_effect": "Current setup continuation and article match installed code/actual bounded rehearsal; historical S5 observations retained",
+      "checks": "Complete preimages, gray-matter/schema/source/link/index/H2/whitespace and unowned readback; fresh own full-S6 gate",
+      "risk": "Old165/168 authority snapshots are historical through precloseout; source preservation excludes these exact later authorized edits only",
+      "downstream_consumer": "Root full-S6 acceptance, final whole-SPEC gate, owner setup acceptance",
+      "downstream_impact": "Documentation integration does not invalidate unchanged implementation or historical behavioral raw outputs; affected current documentation reviewed separately",
+      "builder_proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-CLOSEOUT-D2",
+      "original_criterion": "Use exact current source paths and bounded inspection",
+      "actual_change": "Read-only discovery initially named absent review-gate/runtime-module/adjacent/standards paths; actual paths discovered and full required reads completed",
+      "reason_authority": "Routine path lookup correction; no absent source treated as evidence",
+      "files": [],
+      "observable_effect": "Failed read diagnostics only, followed by exact canonical five files and actual Wiki/standards instructions",
+      "checks": "Current file inventory, complete corrected reads and source hashes",
+      "risk": "Failed reads prove no source coverage; corrected reads supply coverage",
+      "downstream_consumer": "Fresh own/root reviewers",
+      "downstream_impact": "No changed candidate or waived required read",
+      "builder_proposed_classification": "downstream_impact"
+    },
+    {
+      "id": "S6-CLOSEOUT-D3",
+      "original_criterion": "Preserve bounded complete evidence and avoid large inventory dumps",
+      "actual_change": "Several concatenated metadata/report reads exceeded output budget; switched to exact selected fields, smaller reads and programmatic full comparisons",
+      "reason_authority": "Tool output-scoping correction",
+      "files": [],
+      "observable_effect": "Transient truncated output, no source mutation",
+      "checks": "Saved full raw local records; completed exact source and all-record hash comparisons",
+      "risk": "Truncated output alone is not coverage proof",
+      "downstream_consumer": "Fresh own/root gates",
+      "downstream_impact": "Review uses explicit raw file navigation and complete current manifest",
+      "builder_proposed_classification": "downstream_impact"
+    },
+    {
+      "id": "S6-CLOSEOUT-D4",
+      "original_criterion": "Read Git without optional locks and preserve physical source index",
+      "actual_change": "Initial revision/status orientation omitted GIT_OPTIONAL_LOCKS=0; all subsequent own Git wrappers strip inherited GIT_* and set optional locks/literal paths",
+      "reason_authority": "Disclosed procedural omission; revision/stat reads only",
+      "files": [],
+      "observable_effect": "Source physical index observed unchanged at f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+      "checks": "Historical original hash and current full index/status/stage/ref/cache readbacks",
+      "risk": "Cannot retroactively change initial invocation environment",
+      "downstream_consumer": "Root procedural classification",
+      "downstream_impact": "No observed state effect; inherited publication gates intact",
+      "builder_proposed_classification": "downstream_impact"
+    },
+    {
+      "id": "S6-PREP-D13",
+      "original_criterion": "Preserve frozen preparation report provenance during terminal report-only append",
+      "actual_change": "Exact hash-verified immutable provisional bytes reconstructed after terminal metadata append; timing explicitly recorded",
+      "reason_authority": "Root expressly authorized provenance housekeeping only",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/frozen-provisional-builder-preimage.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/report-only-finalization.json"
+      ],
+      "observable_effect": "Old a6be0229 frozen report bytes preserved independently; current preparation report remains preparation only",
+      "checks": "Exact frozen SHA match and postappend metadata-only diff/raw receipt",
+      "risk": "Reconstruction occurred after append; no invented earlier-copy timestamp",
+      "downstream_consumer": "Full-S6 provenance",
+      "downstream_impact": "No candidate/helper fixture repair or repeated prep gate",
+      "builder_proposed_classification": "accepted"
+    }
+  ],
+  "classification_owner": "Root separately; proposals do not bind owner",
+  "historical_raw_source_hashes": {
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/deviations.json": "fa61aff7be7d4a4db960a4e58f0c73340e24fd202b4996745cbe23e8a4aa7d0a",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/first-deviations.json": "947bb50defc6ce89aacead6dc1f0f6ff2b809060dd07a26accc8601376fad248",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-deviations.json": "144c172856b90cdbc23c6cc5f631da6068b5a17b6963b05a74bea5e61fea1647",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/deviations.json": "b992b17f158acea1c98bb959ca1a964211fd3e5d446bf7eef05357ad0325333f",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/deviations.json": "2c0672f229289b6226697c3efebfe800743913e2b78ded10ad58676f392ceaec",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/deviations.json": "2133d2085d71180a1df1b45c80e2c8684ceefc39215e3574b03ecdaab239fbad"
+  }
+}

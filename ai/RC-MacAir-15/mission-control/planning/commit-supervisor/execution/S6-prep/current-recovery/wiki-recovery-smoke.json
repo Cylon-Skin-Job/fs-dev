@@ -1,0 +1,241 @@
+{
+  "kind": "PREPARATION_SUPPLEMENTAL_RECOVERY_ONLY",
+  "stages": [
+    {
+      "job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/wiki-supplement-1",
+      "version_name": "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-054009.md",
+      "selected_local_time": "2026-10-04T05:40:09.274099-07:00",
+      "copied_at_utc": "2026-10-04T12:40:10.561283+00:00",
+      "page_written_at_utc": "2026-10-04T12:40:10.561540+00:00",
+      "page_preimage_sha256": "e2877b2a21a23cce18a7b079d1532a8c7a5a8f30467e369248d75e9750ce527c",
+      "version_sha256": "e2877b2a21a23cce18a7b079d1532a8c7a5a8f30467e369248d75e9750ce527c",
+      "page_after_sha256": "06ff9f0a1b8d9f34df97648a7384849f41d2a9398cab8c4baebc9d10d25366ce"
+    },
+    {
+      "job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/wiki-supplement-2",
+      "version_name": "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-054010.md",
+      "selected_local_time": "2026-10-04T05:40:10.561655-07:00",
+      "copied_at_utc": "2026-10-04T12:40:11.981340+00:00",
+      "page_written_at_utc": "2026-10-04T12:40:11.981446+00:00",
+      "page_preimage_sha256": "06ff9f0a1b8d9f34df97648a7384849f41d2a9398cab8c4baebc9d10d25366ce",
+      "version_sha256": "06ff9f0a1b8d9f34df97648a7384849f41d2a9398cab8c4baebc9d10d25366ce",
+      "page_after_sha256": "e5ab2bde88d4772a457a9486c773f1915fc3669e86f462954cc4bb4c2b245b93"
+    }
+  ],
+  "commands": [
+    {
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/preparation-recovery"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"result\": \"VERIFIED\", \"payloads_valid\": true, \"matches_checkpoint\": true, \"status_equal\": true, \"current_sha256\": \"913c3e698135f38260d2903c63e4c6a0651f4efb68cf3389f8409a1ccc67a497\", \"manifest_sha256\": \"dc6581818f806735d58b7bd02fc6895e16633ed8c1b8b9509e2b0b496e54a81f\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "capture",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/wiki-supplement-1",
+        "--repo",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "--paths-file",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/wiki-supplement-1/owned-paths.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"result\": \"CAPTURED\", \"manifest_sha256\": \"81fdab2326b7ef26b529bc9cbe3200d3b00c96fe6c023ecb41cfdd051be2ff25\", \"paths\": 127, \"target_commit\": \"d15792920731f85e45b743519d4af2b807d95a9c\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "capture",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/wiki-supplement-2",
+        "--repo",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "--paths-file",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/wiki-supplement-2/owned-paths.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"result\": \"CAPTURED\", \"manifest_sha256\": \"f6ea03bf0af2998904c880266482d5d3456eaba80d6b3c4c119f8e2c3ee5caa2\", \"paths\": 128, \"target_commit\": \"d15792920731f85e45b743519d4af2b807d95a9c\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "guard",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/preparation-recovery",
+        "--repo",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "--ownership-file",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/ownership.json"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "{\"result\": \"REFUSED\", \"reason\": \"unrelated entries changed; restore is non-mutating\"}\n"
+    },
+    {
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "guard",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/wiki-supplement-2",
+        "--repo",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "--ownership-file",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/wiki-supplement-2/ownership.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"result\": \"GUARDED\", \"expected_sha256\": \"12f9768c73a9292aac479f4d1ae1263c0f37459aa270d15e9d5b087085203e18\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "restore",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/wiki-supplement-2",
+        "--repo",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"result\": \"RESTORED\", \"index_worktree_equal\": true, \"status_equal\": true, \"restored_sha256\": \"0f752eeb6fa1e04e3c6abbf1d83c2c31c74240c02ee43c8bc5d679bc1d8da9d9\", \"manifest_sha256\": \"f6ea03bf0af2998904c880266482d5d3456eaba80d6b3c4c119f8e2c3ee5caa2\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/wiki-supplement-2"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"result\": \"VERIFIED\", \"payloads_valid\": true, \"matches_checkpoint\": true, \"status_equal\": true, \"current_sha256\": \"16489c1a5f92232b3feecd38afa664ebf6bb23d69a8c94e803458470cec27a9e\", \"manifest_sha256\": \"f6ea03bf0af2998904c880266482d5d3456eaba80d6b3c4c119f8e2c3ee5caa2\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "guard",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/wiki-supplement-1",
+        "--repo",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "--ownership-file",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/wiki-supplement-1/ownership.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"result\": \"GUARDED\", \"expected_sha256\": \"cece05660494ad399c1198f1bafbe3318a143c24980a4efa8ac0983b29d43f93\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "restore",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/wiki-supplement-1",
+        "--repo",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"result\": \"RESTORED\", \"index_worktree_equal\": true, \"status_equal\": true, \"restored_sha256\": \"7aee11f76ca95634d34c2e98f599cafd6e321fdc8092d659bbdf6f046bb7378b\", \"manifest_sha256\": \"81fdab2326b7ef26b529bc9cbe3200d3b00c96fe6c023ecb41cfdd051be2ff25\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/wiki-supplement-1"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"result\": \"VERIFIED\", \"payloads_valid\": true, \"matches_checkpoint\": true, \"status_equal\": true, \"current_sha256\": \"c6783f5f1e632a606135c4d18deffbab7da9d2d395e590aa88b99c76353049dd\", \"manifest_sha256\": \"81fdab2326b7ef26b529bc9cbe3200d3b00c96fe6c023ecb41cfdd051be2ff25\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "guard",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/preparation-recovery",
+        "--repo",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "--ownership-file",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/ownership.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"result\": \"GUARDED\", \"expected_sha256\": \"913c3e698135f38260d2903c63e4c6a0651f4efb68cf3389f8409a1ccc67a497\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "restore",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/preparation-recovery",
+        "--repo",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"result\": \"RESTORED\", \"index_worktree_equal\": true, \"status_equal\": true, \"restored_sha256\": \"8224bb4f8eb2fcd4cb4c0bb58501f8e07a706d6a004d292d20149fb0ae558b80\", \"manifest_sha256\": \"dc6581818f806735d58b7bd02fc6895e16633ed8c1b8b9509e2b0b496e54a81f\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/preparation-recovery"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"result\": \"VERIFIED\", \"payloads_valid\": true, \"matches_checkpoint\": true, \"status_equal\": true, \"current_sha256\": \"913c3e698135f38260d2903c63e4c6a0651f4efb68cf3389f8409a1ccc67a497\", \"manifest_sha256\": \"dc6581818f806735d58b7bd02fc6895e16633ed8c1b8b9509e2b0b496e54a81f\"}\n",
+      "stderr": ""
+    }
+  ],
+  "immutable_manifest_hashes": {
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/preparation-recovery": "dc6581818f806735d58b7bd02fc6895e16633ed8c1b8b9509e2b0b496e54a81f",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/wiki-supplement-1": "81fdab2326b7ef26b529bc9cbe3200d3b00c96fe6c023ecb41cfdd051be2ff25",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/wiki-supplement-2": "f6ea03bf0af2998904c880266482d5d3456eaba80d6b3c4c119f8e2c3ee5caa2"
+  },
+  "original_guard_refused_nonmutating": true,
+  "restore_order": [
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/wiki-supplement-2",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/wiki-supplement-1",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/preparation-recovery"
+  ],
+  "navigation_unchanged_sha256": "7a3058e3ca2a0b793e6c4831487b53098a49c4c80f2f3d91f8a2dbe6463b28ed",
+  "final_original_matches": true,
+  "index_physical_hash_equal": true,
+  "actual_supervisor_wiki_checkpoints": "required independently later"
+}

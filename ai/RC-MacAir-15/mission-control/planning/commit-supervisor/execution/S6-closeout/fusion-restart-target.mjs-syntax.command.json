@@ -1,0 +1,27 @@
+{
+  "started": "2026-10-04T21:23:21.850066+00:00",
+  "finished": "2026-10-04T21:23:21.891611+00:00",
+  "command": [
+    "node",
+    "--check",
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "exit_code": 0,
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "GIT_LITERAL_PATHSPECS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "git_environment": "All inherited GIT_* stripped",
+  "stdout": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/fusion-restart-target.mjs-syntax.stdout",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  "stderr": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/fusion-restart-target.mjs-syntax.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  }
+}

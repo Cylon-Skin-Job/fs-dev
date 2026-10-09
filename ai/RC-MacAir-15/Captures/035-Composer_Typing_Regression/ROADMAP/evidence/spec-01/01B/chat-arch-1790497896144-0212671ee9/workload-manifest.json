@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "TO-01-NATIVE-OUTCOME",
+      "name": "Native OpenCode JSON premature outcomes through public prompt, SQLite and real renderer"
+    }
+  ],
+  "fixture": "fresh disposable profile, migrated fusion.db, fresh empty Capture workspace",
+  "adapter": "canonical deterministic OpenCode iterator at 20 text frames/second",
+  "scenarioInventory": "R1-R9 concrete IDs and later owning contracts in scenario-inventory.mjs",
+  "enforcementGroup": [
+    "R8-GROUP-BACKEND-MATRIX",
+    "R8-UI-LIFECYCLE",
+    "R8-EXACT-MEMBER-HYDRATION",
+    "R7-R8-RUNTIME-OWNERSHIP",
+    "R8-MIRROR-RECOVERY",
+    "R8-SESSION-LIFECYCLE",
+    "R8-PRE-RECEIPT-UPGRADE"
+  ]
+}

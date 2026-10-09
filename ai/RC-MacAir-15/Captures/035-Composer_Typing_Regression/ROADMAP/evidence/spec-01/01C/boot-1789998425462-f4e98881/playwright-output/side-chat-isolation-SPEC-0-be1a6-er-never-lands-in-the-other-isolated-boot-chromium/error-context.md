@@ -1,0 +1,116 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - generic [ref=e5]:
+    - button "View threads" [expanded] [ref=e6] [cursor=pointer]:
+      - generic [ref=e7]: forum
+      - generic [ref=e8]: View Threads
+    - generic [ref=e10]:
+      - complementary [ref=e11]:
+        - generic [ref=e12]:
+          - button "Hide threads" [ref=e13]: dock_to_right
+          - combobox "Thread view" [ref=e14] [cursor=pointer]:
+            - option "Active Threads" [selected]
+            - option "Archive"
+        - button "edit_squareNew chat" [ref=e15]
+        - separator [ref=e16]
+        - generic [ref=e17]:
+          - generic [ref=e18]:
+            - generic [ref=e19]:
+              - generic "Alpha" [ref=e20]: Alpha●
+              - button "More options" [ref=e21]: more_vert
+            - generic [ref=e23]: 1 msgs · 12/31/2025
+          - generic [ref=e24]:
+            - generic [ref=e25]:
+              - generic "Beta" [ref=e26]: Beta●
+              - button "More options" [ref=e27]: more_vert
+            - generic [ref=e29]: 1 msgs · 12/31/2025
+          - generic [ref=e30]:
+            - generic [ref=e31]:
+              - generic "Gamma" [ref=e32]: Gamma●
+              - button "More options" [ref=e33]: more_vert
+            - generic [ref=e35]: 1 msgs · 12/31/2025
+      - generic [ref=e36]:
+        - generic [ref=e37]:
+          - button "More options" [ref=e39]: event_list
+          - menu:
+            - menuitem "left_panel_close Hide threads":
+              - generic: left_panel_close
+              - generic: Hide threads
+            - menuitem "edit Rename":
+              - generic: edit
+              - generic: Rename
+            - menuitem "link_2 Copy Link":
+              - generic: link_2
+              - generic: Copy Link
+            - menuitem "docs View Markdown":
+              - generic: docs
+              - generic: View Markdown
+            - menuitem "open_in_new Move Chat to Side Chat":
+              - generic: open_in_new
+              - generic: Move Chat to Side Chat
+        - generic [ref=e42]: Start a conversation
+        - generic [ref=e44]:
+          - textbox "Ask about file-viewer..." [ref=e48]
+          - generic [ref=e49]:
+            - generic [ref=e50]:
+              - button "Add" [ref=e52] [cursor=pointer]:
+                - generic [ref=e53]: add
+              - button "Mode" [ref=e55]: shield_lockMode
+            - generic [ref=e56]:
+              - 'button "Context usage: 0%" [ref=e58]'
+              - button "DeepSeek V4 Flash" [ref=e60]: DeepSeek V4 Flashkeyboard_arrow_down
+              - button "Voice input (click to open)" [ref=e62] [cursor=pointer]:
+                - generic [ref=e63]: mic
+              - button "Send message" [ref=e65]: arrow_upward
+  - generic [ref=e66]:
+    - tablist "Open tabs" [ref=e68]:
+      - tab "Side Chat" [active] [selected] [ref=e69] [cursor=pointer]:
+        - generic [ref=e70]: tab
+        - generic [ref=e71]: Side Chat
+      - button "Close Side Chat" [ref=e72] [cursor=pointer]:
+        - generic [ref=e73]: close
+    - tabpanel "Side Chat" [ref=e74]:
+      - generic [ref=e75]:
+        - 'navigation "Location: Side Chat" [ref=e77]':
+          - list [ref=e78]:
+            - listitem "Side Chat" [ref=e79]:
+              - generic [ref=e80]: Side Chat
+        - generic [ref=e84]:
+          - generic [ref=e85]:
+            - generic [ref=e86]:
+              - button "Show threads" [ref=e87]: dock_to_right
+              - button "New chat" [ref=e88]: edit_square
+            - button "More options" [ref=e90]: event_list
+            - menu:
+              - menuitem "left_panel_open Show threads":
+                - generic: left_panel_open
+                - generic: Show threads
+              - menuitem "edit Rename":
+                - generic: edit
+                - generic: Rename
+              - menuitem "link_2 Copy Link":
+                - generic: link_2
+                - generic: Copy Link
+              - menuitem "docs View Markdown":
+                - generic: docs
+                - generic: View Markdown
+              - menuitem "open_in_new Move Chat to Side Chat" [disabled]:
+                - generic: open_in_new
+                - generic: Move Chat to Side Chat
+          - generic [ref=e94]: A
+          - generic [ref=e96]:
+            - textbox "Ask about chat-surface-component-chat-side:scp-iso-1..." [ref=e100]
+            - generic [ref=e101]:
+              - generic [ref=e102]:
+                - button "Add" [ref=e104] [cursor=pointer]:
+                  - generic [ref=e105]: add
+                - button "Mode" [ref=e107]: shield_lockMode
+              - generic [ref=e108]:
+                - 'button "Context usage: 0%" [ref=e110]'
+                - button "DeepSeek V4 Flash" [ref=e112]: DeepSeek V4 Flashkeyboard_arrow_down
+                - button "Voice input (click to open)" [ref=e114] [cursor=pointer]:
+                  - generic [ref=e115]: mic
+                - button "Send message" [ref=e117]: arrow_upward
+```

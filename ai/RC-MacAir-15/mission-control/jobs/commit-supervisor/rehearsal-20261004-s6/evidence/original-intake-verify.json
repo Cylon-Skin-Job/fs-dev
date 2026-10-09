@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-04T13:35:44.365900+00:00",
+  "command": [
+    "python3.12",
+    "-B",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+    "verify",
+    "--job",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"result\": \"VERIFIED\", \"payloads_valid\": true, \"matches_checkpoint\": true, \"status_equal\": true, \"current_sha256\": \"ee63a5c309a1a72dd36db462f520931e777a701acd237c9350d2d5eee4cf6d73\", \"manifest_sha256\": \"f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb\"}\n",
+  "stderr": ""
+}

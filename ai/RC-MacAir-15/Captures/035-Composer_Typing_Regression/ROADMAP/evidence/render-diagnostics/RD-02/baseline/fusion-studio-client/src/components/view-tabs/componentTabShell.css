@@ -1,0 +1,133 @@
+.rv-component-tab-shell {
+  --interactive-surface-bg: var(--view-tab-rail-bg, var(--panel-chrome-bg, #1a1a1a));
+  position: relative;
+  display: flex;
+  flex: var(--component-tab-shell-flex, 1 1 auto);
+  min-width: var(--component-tab-shell-min-width, 0);
+  min-height: var(--component-tab-shell-min-height, 0);
+  flex-direction: column;
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+.rv-component-tab-shell-body {
+  display: flex;
+  flex: var(--component-tab-shell-body-flex, 1 1 auto);
+  min-width: var(--component-tab-shell-min-width, 0);
+  min-height: var(--component-tab-shell-min-height, 0);
+  overflow: hidden;
+}
+
+.rv-component-tab-location-action {
+  display: flex;
+  flex: var(--view-tab-action-flex, 0 0 auto);
+  align-items: center;
+  justify-content: center;
+  padding: var(--view-tab-action-padding, 0);
+  border: var(--view-tab-action-border, none);
+  border-radius: var(--radius-sm, 8px);
+  background: var(--view-tab-action-bg, transparent);
+  color: inherit;
+  cursor: pointer;
+}
+
+.rv-component-tab-location-action:hover:not(:disabled) {
+  background: var(--interactive-hover-bg, color-mix(in srgb, var(--interactive-surface-bg, transparent) 92%, var(--interactive-contrast-foreground, #fff) 8%));
+  color: var(--interactive-contrast-foreground, #fff);
+}
+
+.rv-component-tab-location-action:active:not(:disabled) {
+  background: var(--interactive-pressed-bg, color-mix(in srgb, var(--interactive-surface-bg, transparent) 88%, var(--interactive-contrast-foreground, #fff) 12%));
+  color: var(--interactive-contrast-foreground, #fff);
+}
+
+.rv-component-tab-location-action:focus-visible {
+  outline: var(--focus-ring-width, 2px) solid var(--interactive-focus-ring, var(--interactive-contrast-foreground, #fff));
+  outline-offset: var(--focus-ring-offset, -2px);
+}
+
+.rv-component-tab-location-action:disabled {
+  cursor: default;
+  opacity: var(--disabled-opacity, 0.3);
+}
+
+.rv-component-tab-location-rail {
+  display: flex;
+  flex: var(--component-tab-location-flex, 0 0 var(--component-tab-location-height, 54px));
+  align-items: center;
+  gap: var(--component-tab-location-gap, var(--space-sm, 8px));
+  min-width: var(--component-tab-shell-min-width, 0);
+  min-height: var(--component-tab-location-height, 54px);
+  overflow: hidden;
+  padding: var(--component-tab-location-padding, 0 var(--space-md, 16px));
+  border-block-end: var(--border-width-thin, 1px) solid var(--content-border-color, var(--border-subtle, #333));
+  color: var(--workspace-foreground-color, var(--text-primary, #f5f5f5));
+  background: var(--view-tab-rail-bg, var(--panel-chrome-bg, #1a1a1a));
+  box-sizing: border-box;
+}
+
+.rv-component-tab-location-controls {
+  display: flex;
+  flex: var(--component-tab-location-controls-flex, 0 0 auto);
+  align-items: center;
+  gap: var(--component-tab-location-control-gap, var(--space-xs, 4px));
+  color: inherit;
+}
+
+.rv-component-tab-location-action {
+  width: var(--component-tab-location-action-size, 28px);
+  height: var(--component-tab-location-action-size, 28px);
+}
+
+.rv-component-tab-location-action > span {
+  font-size: var(--component-tab-location-action-icon-size, 18px);
+  pointer-events: none;
+}
+
+.rv-component-tab-breadcrumb {
+  min-width: var(--component-tab-shell-min-width, 0);
+  overflow: hidden;
+  color: inherit;
+}
+
+.rv-component-tab-breadcrumb-list {
+  display: flex;
+  align-items: center;
+  min-width: var(--component-tab-shell-min-width, 0);
+  max-width: var(--component-tab-breadcrumb-max-width, 100%);
+  margin: var(--component-tab-breadcrumb-margin, 0);
+  padding: var(--component-tab-breadcrumb-padding, 0);
+  overflow: hidden;
+  list-style: none;
+}
+
+.rv-component-tab-breadcrumb-segment {
+  display: flex;
+  flex: var(--component-tab-breadcrumb-context-flex, 0 1 auto);
+  align-items: center;
+  min-width: var(--component-tab-shell-min-width, 0);
+  overflow: hidden;
+  color: var(--content-muted-color, var(--text-dim, #999));
+}
+
+.rv-component-tab-breadcrumb-segment:last-child {
+  flex: var(--component-tab-breadcrumb-final-flex, 0 0 auto);
+  max-width: var(--component-tab-breadcrumb-final-max-width, 100%);
+  color: var(--workspace-foreground-color, var(--text-primary, #f5f5f5));
+}
+
+.rv-component-tab-breadcrumb-label {
+  min-width: var(--component-tab-shell-min-width, 0);
+  overflow: hidden;
+  font-size: var(--view-tab-label-size, 12px);
+  line-height: var(--component-tab-location-line-height, 1.4);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.rv-component-tab-breadcrumb-separator {
+  flex: var(--component-tab-breadcrumb-separator-flex, 0 0 auto);
+  margin-inline: var(--component-tab-breadcrumb-separator-margin, var(--space-xs, 4px));
+  font-size: var(--component-tab-breadcrumb-separator-size, 16px);
+  color: var(--content-muted-color, var(--text-dim, #999));
+}

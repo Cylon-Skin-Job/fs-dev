@@ -1,0 +1,22 @@
+{
+  "runId": "chat-arch-1789965120391-2ace0dc491",
+  "status": "failed",
+  "results": [
+    {
+      "id": "R1-R9-CONTRACT-INVENTORY",
+      "code": 1,
+      "signal": null,
+      "pid": 93676,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 420
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "R1-R9-CONTRACT-INVENTORY exited 1",
+    "stack": "Error: R1-R9-CONTRACT-INVENTORY exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:282:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-04T15:09:36.580227+00:00",
+  "actor": "/root/s6_supervisor_candidate_1",
+  "state": "HANDOFF_VALIDATED",
+  "original_assigned_paths": [
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js",
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js"
+  ],
+  "covered_identity": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-code-handoff-identity.json",
+  "covered_identity_sha256": "8ae0c59c81ede9db9a69ce7a8a1d3940ed3e6325376cfd9d1db46d126b3a26d4",
+  "current_owned_authority_config_index_status_match": true,
+  "reviewer": "/root/s6_supervisor_candidate_1/code_handoff_review_3",
+  "actual_terminal_observed": "native FINAL_ANSWER and collaboration.list_agents completed",
+  "raw_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/code-handoff-3.raw.md",
+  "raw_sha256": "bbff107ed13103f59820c349cb5a8eda646c30ac728d8a491d0914653fb96baf",
+  "required_raw_checks": "evidence/first-code-command-only.json elevenexit0; current55/17 receipts and35dependencies verified; live proof later",
+  "prior_error_and_invalid_gate": "reviewer1 capacity error and reviewer2 exposure excluded; no gate from either",
+  "limits": "code pair/source self-check acceptance only; Wiki/final/live/runtime/owner separate; actualGitNONE"
+}

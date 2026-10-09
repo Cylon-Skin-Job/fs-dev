@@ -1,0 +1,136 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - generic [ref=e5]:
+    - separator [ref=e6]
+    - paragraph [ref=e7]:
+      - text: "name: Chat Composer"
+      - text: "description: Composer behavior, send/stop/finalization button states, and attachment/input rules."
+      - text: "metadata:"
+      - text: "source-files:"
+      - text: "- fusion-studio-client/src/lib/chat/side-chat-placements.ts"
+      - text: "- fusion-studio-client/src/state/slices/chatSurfaceSlice.ts"
+      - text: "- fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx"
+      - text: "- fusion-studio-client/src/components/chat/ChatSurface.tsx"
+      - text: "- fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx"
+      - text: "- fusion-studio-client/src/components/ChatInput.tsx"
+      - text: "- fusion-studio-client/src/components/ChatArea.css"
+      - text: "- fusion-studio-client/src/components/chat/ChatAreaFooter.tsx"
+      - text: "- fusion-studio-client/src/components/chat/useChatSessionHost.ts"
+      - text: "- fusion-studio-client/src/components/chat/useChatSessionActions.ts"
+      - text: "- fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx"
+      - text: "- fusion-studio-client/src/state/chatComposerDraftStore.ts"
+      - text: "- fusion-studio-client/src/state/chatFileLinkStore.ts"
+      - text: "- fusion-studio-client/src/screenshots/chatScreenshotCapture.ts"
+      - text: "- fusion-studio-client/src/hooks/useFileAutocomplete.ts"
+      - text: "- fusion-studio-client/src/lib/chat-file-links/file-autocomplete-match.ts"
+      - text: "- fusion-studio-client/src/lib/chat-action-controller.ts"
+      - text: "- fusion-studio-client/src/lib/chat-action.ts"
+      - text: "- fusion-studio-client/src/lib/chat-material-target.ts"
+      - text: "- fusion-studio-client/src/lib/chat-material-commit.ts"
+      - text: "- fusion-studio-client/src/state/slices/mountedChatState.ts"
+      - text: "- fusion-studio-client/src/components/chat/useMountedChatBinding.ts"
+      - text: "- fusion-studio-client/src/components/chat/useComposerMaterialSource.ts"
+      - text: "- fusion-studio-client/src/lib/chat-material-source.ts"
+    - 'heading "last-modified: \"2026-10-07T20:18:16Z\"" [level=2] [ref=e8]'
+    - paragraph [ref=e9]:
+      - text: The composer is the user input and turn control surface.
+      - code [ref=e10]: ChatAreaFooter.tsx
+      - text: presents the input and Send/Stop/finalization states.
+      - code [ref=e11]: useChatSessionHost.ts
+      - text: composes the session identity and presentation;
+      - code [ref=e12]: useChatSessionActions.ts
+      - text: supplies exact-session send, Stop, attachment and diagnostic Ask AI actions, and
+      - code [ref=e13]: ConnectedChatComposer.tsx
+      - text: subscribes to the addressed draft, attachments and submission state;
+      - code [ref=e14]: chatComposerDraftStore.ts
+      - text: and
+      - code [ref=e15]: chatFileLinkStore.ts
+      - text: retain their respective owner-keyed data.
+    - heading "Rules" [level=2] [ref=e16]
+    - list [ref=e17]:
+      - listitem [ref=e18]:
+        - text: The user bubble is committed on server
+        - code [ref=e19]: message:sent
+        - text: ", not optimistic click."
+      - listitem [ref=e20]:
+        - code [ref=e21]: Send to chat
+        - text: attachments render as metadata-backed pills above the input.
+      - listitem [ref=e22]: The textarea stays plain user text.
+      - listitem [ref=e23]:
+        - text: During finalization after output end or Stop, the button area can show a
+        - text: spinning pinwheel visual and remain unavailable until the saved exchange ack.
+      - listitem [ref=e24]: Send initiation is not acceptance or completion. Pending/unknown submission and finalization keep the composer gated; acknowledgements and exact-session recovery determine when another prompt is viable.
+    - paragraph [ref=e25]: The composer should not infer persistence success from the last visible token.
+    - heading "Workspace And Thread Ownership" [level=2] [ref=e26]
+    - paragraph [ref=e27]:
+      - text: Draft text, pending prompt acceptance, retry text, and pending attachments are
+      - text: owned by the exact
+      - code [ref=e28]: workspaceId + threadId
+      - text: ", not by the currently visible"
+      - text: panel. Switching threads immediately displays that owner's draft. Prompt send
+      - text: snapshots the accepted composer text and attachment IDs; success clears only
+      - text: that exact owner/accepted set, while failure preserves a retryable draft and
+      - text: attachments. A late acknowledgement for thread A cannot mutate thread B.
+      - text: Pending acceptance survives an owning chat surface's temporary unmount/remount,
+      - text: including a side-chat content-tab switch, because the exact session owns it.
+    - heading "Prepared material ownership" [level=2] [ref=e29]
+    - paragraph [ref=e30]:
+      - text: Global
+      - strong [ref=e31]: Send to Chat
+      - text: and the header camera synchronously capture the last actually active, open, mounted Main or Side composer in the foreground view before preparing their source. A resource's panel and content root select the source; they do not select the destination. Missing, stale, closed or unhydrated activity produces unavailable feedback without falling back to Main, Legacy or
+      - code [ref=e32]: currentThreadId
+      - text: .
+    - paragraph [ref=e33]:
+      - text: Every Add-menu camera, saved screenshot, clipboard selected/top item, recent selected/top file and microphone operation captures its own committed composer binding before preparation. Diagnostic
+      - strong [ref=e34]: Ask AI
+      - text: captures that same owner before retrieval and appends its validated redacted report. The existing Chat action consumer validates the immutable workspace/view/group/session/surface tuple, mount generation, workspace binding and exact open Side placement, then commits prepared text or one attachment synchronously through the existing draft or attachment store. These material operations only compose for review; they do not Send or create a chat.
+    - paragraph [ref=e35]: Another chat or view gaining focus does not cancel an operation whose originating composer remains mounted, hydrated and bound. Main content components and open Side placements keep their exact sessions independently of unrelated outer Main selection. Actual rebind, unmount, closure, session or hydration loss, workspace binding retirement, or Side placement replacement invalidates the operation permanently; returning with the same strings cannot revive an older generation. View-bound Main selection changes its actual binding and cancels older work. Pending prompt acceptance blocks insertion; an unknown outcome allows composition but still blocks another Send.
+    - paragraph [ref=e36]: Cursor replacement uses the latest exact-owner draft and current selection only when its live binding, value, revision and offsets agree. Intervening typing is retained; stale selection safely appends prepared text. Presentation restores caret only through that live owner and never steals focus from another active editor. Duplicate mounts share session drafts/pills but retain independent menu, selection and lifetime state. Existing eligible composer and screenshot warming targets the captured thread; warming remains separate from local insertion and server acceptance. Global resource and diagnostic insertion add no warm path.
+    - paragraph [ref=e37]:
+      - text: Camera capture/save remains source-owned. It checks shared validity after native capture before saving, then uses the correlated saved absolute path at shared commit. Cancellation before save sends no save request; cancellation after save may leave a gallery PNG without any pill.
+      - link "Screenshot Capture" [ref=e38] [cursor=pointer]:
+        - /url: ../../../004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md#in-app-captures-and-attachments
+      - text: describes correlation and the separate gallery/preview paths.
+    - heading "Diagnostic Ask AI" [level=2] [ref=e39]
+    - paragraph [ref=e40]:
+      - text: The terminal-error
+      - strong [ref=e41]: Ask AI
+      - text: action retrieves and validates the redacted
+      - text: report only after the click, then appends it to the exact owner's composer for
+      - text: review/editing. It never sends. It cannot overwrite a prompt awaiting
+      - text: server-owned acceptance; the action stays retryable after that acceptance
+      - text: settles.
+    - heading "Filename Autocomplete" [level=2] [ref=e42]
+    - paragraph [ref=e43]:
+      - text: Filename autocomplete is plain textarea text, not a mention or attachment
+      - text: system.
+    - list [ref=e44]:
+      - listitem [ref=e45]: The ghost suffix is advisory until accepted.
+      - listitem [ref=e46]:
+        - code [ref=e47]: Tab
+        - text: and non-shift
+        - code [ref=e48]: Enter
+        - text: accept the active suggestion.
+      - listitem [ref=e49]:
+        - code [ref=e50]: Space
+        - text: does not accept the suggestion; it must remain available for rejecting
+        - text: ghost text and continuing a new word.
+      - listitem [ref=e51]:
+        - text: The ghost overlay renders the full typed prefix invisibly plus the visible
+        - text: suffix. Keep it typography-compatible with the textarea so wrapping and cursor
+        - text: position stay aligned.
+    - heading "Conversation continuation" [level=2] [ref=e52]
+    - paragraph [ref=e53]:
+      - text: The composer does not clone or inherit another chat's context.
+      - strong [ref=e54]: Send to Chat
+      - text: is the explicit path for bringing selected prior material into this composer.
+      - text: Moving a primary chat to a side tab creates a separate, cold, empty primary
+      - text: composer and does not prefill it.
+  - group "Wiki page actions" [ref=e55]:
+    - button "link_2" [ref=e56] [cursor=pointer]:
+      - generic [ref=e57]: link_2
+    - button "chat_paste_go" [ref=e58] [cursor=pointer]:
+      - generic [ref=e59]: chat_paste_go
+```

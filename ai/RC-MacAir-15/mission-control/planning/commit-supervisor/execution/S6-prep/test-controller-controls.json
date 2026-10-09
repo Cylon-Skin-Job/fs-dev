@@ -1,0 +1,55 @@
+{
+  "kind": "REHEARSAL_ONLY_CONTROL_DEFINITIONS",
+  "resolver": "/root",
+  "authority_file": "K/tests/rehearsal-fixture/authority.md",
+  "authority_sha256": "d56710db1edba2ba6ef8798975fb1fb4808a301b0ea2e46bcb81d6645e251010",
+  "provider": {
+    "id": "FIXTURE_PROVIDER_01",
+    "state": "unreleased",
+    "provider": "fixture-sample-provider",
+    "consumer": "checklist-view",
+    "required_terminal_return": "waiting-dependency",
+    "release_receipt_kind": "REHEARSAL_ONLY_PROVIDER_RELEASE",
+    "release_condition": "Root supplies exact three stable IDs/labels plus sample hash and existing baseline ID, explicitly simulated fixture landed and separately labeled adoption evidence.",
+    "real_landing_or_adoption_claim": false
+  },
+  "intent": {
+    "id": "FIXTURE_INTENT_01",
+    "state": "unresolved",
+    "required_terminal_return": "needs-owner",
+    "question": "Must the incomplete summary be N remaining or N remaining of 3?",
+    "release_receipt_kind": "REHEARSAL_ONLY_INTENT_RESOLUTION",
+    "release_condition": "Root selects one exact format in a labeled receipt; retain already settled numerical/completion/reversal requirements."
+  },
+  "fix_xy": {
+    "state": "not-issued",
+    "eligible_after": "First actual terminal COMMIT_READY_WAITING_OWNER",
+    "receipt_kind": "REHEARSAL_ONLY_FIX_X_Y",
+    "X": "Rename Draft report to Review report, keeping stable draft ID and completion semantics.",
+    "Y": "Add Reset completion; uncheck all three without deleting or renaming rows, persist immediately and update summary. Update Guide prose; reset then reload retains three incomplete tasks."
+  },
+  "pre_operation_refusals": [
+    {
+      "id": "NEG-SOURCE",
+      "control": "Earlier source receipt resolves HEAD, while current explicitly labeled fixture-source selection resolves HEAD^ in the private clone. Record both full existing IDs with git rev-parse. Real R HEAD remains untouched.",
+      "required": "Actual Supervisor refuses stale candidate/source authority and records invalidated dependencies; no Git mutation."
+    },
+    {
+      "id": "NEG-TARGET",
+      "control": "Only in the private candidate, change its existing refs/remotes/origin/agent/exact-workspace-paths from recorded HEAD ID to existing HEAD^ ID. Restore that same private ref before helper recovery. Source/shared target never moves.",
+      "required": "Actual Supervisor observes full ID mismatch and refuses stale target authority; no commit-producing operation."
+    },
+    {
+      "id": "NEG-CANDIDATE",
+      "control": "Preserve current packet then alter only the owned private checklist source bytes; compare old/current worktree hash. Capture preimage and restore bytes after refusal.",
+      "required": "Actual Supervisor withholds operation for material current-byte drift and renews affected gates; no staging/commit/push."
+    },
+    {
+      "id": "NEG-OPERATION",
+      "control": "A simulated receipt names commit for the exact earlier fixture; simulated request names push. Every input remains REHEARSAL_ONLY and supplies no real owner authority.",
+      "required": "Actual Supervisor refuses scope mismatch and rehearsal labels as operation authority."
+    }
+  ],
+  "git_operation_authority": "none",
+  "actual_supervisor_reports": "required later; these definitions are not reports or verdicts"
+}

@@ -1,0 +1,42 @@
+{
+  "checks": {
+    "current_equals_target": true,
+    "source_equals_preimage": true,
+    "same_name": true,
+    "same_description": true,
+    "parent_exact_link_present": true,
+    "original_target_metadata_preserved": true,
+    "no_new_timestamp": true,
+    "no_new_helper_refs": true,
+    "no_unsupported_current_claims": true,
+    "index_restart_matches_target": true,
+    "helpers_remain_excluded_from_index": true,
+    "script_launchservices": true,
+    "script_build": true,
+    "script_port_file_wait": true,
+    "script_listener_wait": true,
+    "script_live_url": true
+  },
+  "current_frontmatter": {
+    "name": "Fusion Restart",
+    "description": "Fusion restart script behavior and when to use it for chat validation.",
+    "metadata": {
+      "incoming-edges": [
+        "Chat Testing And Operations",
+        "Chat Electron Playwright"
+      ],
+      "outgoing-edges": [],
+      "source-files": [],
+      "connected-skills": [],
+      "related-trigger-files": []
+    }
+  },
+  "current_sha256": "fa7ecb9041a4d4c9f2f24cba9386b3e844a6dbe98c9af52063b05fe90345a9f0",
+  "target_sha256": "fa7ecb9041a4d4c9f2f24cba9386b3e844a6dbe98c9af52063b05fe90345a9f0",
+  "source_sha256": "ccf7a76b4201ce3f5a95b29816f72f85cf1506b6f94172a581c100170dd4b94e",
+  "script_index_sha256": "a02c0fa38ffcd89e488ef1785cf83dd2f3476230d8fbaf4916063e9dcedd7380",
+  "article_index_sha256": "ccf7a76b4201ce3f5a95b29816f72f85cf1506b6f94172a581c100170dd4b94e",
+  "article_index_entry": "100644 ccf1ac39cab5c67b756b2c86665f67ebc493361f 0\tai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md",
+  "parser_path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/index.js",
+  "parser_sha256": "0e35aa201de0273eb77d255362199d85f479ea361df539eb3aa483e900478da4"
+}

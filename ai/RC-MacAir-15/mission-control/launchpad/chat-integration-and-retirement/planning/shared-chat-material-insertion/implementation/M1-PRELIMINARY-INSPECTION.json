@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-10-07T12:42:23.511230+00:00",
+  "phase": "preliminary M1 coordination inspection; builder writing; not accepted",
+  "read_modules": [
+    "mountedChatState.ts",
+    "chat-material-target.ts",
+    "chat-material-commit.ts",
+    "chat-action.ts",
+    "useMountedChatBinding.ts",
+    "panelStore subscription",
+    "connected activation seams"
+  ],
+  "positive_traces": [
+    "One compose-only material request kind uses existing installed consumer",
+    "Existing draft/attachment owners retain sole data mutation",
+    "Exact lifetime map membership is checked before synchronous mutation",
+    "Global begin checks foreground; explicit commit does not re-resolve focus",
+    "One per-operation completion record preserves once-only insertion, duplicate result and repeated source-failure result"
+  ],
+  "questions_sent_to_builder": [
+    "Activation matching vs duplicate mount ambiguity/register order",
+    "Explicit Main row/New Chat activation path",
+    "Generated preload rebuild provenance",
+    "Same-socket existing workspace authority loss/return",
+    "Automatic foreground MRU effect must not steal Side activation on delayed Main population"
+  ],
+  "builder_progress_reports_unverified": [
+    "Exact binding/component matching; deferred sibling registration ambiguity check",
+    "New Chat bounded foreground intent resolved by its accepted creation",
+    "Existing workspace epoch/revision/serial captured; synchronous authority retirement",
+    "MRU activation publication removed; delayed population test being added",
+    "Initialized/authenticated product-send fixture authority being repaired with ACK assertions retained"
+  ],
+  "source_backed_repair_observation": {
+    "criterion": "SPEC section 4.2 and A03",
+    "path": "fusion-studio-client/src/components/chat/useViewChatHost.ts automatic MRU effect",
+    "impact": "Late Main population with absent Main selection could steal global destination from retained active Side",
+    "state": "builder reports repair; final bytes and rendered regression not yet accepted"
+  },
+  "next_gate": "await fresh clean builder-owned review plus raw results, then independent manager checks/fresh acceptance reviewer",
+  "owner_authority_change": false
+}

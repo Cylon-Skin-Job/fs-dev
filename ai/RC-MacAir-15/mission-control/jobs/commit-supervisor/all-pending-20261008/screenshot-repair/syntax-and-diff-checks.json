@@ -1,0 +1,51 @@
+[
+  {
+    "command": [
+      "node",
+      "--check",
+      "fusion-studio-server/lib/screenshot/ws-handlers.js"
+    ],
+    "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "fusion-studio-server/test/screenshot-file-capture-request-id.test.js"
+    ],
+    "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "fusion-studio-server/test/screenshot-protected-view-path.test.js"
+    ],
+    "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check",
+      "--",
+      "fusion-studio-server/lib/screenshot/ws-handlers.js",
+      "fusion-studio-server/test/screenshot-file-capture-request-id.test.js",
+      "fusion-studio-server/test/screenshot-protected-view-path.test.js",
+      "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md"
+    ],
+    "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

@@ -11,16 +11,27 @@ metadata:
     - fusion-studio-client/src/lib/chat-action-controller.ts
     - fusion-studio-client/src/components/chat/useChatSessionActions.ts
     - fusion-studio-client/src/lib/save-action-context.ts
-  last-modified: "2026-09-28T04:56:08Z"
+    - fusion-studio-client/src/lib/chat-action.ts
+    - fusion-studio-client/src/lib/chat-material-target.ts
+    - fusion-studio-client/src/lib/chat-material-commit.ts
+    - fusion-studio-client/src/state/slices/mountedChatState.ts
+    - fusion-studio-client/src/components/chat/useMountedChatBinding.ts
+  last-modified: "2026-10-07T20:18:16Z"
 ---
 
 Status: the underlying provenance assessment was source-inspected on 2026-09-19; this cleanup rechecked attachment staging and send ownership against the current development source. Wiki navigation and resource attachment staging exist; a Wiki `ui.action` context adapter does not. This page preserves the chosen first-pair direction without claiming the proposed prompt schema is implemented. No runtime or product test was run.
 
 ## Current Wiki path
 
-`wikiStore` owns selected/viewed paths, including `viewedPagePath`. The page and topic surfaces pass a panel-relative target to their file actions or `SendToChatButton`. `createResourceChatAttachment` resolves that target using the server-hydrated panel content root; the button dispatches a Chat action with insertion delivery. The Chat action controller stages the attachment for the addressed session; `useChatSessionActions` later snapshots pending resources for the ordinary prompt path. No general UI-action fact is created by this sequence.
+`wikiStore` owns selected/viewed paths, including `viewedPagePath`. The page and topic surfaces pass a panel-relative target to their file actions or `SendToChatButton`. `createResourceChatAttachment` resolves that target using the server-hydrated panel content root; the button commits prepared material through the existing Chat action consumer. The Chat action controller stages the attachment for the addressed session; `useChatSessionActions` later snapshots pending resources for the ordinary prompt path. No general UI-action fact is created by this sequence.
 
 Navigation/selection and attachment staging are not themselves durable mutation provenance. The inspected Wiki reader surfaces do not expose direct file create/save/move/rename/delete commands. The generic mediated-save reader can carry workspace/view identity for a registered initiating panel, but its tab/component detail comes only from a matching connected File owner. It does not read `wikiStore.viewedPagePath` or supply a Wiki-specific save/prompt adapter.
+
+## Source resource and composer destination
+
+Global **Send to Chat** captures the last actually active eligible open mounted Main or Side composer before resource preparation. The source panel/root/path describes the attachment subject, independently of that destination. A source button taking DOM focus does not redirect it; missing/stale activity has no Main/Legacy fallback. Shared begin/commit validates the captured binding and writes through existing exact-session stores. A retained owner survives unrelated view/focus changes; actual lifetime or authority loss cancels permanently.
+
+Staging prepares a pill for review/editing and creates no prompt, chat or general `ui.action` fact. Ordinary Send remains a separate server-owned acceptance and persistence boundary; existing attachment order, metadata, receipt clearing and provenance retain their owners. Captured insertion destination is operational authority, not a new UI provenance envelope or a claim about active resource context at later send.
 
 ## First-pair design direction
 

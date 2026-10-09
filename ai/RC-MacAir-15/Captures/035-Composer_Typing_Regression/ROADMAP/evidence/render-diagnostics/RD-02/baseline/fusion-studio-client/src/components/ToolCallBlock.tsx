@@ -1,0 +1,105 @@
+/**
+ * ToolCallBlock — Shared visual shell for all non-text segments.
+ *
+ * Header (icon + label from catalog) + collapsible content area.
+ * Used by both LiveSegmentRenderer and InstantSegmentRenderer.
+ */
+
+import './ToolsPanel.css';
+import type { SegmentType } from '../types';
+import {
+  getSegmentVisual,
+  getSegmentIcon,
+  getSegmentIconColor,
+  getSegmentLabelColor,
+  buildSegmentLabel,
+} from '../lib/catalog-visual';
+import { DEFAULT_TIMING_PROFILE } from '../lib/timing';
+
+interface ToolCallBlockProps {
+  type: SegmentType;
+  /** Override label (e.g., for grouped blocks showing count) */
+  label?: string;
+  /** Tool arguments for label building */
+  toolArgs?: Record<string, unknown>;
+  expanded: boolean;
+  onToggle: () => void;
+  /** Show shimmer animation on the header */
+  shimmer?: boolean;
+  /** Override collapse animation duration (ms). Syncs CSS transition with JS sleep. */
+  collapseDuration?: number;
+  children?: React.ReactNode;
+}
+
+export function ToolCallBlock({
+  type,
+  label: labelOverride,
+  toolArgs,
+  expanded,
+  onToggle,
+  shimmer,
+  collapseDuration: collapseDurationOverride,
+  children,
+}: ToolCallBlockProps) {
+  const effectiveCollapse = collapseDurationOverride ?? DEFAULT_TIMING_PROFILE.collapseDuration;
+  const visual = getSegmentVisual(type);
+  const icon = getSegmentIcon(type);
+  const iconColor = getSegmentIconColor(type);
+  const labelColor = getSegmentLabelColor(type);
+  const label = labelOverride || buildSegmentLabel(type, toolArgs);
+
+  const hasContent = !!children;
+
+  return (
+    <div className="rv-tool-fade-in" style={{ '--tool-collapse-ms': `${effectiveCollapse}ms` } as React.CSSProperties}>
+      {/* Header */}
+      <button
+        type="button"
+        onClick={() => hasContent && onToggle()}
+        className="rv-tool-header-btn"
+        data-interactive={hasContent ? 'true' : undefined}
+        data-expanded={expanded ? 'true' : undefined}
+        style={{ '--tool-label-color': labelColor } as React.CSSProperties}
+      >
+        {icon && (
+          <span
+            className="material-symbols-outlined rv-tool-icon"
+            style={{ '--tool-icon-size': `${visual.iconSize}px`, '--tool-icon-color': iconColor } as React.CSSProperties}
+          >
+            {icon}
+          </span>
+        )}
+        <span className={`rv-tool-label${shimmer ? ' rv-shimmer-text' : ''}`}
+          style={{ '--tool-label-style': visual.labelStyle } as React.CSSProperties}
+        >
+          {label}
+          {hasContent && (
+            <span className="material-symbols-outlined rv-tool-arrow-icon">
+              arrow_drop_down
+            </span>
+          )}
+        </span>
+      </button>
+
+      {/* Content area */}
+      {hasContent && (
+        <div
+          className="rv-tool-content-area"
+          data-expanded={expanded ? 'true' : undefined}
+          style={{
+            '--tool-border-w': visual.borderLeft?.width ?? '0px',
+            '--tool-border-color': visual.borderLeft?.color ?? 'transparent',
+            '--tool-border-pl': visual.borderLeft ? '12px' : '0px',
+          } as React.CSSProperties}
+        >
+          <div
+            className="rv-tool-content-body"
+            style={{ '--tool-content-color': visual.contentColor } as React.CSSProperties}
+          >
+            {children}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

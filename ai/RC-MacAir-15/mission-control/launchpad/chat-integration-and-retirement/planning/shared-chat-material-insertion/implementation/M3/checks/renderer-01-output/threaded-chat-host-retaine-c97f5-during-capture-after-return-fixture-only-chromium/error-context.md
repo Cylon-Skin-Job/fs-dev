@@ -1,0 +1,170 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - generic [ref=e5]:
+    - complementary [ref=e6]:
+      - generic [ref=e7]:
+        - button "Hide threads" [ref=e8] [cursor=pointer]:
+          - generic [ref=e9]: dock_to_right
+        - combobox "Thread view" [ref=e10] [cursor=pointer]:
+          - option "Active Threads" [selected]
+          - option "Archive"
+      - button "edit_squareNew chat" [ref=e11]
+      - separator [ref=e12]
+      - generic [ref=e13]:
+        - generic [ref=e14]:
+          - generic [ref=e15]:
+            - generic "Screenshot New Chat" [ref=e16]: Screenshot New Chat●
+            - button "More options" [ref=e17]: more_vert
+          - generic [ref=e19]: 1 msgs · 12/31/2025
+        - generic [ref=e20]:
+          - generic [ref=e21]:
+            - generic "Alpha" [ref=e22]: Alpha●
+            - button "More options" [ref=e23]: more_vert
+          - generic [ref=e25]: 1 msgs · 12/31/2025
+    - generic [ref=e26]:
+      - button "More options" [ref=e29] [cursor=pointer]:
+        - generic [ref=e30]: event_list
+      - generic [ref=e33]: Start a conversation
+      - generic [ref=e36]:
+        - textbox "Ask about fixture-a..." [ref=e40]
+        - generic [ref=e41]:
+          - generic [ref=e42]:
+            - button "Add" [ref=e44] [cursor=pointer]:
+              - generic [ref=e45]: add
+            - button "Mode" [ref=e47] [cursor=pointer]:
+              - generic [ref=e48]: shield_lock
+              - generic [ref=e49]: Mode
+          - generic [ref=e50]:
+            - 'button "Context usage: 0%" [ref=e52] [cursor=pointer]'
+            - button "DeepSeek V4 Flash" [ref=e54] [cursor=pointer]:
+              - generic [ref=e55]: DeepSeek V4 Flash
+              - generic [ref=e56]: keyboard_arrow_down
+            - button "Voice input (click to open)" [ref=e58] [cursor=pointer]:
+              - generic [ref=e59]: mic
+            - button "Send message" [ref=e61] [cursor=pointer]:
+              - generic [ref=e62]: arrow_upward
+  - generic [ref=e64]:
+    - complementary [ref=e65]:
+      - generic [ref=e66]:
+        - button "Hide threads" [ref=e67] [cursor=pointer]:
+          - generic [ref=e68]: dock_to_right
+        - combobox "Thread view" [ref=e69] [cursor=pointer]:
+          - option "Active Threads" [selected]
+          - option "Archive"
+      - button "edit_squareNew chat" [ref=e70]
+      - separator [ref=e71]
+      - generic [ref=e73]: No threads yet
+    - generic [ref=e74]:
+      - button "More options" [ref=e77] [cursor=pointer]:
+        - generic [ref=e78]: event_list
+      - generic [ref=e81]: No thread selected
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - textbox [disabled]
+          - generic:
+            - generic:
+              - generic:
+                - button "Add":
+                  - generic: add
+              - generic:
+                - button "Mode":
+                  - generic: shield_lock
+                  - generic: Mode
+            - generic:
+              - generic:
+                - 'button "Context usage: 0%"'
+              - generic:
+                - button "DeepSeek V4 Flash":
+                  - generic: DeepSeek V4 Flash
+                  - generic: keyboard_arrow_down
+              - generic:
+                - button "Voice input (click to open)":
+                  - generic: mic
+              - generic:
+                - button "Send message":
+                  - generic: arrow_upward
+  - generic [ref=e83]:
+    - complementary [ref=e84]:
+      - generic [ref=e85]:
+        - button "Hide threads" [ref=e86] [cursor=pointer]:
+          - generic [ref=e87]: dock_to_right
+        - combobox "Thread view" [ref=e88] [cursor=pointer]:
+          - option "Active Threads" [selected]
+          - option "Archive"
+      - button "edit_squareNew chat" [ref=e89]
+      - separator [ref=e90]
+      - generic [ref=e91]:
+        - generic [ref=e92]:
+          - generic [ref=e93]:
+            - generic "Screenshot New Chat" [ref=e94]: Screenshot New Chat●
+            - button "More options" [ref=e95]: more_vert
+          - generic [ref=e97]: 1 msgs · 12/31/2025
+        - generic [ref=e98]:
+          - generic [ref=e99]:
+            - generic "Alpha" [ref=e100]: Alpha●
+            - button "More options" [ref=e101]: more_vert
+          - generic [ref=e103]: 1 msgs · 12/31/2025
+    - generic [ref=e104]:
+      - button "More options" [ref=e107] [cursor=pointer]:
+        - generic [ref=e108]: event_list
+      - generic [ref=e111]: Start a conversation
+      - generic [ref=e114]:
+        - textbox "Ask about view-alpha..." [ref=e118]
+        - generic [ref=e119]:
+          - generic [ref=e120]:
+            - button "Add" [ref=e122] [cursor=pointer]:
+              - generic [ref=e123]: add
+            - button "Mode" [ref=e125] [cursor=pointer]:
+              - generic [ref=e126]: shield_lock
+              - generic [ref=e127]: Mode
+          - generic [ref=e128]:
+            - 'button "Context usage: 0%" [ref=e130] [cursor=pointer]'
+            - button "DeepSeek V4 Flash" [ref=e132] [cursor=pointer]:
+              - generic [ref=e133]: DeepSeek V4 Flash
+              - generic [ref=e134]: keyboard_arrow_down
+            - button "Voice input (click to open)" [ref=e136] [cursor=pointer]:
+              - generic [ref=e137]: mic
+            - button "Send message" [ref=e139] [cursor=pointer]:
+              - generic [ref=e140]: arrow_upward
+    - main [ref=e141]:
+      - tablist "Retained chat" [ref=e143]:
+        - tab "Screenshot chat" [selected] [ref=e144] [cursor=pointer]:
+          - generic [ref=e145]: chat
+          - generic [ref=e146]: Screenshot chat
+        - button [ref=e147] [cursor=pointer]:
+          - generic [ref=e148]: close
+      - tabpanel "Screenshot chat" [ref=e149]:
+        - generic [ref=e152]:
+          - generic [ref=e153]:
+            - generic [ref=e154]:
+              - button "Show threads" [ref=e155] [cursor=pointer]:
+                - generic [ref=e156]: dock_to_right
+              - button "New chat" [ref=e157] [cursor=pointer]:
+                - generic [ref=e158]: edit_square
+            - button "More options" [ref=e160] [cursor=pointer]:
+              - generic [ref=e161]: event_list
+          - generic [ref=e164]: Start a conversation
+          - generic [ref=e167]:
+            - textbox "Ask about chat-surface-component-screenshot-component..." [ref=e171]
+            - generic [ref=e172]:
+              - generic [ref=e173]:
+                - button "Add" [ref=e175] [cursor=pointer]:
+                  - generic [ref=e176]: add
+                - button "Mode" [ref=e178] [cursor=pointer]:
+                  - generic [ref=e179]: shield_lock
+                  - generic [ref=e180]: Mode
+              - generic [ref=e181]:
+                - 'button "Context usage: 0%" [ref=e183] [cursor=pointer]'
+                - button "DeepSeek V4 Flash" [ref=e185] [cursor=pointer]:
+                  - generic [ref=e186]: DeepSeek V4 Flash
+                  - generic [ref=e187]: keyboard_arrow_down
+                - button "Voice input (click to open)" [ref=e189] [cursor=pointer]:
+                  - generic [ref=e190]: mic
+                - button "Send message" [ref=e192] [cursor=pointer]:
+                  - generic [ref=e193]: arrow_upward
+```

@@ -1,0 +1,173 @@
+--- a/fusion-studio-server/lib/screenshot/ws-handlers.js
++++ b/fusion-studio-server/lib/screenshot/ws-handlers.js
+@@ -7,6 +7,7 @@
+ 
+ const fs = require('fs');
+ const path = require('path');
++const crypto = require('crypto');
+ const screenshotService = require('../workspace/screenshot-service');
+ const workspaceState = require('../workspace/workspace-state');
+ const workspaceController = require('../workspace/workspace-controller');
+@@ -20,7 +21,7 @@
+   }
+   const targetDir = path.join(aiPaths.getMachineAiRoot(activeWorkspace.repo_path), 'Data', 'Screenshots');
+   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+-  const targetPath = path.join(targetDir, `fusion-capture-${timestamp}.png`);
++  const targetPath = path.join(targetDir, `fusion-capture-${timestamp}-${crypto.randomUUID()}.png`);
+   await assertGenericViewMutationAllowed({
+     projectRoot: activeWorkspace.repo_path,
+     paths: [targetDir, targetPath],
+@@ -32,7 +33,7 @@
+   const base64 = dataUrl.replace(/^data:image\/png;base64,/, '');
+   const buffer = Buffer.from(base64, 'base64');
+   await fs.promises.mkdir(targetDir, { recursive: true });
+-  await fs.promises.writeFile(targetPath, buffer);
++  await fs.promises.writeFile(targetPath, buffer, { flag: 'wx' });
+ 
+   return targetPath;
+ }
+--- a/fusion-studio-server/test/screenshot-file-capture-request-id.test.js
++++ b/fusion-studio-server/test/screenshot-file-capture-request-id.test.js
+@@ -63,3 +63,95 @@
+     }
+   });
+ });
++
++describe('screenshot:file-capture save isolation', () => {
++  const fs = require('fs');
++  const os = require('os');
++  const path = require('path');
++  const crypto = require('crypto');
++  const capturedAt = Date.parse('2026-01-02T03:04:05Z');
++  const redImage = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP4z8DwHwAFAAH/iZk9HQAAAABJRU5ErkJggg==', 'base64');
++  const blueImage = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGNgYPj/HwADAgH/5ncLrgAAAABJRU5ErkJggg==', 'base64');
++  let root;
++  let previousMachine;
++
++  beforeEach(() => {
++    jest.resetModules();
++    root = fs.mkdtempSync(path.join(os.tmpdir(), 'fusion-screenshot-isolation-'));
++    previousMachine = process.env.FUSION_LOCAL_MACHINE;
++    process.env.FUSION_LOCAL_MACHINE = 'Screenshot-Test';
++    const workspaceController = require('../lib/workspace/workspace-controller');
++    jest.spyOn(workspaceController, 'getActiveWorkspaceSync').mockReturnValue({
++      id: 'workspace-1', repo_path: root,
++    });
++    jest.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] }).setSystemTime(capturedAt);
++  });
++
++  afterEach(() => {
++    jest.useRealTimers();
++    jest.restoreAllMocks();
++    jest.resetModules();
++    fs.rmSync(root, { recursive: true, force: true });
++    if (previousMachine === undefined) delete process.env.FUSION_LOCAL_MACHINE;
++    else process.env.FUSION_LOCAL_MACHINE = previousMachine;
++  });
++
++  test('concurrent captures at the same timestamp retain their own paths and image bytes', async () => {
++    const handlers = require('../lib/screenshot/ws-handlers')({ getAllClients: () => [] });
++    const sent = [];
++    const ws = { send(payload) { sent.push(JSON.parse(payload)); } };
++    const requests = [
++      { requestId: 'capture-red', image: redImage },
++      { requestId: 'capture-blue', image: blueImage },
++    ];
++
++    await Promise.all(requests.map(({ requestId, image }) => handlers['screenshot:file-capture'](ws, {
++      type: 'screenshot:file-capture',
++      requestId,
++      workspaceId: 'workspace-1',
++      dataUrl: `data:image/png;base64,${image.toString('base64')}`,
++    })));
++
++    expect(sent).toHaveLength(2);
++    expect(sent.map((response) => response.requestId).sort()).toEqual(['capture-blue', 'capture-red']);
++    expect(new Set(sent.map((response) => response.savedPath)).size).toBe(2);
++    const screenshotDir = path.join(root, 'ai', 'Screenshot-Test', 'Data', 'Screenshots');
++    for (const { requestId, image } of requests) {
++      const response = sent.find((item) => item.requestId === requestId);
++      expect(response).toEqual({
++        type: 'screenshot:file-captured', requestId, workspaceId: 'workspace-1',
++        savedPath: expect.any(String), capturedAt,
++      });
++      expect(path.dirname(response.savedPath)).toBe(screenshotDir);
++      expect(fs.readFileSync(response.savedPath)).toEqual(image);
++    }
++    expect(fs.readdirSync(screenshotDir).sort()).toEqual(sent.map((response) => path.basename(response.savedPath)).sort());
++  });
++
++  test('rejects an existing generated path without overwriting its image', async () => {
++    const saveId = '00000000-0000-4000-8000-000000000001';
++    jest.spyOn(crypto, 'randomUUID').mockReturnValue(saveId);
++    jest.spyOn(console, 'error').mockImplementation(() => {});
++    const screenshotDir = path.join(root, 'ai', 'Screenshot-Test', 'Data', 'Screenshots');
++    const existingPath = path.join(screenshotDir, `fusion-capture-2026-01-02T03-04-05-000Z-${saveId}.png`);
++    fs.mkdirSync(screenshotDir, { recursive: true });
++    fs.writeFileSync(existingPath, redImage);
++    const handlers = require('../lib/screenshot/ws-handlers')({ getAllClients: () => [] });
++    const sent = [];
++    const ws = { send(payload) { sent.push(JSON.parse(payload)); } };
++
++    await handlers['screenshot:file-capture'](ws, {
++      type: 'screenshot:file-capture',
++      requestId: 'capture-existing',
++      workspaceId: 'workspace-1',
++      dataUrl: `data:image/png;base64,${blueImage.toString('base64')}`,
++    });
++
++    expect(sent).toEqual([{
++      type: 'screenshot:error', requestId: 'capture-existing',
++      message: expect.stringContaining('EEXIST'),
++    }]);
++    expect(fs.readFileSync(existingPath)).toEqual(redImage);
++    expect(fs.readdirSync(screenshotDir)).toEqual([path.basename(existingPath)]);
++  });
++});
+--- a/fusion-studio-server/test/screenshot-protected-view-path.test.js
++++ b/fusion-studio-server/test/screenshot-protected-view-path.test.js
+@@ -88,11 +88,13 @@
+ 
+   test('public file capture denies a broken final symlink into a protected tree', async () => {
+     jest.useFakeTimers().setSystemTime(Date.parse('2026-01-02T03:04:05Z'));
++    const saveId = '00000000-0000-4000-8000-000000000001';
++    const randomUUIDSpy = jest.spyOn(require('crypto'), 'randomUUID').mockReturnValue(saveId);
+     try {
+       const screenshotDir = path.join(root, 'ai', 'Test-Machine', 'Data', 'Screenshots');
+       fs.unlinkSync(screenshotDir);
+       fs.mkdirSync(screenshotDir);
+-      const generatedPath = path.join(screenshotDir, 'fusion-capture-2026-01-02T03-04-05-000Z.png');
++      const generatedPath = path.join(screenshotDir, `fusion-capture-2026-01-02T03-04-05-000Z-${saveId}.png`);
+       const protectedFutureFile = path.join(canonicalRoot, 'future.png');
+       fs.symlinkSync(protectedFutureFile, generatedPath);
+       const createScreenshotHandlers = require('../lib/screenshot/ws-handlers');
+@@ -109,8 +111,11 @@
+ 
+       expect(fs.lstatSync(generatedPath).isSymbolicLink()).toBe(true);
+       expect(fs.existsSync(protectedFutureFile)).toBe(false);
+-      expect(ws.sent).toEqual([expect.objectContaining({ type: 'screenshot:error' })]);
++      expect(ws.sent).toEqual([expect.objectContaining({
++        type: 'screenshot:error', message: 'Protected view path',
++      })]);
+     } finally {
++      randomUUIDSpy.mockRestore();
+       jest.useRealTimers();
+     }
+   });
+--- a/ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md
++++ b/ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md
+@@ -25,12 +25,12 @@
+     - fusion-studio-client/src/state/slices/mountedChatState.ts
+     - fusion-studio-client/src/components/chat/useMountedChatBinding.ts
+     - fusion-studio-client/src/state/chatSubmissionStore.ts
+-  last-modified: "2026-10-07T20:18:16Z"
++  last-modified: "2026-10-09T01:12:37Z"
+ ---
+ 
+ ## In-app captures and attachments
+ 
+-In the desktop app, **Take screenshot** captures the focused Fusion Studio window through Electron/preload. The screenshot source begins through the shared Chat material owner before native work, capturing the source workspace and socket. It sends the existing `screenshot:file-capture` request with a unique request ID. The server validates the active workspace and protected target path, then saves a PNG under its `ai/<machine>/Data/Screenshots/`. Only the correlated `screenshot:file-captured` response provides the original saved absolute path; the attachment retains `Data/Screenshots/<basename>` metadata.
++In the desktop app, **Take screenshot** captures the focused Fusion Studio window through Electron/preload. The screenshot source begins through the shared Chat material owner before native work, capturing the source workspace and socket. It sends the existing `screenshot:file-capture` request with a unique request ID. The server validates the active workspace and protected target path, then saves a PNG under its `ai/<machine>/Data/Screenshots/`. Each save uses a timestamp plus a server-generated UUID in its filename and exclusive file creation: same-time captures retain separate paths, and an existing path causes a correlated `screenshot:error` without overwriting its bytes. Only the correlated `screenshot:file-captured` response provides the original saved absolute path; the attachment retains `Data/Screenshots/<basename>` metadata.
+ 
+ The global header camera uses the same last-active open mounted Main/Side destination as global resource insertion. Main row selection and Side tab selection cannot override actual composer activity; there is no Main/Legacy fallback. The composer Add menu uses its own committed workspace, view, group, session, surface generation and, for Side, exact open placement. Explicit Main components and Side Chat keep their own session independently of unrelated Main selection.
+ 

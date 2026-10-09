@@ -1,0 +1,79 @@
+{
+  "at": "2026-09-27T06:44:55.567438+00:00",
+  "runId": "human-1790491451072-fee1354e",
+  "pidsAlive": {
+    "64110": true,
+    "64115": true
+  },
+  "logBytesBefore": 46199,
+  "logBytesAfter": 49323,
+  "growing": true,
+  "lastDriverHeartbeat": {
+    "at": 1790491495111,
+    "kind": "driver-heartbeat",
+    "gapMs": 1002,
+    "lastRendererBatchAt": 1790491494351
+  },
+  "lastNativeResource": {
+    "at": 1790491487762,
+    "kind": "resources",
+    "dom": {
+      "documents": 3,
+      "nodes": 2387,
+      "jsEventListeners": 854
+    },
+    "nativeEvents": [],
+    "nativeEventsDropped": 0,
+    "appActive": true,
+    "appHidden": false,
+    "memory": {
+      "private": 56945,
+      "shared": 19456
+    },
+    "metrics": [
+      {
+        "pid": 64115,
+        "type": "Browser",
+        "memory": {
+          "workingSetSize": 158160,
+          "peakWorkingSetSize": 170128
+        }
+      },
+      {
+        "pid": 64126,
+        "type": "GPU",
+        "memory": {
+          "workingSetSize": 91472,
+          "peakWorkingSetSize": 148016
+        }
+      },
+      {
+        "pid": 64127,
+        "type": "Utility",
+        "memory": {
+          "workingSetSize": 35984,
+          "peakWorkingSetSize": 38496
+        }
+      },
+      {
+        "pid": 64157,
+        "type": "Tab",
+        "memory": {
+          "workingSetSize": 219136,
+          "peakWorkingSetSize": 241872
+        }
+      }
+    ],
+    "windows": [
+      {
+        "windowId": 1,
+        "focused": true,
+        "visible": true,
+        "minimized": false
+      }
+    ]
+  },
+  "status": "ready",
+  "noPostReadyAutomation": true,
+  "automaticExpiry": false
+}

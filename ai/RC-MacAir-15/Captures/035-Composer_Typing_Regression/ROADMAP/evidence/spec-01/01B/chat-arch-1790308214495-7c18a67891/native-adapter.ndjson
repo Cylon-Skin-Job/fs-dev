@@ -1,0 +1,6 @@
+{"at":1790308217560,"type":"session-start","threadId":"2026-09-24T20-50-17-550","sessionKey":"[\"native-input\",\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790308214495-7c18a67891-xajC5C/native-workspace/native-input\",\"2026-09-24T20-50-17-550\"]","externalProcess":false}
+{"at":1790308217759,"type":"gate","gate":"before-stop","owner":"adapter","occurrence":1}
+{"at":1790308217759,"type":"gate","gate":"after-stop","owner":"adapter","occurrence":1}
+{"at":1790308217759,"type":"gate","gate":"before-shutdown","owner":"adapter","occurrence":1}
+{"at":1790308217759,"type":"gate","gate":"after-shutdown","owner":"adapter","occurrence":1}
+{"at":1790308217759,"type":"session-retired","threadId":"2026-09-24T20-50-17-550","sessionKey":"[\"native-input\",\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790308214495-7c18a67891-xajC5C/native-workspace/native-input\",\"2026-09-24T20-50-17-550\"]","retainedSessions":0}

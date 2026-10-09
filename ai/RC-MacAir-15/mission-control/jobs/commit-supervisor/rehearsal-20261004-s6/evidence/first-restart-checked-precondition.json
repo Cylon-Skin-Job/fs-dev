@@ -1,0 +1,24 @@
+{
+  "kind": "TIME_QUALIFIED_REAL_PRIOR_PROFILE_CHECKED_SAMPLE",
+  "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-acceptance-negative.json",
+  "sha256": "514c140adb5fcb1060ef3fee90f9b6dff830133be738025585a2b05b8c1cf950",
+  "observed_at": "2026-10-04T12:42:59.154Z",
+  "sample": {
+    "action": "first completed",
+    "summary": "3 remaining",
+    "rows": [
+      "Draft report",
+      "Review sources",
+      "Send summary"
+    ],
+    "checks": [
+      true,
+      false,
+      false
+    ]
+  },
+  "candidate": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "profile": "/private/tmp/mc-s6-commit-supervisor-20261004/profile",
+  "machine": "MC-S6",
+  "qualification": "Raw actual preparation negative. Profile is preserved; this does not certify post-restart state or current app readiness. New readback required before smoke initializer."
+}

@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-04T19:20:08.644628+00:00",
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "state": "FINAL_HANDOFF_VALIDATED",
+  "review_identity": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-final3-identity.json",
+  "review_identity_sha256": "17becab4ec6c19b79e0efb1c5ec817641da41c6c7dd88d3baaf2a89ded2191a7",
+  "manager": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-manager-3.md",
+  "manager_sha256": "051d948ed72f3fd5aa3c558cc3dab44c6cdbbb5a83577f16648e08115f442d0c",
+  "raw": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-reviewer-3.raw.md",
+  "raw_sha256": "8d5b30ee5336864717ade91eba5b50170161fe0b7dc9a7b7ed2a59a51cdec92e",
+  "lifecycle_sha256": "0194ed9ffb44e36124f02d4947479b2b6d0fc6e51f5eae9c6082509d8627af13",
+  "actual_manager_and_child_native_completed": true,
+  "native_observation": "Actual FINAL_ANSWER plus exact-prefix native completed list for manager3/reviewer3",
+  "all5_full_original_coverage": true,
+  "source_pre": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-runtime-source-pre.json",
+  "owned130_authority77_config1_current": true,
+  "current55_3808_and_Node17_11_equal": true,
+  "independence": "fork none/root inherited/no overrides, no manager assessments before child terminal; exactraw saved",
+  "resolved_material_findings": [
+    "F-ALL5-01 current55 provenance validated",
+    "FINAL2-INDEPENDENCE-001 / F-ALL5-02 replaced by different fresh actualCLEAN gate"
+  ],
+  "historical_limits": "Old55/35-only and current1 invocations retained qualified, abandoned2 diagnostics never supply current acceptance; Node binary history remains unexposed.",
+  "runtime_required": true,
+  "runtime_acceptance_granted": false,
+  "actual_operations": []
+}

@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-07T00:28:23.563765+00:00",
+  "repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "argv": [
+    "git",
+    "-C",
+    "/Users/rccurtrightjr./projects/fs-dev",
+    "fetch",
+    "--no-tags",
+    "--no-recurse-submodules",
+    "--no-write-fetch-head",
+    "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+    "refs/heads/codex/chat-retirement-and-startup-repair:refs/heads/codex/chat-retirement-and-startup-repair"
+  ]
+}

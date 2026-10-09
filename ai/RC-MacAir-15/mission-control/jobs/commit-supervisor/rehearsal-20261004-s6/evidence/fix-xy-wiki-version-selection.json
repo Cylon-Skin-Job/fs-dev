@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-04T16:56:24.863584+00:00",
+  "actual_local_clock": "2026-10-04T09:56:24.862822-07:00",
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "version_relative": "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-095624.md",
+  "version_absent": true,
+  "page_relative": "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md",
+  "page_sha256": "a3d372eba6208c2fbee71cd046f305a91fc7c44185c5dae42b5da50e5cbcfdce",
+  "owned_union": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/fix-xy-wiki-1/owned-paths.json",
+  "owned_leaves": 130,
+  "code_settled": "Actual current fresh code handoff accepted; no active candidate writer",
+  "before_creation": "Supervisor now captures and verifies NEW immutable union; leaf not dispatched until complete"
+}

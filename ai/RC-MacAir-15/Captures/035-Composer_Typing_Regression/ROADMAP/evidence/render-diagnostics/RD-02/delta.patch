@@ -1,0 +1,1356 @@
+--- predecessor/fusion-studio-client/e2e/diagnostics-render.spec.ts
++++ fusion-studio-client/e2e/diagnostics-render.spec.ts
+@@ -0,0 +1,88 @@
++import { test, expect, type Page } from '@playwright/test';
++import path from 'node:path';
++import { build } from 'vite';
++const bundle = (async () => {
++  const entry = 'virtual:diagnostics-render';
++  const source = `
++    import React from 'react'; import { createRoot } from 'react-dom/client'; import { flushSync } from 'react-dom';
++    import { LiveSegmentRenderer } from ${JSON.stringify(path.resolve('src/components/LiveSegmentRenderer.tsx'))};
++    import { ConnectedDiagnostics } from ${JSON.stringify(path.resolve('src/components/diagnostics/ConnectedDiagnostics.tsx'))};
++    import { openDiagnosticStream, closeDiagnosticStream, sampleDiagnostic } from ${JSON.stringify(path.resolve('src/lib/diagnostics/stream.ts'))};
++    import { handleStreamMessage } from ${JSON.stringify(path.resolve('src/lib/ws/stream-handlers.ts'))};
++    import { readRevealSurfaces } from ${JSON.stringify(path.resolve('src/lib/reveal/progress.ts'))};
++    import { usePanelStore } from ${JSON.stringify(path.resolve('src/state/panelStore.ts'))};
++    import { redactMessageForLog } from ${JSON.stringify(path.resolve('src/lib/ws-client.ts'))};
++    const sent=[], completed=[], roots = new Map();
++    usePanelStore.setState({ activeWorkspaceId:'ws', ws:{readyState:1,send:r=>sent.push(JSON.parse(r))} });
++    const node = id => { let el=document.getElementById(id); if(!el){el=document.createElement('div');el.id=id;document.body.append(el);} if(!roots.has(id))roots.set(id,createRoot(el)); return roots.get(id); };
++    function render(segments, terminal=false) { for(const id of ['observed','control']) flushSync(()=>node(id).render(React.createElement(LiveSegmentRenderer,{workspaceId:'ws',threadId:id,surfaceId:id,turnId:'A',segments,...terminal?{onRevealComplete:()=>completed.push(id)}:{}}))); }
++    window.fixture={render,sent,completed,read:readRevealSurfaces,sample:()=>sampleDiagnostic('tab'),
++      open(){openDiagnosticStream('tab',{workspaceId:'ws',viewId:'wiki-viewer',threadGroupId:'g',threadId:'observed',surfaceId:'observed'});flushSync(()=>node('diagnostics').render(React.createElement(ConnectedDiagnostics,{tabId:'tab'})));},
++      emit(text,seq=1,extra={}){const sub=sent.filter(x=>x.type==='chat-turn:diagnostic:subscribe').at(-1);handleStreamMessage({...sub,type:'chat-turn:diagnostic:stream',availability:'available',generation:1,turnId:'A',reset:true,baseline:0,events:[{seq,text,sourceUnits:text.length,sourceBytes:text.length}],...extra});},
++      unmount(){flushSync(()=>roots.get('observed').unmount());},
++      close(){closeDiagnosticStream('tab');flushSync(()=>roots.get('diagnostics').unmount());},
++      log: redactMessageForLog,
++    };
++  `;
++  const result = await build({ configFile:false,logLevel:'silent', plugins:[{name:entry,resolveId:id=>id===entry?'\0'+entry:null,load:id=>id==='\0'+entry?source:null}],
++    build:{write:false,minify:false,cssCodeSplit:false,rollupOptions:{input:entry,output:{format:'iife'}}} });
++  if(Array.isArray(result)||!('output'in result))throw Error('bundle');
++  return {js:result.output.filter(x=>x.type==='chunk').map(x=>x.code).join('\n'),css:result.output.filter(x=>x.type==='asset').map(x=>x.source).join('\n')};
++})();
++const call = (page: Page, name: string, ...args: unknown[]) => page.evaluate(({name,args})=>(window as any).fixture[name](...args),{name,args});
++async function boot(page:Page, segments:unknown[]) {
++  await page.clock.install(); await page.clock.pauseAt(new Date()); await page.setContent('<body></body>');
++  await page.evaluate(()=>{if(!crypto.randomUUID)Object.defineProperty(crypto,'randomUUID',{value:()=>Math.random().toString(36).slice(2)});});
++  const b=await bundle; await page.addStyleTag({content:b.css+'\n#diagnostics {height:500px;width:900px;}'}); await page.addScriptTag({content:b.js});
++  await call(page,'render',segments); await call(page,'open');
++}
++const segment=(content:string,complete=false)=>({type:'text',content,complete});
++test('native dump gets ahead of actual reveal; active diagnostic sampling leaves output/timeline identical, terminal drains',async({page})=>{
++  const content='A deliberately slow visible sentence. '.repeat(20)+'\n\n';
++  await boot(page,[segment(content)]); await call(page,'emit',content);
++  await page.clock.runFor(200);
++  await expect(page.getByLabel('Native event stream')).toHaveText(content+'\n');
++  const first=await call(page,'read'); expect((first[0].segments[0]?.visible ?? 0)).toBeLessThan(content.length);
++  for(let i=0;i<30;i++){
++    await page.clock.runFor(100);
++    expect(await page.locator('#observed').textContent()).toBe(await page.locator('#control').textContent());
++  }
++  await expect(page.getByLabel('Stream diagnostics')).toContainText('Measured reveal (last sample interval)');
++  await expect(page.getByLabel('Stream diagnostics')).toContainText('completed source prefix');
++  await call(page,'emit','terminal',2,{reset:false,terminal:true});
++  await call(page,'render',[segment(content,true)],true);
++  for(let i=0;i<80;i++){
++    await page.clock.runFor(100);
++    expect(await page.locator('#observed').textContent()).toBe(await page.locator('#control').textContent());
++  }
++  expect(await page.evaluate(()=>(window as any).fixture.completed.sort())).toEqual(['control','observed']);
++  await expect(page.getByLabel('Stream diagnostics')).toContainText('future output, tool completion, pauses and event-loop delay are unknown');
++});
++test('2s wait stays exact with diagnostics open; incomplete source and unmounted observations remain truthful',async({page})=>{
++  await boot(page,[segment('first\n\n```js\npartial')]);
++  let since:number|null=null;
++  for(let i=0;i<1000;i++){const snapshot=await call(page,'read');if(snapshot[0].waitingSince!==null){since=snapshot[0].waitingSince;break;} await page.clock.runFor(10);}
++  expect(since).not.toBeNull(); const now=await page.evaluate(()=>Date.now()); await page.clock.runFor(since!+1999-now);
++  await expect(page.locator('#observed .rv-working-activity')).toHaveCount(0); await page.clock.runFor(1);
++  await expect(page.locator('#observed .rv-working-activity')).toContainText('Working… 2s');
++  await page.clock.runFor(200); await call(page,'unmount'); await page.clock.runFor(2000);
++  await expect(page.getByLabel('Stream diagnostics')).toContainText('unmounted — last known');
++  await expect(page.getByLabel('Stream diagnostics')).toContainText('visible wait unavailable');
++  await expect(page.getByLabel('Stream diagnostics')).toContainText('Measured reveal (last sample interval): unavailable');
++});
++test('real plaintext viewport follows tail only at bottom, bounded sampling and logging suppression',async({page})=>{
++  await boot(page,[{type:'shell',content:'',complete:false},segment('queued later\n\n',true)]);
++  await call(page,'emit',Array.from({length:100},(_,i)=>'row '+i).join('\n')); await page.clock.runFor(200);
++  const stream=page.getByLabel('Native event stream');
++  const bottom=await stream.evaluate(el=>el.scrollHeight-el.scrollTop-el.clientHeight); expect(bottom).toBeLessThan(2);
++  await stream.evaluate(el=>{el.scrollTop=0;el.dispatchEvent(new Event('scroll'));});
++  await call(page,'emit','NEW ROW',2,{reset:false}); await page.clock.runFor(200);
++  expect(await stream.evaluate(el=>el.scrollTop)).toBe(0);
++  await stream.evaluate(el=>{el.scrollTop=el.scrollHeight;el.dispatchEvent(new Event('scroll'));});
++  await call(page,'emit','TAIL ROW',3,{reset:false}); await page.clock.runFor(200);
++  expect(await stream.evaluate(el=>el.scrollHeight-el.scrollTop-el.clientHeight)).toBeLessThan(2);
++  expect(await call(page,'log',{type:'chat-turn:diagnostic:stream',events:[{text:'PRIVATE NATIVE'}]})).toEqual({type:'chat-turn:diagnostic:stream'});
++  await expect(page.getByLabel('Stream diagnostics')).toContainText('source prefix unknown');
++  await expect(page.getByLabel('Stream diagnostics')).toContainText('Queued later segments (before parsing): 1');
++  await page.screenshot({path:'../ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/render-diagnostics/RD-02/diagnostics-runtime.png'});
++});
+--- predecessor/fusion-studio-client/e2e/stream-diagnostics.spec.ts
++++ fusion-studio-client/e2e/stream-diagnostics.spec.ts
+@@ -0,0 +1,104 @@
++import { expect, test, type Page } from '@playwright/test';
++import { mountHarness, sentFrames, HARNESS_WORKSPACE as WS, WIKI_VIEW, WIKI_GROUP_A, WIKI_THREAD_A,
++  CAPTURE_VIEW, CAPTURE_GROUP_A, CAPTURE_THREAD_A } from './worksurface-harness';
++const call = (page: Page, name: string, ...args: unknown[]) => page.evaluate(({ name, args }) => (window as any).__wsFixture[name](...args), { name, args });
++async function menu(page: Page, locator = '#worksurface-host') {
++  await page.locator(locator).locator('.rv-chat-header-btn[aria-label="More options"]').first().click();
++  await page.getByRole('menuitem', { name: 'Diagnostics', exact: true }).click();
++}
++async function boot(page: Page, view = WIKI_VIEW, group = WIKI_GROUP_A) {
++  await page.evaluate(() => { if (!crypto.randomUUID) Object.defineProperty(crypto, 'randomUUID', { value: () => 'fixture-' + Math.random().toString(36).slice(2) }); });
++  await mountHarness(page, view); await call(page, 'forceBinding', group, view); await call(page, 'mountRailFor', view);
++}
++async function native(page: Page, payload: Record<string, unknown> = {}) {
++  const subscription = (await sentFrames(page)).filter(f => f.type === 'chat-turn:diagnostic:subscribe').at(-1)!;
++  await call(page, 'deliver', { ...subscription, type: 'chat-turn:diagnostic:stream', availability: 'available',
++    turnId: 'A', generation: 1, drainId: 'dA', reset: true, baseline: 0, terminal: false, events: [], ...payload });
++}
++const event = (seq: number, text: string) => ({ seq, text, sourceUnits: text.length, sourceBytes: text.length, count: 1 });
++
++test('actual primary menu opens rightmost closable tab; existing adapterless root preserved and reopen focuses', async ({ page }) => {
++  await boot(page); const rail = page.locator('#wiki-viewer-view-tab-rail');
++  await expect(rail.locator('.rv-native-wiki-viewer-children')).toBeVisible();
++  await menu(page); await expect(rail.getByRole('tab')).toHaveCount(2);
++  await expect(rail.getByRole('tab').last()).toHaveText(/Diagnostics/);
++  await expect(rail.getByRole('tab').last()).toHaveAttribute('aria-selected', 'true');
++  await expect(page.getByLabel('Stream diagnostics')).toBeVisible();
++  expect((await sentFrames(page)).filter(f => f.type === 'chat-turn:diagnostic:subscribe')).toEqual([
++    expect.objectContaining({ workspaceId: WS, threadId: WIKI_THREAD_A }),
++  ]);
++  await menu(page); await expect(rail.getByRole('tab')).toHaveCount(2);
++  expect((await sentFrames(page)).filter(f => f.type === 'chat-turn:diagnostic:subscribe')).toHaveLength(1);
++  await rail.getByRole('button', { name: 'Close Diagnostics' }).click();
++  await expect(rail.locator('.rv-native-wiki-viewer-children')).toBeVisible();
++  expect((await sentFrames(page)).filter(f => f.type === 'chat-turn:diagnostic:unsubscribe')).toHaveLength(1);
++  expect((await sentFrames(page)).some(f => f.type === 'turn:stop')).toBe(false);
++});
++
++test('native + Side Chat tab order preserved; Side menu targets own chat and close restores Side Chat', async ({ page }) => {
++  await boot(page, CAPTURE_VIEW, CAPTURE_GROUP_A);
++  await call(page, 'applyCaptureRecords', { schemaVersion: 1, tabs: [{ tabId: 'native', content: { kind: 'component', revision: 1,
++    component: { schemaVersion: 1, componentTypeId: 'capture.document', componentInstanceId: 'doc-native', input: { title: 'alpha.md', locationLabels: ['Capture', 'alpha.md'] }, targetKey: 'capture:alpha.md' } } }], activeTabId: 'native', reservations: [] });
++  await call(page, 'seedSidePlacementIn', CAPTURE_VIEW, CAPTURE_GROUP_A, 'side', CAPTURE_THREAD_A);
++  const rail = page.locator('#capture-viewer-view-tab-rail'); await rail.getByRole('tab', { name: 'Side Chat' }).click();
++  await menu(page, '.rv-chat-area[data-chat-host="side-tab"]');
++  await expect(rail.getByRole('tab')).toHaveText([/alpha.md/, /Side Chat/, /Diagnostics/]);
++  await expect(page.locator('.rv-chat-area[data-chat-host="side-tab"]')).toHaveCount(0);
++  expect((await sentFrames(page)).filter(f => f.type === 'chat-turn:diagnostic:subscribe').at(-1)).toMatchObject({ workspaceId: WS, threadId: CAPTURE_THREAD_A });
++  await expect(page.getByLabel('Stream diagnostics')).toContainText('Renderer: unavailable');
++  await rail.getByRole('button', { name: 'Close Diagnostics' }).click();
++  await expect(page.locator('.rv-chat-area[data-chat-host="side-tab"]')).toBeVisible();
++});
++
++test('native text stays literal and only diagnostic state changes; duplicates, wrong identities, gaps and new turn reset', async ({ page }) => {
++  await boot(page); await menu(page);
++  const raw = '<thinking>**not formatted**</thinking><img src=x onerror="window.diagnosticXss=1">';
++  await native(page, { events: [event(1, raw)] });
++  const stream = page.getByLabel('Native event stream'); await expect(stream).toHaveText(raw + '\n');
++  expect(await page.evaluate(() => (window as any).diagnosticXss)).toBeUndefined();
++  await expect(stream.locator('img,strong,thinking')).toHaveCount(0);
++  await native(page, { events: [event(1, 'DUPLICATE')] });
++  await native(page, { threadId: 'wrong', events: [event(2, 'FOREIGN')] });
++  await native(page, { workspaceId: 'wrong', events: [event(2, 'FOREIGN')] });
++  await native(page, { reset: false, events: [{ ...event(3, 'AFTER GAP'), redacted: true }] });
++  await expect(stream).toContainText('AFTER GAP'); await expect(stream).not.toContainText('DUPLICATE'); await expect(stream).not.toContainText('FOREIGN');
++  await expect(page.getByLabel('Stream diagnostics')).toContainText('Sequence gap');
++  await expect(page.getByLabel('Stream diagnostics')).toContainText('Redaction applied');
++  await native(page, { turnId: 'B', generation: 2, events: [event(1, 'NEW TURN')] });
++  await expect(stream).toHaveText('NEW TURN\n');
++  await expect(page.getByLabel('Stream diagnostics')).not.toContainText('Sequence gap');
++  await expect(page.getByLabel('Stream diagnostics')).not.toContainText('Redaction applied');
++  await native(page, { events: [event(4, 'OLD TURN LATE')] });
++  await expect(stream).toHaveText('NEW TURN\n');
++  await expect(page.getByLabel('Stream diagnostics')).toContainText('Native observed: 1 events');
++});
++
++test('canonical accepted next turn fences delayed first old native frame; accepted counters ignore duplicates', async ({ page }) => {
++  await boot(page);
++  await call(page, 'deliver', { type: 'turn_begin', threadId: WIKI_THREAD_A, turnId: 'A', streamSeq: 1, userInput: 'one' });
++  await menu(page);
++  await call(page, 'deliver', { type: 'turn_end', threadId: WIKI_THREAD_A, turnId: 'A', streamSeq: 2, reason: 'complete' });
++  // A different turn begins only after canonical previous-turn terminalization.
++  await call(page, 'deliver', { type: 'turn_begin', threadId: WIKI_THREAD_A, turnId: 'B', streamSeq: 1, userInput: 'two' });
++  await native(page, { events: [event(1, 'OLD FIRST NATIVE')] });
++  await expect(page.getByLabel('Native event stream')).not.toContainText('OLD FIRST NATIVE');
++  await native(page, { turnId: 'B', generation: 2, events: [event(1, 'NATIVE B')] });
++  const content = { type: 'content', threadId: WIKI_THREAD_A, turnId: 'B', streamSeq: 2, text: 'hello\n\n' };
++  await call(page, 'deliver', content); await call(page, 'deliver', content);
++  await expect(page.getByLabel('Stream diagnostics')).toContainText('content 1 events / 7 source UTF-16');
++  await expect(page.getByLabel('Native event stream')).toHaveText('NATIVE B\n');
++});
++
++test('bounded text reports truncation without losing cumulative native counters; reconnect reports gap and old sub is fenced', async ({ page }) => {
++  await boot(page); await menu(page);
++  const events = Array.from({ length: 4 }, (_, i) => event(i + 1, String(i).repeat(40000)));
++  await native(page, { events });
++  await expect(page.getByLabel('Stream diagnostics')).toContainText('128 Ki UTF-16 scrollback limit');
++  await expect(page.getByLabel('Stream diagnostics')).toContainText('160000 UTF-16 units');
++  expect((await page.getByLabel('Native event stream').textContent())!.length).toBe(131072);
++  const old = (await sentFrames(page)).filter(f => f.type === 'chat-turn:diagnostic:subscribe').at(-1)!;
++  await call(page, 'dropSocket'); await call(page, 'reconnect');
++  await expect(page.getByLabel('Stream diagnostics')).toContainText('Connection gap');
++  await call(page, 'deliver', { ...old, type: 'chat-turn:diagnostic:stream', generation: 9, turnId: 'old', availability: 'available', reset: true, baseline: 0, events: [event(1, 'LATE SOCKET')] });
++  await expect(page.getByLabel('Native event stream')).not.toContainText('LATE SOCKET');
++});
+--- predecessor/fusion-studio-client/e2e/worksurface-harness.ts
++++ fusion-studio-client/e2e/worksurface-harness.ts
+@@ -141,6 +141,7 @@
+       viewActivity: path.resolve('src/lib/viewActivity.ts'),
+       host: path.resolve('src/components/chat/ViewChatHost.tsx'),
+       conflictBanner: path.resolve('src/components/chat/WorksurfaceConflictBanner.tsx'),
++      streamHandlers: path.resolve('src/lib/ws/stream-handlers.ts'),
+       threadHandlers: path.resolve('src/lib/ws/thread-handlers.ts'),
+       worksurfaceHandlers: path.resolve('src/lib/ws/worksurface-handlers.ts'),
+       controller: path.resolve('src/lib/worksurface/worksurfaceController.ts'),
+@@ -168,6 +169,7 @@
+       import { ViewChatHost } from ${JSON.stringify(modulePaths.host)};
+       import { WorksurfaceConflictBanner } from ${JSON.stringify(modulePaths.conflictBanner)};
+       import { handleThreadMessage } from ${JSON.stringify(modulePaths.threadHandlers)};
++      import { handleStreamMessage } from ${JSON.stringify(modulePaths.streamHandlers)};
+       import { handleWorksurfaceMessage } from ${JSON.stringify(modulePaths.worksurfaceHandlers)};
+       import {
+         resetWorksurfaceController, setWorksurfaceRequestTimeout,
+@@ -237,6 +239,7 @@
+ 
+       function deliver(msg) {
+         if (handleThreadMessage(msg)) return;
++        if (handleStreamMessage(msg)) return;
+         handleWorksurfaceMessage(msg);
+       }
+       function replyLater(fn) { setTimeout(fn, 0); }
+--- predecessor/fusion-studio-client/src/components/chat/ChatAreaHeader.tsx
++++ fusion-studio-client/src/components/chat/ChatAreaHeader.tsx
+@@ -31,6 +31,7 @@
+   onRename: (name: string) => void;
+   onCopyLink: () => void;
+   onViewMarkdown: () => void;
++  onOpenDiagnostics?: () => void;
+   canMoveToSideChat: boolean;
+   onMoveToSideChat: () => void;
+   onCloseCliPicker: () => void;
+@@ -53,6 +54,7 @@
+   onRename,
+   onCopyLink,
+   onViewMarkdown,
++  onOpenDiagnostics,
+   canMoveToSideChat,
+   onMoveToSideChat,
+   onCloseCliPicker,
+@@ -76,11 +78,14 @@
+       onSelect: () => { onCopyLink(); return { kind: 'close-all' }; } },
+     { kind: 'action', id: `${domId}-markdown`, label: 'View Markdown', icon: 'docs', disabled: !hasThread,
+       onSelect: () => { onViewMarkdown(); return { kind: 'close-all' }; } },
++    { kind: 'action', id: `${domId}-diagnostics`, label: 'Diagnostics', icon: 'terminal', disabled: !hasThread || !onOpenDiagnostics,
++      onSelect: () => { onOpenDiagnostics?.(); return { kind: 'close-all' }; } },
+     { kind: 'action', id: `${domId}-move`, label: 'Move Chat to Side Chat', icon: 'open_in_new',
+       disabled: !canMoveToSideChat,
+       onSelect: () => { onMoveToSideChat(); return { kind: 'close-all' }; } },
+   ], [domId, sidebarCollapsed, handleToggleThreads, hasThread, threadName, onRename, onCopyLink,
+-    onViewMarkdown, canMoveToSideChat, onMoveToSideChat]);
++    onViewMarkdown,
++  onOpenDiagnostics, canMoveToSideChat, onMoveToSideChat]);
+   useEffect(() => { menuRef.current?.update(items); }, [items]);
+   useEffect(() => () => { menuRef.current?.close('programmatic'); menuRef.current = null; }, []);
+   const toggleMenu = useCallback(() => {
+--- predecessor/fusion-studio-client/src/components/chat/ConnectedChatHeader.tsx
++++ fusion-studio-client/src/components/chat/ConnectedChatHeader.tsx
+@@ -67,6 +67,7 @@
+       onRename={actions.onRename}
+       onCopyLink={actions.onCopyLink}
+       onViewMarkdown={actions.onViewMarkdown}
++      onOpenDiagnostics={actions.onOpenDiagnostics}
+       canMoveToSideChat={header.canMoveToSideChatBase
+         && !turnBusy
+         && !shell.isSendingForCurrentThread
+--- predecessor/fusion-studio-client/src/components/chat/chatSurfaceContract.ts
++++ fusion-studio-client/src/components/chat/chatSurfaceContract.ts
+@@ -88,6 +88,7 @@
+   onRename: (name: string) => void;
+   onCopyLink: () => void;
+   onViewMarkdown: () => void;
++  onOpenDiagnostics: () => void;
+   /** SPEC-04 §4: move the current Main Chat into a Side Chat tab. */
+   onMoveToSideChat: () => void;
+   onModelSelectionChange: (patch: { modelId?: string | null; variant?: string | null }) => void;
+--- predecessor/fusion-studio-client/src/components/chat/useChatSessionActions.ts
++++ fusion-studio-client/src/components/chat/useChatSessionActions.ts
+@@ -7,6 +7,8 @@
+  */
+ 
+ import { useCallback, useMemo, type Dispatch, type SetStateAction } from 'react';
++import { openDiagnostics } from '../../lib/diagnostics/tabs';
++import { chatSurfaceDomId } from './chatSurfaceContract';
+ import { usePanelStore } from '../../state/panelStore';
+ import { chatAttachmentOwnerKey, useChatFileLinkStore } from '../../state/chatFileLinkStore';
+ import { chatComposerDraftOwnerKey, useChatComposerDraftStore } from '../../state/chatComposerDraftStore';
+@@ -174,6 +176,8 @@
+   );
+   const handleCopyLink = useCallback(() => copyGroupLink(groupAddress), [groupAddress]);
+   const handleRename = useCallback((name: string) => renameGroup(groupAddress, name), [groupAddress]);
++  const handleOpenDiagnostics = useCallback(() => openDiagnostics({ workspaceId, viewId, threadGroupId, threadId,
++    surfaceId: `chat-scroll-${chatSurfaceDomId(surfaceId)}` }), [workspaceId, viewId, threadGroupId, threadId, surfaceId]);
+   const handleViewMarkdown = useCallback(() => viewGroupMarkdown(groupAddress), [groupAddress]);
+   const handleMoveToSideChat = useCallback(() => {
+     if (expectedPrimarySequence === null || !threadId) return;
+@@ -279,6 +283,7 @@
+     onRename: handleRename,
+     onCopyLink: handleCopyLink,
+     onViewMarkdown: handleViewMarkdown,
++    onOpenDiagnostics: handleOpenDiagnostics,
+     onMoveToSideChat: handleMoveToSideChat,
+     onModelSelectionChange: handleModelSelectionChange,
+     onRequestDiagnostic: handleRequestDiagnostic,
+@@ -303,6 +308,7 @@
+     handleToggleCliPicker,
+     handleToggleContent,
+     handleViewMarkdown,
++    handleOpenDiagnostics,
+     warmCurrentThread,
+   ]);
+ 
+--- predecessor/fusion-studio-client/src/components/diagnostics/ConnectedDiagnostics.tsx
++++ fusion-studio-client/src/components/diagnostics/ConnectedDiagnostics.tsx
+@@ -0,0 +1,28 @@
++import { useEffect, useState } from 'react';
++import { sampleDiagnostic } from '../../lib/diagnostics/stream';
++import { DiagnosticPanel } from './DiagnosticPanel';
++export function ConnectedDiagnostics({ tabId }: { tabId: string }) {
++  const [sample, setSample] = useState(() => sampleDiagnostic(tabId));
++  useEffect(() => {
++    const timer = setInterval(() => setSample(sampleDiagnostic(tabId)), 200);
++    return () => clearInterval(timer);
++  }, [tabId]);
++  if (!sample) return <DiagnosticPanel text="" status="Capture unavailable" notice="" counters={[]} truncated={false} />;
++  const seconds = Math.max(.2, (sample.now - sample.startedAt) / 1000);
++  const surface = sample.surface;
++  const counters = [
++    `Native observed: ${sample.events} events · ${sample.sourceUnits} UTF-16 units · ${sample.sourceBytes} UTF-8 bytes · ${(sample.sourceUnits / seconds).toFixed(1)} units/s since capture`,
++    `Last incoming: ${sample.lastIncomingAt === null ? 'none' : ((sample.now - sample.lastIncomingAt) / 1000).toFixed(1) + 's ago'}`,
++    `Canonical accepted since capture: ${Object.entries(sample.canonicalEvents).map(([type, count]) => `${type} ${count} events${sample.canonical[type] === undefined ? ' (source units unknown)' : ` / ${sample.canonical[type]} source UTF-16`}`).join(' · ') || 'none'}`,
++    `Renderer: ${sample.mounted ? 'mounted' : surface ? 'unmounted — last known' : 'unavailable'} · phase ${surface?.phase ?? 'unknown'} · visible wait ${!sample.mounted ? 'unavailable' : surface?.waitingSince == null ? 'none' : ((sample.now - surface.waitingSince) / 1000).toFixed(1) + 's'}`,
++  ];
++  counters.push(`Measured reveal (last sample interval): ${sample.mounted ? sample.rates.join(' · ') || 'no visible units' : 'unavailable'}`);
++  counters.push(`Queued later segments (before parsing): ${surface ? surface.queuedSegments : 'unknown'} · source prefix counts are completed boundaries, not an exact current character`);
++  for (const segment of surface?.segments ?? []) {
++    const remaining = segment.speedMs !== null && segment.batchSize !== null && segment.batchSize > 0
++      ? Math.ceil(Math.max(0, segment.chunkTotal - segment.chunkVisible) / segment.batchSize) * segment.speedMs : null;
++    counters.push(`${segment.index + 1}. ${segment.type} · ${segment.phase} · received ${segment.receivedSource} source UTF-16 · completed source prefix ${segment.sourceCursor ?? 'unknown'} · uncommitted source ${segment.sourceCursor === null ? 'unknown' : Math.max(0, segment.receivedSource - segment.sourceCursor)} · visible ${segment.visible} ${segment.visibleUnit} · chunk ${segment.chunkVisible}/${segment.chunkTotal} · ready ${segment.readyChunks} · last visible ${!sample.mounted ? 'unavailable' : segment.lastVisibleAt === null ? 'none' : ((sample.now - segment.lastVisibleAt) / 1000).toFixed(1) + 's ago'} · current chunk nominal ${remaining === null ? 'unknown' : remaining + 'ms'}`);
++  }
++  return <DiagnosticPanel text={sample.text} status={`${sample.availability}${sample.terminal ? ' · turn ended (renderer may still drain)' : ''}`}
++    notice={sample.notice} counters={counters} truncated={sample.truncated} />;
++}
+--- predecessor/fusion-studio-client/src/components/diagnostics/DiagnosticPanel.tsx
++++ fusion-studio-client/src/components/diagnostics/DiagnosticPanel.tsx
+@@ -0,0 +1,33 @@
++import { useLayoutEffect, useRef } from 'react';
++import './diagnostics.css';
++export interface DiagnosticPanelProps {
++  text: string;
++  status: string;
++  notice: string;
++  counters: readonly string[];
++  truncated: boolean;
++}
++/** Plain text observation surface. No provider parsing, markdown or HTML injection. */
++export function DiagnosticPanel({ text, status, notice, counters, truncated }: DiagnosticPanelProps) {
++  const viewport = useRef<HTMLPreElement>(null);
++  const follow = useRef(true);
++  useLayoutEffect(() => {
++    const element = viewport.current;
++    if (element && follow.current) element.scrollTop = element.scrollHeight;
++  }, [text]);
++  return <section className="rv-diagnostics" aria-label="Stream diagnostics">
++    <div className="rv-diagnostics-header">
++      <strong>{status}</strong>
++      <div>Native JSON event lines · redaction enabled · UTF-16 source units / UTF-8 bytes · not model tokens</div>
++      <div>{notice}</div>
++      <div>Capture is temporary; every new turn replaces this stream.</div>
++      <div className="rv-diagnostics-counters">{counters.map((line, i) => <div key={i}>{line}</div>)}</div>
++      <div>Timing is nominal for the current received chunk only; future output, tool completion, pauses and event-loop delay are unknown.</div>
++      {truncated && <div role="status">Older text discarded at the 128 Ki UTF-16 scrollback limit; observed counters retained.</div>}
++    </div>
++    <pre ref={viewport} className="rv-diagnostics-stream" aria-label="Native event stream" onScroll={() => {
++      const el = viewport.current;
++      if (el) follow.current = el.scrollHeight - el.scrollTop - el.clientHeight < 24;
++    }}>{text}</pre>
++  </section>;
++}
+--- predecessor/fusion-studio-client/src/components/diagnostics/diagnostics.css
++++ fusion-studio-client/src/components/diagnostics/diagnostics.css
+@@ -0,0 +1,4 @@
++.rv-diagnostics { display: flex; flex-direction: column; height: var(--diagnostics-height, 100%); min-height: var(--diagnostics-min-height, 0); color: var(--text-primary, #ddd); background: var(--bg-primary, #181818); font-family: var(--font-mono, monospace); font-size: var(--diagnostics-font-size, 12px); }
++.rv-diagnostics-header { flex: 0 0 auto; padding: var(--space-sm, 8px); border-bottom: var(--diagnostics-border-width, 1px) solid var(--border-color, #444); max-height: var(--diagnostics-header-max, 45%); overflow: auto; }
++.rv-diagnostics-counters { margin-block: var(--space-sm, 8px); }
++.rv-diagnostics-stream { flex: 1 1 auto; min-height: var(--diagnostics-min-height, 0); overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; padding: var(--space-sm, 8px); margin: var(--diagnostics-margin, 0); font: inherit; }
+--- predecessor/fusion-studio-client/src/components/diagnostics/useDiagnosticTabAdapter.tsx
++++ fusion-studio-client/src/components/diagnostics/useDiagnosticTabAdapter.tsx
+@@ -0,0 +1,41 @@
++import { createElement } from 'react';
++import { usePanelStore } from '../../state/panelStore';
++import { closeDiagnostics, diagnosticViewKey, focusDiagnostics, useDiagnosticTabs } from '../../lib/diagnostics/tabs';
++import { createFirstPartyComponentResolver } from '../view-tabs/componentTabResolver';
++import type { ViewTabAdapterModel } from '../view-tabs/viewTabAdapters';
++import { viewRootTabId } from '../chat/sideChatBridge';
++import { ConnectedDiagnostics } from './ConnectedDiagnostics';
++const TYPE = 'fusion.stream-diagnostics';
++const resolve = createFirstPartyComponentResolver([{ componentTypeId: TYPE, label: 'Diagnostics',
++  render: ({ input }) => createElement(ConnectedDiagnostics, { tabId: String(input.tabId) }) }]);
++
++/** Appended after native/Side Chat composition; no existing placement owner is replaced. */
++export function useDiagnosticTabAdapter(viewId: string, base: ViewTabAdapterModel | null): ViewTabAdapterModel | null {
++  const workspaceId = usePanelStore(s => s.activeWorkspaceId);
++  const label = usePanelStore(s => s.panelConfigs.find(p => p.id === viewId)?.name ?? viewId);
++  const icon = usePanelStore(s => s.panelConfigs.find(p => p.id === viewId)?.icon ?? 'tab');
++  const state = useDiagnosticTabs();
++  const tabs = state.tabs.filter(t => t.target.workspaceId === workspaceId && t.target.viewId === viewId);
++  if (!workspaceId || tabs.length === 0) return base;
++  const selected = tabs.find(t => t.id === state.active[diagnosticViewKey(workspaceId, viewId)]);
++  const rootId = viewRootTabId(viewId);
++  const baseTabs = base?.tabs.length ? base.tabs : [{ id: rootId, label, icon, closable: false, closeLabel: `Close ${label}` }];
++  return {
++    panelId: base?.panelId ?? viewId, label: base?.label ?? label, tabPanelTabIndex: base?.tabPanelTabIndex ?? -1,
++    tabs: [...baseTabs, ...tabs.map(t => ({ id: t.id, label: 'Diagnostics', icon: 'terminal', closable: true, closeLabel: 'Close Diagnostics' }))],
++    activeId: selected?.id ?? base?.activeId ?? rootId,
++    onActivate(id) {
++      if (tabs.some(t => t.id === id)) focusDiagnostics(workspaceId, viewId, id);
++      else { focusDiagnostics(workspaceId, viewId, null); base?.onActivate(id); }
++    },
++    onClose(id) { if (tabs.some(t => t.id === id)) closeDiagnostics(id); else base?.onClose(id); },
++    ...(base?.add ? { add: base.add } : {}),
++    ...(selected ? { content: {
++      active: { tabId: selected.id, content: { kind: 'component' as const, revision: 1,
++        component: { schemaVersion: 1 as const, componentTypeId: TYPE, componentInstanceId: selected.id, input: { tabId: selected.id } } } },
++      shell: { schemaVersion: 2 as const, tabId: selected.id, presenterId: TYPE,
++        location: { schemaVersion: 1 as const, segments: [{ label: 'Diagnostics' }] } },
++      reservation: null, resolve, retryLauncher: () => {}, cancelLauncher: () => {},
++    } } : base?.content ? { content: base.content } : {}),
++  };
++}
+--- predecessor/fusion-studio-client/src/components/view-tabs/viewTabAdapters.ts
++++ fusion-studio-client/src/components/view-tabs/viewTabAdapters.ts
+@@ -15,6 +15,7 @@
+  * legacy behavior.
+  */
+ 
++import { useDiagnosticTabAdapter } from '../diagnostics/useDiagnosticTabAdapter';
+ import { usePanelStore } from '../../state/panelStore';
+ import { useSideChatRailAdapter } from '../chat/useSideChatRailAdapter';
+ import {
+@@ -72,5 +73,6 @@
+   // only while an open managed placement exists. With no placement the base
+   // model is returned unchanged (and `null` for adapterless views renders the
+   // existing children byte-identically).
+-  return useSideChatRailAdapter(panelId, nativeBase);
++  const withSideChats = useSideChatRailAdapter(panelId, nativeBase);
++  return useDiagnosticTabAdapter(panelId, withSideChats);
+ }
+--- predecessor/fusion-studio-client/src/lib/diagnostics/stream.ts
++++ fusion-studio-client/src/lib/diagnostics/stream.ts
+@@ -0,0 +1,154 @@
++/** Mutable observation buffers. Pulled at 5 Hz by diagnostics only, never chat. */
++import { usePanelStore } from '../../state/panelStore';
++import { readRevealSurfaces } from '../reveal/progress';
++import type { WebSocketMessage } from '../../types';
++import type { DiagnosticTarget, DiagnosticStreamFrame } from './types';
++
++const LIMIT = 131072;
++type Surface = ReturnType<typeof readRevealSurfaces>[number];
++export interface DiagnosticChannel {
++  target: DiagnosticTarget;
++  subscriptionId: string;
++  socket: WebSocket | null;
++  turnId: string | null;
++  retiredTurns: Set<string>;
++  generation: number;
++  sequence: number;
++  text: string;
++  notice: string;
++  availability: string;
++  terminal: boolean;
++  events: number;
++  sourceUnits: number;
++  sourceBytes: number;
++  canonical: Record<string, number>;
++  canonicalEvents: Record<string, number>;
++  startedAt: number;
++  lastIncomingAt: number | null;
++  lastSurface: Surface | null;
++  truncated: boolean;
++  sampledAt: number;
++  sampledVisible: Record<string, number>;
++  stopWatch: () => void;
++}
++const channels = new Map<string, DiagnosticChannel>();
++function addNotice(c: DiagnosticChannel, notice: string) {
++  if (!c.notice.includes(notice)) c.notice += ' ' + notice;
++}
++function reset(c: DiagnosticChannel, turnId: string | null) {
++  if (c.turnId && c.turnId !== turnId) {
++    c.retiredTurns.add(c.turnId);
++    if (c.retiredTurns.size > 64) c.retiredTurns.delete(c.retiredTurns.values().next().value!);
++  }
++  c.notice = 'Capture starts here; no earlier events retained.';
++  c.turnId = turnId; c.sequence = 0; c.text = ''; c.events = 0;
++  c.sourceUnits = 0; c.sourceBytes = 0; c.canonical = {}; c.canonicalEvents = {};
++  c.startedAt = Date.now(); c.lastIncomingAt = null; c.lastSurface = null;
++  c.sampledAt = Date.now(); c.sampledVisible = {};
++  c.truncated = false; c.terminal = false;
++}
++function send(c: DiagnosticChannel, type: 'subscribe' | 'unsubscribe') {
++  if (c.socket?.readyState !== 1) return;
++  try { c.socket.send(JSON.stringify({ type: `chat-turn:diagnostic:${type}`,
++    subscriptionId: c.subscriptionId, workspaceId: c.target.workspaceId, threadId: c.target.threadId })); }
++  catch { c.availability = 'disconnected'; }
++}
++export function openDiagnosticStream(id: string, target: DiagnosticTarget) {
++  if (channels.has(id)) return;
++  const c: DiagnosticChannel = { target, subscriptionId: '', socket: null, turnId: null, retiredTurns: new Set(),
++    generation: 0, sequence: 0, text: '', notice: 'Capture starts here; no earlier events retained.',
++    availability: 'connecting', terminal: false, events: 0, sourceUnits: 0, sourceBytes: 0,
++    canonical: {}, canonicalEvents: {}, startedAt: Date.now(), lastIncomingAt: null,
++    lastSurface: null, truncated: false, sampledAt: Date.now(), sampledVisible: {}, stopWatch: () => {} };
++  channels.set(id, c);
++  const reconcile = () => {
++    const state = usePanelStore.getState();
++    if (state.activeWorkspaceId !== target.workspaceId) {
++      send(c, 'unsubscribe'); c.socket = null; c.availability = 'unavailable';
++      reset(c, null); c.notice = 'Workspace changed; capture discarded.'; return;
++    }
++    if (state.ws === c.socket) return;
++    const reconnect = Boolean(c.subscriptionId);
++    send(c, 'unsubscribe');
++    c.socket = state.ws;
++    c.subscriptionId = `diagnostic-${crypto.randomUUID()}`;
++    c.generation = 0;
++    // Resubscribe starts a new observation window. No attempt to replay missing native data.
++    reset(c, null);
++    c.retiredTurns.clear();
++    c.turnId = state.projectChats[target.threadId]?.currentTurn?.id ?? null;
++    c.notice = reconnect ? 'Connection gap; capture restarted here. Missed events unavailable.'
++      : 'Capture starts here; no earlier events retained.';
++    c.availability = c.socket ? 'connecting' : 'disconnected';
++    send(c, 'subscribe');
++  };
++  c.stopWatch = usePanelStore.subscribe(reconcile);
++  reconcile();
++  c.turnId = usePanelStore.getState().projectChats[target.threadId]?.currentTurn?.id ?? null;
++  sampleDiagnostic(id);
++}
++export function closeDiagnosticStream(id: string) {
++  const c = channels.get(id); if (!c) return;
++  c.stopWatch(); send(c, 'unsubscribe'); channels.delete(id);
++}
++export function handleDiagnosticStream(frame: DiagnosticStreamFrame) {
++  const c = [...channels.values()].find(candidate => candidate.subscriptionId === frame.subscriptionId);
++  if (!c || frame.workspaceId !== c.target.workspaceId || frame.threadId !== c.target.threadId
++    || usePanelStore.getState().activeWorkspaceId !== c.target.workspaceId) return;
++  if (frame.turnId && c.retiredTurns.has(frame.turnId)) return;
++  if (frame.availability === 'unavailable') { c.availability = 'unavailable'; return; }
++  if (!Number.isSafeInteger(frame.generation) || frame.generation! < c.generation) return;
++  const generation = frame.generation!;
++  if (generation === c.generation && c.turnId && frame.turnId !== c.turnId) return;
++  if (generation > c.generation || (frame.reset && !c.turnId)) {
++    if (c.turnId !== frame.turnId) {
++      const reconnecting = c.generation === 0 && c.notice.includes('Connection gap');
++      reset(c, frame.turnId ?? null);
++      if (reconnecting) addNotice(c, 'Connection gap; missed events unavailable.');
++    }
++    c.generation = generation; c.sequence = frame.baseline ?? 0;
++  }
++  c.availability = frame.availability; c.terminal = frame.terminal === true;
++  if (frame.dropped) addNotice(c, 'Transport gap: some native events were dropped; counts cover observed events only.');
++  for (const event of frame.events ?? []) {
++    if (!Number.isSafeInteger(event.seq) || event.seq <= c.sequence || typeof event.text !== 'string') continue;
++    if (event.seq !== c.sequence + 1) addNotice(c, 'Sequence gap: missed native events unavailable.');
++    c.sequence = event.seq;
++    c.events += event.count ?? 1; c.sourceUnits += event.sourceUnits; c.sourceBytes += event.sourceBytes;
++    c.lastIncomingAt = Date.now();
++    c.text += event.dropped ? '[Native event dropped by bounded capture]\n' : event.text + '\n';
++    if (event.redacted) addNotice(c, 'Redaction applied to native event text.');
++    if (c.text.length > LIMIT) { c.text = c.text.slice(-LIMIT); c.truncated = true; }
++  }
++}
++/** Called only after the existing canonical thread/turn/sequence gate accepts a frame. */
++export function observeCanonicalDiagnostic(msg: WebSocketMessage) {
++  for (const c of channels.values()) {
++    if (msg.threadId !== c.target.threadId || usePanelStore.getState().activeWorkspaceId !== c.target.workspaceId) continue;
++    if (msg.type === 'turn_begin') {
++      if (c.turnId !== msg.turnId) reset(c, msg.turnId ?? null);
++      continue;
++    }
++    if (!msg.turnId || c.turnId !== msg.turnId) continue;
++    const type = msg.type;
++    if (!['content', 'thinking', 'tool_call', 'tool_call_args', 'tool_result'].includes(type)) continue;
++    c.canonicalEvents[type] = (c.canonicalEvents[type] ?? 0) + 1;
++    const text = type === 'content' || type === 'thinking' ? msg.text
++      : type === 'tool_call_args' ? msg.argsChunk : null;
++    // Counts only source strings; object tool args/results have no prose-length equivalence.
++    if (typeof text === 'string') c.canonical[type] = (c.canonical[type] ?? 0) + text.length;
++  }
++}
++export function sampleDiagnostic(id: string) {
++  const c = channels.get(id); if (!c) return null;
++  const surface = readRevealSurfaces().find(s => s.workspaceId === c.target.workspaceId
++    && s.threadId === c.target.threadId && s.surfaceId === c.target.surfaceId
++    && (!c.turnId || s.turnId === c.turnId));
++  const now = Date.now();
++  const visible: Record<string, number> = {};
++  for (const segment of surface?.segments ?? []) visible[segment.visibleUnit] = (visible[segment.visibleUnit] ?? 0) + segment.visible;
++  const rates = Object.entries(visible).map(([unit, amount]) => `${(Math.max(0, amount - (c.sampledVisible[unit] ?? amount)) / Math.max(.001, (now - c.sampledAt) / 1000)).toFixed(1)} ${unit}/s`);
++  if (surface) c.lastSurface = surface;
++  c.sampledVisible = visible; c.sampledAt = now;
++  return { rates,  ...c, surface: surface ?? c.lastSurface, mounted: Boolean(surface), now: Date.now() };
++}
+--- predecessor/fusion-studio-client/src/lib/diagnostics/tabs.ts
++++ fusion-studio-client/src/lib/diagnostics/tabs.ts
+@@ -0,0 +1,35 @@
++/** Sole owner of runtime-only diagnostic placement. Existing view tabs remain with their adapters. */
++import { create } from 'zustand';
++import { usePanelStore } from '../../state/panelStore';
++import { closeDiagnosticStream, openDiagnosticStream } from './stream';
++import type { DiagnosticTarget } from './types';
++export interface DiagnosticTab { id: string; target: DiagnosticTarget }
++interface DiagnosticTabs { tabs: DiagnosticTab[]; active: Record<string, string | null> }
++export const useDiagnosticTabs = create<DiagnosticTabs>(() => ({ tabs: [], active: {} }));
++export const diagnosticViewKey = (workspaceId: string, viewId: string) => JSON.stringify([workspaceId, viewId]);
++export function openDiagnostics(target: DiagnosticTarget) {
++  if (!target.workspaceId || !target.threadId || !target.viewId) return;
++  const state = useDiagnosticTabs.getState();
++  const existing = state.tabs.find(t => t.target.workspaceId === target.workspaceId
++    && t.target.viewId === target.viewId && t.target.threadId === target.threadId);
++  const tab = existing ?? { id: `diagnostics-${crypto.randomUUID()}`, target };
++  openDiagnosticStream(tab.id, target);
++  useDiagnosticTabs.setState({ tabs: existing ? state.tabs : [...state.tabs, tab],
++    active: { ...state.active, [diagnosticViewKey(target.workspaceId, target.viewId)]: tab.id } });
++  const panel = usePanelStore.getState();
++  if (panel.viewStates[target.viewId]?.collapsed.contentArea) panel.toggleCollapsed(target.viewId, 'contentArea');
++}
++export function focusDiagnostics(workspaceId: string, viewId: string, id: string | null) {
++  useDiagnosticTabs.setState(s => ({ active: { ...s.active, [diagnosticViewKey(workspaceId, viewId)]: id } }));
++}
++export function closeDiagnostics(id: string) {
++  closeDiagnosticStream(id);
++  useDiagnosticTabs.setState(s => ({ tabs: s.tabs.filter(t => t.id !== id),
++    active: Object.fromEntries(Object.entries(s.active).map(([key, value]) => [key, value === id ? null : value])) }));
++}
++// Discard ephemeral placements and subscriptions on workspace replacement.
++usePanelStore.subscribe((state, previous) => {
++  if (state.activeWorkspaceId === previous.activeWorkspaceId) return;
++  for (const tab of useDiagnosticTabs.getState().tabs) closeDiagnosticStream(tab.id);
++  useDiagnosticTabs.setState({ tabs: [], active: {} });
++});
+--- predecessor/fusion-studio-client/src/lib/diagnostics/types.ts
++++ fusion-studio-client/src/lib/diagnostics/types.ts
+@@ -0,0 +1,31 @@
++export interface DiagnosticTarget {
++  workspaceId: string;
++  viewId: string;
++  threadGroupId: string;
++  threadId: string;
++  surfaceId: string;
++}
++export interface NativeDiagnosticEvent {
++  seq: number;
++  text: string;
++  sourceUnits: number;
++  sourceBytes: number;
++  count?: number;
++  redacted?: boolean;
++  dropped?: boolean;
++}
++export interface DiagnosticStreamFrame {
++  type: 'chat-turn:diagnostic:stream';
++  subscriptionId: string;
++  workspaceId: string;
++  threadId: string;
++  availability: 'available' | 'unavailable' | 'unsupported' | 'idle';
++  turnId?: string | null;
++  generation?: number;
++  drainId?: string | null;
++  terminal?: boolean;
++  reset?: boolean;
++  baseline?: number;
++  dropped?: number;
++  events?: NativeDiagnosticEvent[];
++}
+--- predecessor/fusion-studio-client/src/lib/reveal/progress.ts
++++ fusion-studio-client/src/lib/reveal/progress.ts
+@@ -90,7 +90,7 @@
+   dispose() { this.phase = 'unmounted'; this.waitingSince = null; }
+   snapshot() {
+     return { ...this.identity, phase: this.phase, frontier: this.frontier,
+-      waitingSince: this.waitingSince,
++      waitingSince: this.waitingSince, queuedSegments: Math.max(0, this.count - this.frontier - 1),
+       segments: [...this.records].map(([index, { type, progress }]) => ({ index, type, ...progress.snapshot() })),
+     };
+   }
+--- predecessor/fusion-studio-client/src/lib/ws/stream-handlers.ts
++++ fusion-studio-client/src/lib/ws/stream-handlers.ts
+@@ -1,3 +1,5 @@
++import { handleDiagnosticStream, observeCanonicalDiagnostic } from '../diagnostics/stream';
++import type { DiagnosticStreamFrame } from '../diagnostics/types';
+ /**
+  * @module stream-handlers
+  * @role Thin routed dispatcher for stream-related WebSocket messages
+@@ -153,6 +155,7 @@
+   if (opts?.advanceBeforeBody) {
+     advanceLiveFrontier(resolved.ns, resolved.streamSeq);
+   }
++  observeCanonicalDiagnostic(msg);
+   applyBody(resolved);
+   if (!opts?.advanceBeforeBody) {
+     advanceLiveFrontier(resolved.ns, resolved.streamSeq);
+@@ -223,6 +226,10 @@
+  */
+ export function handleStreamMessage(msg: WebSocketMessage): boolean {
+   const store = usePanelStore.getState();
++  if (msg.type === 'chat-turn:diagnostic:stream') {
++    handleDiagnosticStream(msg as DiagnosticStreamFrame);
++    return true;
++  }
+ 
+   // ── Diagnostic retrieval frames — claimed AHEAD of metadata dispatch ──
+   // Mirrors the server's client-message-router.js registration intent:
+@@ -246,6 +253,7 @@
+       handleTurnBegin(msg, threadId);
+       if (store.activeWorkspaceId && typeof msg.turnId === 'string'
+         && readChatState(threadId)?.currentTurn?.id === msg.turnId) {
++        observeCanonicalDiagnostic(msg);
+         finishAcceptedPromptExecution(store.activeWorkspaceId, threadId, msg.turnId);
+       }
+       return true;
+--- predecessor/fusion-studio-client/src/types/websocket.ts
++++ fusion-studio-client/src/types/websocket.ts
+@@ -28,6 +28,7 @@
+ } from './workspace';
+ 
+ export type WebSocketMessageType =
++  | 'chat-turn:diagnostic:subscribe' | 'chat-turn:diagnostic:unsubscribe' | 'chat-turn:diagnostic:stream'
+   // Turn stream / chat metadata
+   | 'connected' | 'turn_begin' | 'content' | 'thinking' | 'turn_end'
+   | 'step_begin' | 'status_update' | 'exchange_metadata'
+--- predecessor/fusion-studio-server/lib/harness/opencode/harness-diagnostic-redactor.js
++++ fusion-studio-server/lib/harness/opencode/harness-diagnostic-redactor.js
+@@ -345,6 +345,8 @@
+ 
+ module.exports = {
+   redactHarnessDiagnosticDraft,
++  collectExactValueReplacements,
++  redactFreeFormText,
+   SENSITIVE_ENV_KEY_PATTERN,
+   ADAPTER_CREDENTIAL_ENV_KEYS,
+   TRUNCATION_MARKER_NAMES,
+--- predecessor/fusion-studio-server/lib/harness/opencode/index.js
++++ fusion-studio-server/lib/harness/opencode/index.js
+@@ -2,6 +2,7 @@
+ const os = require('os');
+ const { PassThrough } = require('stream');
+ const { spawn } = require('child_process');
++const { createNativeDiagnosticTap } = require('./native-diagnostic-tap');
+ const { JsonLineParser } = require('./json-line-parser');
+ const {
+   OpenCodeJsonEventTranslator,
+@@ -180,6 +181,9 @@
+         const getConfiguredSecrets = typeof runtimeConfig.getConfiguredSecrets === 'function'
+           ? runtimeConfig.getConfiguredSecrets
+           : harness.getConfiguredSecrets;
++        const diagnosticTap = createNativeDiagnosticTap(options.nativeDiagnostic, {
++          getConfiguredSecrets, env: envSnapshot, workspaceRoot: projectRoot || '', homePath: os.homedir(),
++        });
+         let capturedOpenCodeSessionId = session.openCodeSessionId;
+         let capturedSessionIdPatch = null;
+ 
+@@ -202,7 +206,8 @@
+         session.process = proc;
+         session.stopRequested = false;
+ 
+-        parser.on('message', (openCodeEvent) => {
++        parser.on('message', (openCodeEvent, originalLine) => {
++          diagnosticTap.push(originalLine);
+           if (isOpenCodeNativeAuthFailure(openCodeEvent)) {
+             sawNativeAuthFailure = true;
+           }
+@@ -307,6 +312,7 @@
+             throw new Error('OpenCode JSON run completed without a sessionID; cannot preserve thread continuity');
+           }
+         } finally {
++          diagnosticTap.finish();
+           if (session.activeProcess === proc) {
+             session.activeProcess = null;
+             session.activeProcessClose = null;
+--- predecessor/fusion-studio-server/lib/harness/opencode/json-line-parser.js
++++ fusion-studio-server/lib/harness/opencode/json-line-parser.js
+@@ -32,7 +32,7 @@
+     if (!trimmed) return;
+ 
+     try {
+-      this.emit('message', JSON.parse(trimmed));
++      this.emit('message', JSON.parse(trimmed), line);
+     } catch (err) {
+       this.emit('parse_error', trimmed, err, this.lineNumber);
+     }
+--- predecessor/fusion-studio-server/lib/harness/opencode/native-diagnostic-tap.js
++++ fusion-studio-server/lib/harness/opencode/native-diagnostic-tap.js
+@@ -0,0 +1,80 @@
++'use strict';
++const { collectExactValueReplacements, redactFreeFormText } = require('./harness-diagnostic-redactor');
++
++// Redaction and delivery run after the parser callback. The canonical iterator never awaits us.
++function createNativeDiagnosticTap(observer, options) {
++  let queue = [], units = 0, scheduled = false, finished = false;
++  let replacementsPromise;
++  let fallbackSequence = 0;
++  const clear = () => { queue = []; units = 0; };
++  try { observer?.onDiscard?.(clear); } catch { /* observer-only */ }
++  const observed = () => { try { return observer?.isObserved() === true; } catch { return false; } };
++  const emit = (event) => {
++    if (!observed()) return;
++    try { Promise.resolve(observer.emit(event)).catch(() => {}); } catch { /* observer-only failure */ }
++  };
++  try { observer?.available(); } catch { /* observation cannot affect translation */ }
++  async function drain() {
++    try {
++      if (!queue.length || !observed()) { clear(); return; }
++      if (!replacementsPromise) {
++        replacementsPromise = new Promise((resolve, reject) => {
++          const timer = setTimeout(() => reject(new Error('redaction unavailable')), 2000);
++          collectExactValueReplacements(options).then(value => { clearTimeout(timer); resolve(value); }, error => { clearTimeout(timer); reject(error); });
++        });
++      }
++      const replacements = [...await replacementsPromise];
++      for (const item of [...replacements]) {
++        const escaped = JSON.stringify(item.find).slice(1, -1);
++        if (escaped !== item.find) replacements.push({ find: escaped, replacement: item.replacement });
++      }
++      const prefixes = [{ prefix: options.workspaceRoot, token: '$WORKSPACE' },
++        { prefix: options.homePath, token: '$HOME' }].sort((a, b) => b.prefix.length - a.prefix.length);
++      while (queue.length) {
++        const event = queue.shift(); units -= event.text.length;
++        if (!observed()) continue;
++        const redacted = redactFreeFormText(event.text, replacements, prefixes)
++          .replace(/("(?:api[-_]?key|access[-_]?key|private[-_]?key|token|secret|password|passwd|authorization|credentials?)"\s*:\s*)"(?:\\.|[^"\\])*"/gi, '$1"[REDACTED]"');
++        emit({ ...event, text: redacted, redacted: redacted !== event.text });
++      }
++    } catch {
++      const loss = queue.reduce((total, event) => ({ sourceUnits: total.sourceUnits + event.sourceUnits,
++        sourceBytes: total.sourceBytes + event.sourceBytes, count: total.count + event.count, seq: event.seq,
++        firstSeq: total.firstSeq ?? event.firstSeq }), { sourceUnits: 0, sourceBytes: 0, count: 0, firstSeq: null });
++      clear();
++      if (loss.count) emit({ text: '', ...loss, dropped: true, redacted: true });
++    }
++    finally {
++      scheduled = false;
++      if (finished) { try { observer?.finish(); } catch { /* observation-only */ } }
++    }
++  }
++  function schedule() {
++    if (scheduled) return;
++    scheduled = true;
++    setTimeout(() => { void drain(); }, 0);
++  }
++  return {
++    push(line) {
++      if (!observed()) return;
++      let seq;
++      try { seq = observer?.reserveSequence?.() ?? ++fallbackSequence; } catch { return; }
++      const sourceUnits = line.length, sourceBytes = Buffer.byteLength(line);
++      // Drop the WHOLE oversize event before redaction, never reveal a partial secret.
++      const dropped = sourceUnits > 65536 || units + sourceUnits > 262144 || queue.length >= 128;
++      if (dropped) {
++        // Bounded dropped marker, cumulative count retained without retaining native content.
++        const tail = queue[queue.length - 1];
++        if (tail?.dropped) { tail.sourceUnits += sourceUnits; tail.sourceBytes += sourceBytes; tail.count += 1; tail.seq = seq; }
++        else queue.push({ text: '', sourceUnits, sourceBytes, dropped: true, count: 1, seq, firstSeq: seq });
++      } else { queue.push({ text: line, sourceUnits, sourceBytes, count: 1, dropped: false, seq, firstSeq: seq }); units += sourceUnits; }
++      schedule();
++    },
++    finish() {
++      finished = true;
++      if (queue.length) schedule();
++      else if (!scheduled) { try { observer?.finish(); } catch { /* observer-only */ } }
++    },
++  };
++}
++module.exports = { createNativeDiagnosticTap };
+--- predecessor/fusion-studio-server/lib/thread/live-diagnostic-service.js
++++ fusion-studio-server/lib/thread/live-diagnostic-service.js
+@@ -0,0 +1,102 @@
++'use strict';
++
++// Ephemeral, opt-in observations of an exact interactive drain. No bus, DB or logs.
++const { normalizeRuntimeRoot } = require('./runtime-identity');
++const turns = new Map();
++const subscribers = new Set();
++let nextGeneration = 0;
++const MAX_QUEUE_UNITS = 131072;
++const keyOf = (route) => JSON.stringify([
++  route.workspaceId, normalizeRuntimeRoot(route), route.threadId,
++]);
++const same = (subscriber, turn) => subscriber.key === turn.key;
++function hasObservers(turn) { return [...subscribers].some((s) => same(s, turn)); }
++function envelope(turn) {
++  return turn ? { turnId: turn.turnId, generation: turn.generation, drainId: turn.drainId,
++    terminal: turn.terminal, availability: turn.availability } : {
++    turnId: null, generation: 0, drainId: null, terminal: false, availability: 'idle',
++  };
++}
++function resetSubscriber(s, turn) {
++  s.turn = turn;
++  s.events = [];
++  s.units = 0;
++  s.dropped = 0;
++  s.reset = true;
++  s.baseline = turn?.seq ?? 0;
++}
++function beginDiagnosticTurn(route, { turnId, drainId, isCurrent }) {
++  const key = keyOf(route);
++  const turn = { key, turnId, drainId, generation: ++nextGeneration, seq: 0,
++    terminal: false, availability: 'unsupported', isCurrent };
++  turns.get(key)?.discard?.();
++  const discards = new Set();
++  turn.discard = () => { for (const fn of discards) { try { fn(); } catch { /* observer-only */ } } };
++  turns.set(key, turn);
++  for (const s of subscribers) if (same(s, turn)) resetSubscriber(s, turn);
++  const current = () => turns.get(key) === turn && isCurrent();
++  return {
++    isObserved: () => current() && hasObservers(turn),
++    reserveSequence() { return current() ? ++turn.seq : null; },
++    onDiscard(fn) { discards.add(fn); return () => discards.delete(fn); },
++    available() { if (current()) turn.availability = 'available'; },
++    emit(event) {
++      if (!current() || !hasObservers(turn)) return;
++      const record = { ...event, seq: event.seq ?? ++turn.seq };
++      for (const s of subscribers) {
++        if (!same(s, turn) || record.seq <= s.baseline) continue;
++        if (record.firstSeq <= s.baseline) { s.dropped += record.seq - s.baseline; continue; }
++        s.events.push(record);
++        s.units += record.text.length;
++        while (s.units > MAX_QUEUE_UNITS || s.events.length > 128) {
++          s.units -= s.events.shift().text.length;
++          s.dropped += 1;
++        }
++      }
++    },
++    finish() {
++      turn.terminal = true;
++      if (turns.get(key) === turn && !hasObservers(turn)) turns.delete(key);
++    },
++  };
++}
++
++function subscribeDiagnostic({ route, subscriptionId, ws, isCurrent, onDispose = () => {} }) {
++  const key = keyOf(route);
++  const s = { key, route, subscriptionId, ws, isCurrent, lastState: null };
++  resetSubscriber(s, turns.get(key) ?? null);
++  subscribers.add(s);
++  let timer;
++  let disposed = false;
++  const dispose = () => {
++    if (disposed) return;
++    disposed = true;
++    clearInterval(timer);
++    subscribers.delete(s);
++    s.events = [];
++    onDispose();
++    const turn = turns.get(key);
++    if (turn && !hasObservers(turn)) {
++      turn.discard();
++      if (turn.terminal) turns.delete(key);
++    }
++  };
++  const flush = () => {
++    if (!isCurrent() || ws.readyState !== 1) { dispose(); return; }
++    // A slow browser never queues unbounded sends or blocks canonical delivery.
++    if ((ws.bufferedAmount || 0) > 262144) return;
++    const state = envelope(s.turn);
++    const stateKey = JSON.stringify(state);
++    if (!s.reset && s.events.length === 0 && s.dropped === 0 && stateKey === s.lastState) return;
++    const frame = { type: 'chat-turn:diagnostic:stream', subscriptionId,
++      workspaceId: route.workspaceId, threadId: route.threadId, ...state,
++      reset: s.reset, baseline: s.baseline, dropped: s.dropped, events: s.events };
++    s.events = []; s.units = 0; s.dropped = 0; s.reset = false; s.lastState = stateKey;
++    try { ws.send(JSON.stringify(frame)); } catch { dispose(); }
++  };
++  timer = setInterval(flush, 100);
++  timer.unref?.();
++  flush();
++  return dispose;
++}
++module.exports = { beginDiagnosticTurn, subscribeDiagnostic };
+--- predecessor/fusion-studio-server/lib/thread/runtime-dispatch.js
++++ fusion-studio-server/lib/thread/runtime-dispatch.js
+@@ -13,6 +13,7 @@
+ const { persistDiagnosticReport } = require('./harness-diagnostic-service');
+ const { persistTerminalDiagnosticSafely } = require('./terminal-diagnostic-boundary');
+ const promptSubmission = require('./prompt-submission-service');
++const { beginDiagnosticTurn } = require('./live-diagnostic-service');
+ const SCOPE = 'project';
+ 
+ function markReadyIfRuntimeStillActive(runtimeKey, ownership) {
+@@ -145,17 +146,20 @@
+     return !threadRuntimeManager.isOwnershipCurrent(ownership);
+   }
+ 
++  const nativeDiagnostic = beginDiagnosticTurn(claimedRecord.routeContext, {
++    turnId, drainId, isCurrent: () => !isDrainSuperseded(),
++  });
+   const drainCompletion = (async () => {
+     try {
+       if (typeof handleCanonicalHarnessEvent.drainHarnessEvents === 'function') {
+-        await handleCanonicalHarnessEvent.drainHarnessEvents(wire._sendMessage(harnessInput, {}), ws, {
++        await handleCanonicalHarnessEvent.drainHarnessEvents(wire._sendMessage(harnessInput, { nativeDiagnostic }), ws, {
+           drainContext,
+           turnAuthority,
+           turnApplicationContext,
+           finalizeOnError: false,
+         });
+       } else {
+-        for await (const event of wire._sendMessage(harnessInput, {})) {
++        for await (const event of wire._sendMessage(harnessInput, { nativeDiagnostic })) {
+           await handleCanonicalHarnessEvent(event, ws, drainContext);
+         }
+       }
+@@ -240,6 +244,7 @@
+         );
+       }
+     } finally {
++      nativeDiagnostic.finish();
+       if (!isDrainSuperseded() && threadRuntimeManager.getRuntimeState(runtimeKey) !== RUNTIME_STATES.STOPPING) {
+         threadRuntimeManager.clearActiveDrainIfCurrent(runtimeKey, drainId);
+       }
+--- predecessor/fusion-studio-server/lib/thread/runtime-identity.js
++++ fusion-studio-server/lib/thread/runtime-identity.js
+@@ -30,4 +30,4 @@
+     && normalizeRuntimeRoot(left) === normalizeRuntimeRoot(right);
+ }
+ 
+-module.exports = { getRuntimeKey, serializeRuntimeKey, sameRuntimeResource };
++module.exports = { getRuntimeKey, serializeRuntimeKey, sameRuntimeResource, normalizeRuntimeRoot };
+--- predecessor/fusion-studio-server/lib/ws/client-message-router.js
++++ fusion-studio-server/lib/ws/client-message-router.js
+@@ -33,6 +33,7 @@
+ const { createThreadWsHandlers, spawnAndSetupWire } = require('./thread-ws-handlers');
+ const { createHarnessWsHandlers } = require('./harness-ws-handlers');
+ const { createChatTurnMetadataHandlers } = require('./chat-turn-metadata-handlers');
++const { createLiveDiagnosticHandlers } = require('./live-diagnostic-handlers');
+ const { createChatTurnDiagnosticHandlers } = require('./chat-turn-diagnostic-handlers');
+ const { createWorkspaceRequestHandlers } = require('./workspace-request-handlers');
+ const { resolvePrompt } = require('../prompts/prompt-registry');
+@@ -131,6 +132,7 @@
+   });
+   const harnessHandlers = createHarnessWsHandlers({ ws });
+   const chatTurnMetadataHandlers = createChatTurnMetadataHandlers({ ws, session });
++  const liveDiagnosticHandlers = createLiveDiagnosticHandlers({ ws, session });
+   const chatTurnDiagnosticHandlers = createChatTurnDiagnosticHandlers({ ws, session });
+   const workspaceRequestHandlers = createWorkspaceRequestHandlers({ ws, session, getAllClients });
+ 
+@@ -330,7 +332,7 @@
+       // semantics; an unknown diagnostic type returns no report and no
+       // metadata handling.
+       if (clientMsg.type.startsWith('chat-turn:diagnostic:')) {
+-        const handler = chatTurnDiagnosticHandlers[clientMsg.type];
++        const handler = liveDiagnosticHandlers[clientMsg.type] ?? chatTurnDiagnosticHandlers[clientMsg.type];
+         if (handler) { await handler(clientMsg); }
+         return;
+       }
+@@ -884,6 +886,7 @@
+ 
+   function handleClientClose() {
+     return runWithRequestDiagnosticBoundary(async () => {
++      liveDiagnosticHandlers.dispose();
+       console.log('[WS] client_disconnected');
+       try {
+         // Clean up thread state, including durable session suspension.
+--- predecessor/fusion-studio-server/lib/ws/live-diagnostic-handlers.js
++++ fusion-studio-server/lib/ws/live-diagnostic-handlers.js
+@@ -0,0 +1,64 @@
++'use strict';
++
++const ThreadWebSocketHandler = require('../thread/ThreadWebSocketHandler');
++const { hasTrustedShellAuthority } = require('./trusted-shell-authority');
++const { runWorkspaceOperation } = require('./workspace-operation-lease');
++const { subscribeDiagnostic } = require('../thread/live-diagnostic-service');
++const id = (value) => typeof value === 'string' && value.length > 0 && value.length <= 256;
++
++// Connection-owned sibling of stored report retrieval; subscription never activates a harness.
++function createLiveDiagnosticHandlers({ ws, session }) {
++  const subscriptions = new Map();
++  const pending = new Map();
++  let closed = false;
++  function dispose() {
++    closed = true;
++    for (const cancel of subscriptions.values()) cancel();
++    subscriptions.clear();
++    pending.clear();
++  }
++  return {
++    dispose,
++    async 'chat-turn:diagnostic:subscribe'(msg) {
++      const { subscriptionId, threadId, workspaceId } = msg;
++      if (!id(subscriptionId) || !id(threadId) || !id(workspaceId)) return;
++      subscriptions.get(subscriptionId)?.();
++      subscriptions.delete(subscriptionId);
++      const unavailable = () => {
++        try { ws.send(JSON.stringify({ type: 'chat-turn:diagnostic:stream', subscriptionId,
++          threadId, workspaceId, availability: 'unavailable' })); } catch { /* closed */ }
++      };
++      if (closed || !hasTrustedShellAuthority(session) || (!pending.has(subscriptionId) && pending.size >= 16)) { unavailable(); return; }
++      const token = {};
++      pending.set(subscriptionId, token);
++      let installed = false;
++      const binding = ThreadWebSocketHandler.captureActivationBinding(ws, session);
++      const current = () => !closed && pending.get(subscriptionId) === token && hasTrustedShellAuthority(session)
++        && ThreadWebSocketHandler.isActivationBindingCurrent(ws, binding);
++      if (!binding || binding.workspaceId !== workspaceId) { pending.delete(subscriptionId); unavailable(); return; }
++      try {
++        await runWorkspaceOperation(ws, current, async () => {
++          const thread = await binding.state.threadManager.getThread(threadId);
++          if (!current()) return;
++          if (!thread || subscriptions.size >= 16) { unavailable(); return; }
++          const cancel = subscribeDiagnostic({ ws, subscriptionId, isCurrent: current,
++            onDispose() {
++              if (pending.get(subscriptionId) === token) { pending.delete(subscriptionId); subscriptions.delete(subscriptionId); }
++            },
++            route: { workspaceId, projectRoot: binding.projectRoot,
++              workspaceEpoch: binding.workspaceEpoch, threadId } });
++          if (current()) { subscriptions.set(subscriptionId, cancel); installed = true; }
++          else cancel();
++        });
++      } catch { if (current()) unavailable(); }
++      finally { if (!installed && pending.get(subscriptionId) === token) pending.delete(subscriptionId); }
++    },
++    async 'chat-turn:diagnostic:unsubscribe'(msg) {
++      if (!id(msg.subscriptionId)) return;
++      pending.delete(msg.subscriptionId);
++      subscriptions.get(msg.subscriptionId)?.();
++      subscriptions.delete(msg.subscriptionId);
++    },
++  };
++}
++module.exports = { createLiveDiagnosticHandlers };
+--- predecessor/fusion-studio-server/lib/ws/redaction-map.js
++++ fusion-studio-server/lib/ws/redaction-map.js
+@@ -58,6 +58,7 @@
+ ];
+ 
+ const RULES = {
++  'chat-turn:diagnostic:stream': { redactPaths: ['events'] },
+   'shell-auth:challenge': { redactPaths: ['serverNonce'] },
+   'shell-auth:proof': { redactPaths: ['serverNonce', 'rendererNonce', 'proof'] },
+   client_log: { redactPaths: ['level', 'message', 'data'] },
+--- predecessor/fusion-studio-server/test/thread/live-diagnostic-dispatch.test.js
++++ fusion-studio-server/test/thread/live-diagnostic-dispatch.test.js
+@@ -0,0 +1,40 @@
++'use strict';
++jest.mock('uuid', () => ({ v4: () => require('crypto').randomUUID() }));
++jest.mock('../../lib/agent-provenance/turn-authority', () => ({ createAgentTurnAuthorityRef: async () => null, releaseAgentTurnAuthorityRef() {} }));
++jest.mock('../../lib/thread/prompt-submission-service', () => ({ claimDispatch: async () => true, noteClaimedFailure: async () => true }));
++const { threadRuntimeManager } = require('../../lib/thread/thread-runtime-manager');
++const { dispatchAcceptedTurn } = require('../../lib/thread/runtime-dispatch');
++const { subscribeDiagnostic } = require('../../lib/thread/live-diagnostic-service');
++const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
++test('real claimed runtime dispatch binds one native observer to the captured route, never selected chat', async () => {
++  const route = { workspaceId: 'dispatch-workspace', projectRoot: '/tmp/dispatch-root', workspaceEpoch: 'epoch', scope: 'project', threadId: 'owned' };
++  const runtime = threadRuntimeManager.ensureRuntime(route);
++  const frames = [], canonical = []; let native, release;
++  const paused = new Promise(r => { release = r; });
++  const ws = { readyState: 1, send: raw => frames.push(JSON.parse(raw)) };
++  const dispose = subscribeDiagnostic({ route, ws, subscriptionId: 'dispatch-sub', isCurrent: () => true });
++  const send = jest.fn(async function* (_input, options) {
++    native = options.nativeDiagnostic;
++    native.available(); native.emit({ text: 'FIRST', sourceUnits: 5, sourceBytes: 5 });
++    yield { type: 'turn_begin' };
++    await paused;
++    native.emit({ text: 'SECOND', sourceUnits: 6, sourceBytes: 6 });
++    yield { type: 'turn_end' };
++  });
++  const wire = { _harnessId: 'fixture', _sendMessage: send };
++  const session = { currentWorkspaceId: route.workspaceId, currentThreadId: 'owned', projectRoot: route.projectRoot };
++  await dispatchAcceptedTurn({ ws, session, sessions: { ...route, touchSession() {} },
++    thread: { entry: { harnessId: 'fixture' } }, threadId: 'owned', requestId: 'request', clientMsg: { user_input: 'hello' },
++    wire, runtimeKey: route, ownership: threadRuntimeManager.captureOwnership(route), workspaceBinding: route,
++    projectRoot: route.projectRoot, attachments: [], harnessInput: 'hello', turnId: 'exact-turn', receiptIdentity: {},
++    failAcceptedBeforeDispatch: jest.fn(), handleCanonicalHarnessEvent: async (event, _ws, context) => canonical.push({ event, context }) });
++  const completion = runtime.activeDrain.completion;
++  session.currentThreadId = 'other'; session.currentWorkspaceId = 'other-workspace';
++  release(); await completion; await sleep(130);
++  expect(send).toHaveBeenCalledTimes(1);
++  expect(canonical).toHaveLength(2);
++  expect(canonical.every(c => c.context.route.threadId === 'owned' && c.context.route.workspaceId === route.workspaceId)).toBe(true);
++  expect(frames.flatMap(f => f.events ?? []).map(e => e.text)).toEqual(['FIRST', 'SECOND']);
++  expect(frames.at(-1)).toMatchObject({ turnId: 'exact-turn', threadId: 'owned', terminal: true });
++  dispose(); threadRuntimeManager.runtimes.delete(threadRuntimeManager.makeKey(route));
++});
+--- predecessor/fusion-studio-server/test/ws/live-diagnostic-route.integration.test.js
++++ fusion-studio-server/test/ws/live-diagnostic-route.integration.test.js
+@@ -0,0 +1,166 @@
++'use strict';
++jest.mock('../../lib/thread/ThreadWebSocketHandler', () => ({
++  captureActivationBinding: jest.fn(), isActivationBindingCurrent: jest.fn(), cleanup: jest.fn(),
++  getState: jest.fn(), getCurrentThreadManager: jest.fn(), getCurrentThreadId: jest.fn(),
++}));
++jest.mock('../../lib/ws/thread-ws-handlers', () => ({ createThreadWsHandlers: () => ({}) }));
++jest.mock('uuid', () => ({ v4: () => require('crypto').randomUUID() }));
++const fs = require('fs');
++const os = require('os');
++const path = require('path');
++const Thread = require('../../lib/thread/ThreadWebSocketHandler');
++const { createClientMessageRouter } = require('../../lib/ws/client-message-router');
++const { beginDiagnosticTurn } = require('../../lib/thread/live-diagnostic-service');
++const { OpenCodeHarness } = require('../../lib/harness/opencode');
++const { OpenCodeJsonEventTranslator } = require('../../lib/harness/opencode/json-event-translator');
++const { createNativeDiagnosticTap } = require('../../lib/harness/opencode/native-diagnostic-tap');
++const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
++const route = { workspaceId: 'ws', projectRoot: '/fixture', workspaceEpoch: 'epoch', threadId: 'thread' };
++let owned = [];
++function connection({ epoch = route.workspaceEpoch, trusted = true, getThread = async id => id === 'thread' ? { threadId: id } : null } = {}) {
++  const frames = [];
++  const ws = { readyState: 1, bufferedAmount: 0, send: jest.fn(raw => frames.push(JSON.parse(raw))) };
++  const session = { connectionId: 'diag', currentWorkspaceId: route.workspaceId, projectRoot: route.projectRoot,
++    workspaceEpoch: epoch, workspaceBindingState: 'active' };
++  if (trusted) Object.defineProperty(session, 'connectionRole', { value: 'trusted-shell' });
++  const binding = { ...route, workspaceEpoch: epoch, state: { threadManager: { getThread } }, session };
++  ws.binding = binding;
++  const router = createClientMessageRouter({ ws, session, connectionId: 'diag', projectRoot: route.projectRoot,
++    sessions: new Map([[ws, session]]), fileExplorer: {}, wireLifecycle: {}, setSessionRoot() {}, clearSessionRoot() {},
++    getProjectRoot: () => route.projectRoot, getFusionHandlers: () => ({}), getClipboardHandlers: () => ({}),
++    getBookmarksHandlers: () => ({}), getEmojiRecentsHandlers: () => ({}), getThemeHandlers: () => ({}),
++    getSecretsHandlers: () => ({}), getScreenshotHandlers: () => ({}) });
++  const send = (type, extra = {}) => router.handleClientMessage(JSON.stringify({
++    type: `chat-turn:diagnostic:${type}`, workspaceId: 'ws', threadId: 'thread', subscriptionId: 'sub', ...extra }));
++  const result = { ws, session, router, frames, send }; owned.push(result); return result;
++}
++const event = text => ({ text, sourceUnits: text.length, sourceBytes: Buffer.byteLength(text), count: 1 });
++const begin = (turnId = 'A') => beginDiagnosticTurn(route, { turnId, drainId: 'drain-' + turnId, isCurrent: () => true });
++beforeEach(() => {
++  jest.spyOn(console, 'log').mockImplementation(() => {});
++  Thread.captureActivationBinding.mockImplementation(ws => ws.binding);
++  Thread.isActivationBindingCurrent.mockImplementation((ws, b) => ws.binding === b && b.session.currentWorkspaceId === b.workspaceId && b.session.workspaceEpoch === b.workspaceEpoch);
++});
++afterEach(async () => { for (const c of owned) await c.router.handleClientClose(); owned = []; jest.restoreAllMocks(); });
++test('public trusted subscription shares exact native turn, resets every turn and rejects retired emitters', async () => {
++  const c = connection(); await c.send('subscribe');
++  expect(c.frames[0]).toMatchObject({ availability: 'idle', reset: true });
++  const a = begin(); a.available(); a.emit(event('<thinking>**raw**</thinking>'));
++  await sleep(120);
++  expect(c.frames.at(-1)).toMatchObject({ turnId: 'A', reset: true, events: [expect.objectContaining({ seq: 1 })] });
++  const b = begin('B'); b.available(); a.emit(event('OLD')); b.emit(event('NEW'));
++  await sleep(120);
++  expect(c.frames.at(-1)).toMatchObject({ turnId: 'B', reset: true, events: [expect.objectContaining({ text: 'NEW', seq: 1 })] });
++  expect(JSON.stringify(c.frames)).not.toContain('OLD'); b.finish();
++  await c.send('unsubscribe'); expect(b.isObserved()).toBe(false);
++});
++test('untrusted, wrong workspace, foreign thread cannot subscribe or observe', async () => {
++  const c = connection({ trusted: false }); await c.send('subscribe');
++  const d = connection(); await d.send('subscribe', { workspaceId: 'foreign' }); await d.send('subscribe', { threadId: 'foreign' });
++  expect([...c.frames, ...d.frames].every(f => f.availability === 'unavailable')).toBe(true);
++  const a = begin(); expect(a.isObserved()).toBe(false); a.finish();
++});
++test('pending unsubscribe/replacement/close is fenced before installing an observer', async () => {
++  let release; const c = connection({ getThread: () => new Promise(r => { release = r; }) });
++  const pending = c.send('subscribe'); await sleep(0); await c.send('unsubscribe'); release({}); await pending;
++  const a = begin(); expect(a.isObserved()).toBe(false);
++  const next = c.send('subscribe'); await sleep(0); await c.router.handleClientClose(); release({}); await next;
++  expect(a.isObserved()).toBe(false); a.finish();
++});
++test('workspace replacement and closed/throwing/slow sockets dispose or bound observations independently', async () => {
++  const healthy = connection(), slow = connection(), throwing = connection();
++  await Promise.all([healthy.send('subscribe'), slow.send('subscribe'), throwing.send('subscribe')]);
++  slow.ws.bufferedAmount = 300000; throwing.ws.send.mockImplementation(() => { throw Error('closed'); });
++  const a = begin(); a.available();
++  for (let i = 0; i < 300; i++) a.emit(event('x'.repeat(2048)));
++  await sleep(120);
++  expect(healthy.frames.at(-1).dropped).toBeGreaterThan(0);
++  expect(healthy.frames.at(-1).events.length).toBeLessThanOrEqual(64);
++  slow.ws.bufferedAmount = 0; await sleep(120);
++  expect(slow.frames.at(-1).dropped).toBeGreaterThan(0);
++  healthy.session.currentWorkspaceId = 'next'; slow.ws.readyState = 3; await sleep(120);
++  expect(a.isObserved()).toBe(false); a.finish();
++});
++test('concurrent public subscriptions respect the limit after serialized lookup', async () => {
++  const c = connection(); await Promise.all(Array.from({ length: 20 }, (_, i) => c.send('subscribe', { subscriptionId: `s${i}` })));
++  expect(c.frames.filter(f => f.availability === 'unavailable')).toHaveLength(4);
++});
++test('single real subprocess/parser/translation with two public subscribers and configured secret redaction', async () => {
++  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'fusion-native-diag-'));
++  const cli = path.join(tmp, 'fixture.cjs'), starts = path.join(tmp, 'starts');
++  const secret = 'secret-with-"quotes"\\slash\nand-newline';
++  const native = [
++    { type: 'step_start', sessionID: 'ses_test', part: { type: 'step-start' } },
++    { type: 'reasoning', sessionID: 'ses_test', part: { type: 'reasoning', text: '<thinking>**raw**</thinking>' } },
++    { type: 'text', sessionID: 'ses_test', part: { type: 'text', text: 'VISIBLE' }, extra: secret, password: 'unknown-credential' },
++    { type: 'tool_use', sessionID: 'ses_test', part: { type: 'tool', tool: 'read', callID: 'call1', state: { status: 'completed', input: { filePath: 'a.md' }, output: 'RESULT' } } },
++    { type: 'step_finish', sessionID: 'ses_test', part: { type: 'step-finish', reason: 'stop' } },
++  ];
++  fs.writeFileSync(cli, `#!/usr/bin/env node\nrequire('fs').appendFileSync(${JSON.stringify(starts)}, 'start\\n');\nconst events=${JSON.stringify(native)};\nfor(const event of events) console.log(JSON.stringify(event));\n`); fs.chmodSync(cli, 0o755);
++  const c = connection(), d = connection({ epoch: 'second-window-epoch' }); await c.send('subscribe'); await d.send('subscribe');
++  const observer = begin('process');
++  const translate = jest.spyOn(OpenCodeJsonEventTranslator.prototype, 'translate');
++  const harness = new OpenCodeHarness(); await harness.initialize({ cliPath: cli, getConfiguredSecrets: async () => [secret] });
++  const session = await harness.startThread('thread', tmp);
++  const canonical = [];
++  for await (const value of session.sendMessage('test', { nativeDiagnostic: observer, pollIntervalMs: 1 })) canonical.push(value);
++  await sleep(130);
++  expect(fs.readFileSync(starts, 'utf8')).toBe('start\n'); expect(translate).toHaveBeenCalledTimes(native.length);
++  expect(canonical.filter(e => e.type === 'content')).toHaveLength(1);
++  for (const connection of [c, d]) {
++    const events = connection.frames.flatMap(f => f.events ?? []);
++    expect(events).toHaveLength(native.length);
++    const text = events.map(e => e.text).join('\n');
++    expect(text).toContain('<thinking>**raw**</thinking>'); expect(text).toContain('RESULT');
++    expect(text).not.toContain('unknown-credential'); expect(text).not.toContain('quotes'); expect(text).toContain('[REDACTED]');
++  }
++  await harness.dispose(); fs.rmSync(tmp, { recursive: true, force: true });
++});
++test('tap callback throws are isolated and no-observer completion skips configured-secret lookup', async () => {
++  const calls = jest.fn(async () => []);
++  const none = createNativeDiagnosticTap(undefined, { getConfiguredSecrets: calls }); none.push('ignored'); none.finish();
++  await sleep(5); expect(calls).not.toHaveBeenCalled();
++  const emit = jest.fn(() => { throw Error('observer'); });
++  const tap = createNativeDiagnosticTap({ isObserved: () => true, available() { throw Error('observer'); }, emit },
++    { getConfiguredSecrets: async () => [], workspaceRoot: '', homePath: '' });
++  expect(() => tap.push('{"text":"valid"}')).not.toThrow(); await sleep(10); expect(emit).toHaveBeenCalledTimes(1);
++});
++test('pending redaction is bounded and discarded on closed observation and turn replacement', async () => {
++  const c = connection(); await c.send('subscribe'); const a = begin();
++  let resolve; const secrets = new Promise(r => { resolve = r; });
++  const tap = createNativeDiagnosticTap(a, { getConfiguredSecrets: () => secrets, workspaceRoot: '', homePath: '' });
++  tap.push('OLD RAW'); await sleep(5); const b = begin('later'); resolve([]); await sleep(120);
++  expect(JSON.stringify(c.frames)).not.toContain('OLD RAW'); await c.send('unsubscribe'); expect(b.isObserved()).toBe(false); b.finish();
++});
++test('actual adapter finishes canonical output while configured-secret lookup is stalled or observer delivery never resolves', async () => {
++  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'fusion-native-nonblocking-'));
++  const cli = path.join(tmp, 'fixture.cjs');
++  fs.writeFileSync(cli, '#!/usr/bin/env node\nconsole.log(JSON.stringify({type:"text",sessionID:"s",part:{text:"canonical"}}));\n'); fs.chmodSync(cli, 0o755);
++  for (const stalledSecrets of [true, false]) {
++    let release; const pending = new Promise(r => { release = r; });
++    const harness = new OpenCodeHarness();
++    await harness.initialize({ cliPath: cli, getConfiguredSecrets: () => stalledSecrets ? pending : Promise.resolve([]) });
++    const session = await harness.startThread('nonblocking', tmp);
++    const translated = jest.spyOn(OpenCodeJsonEventTranslator.prototype, 'translate');
++    const observer = { isObserved: () => true, available() {}, emit: () => pending, finish() {} };
++    const events = [];
++    let timeout;
++    await Promise.race([(async () => { for await (const e of session.sendMessage('test', { nativeDiagnostic: observer, pollIntervalMs: 1 })) events.push(e); })(),
++      new Promise((_, reject) => { timeout = setTimeout(() => reject(Error('canonical stalled')), 1500); })]);
++    clearTimeout(timeout);
++    expect(events.map(e => e.type)).toEqual(['turn_begin', 'content', 'turn_end']);
++    expect(translated).toHaveBeenCalledTimes(1); translated.mockRestore(); release([]);
++    await sleep(10); await harness.dispose();
++  }
++  fs.rmSync(tmp, { recursive: true, force: true });
++});
++test('midturn subscriber does not receive pre-open native lines still awaiting redaction', async () => {
++  const c = connection(); await c.send('subscribe'); const a = begin('midturn');
++  let release; const secrets = new Promise(r => { release = r; });
++  const tap = createNativeDiagnosticTap(a, { getConfiguredSecrets: () => secrets, workspaceRoot: '', homePath: '' });
++  tap.push('BEFORE SECOND OPEN'); await sleep(5);
++  const d = connection({ epoch: 'another-epoch' }); await d.send('subscribe');
++  tap.push('AFTER SECOND OPEN'); release([]); tap.finish(); await sleep(130);
++  expect(c.frames.flatMap(f => f.events ?? []).map(e => e.text)).toEqual(['BEFORE SECOND OPEN', 'AFTER SECOND OPEN']);
++  expect(d.frames.flatMap(f => f.events ?? []).map(e => e.text)).toEqual(['AFTER SECOND OPEN']);
++});

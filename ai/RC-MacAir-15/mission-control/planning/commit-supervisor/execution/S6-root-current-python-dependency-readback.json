@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-05T03:05:21.427133+00:00",
+  "actor": "/root",
+  "python_dependency_count": 3808,
+  "mismatches": [],
+  "pre_sha256": "50bddcd416ac17f65f2be2be8fc095719a7048433f9d8246afa808b5fe3a499e",
+  "post_sha256": "8ce22ba930046e936f3d7ae106e173212fae681afd9384fc2bd5c36d372ec9fe",
+  "scope": "Current factual bindings only; actual final suite not yet executed.",
+  "node11_current_sources_equal": true,
+  "node_historical_executable_limit": "Current executable selection/binary fingerprints are supplied by current Python pre/post records; historical Node executable binary bytes were not independently bound and are not reconstructed. Retained17 source mechanics/disposable-race observations only; actual app runtime is mandatory later.",
+  "node_source_receipt_sha256": "b03274bec394555e2bca6b8f19887646708404f585c24483ba40590cd12cf417"
+}

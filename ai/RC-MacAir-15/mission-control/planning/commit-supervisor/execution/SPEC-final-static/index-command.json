@@ -1,0 +1,19 @@
+{
+  "actor": "/root",
+  "argv": [
+    "/opt/homebrew/bin/python3.12",
+    "-B",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-memory-maintenance/scripts/validate_index.py",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "started": "2026-10-05T03:23:34.783881+00:00",
+  "finished": "2026-10-05T03:23:34.815523+00:00",
+  "exit": 0,
+  "stdout_hex": "576f726b696e672d6d656d6f72792076616c69646174696f6e207061737365643a20323120646f63756d656e747320696e202f55736572732f72636375727472696768746a722e2f70726f6a656374732f66732d6465762f61692f52432d4d61634169722d31352f6d697373696f6e2d636f6e74726f6c0a",
+  "stderr_hex": "",
+  "env_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  }
+}

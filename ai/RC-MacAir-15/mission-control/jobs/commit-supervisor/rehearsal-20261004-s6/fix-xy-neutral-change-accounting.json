@@ -1,0 +1,180 @@
+{
+  "at": "2026-10-04T17:25:57.344060+00:00",
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "scope": "Current revised fixture technical/procedural allocation; no gate conclusion",
+  "entries": [
+    {
+      "id": "FIX-XY-CODE-D1",
+      "original_criterion": "Original draft label Draft report; revised X supersedes only that label, retaining draft identity and all original semantics.",
+      "actual_change": "Changed draft visible label to Review report; review/send IDs and labels remain unchanged.",
+      "reason_authority": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-original-authority.md and C/planning/commit-supervisor/execution/S6-fix-xy-event.json /X.",
+      "files": [
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js"
+      ],
+      "effect": "Current hydration and checkbox writes still use draft/review/send.",
+      "checks": "39 current-source samples, original numerical/reversal/reload/all-states oracles; two syntax checks; four-delta readback.",
+      "risk": "Browser-level revised label still needs manager-owned real runtime verification.",
+      "downstream_consumer": "Checklist iframe, Checklist Guide, fresh code/Wiki/final/runtime gates."
+    },
+    {
+      "id": "FIX-XY-CODE-D2",
+      "original_criterion": "Y requires Reset completion to uncheck all retained rows, update exact summary, persist immediately and survive ordinary reload.",
+      "actual_change": "Added one native Reset button, explicit view callback, reset mutation in existing controller and reused persistCompletion for both completion and reset. Added variable-backed local button CSS.",
+      "reason_authority": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-code-1-assignment.md and C/planning/commit-supervisor/execution/S6-fix-xy-event.json /Y; existing controller owns private fixture completion state/localStorage.",
+      "files": [
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js",
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js",
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css",
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html"
+      ],
+      "effect": "Each reset click persists [] once and synchronously renders allfalse/3 remaining of 3, retaining logical rows/IDs/labels; no listener accumulation across refresh.",
+      "checks": "Two-checked reset/reload; idempotent reset; postreset completion/reversal; all eight completion masks reset and reload; current-source module and HTML/style wiring checks.",
+      "risk": "Minimal DOM/in-memory storage does not establish native pointer/keyboard interaction or actual persisted browser profile behavior.",
+      "downstream_consumer": "Bounded Wiki rewrite and actual public-route/reset/restart smoke."
+    },
+    {
+      "id": "FIX-XY-CODE-D3",
+      "original_criterion": "Installed named worker procedure/profile with root inherited model/effort and verified effective permissions.",
+      "actual_change": "Used assigned supported default fallback; explicitly read and acknowledged exact installed SKILL and TOML developer instructions.",
+      "reason_authority": "Assignment plus session-contract.md Runtime and portability permits supported default with explicit exact paths.",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-checks.json"
+      ],
+      "effect": "Leaf scope retained; no children/external reviewers; effective danger-full-access/never came from host developer instructions, not local config inference.",
+      "checks": "Actual CWD, source/private Git roots, parent assignment and collaboration inventory; all loaded revisions recorded.",
+      "risk": "Native TOML loader/concrete model/effort values are not exposed and no such assertion is made.",
+      "downstream_consumer": "Manager lifecycle and fresh independent handoff."
+    },
+    {
+      "id": "FIX-XY-CODE-D4",
+      "original_criterion": "Meaningful current-source self-check plus retained valid required55/17 evidence; actual successful runtime must be real.",
+      "actual_change": "Added unique VM/minimal-DOM/in-memory-storage scenario and read-only postflight helpers in assigned worker output namespace; used matching35 dependencies to retain55/17 receipts.",
+      "reason_authority": "Leaf assignment explicitly separates current-source checks from later Supervisor actual runtime and directs rerun only invalidated checks.",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-scenarios.mjs",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-postflight.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-commands.json"
+      ],
+      "effect": "39 source scenarios and two syntax commands pass;4354 inventory and52 authority matches recorded; no profile/app effects.",
+      "checks": "/0 scenario, /1-/2 syntax, /3 postflight in pure raw command array.",
+      "risk": "VM Modules experimental warning is test-tool-only. Current app/build/reset before initializer, UI persistence, Wiki/watch/protection remain unverified by this worker.",
+      "downstream_consumer": "Fresh handoff may use immutable derivative of /0-/3; manager must renew original affected gates and real runtime."
+    },
+    {
+      "id": "FIX-XY-CODE-D5",
+      "original_criterion": "Every Git invocation uses GIT_OPTIONAL_LOCKS=0.",
+      "actual_change": "Initial orientation command pwd; git rev-parse --show-toplevel omitted the environment flag. Every later Git read and snapshot invocation explicitly used the flag; no Git write operation occurred.",
+      "reason_authority": "Procedural oversight disclosed; revision-only command performed before mutation.",
+      "files": [],
+      "effect": "Source and candidate index/ref/config fingerprints remain identical to fixed-first after repair; no index refresh/write observed.",
+      "checks": "Final read-only snapshot-state protected/ref equality and source index file f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966.",
+      "risk": "No observed state impact; this note cannot retroactively change the initial invocation.",
+      "downstream_consumer": "Manager procedural accounting; independent gate unaffected."
+    },
+    {
+      "id": "FIX-XY-WIKI-D6",
+      "original_criterion": "Guide must explain revised label and Reset while retaining every original fact, full exclusive version and actual quoted UTC metadata; root/Navigation exact bytes and times retained.",
+      "actual_change": "Rewrote only existing Guide; added index.html as direct native-button source owner. Created exact declared .versions/2026-10-04-095624.md with complete1620-byte previous Guide SHAa3d372eb before replacement. Current Guide SHA5f093725, quoted2026-10-04T17:06:34Z.",
+      "reason_authority": "Original authority plus X/Y Wiki steering and new immutable130 union declared absent version before creation.",
+      "files": [
+        "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md",
+        "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-095624.md"
+      ],
+      "effect": "Current reader facts updated in place; complete first fixed Guide retained; root/Navigation remain exact bytes/mtime/authoredtime.",
+      "checks": "Five raw source/document commands: public130 verification,114-dependency precheck, exclusive full preimage/write with recheck, full130 comparison and YAML/source/link checks, actual client gray-matter parse.",
+      "risk": "Source/document mechanics alone do not prove independent Wiki/final or actual built-in Wiki navigation.",
+      "downstream_consumer": "Fresh original-three-page gate, different final all5 gate and actual Wiki navigation/reload."
+    },
+    {
+      "id": "FIX-XY-WIKI-D7",
+      "original_criterion": "Installed Wiki worker procedure/profile under manager-assigned bounded leaf reuse.",
+      "actual_change": "Supported default leaf explicitly loaded exact installed Wiki Repair SKILL/TOML developer instructions plus complete assigned methods; no children.",
+      "reason_authority": "Exact leaf assignment and session/Supervisor integration fallback contracts.",
+      "files": [
+        "workers/fix-xy-wiki-1.md"
+      ],
+      "effect": "Actual CWD, host danger-full-access/never, root inheritance/no overrides acknowledged; native loader/concrete settings unexposed.",
+      "checks": "Loaded current revisions and prewrite identity acknowledgment; mechanical full candidate boundaries.",
+      "risk": "No native named-profile loader claim is available.",
+      "downstream_consumer": "Supervisor actual lifecycle and fresh independent gate."
+    },
+    {
+      "id": "FIX-XY-WIKI-D8",
+      "original_criterion": "All Git reads require GIT_OPTIONAL_LOCKS=0.",
+      "actual_change": "Wiki leaf sole initial revision-only git rev-parse root discovery omitted explicit environment; subsequent helper/runner calls explicitly supply it.",
+      "reason_authority": "Worker disclosed procedural oversight; no Git write operation requested.",
+      "files": [],
+      "effect": "No observed source/candidate index/ref/config change; exact pre/post integrity readbacks retained.",
+      "checks": "Full130 prewrite verification and later index/ref/config equality.",
+      "risk": "Read-only environment omission cannot be retroactively removed.",
+      "downstream_consumer": "Supervisor procedural accounting; current gate dependencies remain explicit."
+    },
+    {
+      "id": "FIX-XY-SUPERVISOR-D9",
+      "original_criterion": "Actual newly installed Commit Supervisor entry/profile with exact instructions and effective settings.",
+      "actual_change": "Supported default actual runtime actor explicitly loaded exact installed Supervisor SKILL/TOML developer instructions, CWD verified and host settings acknowledged.",
+      "reason_authority": "Exact root executable assignment explicitly directs supported default fallback; host named profile unavailable.",
+      "files": [
+        "activation-fix-xy.json",
+        "lifecycle-fix-xy.json"
+      ],
+      "effect": "Bounded Supervisor process and authorized children; root inheritance/no overrides; concrete model/effort/native loader metadata remain unexposed.",
+      "checks": "Prewrite loading/identity acknowledgement and actual native predecessor terminal observation.",
+      "risk": "No fabricated native-loader/settings metadata.",
+      "downstream_consumer": "Second actual owner wait and root-observed native terminal."
+    },
+    {
+      "id": "FIX-XY-SUPERVISOR-D10",
+      "original_criterion": "Actual revised UI keeps original reversal/reload/all0/all3 and proves Reset immediate persistence/reload plus canonical reset before initializer.",
+      "actual_change": "Unique job-local immutable live helper derivative retains original reversal shell reload before Reset, adds actual iframe localStorage [] assertion and revised Guide checks. Separate pre-restart helper requires priortrue/false/false/count2; separate postrestart helper requires revised labels/allfalse/count3 before initializer.",
+      "reason_authority": "Original runtime criteria plus X/Y label/reset; source inspection showed maintained helper fix mode needed explicit retained reversal reload observation.",
+      "files": [
+        "fix_xy_live_smoke.mjs",
+        "fix_xy_live_readback.mjs",
+        "fix_xy_pre_restart_readback.mjs"
+      ],
+      "effect": "Installed helpers remain unchanged; actual UI/server/CDP used later with stricter current oracles.",
+      "checks": "Source read/syntax commands; actual runtime remains later mandatory.",
+      "risk": "Syntax and helper source are not successful actual runtime evidence.",
+      "downstream_consumer": "Different final review and Supervisor actual runtime; current hashes pinned separately."
+    },
+    {
+      "id": "FIX-XY-SUPERVISOR-D11",
+      "original_criterion": "Protect source/unowned caches/index/refs and normal/Alpha, while preserving assigned root E and Supervisor J writes.",
+      "actual_change": "Initial entry comparison excluding only J flagged13 authorized root E records. Corrected comparison explicitly excludes entire assigned E and J; raw snapshots retained.",
+      "reason_authority": "Root owns disjoint E coordination/control records under exact assignment; our candidate-only effects do not own E.",
+      "files": [
+        "evidence/fix-xy-entry-protection-comparison.json"
+      ],
+      "effect": "Comparison scope aligns with authorized concurrent writers; no observed outside-J/E/source-cache/index/ref/protected-process change.",
+      "checks": "Retained entry and first protection raw snapshots; explicit excluded namespaces and outside differences recorded.",
+      "risk": "Authorized E/J writes are not protection failures; scope correction does not hide outside differences.",
+      "downstream_consumer": "Fresh pre/post runtime protection comparisons with exact same namespaces."
+    },
+    {
+      "id": "FIX-XY-SUPERVISOR-D12",
+      "original_criterion": "Preserve immutable historical predecessor and make current return fields consistent.",
+      "actual_change": "First historical checkpoint has return IN_PROGRESS and return_state COMMIT_READY_WAITING_OWNER, preserved exactly. Actual native first terminal supplied; unique current successor checkpoint uses aligned return/return_state.",
+      "reason_authority": "Exact root confirms actual first native terminal before labeled X/Y; preserving first history prohibits retroactive rewriting.",
+      "files": [
+        "checkpoint-fix-xy.json"
+      ],
+      "effect": "Historical alias discrepancy disclosed without reopening intake or treating intentional wait as interrupted execution.",
+      "checks": "Historical checkpoint/packet hashes and native terminal evidence; current unique checkpoint readback.",
+      "risk": "Readers must use actual first native terminal and qualified history rather than the old alias alone.",
+      "downstream_consumer": "Current second owner operation packet and later separately authorized recovery."
+    },
+    {
+      "id": "FIX-XY-REVIEW-D13",
+      "original_criterion": "Fresh read-only original-three-page reviewer, all Git reads optional-lock-free, exact current dependencies and no prior diagnoses.",
+      "actual_change": "Reviewer disclosed initial revision-only Git root read without explicit GIT_OPTIONAL_LOCKS=0 and one corrected in-memory comparison helper error; subsequent current readbacks succeeded. Read-only VM source verification reproduced39 samples;55/17 retained, no runtime or file writes.",
+      "reason_authority": "Procedural disclosures in actual fresh native terminal; original affected review permits independent source mechanics.",
+      "files": [],
+      "effect": "No observed source/candidate index/ref/config/files/profile effects; current130/58/config/status/35 dependency equality recorded.",
+      "checks": "Fresh terminal direct metadata/link/preimage/recovery/current-state checks and read-only source scenario exit0.",
+      "risk": "Initial invocation omission preserved honestly; corrected in-memory error does not replace final successful readback.",
+      "downstream_consumer": "Supervisor classification and different fresh final current coverage; no prior gate verdict supplied to final manager."
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "fusion-studio-client/e2e/diagnostics-render.spec.ts": {
+    "after": "9381b0ab2ce3392536875a13f12b2621e525dd60f04b1f341b8e9c97875a9a58",
+    "before": null
+  },
+  "fusion-studio-client/e2e/stream-diagnostics.spec.ts": {
+    "after": "df3fb4bd6245fe616f21c9cac9af21a765fe2457332cda0ddaf976c3462bd514",
+    "before": null
+  },
+  "fusion-studio-client/e2e/worksurface-harness.ts": {
+    "after": "15a7bea09faf001dd00cdb1d46059dea050cc2bd1e1d35bfa968510da719abb5",
+    "before": "d9223de5751c5978cf6ed46b73b208f8f985147680ce7dd4b7c4f0b531ddd7b3"
+  },
+  "fusion-studio-client/src/components/chat/ChatAreaHeader.tsx": {
+    "after": "494519b578e547e6c1aac908a2b2449e2543b86791b0694458372aeb5b9acebe",
+    "before": "369e9a1f2c324d281a02bde9bfb984d8e4a57eeb6460dbdcb466c9cd34a3418f"
+  },
+  "fusion-studio-client/src/components/chat/ConnectedChatHeader.tsx": {
+    "after": "0e0801b81058e21d14ec2e7fadb1ae744db82706c55ed9243d82b283127f77fe",
+    "before": "11b89a28c36aed695f0b7709c17c8ae5bd5b0d6314797879225639ac0aac5390"
+  },
+  "fusion-studio-client/src/components/chat/chatSurfaceContract.ts": {
+    "after": "bf88bee1671800ac2eae5f7486a18d5fb9432128a08cdfa80249dd0fae8dd09c",
+    "before": "20ec00158b54874044b5dc40a2b4c08aa4fae8e9d93072d3e4d4ec42c99b2c20"
+  },
+  "fusion-studio-client/src/components/chat/useChatSessionActions.ts": {
+    "after": "09eee115f44535b6b52260da0c9c48dd16029993eac1fbf2ad0222d8743a256a",
+    "before": "5cb75dcda8b1fb1723b1155e64f5221448a65aaf899be0241d97162a81f9e6f9"
+  },
+  "fusion-studio-client/src/components/diagnostics/ConnectedDiagnostics.tsx": {
+    "after": "77036f9b547a03b5b792d2d518b4ea1880944db28d8d0933629de4bd384433e1",
+    "before": null
+  },
+  "fusion-studio-client/src/components/diagnostics/DiagnosticPanel.tsx": {
+    "after": "70310e8e346c5c6f1882c159c1a30fc011dc96334c1894004401e97340166f14",
+    "before": null
+  },
+  "fusion-studio-client/src/components/diagnostics/diagnostics.css": {
+    "after": "f4f6111bb81c9e85b080878277e82772bd725d22a94da9508bc1b6539c0cb21b",
+    "before": null
+  },
+  "fusion-studio-client/src/components/diagnostics/useDiagnosticTabAdapter.tsx": {
+    "after": "28eabc86852e6c49a2d388c7b33656f99706485f6dfcab76c9193a1ba4c15efc",
+    "before": null
+  },
+  "fusion-studio-client/src/components/view-tabs/viewTabAdapters.ts": {
+    "after": "f83d1ca89fc045e6384c5a9e7aac2692505608701f31f70f49e293ec46e19014",
+    "before": "275579b0c1cb4a9ee042543238bd62957a93e19181d5bfae28ce2c04f8bc368b"
+  },
+  "fusion-studio-client/src/lib/diagnostics/stream.ts": {
+    "after": "b90d969d815076e67afc415e620d9a7ea9458ea70308a0dd0ac6b2967b48b04b",
+    "before": null
+  },
+  "fusion-studio-client/src/lib/diagnostics/tabs.ts": {
+    "after": "eb1e9bbb28ea46d6b418a627811621e6305209b9bf2532e2eee3a8b0f7c64091",
+    "before": null
+  },
+  "fusion-studio-client/src/lib/diagnostics/types.ts": {
+    "after": "3b2c9a0b2ca0c50662314046b092b86d546e6232967ea6a6c3f6d0c551da0106",
+    "before": null
+  },
+  "fusion-studio-client/src/lib/reveal/progress.ts": {
+    "after": "4d9f6e381e6491723806a77e142a135c07e279ada62ded1ccb0f06700203dfd0",
+    "before": "84d272a3b7a36da8e77936e3f22947ab7fad98672678f8646e471d5b619f6e96"
+  },
+  "fusion-studio-client/src/lib/ws/stream-handlers.ts": {
+    "after": "3e3ee79eec79bede2922b46437e9a8636a67ee57dfb526bfb68260abb6d6627c",
+    "before": "6160903e6e843320b00655f41e84316922698e48be3a754b844af0a1d6cbabe0"
+  },
+  "fusion-studio-client/src/types/websocket.ts": {
+    "after": "2ae87a03b13564215f8419d457012aaf4299653ebd359b94ce8fbe9d8c4f24a5",
+    "before": "062f184e231136949ff286ce3c89f39fa136a0960f455e6d466dc41c23769bcd"
+  },
+  "fusion-studio-server/lib/harness/opencode/harness-diagnostic-redactor.js": {
+    "after": "4a17671a9dd674ba6a4a55d5db08a378f2a3560eb8c01fadbe83ab12ed92af38",
+    "before": "89d06a0e928ac25de6f53ca6972eaf5b7b5c4eaae283390921e4285fcc654db6"
+  },
+  "fusion-studio-server/lib/harness/opencode/index.js": {
+    "after": "a6d43c4cbe18324d384b88c2c802fcc68b6dc2125d9510d24e110b4d46ac77fa",
+    "before": "14c6dff6c5a83bd3f1c7008547efb6720527c94f88c75ebd47b1047ddd992afb"
+  },
+  "fusion-studio-server/lib/harness/opencode/json-line-parser.js": {
+    "after": "53205f7927c30e2be6de9157587b0ebaadbe0b0b7e731c9b99ec3c8f472c970f",
+    "before": "675467bcfe968e36182b7daa74d388a2a1b10ee83b539b8294fa307331bee245"
+  },
+  "fusion-studio-server/lib/harness/opencode/native-diagnostic-tap.js": {
+    "after": "90fde114011adc34d5916a09604395c9d02f1f924b5dc31302dc7d91191d297e",
+    "before": null
+  },
+  "fusion-studio-server/lib/thread/live-diagnostic-service.js": {
+    "after": "f9434147f5d280bd7811cd78f676fa991d5bf620cda7cd1b15d7da624d6f46e8",
+    "before": null
+  },
+  "fusion-studio-server/lib/thread/runtime-dispatch.js": {
+    "after": "c70060a511e611dd53516bee186f66ed30e84b59b25624893976b6806f3c2558",
+    "before": "b2df2d549b30d93d3c571ac4a6ae4d7f5fe12e7b8f2ff2a38c41a523fee5ae20"
+  },
+  "fusion-studio-server/lib/thread/runtime-identity.js": {
+    "after": "e8de9ea5b587669f4b5ee9944d5fc87ae390890e1f55bb96b80fc8d8d20bfef6",
+    "before": "8ef80724ed2f4c062f3c9cf7ad670d4fe738f21753ec00cfa91df525be4301ee"
+  },
+  "fusion-studio-server/lib/ws/client-message-router.js": {
+    "after": "1a6faeeaf5f667cfad04804d275f67c748e436c76d5e267e3ad5f3572e153707",
+    "before": "a56d1c6c23d351a694cc69374cf206dcba72a2ca0e06c3a73af97a45574d957c"
+  },
+  "fusion-studio-server/lib/ws/live-diagnostic-handlers.js": {
+    "after": "838d3c3e3aea519a973253348e2d97b0bc94892b7766f5cc6f95500f35cbb8e9",
+    "before": null
+  },
+  "fusion-studio-server/lib/ws/redaction-map.js": {
+    "after": "1aa9adf3f0267d2cb26ab02d77e52d81b140e6a0caa47c8577304593b4ef2f95",
+    "before": "497fc71aa9a24e4d6d106ef6a72fc96daa8183e9cec7928788df41644bf53716"
+  },
+  "fusion-studio-server/test/thread/live-diagnostic-dispatch.test.js": {
+    "after": "f7b2843915acfac97570d2fbe6e8a66f5e83c98f638ff86fc93ba2c8b6efb82e",
+    "before": null
+  },
+  "fusion-studio-server/test/ws/live-diagnostic-route.integration.test.js": {
+    "after": "7aa74c5f3691ad99d5f8bf6e7502a998e3b878ec8e9bf6b6f12f0916a03adee8",
+    "before": null
+  }
+}

@@ -1,0 +1,148 @@
+{
+  "caseId": "R4-LATE-DRAFT-RECOVERY",
+  "status": "blocked",
+  "authenticatedShell": true,
+  "startupPanelRetry": 0,
+  "fixture": "F4",
+  "owner": "SPEC-02/02C",
+  "missingContracts": [
+    "request-id",
+    "receipt-persistence",
+    "editable-draft-before-late-ack"
+  ],
+  "assertionsEvaluated": false,
+  "statusEndpointFabricated": false,
+  "promptContentRecorded": false,
+  "originalSnapshotSha256": "4ce9002c84fcc3f08590016e4f22ae3de343a84330390c0e552bd3d4eef1c702",
+  "revisedDraftSha256": "e5ef498008cb23ddf9fb48dc036369ee68bd571f186b67ec5e13818780a8bb9e",
+  "transport": {
+    "beforeRestart": {
+      "sentTypes": {
+        "shell-auth:proof": 1,
+        "office:palette_get": 1,
+        "state:get": 1,
+        "thread:list": 8,
+        "screenshot:list": 1,
+        "file_content_request": 53,
+        "set_panel": 3,
+        "file_tree_request": 64,
+        "state:set": 5,
+        "thread:open-assistant": 1,
+        "thread:open": 1,
+        "state:worksurface_get": 1,
+        "thread:warm": 2,
+        "prompt": 1,
+        "screenshot:capture": 1,
+        "screenshot:request": 1,
+        "state:worksurface_put": 1,
+        "workspace:state_push": 2
+      },
+      "receivedTypes": {
+        "shell-auth:challenge": 1,
+        "connected": 1,
+        "workspace:init": 1,
+        "panel_config": 1,
+        "shell-auth:authenticated": 1,
+        "thread:list": 13,
+        "screenshot:list": 1,
+        "panel_changed": 3,
+        "file_content_response": 53,
+        "office:palette_state": 1,
+        "file_tree_response": 64,
+        "state:result": 6,
+        "thread:created": 1,
+        "thread:opened": 2,
+        "wire_ready": 1,
+        "state:worksurface_result": 2,
+        "screenshot:updated": 1,
+        "screenshot:data": 1,
+        "message:sent": 1,
+        "turn_begin": 1,
+        "thread:state_changed": 2,
+        "step_begin": 1,
+        "thinking": 1,
+        "tool_call": 1,
+        "tool_call_args": 1,
+        "tool_result": 1,
+        "status_update": 1,
+        "content": 3,
+        "turn_end": 1,
+        "exchange_metadata": 1,
+        "chat-turn:saved": 1
+      },
+      "promptRequestIds": [
+        null
+      ],
+      "acceptanceRequestIds": [
+        null
+      ],
+      "statusRequests": []
+    },
+    "afterRestart": {
+      "sentTypes": {
+        "shell-auth:proof": 1,
+        "office:palette_get": 1,
+        "state:get": 1,
+        "thread:list": 7,
+        "screenshot:list": 1,
+        "file_content_request": 51,
+        "set_panel": 1,
+        "screenshot:request": 1,
+        "file_tree_request": 63,
+        "state:set": 2,
+        "state:worksurface_get": 2,
+        "thread:open": 1
+      },
+      "receivedTypes": {
+        "shell-auth:challenge": 1,
+        "connected": 1,
+        "workspace:init": 1,
+        "panel_config": 1,
+        "shell-auth:authenticated": 1,
+        "office:palette_state": 1,
+        "thread:list": 8,
+        "screenshot:list": 1,
+        "screenshot:data": 1,
+        "panel_changed": 1,
+        "file_content_response": 51,
+        "state:result": 3,
+        "file_tree_response": 63,
+        "state:worksurface_result": 2,
+        "thread:opened": 1
+      },
+      "promptRequestIds": [],
+      "acceptanceRequestIds": [],
+      "statusRequests": []
+    }
+  },
+  "observations": {
+    "exactDuplicateReplayed": false,
+    "mismatchedFingerprintReplayed": false,
+    "idempotentAcceptanceCount": 1,
+    "acceptanceBeforeEdit": 1,
+    "resendGatedBeforeEdit": false,
+    "visibleRecoveryStatusBeforeEdit": false,
+    "switchedViewAndRemounted": true,
+    "restarted": true,
+    "preRestartDraftRetained": true,
+    "persistence": {
+      "exchangeCount": 1,
+      "activityCount": 1,
+      "activityTurnIds": [
+        "91c4c94f-be6d-4771-97a6-3439a5c97a27"
+      ],
+      "receiptTables": [],
+      "receiptRows": 0
+    },
+    "providerDispatchCount": 1,
+    "userBubbleCount": 1
+  },
+  "violations": [],
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": null
+}

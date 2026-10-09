@@ -1,0 +1,72 @@
+{
+  "runId": "chat-arch-1790248760785-a2c9cfb94d",
+  "status": "failed",
+  "results": [
+    {
+      "id": "R2-NO-ENQUEUE",
+      "code": 0,
+      "signal": null,
+      "pid": 7601,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 6952
+    },
+    {
+      "id": "R3-LOST-ACK-STATUS",
+      "code": 0,
+      "signal": null,
+      "pid": 8676,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 7905
+    },
+    {
+      "id": "R3-RECONNECT-UI",
+      "code": 0,
+      "signal": null,
+      "pid": 9689,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 11122
+    },
+    {
+      "id": "R4-DISTINCT-ATTEMPTS",
+      "code": 0,
+      "signal": null,
+      "pid": 11097,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 10898
+    },
+    {
+      "id": "R4-DISTINCT-RECEIPTS",
+      "code": 0,
+      "signal": null,
+      "pid": 12461,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 11598
+    },
+    {
+      "id": "R4-LATE-DRAFT-RECOVERY",
+      "code": 1,
+      "signal": null,
+      "pid": 13887,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 26874
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "R4-LATE-DRAFT-RECOVERY exited 1",
+    "stack": "Error: R4-LATE-DRAFT-RECOVERY exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:446:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

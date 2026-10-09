@@ -1,0 +1,31 @@
+{
+  "started": "2026-10-04T21:14:38.090549+00:00",
+  "finished": "2026-10-04T21:14:38.125585+00:00",
+  "command": [
+    "git",
+    "-C",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+    "status",
+    "--porcelain=v1",
+    "-z",
+    "--untracked-files=all"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "exit_code": 0,
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "GIT_LITERAL_PATHSPECS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "git_environment": "All inherited GIT_* stripped",
+  "stdout": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/before-candidate-status.stdout",
+    "sha256": "b4c1b7d8d6b9e8a52c9213f0b600c6697aac94a327e7b53d30aec333012ef134",
+    "size": 6973
+  },
+  "stderr": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/before-candidate-status.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  }
+}

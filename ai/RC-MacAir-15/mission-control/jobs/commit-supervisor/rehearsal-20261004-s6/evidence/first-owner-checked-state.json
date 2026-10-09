@@ -1,0 +1,43 @@
+{
+  "kind": "ACTUAL_PRIVATE_CHECKLIST_READBACK",
+  "mode": "leave-completion",
+  "started": "2026-10-04T16:04:25.294Z",
+  "profile": "/private/tmp/mc-s6-commit-supervisor-20261004/profile",
+  "candidate": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "machine": "MC-S6",
+  "samples": [
+    {
+      "at": "2026-10-04T16:04:25.425Z",
+      "action": "deliberately leave Draft completion checked",
+      "summary": "2 remaining of 3",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "at": "2026-10-04T16:04:25.613Z",
+      "action": "ordinary shell reload retains owner-test checked state",
+      "summary": "2 remaining of 3",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        false,
+        false
+      ]
+    }
+  ],
+  "deliberately_persisted_for_later_fix_restart_reset": true,
+  "sustainedConnected": true,
+  "finished": "2026-10-04T16:04:27.908Z"
+}

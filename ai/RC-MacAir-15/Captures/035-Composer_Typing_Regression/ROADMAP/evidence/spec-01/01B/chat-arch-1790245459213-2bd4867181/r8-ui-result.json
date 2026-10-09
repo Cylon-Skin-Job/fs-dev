@@ -1,0 +1,92 @@
+{
+  "status": "failed",
+  "flows": {
+    "create": {
+      "groupId": "tg-04100806-e11d-42c1-9192-149ce22b6328",
+      "threadId": "2026-09-24T03-24-23-332",
+      "mirror": true
+    },
+    "send": {
+      "accepted": true,
+      "receipt": true,
+      "exchangeId": 1
+    },
+    "stop": {
+      "partial": true,
+      "reason": "interrupted",
+      "threadId": "2026-09-24T03-24-23-332"
+    }
+  },
+  "screenshots": [],
+  "frameCounts": {
+    "shell-auth:challenge": 2,
+    "connected": 2,
+    "workspace:init": 2,
+    "panel_config": 3,
+    "shell-auth:authenticated": 2,
+    "screenshot:list": 2,
+    "file_content_response": 76,
+    "error": 3,
+    "workspace:create_manifest": 1,
+    "workspace:created": 1,
+    "workspace:added": 1,
+    "workspace:registry_changed": 1,
+    "workspace:switched": 1,
+    "state:result": 8,
+    "office:palette_state": 2,
+    "file_tree_response": 66,
+    "thread:list": 5,
+    "panel_changed": 2,
+    "thread:created": 1,
+    "thread:opened": 2,
+    "state:worksurface_result": 1,
+    "wire_ready": 1,
+    "message:sent": 1,
+    "turn_begin": 1,
+    "thread:state_changed": 2,
+    "step_begin": 1,
+    "thinking": 1,
+    "tool_call": 1,
+    "tool_call_args": 1,
+    "tool_result": 1,
+    "status_update": 1,
+    "content": 65,
+    "screenshot:updated": 1,
+    "screenshot:data": 1,
+    "turn_end": 1,
+    "wire_disconnected": 1
+  },
+  "errors": [
+    {
+      "type": "error",
+      "message": "No active workspace"
+    },
+    {
+      "type": "error",
+      "message": "Message handling failed"
+    },
+    {
+      "type": "error",
+      "message": "No active workspace"
+    }
+  ],
+  "consoleErrors": [
+    "[SharedStyles] Failed to load workspace styles: Error: Panel \"__settings__\" is not filesystem-backed\n    at Proxy.R (fusion-shell://app/assets/index-LonvtJmn.js:124:81855)\n    at l (fusion-shell://app/assets/index-LonvtJmn.js:124:75968)\n    at WebSocket.xe (fusion-shell://app/assets/index-LonvtJmn.js:124:76198)",
+    "[WS] handler_error",
+    "[WS] handler_error",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "[WS] handler_error"
+  ],
+  "failure": {
+    "message": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('menu', { name: 'Chat options' }).getByRole('menuitem', { name: 'Move Chat to Side Chat' })\u001b[22m\n\u001b[2m    - locator resolved to <button disabled type=\"button\" tabindex=\"-1\" role=\"menuitem\" class=\"rv-menu-item\" aria-disabled=\"true\" data-menu-item-id=\"chat-surface-main-1-cbfa84cc-2e2e-4cc6-9a2c-cdcc6258eaf6-move\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    56 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not enabled\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n",
+    "stack": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('menu', { name: 'Chat options' }).getByRole('menuitem', { name: 'Move Chat to Side Chat' })\u001b[22m\n\u001b[2m    - locator resolved to <button disabled type=\"button\" tabindex=\"-1\" role=\"menuitem\" class=\"rv-menu-item\" aria-disabled=\"true\" data-menu-item-id=\"chat-surface-main-1-cbfa84cc-2e2e-4cc6-9a2c-cdcc6258eaf6-move\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    56 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not enabled\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n    at /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r8-ui-electron.mjs:64:116"
+  },
+  "lingering": [],
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  }
+}

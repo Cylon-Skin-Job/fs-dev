@@ -1,0 +1,58 @@
+{
+  "status": "failed",
+  "measurementStarted": false,
+  "failure": {
+    "name": "Error",
+    "message": "screenshot bootstrap did not quiesce: {\"sequence\":887,\"overflow\":0,\"lifecycle\":[],\"complete\":false}",
+    "code": null,
+    "observation": null
+  },
+  "ownedFocus": {
+    "pid": 7683,
+    "windowId": 1,
+    "events": [
+      {
+        "type": "installed",
+        "at": 1790383381342,
+        "focused": false,
+        "visible": true,
+        "minimized": false
+      },
+      {
+        "type": "focus",
+        "at": 1790383381389,
+        "focused": true,
+        "visible": true,
+        "minimized": false
+      },
+      {
+        "type": "show",
+        "at": 1790383381549,
+        "focused": true,
+        "visible": true,
+        "minimized": false
+      },
+      {
+        "type": "hide",
+        "at": 1790383382601,
+        "focused": true,
+        "visible": true,
+        "minimized": false
+      },
+      {
+        "type": "blur",
+        "at": 1790383382885,
+        "focused": false,
+        "visible": true,
+        "minimized": false
+      }
+    ],
+    "overflow": 0
+  },
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "lingeringOwnedPids": []
+}

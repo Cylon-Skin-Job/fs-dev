@@ -1,0 +1,17 @@
+{
+  "runId": "boot-1789987825502-49ee9169",
+  "mode": "--all",
+  "status": "observed-red",
+  "port": 58628,
+  "testResult": {
+    "code": 1,
+    "signal": null,
+    "pid": 12177,
+    "timedOut": false,
+    "interrupted": false,
+    "leakedOwnedPids": [],
+    "elapsedMs": 85185
+  },
+  "failure": null,
+  "ownedRunRootRemoved": true
+}

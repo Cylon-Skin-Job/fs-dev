@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "R4-DUPLICATE-MISMATCH",
+      "name": "R4 authenticated exact duplicate and mismatched fingerprint durable admission probe"
+    },
+    {
+      "id": "R4-LATE-DRAFT-RECOVERY",
+      "name": "R4 delayed original ACK, editable unknown state, remount/restart draft isolation"
+    }
+  ],
+  "fixture": "fresh disposable profile, migrated fusion.db, fresh empty Capture workspace",
+  "adapter": "canonical deterministic OpenCode iterator at 20 text frames/second",
+  "scenarioInventory": "R1-R9 concrete IDs and later owning contracts in scenario-inventory.mjs",
+  "enforcementGroup": [
+    "R2-DISCONNECT-BEFORE-CLICK",
+    "R2-ENQUEUE-THROW-RACE",
+    "R3-LOST-ACK-STATUS",
+    "R3-RECONNECT-UI",
+    "R4-DISTINCT-ATTEMPTS",
+    "R4-DISTINCT-RECEIPTS",
+    "R4-DUPLICATE-MISMATCH",
+    "R4-LATE-DRAFT-RECOVERY"
+  ]
+}

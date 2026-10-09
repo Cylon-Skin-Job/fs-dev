@@ -1,0 +1,52 @@
+{
+  "at": "2026-09-27T03:23:24.483834+00:00",
+  "runId": "chat-arch-1790478658279-b18e60618b",
+  "rawSha256": "bf66f6e6b232ea757e54621a0dcdb9285c90dfaed5dc8fe901c1f24230221b45",
+  "status": "diagnostic-complete",
+  "ownerAcceptance": false,
+  "events": 204,
+  "overflow": 0,
+  "truncated": 0,
+  "observerRemoved": true,
+  "durationMs": 600037,
+  "case": {
+    "id": "R9-NATIVE-COMPOSITION-CONTROL",
+    "code": 0,
+    "signal": null,
+    "pid": 31895,
+    "timedOut": false,
+    "interrupted": false,
+    "leakedOwnedPids": [],
+    "elapsedMs": 608115
+  },
+  "ownedRootExists": false,
+  "pidsAlive": {
+    "31883": false,
+    "31895": false,
+    "32601": false
+  },
+  "protected55084Alive": true,
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "lingering": [],
+  "sourceFreezeVerification": "Builder completion receipt verifies1955 source/200 build unchanged; root had independently verified these identities before launch. Product repair begins only after completion; no claim of current B19 equality after B20 starts.",
+  "keyEvidence": {
+    "composingEnterPreventedEventIds": [
+      66,
+      144
+    ],
+    "composingEscapeBeforeBlurEventIds": [
+      46,
+      101
+    ],
+    "controlComposingKeysUnpreventedEventIds": [
+      9,
+      28,
+      81,
+      121
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "result": "PASS",
+  "fixtures": [
+    {
+      "label": "redImage",
+      "png_sha256": "4ff6ab670a58c14270e034e2090d9a432caa263a14e0a25785386b0c12f880b5",
+      "valid_crc": true,
+      "width": 1,
+      "height": 1,
+      "rgba_scanline": [
+        0,
+        255,
+        0,
+        0,
+        255
+      ],
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "label": "blueImage",
+      "png_sha256": "6a34118ba2e0bf5da5ab14cb63b121e2e8b2987a876668a9b2f9c30e1357470b",
+      "valid_crc": true,
+      "width": 1,
+      "height": 1,
+      "rgba_scanline": [
+        0,
+        0,
+        0,
+        255,
+        255
+      ],
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    }
+  ],
+  "limits": "Encoded test PNGs, not native captures"
+}

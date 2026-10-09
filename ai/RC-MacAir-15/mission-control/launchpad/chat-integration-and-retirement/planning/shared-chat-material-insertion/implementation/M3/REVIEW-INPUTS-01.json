@@ -1,0 +1,293 @@
+{
+  "at": "2026-10-07T22:47:00.529160+00:00",
+  "gate": "builder-owned M3 implementation and immediate integration",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "memory_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement",
+  "package": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion",
+  "checkout": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev",
+  "branch": "codex/chat-material-01",
+  "HEAD": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "candidate": "sha256:65b324647b7e52f0426f7b2005849d053f4f239420fab07c848170b21ec1d3f3",
+  "currentSourceSealSha256": "35cda972a106468eaa279c60da9ef51fc04ec23333f03de4226269b84e14ad07",
+  "sourcePaths": 65,
+  "currentSourceMismatches": [],
+  "authorities": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/SPEC.md",
+      "sha256": "063562058007928d07477913a1ba05e43a2d191d6e42a0e9cb1d6a6e5c71659e"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/TICKET.md",
+      "sha256": "730b6c92efa396eeb3abdc5ee6c522c692c790db9c288346d141ad57817e0074"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/OWNER-REQUEST.md",
+      "sha256": "71dd8441f4ee79f9c0688ec335de0a553d9dfd6f4a6b2b60a93d8f222a529c1d"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/OWNER-APPROVAL.md",
+      "sha256": "459e03d05c8e2144db863cb9e31d46586e80fe2912641ee7157abbfae9a4b942"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/CANDIDATE.json",
+      "sha256": "a13356706562cef0be0ce914e21f889f10fad3766873fe27909e976363c30541"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3-DISPATCH.md",
+      "sha256": "e1df476ad24b4a9c11a9b72d7a086c3d0da575c1c1f45fd1508bec765c9c54b7"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/reports/RELEASE-VALIDATION-01.md",
+      "sha256": "de3ae8e92601794105b436a3610949ea7ebd2eabe145ac1be6c808e7e2c35754"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/reports/ACCEPTED-SYNTHESIS.md",
+      "sha256": "f7186c2c6e353c2f0134d65b6e444715e670dbb526ad5168d7d3bbbeb2e911e4"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M1/ACCEPTANCE.json",
+      "sha256": "8aa8348999d710d3fbbbf7bfb8cdafacbef2e02070f03cba3c576ac8cb59cd75"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/ACCEPTANCE.json",
+      "sha256": "d5a92484ce3351ccc9fb46d94b533a878f1a6f1551dea052de77480b90c1b315"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/SOURCE-SEAL.json",
+      "sha256": "7177c3cc452e4391e3c5e31bb682532c358b7ade99e252a4cbc54b3029b82883"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/orchestrator-checks/acceptance-inputs-01.json",
+      "sha256": "9eb615ac65b246aec8020dfbe5f4d7c6ab5ab10905c29a7bbe496f0b99a3b000"
+    }
+  ],
+  "procedures": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/session-contract.md",
+      "sha256": "d82d5a815a94f8c27b64d1d90aa0085790e3d98408c011e86d6126dd1bd9b570"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-slice-builder/SKILL.md",
+      "sha256": "c4ca4bf6f739ea4bea811b6de41cbea6685ad0abd89543f77df33a8e95ccca94"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-review-gate/SKILL.md",
+      "sha256": "cc738b3ecebca875b1f6d4460d26c3185dd3b3dd2a93550086742995a0c6c56a"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/AGENTS.md",
+      "sha256": "41dc4e9dc4d58e7505cb6fc37b500129502231293894b5f90eda9398315e001d"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/fusion-studio-server/AGENTS.md",
+      "sha256": "00d56bfd0e50a512bd1d8e76110c6882ce7d9cbdac58782839ee6426c1d54fd2"
+    }
+  ],
+  "standardsAndChatOverview": [
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md",
+      "sha256": "de3995c68ae84f3b0fa389c6af0327e21dd08f30ac9ffbc7548b76f80ac393d7"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/001-Architecture_Routing/PAGE.md",
+      "sha256": "4c5fcbf62912c9e8ff6d3d0e1ec07016145e1f1c90c792a162dfcc3ca1b0bfba"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/002-Frontend_UI/PAGE.md",
+      "sha256": "18a093c333a610ec8d2c77661b29744f1fae6e9ca8f4e113148fee10a0d9fc18"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/PAGE.md",
+      "sha256": "2b4e55ed7580659b35a91d13f5a7b781960c659868027dd8b6ea6f79e609b105"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/004-WebSocket_Protocol/PAGE.md",
+      "sha256": "5b77528cec69d60c11c0487a349ec1cfb0b9a47eb69c213dedd1fbf1797dbad6"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "sha256": "25689bb9d2540fff061040ed14f5dc9789a4d9ceaa49662a4e0a1e448f5b0ee0"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/006-Harness_Adapters/PAGE.md",
+      "sha256": "5ece90e88dac136f7ec464b0219a3eb242b7837d118dbbdaba57de673b8a5919"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md",
+      "sha256": "bd3e7be468289ac0a6ee6502cd8b9fc340f03fd7568deb59370ed00cc3b2a7a3"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/008-Testing_And_Smoke_Slices/PAGE.md",
+      "sha256": "e7319750bd27b7ccdad8e5e451b9779044e8fc7a713fc6d461113b409b39018d"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/005-User_Profile_Preferences_and_Design_Philosophy/PAGE.md",
+      "sha256": "45fa9f630563d79935d5a461b308c823c0db3ded5c23817ba6d4c8a06c794ed5"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md",
+      "sha256": "696afb2d3ec027256e783957c3461eb03300db0b97b34b3e62162977c22ed42f"
+    }
+  ],
+  "wikiProcedureRoutes": [
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/AGENTS.md",
+      "sha256": "9d353611f3b5ac94efa92048d1c0f8879d71786bcf1b641f915a0f695f5ef697"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/001-Style_Guide/PAGE.md",
+      "sha256": "28ae2301be3115e22b6d69691fb5208e2625945998393071874b9a1fbee70629"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/002-Creating_Wikis/PAGE.md",
+      "sha256": "5e2c32b2c6e8ec2106ed9660f019525bc87f62f551f29eec368e85feaf037dc0"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/003-Updating_Wikis/PAGE.md",
+      "sha256": "ec1739e2d693c07c5691fa3624b200915ea1c65257a09b75c853ff1c181a1a78"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/PAGE.md",
+      "sha256": "2ea02f01a6b71621e59c7b198e53af019194cc4620efdb0ffd8a7199cdadc637"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/005-User_Profile_Preferences_and_Design_Philosophy/PAGE.md",
+      "sha256": "45fa9f630563d79935d5a461b308c823c0db3ded5c23817ba6d4c8a06c794ed5"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md",
+      "sha256": "b8e14ae251fa373b559f97b67db5a3b3d2288f2b5d1893d3dbbb2900bd74566e"
+    }
+  ],
+  "reports": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/BUILDER-REPORT.md",
+      "sha256": "85d6ae1736dfb1a0eb0725501e64191978cf2ed1df4338727dc1a0ecf16613b3"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/CRITERIA.md",
+      "sha256": "6414289961339ed8c1ee35a13158b6555ebd615cab70b8072d3da789c9f232a7"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/CALLER-INVENTORY.md",
+      "sha256": "ebffd266d3c5c8286d3df98ea4484988c5b9f82e32666ba16cf7e8184d38a990"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/CALLER-SWEEP.json",
+      "sha256": "92698c32cbce92ba1fd085dc71315394f792e4fd83eecddab352af53078884ae"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/caller-sweep.raw.txt",
+      "sha256": "787d9f8805d476c868920b8106867f25ce8faab7878e6daaf662b2b5cc8fa553"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/DEVIATIONS.md",
+      "sha256": "118971edb3d08647c91c5b6d24ffd7b1cbfc5ccd3d64ef27468fc06bb857cd65"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/SELF-REVIEW.md",
+      "sha256": "d82b015b5d121e07d956e8382e659f614ecbad6f8f28871efeb77bb8c1173434"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/CHECKS.json",
+      "sha256": "8902846a91f9b542cb7a97f6748da212cbd0e9eddd4dfc6cc64ea83b9e280ec0"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/LIFECYCLE.json",
+      "sha256": "d4543f319a7d3ca5f140774041c41b067152a63bf01a62e98579e4f792df2126"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/SOURCE-SEAL.json",
+      "sha256": "35cda972a106468eaa279c60da9ef51fc04ec23333f03de4226269b84e14ad07"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/SOURCE-SEAL-01.json",
+      "sha256": "6fcef6edfdf2439a45eec626a1d854ed67db209b7c78988a6aeaa48a713fd316"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/SOURCE-SEAL-02.json",
+      "sha256": "2d8d3778f5dda29d54fa3f08e4de5fe52e6a0c261d5e103e3b62f3599198d13c"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/SOURCE-SEAL-03.json",
+      "sha256": "47e9fe2792bd347d4bf53f5ef04af2bbb50487294a08f2fa9e69c83f9e62cc11"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/M3-slice.patch",
+      "sha256": "45a9e7bc4ecd9a8ef9341bbd81d26352592ac4f18f116fc2976cf525dd599f9c"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/NATIVE-SUMMARY.json",
+      "sha256": "804e6540874255d3f1f215b52fd5cad62c292eddd26db14c06c1977237e9bd9a"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/NONNATIVE-RETENTION-01.json",
+      "sha256": "9e5696a0306ef19f26ec4b5b53b9abbefc82820384688396252d98106580fffe"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/SEAL-PRESERVATION.json",
+      "sha256": "0a9bf8bab61a56c3ad29d5dcb8d8f9de32ee2db2a517c6a441dc9a84f8bdce77"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/START.json",
+      "sha256": "2801b2f6b6a556b7ba40600bd0d275db394da1aa2ce41d32a01dc95e66c52250"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/UNCHANGED-DEPENDENCIES.json",
+      "sha256": "08c88f63e1ceb451f842231b180c04ab60858c8a6d0e99ddd95d3336492c0a32"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/HANDOFF.json",
+      "sha256": "2f8088f28a4682b3d8618e11c6ff491fca064ecf933e8775ef0347839a862e04"
+    }
+  ],
+  "requiredCurrentRaw": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/checks/build-03.json",
+      "sha256": "573d1eb43e5e051b9f1151f027a81f74a370f6e544bab2400a4b3f4cac861ead"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/checks/server-full-01.json",
+      "sha256": "0f97bf45f88fe4bc1d6adc7cb0df59ec05f73a1219fb390fe68b844e09d5385f"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/checks/server-focused-01.json",
+      "sha256": "abe6c4a15bd845040aeb66047dc92b72aad0af5e535b1464068a531080dbbf6e"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/checks/renderer-05.json",
+      "sha256": "dcbeb61f87cd6840f00c90e50df9eba6dee54171691bce4d9b5529674fbf9f55"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/checks/wiki-02.json",
+      "sha256": "a7e244cdf9765467b28cf278dc9cb5ca60470047df1e9f280b56d4336705937f"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/checks/native-18.json",
+      "sha256": "2c720458c97bf93ceb42df7ddcd286875c8e891ba0964c7585fa97b36eaa2823"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/checks/native-observer-build-01.json",
+      "sha256": "5c9913f47abbc36a0b6647e6c1766a6d3b977825f4e5e07db9dd161bd6b8fef4"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/native-18/native-receipt.json",
+      "sha256": "96b107e3f731294fbd35274f99ca3ca2ae272558b7ecdce2461c63cc38c485a2"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/wiki/EDITS.json",
+      "sha256": "e84e6c1fa08b7b333cdc125a6a36598e9f708e15ea2087f7c4320d8f5e63340e"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/preload/RECONCILIATION.json",
+      "sha256": "32db5146ca5bcb9199127ec8604edcf84fd611e2e93eee30bcfa1b6db0939394"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/orchestrator-checks/NONNATIVE-CHECKS-01.json",
+      "sha256": "7fd8b106bc6bfdea46eeedb389dfd6309a56840fb7c7ca997e2dd9286c8bb036"
+    }
+  ],
+  "allHistoricalRaw": "CHECKS.json indexes every raw attempt; LIFECYCLE.json indexes18 native receipts and cleanup. Failures remain failures; native18 is current complete PASS.",
+  "reviewerContract": "Fresh clean-room-reviewer fork none/inherited root settings; read-only tools, no file writes, no test/native execution, no delegation/external reviewer. Return full Markdown for builder to persist verbatim. Four materiality elements required. Stop first materially CLEAN; parent acceptance/final review remain separate.",
+  "writerBoundary": "Product/helper/renderer/Wiki frozen; builder report-only. Root may independently run isolated native without product writes. Report bytes will only gain lifecycle/final status after reviewer terminal."
+}

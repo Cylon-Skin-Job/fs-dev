@@ -1,0 +1,16 @@
+{
+  "reviewer": "/root/review_collapse",
+  "gate": "orchestrator slice acceptance",
+  "result": "CLEAN",
+  "pass": 1,
+  "materialFindings": [],
+  "advisories": [],
+  "terminalConfirmedBy": [
+    "final response",
+    "list_agents completed"
+  ],
+  "closeAgentAvailable": false,
+  "closeAgentInventoryMatches": [],
+  "readOnly": true,
+  "descendants": []
+}

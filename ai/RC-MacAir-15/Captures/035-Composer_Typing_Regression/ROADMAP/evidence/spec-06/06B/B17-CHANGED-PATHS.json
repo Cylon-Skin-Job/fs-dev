@@ -1,0 +1,22 @@
+[
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/run.mjs",
+    "before": "98fd53c90fb93288bab86693c3bd4dbbace384b319e82e4b5c411aa1b01cb223",
+    "after": "6140fbdc21a04ba1e3ca78a7a82262e166898cd1c1e004c6ef034a7aa6378c28"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/soak-electron.mjs",
+    "before": "0bc9b3fe7c26ac4b6994725b0336f86f84a83b776029d4bc429115f13e14199a",
+    "after": "99821cd7a9bb4f7b12272786dd6b85ffe029a13856c568643d7f86cac7c35d05"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/soak-foreground-handoff.mjs",
+    "before": null,
+    "after": "37957324d52b37c414c2d1cc3f78b2688d11804cbe620234e7dcc41e1ea45495"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/soak-foreground-handoff.test.mjs",
+    "before": null,
+    "after": "41d9f607a5aab2cc92ed6a0a4e2aef26b47a11cbfd346ef058ae2f68ffeccbd6"
+  }
+]

@@ -1,0 +1,115 @@
+{
+  "at": "2026-10-04T10:28:37.912065+00:00",
+  "covered": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh",
+      "sha256": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+      "mode": 493,
+      "lines": 5
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs",
+      "sha256": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e",
+      "mode": 420,
+      "lines": 60
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs",
+      "sha256": "3f5f209457b90e1d0fd44266de7934ee3116d3f7a122a1f9d85a6d9e88d98d56",
+      "mode": 420,
+      "lines": 143
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs",
+      "sha256": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+      "mode": 420,
+      "lines": 93
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs",
+      "sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+      "mode": 420,
+      "lines": 114
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/skills/fusion-electron-restart/SKILL.md",
+      "sha256": "ca796770a18e1833ac025c24a881a62b7b07e6ee177bb08aaf00798b7b141153",
+      "mode": 420,
+      "lines": 30
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+      "sha256": "77f805037ed1384e3a387cb246d95df95fc2e0858755a63e95228d684403c6a7",
+      "mode": 420,
+      "lines": 325
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/runtime-handoff.md",
+      "sha256": "1f32dcb413d10288ced451ba8806dfc1b325e280e6919e35165e8a8d70b50694",
+      "mode": 420,
+      "lines": 71
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs",
+      "sha256": "0031ecf01c134854a008a9946f7c9f05a8a2e676b7cb73fbe1654cc12dc767c7",
+      "mode": 420,
+      "lines": 234
+    }
+  ],
+  "checks": [
+    {
+      "command": "bash -n R/restart-fusion.sh; node --check each R/scripts/fusion-restart*.mjs",
+      "exit": 0,
+      "evidence": "S4-static-checks.json",
+      "coverage": "syntax only"
+    },
+    {
+      "command": "FUSION_RESTART_TEST_EVIDENCE=planning/commit-supervisor/execution/S4-smoke node --test .agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs",
+      "exit": 0,
+      "tests": 14,
+      "evidence": "S4-tests.log",
+      "coverage": "canonical CLI, real disposable process selection/termination and injected identity/DOM failures; not successful live app"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 /opt/homebrew/bin/python3.12 -B -m unittest discover -s .agents/skills/mc-commit-supervisor/tests -p test_*.py -v",
+      "exit": 0,
+      "tests": 55,
+      "evidence": "S4-cumulative-tests.log",
+      "coverage": "accepted S1-S3 cumulative; workflow extension only"
+    },
+    {
+      "command": "uv run --offline --python /opt/homebrew/bin/python3.12 --with PyYAML python -B /Users/rccurtrightjr./.codex/skills/.system/skill-creator/scripts/quick_validate.py /Users/rccurtrightjr./.codex/skills/fusion-electron-restart",
+      "exit": 0,
+      "evidence": "S4-skill.log",
+      "coverage": "frontmatter/scaffold only"
+    },
+    {
+      "command": "node planning/commit-supervisor/execution/S4-readonly-selector.mjs",
+      "exit": 0,
+      "evidence": "S4-readonly-selector.json",
+      "coverage": "actual source default selection excludes Alpha; zero runtime mutations"
+    },
+    {
+      "command": "R/restart-fusion.sh --repo R --machine RC-MacAir-15 --dry-run",
+      "exit": 0,
+      "evidence": "S4-dry-run.json",
+      "coverage": "default-profile/default-database resolved; not health"
+    },
+    {
+      "command": "Python static link, prefix, latest-accepted-file and HEAD/index/protected-PID readback",
+      "exit": 0,
+      "evidence": "S4-static-checks.json",
+      "coverage": "7 links; exact accepted prefix; latest accepted paths; unchanged source/index/protected apps"
+    }
+  ],
+  "skips": [
+    {
+      "check": "real client build/restart/UI successful connection",
+      "reason": "Explicitly assigned to S6; S4 dry-run/disposable injected fixture scope only"
+    },
+    {
+      "check": "normal development or Alpha restart/profile operations",
+      "reason": "Outside S4 authority; not performed"
+    }
+  ]
+}

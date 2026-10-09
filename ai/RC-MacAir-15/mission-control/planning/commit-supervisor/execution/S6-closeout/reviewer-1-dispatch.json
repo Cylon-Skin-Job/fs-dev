@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-04T21:31:12.920865+00:00",
+  "manager": "/root/s6_builder",
+  "reviewer": "/root/s6_builder/s6_full_review_1",
+  "requested_agent_type": "clean-room-reviewer",
+  "fork_turns": "none",
+  "model_effort": "Invoking root inherited; no overrides; concrete settings unexposed",
+  "assignment": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/reviewer-assignment.md",
+  "assignment_sha256": "61715c09eb3b147e89f4f0302aee18c913c742cd147e5dc9b95e38369772c9b4",
+  "manifest_sha256": "5a3cd688a30036095af7da276907543961331fe3a11bd7fa2db89486d98357aa",
+  "freeze_sha256": "80647ab62331481e469d48b3369f1115b02dab85e6d627b03a83b87d0b2ce3a0",
+  "prior_children": "Native exact-prefix list_agents returned only running builder; earlier prep reviewer terminal, not reused",
+  "effective_permissions": "danger-full-access/never; reviewer read-only",
+  "scope": "FULL S6 builder-owned, not root acceptance or whole-SPEC gate",
+  "exclusions": "Root assessments/author reports/prior OUTER verdicts, no nonreviewer delegation/effects",
+  "native_state": "Running after successful spawn; terminal result not yet asserted",
+  "close_agent": "Unavailable; record terminal lifecycle"
+}

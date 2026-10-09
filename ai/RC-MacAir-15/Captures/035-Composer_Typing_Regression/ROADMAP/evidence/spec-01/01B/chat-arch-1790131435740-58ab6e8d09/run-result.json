@@ -1,0 +1,78 @@
+{
+  "runId": "chat-arch-1790131435740-58ab6e8d09",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R2-NO-ENQUEUE",
+      "code": 0,
+      "signal": null,
+      "pid": 19302,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 6054
+    },
+    {
+      "id": "R3-LOST-ACK-STATUS",
+      "code": 0,
+      "signal": null,
+      "pid": 19823,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 7104
+    },
+    {
+      "id": "R3-RECONNECT-UI",
+      "code": 0,
+      "signal": null,
+      "pid": 20350,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 11031
+    },
+    {
+      "id": "R4-DISTINCT-ATTEMPTS",
+      "code": 0,
+      "signal": null,
+      "pid": 21093,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 11082
+    },
+    {
+      "id": "R4-DISTINCT-RECEIPTS",
+      "code": 0,
+      "signal": null,
+      "pid": 21877,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 11218
+    },
+    {
+      "id": "R4-LATE-DRAFT-RECOVERY",
+      "code": 0,
+      "signal": null,
+      "pid": 22637,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 26073
+    },
+    {
+      "id": "R4-DUPLICATE-MISMATCH",
+      "code": 0,
+      "signal": null,
+      "pid": 24355,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 7564
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

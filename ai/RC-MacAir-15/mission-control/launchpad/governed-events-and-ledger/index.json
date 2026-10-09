@@ -1,0 +1,253 @@
+{
+  "schema_version": 2,
+  "name": "Governed events and ledger",
+  "description": "Shape governed event schemas, publisher and subscriber authority, delivery semantics, and system ledger boundaries for plugin consumers.",
+  "repository_root": "../../../../..",
+  "wiki_root": "../../../Wiki",
+  "workflow": [
+    "intake",
+    "shaping",
+    "planning",
+    "authorized implementation",
+    "verification"
+  ],
+  "documents": [
+    {
+      "path": "TICKET.md",
+      "kind": "ticket",
+      "authority": "context",
+      "description": "Intake, authority, current position and next safe action.",
+      "lifecycle": "Maintain as source-backed understanding evolves.",
+      "read_before": [],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Assignment",
+          "description": "Assignment"
+        },
+        {
+          "key": "s2",
+          "heading": "Desired outcome",
+          "description": "Desired outcome"
+        },
+        {
+          "key": "s3",
+          "heading": "Scope and dependencies",
+          "description": "Scope and dependencies"
+        },
+        {
+          "key": "s4",
+          "heading": "Current disposition",
+          "description": "Current disposition"
+        },
+        {
+          "key": "s5",
+          "heading": "Next safe action",
+          "description": "Next safe action"
+        }
+      ]
+    },
+    {
+      "path": "CAPTURE.md",
+      "kind": "capture",
+      "authority": "context",
+      "description": "Working synthesis and open discussion.",
+      "lifecycle": "Maintain as source-backed understanding evolves.",
+      "read_before": [
+        "TICKET.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Current understanding",
+          "description": "Current understanding"
+        },
+        {
+          "key": "s2",
+          "heading": "Open discussion",
+          "description": "Open discussion"
+        },
+        {
+          "key": "s3",
+          "heading": "Routed outcomes",
+          "description": "Routed outcomes"
+        }
+      ]
+    },
+    {
+      "path": "INTENT.md",
+      "kind": "intent",
+      "authority": "owner",
+      "description": "Owner-directed outcomes and boundaries.",
+      "lifecycle": "Maintain as source-backed understanding evolves.",
+      "read_before": [
+        "TICKET.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Outcomes",
+          "description": "Outcomes"
+        },
+        {
+          "key": "s2",
+          "heading": "Boundaries",
+          "description": "Boundaries"
+        },
+        {
+          "key": "s3",
+          "heading": "Success and unresolved detail",
+          "description": "Success and unresolved detail"
+        }
+      ]
+    },
+    {
+      "path": "DECISIONS.md",
+      "kind": "decisions",
+      "authority": "owner",
+      "description": "Explicit owner decisions and exact scope.",
+      "lifecycle": "Maintain as source-backed understanding evolves.",
+      "read_before": [
+        "INTENT.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Folder ownership",
+          "description": "Folder ownership"
+        }
+      ],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": [
+          "D"
+        ],
+        "required_fields": [
+          "Source",
+          "Status",
+          "Scope"
+        ]
+      }
+    },
+    {
+      "path": "ISSUES.md",
+      "kind": "issues",
+      "authority": "evidence",
+      "description": "Sourced problems and consequential unresolved intent.",
+      "lifecycle": "Maintain as source-backed understanding evolves.",
+      "read_before": [
+        "INTENT.md",
+        "DECISIONS.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Scope and contracts",
+          "description": "Scope and contracts"
+        }
+      ],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": [
+          "I"
+        ],
+        "required_fields": [
+          "Category",
+          "Type",
+          "Severity",
+          "Status",
+          "Source",
+          "Observation",
+          "Affected scope",
+          "Consequence",
+          "Resolution needed",
+          "Owner",
+          "Next",
+          "Related"
+        ]
+      }
+    },
+    {
+      "path": "REFERENCES.md",
+      "kind": "references",
+      "authority": "evidence",
+      "description": "Sources, provenance and limitations.",
+      "lifecycle": "Maintain as source-backed understanding evolves.",
+      "read_before": [
+        "TICKET.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Owner direction and prior work",
+          "description": "Owner direction and prior work"
+        }
+      ],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": [
+          "REF"
+        ],
+        "required_fields": [
+          "Kind",
+          "Status",
+          "Source",
+          "Locator",
+          "Revision",
+          "Checked",
+          "Supports",
+          "Limitations",
+          "Related"
+        ]
+      }
+    }
+  ],
+  "support_files": [
+    {
+      "path": "AGENTS.md",
+      "description": "Local role, scope and re-entry contract.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Scope and authority",
+          "description": "Scope and authority"
+        },
+        {
+          "key": "s2",
+          "heading": "Main and side roles",
+          "description": "Main and side roles"
+        },
+        {
+          "key": "s3",
+          "heading": "Re-entry and records",
+          "description": "Re-entry and records"
+        },
+        {
+          "key": "s4",
+          "heading": "Boundaries",
+          "description": "Boundaries"
+        },
+        {
+          "key": "s5",
+          "heading": "Reports and handoff",
+          "description": "Reports and handoff"
+        }
+      ]
+    },
+    {
+      "path": "BULLETIN.md",
+      "description": "Advisory coordination notices.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Coordination Notices",
+          "description": "Coordination Notices"
+        }
+      ]
+    },
+    {
+      "path": "index.json",
+      "description": "Static document routing schema."
+    }
+  ]
+}

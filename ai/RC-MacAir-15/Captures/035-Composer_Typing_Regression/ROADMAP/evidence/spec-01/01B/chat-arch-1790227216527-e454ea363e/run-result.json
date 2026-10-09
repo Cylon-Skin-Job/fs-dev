@@ -1,0 +1,22 @@
+{
+  "runId": "chat-arch-1790227216527-e454ea363e",
+  "status": "failed",
+  "results": [
+    {
+      "id": "R1-FIVE-MINUTE-TYPING",
+      "code": 1,
+      "signal": null,
+      "pid": 13072,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 358048
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "R1-FIVE-MINUTE-TYPING exited 1",
+    "stack": "Error: R1-FIVE-MINUTE-TYPING exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:404:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

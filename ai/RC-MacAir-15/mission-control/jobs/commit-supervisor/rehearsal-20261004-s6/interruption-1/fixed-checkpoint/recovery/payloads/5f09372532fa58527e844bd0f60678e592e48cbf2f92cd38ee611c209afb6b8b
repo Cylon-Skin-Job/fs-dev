@@ -1,0 +1,26 @@
+---
+name: Checklist Guide
+description: How to complete, reset and revisit the disposable checklist.
+metadata:
+  source-files:
+    - rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js
+    - rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js
+    - rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html
+    - scripts/fusion-restart-target.mjs
+    - scripts/fusion-restart.mjs
+  last-modified: "2026-10-04T17:06:34Z"
+---
+
+# Checklist Guide
+
+The checklist contains Review report (`draft`), Review sources (`review`) and Send summary (`send`). These task IDs remain stable. Select a task checkbox to complete it; clear the checkbox to make it incomplete again. All three task rows and their checkboxes remain visible, including completed tasks.
+
+The summary uses `N remaining of 3`, where N counts incomplete tasks. With all tasks incomplete it reads `3 remaining of 3`. Complete Review report to reach `2 remaining of 3`, then Review sources to reach `1 remaining of 3`; clear Review report to return to `2 remaining of 3`. Completing every task reaches `0 remaining of 3`, and clearing every checkbox returns to `3 remaining of 3`.
+
+An ordinary iframe or shell reload within the same profile retains completion. After the example above, reloading keeps Review sources checked, Review report and Send summary incomplete, and the summary at `2 remaining of 3`.
+
+Select Reset completion to uncheck all three tasks. The summary immediately becomes `3 remaining of 3`, and the reset completion state is saved immediately. All three rows, task IDs and labels remain. For example, complete Review report and Review sources, then reset: all three tasks become incomplete. An ordinary reload within the same profile retains this reset, with every checkbox unchecked and `3 remaining of 3`.
+
+A full canonical development restart clears browser storage, including Local Storage and Session Storage, before the checklist initializes, so it starts with all three tasks incomplete and `3 remaining of 3`.
+
+Open the built-in Wiki view to return to this guide. See the [Navigation Guide](../002-Navigation_Guide/PAGE.md) for movement between views.

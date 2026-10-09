@@ -1,0 +1,1142 @@
+{
+  "schema_version": 2,
+  "name": "Mission Control",
+  "description": "Controller instructions, coordination records and folder-bound Launchpad intake.",
+  "repository_root": "../../..",
+  "wiki_root": "../Wiki",
+  "documents": [
+    {
+      "path": "mission-control.md",
+      "kind": "charter",
+      "authority": "owner direction and explicitly labeled proposed principles",
+      "description": "Mission Control — Role and Principles",
+      "lifecycle": "Maintained in this controller home; retain source attribution.",
+      "read_before": [
+        "decisions.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Established by the owner",
+          "description": "Established by the owner"
+        },
+        {
+          "key": "s6",
+          "heading": "Ticket sessions and unattended coordination",
+          "description": "Ticket sessions and unattended coordination"
+        },
+        {
+          "key": "s2",
+          "heading": "Intent completeness — owner requirement",
+          "description": "Intent completeness — owner requirement"
+        },
+        {
+          "key": "s3",
+          "heading": "Proposed operating principles",
+          "description": "Proposed operating principles"
+        },
+        {
+          "key": "s4",
+          "heading": "Depth decision test",
+          "description": "Depth decision test"
+        },
+        {
+          "key": "s5",
+          "heading": "Current phase",
+          "description": "Current phase"
+        }
+      ]
+    },
+    {
+      "path": "decisions.md",
+      "kind": "decisions",
+      "authority": "attributed owner direction",
+      "description": "Owner decisions",
+      "lifecycle": "Maintained in this controller home; retain source attribution.",
+      "read_before": [],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "D-001 — Controller and Launchpad homes",
+          "description": "D-001 — Controller and Launchpad homes"
+        },
+        {
+          "key": "s2",
+          "heading": "D-002 — Continue the existing TODO",
+          "description": "D-002 — Continue the existing TODO"
+        },
+        {
+          "key": "s3",
+          "heading": "D-003 — Full Access",
+          "description": "D-003 — Full Access"
+        },
+        {
+          "key": "s5",
+          "heading": "D-004 — Build the system before running Mission Control",
+          "description": "D-004 — Build the system before running Mission Control"
+        },
+        {
+          "key": "s6",
+          "heading": "D-005 — One fronting main session and bounded side chats per domain folder",
+          "description": "D-005 — One fronting main session and bounded side chats per domain folder"
+        },
+        {
+          "key": "s7",
+          "heading": "D-006 — Second Brain is legacy v1",
+          "description": "D-006 — Second Brain is legacy v1"
+        },
+        {
+          "key": "s8",
+          "heading": "D-007 — Create local profiles and skills",
+          "description": "D-007 — Create local profiles and skills"
+        },
+        {
+          "key": "s9",
+          "heading": "D-008 — Add a First Draft role",
+          "description": "D-008 — Add a First Draft role"
+        },
+        {
+          "key": "s10",
+          "heading": "D-009 — Shared investigation governance",
+          "description": "D-009 — Shared investigation governance"
+        },
+        {
+          "key": "s11",
+          "heading": "D-010 — Main Launchpad may dispatch bounded investigators",
+          "description": "D-010 — Main Launchpad may dispatch bounded investigators"
+        },
+        {
+          "key": "s12",
+          "heading": "D-011 — Restore conversational starter templates",
+          "description": "D-011 — Restore conversational starter templates"
+        },
+        {
+          "key": "s13",
+          "heading": "D-012 — Add reference, change-surface and contract templates",
+          "description": "D-012 — Add reference, change-surface and contract templates"
+        },
+        {
+          "key": "s14",
+          "heading": "D-013 — Retire Second Brain and add documentation sweeps",
+          "description": "D-013 — Retire Second Brain and add documentation sweeps"
+        },
+        {
+          "key": "s15",
+          "heading": "D-014 — Ticket intake and unattended project sessions",
+          "description": "D-014 — Ticket intake and unattended project sessions"
+        },
+        {
+          "key": "d015",
+          "heading": "D-015 — Inline Preflight and process Validation",
+          "description": "Owner-approved inline readiness and planning validation terminology."
+        },
+        {
+          "key": "d016",
+          "heading": "D-016 — Conversation evidence tools and proposal authority",
+          "description": "Bounded source retrieval, CWD candidates and explicit decision authority."
+        },
+        {
+          "key": "d017",
+          "heading": "D-017 — Prepare distinct Launchpad homes before choosing build details",
+          "description": "Owner-approved folder ownership and deferred planning details."
+        },
+        {
+          "key": "d018",
+          "heading": "D-018 — Rebuild Roadmap Creator around the planning hierarchy",
+          "description": "Creation Supervisor, stage/author/validator roles and direct intake without Launchpad."
+        },
+        {
+          "key": "s19",
+          "heading": "D-019 — Standalone First Draft Supervisor",
+          "description": "Draft-only supervision, shared stages and discussion-readiness boundaries."
+        },
+        {
+          "key": "d020",
+          "heading": "D-020 — Owner-directed ticket changes by any agent",
+          "description": "Owner-requested creation, scope revision, splitting and closure without an exclusive main-session gate."
+        },
+        {
+          "key": "d021",
+          "heading": "D-021 — General assistant, explicit Alert-Monitor and owner-gated Review and Merge",
+          "description": "D-021 — General assistant, explicit Alert-Monitor and owner-gated Review and Merge"
+        },
+        {
+          "key": "d022",
+          "heading": "D-022 — Independent planning worker handoff review",
+          "description": "Manager-assigned worker reviews, clean-room independence and planning-specific thresholds."
+        },
+        {
+          "key": "d023",
+          "heading": "D-023 — Mission Control role with shared incremental Status and bounded Monitor cycles",
+          "description": "D-023 — Mission Control role with shared incremental Status and bounded Monitor cycles"
+        },
+        {
+          "key": "d024",
+          "heading": "D-024 — Commit Supervisor and one integrated workflow SPEC",
+          "description": "Owner renaming and single-SPEC planning assignment with preserved owner/publication boundaries."
+        },
+        {
+          "key": "s4",
+          "heading": "Attribution and earlier authority",
+          "description": "Attribution and earlier authority"
+        }
+      ]
+    },
+    {
+      "path": "handoff.md",
+      "kind": "handoff",
+      "authority": "current resume synthesis",
+      "description": "Mission Control — Resume here",
+      "lifecycle": "Maintained in this controller home; retain source attribution.",
+      "read_before": [
+        "decisions.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Current state",
+          "description": "Current state"
+        },
+        {
+          "key": "s2",
+          "heading": "Next safe action",
+          "description": "Next safe action"
+        },
+        {
+          "key": "s3",
+          "heading": "Entry packet and open work",
+          "description": "Entry packet and open work"
+        }
+      ]
+    },
+    {
+      "path": "registry.md",
+      "kind": "registry",
+      "authority": "coordination state with cited evidence",
+      "description": "Mission Control Registry",
+      "lifecycle": "Maintained in this controller home; retain source attribution.",
+      "read_before": [
+        "decisions.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Authority and editing",
+          "description": "Authority and editing"
+        },
+        {
+          "key": "s2",
+          "heading": "Workspace and session bindings",
+          "description": "Workspace and session bindings"
+        },
+        {
+          "key": "s3",
+          "heading": "Mission Control setup tasks",
+          "description": "Mission Control setup tasks"
+        },
+        {
+          "key": "s4",
+          "heading": "Roadmap slots",
+          "description": "Roadmap slots"
+        },
+        {
+          "key": "s5",
+          "heading": "Active assignments and integration",
+          "description": "Active assignments and integration"
+        },
+        {
+          "key": "s6",
+          "heading": "State and evidence conventions",
+          "description": "State and evidence conventions"
+        }
+      ]
+    },
+    {
+      "path": "todo.md",
+      "kind": "todo",
+      "authority": "task scopes and imported completion records",
+      "description": "Mission Control — Tasks for Owner-Managed Chats",
+      "lifecycle": "Maintained in this controller home; retain source attribution.",
+      "read_before": [
+        "decisions.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Current home and migration",
+          "description": "Current home and migration"
+        },
+        {
+          "key": "s2",
+          "heading": "How to use this list",
+          "description": "How to use this list"
+        },
+        {
+          "key": "s3",
+          "heading": "Ordered TODO list",
+          "description": "Ordered TODO list"
+        },
+        {
+          "key": "s4",
+          "heading": "First chat to open",
+          "description": "First chat to open"
+        }
+      ]
+    },
+    {
+      "path": "domain-routing.md",
+      "kind": "routing",
+      "authority": "working coordination design",
+      "description": "Mission Control — Domain Routing and Future Roadmap Intake",
+      "lifecycle": "Maintained in this controller home; retain source attribution.",
+      "read_before": [
+        "decisions.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "What Mission Control routes",
+          "description": "What Mission Control routes"
+        },
+        {
+          "key": "s2",
+          "heading": "Choosing a domain memory home",
+          "description": "Choosing a domain memory home"
+        },
+        {
+          "key": "s6",
+          "heading": "Governing sessions in subordinate folders",
+          "description": "Governing sessions in subordinate folders"
+        },
+        {
+          "key": "s3",
+          "heading": "Future roadmap intake packet",
+          "description": "Future roadmap intake packet"
+        },
+        {
+          "key": "s4",
+          "heading": "Three slots, zero assignments",
+          "description": "Three slots, zero assignments"
+        },
+        {
+          "key": "s5",
+          "heading": "Successor rule",
+          "description": "Successor rule"
+        }
+      ]
+    },
+    {
+      "path": "record-templates.md",
+      "kind": "templates",
+      "authority": "record convention; example is illustrative",
+      "description": "Coordination record templates",
+      "lifecycle": "Maintained in this controller home; retain source attribution.",
+      "read_before": [
+        "decisions.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Assignment and return packet",
+          "description": "Assignment and return packet"
+        },
+        {
+          "key": "s4",
+          "heading": "Investigation packets",
+          "description": "Investigation packets"
+        },
+        {
+          "key": "s2",
+          "heading": "Decisions, issues and changes",
+          "description": "Decisions, issues and changes"
+        },
+        {
+          "key": "s3",
+          "heading": "Hold and resume walkthrough — illustrative only",
+          "description": "Hold and resume walkthrough — illustrative only"
+        }
+      ]
+    },
+    {
+      "path": "template-review.md",
+      "kind": "proposals",
+      "authority": "unapproved template recommendations",
+      "description": "Launchpad template review",
+      "lifecycle": "Maintained in this controller home; retain source attribution.",
+      "read_before": [
+        "decisions.md"
+      ],
+      "sections": [
+        {
+          "key": "s4",
+          "heading": "Reconciled role contract",
+          "description": "Reconciled role contract"
+        },
+        {
+          "key": "s5",
+          "heading": "Remaining MC-T04 work",
+          "description": "Remaining MC-T04 work"
+        },
+        {
+          "key": "s3",
+          "heading": "Open design choice",
+          "description": "Open design choice"
+        }
+      ]
+    },
+    {
+      "path": "codex-context.md",
+      "kind": "reference",
+      "authority": "official documentation with local observations",
+      "description": "Codex folder context",
+      "lifecycle": "Maintained in this controller home; retain source attribution.",
+      "read_before": [
+        "decisions.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Instructions and skills",
+          "description": "Instructions and skills"
+        },
+        {
+          "key": "s2",
+          "heading": "Full Access configuration",
+          "description": "Full Access configuration"
+        }
+      ]
+    },
+    {
+      "path": "source-map.md",
+      "kind": "provenance",
+      "authority": "import references and hashes",
+      "description": "Source map and migration provenance",
+      "lifecycle": "Maintained in this controller home; retain source attribution.",
+      "read_before": [],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Authority and import boundary",
+          "description": "Authority and import boundary"
+        },
+        {
+          "key": "s2",
+          "heading": "Source revisions at import",
+          "description": "Source revisions at import"
+        },
+        {
+          "key": "s3",
+          "heading": "Template baseline",
+          "description": "Template baseline"
+        }
+      ]
+    },
+    {
+      "path": "changelog.md",
+      "kind": "changelog",
+      "authority": "attributed change history",
+      "description": "Mission Control changes",
+      "lifecycle": "Maintained in this controller home; retain source attribution.",
+      "read_before": [
+        "decisions.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "2026-09-25T05:22:57Z — Controller home established",
+          "description": "2026-09-25T05:22:57Z — Controller home established"
+        },
+        {
+          "key": "s2",
+          "heading": "2026-09-25T15:50:36Z — First MC run deferred until construction is complete",
+          "description": "2026-09-25T15:50:36Z — First MC run deferred until construction is complete"
+        },
+        {
+          "key": "s3",
+          "heading": "2026-09-26T00:49:22Z — Launchpad main and side-chat roles reconciled",
+          "description": "2026-09-26T00:49:22Z — Launchpad main and side-chat roles reconciled"
+        },
+        {
+          "key": "s4",
+          "heading": "2026-09-26T00:59:37Z — Skills inventory and Second Brain v1 boundary",
+          "description": "2026-09-26T00:59:37Z — Skills inventory and Second Brain v1 boundary"
+        },
+        {
+          "key": "s5",
+          "heading": "2026-09-26T01:58:05Z — Subordinate-session governance contract",
+          "description": "2026-09-26T01:58:05Z — Subordinate-session governance contract"
+        },
+        {
+          "key": "s6",
+          "heading": "2026-09-26T02:11:26Z — Local skill/profile package created",
+          "description": "2026-09-26T02:11:26Z — Local skill/profile package created"
+        },
+        {
+          "key": "s7",
+          "heading": "2026-09-26T11:08:58Z — First Draft role and shaping boundaries",
+          "description": "2026-09-26T11:08:58Z — First Draft role and shaping boundaries"
+        },
+        {
+          "key": "s8",
+          "heading": "2026-09-26T11:30:21Z — Launchpad investigation contract",
+          "description": "2026-09-26T11:30:21Z — Launchpad investigation contract"
+        },
+        {
+          "key": "s9",
+          "heading": "2026-09-26T11:38:53Z — Standing Launchpad investigator dispatch authority",
+          "description": "2026-09-26T11:38:53Z — Standing Launchpad investigator dispatch authority"
+        },
+        {
+          "key": "s10",
+          "heading": "2026-09-26T11:48:39Z — Conversational starter documents",
+          "description": "2026-09-26T11:48:39Z — Conversational starter documents"
+        },
+        {
+          "key": "s11",
+          "heading": "2026-09-26 — Reference, impact and contract templates",
+          "description": "2026-09-26 — Reference, impact and contract templates"
+        },
+        {
+          "key": "s12",
+          "heading": "2026-09-26 — Second Brain retirement and Document Sweep",
+          "description": "2026-09-26 — Second Brain retirement and Document Sweep"
+        },
+        {
+          "key": "s13",
+          "heading": "2026-09-26 — Ticket intake and unattended work contract",
+          "description": "2026-09-26 — Ticket intake and unattended work contract"
+        },
+        {
+          "key": "s14",
+          "heading": "2026-09-27 — Inline planning Preflight and validation terminology",
+          "description": "Inline input readiness and current planning validation terminology."
+        },
+        {
+          "key": "s15",
+          "heading": "2026-09-27 — Conversation evidence tools and main-thread lookup",
+          "description": "Conversation retrieval, source resolution, authority links and verification."
+        },
+        {
+          "key": "s16",
+          "heading": "2026-09-27 — Roadmap Creation Supervisor and planning gates",
+          "description": "Planning hierarchy installation, independent gates, candidate identity and verification."
+        },
+        {
+          "key": "s17",
+          "heading": "2026-09-28 — Standalone First Draft Supervisor",
+          "description": "Standalone drafting supervision, shared stage reuse and verification limits."
+        },
+        {
+          "key": "d021-change",
+          "heading": "2026-10-03 — General assistant, Alert-Monitor and Review and Merge",
+          "description": "2026-10-03 — General assistant, Alert-Monitor and Review and Merge"
+        },
+        {
+          "key": "d022-change",
+          "heading": "2026-10-03 — Planning worker handoff clean-room adaptation",
+          "description": "Worker review installation, authored statuses and remaining behavioral checks."
+        },
+        {
+          "key": "d023-change",
+          "heading": "2026-10-03 — Mission Control entry and shared Status/Monitor cycles",
+          "description": "2026-10-03 — Mission Control entry and shared Status/Monitor cycles"
+        },
+        {
+          "key": "review-merge-handoff",
+          "heading": "2026-10-03 — Review and Merge creation handoff",
+          "description": "Owner-managed Review and Merge creation packet and inline hierarchy requirement."
+        }
+      ]
+    },
+    {
+      "path": "skills-and-agents.md",
+      "kind": "inventory",
+      "authority": "observed local definitions and explicitly proposed migration dispositions",
+      "description": "Existing skills, roles, dependencies and Second Brain v1 replacement map.",
+      "lifecycle": "Refresh source observations before migration; preserve explicit owner decisions.",
+      "read_before": [
+        "decisions.md"
+      ],
+      "sections": [
+        {
+          "key": "s9",
+          "heading": "Current installation",
+          "description": "Current installation"
+        },
+        {
+          "key": "s1",
+          "heading": "Scope and status",
+          "description": "Scope and status"
+        },
+        {
+          "key": "s2",
+          "heading": "Skills and proposed homes",
+          "description": "Skills and proposed homes"
+        },
+        {
+          "key": "s3",
+          "heading": "Actual agent profiles and standing roles",
+          "description": "Actual agent profiles and standing roles"
+        },
+        {
+          "key": "s4",
+          "heading": "Second Brain responsibility replacement",
+          "description": "Second Brain responsibility replacement"
+        },
+        {
+          "key": "s5",
+          "heading": "Dependency edges to preserve",
+          "description": "Dependency edges to preserve"
+        },
+        {
+          "key": "s6",
+          "heading": "Discovery and deployment boundary",
+          "description": "Discovery and deployment boundary"
+        },
+        {
+          "key": "s7",
+          "heading": "Migration sequence and unresolved choices",
+          "description": "Migration sequence and unresolved choices"
+        },
+        {
+          "key": "s8",
+          "heading": "Source fingerprints",
+          "description": "Source fingerprints"
+        }
+      ]
+    },
+    {
+      "path": "deployment.md",
+      "kind": "deployment",
+      "authority": "approved local implementation and explicit runtime limits",
+      "description": "Created profiles, skills, local scope and validation.",
+      "lifecycle": "Update when role definitions or runtime contracts change.",
+      "read_before": [
+        "decisions.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Installed definitions",
+          "description": "Installed definitions"
+        },
+        {
+          "key": "s2",
+          "heading": "Local scope and global compatibility",
+          "description": "Local scope and global compatibility"
+        },
+        {
+          "key": "s3",
+          "heading": "Second Brain replacement and helpers",
+          "description": "Second Brain replacement and helpers"
+        },
+        {
+          "key": "s4",
+          "heading": "Validation and remaining runtime checks",
+          "description": "Validation and remaining runtime checks"
+        },
+        {
+          "key": "s5",
+          "heading": "Maintain or roll back",
+          "description": "Maintain or roll back"
+        }
+      ]
+    },
+    {
+      "path": "session-contract.md",
+      "kind": "contract",
+      "authority": "approved local implementation and explicit runtime limits",
+      "description": "Role, session and execution boundaries for local procedures.",
+      "lifecycle": "Update when role definitions or runtime contracts change.",
+      "read_before": [
+        "decisions.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Identify the assignment",
+          "description": "Identify the assignment"
+        },
+        {
+          "key": "s2",
+          "heading": "Assign and return",
+          "description": "Assign and return"
+        },
+        {
+          "key": "s3",
+          "heading": "Runtime and portability",
+          "description": "Runtime and portability"
+        },
+        {
+          "key": "s4",
+          "heading": "Construction and recovery",
+          "description": "Construction and recovery"
+        }
+      ]
+    },
+    {
+      "path": "investigation-contract.md",
+      "kind": "contract",
+      "authority": "owner-authorized operating contract under D-009",
+      "description": "Launchpad investigation ownership, timing, specialties, assignment/report formats and synthesis rules.",
+      "lifecycle": "Update when the shared investigation governance changes; project assignments remain in domain records.",
+      "read_before": [
+        "decisions.md",
+        "session-contract.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Ownership and authority",
+          "description": "Ownership and authority"
+        },
+        {
+          "key": "s8",
+          "heading": "Dispatch and follow-up",
+          "description": "Dispatch and follow-up"
+        },
+        {
+          "key": "s2",
+          "heading": "When and how deeply to investigate",
+          "description": "When and how deeply to investigate"
+        },
+        {
+          "key": "s3",
+          "heading": "Selectable specialties",
+          "description": "Selectable specialties"
+        },
+        {
+          "key": "s4",
+          "heading": "Assignment packet",
+          "description": "Assignment packet"
+        },
+        {
+          "key": "s5",
+          "heading": "Parallel work and source changes",
+          "description": "Parallel work and source changes"
+        },
+        {
+          "key": "s6",
+          "heading": "Report and synthesis",
+          "description": "Report and synthesis"
+        },
+        {
+          "key": "s7",
+          "heading": "Stop, resume and handoff",
+          "description": "Stop, resume and handoff"
+        }
+      ]
+    },
+    {
+      "path": "ticket-workflow.md",
+      "kind": "ticket_workflow",
+      "authority": "owner-approved workflow",
+      "description": "Ticket session lifecycle, review evidence and unattended coordination.",
+      "lifecycle": "Maintain under recorded owner direction.",
+      "read_before": [
+        "decisions.md",
+        "session-contract.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Work unit and ownership",
+          "description": "Work unit and ownership"
+        },
+        {
+          "key": "s2",
+          "heading": "Intake and workflow selection",
+          "description": "Intake and workflow selection"
+        },
+        {
+          "key": "s3",
+          "heading": "Investigation and repair",
+          "description": "Investigation and repair"
+        },
+        {
+          "key": "s4",
+          "heading": "Independent review and audit trail",
+          "description": "Independent review and audit trail"
+        },
+        {
+          "key": "s5",
+          "heading": "Mission Control and unattended activity",
+          "description": "Mission Control and unattended activity"
+        },
+        {
+          "key": "s6",
+          "heading": "Steering, acceptance and continuity",
+          "description": "Steering, acceptance and continuity"
+        },
+        {
+          "key": "s7",
+          "heading": "Construction status",
+          "description": "Construction status"
+        }
+      ]
+    },
+    {
+      "path": "conversation-evidence.md",
+      "kind": "contract",
+      "authority": "owner-authorized D-016 retrieval contract",
+      "description": "Main-thread resolution, bounded conversation retrieval, citation and proposal/decision authority.",
+      "lifecycle": "Maintain with tool and conversation-source contracts; keep live identities in assignment/checkpoint records.",
+      "read_before": [
+        "decisions.md",
+        "session-contract.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Resolve the history source",
+          "description": "Resolve the history source"
+        },
+        {
+          "key": "s2",
+          "heading": "Retrieve before escalating missing intent",
+          "description": "Retrieve before escalating missing intent"
+        },
+        {
+          "key": "s3",
+          "heading": "Cite evidence and reconcile proposals",
+          "description": "Cite evidence and reconcile proposals"
+        },
+        {
+          "key": "s4",
+          "heading": "Roles and checkpoint boundaries",
+          "description": "Roles and checkpoint boundaries"
+        },
+        {
+          "key": "s5",
+          "heading": "Tool installation and fallback",
+          "description": "Tool installation and fallback"
+        }
+      ]
+    },
+    {
+      "path": "review-and-merge-handoff.md",
+      "kind": "handoff",
+      "authority": "owner-directed workflow setup assignment and source-backed hierarchy",
+      "description": "Commit Supervisor continuation packet, historical hierarchy and current single-SPEC planning route.",
+      "lifecycle": "Preserve the historical creation handoff; follow canonical Commit Supervisor deployment and approved execution records for current work.",
+      "read_before": [
+        "decisions.md",
+        "session-contract.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Assignment and first response",
+          "description": "Assignment and first response"
+        },
+        {
+          "key": "s2",
+          "heading": "Current hierarchy",
+          "description": "Current hierarchy"
+        },
+        {
+          "key": "s3",
+          "heading": "Review principles to preserve",
+          "description": "Review principles to preserve"
+        },
+        {
+          "key": "s4",
+          "heading": "Existing Review and Merge and remaining design",
+          "description": "Existing Review and Merge and remaining design"
+        },
+        {
+          "key": "s5",
+          "heading": "Authority and coordination boundaries",
+          "description": "Authority and coordination boundaries"
+        },
+        {
+          "key": "s6",
+          "heading": "Read order and completion evidence",
+          "description": "Read order and completion evidence"
+        }
+      ]
+    },
+    {
+      "path": "review-and-merge-design.md",
+      "kind": "handoff",
+      "authority": "owner-directed side-conversation design record; implementation proposals distinguished from existing definitions",
+      "description": "Commit Supervisor design under D-024, retaining the original Review and Merge discussion and installed-identifier provenance.",
+      "lifecycle": "Preserve original owner design and source provenance; canonical workflow deployment and approved SPEC own current execution.",
+      "read_before": [
+        "decisions.md",
+        "session-contract.md",
+        "review-and-merge-handoff.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Owner's intended experience",
+          "description": "Owner's intended experience"
+        },
+        {
+          "key": "s2",
+          "heading": "Existing definitions and source authority",
+          "description": "Existing definitions and source authority"
+        },
+        {
+          "key": "s3",
+          "heading": "Proposed hierarchy",
+          "description": "Proposed hierarchy"
+        },
+        {
+          "key": "s4",
+          "heading": "Intake and recoverable checkpoint",
+          "description": "Intake and recoverable checkpoint"
+        },
+        {
+          "key": "s5",
+          "heading": "Initial review lenses and ordering",
+          "description": "Initial review lenses and ordering"
+        },
+        {
+          "key": "s6",
+          "heading": "Applying heuristics and disposing of deviations",
+          "description": "Applying heuristics and disposing of deviations"
+        },
+        {
+          "key": "s7",
+          "heading": "Consolidated repair and Wiki updates",
+          "description": "Consolidated repair and Wiki updates"
+        },
+        {
+          "key": "s8",
+          "heading": "Clean-room gates and repair loop",
+          "description": "Clean-room gates and repair loop"
+        },
+        {
+          "key": "s9",
+          "heading": "Candidate identity and evidence invalidation",
+          "description": "Candidate identity and evidence invalidation"
+        },
+        {
+          "key": "s10",
+          "heading": "Final development-app handoff",
+          "description": "Final development-app handoff"
+        },
+        {
+          "key": "s11",
+          "heading": "Owner approval, publication and dependencies",
+          "description": "Owner approval, publication and dependencies"
+        },
+        {
+          "key": "s12",
+          "heading": "Durable job records and recovery",
+          "description": "Durable job records and recovery"
+        },
+        {
+          "key": "s13",
+          "heading": "Implementation work for the main chat",
+          "description": "Implementation work for the main chat"
+        }
+      ]
+    },
+    {
+      "path": "planning/commit-supervisor/SPEC.md",
+      "kind": "spec",
+      "authority": "Executable candidate grounded in D-024; independent release review and owner implementation assignment remain separate.",
+      "description": "One integrated Commit Supervisor setup and isolated-rehearsal SPEC.",
+      "lifecycle": "Maintain exact candidate identity and affected review when normative requirements change.",
+      "read_before": [
+        "decisions.md",
+        "session-contract.md",
+        "review-and-merge-design.md",
+        "review-and-merge-handoff.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Objective and authority",
+          "description": "Objective and authority"
+        },
+        {
+          "key": "s2",
+          "heading": "Scope, prerequisites and exclusions",
+          "description": "Scope, prerequisites and exclusions"
+        },
+        {
+          "key": "s3",
+          "heading": "Installed and target hierarchy",
+          "description": "Installed and target hierarchy"
+        },
+        {
+          "key": "s4",
+          "heading": "Integration job contract",
+          "description": "Integration job contract"
+        },
+        {
+          "key": "s5",
+          "heading": "Dependency-ordered execution slices",
+          "description": "Dependency-ordered execution slices"
+        },
+        {
+          "key": "s6",
+          "heading": "Final integration and handoff criteria",
+          "description": "Final integration and handoff criteria"
+        },
+        {
+          "key": "s7",
+          "heading": "Author self-check and source coverage",
+          "description": "Author self-check and source coverage"
+        },
+        {
+          "key": "s8",
+          "heading": "Source revisions",
+          "description": "Source revisions"
+        }
+      ]
+    },
+    {
+      "path": "planning/commit-supervisor/PLANNING.md",
+      "kind": "planning_record",
+      "authority": "Attributed planning coordination and gate evidence; not implementation approval.",
+      "description": "Single-SPEC intake, authorship, independent gates and continuation evidence.",
+      "lifecycle": "Maintain during this planning assignment; preserve reviewer provenance and explicit waits.",
+      "read_before": [
+        "decisions.md",
+        "session-contract.md",
+        "review-and-merge-design.md",
+        "review-and-merge-handoff.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Intake and scope",
+          "description": "Intake and scope"
+        },
+        {
+          "key": "s2",
+          "heading": "Ownership and children",
+          "description": "Ownership and children"
+        },
+        {
+          "key": "s3",
+          "heading": "Gate ledger",
+          "description": "Gate ledger"
+        },
+        {
+          "key": "s4",
+          "heading": "Evidence and continuity",
+          "description": "Evidence and continuity"
+        }
+      ]
+    }
+  ],
+  "support_files": [
+    {
+      "path": "AGENTS.md",
+      "description": "Mission Control working home",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Role and scope",
+          "description": "Role and scope"
+        },
+        {
+          "key": "s2",
+          "heading": "Re-entry",
+          "description": "Re-entry"
+        },
+        {
+          "key": "s3",
+          "heading": "Records and concurrency",
+          "description": "Records and concurrency"
+        },
+        {
+          "key": "s4",
+          "heading": "Access and execution",
+          "description": "Access and execution"
+        },
+        {
+          "key": "s5",
+          "heading": "Skills and schema",
+          "description": "Skills and schema"
+        }
+      ]
+    },
+    {
+      "path": "bulletin.md",
+      "description": "Mission Control bulletin",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Contract",
+          "description": "Contract"
+        },
+        {
+          "key": "s2",
+          "heading": "B-001 — New controller home",
+          "description": "B-001 — New controller home"
+        }
+      ]
+    },
+    {
+      "path": "index.json",
+      "description": "Static document routing schema."
+    },
+    {
+      "path": ".codex/config.toml",
+      "description": "Local Full Access defaults, role mappings and read-only conversation MCP configuration."
+    },
+    {
+      "path": "installation-sources.json",
+      "description": "Static source fingerprints for the local package migration."
+    },
+    {
+      "path": ".codex/agents/mc-roadmap-supervisor.toml",
+      "description": "Local mc-roadmap-supervisor profile; workflow remains in its linked skill."
+    },
+    {
+      "path": ".codex/agents/mc-spec-orchestrator.toml",
+      "description": "Local mc-spec-orchestrator profile; workflow remains in its linked skill."
+    },
+    {
+      "path": ".codex/agents/mc-spec-slice-builder.toml",
+      "description": "Local mc-spec-slice-builder profile; workflow remains in its linked skill."
+    },
+    {
+      "path": ".codex/agents/mc-first-draft.toml",
+      "description": "Local mc-first-draft profile; shaping procedure remains in its linked skill."
+    },
+    {
+      "path": ".codex/agents/mc-roadmap-creation-supervisor.toml",
+      "description": "Local mc-roadmap-creation-supervisor profile; procedure and shared planning contract define its scope."
+    },
+    {
+      "path": ".codex/agents/mc-planning-stage-orchestrator.toml",
+      "description": "Local mc-planning-stage-orchestrator profile; procedure and shared planning contract define its scope."
+    },
+    {
+      "path": ".codex/agents/mc-roadmap-author.toml",
+      "description": "Local mc-roadmap-author profile; procedure and shared planning contract define its scope."
+    },
+    {
+      "path": ".codex/agents/mc-planning-validator.toml",
+      "description": "Local mc-planning-validator profile; procedure and shared planning contract define its scope."
+    },
+    {
+      "path": ".codex/agents/mc-draft-supervisor.toml",
+      "description": "Standalone First Draft Supervisor profile; shared stage and independent draft validation."
+    },
+    {
+      "path": ".codex/agents/mc-commit-supervisor.toml",
+      "description": "Local mc-commit-supervisor integration profile; exact skill loading and supported runtime fallback preserve assigned scope."
+    },
+    {
+      "path": ".codex/agents/mc-code-review-orchestrator.toml",
+      "description": "Local mc-code-review-orchestrator integration profile; exact skill loading and supported runtime fallback preserve assigned scope."
+    },
+    {
+      "path": ".codex/agents/mc-commit-repair-worker.toml",
+      "description": "Local mc-commit-repair-worker integration profile; exact skill loading and supported runtime fallback preserve assigned scope."
+    },
+    {
+      "path": ".agents/skills/mc-commit-supervisor/SKILL.md",
+      "description": "Canonical accepted-integration entry; shared workflow, recovery, independent review, Wiki/runtime handoff and attended owner operation gate."
+    }
+  ]
+}

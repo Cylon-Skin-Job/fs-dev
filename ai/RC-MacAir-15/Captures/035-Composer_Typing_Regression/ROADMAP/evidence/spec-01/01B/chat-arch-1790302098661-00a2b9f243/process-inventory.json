@@ -1,0 +1,30 @@
+{
+  "token": "chat-architecture-owner-chat-arch-1790302098661-00a2b9f243",
+  "electronPid": 92424,
+  "descendants": [
+    92437,
+    92438,
+    92439,
+    92558
+  ],
+  "port": 63381,
+  "runtime": {
+    "electron": "42.0.1",
+    "node": "24.15.0",
+    "focused": true,
+    "visible": true,
+    "profile": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790302098661-00a2b9f243-H7aSh2/profile"
+  },
+  "browser": {
+    "viewport": {
+      "width": 1600,
+      "height": 972
+    },
+    "visibilityState": "visible",
+    "performanceObserver": true
+  },
+  "profileRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790302098661-00a2b9f243-H7aSh2/profile",
+  "workspaceRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790302098661-00a2b9f243-H7aSh2/workspace",
+  "stageRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790302098661-00a2b9f243-H7aSh2/stage",
+  "externalProviderProcess": false
+}

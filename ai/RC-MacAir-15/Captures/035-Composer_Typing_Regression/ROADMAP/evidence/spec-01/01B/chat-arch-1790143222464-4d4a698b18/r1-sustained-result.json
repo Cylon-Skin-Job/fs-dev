@@ -1,0 +1,16 @@
+{
+  "status": "failed",
+  "measurementStarted": false,
+  "failure": {
+    "name": "Error",
+    "message": "timed out waiting for public New Chat",
+    "code": null,
+    "observation": null
+  },
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "lingeringOwnedPids": []
+}

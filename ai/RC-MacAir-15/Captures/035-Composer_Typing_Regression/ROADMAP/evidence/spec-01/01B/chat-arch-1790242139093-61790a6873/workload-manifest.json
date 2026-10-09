@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "R7-R8-RUNTIME-OWNERSHIP",
+      "name": "R7/R8 exact activation, drain, Stop and terminal ownership"
+    }
+  ],
+  "fixture": "fresh disposable profile, migrated fusion.db, fresh empty Capture workspace",
+  "adapter": "canonical deterministic OpenCode iterator at 20 text frames/second",
+  "scenarioInventory": "R1-R9 concrete IDs and later owning contracts in scenario-inventory.mjs",
+  "enforcementGroup": [
+    "R8-GROUP-BACKEND-MATRIX"
+  ]
+}

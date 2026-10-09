@@ -1,0 +1,36 @@
+{
+  "owner": "/root",
+  "source_repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "shared_repos": [],
+  "source_refs": [
+    {
+      "repo": "/Users/rccurtrightjr./projects/fs-dev",
+      "ref": "HEAD",
+      "expected": "d15792920731f85e45b743519d4af2b807d95a9c"
+    }
+  ],
+  "conflicting_writers": [],
+  "ignored_runtime_paths": [],
+  "paths": [
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/SOURCES.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/INPUT-PACKET.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/CANDIDATE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-ARTIFACT-FINGERPRINTS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/CANDIDATE.json",
+      "job_created": true
+    }
+  ]
+}

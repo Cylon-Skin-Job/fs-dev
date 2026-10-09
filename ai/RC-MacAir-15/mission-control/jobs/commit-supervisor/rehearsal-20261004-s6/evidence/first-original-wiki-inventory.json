@@ -1,0 +1,51 @@
+{
+  "at": "2026-10-04T14:05:34.504819+00:00",
+  "scope": "Original current-state three-task completion/reversal/count/reload/fullrestart facts plus ordinary custom iframe/built-in Wiki navigation. No invented commit range.",
+  "source_paths": [
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html"
+  ],
+  "articles": {
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/PAGE.md": {
+      "exists": true,
+      "sha256": "09d0c7fd6ad2882d50c137412194c6060f2e6d9668d7d3a3e1569f3274ea3a6c",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/002-Navigation_Guide/PAGE.md": {
+      "exists": true,
+      "sha256": "7a3058e3ca2a0b793e6c4831487b53098a49c4c80f2f3d91f8a2dbe6463b28ed",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md": {
+      "exists": true,
+      "sha256": "e2877b2a21a23cce18a7b079d1532a8c7a5a8f30467e369248d75e9750ce527c",
+      "mode": "0o100644",
+      "kind": "file"
+    }
+  },
+  "instruction_absences": {
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/AGENTS.md": true,
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/.agents/wiki-session-contract.md": true,
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/.agents/skills/wiki-repair/SKILL.md": true
+  },
+  "procedure_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki",
+  "coverage_search": "All two existing articles inspected beyond metadata; Checklist Guide owns completion/reversal/count/reload/fullrestart; Navigation Guide owns unchanged movement/link behavior. No missing third article required for these facts.",
+  "dispositions": [
+    {
+      "article": "001-Checklist/001-Checklist_Guide/PAGE.md",
+      "disposition": "repair after code handoff",
+      "reason": "Original accepted fact coverage current prose must match settled source."
+    },
+    {
+      "article": "001-Checklist/002-Navigation_Guide/PAGE.md",
+      "disposition": "retain unchanged",
+      "reason": "Navigation remains custom iframe and built-in Wiki, linked articles exist; preserve exact bytes/time."
+    }
+  ],
+  "structural_change_authority": "NONE",
+  "navigation_generation": "not applicable, no markers or structure change",
+  "central_or_realWiki_authority": "NONE"
+}

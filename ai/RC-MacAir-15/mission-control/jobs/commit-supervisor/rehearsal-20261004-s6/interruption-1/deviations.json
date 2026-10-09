@@ -1,0 +1,135 @@
+{
+  "schema": 1,
+  "at": "2026-10-04T20:20:37.027873+00:00",
+  "actor": "/root/s6_supervisor_interruption_1",
+  "entries": [
+    {
+      "id": "I1-D1",
+      "original_criterion": "Exact installed role loading, actual CWD/host/root inheritance acknowledged",
+      "actual_change": "Supported default agent explicitly loaded exact SKILL/TOML full contracts",
+      "reason_authority": "Assignment supported fallback and session portability contract",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/activation.json"
+      ],
+      "observable_effect": "No override/settings change; current identity is actual native runtime child",
+      "checks": [
+        "Hashes, actual CWD/root/permissions and collaboration inventory"
+      ],
+      "risk": "Concrete model/effort/native loader metadata unexposed",
+      "downstream_consumer_impact": "Root and successor must retain fallback fact",
+      "owning_classification": "accepted",
+      "owner": "/root/s6_supervisor_interruption_1"
+    },
+    {
+      "id": "I1-D2",
+      "original_criterion": "Private runtime stop before new snapshot; protect normal/Alpha by current ownership",
+      "actual_change": "Maintained actual stop completed for six freshly observed exact owned P/profile processes",
+      "reason_authority": "Original S6 end-rehearsal boundary plus first-turn assignment",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/owned-stop.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/actual-owned-stop.command.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/stop-comparison.json"
+      ],
+      "observable_effect": "Private tree/listeners absent; code/Wiki/workspace flush deltas empty",
+      "checks": [
+        "Full before/after process/UID/start/entry/exe/CWD/env/listener raw, protected four/13 equal"
+      ],
+      "risk": "Disposable private profile shutdown effects remain outside code restore",
+      "downstream_consumer_impact": "Successor inherits completed stop; verify absence, never replay stale PID termination",
+      "owning_classification": "accepted",
+      "owner": "/root/s6_supervisor_interruption_1"
+    },
+    {
+      "id": "I1-D3",
+      "original_criterion": "Exact fixed130 captured after stop; earlier manifests/preimages immutable",
+      "actual_change": "New public fixed-checkpoint with current actor owner and actual root transfer/historical inactive owners",
+      "reason_authority": "Original S1 schema and explicit recovery ownership note",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/fixed-checkpoint/owned-paths.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/fixed-checkpoint/recovery/manifest.json"
+      ],
+      "observable_effect": "130 owned/4355 full baseline/119 payloads exactly equal latest fixed input; distinct manifest namespace",
+      "checks": [
+        "Public capture/verify and full owned/base/index/worktree equality"
+      ],
+      "risk": "Code checkpoint excludes profile/DB/cache effects",
+      "downstream_consumer_impact": "Fresh successor derives receipt owner/path set from this immutable manifest, active_actor separately",
+      "owning_classification": "accepted",
+      "owner": "/root/s6_supervisor_interruption_1"
+    },
+    {
+      "id": "I1-D4",
+      "original_criterion": "Only two exact private input leaves; explicitly permitted private test-only staging",
+      "actual_change": "Staged binary zero/0xff value, then distinct unstaged binary; created declared-absent future leaf",
+      "reason_authority": "Exact FIRST interruption assignment, no actual publication authority",
+      "files": [
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-inputs/checkpoint.bin",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-inputs/future-addition.txt"
+      ],
+      "observable_effect": "Exactly two entry deltas, sole index delta binary; all other owned/unrelated/ref state exact",
+      "checks": [
+        "One literal private git add with ALL inherited GIT_* stripped; raw blob/readback/guard"
+      ],
+      "risk": "Candidate current match and readiness intentionally false until actual recovery",
+      "downstream_consumer_impact": "Successor must execute separately activated guarded collision/restore from saved expected state",
+      "owning_classification": "accepted",
+      "owner": "/root/s6_supervisor_interruption_1"
+    },
+    {
+      "id": "I1-D5",
+      "original_criterion": "Preserve normal/Alpha storage; avoid unearned live DB byte-equality claims",
+      "actual_change": "Recorded protected11 identity equality and exact natural hash/stat deltas",
+      "reason_authority": "Original runtime limits and active profile evidence",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/final-preservation-proof.json"
+      ],
+      "observable_effect": "Protected roots/tree identity unchanged; no DB/profile copy/restore",
+      "checks": [
+        "dev/inode/existence/kind/mode equality, raw before/after samples"
+      ],
+      "risk": "Active protected DB sizes/hashes/mtimes may naturally change",
+      "downstream_consumer_impact": "Root/S6 closeout must qualify live-storage preservation",
+      "owning_classification": "accepted",
+      "owner": "/root/s6_supervisor_interruption_1"
+    },
+    {
+      "id": "I1-D6",
+      "original_criterion": "Capture exact raw evidence and avoid replay after ambiguous tool completion",
+      "actual_change": "Initial shell wrapper yielded after10seconds; only output was surfaced. Inspected completed stop/after snapshot/comparison files without rerunning stop",
+      "reason_authority": "Preserve uncertain actual outcome first; installed successor no replay rule",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/actual-owned-stop.command.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/stop-comparison.json"
+      ],
+      "observable_effect": "Actual maintained stop exit0 proven by saved command and completed readback; no repeated effect",
+      "checks": [
+        "Complete raw command receipt and comparison assertions, final owned-tree absence"
+      ],
+      "risk": "Initial shell session identifier was not surfaced; no claim about nonexistent forced crash",
+      "downstream_consumer_impact": "Successor retains real completed stop rather than repeating it",
+      "owning_classification": "accepted",
+      "owner": "/root/s6_supervisor_interruption_1"
+    },
+    {
+      "id": "I1-D7",
+      "original_criterion": "Full current source reads and unique record ownership",
+      "actual_change": "Oversized read outputs were shortened and required source portions reread; all writes stayed in unique N aside from authorized two inputs",
+      "reason_authority": "Bounded first-turn evidence capture",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/preservation.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/process-readback.mjs"
+      ],
+      "observable_effect": "No original evidence or source/procedure edits; raw process environments retained locally",
+      "checks": [
+        "Original J1224/source11977/cache193 exact, archive/readback equality"
+      ],
+      "risk": "Full raw process environment records may contain local environment data; never publish as part of this rehearsal",
+      "downstream_consumer_impact": "Root uses bounded factual evidence; no Git publication authority",
+      "owning_classification": "accepted",
+      "owner": "/root/s6_supervisor_interruption_1"
+    }
+  ],
+  "unresolved_material_findings": [],
+  "requested_owner_rulings": [],
+  "scope": "FIRST interruption only; intentional unfinished recovery remains unmet"
+}

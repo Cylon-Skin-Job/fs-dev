@@ -1,0 +1,31 @@
+{
+  "at": "2026-10-04T20:42:10.996330+00:00",
+  "actor": "/root/s6_supervisor_recovery_1",
+  "label": "fix-xy-wiki",
+  "original_job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/fix-xy-wiki-1",
+  "control_job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/public-controls/fix-xy-wiki",
+  "manifest_sha256": "5227a7a7d38dddec138aff13c16f2ee8a22bda1a53657f203a47d80857827617",
+  "historical_owner": "/root/s6_supervisor_fix_xy_1",
+  "active_actor": "/root/s6_supervisor_recovery_1",
+  "guard": {
+    "result": "GUARDED",
+    "expected_sha256": "b09ccfdfea23309603f462fefc5e4e1f2956a9541fb99e2a19fb741fd05adf01"
+  },
+  "actual_restore": {
+    "result": "RESTORED",
+    "index_worktree_equal": true,
+    "status_equal": true,
+    "restored_sha256": "71469a9caa19cd4dced4a0e3e0b766b8178930ae654a6ab7f242f12e38e16686",
+    "manifest_sha256": "5227a7a7d38dddec138aff13c16f2ee8a22bda1a53657f203a47d80857827617"
+  },
+  "removed_only_manifest_declared_job_created_absent_leaves": [
+    "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-095624.md",
+    "rehearsal-workspace/ai/MC-S6/watcher-proof-runtime-2.md"
+  ],
+  "owned_count": 130,
+  "full_inventory_count": 4355,
+  "full_readback": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/fix-xy-wiki-full-exact-readback.json",
+  "current_ready": false,
+  "original_namespace_public_verify": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/fix-xy-wiki-original-namespace-verify.command.json",
+  "all_source_refs_config_physical_index_history_archives_protected_preserved": true
+}

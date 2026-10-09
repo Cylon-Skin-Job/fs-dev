@@ -1,0 +1,22 @@
+{
+  "runId": "chat-arch-1790045838832-ce6a797877",
+  "status": "failed",
+  "results": [
+    {
+      "id": "R6-LIFETIME-BOUNDARIES",
+      "code": 1,
+      "signal": null,
+      "pid": 50904,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 21052
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "R6-LIFETIME-BOUNDARIES exited 1",
+    "stack": "Error: R6-LIFETIME-BOUNDARIES exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:383:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

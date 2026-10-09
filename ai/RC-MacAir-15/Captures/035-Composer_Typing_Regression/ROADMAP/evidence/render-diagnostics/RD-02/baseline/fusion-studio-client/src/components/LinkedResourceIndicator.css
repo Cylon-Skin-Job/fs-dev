@@ -1,0 +1,8 @@
+.rv-linked-resource-indicator {
+  cursor: help;
+  flex: 0 0 auto;
+}
+
+.rv-linked-resource-indicator .material-symbols-outlined {
+  font-size: 18px;
+}

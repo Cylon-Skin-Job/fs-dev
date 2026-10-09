@@ -1,0 +1,48 @@
+{
+  "status": "focus-prerequisite-pending",
+  "characterization": true,
+  "repeatTrials": 3,
+  "coverageCalibration": {
+    "discovered": [
+      "ChatAreaFooter",
+      "ChatAreaHeader",
+      "ContentArea",
+      "InstantSegmentRenderer",
+      "MessageList",
+      "ThreadRail",
+      "renderTextInstant"
+    ],
+    "invocationCounts": {
+      "renderTextInstant": 152,
+      "MessageList": 4,
+      "InstantSegmentRenderer": 32,
+      "ChatAreaHeader": 20,
+      "ThreadRail": 27,
+      "ContentArea": 27,
+      "ChatAreaFooter": 18
+    },
+    "hydrationRetries": 0
+  },
+  "measurements": [],
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": {
+    "name": "Error",
+    "code": "R1_FOCUS_UNAVAILABLE",
+    "message": "R1 staged Electron focus unavailable after 48 attempts: {\"available\":true,\"focused\":false,\"visible\":true,\"minimized\":false,\"windowId\":1,\"title\":\"Fusion Studio\",\"url\":\"fusion-shell://app/\"}",
+    "observation": {
+      "available": true,
+      "focused": false,
+      "visible": true,
+      "minimized": false,
+      "windowId": 1,
+      "title": "Fusion Studio",
+      "url": "fusion-shell://app/"
+    },
+    "stack": "Error: R1 staged Electron focus unavailable after 48 attempts: {\"available\":true,\"focused\":false,\"visible\":true,\"minimized\":false,\"windowId\":1,\"title\":\"Fusion Studio\",\"url\":\"fusion-shell://app/\"}\n    at establishFocusedWindow (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/window-focus.mjs:23:17)\n    at async measureWindow (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r1-electron.mjs:215:30)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r1-electron.mjs:351:23"
+  }
+}

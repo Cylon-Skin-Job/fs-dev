@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-06T22:31:35.227904+00:00",
+  "memory_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "candidate_head": "3356e1b73cc5d44028eac5baa02fd542a8bbc385",
+  "candidate_branch": "codex/chat-retirement-and-startup-repair",
+  "source_head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "source_branch": "agent/exact-workspace-paths",
+  "frozen_tree": "1befa26e94a3487ef91d309665ff389b2e959b65",
+  "candidate_index_sha256": "7026c1f4e6fe37d3e6b5853f0f020e13bf2bcba736320f69025451db20cec930",
+  "source_index_sha256": "8c2f62d2d71cc47a2c5ca767375290e860835e7eec19014f13b8f1475a1c26a4",
+  "source_index_frozen_matches": true,
+  "candidate_owned_count": 1669,
+  "source_owned_count": 1669,
+  "candidate_mismatches": [],
+  "source_mismatches": [],
+  "index_tree_count": 5620,
+  "index_tree_differences": [],
+  "frozen_record_hashes": {
+    "final-candidate-identity.json": "3a30c8501688a6c276486c539678d772b85d65227b29e68de2b354841a1f621f",
+    "final-candidate-owned-inventory.json": "6741bf3ccc50fb70dd4d5f88f99cd9982b1c8f3f864d1452f6a4a73a2f79ec98",
+    "final-source-owned-inventory.json": "2e63d95ecef115ab98733af8f659e969cb5d059ba63e2e2dbfec0cf1598fc610",
+    "final-commit-paths.json": "8383af79f04acbb0e3d32d178e8b675c4f2518cecac543a7efe7e0a38d62cb61",
+    "final-candidate-runtime-support.json": "d4ae4338a17046259795b668c636205aa38217299a071ee443af57f427f9892f"
+  },
+  "check_method": "Read/hash/stat and GIT_OPTIONAL_LOCKS=0 git ls-files/ls-tree/rev-parse/branch; no write-tree",
+  "comparison_schema_note": "Absent leaves normalized to kind=absent; inventory null mode/hash/0bytes are schema placeholders, not drift."
+}

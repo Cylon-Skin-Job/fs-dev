@@ -1,0 +1,45 @@
+{
+  "systemSetupReadiness": {
+    "id": "R5-SYSTEM-FIXTURE-READINESS",
+    "sourceCapsuleVerified": true,
+    "boundedRebind": false,
+    "initial": null,
+    "final": {
+      "workspaceLabel": "R5 System Fixture",
+      "connected": true,
+      "projectionFrames": [
+        {
+          "workspaceId": "system-files",
+          "unavailable": false,
+          "viewIds": [
+            "capture-viewer",
+            "file-viewer",
+            "wiki-viewer",
+            "issues-viewer",
+            "agents-viewer",
+            "system-viewer"
+          ]
+        }
+      ],
+      "railTitles": [
+        "Captures",
+        "Files",
+        "Wiki",
+        "Issues",
+        "Agents",
+        "System"
+      ]
+    }
+  },
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": {
+    "name": "TimeoutError",
+    "message": "page.waitForFunction: Timeout 15000ms exceeded.",
+    "stack": "page.waitForFunction: Timeout 15000ms exceeded.\n    at reconnectAndRelease (/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r5-r6-electron.mjs:304:16)\n    at async exerciseProductionR6 (/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r5-r6-electron.mjs:340:23)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r5-r6-electron.mjs:782:7"
+  }
+}

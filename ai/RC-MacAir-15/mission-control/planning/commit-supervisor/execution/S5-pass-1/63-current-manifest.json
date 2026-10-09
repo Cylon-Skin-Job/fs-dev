@@ -1,0 +1,201 @@
+[
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md",
+    "relative": "AGENTS.md",
+    "sha256": "54cb3ff16f0fae8847341ba38f53af6afd6aa6d84ac4ddb7df9e20faf13888dc",
+    "mode": 420,
+    "bytes": 11356,
+    "lines": 60
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/session-contract.md",
+    "relative": "session-contract.md",
+    "sha256": "d82d5a815a94f8c27b64d1d90aa0085790e3d98408c011e86d6126dd1bd9b570",
+    "mode": 420,
+    "bytes": 7123,
+    "lines": 37
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/record-templates.md",
+    "relative": "record-templates.md",
+    "sha256": "41a4de158caea4cd1512b839150db77735d3a36cdfbe4fb688059bc8a86732e7",
+    "mode": 420,
+    "bytes": 4673,
+    "lines": 59
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/mission-control.md",
+    "relative": "mission-control.md",
+    "sha256": "daff3be04e4c9db92098517de4a7866fb7f9cb86532d1bd60eab6d6f78272f13",
+    "mode": 420,
+    "bytes": 10810,
+    "lines": 93
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "relative": "deployment.md",
+    "sha256": "7c5c447fc48805dcbea283e1bd7c5e4290b3443496abdb2876c6ccf460fe41b1",
+    "mode": 420,
+    "bytes": 21875,
+    "lines": 114
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "relative": "skills-and-agents.md",
+    "sha256": "41fe2c81f6da2ed87e4fd625e60044988fd10c5725da33446ebc360f6ab8cba9",
+    "mode": 420,
+    "bytes": 17686,
+    "lines": 113
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "relative": "handoff.md",
+    "sha256": "52ed4a92ffef4a3f6ecd2f128f5e5886a2d1ed496d841e9f83a38481360da937",
+    "mode": 420,
+    "bytes": 35271,
+    "lines": 196
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "relative": "todo.md",
+    "sha256": "aca67f27b5c1cd4c75e5e8ebfc388c446ff505a9581719e239d6ed40087a49b1",
+    "mode": 420,
+    "bytes": 22422,
+    "lines": 138
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+    "relative": "registry.md",
+    "sha256": "e3ffc6d20ff9d31dfe1b0a7f5bbbeabe3351cee9a3c4ec9bc8f990c080dd08ea",
+    "mode": 420,
+    "bytes": 13674,
+    "lines": 108
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/index.json",
+    "relative": "index.json",
+    "sha256": "c93b4e279488456bd2e81b2836f8e1e11a80301af0f0b3d1ba521f9acfbdb460",
+    "mode": 420,
+    "bytes": 39626,
+    "lines": 1142
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/config.toml",
+    "relative": ".codex/config.toml",
+    "sha256": "21558b2f2eae1c44479ea7d5afe5e636a379b8b08f4a79c108715d99f9b81322",
+    "mode": 420,
+    "bytes": 3017,
+    "lines": 62
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-review-and-merge.toml",
+    "relative": ".codex/agents/mc-review-and-merge.toml",
+    "absent": true
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-review-and-merge/SKILL.md",
+    "relative": ".agents/skills/mc-review-and-merge/SKILL.md",
+    "absent": true
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-review-and-merge/agents/openai.yaml",
+    "relative": ".agents/skills/mc-review-and-merge/agents/openai.yaml",
+    "absent": true
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mission-control/SKILL.md",
+    "relative": ".agents/skills/mission-control/SKILL.md",
+    "sha256": "49ad5a39b4ca9bc70194f7268b55d7e859c8a1edb6af2398f4cf7499f6972acd",
+    "mode": 420,
+    "bytes": 5403,
+    "lines": 32
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/monitor/SKILL.md",
+    "relative": ".agents/skills/monitor/SKILL.md",
+    "sha256": "ddd24895961ae68a0adc53a61f9a1722b9169b6b89da12c9960c0a7816831425",
+    "mode": 420,
+    "bytes": 5490,
+    "lines": 34
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/status/references/report-format.md",
+    "relative": ".agents/skills/status/references/report-format.md",
+    "sha256": "3cd603a9c454f2a2458b09af2d50ec416768cfa5202f1bd2bf783f26dbf5d557",
+    "mode": 420,
+    "bytes": 3039,
+    "lines": 43
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-implementation-supervisor/SKILL.md",
+    "relative": ".agents/skills/mc-roadmap-implementation-supervisor/SKILL.md",
+    "sha256": "aeff519d09551470d8aadbf6a223bbee89729d96184726addef155492a3b1f38",
+    "mode": 420,
+    "bytes": 17125,
+    "lines": 171
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+    "relative": ".agents/skills/mc-commit-supervisor/references/workflow.md",
+    "sha256": "27aab53da9edbed9f6ee8ceb4917d7c7531a7de914a3c2df7fb2196b6bd4a20c",
+    "mode": 420,
+    "bytes": 21146,
+    "lines": 334
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/job-template.md",
+    "relative": ".agents/skills/mc-commit-supervisor/references/job-template.md",
+    "sha256": "21bf5a6b99bb333115c43b594996810159a7a34ddaa360936895cf1ce95d35f8",
+    "mode": 420,
+    "bytes": 7305,
+    "lines": 115
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md",
+    "relative": ".agents/skills/mc-commit-supervisor/SKILL.md",
+    "sha256": "b4ec0266a8d72f573dd4f3670c671a856ee5cc98b6942aad48683fa22fb14d68",
+    "mode": 420,
+    "bytes": 3967,
+    "lines": 62
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/agents/openai.yaml",
+    "relative": ".agents/skills/mc-commit-supervisor/agents/openai.yaml",
+    "sha256": "1b938e91f8799afb36273459f1172b18b7e45aceed5b9cb2b81af9d9c86ce82d",
+    "mode": 420,
+    "bytes": 364,
+    "lines": 6
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-supervisor.toml",
+    "relative": ".codex/agents/mc-commit-supervisor.toml",
+    "sha256": "01887fdc12c962be5a7438b513836e6269cff1f9683b7a17c2edfbf2aa961044",
+    "mode": 420,
+    "bytes": 1563,
+    "lines": 3
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/owner-publication.md",
+    "relative": ".agents/skills/mc-commit-supervisor/references/owner-publication.md",
+    "sha256": "e443f0a689532a42ababb29bf6729a49dc56ba91f6727364f46faafb1ae19785",
+    "mode": 420,
+    "bytes": 7391,
+    "lines": 110
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "relative": "review-and-merge-design.md",
+    "sha256": "de9ee5cf8ba042caa0ea452b6b67c791ac40bdcf76cbf4a04c0d2555fcb63a68",
+    "mode": 420,
+    "bytes": 33283,
+    "lines": 273
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "relative": "review-and-merge-handoff.md",
+    "sha256": "c752f13b4ba459793a178aee789cf6bd42bf1c39184f2b045b17494980176198",
+    "mode": 420,
+    "bytes": 15813,
+    "lines": 124
+  }
+]

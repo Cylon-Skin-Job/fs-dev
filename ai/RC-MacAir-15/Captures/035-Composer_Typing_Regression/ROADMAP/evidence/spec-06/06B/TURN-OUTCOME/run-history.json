@@ -1,0 +1,118 @@
+[
+  {
+    "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790497850865-7f0979e63e",
+    "status": "failed",
+    "completedCases": 0,
+    "failure": {
+      "message": "timed out waiting for Stop cleared",
+      "stack": "Error: timed out waiting for Stop cleared\n    at waitFor (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs:32:9)\n    at async send (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs:69:5)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs:98:3"
+    },
+    "cleanup": {
+      "lingering": [],
+      "dbQuickCheck": "ok",
+      "portFileRemoved": true,
+      "fixtureRootsRemoved": true
+    }
+  },
+  {
+    "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790497896144-0212671ee9",
+    "status": "failed",
+    "completedCases": 0,
+    "failure": {
+      "message": "tool history retained: denied",
+      "stack": "AssertionError [ERR_ASSERTION]: tool history retained: denied\n    at send (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs:86:14)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs:98:3"
+    },
+    "cleanup": {
+      "lingering": [],
+      "dbQuickCheck": "ok",
+      "portFileRemoved": true,
+      "fixtureRootsRemoved": true
+    }
+  },
+  {
+    "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790497935018-768c1cdf4c",
+    "status": "failed",
+    "completedCases": 13,
+    "failure": {
+      "message": "database is locked",
+      "stack": "SqliteError: database is locked\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs:67:122\n    at withDb (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs:22:16)\n    at send (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs:66:21)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs:113:84"
+    },
+    "cleanup": {
+      "lingering": [
+        80395
+      ],
+      "dbQuickCheck": "ok",
+      "portFileRemoved": true,
+      "fixtureRootsRemoved": true
+    }
+  },
+  {
+    "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790498026870-9cb4fcd28a",
+    "status": "failed",
+    "completedCases": 14,
+    "failure": {
+      "message": "timed out waiting for one saved success",
+      "stack": "Error: timed out waiting for one saved success\n    at waitFor (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs:32:9)\n    at async send (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs:72:5)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs:135:3"
+    },
+    "cleanup": {
+      "lingering": [],
+      "dbQuickCheck": "ok",
+      "portFileRemoved": true,
+      "fixtureRootsRemoved": true
+    }
+  },
+  {
+    "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790498104305-33a622729d",
+    "status": "failed",
+    "completedCases": 14,
+    "failure": {
+      "message": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.rv-panel[data-panel=\"capture-viewer\"].active').locator('[data-chat-thread-id=\"2026-09-27T01-35-26-394\"] textarea.rv-chat-input') to be visible\u001b[22m\n",
+      "stack": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.rv-panel[data-panel=\"capture-viewer\"].active').locator('[data-chat-thread-id=\"2026-09-27T01-35-26-394\"] textarea.rv-chat-input') to be visible\u001b[22m\n\n    at send (/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs:63:97)\n    at /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs:149:9"
+    },
+    "cleanup": {
+      "lingering": [],
+      "dbQuickCheck": "ok",
+      "portFileRemoved": true,
+      "fixtureRootsRemoved": true
+    }
+  },
+  {
+    "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790498167176-45a282de59",
+    "status": "failed",
+    "completedCases": 13,
+    "failure": {
+      "message": "database is locked",
+      "stack": "SqliteError: database is locked\n    at Database.prepare (/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules/better-sqlite3/lib/methods/wrappers.js:5:21)\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs:27:42\n    at withDb (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs:22:16)\n    at readDb (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs:20:18)\n    at async send (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs:78:18)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs:145:84"
+    },
+    "cleanup": {
+      "lingering": [],
+      "dbQuickCheck": "ok",
+      "portFileRemoved": true,
+      "fixtureRootsRemoved": true
+    }
+  },
+  {
+    "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790498243763-d99a2c1549",
+    "status": "passed",
+    "completedCases": 16,
+    "failure": null,
+    "cleanup": {
+      "lingering": [],
+      "dbQuickCheck": "ok",
+      "portFileRemoved": true,
+      "fixtureRootsRemoved": true
+    }
+  },
+  {
+    "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790498299924-f332d1cd8c",
+    "status": "passed",
+    "completedCases": 16,
+    "failure": null,
+    "cleanup": {
+      "lingering": [],
+      "dbQuickCheck": "ok",
+      "portFileRemoved": true,
+      "fixtureRootsRemoved": true
+    }
+  }
+]

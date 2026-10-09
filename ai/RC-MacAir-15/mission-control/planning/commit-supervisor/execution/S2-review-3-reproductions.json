@@ -1,0 +1,276 @@
+{
+  "finding": "CR-S2-R3-01",
+  "argv": [
+    "/opt/homebrew/bin/python3.12",
+    "-B",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+    "--packet",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-review-3-reproduction-inputs/CR-S2-R3-01.json"
+  ],
+  "input_sha256": "f541cc6e7b85e6fae8c80fe4ca8fb9f853778ce1e58c49aa3f7fa2120d445d89",
+  "result": {
+    "agent_gate_proof": false,
+    "candidate": {
+      "authority": {
+        "SPEC": "approved"
+      },
+      "configuration": {
+        "profile": "disposable"
+      },
+      "fixtures": {
+        "oracle": "correct"
+      },
+      "owned": {
+        "code.py": {
+          "index": "base",
+          "mode": "100644",
+          "worktree": "fixed"
+        }
+      },
+      "preparation": "replay-owned-bytes",
+      "sources": [
+        "source-1"
+      ],
+      "target": "target-1"
+    },
+    "dispatch_actions": [],
+    "dispositions": {
+      "F1": [
+        {
+          "actor": "fixture-manager",
+          "evidence": "fixture/repro.log",
+          "status": "open"
+        },
+        {
+          "actor": "fixture-writer",
+          "status": "repair-reported"
+        },
+        {
+          "actor": "fixture-manager",
+          "candidate": {
+            "authority": {
+              "SPEC": "approved"
+            },
+            "configuration": {
+              "profile": "disposable"
+            },
+            "fixtures": {
+              "oracle": "correct"
+            },
+            "owned": {
+              "code.py": {
+                "index": "base",
+                "mode": "100644",
+                "worktree": "fixed"
+              }
+            },
+            "preparation": "replay-owned-bytes",
+            "sources": [
+              "source-1"
+            ],
+            "target": "target-1"
+          },
+          "handoff_id": "F1-handoff",
+          "reviewers": [
+            "fixture-handoff-reviewer"
+          ],
+          "status": "handoff-validated"
+        },
+        {
+          "actor": "fixture-final-orchestrator",
+          "candidate": {
+            "authority": {
+              "SPEC": "approved"
+            },
+            "configuration": {
+              "profile": "disposable"
+            },
+            "fixtures": {
+              "oracle": "correct"
+            },
+            "owned": {
+              "code.py": {
+                "index": "base",
+                "mode": "100644",
+                "worktree": "fixed"
+              }
+            },
+            "preparation": "replay-owned-bytes",
+            "sources": [
+              "source-1"
+            ],
+            "target": "target-1"
+          },
+          "dependencies": {
+            "authority": {
+              "SPEC": "approved"
+            },
+            "configuration": {
+              "profile": "disposable"
+            },
+            "fixtures": {
+              "oracle": "correct"
+            },
+            "owned": {
+              "code.py": {
+                "index": "base",
+                "mode": "100644",
+                "worktree": "fixed"
+              }
+            },
+            "preparation": "replay-owned-bytes",
+            "sources": [
+              "source-1"
+            ],
+            "target": "target-1"
+          },
+          "finding_evidence": "fixture/repro.log",
+          "next_action": "Retain advisory; no repair required",
+          "reason": "Independent validation establishes optional polish",
+          "status": "advisory",
+          "time": "2026-10-04T00:00:00Z",
+          "validation_evidence": "fixture/reclassification.md"
+        }
+      ]
+    },
+    "findings": [
+      {
+        "assigned_paths": [
+          "code.py"
+        ],
+        "authority": "approved behavior criterion",
+        "confidence": "medium",
+        "evidence": "fixture/repro.log",
+        "id": "F1",
+        "impact": "accepted input returns incorrect result",
+        "path": "code.py",
+        "severity": "high",
+        "validated": true
+      },
+      {
+        "assigned_paths": [
+          "code.py"
+        ],
+        "authority": "approved behavior criterion",
+        "confidence": "medium",
+        "evidence": "fixture/repro.log",
+        "id": "F1",
+        "impact": "Optional polish; accepted behavior passes",
+        "path": "code.py",
+        "severity": "advisory",
+        "validated": false
+      }
+    ],
+    "gaps": [],
+    "hold_packet": null,
+    "invalidated": [],
+    "raw_reports": [
+      {
+        "clean_room": true,
+        "dependencies": {
+          "authority": {
+            "SPEC": "approved"
+          },
+          "configuration": {
+            "profile": "disposable"
+          },
+          "fixtures": {
+            "oracle": "correct"
+          },
+          "owned": {
+            "code.py": {
+              "index": "base",
+              "mode": "100644",
+              "worktree": "fixed"
+            }
+          },
+          "preparation": "replay-owned-bytes",
+          "sources": [
+            "source-1"
+          ],
+          "target": "target-1"
+        },
+        "findings": [
+          {
+            "assigned_paths": [
+              "code.py"
+            ],
+            "authority": "approved behavior criterion",
+            "confidence": "medium",
+            "evidence": "fixture/repro.log",
+            "id": "F1",
+            "impact": "Optional polish; accepted behavior passes",
+            "path": "code.py",
+            "severity": "advisory",
+            "validated": false
+          }
+        ],
+        "identity": "fixture-final-reviewer",
+        "lenses": [
+          "Behavior & Verification",
+          "Standards Compliance",
+          "Integrations & Dependencies",
+          "Forward Compatibility",
+          "Wiki Impact"
+        ],
+        "raw_path": "fixture/review-1.md",
+        "read_only": true,
+        "result": "findings",
+        "root_inherited": true,
+        "terminal": true
+      }
+    ],
+    "repair_packet": {
+      "candidate": {
+        "authority": {
+          "SPEC": "approved"
+        },
+        "configuration": {
+          "profile": "disposable"
+        },
+        "fixtures": {
+          "oracle": "correct"
+        },
+        "owned": {
+          "code.py": {
+            "index": "base",
+            "mode": "100644",
+            "worktree": "fixed"
+          }
+        },
+        "preparation": "replay-owned-bytes",
+        "sources": [
+          "source-1"
+        ],
+        "target": "target-1"
+      },
+      "finding_ids": [
+        "F1"
+      ],
+      "findings": [
+        {
+          "assigned_paths": [
+            "code.py"
+          ],
+          "authority": "approved behavior criterion",
+          "confidence": "medium",
+          "evidence": "fixture/repro.log",
+          "id": "F1",
+          "impact": "accepted input returns incorrect result",
+          "path": "code.py",
+          "severity": "high",
+          "validated": true
+        }
+      ],
+      "manager": "fixture-final-orchestrator",
+      "return": "READY_FOR_HANDOFF_REVIEW"
+    },
+    "result": "findings",
+    "return": "REVIEW_COMPLETE",
+    "state": "repair",
+    "unaffected": [
+      "behavior"
+    ]
+  },
+  "validated": true
+}

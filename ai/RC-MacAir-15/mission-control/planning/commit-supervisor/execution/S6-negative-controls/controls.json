@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-04T19:42:22.431528+00:00",
+  "actor": "/root",
+  "label": "REHEARSAL_ONLY",
+  "actual_authorization": "NONE",
+  "controls_applied": true,
+  "plan": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-negative-controls/plan.json",
+  "selected_source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-negative-controls/selected-source.json",
+  "private_target_ref": "refs/remotes/origin/agent/exact-workspace-paths",
+  "current_target_commit": "551a74313d099724cdb3d76ead04e940ae88f223",
+  "candidate_fault": "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js",
+  "current_fault_sha256": "95ece1f98d8ff6cd5d420784bc1dc5356a4a05c50df223527bb9164545ae6d10",
+  "simulated_receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-negative-controls/simulated-commit-only-receipt.json",
+  "simulated_request": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-negative-controls/simulated-push-request.json",
+  "source_shared_preserved": true,
+  "private_changed_paths": [
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js"
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fusion://schemas/file-content-v1",
+  "title": "File Viewer content request and response family v1",
+  "oneOf": [
+    { "$ref": "#/$defs/request" },
+    { "$ref": "#/$defs/envelopeInvalid" },
+    { "$ref": "#/$defs/workspaceUnavailable" },
+    { "$ref": "#/$defs/pairError" },
+    { "$ref": "#/$defs/domainError" },
+    { "$ref": "#/$defs/success" }
+  ],
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "boundedId": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "boundedPath": { "type": "string", "minLength": 1, "maxLength": 4096 },
+    "fixedError": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "version", "requestId", "workspaceId", "workspaceEpoch", "panel", "path"],
+      "properties": {
+        "type": { "const": "file_content_request" },
+        "version": { "const": 1 },
+        "requestId": { "$ref": "#/$defs/boundedId" },
+        "workspaceId": { "$ref": "#/$defs/boundedId" },
+        "workspaceEpoch": { "$ref": "#/$defs/uuid" },
+        "panel": { "const": "file-viewer" },
+        "path": { "$ref": "#/$defs/boundedPath" }
+      }
+    },
+    "envelopeInvalid": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "version", "success", "code", "error"],
+      "properties": {
+        "type": { "const": "file_content_response" },
+        "version": { "const": 1 },
+        "success": { "const": false },
+        "code": { "const": "invalid_request" },
+        "requestId": { "$ref": "#/$defs/boundedId" },
+        "error": { "const": "The file content request is invalid." }
+      }
+    },
+    "workspaceUnavailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "version", "success", "code", "requestId", "error"],
+      "properties": {
+        "type": { "const": "file_content_response" },
+        "version": { "const": 1 },
+        "success": { "const": false },
+        "code": { "const": "workspace_unavailable" },
+        "requestId": { "$ref": "#/$defs/boundedId" },
+        "error": { "const": "The workspace is not available." }
+      }
+    },
+    "pairError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "version", "success", "code", "requestId", "workspaceId", "workspaceEpoch", "error"],
+      "properties": {
+        "type": { "const": "file_content_response" },
+        "version": { "const": 1 },
+        "success": { "const": false },
+        "code": { "enum": ["invalid_request", "stale_workspace"] },
+        "requestId": { "$ref": "#/$defs/boundedId" },
+        "workspaceId": { "$ref": "#/$defs/boundedId" },
+        "workspaceEpoch": { "$ref": "#/$defs/uuid" },
+        "error": { "$ref": "#/$defs/fixedError" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "code": { "const": "invalid_request" } }, "required": ["code"] },
+          "then": { "properties": { "error": { "const": "The file content request is invalid." } } },
+          "else": { "properties": { "error": { "const": "The workspace changed before this read was accepted." } } }
+        }
+      ]
+    },
+    "domainError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "version", "success", "code", "requestId", "workspaceId", "workspaceEpoch", "panel", "path", "error"],
+      "properties": {
+        "type": { "const": "file_content_response" },
+        "version": { "const": 1 },
+        "success": { "const": false },
+        "code": { "enum": ["path_not_allowed", "not_found", "permission_denied", "is_directory", "unsupported_text", "read_failed"] },
+        "requestId": { "$ref": "#/$defs/boundedId" },
+        "workspaceId": { "$ref": "#/$defs/boundedId" },
+        "workspaceEpoch": { "$ref": "#/$defs/uuid" },
+        "panel": { "const": "file-viewer" },
+        "path": { "$ref": "#/$defs/boundedPath" },
+        "error": { "$ref": "#/$defs/fixedError" }
+      },
+      "allOf": [
+        { "if": { "properties": { "code": { "const": "path_not_allowed" } }, "required": ["code"] }, "then": { "properties": { "error": { "const": "The requested path is not allowed." } } } },
+        { "if": { "properties": { "code": { "const": "not_found" } }, "required": ["code"] }, "then": { "properties": { "error": { "const": "The requested file was not found." } } } },
+        { "if": { "properties": { "code": { "const": "permission_denied" } }, "required": ["code"] }, "then": { "properties": { "error": { "const": "Permission was denied while reading the file." } } } },
+        { "if": { "properties": { "code": { "const": "is_directory" } }, "required": ["code"] }, "then": { "properties": { "error": { "const": "The requested path is a folder." } } } },
+        { "if": { "properties": { "code": { "const": "unsupported_text" } }, "required": ["code"] }, "then": { "properties": { "error": { "const": "Only supported UTF-8 text can be read." } } } },
+        { "if": { "properties": { "code": { "const": "read_failed" } }, "required": ["code"] }, "then": { "properties": { "error": { "const": "The file could not be read." } } } }
+      ]
+    },
+    "success": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "version", "success", "requestId", "workspaceId", "workspaceEpoch", "panel", "path", "content", "size", "lastModified"],
+      "properties": {
+        "type": { "const": "file_content_response" },
+        "version": { "const": 1 },
+        "success": { "const": true },
+        "requestId": { "$ref": "#/$defs/boundedId" },
+        "workspaceId": { "$ref": "#/$defs/boundedId" },
+        "workspaceEpoch": { "$ref": "#/$defs/uuid" },
+        "panel": { "const": "file-viewer" },
+        "path": { "$ref": "#/$defs/boundedPath" },
+        "content": { "type": "string" },
+        "size": { "type": "integer", "minimum": 0 },
+        "lastModified": { "type": "integer", "minimum": 0 },
+        "isSymlink": { "const": true },
+        "symlinkTarget": { "type": "string", "minLength": 1, "maxLength": 4096 }
+      },
+      "dependentRequired": { "isSymlink": ["symlinkTarget"], "symlinkTarget": ["isSymlink"] }
+    }
+  }
+}

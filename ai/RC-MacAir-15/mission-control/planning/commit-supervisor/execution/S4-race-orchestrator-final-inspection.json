@@ -1,0 +1,36 @@
+{
+  "at": "2026-10-04T12:26:35.589606+00:00",
+  "current": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs",
+      "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+      "lines": 178,
+      "mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs",
+      "sha256": "9b4bb189ebff26ceaf9b899abafa75400ebbd5e9157f0a45468640d87459ad85",
+      "lines": 328,
+      "mode": 420
+    }
+  ],
+  "filtered_frozen_source_pairs": 74,
+  "preimages_diff": true,
+  "accepted_unchanged": 49,
+  "unowned_baseline_checked": 15943,
+  "absences_checked": 68,
+  "drifts": [],
+  "source_build_cache_checked": 193,
+  "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "branch": "agent/exact-workspace-paths",
+  "index_sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+  "raw_failure_preserved": true,
+  "root_targeted_tests": {
+    "pass": 17,
+    "fail": 0,
+    "skip": 0
+  },
+  "cumulative_reuse": "55 Python tests: unchanged dependency bytes; new changes are Node inventory/test only",
+  "initial_probe": "Read-only first attempt assumed every slice had a non-null current_revision; corrected to preserve S6 null pending revision",
+  "deviation_classification_pending_acceptance": "S4-R2-D1 accepted mechanical process-race correction; S6 exact helper replay and renewed affected proof required"
+}

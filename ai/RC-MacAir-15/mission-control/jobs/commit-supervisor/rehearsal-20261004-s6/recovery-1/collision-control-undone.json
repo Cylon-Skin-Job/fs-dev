@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-04T20:40:18.889120+00:00",
+  "actor": "/root/s6_supervisor_recovery_1",
+  "only_path": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-inputs/checkpoint.bin",
+  "working_sha256": "a9c4ca3841b8c8c8ceeb84488d6c501543d0ae673f06e6ae67111d61f9bdb07b",
+  "full_current_guard_equal": true,
+  "fresh_guard_expected": "6dbdf53b8ac8c64554ec194365b18410bea163af27d97024af5b5d43a42e4a8c"
+}

@@ -1,0 +1,51 @@
+{
+  "state": "READY_FOR_HANDOFF_REVIEW",
+  "actor": "/root/restart_wiki_scope_repair",
+  "manager": "/root",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "assigned_paths": [
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md"
+  ],
+  "finding_ids": [
+    "FINAL-DOC-001"
+  ],
+  "proposed_disposition": "repair-reported",
+  "candidate": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+  "source": "/Users/rccurtrightjr./projects/fs-dev",
+  "candidate_HEAD": "3356e1b73cc5d44028eac5baa02fd542a8bbc385",
+  "prior_covered_tree": "1befa26e94a3487ef91d309665ff389b2e959b65",
+  "owned_worktree_sha256": "fa7ecb9041a4d4c9f2f24cba9386b3e844a6dbe98c9af52063b05fe90345a9f0",
+  "owned_index_sha256": "ccf7a76b4201ce3f5a95b29816f72f85cf1506b6f94172a581c100170dd4b94e",
+  "source_article_sha256": "ccf7a76b4201ce3f5a95b29816f72f85cf1506b6f94172a581c100170dd4b94e",
+  "preimage_manifest_sha256": "b3b4526b10f15e1a7305fbb55bdf62660c95dba41d58f3a29c35d3840b506977",
+  "checks": {
+    "restoration_exit": 0,
+    "frontmatter_assertions": 16,
+    "frontmatter_exit": 0,
+    "diff_check_exit": 0,
+    "diff_capture_exit": 0,
+    "preimage_payloads_valid": true,
+    "preimage_matched_before_mutation": true,
+    "only_owned_worktree_leaf_changed": true,
+    "source_raw_and_semantic_index_refs_unchanged": true,
+    "candidate_raw_and_semantic_index_refs_unchanged": true,
+    "no_parent_or_version_changes": true
+  },
+  "root_settings_inherited_without_override": true,
+  "leaf_no_agents": true,
+  "no_independent_verdict": true,
+  "no_runtime_effects": true,
+  "invalidated_claims": [
+    "prior whole-candidate final documentation identity for owned article"
+  ],
+  "unaffected_scope": "unchanged checked candidate/code/fixture/runtime-dependency bytes; no new higher-level verdict",
+  "limits": [
+    "candidate index still preimage until root index-selector update",
+    "ignored runtime/dependency leaves outside Git-visible inventory",
+    "no product/runtime test result claimed",
+    "initial preparation raw tool outputs remain in conversation"
+  ],
+  "next_safe_action": "distinct fresh manager-assigned read-only handoff; manager index-selector update and fresh final gate",
+  "reports": {},
+  "at": "2026-10-06T22:55:08.505849+00:00"
+}

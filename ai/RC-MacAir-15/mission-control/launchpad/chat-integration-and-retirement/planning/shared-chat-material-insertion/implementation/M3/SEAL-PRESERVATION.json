@@ -1,0 +1,7 @@
+{
+  "at": "2026-10-07T22:38:30.722227+00:00",
+  "method": "Original full seal recovered from exact verified source rows/patch/helper bytes and timestamp near original file birth; accepted only on exact original SHA-256 match. No substituted or inferred seal identity.",
+  "originalSha256": "6fcef6edfdf2439a45eec626a1d854ed67db209b7c78988a6aeaa48a713fd316",
+  "recovered": true,
+  "originalTimestamp": "2026-10-07T20:52:54.797071+00:00"
+}

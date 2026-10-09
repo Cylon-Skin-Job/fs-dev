@@ -1,0 +1,20 @@
+--- session-contract.md preimage
++++ session-contract.md current
+@@ -14,7 +14,7 @@
+ 
+ MC coordinates roadmap dependencies; the supervisor owns its SPEC chain; the orchestrator owns its slice chain. Direct owner direction remains authoritative. Return changed files, checks, evidence, deviations, unresolved intent and next safe action without rewriting central registry state outside the assignment. Owner acceptance remains mandatory between SPECs. A hold request requires acknowledgment or authorized interruption before reallocating the writer.
+ 
+-D-023 keeps ordinary sessions as general assistants and explicitly selects the Mission Control role through `$mission-control`. MC may assign persistent same-folder Review and Merge tasks for eligible completed builds after its cycle is confirmed paused. Include exact skill, candidate/target revisions, job-report ownership, prerequisites and stop before commit/push. Verify created-task CWD. Review and Merge returns `waiting-owner`; no controller/monitor may approve publication or restart that expected wait.
++D-023 keeps ordinary sessions as general assistants and explicitly selects the Mission Control role through `$mission-control`. MC may assign persistent same-folder Commit Supervisor tasks for eligible completed builds after its cycle is confirmed paused. Include exact skill, candidate/target revisions, job-report ownership, prerequisites and stop before commit/push. Verify created-task CWD. Commit Supervisor loads `.agents/skills/mc-commit-supervisor/SKILL.md`, uses its shared workflow and returns `COMMIT_READY_WAITING_OWNER` in `waiting-owner`; no controller/monitor may approve publication or restart that expected wait.
+ 
+ Use the shared `status` and `monitor` skills for incremental observation and hourly cycles. Status is read/record/report work, not dispatch or approval. MC stops the whole cycle before informing the owner of any next action or performing one, and on any tracked build completion; other ongoing tickets remain in its report. MC requires a new owner directive to re-arm. Supervisors pause during their own review/next-step selection/owner wait and resume a new cycle only after acknowledged authorized child dispatch. Preserve per-SPEC owner acceptance. Cycle records include ownership, scope, actual/desired schedule state, previous/latest Status pointers and explicit end reason; report paths are separately owned per role/job.
+ 
+@@ -26,6 +26,8 @@
+ 
+ Use local `mc-first-draft`, `mc-roadmap-supervisor`, `mc-spec-orchestrator` and `mc-spec-slice-builder` profiles for the corresponding spawned roles. The shared global `clean-room-reviewer` remains a dependency; verify it is available before a required gate. A main supervisor can run its skill without a TOML spawn. Role definitions do not provision a folder-bound session; use a supported launch path and verify it. Do not launch agents in a side conversation where delegation is prohibited.
+ 
++Integration roles use `mc-commit-supervisor`, `mc-code-review-orchestrator` and `mc-commit-repair-worker`. Verify supported runtime names and actual loading; when a new name is unavailable, use a supported default agent with explicit exact absolute skill/session/workflow paths and record the fallback acknowledgment. Never invent persistent-task API fields such as `profile`. A task prompt names the procedure; a profile does not bind CWD.
++
+ Preserve the invoking root model/effort. Profiles inherit session permissions and local Full Access defaults; verify actual host settings rather than inferring them from a file. Check actual delegation capacity/depth before a build. Do not pin models or raise global limits as part of installing this package.
+ 
+ A build session outside this directory ancestry needs an explicit absolute procedure source and appropriate runtime profile deployment. Do not assume a shell `cd` reloads startup instructions or inherited skill discovery. The present package config is scoped to trusted MC/descendant launch contexts, not every checkout on the machine.

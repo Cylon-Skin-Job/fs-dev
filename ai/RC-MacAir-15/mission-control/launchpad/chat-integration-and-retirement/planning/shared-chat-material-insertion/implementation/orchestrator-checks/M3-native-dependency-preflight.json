@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-07T16:39:14.241751+00:00",
+  "state": "read-only M3 prerequisite inspection; no compilation/test performed",
+  "worktree_artifact_exists": false,
+  "primary_artifact_sha256": "d24d6e8dd1fa53daa76291b3d51ced097a33d7975e92e6df25e9530c92379ef1",
+  "reason": "Full Jest suite contains direct unconditional require of ignored native artifact; fresh managed worktree has no build output.",
+  "next_safe_action": "M3 builder, after M2 accepted, checks current dependency and compiles unchanged addon locally through established owner if still absent; records source/dependency/artifact/raw command receipt. No shared modules/source or owner profile mutation.",
+  "source_hashes": {
+    "fusion-studio-server/package.json": "15113c033b6deb5622aa8a5213042bcb1b67e82d87f63df3b006efc9640717db",
+    "fusion-studio-server/native/secure-file-observer/index.js": "3b8c93ed7cc31cbe294b7f0a81729a458ed029726f51009029c622b26d6c6be2",
+    "fusion-studio-server/native/secure-file-observer/binding.gyp": "c660385eeefbd59db21ce1433f1a6f8eebd088cf72a8cb675c4ebeda61e0795e",
+    "fusion-studio-server/native/secure-file-observer/secure_file_observer.c": "113ddf43102c205c175ed56699b95fd03cf2857b9896231d349c16514039ffd0",
+    "fusion-studio-server/native/secure-file-observer/runtime-smoke.js": "b0eb8261146ee444981223b2e96064fb4cc0a598f0ff23f8cd21e04a9a0043f7",
+    "fusion-studio-server/test/agent-provenance/secure-file-observer.test.js": "49473d7855359ef2ed18e66ec04539e40c245e3decfd5f64f3184f0685db93fb"
+  },
+  "scope_limit": "This inspection neither runs npm pretest nor certifies native/server checks."
+}

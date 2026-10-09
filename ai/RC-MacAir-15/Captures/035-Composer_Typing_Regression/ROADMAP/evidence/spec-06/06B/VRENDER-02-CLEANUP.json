@@ -1,0 +1,26 @@
+{
+  "checkedAt": "2026-09-26T12:16:23.785651+00:00",
+  "runId": "chat-arch-1790424871492-50a0d12d9d",
+  "rootExists": false,
+  "exactTokenProcesses": [],
+  "checkedPids": [
+    24309,
+    24322,
+    24444,
+    25252,
+    25859
+  ],
+  "remainingPids": [],
+  "identities": {
+    "source": {
+      "entries": 1946,
+      "sha256": "467062ff7a638314c164c30f5900507a010a4084823dc72a9f90290404541fe1",
+      "mismatches": []
+    },
+    "build": {
+      "entries": 200,
+      "sha256": "6c06602b58f8dc0e4a9b1ed6588c5670b8e628b21044040a581e9e9d55f05234",
+      "mismatches": []
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "actor": "/root/s6_supervisor_recovery_1",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "command": [
+    "git",
+    "-C",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+    "for-each-ref",
+    "--format=%(refname)%00%(objectname)"
+  ],
+  "started": "2026-10-04T20:34:27.221377+00:00",
+  "finished": "2026-10-04T20:34:27.225138+00:00",
+  "exit_code": 0,
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "GIT_LITERAL_PATHSPECS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "inherited_git_variables_removed": "ALL GIT_* repository/index/object/alternate variables",
+  "stdout_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/initial-candidate-refs.stdout",
+    "sha256": "9d16de57b401c2857b4e01e956037365f3ca9669a716562248c6be8faf58472d",
+    "size": 1226
+  },
+  "stderr_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/initial-candidate-refs.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": {
+    "name": "AssertionError",
+    "message": "R5-NO-TARGET-CONSUMER actual caller button was not rendered",
+    "stack": "AssertionError [ERR_ASSERTION]: R5-NO-TARGET-CONSUMER actual caller button was not rendered\n    at clickAction (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r5-r6-electron.mjs:94:10)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r5-r6-electron.mjs:114:20"
+  }
+}

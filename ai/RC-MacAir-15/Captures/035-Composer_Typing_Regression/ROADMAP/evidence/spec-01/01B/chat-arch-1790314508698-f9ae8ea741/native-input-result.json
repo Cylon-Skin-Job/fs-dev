@@ -1,0 +1,943 @@
+{
+  "status": "native-keyboard-paste-passed-manual-pending",
+  "nativeMethods": [
+    {
+      "method": "macOS System Events keystroke to verified exact owned frontmost PID",
+      "exit": 0,
+      "error": ""
+    },
+    {
+      "method": "macOS Cmd+V with Electron OS clipboard",
+      "exit": 0,
+      "error": ""
+    },
+    {
+      "method": "macOS keystroke original synthetic workspace label, trailing space and Tab in exact owned modal",
+      "exit": 0,
+      "error": ""
+    }
+  ],
+  "ownerAcceptance": "pending; explicit timestamped owner receipt required",
+  "capability": {
+    "at": "2026-09-25T05:35:09.157Z",
+    "locked": false
+  },
+  "fixture": {
+    "rendererLifetime": "fresh isolated candidate; not the post-soak renderer",
+    "f2": {
+      "id": "F2-DETERMINISTIC-HISTORY-V1",
+      "exchanges": 30,
+      "renderedMessages": 60,
+      "includes": [
+        "text",
+        "code",
+        "lists",
+        "tables",
+        "collapsed-tool-results",
+        "reply-metadata"
+      ],
+      "dense": {
+        "exchanges": 2,
+        "assistantPayloadBytes": 534528,
+        "sha256": "9b06d21b677d93e4479544db39cf56f86eb4d3cd25fb603740407f263e7420dc"
+      }
+    },
+    "f3": {
+      "id": "F3-DETERMINISTIC-WORKSPACE-V1",
+      "algorithm": "label-repeated-to-fixed-byte-count",
+      "counts": {
+        "smallFiles": 1000,
+        "captureFolders": 100,
+        "wikiPages": 100,
+        "officeDocuments": 20
+      },
+      "totalFiles": 1220,
+      "totalContentBytes": 11059200,
+      "root": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790314508698-f9ae8ea741-YaoJPi/native-workspace/native-input",
+      "everyPathFixtureContained": true,
+      "manifestHash": "421c0ef8f5e255bb333a82a9f26d28c74eb2c8d55e95fc262ad241ed45740079"
+    },
+    "project": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790314508698-f9ae8ea741-YaoJPi/native-workspace/native-input",
+    "profile": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790314508698-f9ae8ea741-YaoJPi/native-profile",
+    "pid": 45627,
+    "threadId": "2026-09-24T22-35-12-596"
+  },
+  "focus": [
+    {
+      "at": 1790314514721,
+      "pid": 45627,
+      "windowId": 1,
+      "url": "fusion-shell://app/",
+      "focused": true
+    },
+    {
+      "at": 1790314515683,
+      "pid": 45627,
+      "windowId": 1,
+      "url": "fusion-shell://app/",
+      "focused": true
+    },
+    {
+      "at": 1790314516357,
+      "pid": 45627,
+      "windowId": 1,
+      "url": "fusion-shell://app/",
+      "focused": true
+    }
+  ],
+  "keyboard": {
+    "expected": "native keyboard 2227ebc2 ",
+    "actual": "native keyboard 2227ebc2 ",
+    "exact": true,
+    "wordBoundary": "native OS trailing space after synthetic suffix"
+  },
+  "paste": {
+    "expected": "native keyboard 2227ebc2  native paste 😀 café 日本語",
+    "actual": "native keyboard 2227ebc2  native paste 😀 café 日本語"
+  },
+  "workspaceLabel": {
+    "expected": "R5 R6 2227ebc2 ",
+    "actual": "R5 R6 2227ebc2 ",
+    "submitted": false
+  },
+  "events": [
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "n",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "",
+      "at": 895.5
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "n",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "n",
+      "at": 896.0999999046326
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "a",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "n",
+      "at": 897
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "a",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "na",
+      "at": 897.1999998092651
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "t",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "na",
+      "at": 897.5999999046326
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "t",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "nat",
+      "at": 897.5999999046326
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "i",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "nat",
+      "at": 897.8999996185303
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "i",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "nati",
+      "at": 898.0999999046326
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "v",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "nati",
+      "at": 898.2999997138977
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "v",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "nativ",
+      "at": 898.5
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "e",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "nativ",
+      "at": 898.6999998092651
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "e",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native",
+      "at": 898.7999997138977
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": " ",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native",
+      "at": 899.0999999046326
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": " ",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native ",
+      "at": 899.1999998092651
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "k",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native ",
+      "at": 899.3999996185303
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "k",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native k",
+      "at": 899.5
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "e",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native k",
+      "at": 899.5999999046326
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "e",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native ke",
+      "at": 899.7999997138977
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "y",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native ke",
+      "at": 900
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "y",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native key",
+      "at": 900
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "b",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native key",
+      "at": 900.2999997138977
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "b",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyb",
+      "at": 900.2999997138977
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "o",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyb",
+      "at": 900.5
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "o",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keybo",
+      "at": 900.5999999046326
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "a",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keybo",
+      "at": 900.6999998092651
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "a",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboa",
+      "at": 900.7999997138977
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "r",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboa",
+      "at": 901
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "r",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboar",
+      "at": 901.0999999046326
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "d",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboar",
+      "at": 901.2999997138977
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "d",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard",
+      "at": 901.2999997138977
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": " ",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard",
+      "at": 901.5999999046326
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": " ",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard ",
+      "at": 901.5999999046326
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard ",
+      "at": 901.6999998092651
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2",
+      "at": 901.7999997138977
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2",
+      "at": 902
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 22",
+      "at": 902
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 22",
+      "at": 902.2999997138977
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 222",
+      "at": 902.2999997138977
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "7",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 222",
+      "at": 902.5
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "7",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227",
+      "at": 902.5
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "e",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227",
+      "at": 902.6999998092651
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "e",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227e",
+      "at": 902.7999997138977
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "b",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227e",
+      "at": 902.8999996185303
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "b",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227eb",
+      "at": 903.0999999046326
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "c",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227eb",
+      "at": 903.1999998092651
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "c",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227ebc",
+      "at": 903.2999997138977
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227ebc",
+      "at": 903.5
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227ebc2",
+      "at": 903.5
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": " ",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227ebc2",
+      "at": 903.6999998092651
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertText",
+      "data": " ",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227ebc2 ",
+      "at": 903.6999998092651
+    },
+    {
+      "type": "beforeinput",
+      "field": "composer",
+      "inputType": "insertFromPaste",
+      "data": " native paste 😀 café 日本語",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227ebc2 ",
+      "at": 1651.2999997138977
+    },
+    {
+      "type": "input",
+      "field": "composer",
+      "inputType": "insertFromPaste",
+      "data": " native paste 😀 café 日本語",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227ebc2  native paste 😀 café 日本語",
+      "at": 1656.2999997138977
+    },
+    {
+      "type": "beforeinput",
+      "field": "workspace-name",
+      "inputType": "deleteContentForward",
+      "data": null,
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "",
+      "at": 2179.3999996185303
+    },
+    {
+      "type": "beforeinput",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "R",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "",
+      "at": 2326.699999809265
+    },
+    {
+      "type": "input",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "R",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R",
+      "at": 2327
+    },
+    {
+      "type": "beforeinput",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "5",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R",
+      "at": 2328.8999996185303
+    },
+    {
+      "type": "input",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "5",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5",
+      "at": 2329
+    },
+    {
+      "type": "beforeinput",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": " ",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5",
+      "at": 2331
+    },
+    {
+      "type": "input",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": " ",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 ",
+      "at": 2331.0999999046326
+    },
+    {
+      "type": "beforeinput",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "R",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 ",
+      "at": 2331.5999999046326
+    },
+    {
+      "type": "input",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "R",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 R",
+      "at": 2331.699999809265
+    },
+    {
+      "type": "beforeinput",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "6",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 R",
+      "at": 2333.199999809265
+    },
+    {
+      "type": "input",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "6",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 R6",
+      "at": 2333.2999997138977
+    },
+    {
+      "type": "beforeinput",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": " ",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 R6",
+      "at": 2333.3999996185303
+    },
+    {
+      "type": "input",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": " ",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 R6 ",
+      "at": 2333.5
+    },
+    {
+      "type": "beforeinput",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 R6 ",
+      "at": 2333.5999999046326
+    },
+    {
+      "type": "input",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 R6 2",
+      "at": 2333.5999999046326
+    },
+    {
+      "type": "beforeinput",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 R6 2",
+      "at": 2333.699999809265
+    },
+    {
+      "type": "input",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 R6 22",
+      "at": 2333.8999996185303
+    },
+    {
+      "type": "beforeinput",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 R6 22",
+      "at": 2334.199999809265
+    },
+    {
+      "type": "input",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 R6 222",
+      "at": 2334.3999996185303
+    },
+    {
+      "type": "beforeinput",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "7",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 R6 222",
+      "at": 2334.5999999046326
+    },
+    {
+      "type": "input",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "7",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 R6 2227",
+      "at": 2334.5999999046326
+    },
+    {
+      "type": "beforeinput",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "e",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 R6 2227",
+      "at": 2334.7999997138977
+    },
+    {
+      "type": "input",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "e",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 R6 2227e",
+      "at": 2334.8999996185303
+    },
+    {
+      "type": "beforeinput",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "b",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 R6 2227e",
+      "at": 2335.199999809265
+    },
+    {
+      "type": "input",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "b",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 R6 2227eb",
+      "at": 2335.2999997138977
+    },
+    {
+      "type": "beforeinput",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "c",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 R6 2227eb",
+      "at": 2335.5
+    },
+    {
+      "type": "input",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "c",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 R6 2227ebc",
+      "at": 2335.699999809265
+    },
+    {
+      "type": "beforeinput",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 R6 2227ebc",
+      "at": 2335.7999997138977
+    },
+    {
+      "type": "input",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 R6 2227ebc2",
+      "at": 2336
+    },
+    {
+      "type": "beforeinput",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": " ",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 R6 2227ebc2",
+      "at": 2336.199999809265
+    },
+    {
+      "type": "input",
+      "field": "workspace-name",
+      "inputType": "insertText",
+      "data": " ",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "R5 R6 2227ebc2 ",
+      "at": 2336.2999997138977
+    }
+  ],
+  "ime": "not established: OS clipboard Unicode is not IME composition",
+  "emoji": "native Unicode paste verified; Character Palette/manual autocomplete remains separate",
+  "lingering": [],
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  }
+}

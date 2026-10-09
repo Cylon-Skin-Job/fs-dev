@@ -1,0 +1,11 @@
+# S6 runtime manager contract
+
+This is coordination for the already approved SPEC; it creates no rehearsal job or dispatch before S1–S6 fixture preparation is accepted. Sole behavior authority remains SPEC.md.
+
+The S6 builder prepares fixtures/tests only and may commission only its builder-owned clean-room gate. Root owns the subsequent bounded actual Commit Supervisor assignment. Use supported runtime children with exact local skills; if newly installed names are absent from the current host catalog, use the documented default-agent fallback, recording skill/profile/CWD acknowledgment and inherited root settings. Do not create persistent chats, timers, fixture commits or remote operations.
+
+Required actual lifecycle: fresh initial review manager and reviewer; leaf repair writer; separate manager-assigned repair-handoff reviewer; settled bounded Wiki writer; separate fresh Wiki reviewer; fresh final review manager and reviewer; real canonical restart, matching app/server/profile/machine and UI read/navigation/reload; terminal owner wait. Root then supplies labeled rehearsal-only fix-X/Y steering, and a replacement supervisor resumes only after the predecessor is terminal/non-conflicting. Preserve completed raw evidence and rerun affected fresh gates and real runtime, producing an updated packet.
+
+The root supplies only labeled fixture dependency-release/intent-resolution evidence and synthetic operation-mismatch events. They authorize no real commit-producing operation, push, target advancement, PR or Alpha action. Required waiting-dependency and needs-owner returns must be actual terminal reports with explicit release conditions and no unauthorized prerequisite dispatch. Track restoration after interruption, collision refusal, stale authority refusal and source/index/ref/profile/process preservation.
+
+All fixture intent will be defined in the S6 raw packet before agent evaluation. A seeded defect must have independently reproducible observable behavior. Tests and mock verdicts cannot stand in for real agent gates or successful runtime. Every manager/reviewer/worker has unique report ownership and actual runtime identity. No prior conclusions go into fresh reviewer packets. Runtime effects remain in the disposable fixture profile/workspace. Stop owned fixture processes at closeout and retain evidence/recovery payloads.

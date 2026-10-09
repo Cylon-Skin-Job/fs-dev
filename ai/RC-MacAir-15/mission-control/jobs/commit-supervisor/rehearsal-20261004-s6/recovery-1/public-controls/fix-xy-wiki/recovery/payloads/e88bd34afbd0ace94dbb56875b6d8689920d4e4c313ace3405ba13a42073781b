@@ -1,0 +1,27 @@
+---
+id: RCC-0082
+title: 'Chunk K — Managed Server Spawn + Port Negotiation'
+assignee: rccurtrightjr
+created: 2026-05-22T00:00:00.000Z
+author: rccurtrightjr
+state: closed
+---
+
+`main.cjs` now owns the server process lifecycle. App is distributable without manual server startup. Port conflict is impossible.
+
+### What shipped
+
+- Server binds to port 0 (OS assigns a guaranteed-free port)
+- Server writes `SERVER_READY:{port}` to stdout; `main.cjs` reads the signal before calling `createWindow()`
+- Port written to `~/Library/Application Support/Fusion Studio/server.port` for user script access
+- Port file cleared on `app.quit()`, `SIGTERM`, and `SIGINT`
+- Server crash → Electron dialog "Server crashed, restarting…" → respawn; dialog dismisses on new `SERVER_READY`
+- Fixed ABI mismatch: `server-spawn.cjs` uses `execSync('which node')` to find system node binary, not `process.execPath` (Electron binary)
+- Fixed WS client hardcoded port: `ws-client.ts` now uses `ws://${window.location.host}` instead of `ws://localhost:3001`
+
+### Files created / modified
+
+- `electron/server-spawn.cjs` (new)
+- `electron/port-file.cjs` (new)
+- `electron/main.cjs` (updated — spawn, cleanup, will-quit, SIGTERM/SIGINT)
+- `src/lib/ws-client.ts` (updated — dynamic port)

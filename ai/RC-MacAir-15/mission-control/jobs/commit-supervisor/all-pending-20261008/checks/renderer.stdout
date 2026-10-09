@@ -1,0 +1,345 @@
+[2m[WebServer] [22m(node:93511) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[2m[WebServer] [22m(Use `node --trace-warnings ...` to show where the warning was created)
+[2m[WebServer] [22m[Server] diagnostic_error
+[2m[WebServer] [22m[Server] diagnostic_error
+[2m[WebServer] [22m[Server] diagnostic_warning
+[2m[WebServer] [22m[Server] diagnostic_warning
+[2m[WebServer] [22m[Server] diagnostic_error
+[2m[WebServer] [22m[Server] diagnostic_error
+[2m[WebServer] [22m[Server] diagnostic_error
+[2m[WebServer] [22m[Server] diagnostic_error
+[2m[WebServer] [22m[Server] diagnostic_error
+[2m[WebServer] [22m[Server] diagnostic_error
+[2m[WebServer] [22m[Server] diagnostic_error
+[2m[WebServer] [22m[Server] diagnostic_error
+[2m[WebServer] [22m[Server] diagnostic_error
+[2m[WebServer] [22m[Server] diagnostic_error
+[2m[WebServer] [22m[Server] diagnostic_error
+[2m[WebServer] [22m[Server] diagnostic_error
+[2m[WebServer] [22m[Server] diagnostic_error
+[2m[WebServer] [22m[Server] diagnostic_error
+
+Running 269 tests using 1 worker
+
+(node:93779) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:93779) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓    1 [fixture-only-chromium] › e2e/chat-architecture/observation-boundaries.spec.ts:194:1 › F4 duplicate session mounts and two sessions/views retain separate transient surfaces in visible and inactive mounted states (588ms)
+  ✓    2 [fixture-only-chromium] › e2e/chat-architecture/observation-boundaries.spec.ts:222:1 › R9 indicator states distinguish prompt acceptance, turn finalization, active work, idle, and a blocked renderer (282ms)
+  ✓    3 [fixture-only-chromium] › e2e/chat-architecture/observation-boundaries.spec.ts:298:1 › R5 current action owner inserts once across duplicate mounts and reports send pending (195ms)
+  ✓    4 [fixture-only-chromium] › e2e/chat-architecture/observation-boundaries.spec.ts:327:1 › R5 unknown attempt permits exact insert and attachment while blocking resend (189ms)
+  ✓    5 [fixture-only-chromium] › e2e/chat-architecture/observation-boundaries.spec.ts:360:1 › R5 diagnostic Ask AI retrieves through the actual handler and appends without sending a prompt (431ms)
+  ✓    6 [fixture-only-chromium] › e2e/chat-architecture/observation-boundaries.spec.ts:398:1 › R5 diagnostic Ask AI appends after an unknown attempt without resending (345ms)
+  ✓    7 [fixture-only-chromium] › e2e/chat-architecture/observation-boundaries.spec.ts:419:1 › retired address-only current insert rejects without mutation or source work (178ms)
+  ✓    8 [fixture-only-chromium] › e2e/chat-component-registration.spec.ts:54:1 › descriptor input accepts durable identities only and rejects every transient/authority field (3ms)
+  ✓    9 [fixture-only-chromium] › e2e/chat-component-registration.spec.ts:90:1 › component surfaceId derives from componentInstanceId + runtime mount generation (1ms)
+  ✓   10 [fixture-only-chromium] › e2e/chat-component-registration.spec.ts:102:1 › the chat registration is code-owned, CSS/DOM-free, and imports no Generic Host implementation (4ms)
+  ✓   11 [fixture-only-chromium] › e2e/chat-component-registration.spec.ts:391:1 › a valid fusion.chat-surface descriptor resolves ready and renders the chat surface with explicit props (1.4s)
+  ✓   12 [fixture-only-chromium] › e2e/chat-component-registration.spec.ts:412:1 › unknown, disabled, malformed, and unsupported descriptors stay inert under the accepted host (214ms)
+  ✓   13 [fixture-only-chromium] › e2e/chat-component-registration.spec.ts:432:1 › an invalid tuple or transient/authority input renders the inert chat body and no live mount (180ms)
+  ✓   14 [fixture-only-chromium] › e2e/chat-component-registration.spec.ts:452:1 › the minted component surfaceId is never persisted and never sent in an outbound frame (959ms)
+  ✓   15 [fixture-only-chromium] › e2e/chat-composer-screenshot-menu.spec.ts:5:1 › composer screenshot menu preserves split capture and gallery controls (74ms)
+  ✓   16 [fixture-only-chromium] › e2e/chat-diagnostic-actions.slice-c.spec.ts:143:1 › Slice C: explicit View/Copy/Ask AI validates once, never auto-fetches or auto-sends, and keeps report canaries out of logs (809ms)
+  ✓   17 [fixture-only-chromium] › e2e/chat-diagnostic-actions.slice-c.spec.ts:206:1 › Slice C: clipboard failure preserves the validated report and remaining actions (695ms)
+  ✓   18 [fixture-only-chromium] › e2e/chat-diagnostic-actions.slice-c.spec.ts:228:1 › Slice C: malformed retrieved report fails closed to the fixed unavailable state (509ms)
+  ✓   19 [fixture-only-chromium] › e2e/chat-diagnostic-actions.slice-c.spec.ts:246:1 › Slice C: unavailable and stale responses cannot leak across diagnostic rows (660ms)
+  ✓   20 [fixture-only-chromium] › e2e/chat-diagnostic-actions.slice-c.spec.ts:273:1 › Slice C: an exact-route in-flight request survives unmount and remount (691ms)
+  ✓   21 [fixture-only-chromium] › e2e/chat-diagnostic-actions.slice-c.spec.ts:287:1 › Slice C: Ask AI cannot race server-owned prompt acceptance (1.4s)
+  ✓   22 [fixture-only-chromium] › e2e/chat-diagnostic-actions.slice-c.spec.ts:314:1 › Slice C: unavailable frames require the complete pending route tuple (155ms)
+  ✓   23 [fixture-only-chromium] › e2e/chat-diagnostic-actions.slice-c.spec.ts:365:1 › Slice C: an unattributable null echo resolves only through the bounded timeout (2ms)
+  ✓   24 [fixture-only-chromium] › e2e/chat-diagnostic-actions.slice-c.spec.ts:395:1 › Slice C: diagnostic IDs enforce the frozen UTF-8 byte bound (1ms)
+  ✓   25 [fixture-only-chromium] › e2e/chat-diagnostic-actions.slice-c.spec.ts:401:1 › Slice C: late acceptance cannot clear another thread draft (886ms)
+  ✓   26 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:30:1 › A01/A02/A04 pointer Main and Side activity wins over persistent row/tab and source panel focus (1.5s)
+  ✓   27 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:50:1 › A03 keyboard focus switches both directions; duplicate attachment is a truthful no-op (269ms)
+  ✓   28 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:68:1 › A03 registration, rerender, StrictMode and late history cannot steal activation (330ms)
+  ✓   29 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:83:1 › A03 real rail selection explicitly activates its exact mounted Main (304ms)
+  ✓   30 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:93:1 › A03 delayed Main population and automatic MRU open cannot steal retained foreground Side (294ms)
+  ✓   31 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:106:1 › A05 unhydrated Main population denies the former active owner before source work (251ms)
+  ✓   32 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:115:1 › A05 no activation rejects before reading a source root despite stale global thread (213ms)
+  ✓   33 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:125:3 › A05/A13 collapsed active owner gives no target or source preparation (392ms)
+  ✓   34 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:125:3 › A05/A13 closed active owner gives no target or source preparation (324ms)
+  ✓   35 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:125:3 › A05/A13 foreground active owner gives no target or source preparation (258ms)
+  ✓   36 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:125:3 › A05/A13 foreign active owner gives no target or source preparation (341ms)
+  ✓   37 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:125:3 › A05/A13 unhydrated active owner gives no target or source preparation (265ms)
+  ✓   38 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:148:1 › A02 adapterless Side requires its exact service placement, no Main population (238ms)
+  ✓   39 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:156:1 › A07 shared commit retains exact owner through unrelated focus/view and preserves latest typed draft (259ms)
+  ✓   40 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:170:3 › A09/A13 workspace loss and return permanently cancels captured operation (214ms)
+  ✓   41 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:170:3 › A09/A13 hydration loss and return permanently cancels captured operation (224ms)
+  ✓   42 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:170:3 › A09/A13 placement loss and return permanently cancels captured operation (226ms)
+  ✓   43 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:170:3 › A09/A13 socket loss and return permanently cancels captured operation (225ms)
+  ✓   44 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:170:3 › A09/A13 binding loss and return permanently cancels captured operation (224ms)
+  ✓   45 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:180:1 › A09 actual unmount/remount with equal tuple cannot revive a captured lease (329ms)
+  ✓   46 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:187:1 › A13 invalid material changes no store; A16 exact selection uses latest matching revision (223ms)
+  ✓   47 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:200:3 › A15 pending acceptance preserves existing composer admission (262ms)
+  ✓   48 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:200:3 › A15 unknown acceptance preserves existing composer admission (263ms)
+  ✓   49 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:211:1 › A03 Side tab selection through the real connected bridge publishes exact placement activation (290ms)
+  ✓   50 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:220:1 › A05 duplicate view bindings cannot win a pending activation by registration order (227ms)
+  ✓   51 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:231:1 › A09 view-bound Main rebind and return invalidates old operation (289ms)
+  ✓   52 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:240:1 › A03/A08 duplicate explicit Main keeps its independent lifetime; rail activation identifies view Main (455ms)
+  ✓   53 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:260:1 › A17 resource wrapper keeps source and attachment order; independent Send waits for exact ACK (344ms)
+  ✓   54 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:281:1 › A17 ordinary New Chat activates the acknowledged new Main without material send/create modes (296ms)
+  ✓   55 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:293:1 › A13 source failure are distinct terminal results with no mutation (211ms)
+  ✓   56 [fixture-only-chromium] › e2e/chat-material-insertion.spec.ts:302:1 › A13 source abort cancels before shared commit (226ms)
+  ✓   57 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:50:5 › A06 main clipboard-top begins at actual action and uses its own composer (270ms)
+  ✓   58 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:50:5 › A06 main clipboard-row begins at actual action and uses its own composer (312ms)
+  ✓   59 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:50:5 › A06 main recent-top begins at actual action and uses its own composer (273ms)
+  ✓   60 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:50:5 › A06 main recent-row begins at actual action and uses its own composer (310ms)
+  ✓   61 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:50:5 › A06 main gallery begins at actual action and uses its own composer (327ms)
+  ✓   62 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:50:5 › A06 side clipboard-top begins at actual action and uses its own composer (287ms)
+  ✓   63 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:50:5 › A06 side clipboard-row begins at actual action and uses its own composer (312ms)
+  ✓   64 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:50:5 › A06 side recent-top begins at actual action and uses its own composer (295ms)
+  ✓   65 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:50:5 › A06 side recent-row begins at actual action and uses its own composer (305ms)
+  ✓   66 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:50:5 › A06 side gallery begins at actual action and uses its own composer (309ms)
+  ✓   67 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:67:5 › A07/A16 deferred clipboard-top keeps retained owner and fresh selection after typing/focus (274ms)
+  ✓   68 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:67:5 › A07/A16 deferred recent-top keeps retained owner and fresh selection after typing/focus (269ms)
+  ✓   69 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:84:3 › A16 stale editor value safely paragraph-appends to latest owner draft (269ms)
+  ✓   70 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:99:5 › A08 deferred side source survives unrelated Main selection (290ms)
+  ✓   71 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:99:5 › A08 deferred explicit source survives unrelated Main selection (292ms)
+  ✓   72 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:119:5 › A09/A11/A13 real deferred clipboard cancels on rebind and does not revive (342ms)
+  ✓   73 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:119:5 › A09/A11/A13 real deferred clipboard cancels on unmount and does not revive (278ms)
+  ✓   74 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:119:5 › A09/A11/A13 real deferred clipboard cancels on placement and does not revive (277ms)
+  ✓   75 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:119:5 › A09/A11/A13 real deferred clipboard cancels on hydration and does not revive (267ms)
+  ✓   76 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:119:5 › A09/A11/A13 real deferred clipboard cancels on workspace and does not revive (266ms)
+  ✓   77 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:119:5 › A09/A11/A13 real deferred clipboard cancels on binding and does not revive (276ms)
+  ✓   78 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:147:3 › A09/A16 old callbacks after genuine same-instance tuple reuse reject before write or focus (225ms)
+  ✓   79 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:176:3 › A12 concurrent source requests complete out of order only once in their own owners (443ms)
+  ✓   80 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:199:5 › A15 pending gates actual source preparation and suppresses warm as appropriate (267ms)
+  ✓   81 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:199:5 › A15 unknown gates actual source preparation and suppresses warm as appropriate (276ms)
+  ✓   82 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:214:3 › A15 own source warms captured thread; suppressed/failed warming preserves valid insertion (560ms)
+  ✓   83 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:240:5 › A16 main microphone completion keeps own material lease (277ms)
+  ✓   84 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:240:5 › A16 side microphone completion keeps own material lease (258ms)
+  ✓   85 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:263:5 › A09/A11 mic explicit cancel during permission prevents late source completion (256ms)
+  ✓   86 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:263:5 › A09/A11 mic explicit cancel during recording prevents late source completion (256ms)
+  ✓   87 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:263:5 › A09/A11 mic explicit cancel during processing prevents late source completion (259ms)
+  ✓   88 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:300:5 › A16 diagnostic begins before retrieval and survives other focus (291ms)
+  ✓   89 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:300:5 › A16 diagnostic begins before retrieval and cancels on real rebind (296ms)
+  ✓   90 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:324:5 › A06 adapterless Side clipboard-top uses placement authority without Main rows (275ms)
+  ✓   91 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:324:5 › A06 adapterless Side recent-top uses placement authority without Main rows (273ms)
+  ✓   92 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:324:5 › A06 adapterless Side gallery uses placement authority without Main rows (309ms)
+  ✓   93 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:335:5 › A09 microphone tuple rebind during permission cancels old preparation permanently (340ms)
+  ✓   94 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:335:5 › A09 microphone tuple rebind during processing cancels old preparation permanently (286ms)
+  ✓   95 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:373:5 › A16 direct Ask AI unavailable preserves fixed source failure and disabled actions (355ms)
+  ✓   96 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:373:5 › A16 direct Ask AI malformed preserves fixed source failure and disabled actions (341ms)
+  ✓   97 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:416:5 › A13 source failure from actual clipboard-top leaves composer owners unchanged (263ms)
+  ✓   98 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:416:5 › A13 source failure from actual recent-top leaves composer owners unchanged (279ms)
+  ✓   99 [fixture-only-chromium] › e2e/support/chat-material-source-cases.ts:443:3 › A16 prepared emoji records once through its existing editor side effect (292ms)
+  ✓  100 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:42:5 › A02/A10 own camera main survives other retained focus (312ms)
+  ✓  101 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:42:5 › A02/A10 global camera main survives other retained focus (318ms)
+  ✓  102 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:42:5 › A02/A10 own camera side survives other retained focus (318ms)
+  ✓  103 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:42:5 › A02/A10 global camera side survives other retained focus (300ms)
+  ✓  104 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:75:5 › A09/A11/A13 camera irreversible workspace during capture (422ms)
+  ✓  105 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:75:5 › A09/A11/A13 camera irreversible hydration during capture (268ms)
+  ✓  106 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:75:5 › A09/A11/A13 camera irreversible placement during capture (270ms)
+  ✓  107 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:75:5 › A09/A11/A13 camera irreversible binding during capture (264ms)
+  ✓  108 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:75:5 › A09/A11/A13 camera irreversible unmount during capture (271ms)
+  ✓  109 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:75:5 › A09/A11/A13 camera irreversible workspace during save (278ms)
+  ✓  110 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:75:5 › A09/A11/A13 camera irreversible hydration during save (270ms)
+  ✓  111 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:75:5 › A09/A11/A13 camera irreversible placement during save (274ms)
+  ✓  112 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:75:5 › A09/A11/A13 camera irreversible binding during save (282ms)
+  ✓  113 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:75:5 › A09/A11/A13 camera irreversible unmount during save (275ms)
+  ✓  114 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:105:3 › A12 concurrent cameras own out-of-order/foreign/duplicate results and cleanup (363ms)
+  ✓  115 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:134:5 › A14 camera unsupported cleans terminal resources without insertion (256ms)
+  ✓  116 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:134:5 › A14 camera empty cleans terminal resources without insertion (261ms)
+  ✓  117 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:134:5 › A14 camera error cleans terminal resources without insertion (253ms)
+  ✓  118 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:134:5 › A14 camera save-error cleans terminal resources without insertion (269ms)
+  ✓  119 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:134:5 › A14 camera malformed-save cleans terminal resources without insertion (267ms)
+  ✓  120 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:134:5 › A14 camera send-throw cleans terminal resources without insertion (274ms)
+  ✓  121 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:134:5 › A14 camera disconnect cleans terminal resources without insertion (262ms)
+  ✓  122 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:134:5 › A14 camera deadline cleans terminal resources without insertion (258ms)
+  ✓  123 [fixture-only-chromium] › e2e/support/chat-material-screenshot-cases.ts:171:3 › A05/A15 no active owner and pending block native work; unknown composes without second Send (361ms)
+  ✓  124 [fixture-only-chromium] › e2e/chat-send-transport.spec.ts:84:1 › SEND-01–13 share production serialization and socket admission; sources have no raw chat send (8ms)
+  ✓  125 [fixture-only-chromium] › e2e/chat-send-transport.spec.ts:99:1 › auth queue is explicit, FIFO, bounded to captured binding, and prompt is never queued (1ms)
+  ✓  126 [fixture-only-chromium] › e2e/chat-send-transport.spec.ts:117:1 › qualified pre-auth frames flush FIFO once and a retired socket cannot deliver to a replacement (1ms)
+  ✓  127 [fixture-only-chromium] › e2e/chat-send-transport.spec.ts:141:1 › local refusal and native throw preserve the closed truthful result vocabulary (2ms)
+[TIMING] SEND at 44100.1ms threadId=thread-0
+  ✓  128 [fixture-only-chromium] › e2e/chat-send-transport.spec.ts:177:1 › real store, group, creation, metadata, recovery, and diagnostic callers use the installed lane (470ms)
+[WS] thread:opened: thread-s exchanges: [33m0[39m history: [90mundefined[39m contextUsage: [90mundefined[39m
+[WS] Restoring context snapshot: { threadId: [32m'thread-sync'[39m, contextUsage: [33m0[39m, tokenUsage: [1mnull[22m }
+[WS] thread:created received: sync-created-1
+[WS] thread:created received: sync-created-2
+  ✓  129 [fixture-only-chromium] › e2e/chat-send-transport.spec.ts:299:1 › SEND-05 installs exact open/model correlation before a synchronous server response (7ms)
+  ✓  130 [fixture-only-chromium] › e2e/chat-send-transport.spec.ts:354:1 › SEND-04 active host lists and opens its exact view through the real browser socket (470ms)
+  ✓  131 [fixture-only-chromium] › e2e/chat-send-transport.spec.ts:363:1 › SEND-03 Stop and SEND-06 passive component history use the installed product lane (1.7s)
+  ✓  132 [fixture-only-chromium] › e2e/chat-send-transport.spec.ts:392:1 › synchronous native-send ACK keeps the prompt attempt and Stop terminal state exact (454ms)
+  ✓  133 [fixture-only-chromium] › e2e/chat-send-transport.spec.ts:416:1 › definitely refused prompt keeps the draft and releases only its provisional attempt (386ms)
+  ✓  134 [fixture-only-chromium] › e2e/chat-send-transport.spec.ts:429:1 › refused later prompt preserves a prior accepted attempt and its original ACK (15.8s)
+  ✓  135 [fixture-only-chromium] › e2e/chat-send-transport.spec.ts:448:1 › retired current prompt-resolution insertion rejects before source work (5ms)
+  ✓  136 [fixture-only-chromium] › e2e/chat-surface-identity.spec.ts:41:1 › ChatSurface explicitly consumes an identity/model/actions contract (4ms)
+  ✓  137 [fixture-only-chromium] › e2e/chat-surface-identity.spec.ts:58:1 › ChatSurface module imports no app store, socket, controller, service, filesystem, or tab owner (8ms)
+  ✓  138 [fixture-only-chromium] › e2e/chat-surface-identity.spec.ts:83:1 › surfaceId never enters canonical action envelopes, results, or fan-out (2ms)
+[WS] thread:opened: surface- exchanges: [33m0[39m history: [90mundefined[39m contextUsage: [33m0.9[39m
+[WS] Restoring context snapshot: { threadId: [32m'surface-identity-b'[39m, contextUsage: [33m0.9[39m, tokenUsage: [1mnull[22m }
+  ✓  139 [fixture-only-chromium] › e2e/chat-surface-identity.spec.ts:165:1 › late thread:opened and usage for thread B cannot mutate thread A displayed state (3ms)
+[WS] thread:opened: surface- exchanges: [33m0[39m history: [90mundefined[39m contextUsage: [90mundefined[39m
+[WS] Restoring context snapshot: { threadId: [32m'surface-identity-a'[39m, contextUsage: [33m0[39m, tokenUsage: [1mnull[22m }
+  ✓  140 [fixture-only-chromium] › e2e/chat-surface-identity.spec.ts:207:1 › model selection is pending by exact thread, promoted by exact ack, and rejection restores the prior value (6ms)
+  ✓  141 [fixture-only-chromium] › e2e/chat-surface-identity.spec.ts:277:1 › passive thread:open request carries the group identity and never warms (2ms)
+  ✓  142 [fixture-only-chromium] › e2e/chat-surface-identity.spec.ts:439:1 › two mounts of one session share session truth but keep DOM/menu/focus state separate (998ms)
+  ✓  143 [fixture-only-chromium] › e2e/chat-surface-identity.spec.ts:470:1 › surfaceId is minted at mount, never persisted, and collapse/expand preserves it (174ms)
+  ✓  144 [fixture-only-chromium] › e2e/chat-surface-identity.spec.ts:502:1 › contract mints distinct transient surface ids per runtime mount generation (8ms)
+[WS] thread:opened: surface- exchanges: [33m1[39m history: [90mundefined[39m contextUsage: [90mundefined[39m
+[WS] Loading [33m1[39m exchanges (rich format)
+[WS] Restoring context snapshot: { threadId: [32m'surface-identity-b'[39m, contextUsage: [33m0[39m, tokenUsage: [1mnull[22m }
+  ✓  145 [fixture-only-chromium] › e2e/chat-surface-identity.spec.ts:521:1 › history-only exact-member hydration preserves selected Main and unrelated pending group opens (3ms)
+  ✓  146 [fixture-only-chromium] › e2e/chat-surface-identity.spec.ts:551:1 › whole-group Delete evicts every peer cache while preserving another group and workspace (3ms)
+  ✓  147 [fixture-only-chromium] › e2e/chat-surface-identity.spec.ts:592:1 › Delete retires only a clean exact worksurface binding and fences a late read (2ms)
+  ✓  148 [fixture-only-chromium] › e2e/chat-surface-identity.spec.ts:613:1 › Delete preserves dirty content and another workspace binding without warned discard (2ms)
+  ✓  149 [fixture-only-chromium] › e2e/chat-surface-isolation.spec.ts:376:1 › two simultaneously mounted explicit surfaces have distinct transient surfaceIds and hosts (937ms)
+  ✓  150 [fixture-only-chromium] › e2e/chat-surface-isolation.spec.ts:388:1 › Send in each surface emits a prompt frame with its exact threadId and acknowledged model snapshot (178ms)
+  ✓  151 [fixture-only-chromium] › e2e/chat-surface-isolation.spec.ts:415:1 › two mounts of one session share one pending attempt and one accepted bubble (188ms)
+  ✓  152 [fixture-only-chromium] › e2e/chat-surface-isolation.spec.ts:451:1 › ACK cleanup preserves a stable-ID attachment removed and readded while pending (177ms)
+  ✓  153 [fixture-only-chromium] › e2e/chat-surface-isolation.spec.ts:479:1 › interleaved live frames for both threads render only their own content, thinking, tools, usage, Todos, errors, and saved turns (240ms)
+  ✓  154 [fixture-only-chromium] › e2e/chat-surface-isolation.spec.ts:596:1 › Stop targets one active session and leaves the other session untouched (193ms)
+  ✓  155 [fixture-only-chromium] › e2e/chat-surface-isolation.spec.ts:614:1 › usage/readiness are per-thread and a wire_ready for one session never marks the other (171ms)
+  ✓  156 [fixture-only-chromium] › e2e/chat-surface-isolation.spec.ts:636:1 › model/variant pending, acknowledgement, rejection, and hydration stay per thread (176ms)
+  ✓  157 [fixture-only-chromium] › e2e/chat-surface-isolation.spec.ts:692:1 › drafts and attachments remain per workspace/thread owner stores and never cross surfaces (164ms)
+  ✓  158 [fixture-only-chromium] › e2e/chat-surface-isolation.spec.ts:728:1 › duplicate mounts preserve exact draft input semantics while other sessions stay isolated (349ms)
+  ✓  159 [fixture-only-chromium] › e2e/chat-surface-isolation.spec.ts:812:1 › draft-only updates render the exact composer leaf without history, formatter, or header work (180ms)
+  ✓  160 [fixture-only-chromium] › e2e/chat-surface-isolation.spec.ts:841:1 › 20fps live frontier keeps completed formatting quiet and preserves public history UI state (1.3s)
+  ✓  161 [fixture-only-chromium] › e2e/chat-surface-isolation.spec.ts:906:1 › metadata invalidation is scoped while hydration/content replacement cannot reuse stale formatting (276ms)
+  ✓  162 [fixture-only-chromium] › e2e/chat-surface-isolation.spec.ts:989:1 › replacing an unrelated thread row does not reproject the target parent or leaves (217ms)
+  ✓  163 [fixture-only-chromium] › e2e/chat-surface-isolation.spec.ts:1024:1 › collapsed header New Chat and Rename keep the explicit view/group address (277ms)
+  ✓  164 [fixture-only-chromium] › e2e/chat-surface-isolation.spec.ts:1046:1 › opening a menu on surface A leaves surface B DOM/menu/focus untouched (189ms)
+  ✓  165 [fixture-only-chromium] › e2e/chat-surface-isolation.spec.ts:1066:1 › Chat/Threads collapse and content collapse/expand preserve both surface identities and state (173ms)
+  ✓  166 [fixture-only-chromium] › e2e/chat-surface-isolation.spec.ts:1100:1 › the pending-new-thread connecting state is surface-owned and never leaks to another mount (164ms)
+  ✓  167 [fixture-only-chromium] › e2e/chat-surface-isolation.spec.ts:1138:3 › composition keys do not Send or Stop ({"isComposing":true,"keyCode":13}) (179ms)
+  ✓  168 [fixture-only-chromium] › e2e/chat-surface-isolation.spec.ts:1159:3 › composition keys do not accept autocomplete ({"isComposing":true,"keyCode":13}) (280ms)
+  ✓  169 [fixture-only-chromium] › e2e/chat-surface-isolation.spec.ts:1138:3 › composition keys do not Send or Stop ({"isComposing":false,"keyCode":229}) (177ms)
+  ✓  170 [fixture-only-chromium] › e2e/chat-surface-isolation.spec.ts:1159:3 › composition keys do not accept autocomplete ({"isComposing":false,"keyCode":229}) (282ms)
+  ✓  171 [fixture-only-chromium] › e2e/move-chat-to-side-chat.spec.ts:61:3 › SPEC-04 Move Chat to Side Chat › the visible Main Chat menu emits one canonical move_chat_to_side intent (383ms)
+  ✓  172 [fixture-only-chromium] › e2e/move-chat-to-side-chat.spec.ts:90:3 › SPEC-04 Move Chat to Side Chat › the moved member renders centered in a Side Chat tab through fusion.chat-surface (463ms)
+  ✓  173 [fixture-only-chromium] › e2e/move-chat-to-side-chat.spec.ts:159:3 › SPEC-04 Move Chat to Side Chat › a placement-only broadcast after a failed delivery materializes the Side Chat without another trigger (334ms)
+  ✓  174 [fixture-only-chromium] › e2e/move-chat-to-side-chat.spec.ts:184:3 › SPEC-04 Move Chat to Side Chat › Move is unavailable while the session has an unresolved finalizing Stop boundary (382ms)
+  ✓  175 [fixture-only-chromium] › e2e/move-chat-to-side-chat.spec.ts:202:3 › SPEC-04 Move Chat to Side Chat › the delivered placement survives a rail remount (restart/readback) (359ms)
+  ✓  176 [fixture-only-chromium] › e2e/prompt-ownership.slice-c.spec.ts:19:1 › Slice C: identical attachment IDs remain isolated by workspace and thread owner (1ms)
+  ✓  177 [fixture-only-chromium] › e2e/prompt-ownership.slice-c.spec.ts:34:1 › correlated message:sent commits once; unmatched, deleted and foreign ownership cannot recreate state (3ms)
+  ✓  178 [fixture-only-chromium] › e2e/prompt-ownership.slice-c.spec.ts:83:1 › Slice C: workspace activation evicts only the departed workspace attachment owners (1ms)
+[WS] thread:opened: prompt-o exchanges: [33m0[39m history: [90mundefined[39m contextUsage: [90mundefined[39m
+[WS] Restoring context snapshot: { threadId: [32m'prompt-owner-a'[39m, contextUsage: [33m0[39m, tokenUsage: [1mnull[22m }
+[WS] thread:opened: prompt-o exchanges: [33m1[39m history: [90mundefined[39m contextUsage: [90mundefined[39m
+[WS] Loading [33m1[39m exchanges (rich format)
+[WS] Restoring context snapshot: { threadId: [32m'prompt-owner-a'[39m, contextUsage: [33m0[39m, tokenUsage: [1mnull[22m }
+  ✓  179 [fixture-only-chromium] › e2e/prompt-ownership.slice-c.spec.ts:100:1 › accepted receipt bubble survives a late open and yields once to the saved turn (3ms)
+  ✓  180 [fixture-only-chromium] › e2e/prompt-ownership.slice-c.spec.ts:145:1 › a live turn bound before its ACK does not retain an accepted execution watch (1ms)
+  ✓  181 [fixture-only-chromium] › e2e/prompt-ownership.slice-c.spec.ts:169:1 › accepted pre-begin failure releases Stop without letting an older failure clear a newer send (500ms)
+  ✓  182 [fixture-only-chromium] › e2e/prompt-ownership.slice-c.spec.ts:208:1 › acknowledged pre-begin restart queries interrupted receipt and keeps a later send independent (4.4s)
+  ✓  183 [fixture-only-chromium] › e2e/prompt-ownership.slice-c.spec.ts:248:1 › post-begin accepted failure consumes its companion before a later rejection (594ms)
+  ✓  184 [fixture-only-chromium] › e2e/prompt-ownership.slice-c.spec.ts:282:1 › a later rejection is immediate even when the old terminal companion arrives afterward (537ms)
+  ✓  185 [fixture-only-chromium] › e2e/prompt-ownership.slice-c.spec.ts:314:1 › Slice C: composer drafts swap immediately by thread and preserve pending retry ownership (864ms)
+  ✓  186 [fixture-only-chromium] › e2e/prompt-ownership.slice-c.spec.ts:351:1 › Slice C: deferred screenshot cancels when its workspace and thread owner changes (16ms)
+  ✓  187 [fixture-only-chromium] › e2e/prompt-ownership.slice-c.spec.ts:386:1 › Slice C: direct screenshot attaches only the path acknowledged for its request ID (16ms)
+  ✓  188 [fixture-only-chromium] › e2e/prompt-ownership.slice-c.spec.ts:459:1 › qualified screenshot guards reject arbitrary requested sessions and stale mounts before capture (3ms)
+  ✓  189 [fixture-only-chromium] › e2e/prompt-submission-recovery.spec.ts:128:1 › definite refusal from the real product boundary immediately resolves both watch kinds without a response deadline (5ms)
+  ✓  190 [fixture-only-chromium] › e2e/prompt-submission-recovery.spec.ts:148:1 › uncertain send waits once; a late exact receipt after timeout and a later refusal remains eligible (3ms)
+  ✓  191 [fixture-only-chromium] › e2e/prompt-submission-recovery.spec.ts:170:1 › synchronous receipt settles before send returns; manual recheck clears initial 15-second deadline (5ms)
+  ✓  192 [fixture-only-chromium] › e2e/prompt-submission-recovery.spec.ts:189:1 › same-ID binding rebind retires late eligibility and avoids duplicate resume query (3ms)
+  ✓  193 [fixture-only-chromium] › e2e/prompt-submission-recovery.spec.ts:209:1 › pre-auth queue means bounded waiting, not proven delivery or permission to replay the prompt (2ms)
+  ✓  194 [fixture-only-chromium] › e2e/prompt-submission-recovery.spec.ts:223:1 › retry exhaustion retains exact late eligibility until a matched terminal receipt settles it (3ms)
+  ✓  195 [fixture-only-chromium] › e2e/prompt-submission-recovery.spec.ts:241:1 › conflicting inner receipt identities leave the current inquiry and deadline unchanged (4ms)
+  ✓  196 [fixture-only-chromium] › e2e/prompt-submission-recovery.spec.ts:263:1 › execution watch rejects the wrong accepted turn, then handles exact failed-before-dispatch once (3ms)
+  ✓  197 [fixture-only-chromium] › e2e/prompt-submission-recovery.spec.ts:283:1 › replaced attempt and workspace A-to-B-to-A cannot inherit an old receipt window (2ms)
+  ✓  198 [fixture-only-chromium] › e2e/prompt-submission-recovery.spec.ts:305:1 › unqualified same-socket error after rebind cannot borrow the active workspace (2ms)
+  ✓  199 [fixture-only-chromium] › e2e/prompt-submission-recovery.spec.ts:323:1 › public composer scheduled inquiry accepts a late exact receipt without sending the prompt twice (537ms)
+  ✓  200 [fixture-only-chromium] › e2e/prompt-submission-recovery.spec.ts:350:1 › public Check status uses the existing route for an accepted execution watch (598ms)
+  ✓  201 [fixture-only-chromium] › e2e/side-chat-adapterless-native.spec.ts:95:3 › SPEC-04 04B Side Chat adapterless and native coverage › capture-native: the connected adapter keeps its native tab and the composed Side Chat renders (813ms)
+  ✓  202 [fixture-only-chromium] › e2e/side-chat-adapterless-native.spec.ts:120:3 › SPEC-04 04B Side Chat adapterless and native coverage › adapterless wiki: children-only until a placement exists, then the complete Move path (972ms)
+  ✓  203 [fixture-only-chromium] › e2e/side-chat-adapterless-native.spec.ts:195:3 › SPEC-04 04B Side Chat adapterless and native coverage › adapterless issues: a seeded server placement presents root + Side Chat with dedupe/focus (818ms)
+  ✓  204 [fixture-only-chromium] › e2e/side-chat-adapterless-native.spec.ts:228:5 › SPEC-04 04B Side Chat adapterless and native coverage › adapterless office-viewer: the generic runtime-root composition presents the Side Chat (757ms)
+  ✓  205 [fixture-only-chromium] › e2e/side-chat-adapterless-native.spec.ts:228:5 › SPEC-04 04B Side Chat adapterless and native coverage › adapterless email-viewer: the generic runtime-root composition presents the Side Chat (752ms)
+  ✓  206 [fixture-only-chromium] › e2e/side-chat-adapterless-native.spec.ts:248:3 › SPEC-04 04B Side Chat adapterless and native coverage › the non-Move file rail stays byte-identical (no injected root) (346ms)
+  ✓  207 [fixture-only-chromium] › e2e/side-chat-adapterless-native.spec.ts:258:3 › SPEC-04 04B Side Chat adapterless and native coverage › dockless restart/readback materializes on active-view population without an action frame (747ms)
+  ✓  208 [fixture-only-chromium] › e2e/side-chat-isolation.spec.ts:74:3 › SPEC-04 04C Main/Side isolation › Main Chat B and Side Chat A mount as distinct sessions (426ms)
+  ✓  209 [fixture-only-chromium] › e2e/side-chat-isolation.spec.ts:108:3 › SPEC-04 04C Main/Side isolation › a send for one member never lands in the other (458ms)
+  ✓  210 [fixture-only-chromium] › e2e/side-chat-isolation.spec.ts:140:3 › SPEC-04 04C Main/Side isolation › every Side Chat frame carries durable identities only and no surfaceId (424ms)
+  ✓  211 [fixture-only-chromium] › e2e/side-chat-placement-recovery.spec.ts:55:3 › SPEC-04 04C Side Chat close disposition and recovery › closing a Side Chat records a durable closed disposition, removes the tab, and keeps the member (501ms)
+  ✓  212 [fixture-only-chromium] › e2e/side-chat-placement-recovery.spec.ts:96:3 › SPEC-04 04C Side Chat close disposition and recovery › restart/readback does not resurrect a closed Side Chat (517ms)
+  ✓  213 [fixture-only-chromium] › e2e/side-chat-placement-recovery.spec.ts:124:3 › SPEC-04 04C Side Chat close disposition and recovery › an explicit member action reopens a closed Side Chat without a new placement (739ms)
+  ✓  214 [fixture-only-chromium] › e2e/side-chat-placement-recovery.spec.ts:166:3 › SPEC-04 04C Side Chat close disposition and recovery › a failed close disposition is a classified non-destructive warning and keeps the tab (403ms)
+  ✓  215 [fixture-only-chromium] › e2e/side-chat-placement-recovery.spec.ts:184:3 › SPEC-04 04C Side Chat close disposition and recovery › a placement-only broadcast for a closed placement never reopens the tab (690ms)
+  ✓  216 [fixture-only-chromium] › e2e/system-viewer-action-outcome.spec.ts:48:1 › System Create reports an unrequested cancellation and keeps its exact draft target available (823ms)
+  ✓  217 [fixture-only-chromium] › e2e/system-viewer-action-outcome.spec.ts:68:1 › System Create reports an exact server denial without claiming creation (268ms)
+  ✓  218 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:87:1 › ThreadRail is a portable population/menu boundary with no store or socket access (13ms)
+  ✓  219 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:121:1 › ThreadedChat composes exactly one ThreadRail with one ChatSurface (3ms)
+  ✓  220 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:130:1 › the connected view host owns qualified list/open correlation and never touches the Legacy store (2ms)
+  ✓  221 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:143:1 › the dead un-gated ThreadJumpDropdown is removed (2ms)
+  ✓  222 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:153:1 › open-request correlation is per-request/per-population, not a single slot (2ms)
+  ✓  223 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:161:1 › thread:list fills only the echoed view population and keeps Legacy explicit (2ms)
+  ✓  224 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:214:1 › threadId-only historical commands keep the canonical server fallback (6ms)
+[WS] thread:list received: [33m1[39m thread groups
+[WS] thread:list received: [33m1[39m thread groups
+  ✓  225 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:249:1 › thread:list fills only its echoed {workspaceId, viewId} population (4ms)
+[WS] thread:list received: [33m1[39m thread groups
+[WS] thread:opened: thread-b exchanges: [33m0[39m history: [90mundefined[39m contextUsage: [90mundefined[39m
+[WS] Restoring context snapshot: { threadId: [32m'thread-beta'[39m, contextUsage: [33m0[39m, tokenUsage: [1mnull[22m }
+  ✓  226 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:276:1 › a late list/open for view B cannot fill or select view A (4ms)
+[WS] thread:opened: thread-b exchanges: [33m0[39m history: [90mundefined[39m contextUsage: [90mundefined[39m
+[WS] Restoring context snapshot: { threadId: [32m'thread-beta'[39m, contextUsage: [33m0[39m, tokenUsage: [1mnull[22m }
+  ✓  227 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:316:1 › thread:opened updates only its own population selection and retires its request (4ms)
+[WS] thread:created received: new-thread
+[WS] thread:list received: [33m2[39m thread groups
+[WS] thread:opened: new-thre exchanges: [33m0[39m history: [90mundefined[39m contextUsage: [90mundefined[39m
+[WS] Restoring context snapshot: { threadId: [32m'new-thread'[39m, contextUsage: [33m0[39m, tokenUsage: [1mnull[22m }
+  ✓  228 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:343:1 › ordinary New Chat selects the accepted view group without rewriting Legacy or content state (5ms)
+[WS] thread:created received: new-thread
+[WS] thread:opened: new-thre exchanges: [33m0[39m history: [90mundefined[39m contextUsage: [90mundefined[39m
+[WS] Restoring context snapshot: { threadId: [32m'new-thread'[39m, contextUsage: [33m0[39m, tokenUsage: [1mnull[22m }
+[WS] thread:opened: new-thre exchanges: [33m0[39m history: [90mundefined[39m contextUsage: [90mundefined[39m
+[WS] Restoring context snapshot: { threadId: [32m'new-thread'[39m, contextUsage: [33m0[39m, tokenUsage: [1mnull[22m }
+  ✓  229 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:372:1 › New Chat in Capture keeps the outgoing group until its content save is acknowledged (7ms)
+[WS] thread:list received: [33m1[39m thread groups
+  ✓  230 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:416:1 › Legacy viewId:null is explicit and never borrows a view population (3ms)
+[WS] thread:list received: [33m1[39m thread groups
+[WS] thread:list received: [33m1[39m thread groups
+[WS] thread:list received: [33m1[39m thread groups
+[WS] thread:opened: thread-a exchanges: [33m0[39m history: [90mundefined[39m contextUsage: [90mundefined[39m
+[WS] Restoring context snapshot: { threadId: [32m'thread-alpha'[39m, contextUsage: [33m0[39m, tokenUsage: [1mnull[22m }
+[WS] thread:opened: thread-b exchanges: [33m0[39m history: [90mundefined[39m contextUsage: [90mundefined[39m
+[WS] Restoring context snapshot: { threadId: [32m'thread-beta'[39m, contextUsage: [33m0[39m, tokenUsage: [1mnull[22m }
+  ✓  231 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:441:1 › restart/readback restores keyed populations and selections through the handler path (6ms)
+[WS] thread:list received: [33m1[39m thread groups
+[WS] thread:list received: [33m1[39m thread groups
+  ✓  232 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:508:1 › accepted rename updates the composite Legacy and view populations, not only threads (13ms)
+  ✓  233 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:542:1 › accepted delete removes the row and clears the qualified selection (6ms)
+[WS] thread:list received: [33m1[39m thread groups
+[WS] thread:list received: [33m1[39m thread groups
+  ✓  234 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:592:1 › a row mutation acked for one population never mutates an unrelated population (3ms)
+[WS] thread:list received: [33m1[39m thread groups
+[WS] thread:list received: [33m2[39m thread groups
+  ✓  235 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:638:1 › accepted create inserts into an initialized Legacy population without double-adding (3ms)
+  ✓  236 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:945:1 › the rail New Chat button replaces the selected chat after accepted create and open (4.8s)
+  ✓  237 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:969:1 › two view-bound hosts restore independent selected rows and transcripts (911ms)
+  ✓  238 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1009:1 › rendered hosts isolate a late list/open for view B from view A (857ms)
+  ✓  239 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1048:1 › hidden inactive panels issue no list request and do not steal selection (950ms)
+  ✓  240 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1099:1 › ThreadRail rows emit canonical thread:open and thread:action intents (1.1s)
+  ✓  241 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1206:3 › New Chat composer screenshot uses its exact view owner with Legacy null (968ms)
+  ✓  242 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1222:3 › header screenshot captures activated Main New Chat with Legacy null (918ms)
+  ✓  243 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1206:3 › New Chat composer screenshot uses its exact view owner with Legacy older-legacy-thread (978ms)
+  ✓  244 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1222:3 › header screenshot captures activated Main New Chat with Legacy older-legacy-thread (925ms)
+  ✓  245 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1235:5 › composer screenshot cancels on actual thread owner change during capture (967ms)
+  ✓  246 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1235:5 › composer screenshot cancels on actual workspace owner change during capture (890ms)
+  ✓  247 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1235:5 › composer screenshot cancels on actual view owner change during capture (1.0s)
+  ✓  248 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1235:5 › composer screenshot cancels on actual unmount owner change during capture (1.0s)
+  ✓  249 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1235:5 › composer screenshot cancels on actual thread owner change during save (979ms)
+  ✓  250 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1235:5 › composer screenshot cancels on actual workspace owner change during save (907ms)
+  ✓  251 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1235:5 › composer screenshot cancels on actual view owner change during save (1.0s)
+  ✓  252 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1235:5 › composer screenshot cancels on actual unmount owner change during save (1.1s)
+  ✓  253 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1271:3 › qualified header screenshot preserves retained owner after view focus switch during capture (969ms)
+  ✓  254 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1271:3 › qualified header screenshot preserves retained owner after view focus switch during save (936ms)
+  ✓  255 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1284:1 › header screenshot denies stale Legacy without an active mounted destination (787ms)
+  ✓  256 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1294:1 › Side composer screenshot preserves its placement owner when Main selection changes (1.0s)
+  ✓  257 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1312:5 › Side composer screenshot cancels placement-close during capture (945ms)
+  ✓  258 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1312:5 › Side composer screenshot cancels unmount during capture (1.0s)
+  ✓  259 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1312:5 › Side composer screenshot cancels placement-close during save (951ms)
+  ✓  260 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1312:5 › Side composer screenshot cancels unmount during save (966ms)
+  ✓  261 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1329:1 › an explicit Main component screenshot uses its hydrated session independently of the rail (1.0s)
+  ✓  262 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1342:7 › retained main component screenshot survives retained active panel switch during capture (1.3s)
+  ✓  263 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1342:7 › retained main component screenshot survives retained active panel switch during capture after return (1.3s)
+  ✓  264 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1342:7 › retained main component screenshot survives retained active panel switch during save (1.3s)
+  ✓  265 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1342:7 › retained main component screenshot survives retained active panel switch during save after return (1.3s)
+  ✓  266 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1342:7 › retained side-tab component screenshot survives retained active panel switch during capture (1.3s)
+  ✓  267 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1342:7 › retained side-tab component screenshot survives retained active panel switch during capture after return (1.3s)
+  ✓  268 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1342:7 › retained side-tab component screenshot survives retained active panel switch during save (1.4s)
+  ✓  269 [fixture-only-chromium] › e2e/threaded-chat-host.spec.ts:1342:7 › retained side-tab component screenshot survives retained active panel switch during save after return (1.3s)
+
+  269 passed (2.4m)

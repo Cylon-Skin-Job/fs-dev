@@ -1,0 +1,43 @@
+--- index.json preimage
++++ index.json current
+@@ -818,7 +818,7 @@
+       "kind": "handoff",
+       "authority": "owner-directed workflow setup assignment and source-backed hierarchy",
+       "description": "Commit Supervisor continuation packet, historical hierarchy and current single-SPEC planning route.",
+-      "lifecycle": "Read for the owner-managed Review and Merge setup chat; preserve the handoff baseline and record later scoped revisions.",
++      "lifecycle": "Preserve the historical creation handoff; follow canonical Commit Supervisor deployment and approved execution records for current work.",
+       "read_before": [
+         "decisions.md",
+         "session-contract.md"
+@@ -861,7 +861,7 @@
+       "kind": "handoff",
+       "authority": "owner-directed side-conversation design record; implementation proposals distinguished from existing definitions",
+       "description": "Commit Supervisor design under D-024, retaining the original Review and Merge discussion and installed-identifier provenance.",
+-      "lifecycle": "Use for main-chat implementation; supersedes conflicting earlier Review and Merge proposals without claiming installed roles or live review evidence.",
++      "lifecycle": "Preserve original owner design and source provenance; canonical workflow deployment and approved SPEC own current execution.",
+       "read_before": [
+         "decisions.md",
+         "session-contract.md",
+@@ -1121,6 +1121,22 @@
+     {
+       "path": ".codex/agents/mc-draft-supervisor.toml",
+       "description": "Standalone First Draft Supervisor profile; shared stage and independent draft validation."
++    },
++    {
++      "path": ".codex/agents/mc-commit-supervisor.toml",
++      "description": "Local mc-commit-supervisor integration profile; exact skill loading and supported runtime fallback preserve assigned scope."
++    },
++    {
++      "path": ".codex/agents/mc-code-review-orchestrator.toml",
++      "description": "Local mc-code-review-orchestrator integration profile; exact skill loading and supported runtime fallback preserve assigned scope."
++    },
++    {
++      "path": ".codex/agents/mc-commit-repair-worker.toml",
++      "description": "Local mc-commit-repair-worker integration profile; exact skill loading and supported runtime fallback preserve assigned scope."
++    },
++    {
++      "path": ".agents/skills/mc-commit-supervisor/SKILL.md",
++      "description": "Canonical accepted-integration entry; shared workflow, recovery, independent review, Wiki/runtime handoff and attended owner operation gate."
+     }
+   ]
+ }

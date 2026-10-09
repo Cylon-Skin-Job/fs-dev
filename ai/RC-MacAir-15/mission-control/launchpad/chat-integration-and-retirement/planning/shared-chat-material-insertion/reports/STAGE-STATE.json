@@ -1,0 +1,292 @@
+{
+  "planning_id": "CHAT-MATERIAL-PLAN-01",
+  "revision": 1,
+  "stage": "candidate",
+  "state": "STAGE_VALIDATED",
+  "manager": "/root/chat_material_candidate_stage",
+  "supervisor": "/root",
+  "last_check": "2026-10-07T10:34:04.684102+00:00",
+  "last_progress": "Fresh assembled candidate-stage pass accepted; exact manager handoff saved; no remaining stage finding",
+  "children": [
+    {
+      "id": "/root/chat_material_candidate_stage/standards_wiki_investigator",
+      "kind": "runtime child",
+      "role": "leaf standards/Wiki investigator",
+      "write": "reports/STANDARDS-WIKI-INVESTIGATION.md",
+      "question": "Exact applicable standards, governance boundaries and later Wiki claims to update",
+      "status": "completed; SWI-01 accepted via independent handoff"
+    },
+    {
+      "id": "/root/chat_material_candidate_stage/verification_investigator",
+      "kind": "runtime child",
+      "role": "leaf verification/evidence investigator",
+      "write": "reports/VERIFICATION-INVESTIGATION.md",
+      "question": "Exact meaningful check scope, missing scenarios and proportional source-bound invalidation",
+      "status": "completed; VER-01 accepted via independent handoff"
+    },
+    {
+      "id": "/root/chat_material_candidate_stage/candidate_author",
+      "kind": "runtime child",
+      "role": "mc-roadmap-author leaf",
+      "write": [
+        "TICKET.md",
+        "SPEC.md",
+        "CANDIDATE.json",
+        "reports/author-source-evidence.json"
+      ],
+      "status": "completed repaired CANDIDATE_AUTHORED; no active normative writer"
+    },
+    {
+      "id": "/root/chat_material_candidate_stage/standards_handoff_review_01",
+      "kind": "runtime child",
+      "role": "mc-planning-validator",
+      "mode": "worker-handoff",
+      "deliverable_kind": "investigation",
+      "deliverable": "SWI-01 r1",
+      "input": "reports/STANDARDS-WIKI-INVESTIGATION.md",
+      "input_sha256": "2811c3c2c877cde932b14bd0f8f62dbde505f4afbb3cb3752cc6fa76f81338da",
+      "write": "reports/STANDARDS-HANDOFF-REVIEW-01.md",
+      "independence": "fork_turns none; fresh; not author/investigator; no model/effort override",
+      "status": "completed WORKER_HANDOFF_VALIDATED"
+    },
+    {
+      "id": "/root/chat_material_candidate_stage/verification_handoff_review_01",
+      "kind": "runtime child",
+      "role": "mc-planning-validator",
+      "mode": "worker-handoff",
+      "deliverable_kind": "investigation",
+      "deliverable": "VER-01",
+      "input": "reports/VERIFICATION-INVESTIGATION.md",
+      "input_sha256": "693a6ab911dbe6c549e997cc898197fc01f22bfc7750ce5c856371fcdf029ab2",
+      "write": "reports/VERIFICATION-HANDOFF-REVIEW-01.md",
+      "independence": "fork_turns none; fresh; no model/effort override",
+      "status": "completed WORKER_HANDOFF_VALIDATED; advisories incorporated"
+    },
+    {
+      "id": "/root/chat_material_candidate_stage/candidate_handoff_review_01",
+      "kind": "runtime child",
+      "role": "mc-planning-validator",
+      "mode": "worker-handoff",
+      "deliverable_kind": "candidate",
+      "input_candidate": "sha256:f68de0235fa3bf24e3d11cfd0ece3599c113c0fc0fa06de24fa1bb7e2807ed4d",
+      "write": "reports/CANDIDATE-HANDOFF-REVIEW-01.md",
+      "independence": "fresh fork_turns none; no override; not earlier author/investigator/reviewer",
+      "status": "completed REVISE CMH-001; original report and bytes preserved"
+    },
+    {
+      "id": "/root/chat_material_candidate_stage/candidate_handoff_review_02",
+      "kind": "runtime child",
+      "role": "mc-planning-validator",
+      "mode": "worker-handoff",
+      "deliverable_kind": "candidate",
+      "input_candidate": "sha256:65b324647b7e52f0426f7b2005849d053f4f239420fab07c848170b21ec1d3f3",
+      "write": "reports/CANDIDATE-HANDOFF-REVIEW-02.md",
+      "independence": "fresh fork_turns none; no override; not any earlier package actor/reviewer",
+      "status": "completed WORKER_HANDOFF_VALIDATED; CMH-001 resolved; no new findings"
+    },
+    {
+      "id": "/root/chat_material_candidate_stage/candidate_stage_review_01",
+      "kind": "runtime child",
+      "role": "mc-planning-validator",
+      "mode": "candidate-stage",
+      "input_candidate": "sha256:65b324647b7e52f0426f7b2005849d053f4f239420fab07c848170b21ec1d3f3",
+      "write": "reports/CANDIDATE-STAGE-REVIEW-01.md",
+      "independence": "fresh fork_turns none; no overrides; none of earlier package actors/reviewers",
+      "status": "completed CANDIDATE_STAGE_VALIDATED; all four perspectives; no findings"
+    }
+  ],
+  "worker_acceptance": [
+    {
+      "deliverable": "SWI-01 r1",
+      "kind": "investigation",
+      "output": "reports/STANDARDS-WIKI-INVESTIGATION.md",
+      "sha256": "2811c3c2c877cde932b14bd0f8f62dbde505f4afbb3cb3752cc6fa76f81338da",
+      "reviewer": "/root/chat_material_candidate_stage/standards_handoff_review_01",
+      "review": "reports/STANDARDS-HANDOFF-REVIEW-01.md",
+      "review_sha256": "bb6e510f9dad8aac3ef4c41aa09261faea3dc131c9530e7d4daab7ac4a685e7a",
+      "verdict": "WORKER_HANDOFF_VALIDATED",
+      "manager_disposition": "accepted; pending one coherent author synthesis with accepted verification report; no material findings",
+      "source_change": "D-009 AGENTS clarification inspected by reviewer and non-invalidating"
+    },
+    {
+      "deliverable": "VER-01",
+      "kind": "investigation",
+      "output": "reports/VERIFICATION-INVESTIGATION.md",
+      "sha256": "693a6ab911dbe6c549e997cc898197fc01f22bfc7750ce5c856371fcdf029ab2",
+      "reviewer": "/root/chat_material_candidate_stage/verification_handoff_review_01",
+      "review": "reports/VERIFICATION-HANDOFF-REVIEW-01.md",
+      "review_sha256": "f4b3a1f0a4f5248739f595b6e6a5a1654f486fada14f7ddc0e55a88d38ddef80",
+      "verdict": "WORKER_HANDOFF_VALIDATED",
+      "manager_disposition": "accepted; advisory VER-A01/A02/A03 incorporated in coherent synthesis",
+      "material_findings": []
+    },
+    {
+      "deliverable": "sha256:65b324647b7e52f0426f7b2005849d053f4f239420fab07c848170b21ec1d3f3",
+      "kind": "candidate",
+      "output": [
+        "TICKET.md",
+        "SPEC.md",
+        "CANDIDATE.json",
+        "reports/author-source-evidence.json"
+      ],
+      "reviewer": "/root/chat_material_candidate_stage/candidate_handoff_review_02",
+      "review": "reports/CANDIDATE-HANDOFF-REVIEW-02.md",
+      "review_sha256": "2724112444e77f119c0f349c66aa8d636df685d2c6708b7b9e9569c37270e83e",
+      "verdict": "WORKER_HANDOFF_VALIDATED",
+      "manager_disposition": "accepted current author output; CMH-001 resolved at worker gate; separate stage/release gates remain",
+      "coverage": "fresh verification-delta review plus explicit identical-section/source-bound unaffected coverage; current full gate covered"
+    }
+  ],
+  "findings": [
+    {
+      "id": "CMH-001",
+      "gate": "candidate worker-handoff 01",
+      "severity": "material correctable",
+      "confidence": "high",
+      "authority": "Chat Testing/Operations PAGE.md:110 and Smoke child:37-39; no exact waiver in OWNER-REQUEST/D-009",
+      "affected": "SPEC section7 and M3/final verification/accounting",
+      "consequence": "conditional historical equality exception can omit required fresh full-server command",
+      "review": "reports/CANDIDATE-HANDOFF-REVIEW-01.md",
+      "review_sha256": "258862f003a1f2b299f12e7d0fc9204724834c080c8c92101f08c4a581cb1c69",
+      "old_candidate": "sha256:f68de0235fa3bf24e3d11cfd0ece3599c113c0fc0fa06de24fa1bb7e2807ed4d",
+      "owner": "/root/chat_material_candidate_stage/candidate_author",
+      "disposition": "Resolved on current candidate; mandatory fresh full-server Jest and client build propagated. Fresh affected worker review with explicit unaffected coverage and separate fresh assembled-stage review both validated.",
+      "state": "resolved_current_worker_and_stage_gates",
+      "resolution_review": "reports/CANDIDATE-HANDOFF-REVIEW-02.md",
+      "stage_resolution_review": "reports/CANDIDATE-STAGE-REVIEW-01.md"
+    }
+  ],
+  "next_safe_action": "Return frozen exact candidate and STAGE-REPORT to /root for separately fresh release validator; implementation remains held by original owner Dont build instruction",
+  "must_not_replay": [
+    "completed CHAT-AR acceptance and publication",
+    "old native gates",
+    "checkpoint history",
+    "runtime restarts"
+  ],
+  "source_notes": [
+    "Provisional verification observation: screenshot tests currently assert currentPanel focus cancellation; pending report and independent handoff review"
+  ],
+  "design_notes": [
+    {
+      "classification": "implementation_choice source-backed and stage-validated; not owner implementation approval",
+      "scope": "Transient last-active mounted chat projection under existing chatSurfaceSlice; registration/removal and active workspace/view validity; no valid open destination yields unavailable; later unrelated focus does not invalidate captured valid owner; no server/UI mode expansion"
+    }
+  ],
+  "source_changes": [
+    {
+      "path": "../../AGENTS.md",
+      "type": "supervisor-owned authority clarification",
+      "sha256": "428c8939c8c57ec172624934ad1425ff2d4fdc1a359570ed71a38fcc837292cc",
+      "consequence": "narrow D-009 planning-only exception; no product source/acceptance changes; author and active investigator/reviewer notified; report-time prior binding remains dated evidence"
+    },
+    {
+      "path": "parent index/PLANNING and handoff routing",
+      "type": "supervisor-owned mutable coordination",
+      "consequence": "root will route actual candidate documents and final stage/release handoff; excluded from normative candidate identity; relevant hash drift must be disclosed without product/authority supersession claims"
+    },
+    {
+      "path": "PLANNING.md",
+      "prior_sha256": "d43a9a2844620ccbef7193c14d3196a8c8ba695f5d2910f0d969789c1d946337",
+      "current_sha256": "f2ada7fed36606eda52979ab201f3b64f1fbb4bfb3e0d77eec10cf7cc784e0a8",
+      "type": "supervisor-owned mutable lifecycle; independently assessed by review02",
+      "consequence": "non-invalidating; 127/128 source rows match at final reviewer readback; normative/owner/product/guidance unchanged"
+    },
+    {
+      "path": "parent TICKET.md/INTENT.md older current-outcome paragraphs",
+      "type": "supervisor-owned coordination reconciliation after final review",
+      "consequence": "root will make dated old outcome explicitly historical and current D-009 planning assignment clear, preserving acceptance; preservation/context-only, not candidate source inventory/authority",
+      "resolution": "Supervisor completed TICKET/INTENT/CAPTURE/index reconciliation/routing before stage return; current context hashes in STAGE-CHECKS and independently assessed stage report; no normative change"
+    }
+  ],
+  "manager_seam_checks": [
+    {
+      "source": "Chat UI PAGE.md:108-117; useChatSessionActions.ts:158-168; accepted SWI-01",
+      "observation": "Existing composer material attach/text invoke targeted warm intent. Owner excludes automatic Send/create, not warm; draft blanket no-warm language needs reconciliation with existing owner/source policy",
+      "status": "routed to author; supervisor agrees exact preservation; candidate gates must cover current repaired bytes",
+      "scope": "small direct factual source check plus accepted investigation, not independent gate/self-certification",
+      "resolution": "Existing targeted warm intent preserved in current candidate; fresh worker and stage gates cover exact repaired bytes"
+    }
+  ],
+  "accepted_synthesis": {
+    "path": "reports/ACCEPTED-SYNTHESIS.md",
+    "sha256": "f7186c2c6e353c2f0134d65b6e444715e670dbb526ad5168d7d3bbbeb2e911e4",
+    "recipient": "/root/chat_material_candidate_stage/candidate_author",
+    "state": "delivered/read/incorporated per author evidence"
+  },
+  "candidate": {
+    "id": "sha256:65b324647b7e52f0426f7b2005849d053f4f239420fab07c848170b21ec1d3f3",
+    "author": "/root/chat_material_candidate_stage/candidate_author",
+    "status": "STAGE_VALIDATED; fresh worker and distinct assembled-stage gates complete; release/owner implementation authority remain separate",
+    "normative": [
+      {
+        "path": "SPEC.md",
+        "sha256": "063562058007928d07477913a1ba05e43a2d191d6e42a0e9cb1d6a6e5c71659e"
+      },
+      {
+        "path": "TICKET.md",
+        "sha256": "730b6c92efa396eeb3abdc5ee6c522c692c790db9c288346d141ad57817e0074"
+      }
+    ],
+    "source_evidence_sha256": "3ded48319af3a6a6ab45c23c540833b6eb617151ec31f4e4596f8c9e86f3d7f8",
+    "preimage": "reports/CANDIDATE-BEFORE-CMH-001.json",
+    "exact_delta": "reports/CMH-001-NORMATIVE.diff",
+    "manifest_sha256": "a13356706562cef0be0ce914e21f889f10fad3766873fe27909e976363c30541"
+  },
+  "candidate_history": [
+    {
+      "id": "sha256:f68de0235fa3bf24e3d11cfd0ece3599c113c0fc0fa06de24fa1bb7e2807ed4d",
+      "author": "/root/chat_material_candidate_stage/candidate_author",
+      "status": "REVISE; not accepted",
+      "normative": [
+        {
+          "path": "SPEC.md",
+          "sha256": "1764a387605f65a0a65dfdd59b55c9a6a9e55a38030f506ff0da1caa393c1db6"
+        },
+        {
+          "path": "TICKET.md",
+          "sha256": "c29e2646b34b6d2e0ee9bf083ef0cce07954f27c887294cbe035ae088dcc0e41"
+        }
+      ],
+      "source_evidence_sha256": "b7c35b3f7d9cb5efca5ac9ccdce031278a7662aa0cccd99b1962e47b7bbf97fd",
+      "manager_manifest_check": "matches true; semantic/complete gate remains independent"
+    }
+  ],
+  "runtime_observation": "collaboration.list_agents final snapshot: all eight stage children completed; manager completing handoff; no active normative writer",
+  "last_progress_at": "2026-10-07T10:36:13.963109+00:00",
+  "stage_acceptance": {
+    "candidate": "sha256:65b324647b7e52f0426f7b2005849d053f4f239420fab07c848170b21ec1d3f3",
+    "reviewer": "/root/chat_material_candidate_stage/candidate_stage_review_01",
+    "review": "reports/CANDIDATE-STAGE-REVIEW-01.md",
+    "review_sha256": "cc8cac13dc8f75a269fd97837c1e5c994dda64bb3215995ad64d04f2d39e0549",
+    "verdict": "CANDIDATE_STAGE_VALIDATED",
+    "perspectives": "all four complete",
+    "manager_disposition": "accepted assembled stage; no material/advisory findings; no stage-critical owner/evidence/runtime gap",
+    "at": "2026-10-07T10:36:13.963109+00:00",
+    "source_check": "reports/STAGE-CHECKS.json",
+    "source_check_sha256": "f8a2bf70d882911724d756fd0af32a11430f85b8177996792f99e4b4ac123b34"
+  },
+  "advisory_dispositions": [
+    {
+      "id": "VER-A01",
+      "disposition": "Visible SystemViewer intent classification and regression boundary included; stage validated"
+    },
+    {
+      "id": "VER-A02",
+      "disposition": "Real delayed connected begin/preparation/draft/focus/old-closure reuse acceptance included; stage validated"
+    },
+    {
+      "id": "VER-A03",
+      "disposition": "Mandatory fresh server/client commands and historical scope limits included; stage validated"
+    }
+  ],
+  "source_notes_resolution": "Former provisional screenshot focus/lifetime observation incorporated as explicit source behavior supersession in current candidate; both candidate gates validated",
+  "handoff": {
+    "report": "reports/STAGE-REPORT.md",
+    "sha256": "7fc9891c31b6ed22939c83dae88f9782ebf4b8cf3a8b64a01ef067b48335a35b",
+    "at": "2026-10-07T10:36:13.963109+00:00",
+    "status": "STAGE_VALIDATED",
+    "recipient": "/root",
+    "release_authority": "not granted; parent-owned fresh gate",
+    "implementation_authority": "not granted; Dont build preserved"
+  }
+}

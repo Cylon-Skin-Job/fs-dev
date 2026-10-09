@@ -1,0 +1,80 @@
+{
+  "status": "passed",
+  "caseId": "F1-PUBLIC-ROUTE",
+  "identity": {
+    "threadGroupId": "tg-a85d4760-786a-4c2e-91eb-8b87d2fd6018",
+    "viewId": "capture-viewer",
+    "threadId": "2026-09-20T19-46-42-969",
+    "harnessId": "opencode"
+  },
+  "exchange": {
+    "id": 1,
+    "threadId": "2026-09-20T19-46-42-969",
+    "seq": 1,
+    "userInput": "F1 empty Capture composer typing",
+    "assistant": {
+      "parts": [
+        {
+          "type": "text",
+          "content": "Deterministic fixture reply "
+        }
+      ]
+    },
+    "metadata": {
+      "messageId": null,
+      "planMode": false,
+      "contextUsage": null,
+      "tokenUsage": null,
+      "turnId": "40d658fd-ff76-48e4-85e6-f38655a48c0b",
+      "reason": "interrupted",
+      "partial": true,
+      "capturedAt": 1789958803719,
+      "savedAt": 1789958803720,
+      "attachments": [],
+      "mentions": [],
+      "fileMutations": []
+    }
+  },
+  "uiReadback": true,
+  "authenticatedShell": true,
+  "wsFrameCounts": {
+    "shell-auth:challenge": 3,
+    "connected": 3,
+    "workspace:init": 3,
+    "panel_config": 4,
+    "shell-auth:authenticated": 3,
+    "error": 4,
+    "file_content_response": 127,
+    "screenshot:list": 3,
+    "workspace:create_manifest": 1,
+    "workspace:created": 1,
+    "workspace:added": 1,
+    "workspace:registry_changed": 1,
+    "workspace:switched": 1,
+    "file_tree_response": 129,
+    "office:palette_state": 2,
+    "thread:list": 18,
+    "panel_changed": 3,
+    "state:result": 10,
+    "thread:created": 1,
+    "thread:opened": 3,
+    "wire_ready": 1,
+    "state:worksurface_result": 3,
+    "screenshot:updated": 1,
+    "screenshot:data": 2,
+    "message:sent": 1,
+    "turn_begin": 1,
+    "thread:state_changed": 2,
+    "step_begin": 1,
+    "content": 1,
+    "turn_end": 1,
+    "wire_disconnected": 1
+  },
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": null
+}

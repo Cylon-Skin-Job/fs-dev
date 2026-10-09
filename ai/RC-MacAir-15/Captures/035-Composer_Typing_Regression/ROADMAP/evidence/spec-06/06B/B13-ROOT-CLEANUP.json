@@ -1,0 +1,24 @@
+{
+  "checkedAt": "2026-09-26T02:39:11.573057+00:00",
+  "ownedRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790390151299-353c7fc4ec-kHw8FJ",
+  "rootExists": false,
+  "exactRecordedPids": [
+    {
+      "pid": 65418,
+      "present": false
+    },
+    {
+      "pid": 65430,
+      "present": false
+    },
+    {
+      "pid": 65442,
+      "present": false
+    },
+    {
+      "pid": 66074,
+      "present": false
+    }
+  ],
+  "scope": "Read-only existence checks on exact B13-owned identifiers; no unrelated process inventory or termination."
+}

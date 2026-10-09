@@ -1,0 +1,87 @@
+{
+  "owner": "/root",
+  "conflicting_writers": [],
+  "source_repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "paths": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/.agents/package-status.md",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/.agents/skills/wiki-audit/SKILL.md",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/.agents/skills/wiki-repair/SKILL.md",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/.agents/skills/wiki-research/SKILL.md",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/.agents/skills/wiki-update/SKILL.md",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/.agents/wiki-session-contract.md",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/.codex/agents/wiki-auditor.toml",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/.codex/agents/wiki-repair-worker.toml",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/.codex/agents/wiki-research-worker.toml",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/.codex/agents/wiki-update-supervisor.toml",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/.codex/config.toml",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/AGENTS.md",
+      "job_created": true
+    }
+  ],
+  "shared_repos": [
+    "/Users/rccurtrightjr./projects/fs-dev"
+  ],
+  "source_refs": [
+    {
+      "repo": "/Users/rccurtrightjr./projects/fs-dev",
+      "ref": "refs/heads/agent/exact-workspace-paths"
+    },
+    {
+      "repo": "/Users/rccurtrightjr./projects/fs-dev",
+      "ref": "refs/remotes/origin/main"
+    },
+    {
+      "repo": "/Users/rccurtrightjr./projects/fs-dev",
+      "ref": "refs/heads/main"
+    }
+  ],
+  "target_ref": "HEAD",
+  "authority_paths": [
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/assignment.md",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/COMPLETED-WORK-OWNER-ACCEPTANCE.md",
+    "/Users/rccurtrightjr./projects/fs-dev/AGENTS.md",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md"
+  ],
+  "preparation": "Supplemental independent baseline before any replay: Wiki documentation manual workflow closure, 7 Markdown and 5 TOML exact existing source files. No role activation or run scheduling.",
+  "runtime": {
+    "boundary": "disposable profile and sole disposable workspace outside both checkouts",
+    "deps": "APFS private file copies of existing client/server node_modules; no borrowed Electron executable",
+    "normal_and_alpha": "read-only protection identity; no DB copy/restore",
+    "recovery_limits": "snapshot recovers candidate files/index only, not profile/database/runtime effects"
+  },
+  "ignored_runtime_paths": []
+}

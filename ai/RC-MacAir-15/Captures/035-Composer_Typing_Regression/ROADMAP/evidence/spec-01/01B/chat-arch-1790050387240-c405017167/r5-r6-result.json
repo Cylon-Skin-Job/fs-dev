@@ -1,0 +1,45 @@
+{
+  "systemSetupReadiness": {
+    "id": "R5-SYSTEM-FIXTURE-READINESS",
+    "sourceCapsuleVerified": true,
+    "boundedRebind": false,
+    "initial": null,
+    "final": {
+      "workspaceLabel": "R5 System Fixture",
+      "connected": true,
+      "projectionFrames": [
+        {
+          "workspaceId": "system-files",
+          "unavailable": false,
+          "viewIds": [
+            "capture-viewer",
+            "file-viewer",
+            "wiki-viewer",
+            "issues-viewer",
+            "agents-viewer",
+            "system-viewer"
+          ]
+        }
+      ],
+      "railTitles": [
+        "Captures",
+        "Files",
+        "Wiki",
+        "Issues",
+        "Agents",
+        "System"
+      ]
+    }
+  },
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": {
+    "name": "Error",
+    "message": "timed out waiting for System prompt/new applied and overlay closed",
+    "stack": "Error: timed out waiting for System prompt/new applied and overlay closed\n    at waitFor (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs:31:9)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r5-r6-electron.mjs:864:3"
+  }
+}

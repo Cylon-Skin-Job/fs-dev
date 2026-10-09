@@ -1,0 +1,954 @@
+diff --git a/fusion-studio-client/e2e/chat-component-registration.spec.ts b/fusion-studio-client/e2e/chat-component-registration.spec.ts
+index 7b24716f..31a1eb2b 100644
+--- a/fusion-studio-client/e2e/chat-component-registration.spec.ts
++++ b/fusion-studio-client/e2e/chat-component-registration.spec.ts
+@@ -145,6 +145,7 @@ async function buildHarness(): Promise<string> {
+     const registrationPath = path.resolve('src/components/chat/chatComponentRegistration.tsx');
+     const resolverPath = path.resolve('src/components/view-tabs/componentTabResolver.ts');
+     const panelStorePath = path.resolve('src/state/panelStore.ts');
++    const productSendPath = path.resolve('src/lib/ws/product-send.ts');
+     const source = `
+       import React from 'react';
+       import { createRoot } from 'react-dom/client';
+@@ -152,6 +153,7 @@ async function buildHarness(): Promise<string> {
+       import { chatConnectedRegistrations } from ${JSON.stringify(registrationPath)};
+       import { createFirstPartyComponentResolver } from ${JSON.stringify(resolverPath)};
+       import { usePanelStore } from ${JSON.stringify(panelStorePath)};
++      import { installProductSendCapability } from ${JSON.stringify(productSendPath)};
+ 
+       var WS = ${JSON.stringify(WS)};
+       var VIEW = ${JSON.stringify(VIEW)};
+@@ -168,6 +170,19 @@ async function buildHarness(): Promise<string> {
+         removeEventListener: function () {},
+         close: function () {},
+       };
++      // The fixture owns its socket lifecycle; install the same admission
++      // capability that ws-client supplies in the app before sending intents.
++      var binding = { workspaceId: WS, workspaceEpoch: 'fixture-epoch', bindingRevision: 1, bindingSerial: 1 };
++      installProductSendCapability({ socket: fakeWs, generation: 'component-registration-fixture',
++        isAuthenticated: function () { return true; },
++        captureBinding: function (id) { return id === WS ? binding : null; },
++        isBindingCurrent: function (captured) { return captured === binding; },
++        sendProductResult: function (serialized, policy, stillCurrent) {
++          if (!stillCurrent()) return { status: 'not_enqueued', reason: 'stale_binding' };
++          fakeWs.send(serialized);
++          return { status: 'enqueued', destination: 'socket' };
++        },
++      });
+ 
+       var row = {
+         threadId: THREAD,
+diff --git a/fusion-studio-client/e2e/chat-composer-screenshot-menu.spec.ts b/fusion-studio-client/e2e/chat-composer-screenshot-menu.spec.ts
+index a135ebb4..5707aff9 100644
+--- a/fusion-studio-client/e2e/chat-composer-screenshot-menu.spec.ts
++++ b/fusion-studio-client/e2e/chat-composer-screenshot-menu.spec.ts
+@@ -39,8 +39,8 @@ test('composer screenshot menu preserves split capture and gallery controls', as
+ 
+   expect(appSource).toContain('void captureAndAttachScreenshot()');
+   expect(appSource).toContain('onClick={handleControlCamera}');
+-  expect(footerSource).toContain('onAttach={handleAddAttachment}');
+-  expect(footerSource).toContain('onInsert={handleInsertText}');
++  expect(footerSource).toContain('onAttach={onAddAttachment}');
++  expect(footerSource).toContain('onInsert={onInsertText}');
+   expect(footerSource).not.toContain('<ScreenshotsTrigger');
+   expect(addMenuSource).toContain('void captureAndAttachScreenshot(screenshotOwner)');
+   expect(addMenuSource).toContain('control_camera');
+diff --git a/fusion-studio-client/e2e/prompt-ownership.slice-c.spec.ts b/fusion-studio-client/e2e/prompt-ownership.slice-c.spec.ts
+index dee0d598..dbe87768 100644
+--- a/fusion-studio-client/e2e/prompt-ownership.slice-c.spec.ts
++++ b/fusion-studio-client/e2e/prompt-ownership.slice-c.spec.ts
+@@ -446,3 +446,40 @@ test('Slice C: direct screenshot attaches only the path acknowledged for its req
+   ]);
+   unregisterToastSetter();
+ });
++
++test('qualified screenshot guards reject arbitrary requested sessions and stale mounts before capture', async () => {
++  let captureCalls = 0;
++  const fakeWindow = new EventTarget() as Window & typeof globalThis;
++  Object.assign(fakeWindow, { electronAPI: { capturePage: async () => { captureCalls += 1; return 'png'; } } });
++  Object.defineProperty(globalThis, 'window', { configurable: true, value: fakeWindow });
++  if (!('WebSocket' in globalThis)) {
++    Object.defineProperty(globalThis, 'WebSocket', { configurable: true, value: { OPEN: 1 } });
++  }
++  const { usePanelStore } = await import('../src/state/panelStore');
++  const { useChatFileLinkStore } = await import('../src/state/chatFileLinkStore');
++  const { captureAndAttachScreenshot } = await import('../src/screenshots/chatScreenshotCapture');
++  useChatFileLinkStore.setState({ pendingAttachmentsByOwner: {} });
++  usePanelStore.setState({
++    activeWorkspaceId: WORKSPACE_A, currentPanel: 'guard-view', currentThreadId: THREAD_B,
++    threadGroupsByWorkspaceAndView: { [WORKSPACE_A]: { 'guard-view': [
++      { threadGroupId: 'guard-group', threadId: THREAD_A, entry: { name: 'Guard' } },
++    ] } },
++    currentThreadGroupIdByWorkspaceAndView: { [WORKSPACE_A]: { 'guard-view': 'guard-group' } },
++    worksurfaceEntries: {}, ws: { readyState: WebSocket.OPEN } as WebSocket,
++  } as never);
++  const owner = { workspaceId: WORKSPACE_A, threadId: THREAD_A, surface: 'primary' as const,
++    selection: { viewId: 'guard-view', threadGroupId: 'guard-group' },
++    mount: { surfaceId: 'guard-surface', selectionScope: 'view' as const, isCurrent: () => true } };
++  for (const invalid of [
++    { ...owner, workspaceId: 'foreign-workspace' },
++    { ...owner, threadId: THREAD_B },
++    { ...owner, selection: { viewId: 'other-view', threadGroupId: 'guard-group' } },
++    { ...owner, selection: { viewId: 'guard-view', threadGroupId: 'other-group' } },
++    { ...owner, mount: { ...owner.mount, isCurrent: () => false } },
++    { ...owner, surface: 'side-tab' as const },
++  ]) {
++    await expect(captureAndAttachScreenshot(invalid)).resolves.toBeNull();
++  }
++  expect(captureCalls).toBe(0);
++  expect(useChatFileLinkStore.getState().pendingAttachmentsByOwner).toEqual({});
++});
+diff --git a/fusion-studio-client/e2e/threaded-chat-host.spec.ts b/fusion-studio-client/e2e/threaded-chat-host.spec.ts
+index d14f54ca..d6a30ec9 100644
+--- a/fusion-studio-client/e2e/threaded-chat-host.spec.ts
++++ b/fusion-studio-client/e2e/threaded-chat-host.spec.ts
+@@ -687,6 +687,15 @@ async function buildThreadedHarness(): Promise<string> {
+     const hostPath = path.resolve('src/components/chat/ViewChatHost.tsx');
+     const handlersPath = path.resolve('src/lib/ws/thread-handlers.ts');
+     const productSendPath = path.resolve('src/lib/ws/product-send.ts');
++    const screenshotPath = path.resolve('src/screenshots/chatScreenshotCapture.ts');
++    const attachmentPath = path.resolve('src/state/chatFileLinkStore.ts');
++    const componentMountPath = path.resolve('src/components/chat/ChatSurfaceComponentMount.tsx');
++    const toastPath = path.resolve('src/lib/toast.ts');
++    const workspacePanelPath = path.resolve('src/components/WorkspacePanel.tsx');
++    const viewTabBarPath = path.resolve('src/components/view-tabs/ViewTabBar.tsx');
++    const registrationPath = path.resolve('src/components/chat/chatComponentRegistration.tsx');
++    const resolverPath = path.resolve('src/components/view-tabs/componentTabResolver.ts');
++    const virtualAdapters = '\0virtual:threaded-screenshot-workspace-adapters';
+     const source = `
+       import React from 'react';
+       import { createRoot } from 'react-dom/client';
+@@ -695,18 +704,31 @@ async function buildThreadedHarness(): Promise<string> {
+       import { ViewChatHost } from ${JSON.stringify(hostPath)};
+       import { handleThreadMessage } from ${JSON.stringify(handlersPath)};
+       import { installProductSendCapability } from ${JSON.stringify(productSendPath)};
++      import { captureAndAttachScreenshot } from ${JSON.stringify(screenshotPath)};
++      import { useChatFileLinkStore } from ${JSON.stringify(attachmentPath)};
++      import { ChatSurfaceComponentMount } from ${JSON.stringify(componentMountPath)};
++      import { registerToastSetter } from ${JSON.stringify(toastPath)};
++      import { WorkspacePanel } from ${JSON.stringify(workspacePanelPath)};
+ 
+       var WS = ${JSON.stringify(WORKSPACE)};
+       var VIEW_A = ${JSON.stringify(VIEW_A)};
+       var VIEW_B = ${JSON.stringify(VIEW_B)};
+       var sent = [];
+-      var fakeWs = {
++      var captures = 0;
++      var finishCapture = null;
++      var toasts = [];
++      window.electronAPI = { capturePage: function () {
++        captures += 1;
++        return new Promise(function (resolve) { finishCapture = resolve; });
++      } };
++      registerToastSetter(function (message) { toasts.push(message); });
++      useChatFileLinkStore.setState({ pendingAttachmentsByOwner: {} });
++      var fakeWs = new EventTarget();
++      Object.assign(fakeWs, {
+         readyState: 1,
+         send: function (data) { try { sent.push(JSON.parse(data)); } catch (e) {} },
+-        addEventListener: function () {},
+-        removeEventListener: function () {},
+         close: function () {},
+-      };
++      });
+       // This isolated host fixture has no ws-client connection lifecycle.
+       // Supply its transport capability instead of bypassing product-send.
+       var binding = { workspaceId: WS, workspaceEpoch: 'fixture-epoch', bindingRevision: 1, bindingSerial: 1 };
+@@ -737,6 +759,7 @@ async function buildThreadedHarness(): Promise<string> {
+ 
+       usePanelStore.setState({
+         activeWorkspaceId: WS,
++        currentPanel: VIEW_A,
+         currentThreadId: null,
+         chatActive: false,
+         ws: fakeWs,
+@@ -755,42 +778,124 @@ async function buildThreadedHarness(): Promise<string> {
+         wireReadyByThread: {},
+         harnessSelectionByThread: {},
+         viewStates: {},
++        worksurfaceEntries: {},
+       });
+       useWorkspaceStore.setState({ hasReceivedInit: true });
+ 
++      function seedComponentPlacement(host, threadId) {
++        var descriptor = { schemaVersion: 1, componentTypeId: 'fusion.chat-surface',
++          componentInstanceId: 'screenshot-component', input: {
++            workspaceId: WS, viewId: VIEW_A, threadGroupId: ${JSON.stringify(GROUP_A)},
++            threadId: threadId, host: host,
++          } };
++        usePanelStore.getState().setWorksurfaceEntry(WS, VIEW_A, ${JSON.stringify(GROUP_A)}, {
++          schemaVersion: 1, adapterId: 'fixture', adapterVersion: 1, contentRevision: 'c1',
++          placementRevision: 'p1', updatedAt: '2026-01-01T00:00:00.000Z', content: null,
++          managedComponentPlacements: { 'screenshot-side': {
++            placementId: 'screenshot-side', disposition: 'open',
++            updatedAt: '2026-01-01T00:00:00.000Z', descriptor: descriptor,
++          } },
++        });
++        return descriptor;
++      }
++
+       function Fixture() {
+         var [aActive, setAActive] = React.useState(true);
++        var [aMounted, setAMounted] = React.useState(true);
++        var [aView, setAView] = React.useState(VIEW_A);
++        var [component, setComponent] = React.useState(null);
++        var [workspaceComponent, setWorkspaceComponent] = React.useState(false);
++        var currentPanel = usePanelStore(function (state) { return state.currentPanel; });
+         React.useEffect(function () {
+           window.__threadedFixture = {
+             deliver: function (msg) { return handleThreadMessage(msg); },
+             sentRaw: function () { return sent.slice(); },
+             setAActive: setAActive,
++            setAMounted: setAMounted,
++            setAView: setAView,
++            setState: function (partial) { usePanelStore.setState(partial); },
++            setCurrentPanel: function (panel) { usePanelStore.getState().setCurrentPanel(panel); },
++            finishCapture: function () { if (finishCapture) finishCapture('fixture-png-base64'); },
++            saved: function (requestId, savedPath) {
++              fakeWs.dispatchEvent(new MessageEvent('message', { data: JSON.stringify({
++                type: 'screenshot:file-captured', requestId: requestId, savedPath: savedPath,
++              }) }));
++            },
++            globalCapture: function () { void captureAndAttachScreenshot(); },
++            screenshotState: function () { return {
++              captures: captures, toasts: toasts.slice(),
++              requests: sent.filter(function (frame) { return frame.type === 'screenshot:file-capture'; }),
++              attachments: useChatFileLinkStore.getState().pendingAttachmentsByOwner,
++            }; },
++            seedComponent: function (host, threadId) {
++              setComponent(seedComponentPlacement(host, threadId));
++            },
++            seedWorkspaceComponent: function (host, threadId) {
++              window.__threadedWorkspaceDescriptor = seedComponentPlacement(host, threadId);
++              setWorkspaceComponent(true);
++            },
++            closeComponent: function () {
++              var entry = usePanelStore.getState().worksurfaceEntries[WS + '::' + VIEW_A + '::' + ${JSON.stringify(GROUP_A)}];
++              var record = entry.managedComponentPlacements['screenshot-side'];
++              usePanelStore.getState().setWorksurfaceEntry(WS, VIEW_A, ${JSON.stringify(GROUP_A)},
++                Object.assign({}, entry, { managedComponentPlacements: {
++                  'screenshot-side': Object.assign({}, record, { disposition: 'closed' }),
++                } }));
++            },
++            unmountComponent: function () { setComponent(null); },
+             aActive: aActive,
+             storeState: function () { return JSON.stringify(usePanelStore.getState()); },
+           };
+-        }, [aActive]);
++        }, [aActive, aMounted, aView, component, workspaceComponent]);
+         return React.createElement('div', null,
+           React.createElement('div', { id: 'host-a' },
+-            React.createElement(ViewChatHost, { panel: 'fixture-a', workspaceId: WS, viewId: VIEW_A, isActive: aActive })),
++            aMounted ? React.createElement(ViewChatHost, { panel: 'fixture-a', workspaceId: WS, viewId: aView, isActive: aActive }) : null),
+           React.createElement('div', { id: 'host-b' },
+             React.createElement(ViewChatHost, { panel: 'fixture-b', workspaceId: WS, viewId: VIEW_B, isActive: !aActive })),
++          React.createElement('div', { id: 'host-component' },
++            component ? React.createElement(ChatSurfaceComponentMount, { descriptor: component }) : null),
++          React.createElement('div', { id: 'host-workspace-component' },
++            workspaceComponent ? React.createElement(WorkspacePanel, {
++              panelId: VIEW_A, isActive: currentPanel === VIEW_A,
++            }) : null),
+         );
+       }
+ 
+       createRoot(document.querySelector('#root')).render(React.createElement(Fixture));
+     `;
++    // Control only the tab adapter. Retention/activity is the real
++    // WorkspacePanel -> ContentArea -> ViewTabBar -> component resolver path.
++    const adapterSource = `
++      import { createFirstPartyComponentResolver } from ${JSON.stringify(resolverPath)};
++      import { chatConnectedRegistrations } from ${JSON.stringify(registrationPath)};
++      var resolve = createFirstPartyComponentResolver(chatConnectedRegistrations());
++      export function useViewTabAdapter(panelId) {
++        var descriptor = window.__threadedWorkspaceDescriptor;
++        if (panelId !== ${JSON.stringify(VIEW_A)} || !descriptor) return null;
++        var tabId = 'retained-screenshot-component';
++        return { panelId: panelId, label: 'Retained chat',
++          tabs: [{ id: tabId, label: 'Screenshot chat', icon: 'chat', closable: true }],
++          activeId: tabId, tabPanelTabIndex: -1, onActivate: function () {}, onClose: function () {},
++          content: { active: { tabId: tabId,
++            content: { kind: 'component', revision: 1, component: descriptor } },
++            reservation: null, resolve: resolve, retryLauncher: function () {}, cancelLauncher: function () {} },
++        };
++      }
++    `;
+     const result = await build({
+       configFile: false,
+       logLevel: 'silent',
+       plugins: [{
+         name: 'threaded-chat-harness',
+         enforce: 'pre',
+-        resolveId(id) {
++        resolveId(id, importer) {
+           if (id === virtualEntry) return resolvedEntry;
++          if (id.includes('viewTabAdapters') && importer?.split('?')[0] === viewTabBarPath) return virtualAdapters;
+           return null;
+         },
+         load(id) {
+           if (id === resolvedEntry) return source;
++          if (id === virtualAdapters) return adapterSource;
+           return null;
+         },
+       }],
+@@ -1028,3 +1133,247 @@ test('built client boots the real app on the isolated server without runtime err
+   await expect(page.locator('.rv-connection-status').first()).toBeVisible({ timeout: 20_000 });
+   expect(errors).toEqual([]);
+ });
++
++// Direct screenshot preservation over the real host/accepted New Chat/composer
++// route. Only Electron capture and save delivery are controlled dependencies.
++interface ScreenshotFixtureState {
++  captures: number;
++  toasts: string[];
++  requests: Array<{ requestId: string; workspaceId: string; dataUrl: string }>;
++  attachments: Record<string, { attachments: Array<{ path: string; relativePath: string }> }>;
++}
++
++async function screenshotFixtureCall(page: Page, method: string, ...args: unknown[]): Promise<unknown> {
++  return page.evaluate(([name, params]) => {
++    const fixture = (window as unknown as {
++      __threadedFixture: Record<string, (...values: unknown[]) => unknown>;
++    }).__threadedFixture;
++    return fixture[name](...params);
++  }, [method, args] as [string, unknown[]]);
++}
++
++async function screenshotState(page: Page): Promise<ScreenshotFixtureState> {
++  return await screenshotFixtureCall(page, 'screenshotState') as ScreenshotFixtureState;
++}
++
++async function acceptedNewChat(page: Page, legacyThreadId: string | null = null): Promise<void> {
++  await mountFixture(page);
++  await screenshotFixtureCall(page, 'setState', { currentThreadId: legacyThreadId });
++  await deliver(page, { type: 'thread:list', viewId: VIEW_A, threads: [PROJ_A] });
++  await deliver(page, { type: 'thread:opened', workspaceId: WORKSPACE, viewId: VIEW_A,
++    threadGroupId: GROUP_A, threadId: THREAD_A, thread: PROJ_A.entry, exchanges: [] });
++  await page.locator('#host-a .rv-new-chat-btn').click();
++  const row = projection({ groupId: 'screenshot-new-group', threadId: 'screenshot-new-thread',
++    viewId: VIEW_A, name: 'Screenshot New Chat' });
++  await deliver(page, { type: 'thread:created', workspaceId: WORKSPACE, viewId: VIEW_A,
++    threadGroupId: row.threadGroupId, threadId: row.threadId, thread: row.entry });
++  await deliver(page, { type: 'thread:opened', workspaceId: WORKSPACE, viewId: VIEW_A,
++    threadGroupId: row.threadGroupId, threadId: row.threadId, thread: row.entry, exchanges: [] });
++  await expect(page.locator('#host-a .rv-chat-area')).toHaveAttribute('data-chat-thread-id', row.threadId);
++  await expect(page.locator('#host-a textarea')).toBeEnabled();
++  const state = JSON.parse(await screenshotFixtureCall(page, 'storeState') as string);
++  expect(state.currentThreadId).toBe(legacyThreadId);
++}
++
++async function clickComposerScreenshot(page: Page, host = '#host-a'): Promise<void> {
++  await page.locator(`${host} .rv-chat-composer-add-trigger`).click();
++  await page.locator(host).getByRole('menuitem', { name: 'Take screenshot', exact: true }).click();
++  await expect.poll(async () => (await screenshotState(page)).captures).toBe(1);
++}
++
++async function finishScreenshotCapture(page: Page): Promise<string> {
++  await screenshotFixtureCall(page, 'finishCapture');
++  await expect.poll(async () => (await screenshotState(page)).requests.length).toBe(1);
++  return (await screenshotState(page)).requests[0].requestId;
++}
++
++async function expectExactScreenshotAttachment(page: Page, threadId: string): Promise<void> {
++  const owner = JSON.stringify([WORKSPACE, threadId]);
++  await expect.poll(async () => Object.keys((await screenshotState(page)).attachments)).toEqual([owner]);
++  const state = await screenshotState(page);
++  expect(state.requests[0]).toMatchObject({ workspaceId: WORKSPACE,
++    dataUrl: 'data:image/png;base64,fixture-png-base64' });
++  expect(state.attachments[owner].attachments).toMatchObject([{ path: '/scratch/ai/Test/Data/Screenshots/exact.png',
++    relativePath: 'Data/Screenshots/exact.png' }]);
++  expect(state.toasts.at(-1)).toBe('Screenshot attached to chat.');
++}
++
++for (const legacyThreadId of [null, 'older-legacy-thread']) {
++  test(`New Chat composer screenshot uses its exact view owner with Legacy ${legacyThreadId}`, async ({ page }) => {
++    await acceptedNewChat(page, legacyThreadId);
++    await clickComposerScreenshot(page);
++    // An accepted update in another view cannot steal the screenshot owner.
++    await deliver(page, { type: 'thread:list', viewId: VIEW_B, threads: [PROJ_B] });
++    await deliver(page, { type: 'thread:opened', workspaceId: WORKSPACE, viewId: VIEW_B,
++      threadGroupId: GROUP_B, threadId: THREAD_B, thread: PROJ_B.entry, exchanges: [] });
++    const requestId = await finishScreenshotCapture(page);
++    await screenshotFixtureCall(page, 'saved', 'wrong-request', '/wrong.png');
++    expect((await screenshotState(page)).attachments).toEqual({});
++    await screenshotFixtureCall(page, 'saved', requestId, '/scratch/ai/Test/Data/Screenshots/exact.png');
++    await expectExactScreenshotAttachment(page, 'screenshot-new-thread');
++    await expect(page.locator('#host-a .rv-chat-attachments-strip')).toContainText('exact.png');
++    await expect(page.locator('#host-b .rv-chat-attachment-pill')).toHaveCount(0);
++  });
++
++  test(`header screenshot resolves qualified New Chat with Legacy ${legacyThreadId}`, async ({ page }) => {
++    await acceptedNewChat(page, legacyThreadId);
++    await screenshotFixtureCall(page, 'globalCapture');
++    await expect.poll(async () => (await screenshotState(page)).captures).toBe(1);
++    const requestId = await finishScreenshotCapture(page);
++    await screenshotFixtureCall(page, 'saved', requestId, '/scratch/ai/Test/Data/Screenshots/exact.png');
++    await expectExactScreenshotAttachment(page, 'screenshot-new-thread');
++  });
++}
++
++for (const phase of ['capture', 'save'] as const) {
++  for (const change of ['thread', 'workspace', 'view', 'inactive', 'unmount'] as const) {
++    test(`composer screenshot cancels on actual ${change} owner change during ${phase}`, async ({ page }) => {
++      await acceptedNewChat(page, 'older-legacy-thread');
++      await clickComposerScreenshot(page);
++      const requestId = phase === 'save' ? await finishScreenshotCapture(page) : null;
++      if (change === 'thread') {
++        await page.locator(`#host-a .rv-chat-item[data-thread-group-id="${GROUP_A}"]`).locator('.rv-chat-item-text').click();
++        await deliver(page, { type: 'thread:opened', workspaceId: WORKSPACE, viewId: VIEW_A,
++          threadGroupId: GROUP_A, threadId: THREAD_A, thread: PROJ_A.entry, exchanges: [] });
++        await expect(page.locator('#host-a .rv-chat-area')).toHaveAttribute('data-chat-thread-id', THREAD_A);
++        // Returning to the old session must not revive its old capture token.
++        await page.locator('#host-a .rv-chat-item[data-thread-group-id="screenshot-new-group"]').locator('.rv-chat-item-text').click();
++        await deliver(page, { type: 'thread:opened', workspaceId: WORKSPACE, viewId: VIEW_A,
++          threadGroupId: 'screenshot-new-group', threadId: 'screenshot-new-thread',
++          thread: PROJ_A.entry, exchanges: [] });
++        await expect(page.locator('#host-a .rv-chat-area')).toHaveAttribute('data-chat-thread-id', 'screenshot-new-thread');
++      } else if (change === 'workspace') {
++        await screenshotFixtureCall(page, 'setState', { activeWorkspaceId: 'other-workspace' });
++      } else if (change === 'view') {
++        await screenshotFixtureCall(page, 'setAView', 'other-owning-view');
++        await expect(page.locator('#host-a .rv-chat-area')).toHaveAttribute('data-chat-view-id', 'other-owning-view');
++      } else if (change === 'inactive') {
++        await screenshotFixtureCall(page, 'setAActive', false);
++        await expect(page.locator('#host-a textarea')).toBeDisabled();
++      } else {
++        await screenshotFixtureCall(page, 'setAMounted', false);
++        await expect(page.locator('#host-a .rv-chat-area')).toHaveCount(0);
++      }
++      if (requestId) await screenshotFixtureCall(page, 'saved', requestId, '/scratch/ai/Test/Data/Screenshots/exact.png');
++      else await screenshotFixtureCall(page, 'finishCapture');
++      await expect.poll(async () => (await screenshotState(page)).toasts.at(-1))
++        .toBe('Screenshot was not attached because the chat changed.');
++      const state = await screenshotState(page);
++      expect(state.attachments).toEqual({});
++      expect(state.requests).toHaveLength(phase === 'save' ? 1 : 0);
++    });
++  }
++}
++
++for (const phase of ['capture', 'save'] as const) {
++  test(`qualified header screenshot cancels owning view switch during ${phase}`, async ({ page }) => {
++    await acceptedNewChat(page);
++    await screenshotFixtureCall(page, 'globalCapture');
++    await expect.poll(async () => (await screenshotState(page)).captures).toBe(1);
++    const requestId = phase === 'save' ? await finishScreenshotCapture(page) : null;
++    await screenshotFixtureCall(page, 'setState', { currentPanel: VIEW_B });
++    if (requestId) await screenshotFixtureCall(page, 'saved', requestId, '/scratch/ai/Test/Data/Screenshots/exact.png');
++    else await screenshotFixtureCall(page, 'finishCapture');
++    await expect.poll(async () => (await screenshotState(page)).toasts.at(-1))
++      .toBe('Screenshot was not attached because the chat changed.');
++    expect((await screenshotState(page)).attachments).toEqual({});
++  });
++}
++
++test('header screenshot retains the actual Legacy fallback when qualified Main is unavailable', async ({ page }) => {
++  await mountFixture(page);
++  await screenshotFixtureCall(page, 'setState', { currentThreadId: 'legacy-fallback' });
++  await screenshotFixtureCall(page, 'globalCapture');
++  await expect.poll(async () => (await screenshotState(page)).captures).toBe(1);
++  const requestId = await finishScreenshotCapture(page);
++  await screenshotFixtureCall(page, 'saved', requestId, '/scratch/ai/Test/Data/Screenshots/exact.png');
++  await expectExactScreenshotAttachment(page, 'legacy-fallback');
++});
++
++test('Side composer screenshot preserves its placement owner when Main selection changes', async ({ page }) => {
++  await acceptedNewChat(page, 'older-legacy-thread');
++  await screenshotFixtureCall(page, 'seedComponent', 'side-tab', 'screenshot-side-thread');
++  await expect(page.locator('#host-component .rv-chat-area')).toHaveAttribute('data-chat-host', 'side-tab');
++  await clickComposerScreenshot(page, '#host-component');
++  await page.locator(`#host-a .rv-chat-item[data-thread-group-id="${GROUP_A}"]`).locator('.rv-chat-item-text').click();
++  await deliver(page, { type: 'thread:opened', workspaceId: WORKSPACE, viewId: VIEW_A,
++    threadGroupId: GROUP_A, threadId: THREAD_A, thread: PROJ_A.entry, exchanges: [] });
++  await expect(page.locator('#host-a .rv-chat-area')).toHaveAttribute('data-chat-thread-id', THREAD_A);
++  const requestId = await finishScreenshotCapture(page);
++  await screenshotFixtureCall(page, 'saved', requestId, '/scratch/ai/Test/Data/Screenshots/exact.png');
++  await expectExactScreenshotAttachment(page, 'screenshot-side-thread');
++  await expect(page.locator('#host-component .rv-chat-attachments-strip')).toContainText('exact.png');
++  await expect(page.locator('#host-a .rv-chat-attachment-pill')).toHaveCount(0);
++});
++
++for (const phase of ['capture', 'save'] as const) {
++  for (const change of ['placement-close', 'unmount'] as const) {
++    test(`Side composer screenshot cancels ${change} during ${phase}`, async ({ page }) => {
++      await acceptedNewChat(page);
++      await screenshotFixtureCall(page, 'seedComponent', 'side-tab', 'screenshot-side-thread');
++      await expect(page.locator('#host-component .rv-chat-area')).toHaveAttribute('data-chat-host', 'side-tab');
++      await clickComposerScreenshot(page, '#host-component');
++      const requestId = phase === 'save' ? await finishScreenshotCapture(page) : null;
++      await screenshotFixtureCall(page, change === 'placement-close' ? 'closeComponent' : 'unmountComponent');
++      await expect(page.locator('#host-component .rv-chat-area')).toHaveCount(0);
++      if (requestId) await screenshotFixtureCall(page, 'saved', requestId, '/scratch/ai/Test/Data/Screenshots/exact.png');
++      else await screenshotFixtureCall(page, 'finishCapture');
++      await expect.poll(async () => (await screenshotState(page)).toasts.at(-1))
++        .toBe('Screenshot was not attached because the chat changed.');
++      expect((await screenshotState(page)).attachments).toEqual({});
++    });
++  }
++}
++
++test('an explicit Main component screenshot uses its hydrated session independently of the rail', async ({ page }) => {
++  await acceptedNewChat(page);
++  await screenshotFixtureCall(page, 'seedComponent', 'main', THREAD_A);
++  await expect(page.locator('#host-component .rv-chat-area')).toHaveAttribute('data-chat-thread-id', THREAD_A);
++  await clickComposerScreenshot(page, '#host-component');
++  const requestId = await finishScreenshotCapture(page);
++  await screenshotFixtureCall(page, 'saved', requestId, '/scratch/ai/Test/Data/Screenshots/exact.png');
++  await expectExactScreenshotAttachment(page, THREAD_A);
++});
++
++for (const host of ['main', 'side-tab'] as const) {
++  for (const phase of ['capture', 'save'] as const) {
++    for (const returnsToView of [false, true]) {
++      test(`retained ${host} component screenshot cancels active panel switch during ${phase}${returnsToView ? ' even after return' : ''}`, async ({ page }) => {
++        await acceptedNewChat(page);
++        await screenshotFixtureCall(page, 'seedWorkspaceComponent', host,
++          host === 'main' ? THREAD_A : 'screenshot-side-thread');
++        const owningPanel = page.locator('#host-workspace-component [data-panel]');
++        const component = page.locator('#host-workspace-component .rv-content-area .rv-chat-area');
++        await expect(component).toHaveAttribute('data-chat-host', host);
++        const surfaceId = await component.getAttribute('data-surface-id');
++        expect(surfaceId).toBeTruthy();
++        await clickComposerScreenshot(page, '#host-workspace-component .rv-content-area');
++        const requestId = phase === 'save' ? await finishScreenshotCapture(page) : null;
++
++        // Only the actual shell selection changes. WorkspacePanel retains the
++        // ContentArea and component instance; its placement remains open.
++        await screenshotFixtureCall(page, 'setCurrentPanel', VIEW_B);
++        await expect(owningPanel).not.toHaveClass(/\bactive\b/);
++        await expect(component).toHaveAttribute('data-surface-id', surfaceId!);
++        let state = JSON.parse(await screenshotFixtureCall(page, 'storeState') as string);
++        expect(state.worksurfaceEntries[`${WORKSPACE}::${VIEW_A}::${GROUP_A}`]
++          .managedComponentPlacements['screenshot-side'].disposition).toBe('open');
++        if (returnsToView) {
++          await screenshotFixtureCall(page, 'setCurrentPanel', VIEW_A);
++          await expect(owningPanel).toHaveClass(/\bactive\b/);
++          await expect(component).toHaveAttribute('data-surface-id', surfaceId!);
++        }
++
++        if (requestId) await screenshotFixtureCall(page, 'saved', requestId, '/scratch/ai/Test/Data/Screenshots/exact.png');
++        else await screenshotFixtureCall(page, 'finishCapture');
++        await expect.poll(async () => (await screenshotState(page)).toasts.at(-1))
++          .toBe('Screenshot was not attached because the chat changed.');
++        expect((await screenshotState(page)).attachments).toEqual({});
++        expect((await screenshotState(page)).requests).toHaveLength(phase === 'save' ? 1 : 0);
++        state = JSON.parse(await screenshotFixtureCall(page, 'storeState') as string);
++        expect(state.worksurfaceEntries[`${WORKSPACE}::${VIEW_A}::${GROUP_A}`]
++          .managedComponentPlacements['screenshot-side'].disposition).toBe('open');
++      });
++    }
++  }
++}
+diff --git a/fusion-studio-client/src/components/chat/ChatSurface.tsx b/fusion-studio-client/src/components/chat/ChatSurface.tsx
+index fd0f10a7..392accfa 100644
+--- a/fusion-studio-client/src/components/chat/ChatSurface.tsx
++++ b/fusion-studio-client/src/components/chat/ChatSurface.tsx
+@@ -26,6 +26,8 @@ export interface ChatSurfaceComponentProps extends ChatSurfaceProps {
+   panel: string;
+   /** Outer shell content-collapse toggle; shell state is never chat identity. */
+   onToggleContent?: () => void;
++  /** Component descriptors own an exact session independently of rail selection. */
++  screenshotSelection?: 'view' | 'session';
+ }
+ 
+ export const ChatSurface = memo(function ChatSurface({
+@@ -43,9 +45,8 @@ export const ChatSurface = memo(function ChatSurface({
+   panel,
+   onToggleThreads,
+   onToggleContent,
++  screenshotSelection = 'view',
+ }: ChatSurfaceComponentProps) {
+-  void threadGroupId;
+-
+   const domId = chatSurfaceDomId(surfaceId);
+   const sectionClass = `rv-chat-area rv-chat-area--project${shell.isActive ? ' rv-chat-area--active' : ' rv-chat-area--inactive'}${!shell.hasThread ? ' rv-chat-area--no-thread' : ''}`;
+ 
+@@ -83,6 +84,10 @@ export const ChatSurface = memo(function ChatSurface({
+       />
+       <ConnectedChatComposer
+         workspaceId={workspaceId}
++        viewId={viewId}
++        threadGroupId={threadGroupId}
++        host={host}
++        screenshotSelection={screenshotSelection}
+         threadId={threadId}
+         surfaceId={surfaceId}
+         panel={panel}
+diff --git a/fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx b/fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx
+index a0090c6c..542949c3 100644
+--- a/fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx
++++ b/fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx
+@@ -20,7 +20,7 @@ import { getThreadGroupPopulation } from '../../state/slices/chatSurfaceSlice';
+ import { getWorksurfaceEntry } from '../../state/slices/worksurfaceSlice';
+ import type { AppState } from '../../state/panelStoreTypes';
+ import type { ComponentDescriptor } from '../view-tabs/componentTabTypes';
+-import { readOpenSideChatPlacements } from './sideChatBridge';
++import { readOpenSideChatPlacements } from '../../lib/chat/side-chat-placements';
+ import { ChatSurface } from './ChatSurface';
+ import { useChatSessionHost } from './useChatSessionHost';
+ import { nextChatSurfaceMountGeneration } from './chatSurfaceContract';
+@@ -132,6 +132,7 @@ function ChatSurfaceReadyMount({
+   return (
+     <ChatSurface
+       {...host.identity}
++      screenshotSelection="session"
+       shell={host.shell}
+       header={host.header}
+       composer={host.composer}
+diff --git a/fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx b/fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx
+index 418612b6..5df6490e 100644
+--- a/fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx
++++ b/fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx
+@@ -1,5 +1,5 @@
+ /** Exact-session connected composer leaf. No parent observes composer stores. */
+-import { memo, useCallback } from 'react';
++import { memo, useCallback, useLayoutEffect, useMemo } from 'react';
+ import { usePanelStore } from '../../state/panelStore';
+ import {
+   chatAttachmentOwnerKey,
+@@ -17,11 +17,16 @@ import { hasAcceptedPromptExecutionWatch } from '../../lib/chat/prompt-submissio
+ import type { ChatLinkAttachment } from '../../lib/chat-file-links/file-link-types';
+ import type { ChatSurfaceActions, ChatSurfaceComposerPresentation, ChatSurfaceRefs } from './chatSurfaceContract';
+ import { ChatAreaFooter } from './ChatAreaFooter';
++import type { ScreenshotAttachmentOwner } from '../../screenshots/chatScreenshotCapture';
+ 
+ const EMPTY_ATTACHMENTS: readonly ChatLinkAttachment[] = [];
+ 
+ interface ConnectedChatComposerProps {
+   workspaceId: string;
++  viewId: string | null;
++  threadGroupId: string;
++  host: 'main' | 'side-tab';
++  screenshotSelection: 'view' | 'session';
+   threadId: string;
+   surfaceId: string;
+   panel: string;
+@@ -35,6 +40,10 @@ interface ConnectedChatComposerProps {
+ 
+ export const ConnectedChatComposer = memo(function ConnectedChatComposer({
+   workspaceId,
++  viewId,
++  threadGroupId,
++  host,
++  screenshotSelection,
+   threadId,
+   surfaceId,
+   panel,
+@@ -46,6 +55,25 @@ export const ConnectedChatComposer = memo(function ConnectedChatComposer({
+   inputRef,
+ }: ConnectedChatComposerProps) {
+   const ownerReady = Boolean(workspaceId && hasThread && threadId);
++  const screenshotViewActive = usePanelStore(
++    (state) => viewId === null || state.currentPanel === viewId,
++  );
++  // This token owns only the committed mount's lifetime, not session state.
++  // A new owner/active view invalidates old asynchronous captures even when
++  // the same component instance is reused or the old session is reopened.
++  const screenshotMount = useMemo(() => ({ current: false }),
++    [workspaceId, viewId, threadGroupId, threadId, surfaceId, host, screenshotSelection, isActive, screenshotViewActive, ownerReady]);
++  useLayoutEffect(() => {
++    screenshotMount.current = ownerReady && isActive && screenshotViewActive;
++    return () => { screenshotMount.current = false; };
++  }, [screenshotMount, ownerReady, isActive, screenshotViewActive]);
++  const screenshotOwner = useMemo<ScreenshotAttachmentOwner | null>(() => ownerReady ? {
++    workspaceId,
++    threadId,
++    surface: host === 'side-tab' ? 'side-tab' : 'primary',
++    selection: { viewId, threadGroupId },
++    mount: { surfaceId, selectionScope: screenshotSelection, isCurrent: () => screenshotMount.current },
++  } : null, [ownerReady, workspaceId, threadId, viewId, threadGroupId, surfaceId, host, screenshotSelection, screenshotMount]);
+   const draftKey = ownerReady ? chatComposerDraftOwnerKey(workspaceId, threadId) : '';
+   const attachmentKey = ownerReady ? chatAttachmentOwnerKey(workspaceId, threadId) : '';
+   const submissionKey = ownerReady ? chatSubmissionOwnerKey(workspaceId, threadId) : '';
+@@ -126,11 +154,7 @@ export const ConnectedChatComposer = memo(function ConnectedChatComposer({
+       onComposerDraftChange={handleDraftChange}
+       modelSelection={composer.modelSelection}
+       onModelSelectionChange={actions.onModelSelectionChange}
+-      screenshotOwner={hasThread ? {
+-        workspaceId,
+-        threadId,
+-        surface: 'primary',
+-      } : null}
++      screenshotOwner={screenshotOwner}
+     />
+   );
+ });
+diff --git a/fusion-studio-client/src/components/chat/sideChatBridge.ts b/fusion-studio-client/src/components/chat/sideChatBridge.ts
+index 003c6edb..8bb67c37 100644
+--- a/fusion-studio-client/src/components/chat/sideChatBridge.ts
++++ b/fusion-studio-client/src/components/chat/sideChatBridge.ts
+@@ -11,7 +11,7 @@
+  * placement, and never persists any transient identity.
+  */
+ 
+-import type { ComponentDescriptor, TabContentRecord } from '../view-tabs/componentTabTypes';
++import type { TabContentRecord } from '../view-tabs/componentTabTypes';
+ import { createFirstPartyComponentResolver } from '../view-tabs/componentTabResolver';
+ import type { ComponentTabShellProjection } from '../view-tabs/componentTabPresentationDomain';
+ import type { ViewTabAdapterModel } from '../view-tabs/viewTabAdapters';
+@@ -19,69 +19,10 @@ import type { ViewTabContentAdapter } from '../view-tabs/viewTabContentAdapter';
+ import type { ViewTabDescriptor } from '../view-tabs/ViewTabStrip';
+ import { chatConnectedRegistrations } from './chatComponentRegistration';
+ import type { ThreadWorksurfaceEntry } from '../../lib/worksurface/types';
++import { readOpenSideChatPlacements, SIDE_CHAT_COMPONENT_TYPE, type SideChatPlacement } from '../../lib/chat/side-chat-placements';
+ 
+-export const SIDE_CHAT_COMPONENT_TYPE = 'fusion.chat-surface';
+-export const SIDE_CHAT_HOST = 'side-tab';
+ export const SIDE_CHAT_TAB_LABEL = 'Side Chat';
+ 
+-export interface SideChatPlacement {
+-  placementId: string;
+-  threadId: string;
+-  descriptor: ComponentDescriptor;
+-}
+-
+-function isPlainRecord(value: unknown): value is Record<string, unknown> {
+-  if (typeof value !== 'object' || value === null || Array.isArray(value)) return false;
+-  const prototype = Object.getPrototypeOf(value);
+-  return prototype === Object.prototype || prototype === null;
+-}
+-
+-function boundedIdentity(value: unknown): value is string {
+-  return typeof value === 'string' && value.length > 0 && value.trim() === value;
+-}
+-
+-/**
+- * Validate one persisted managed-placement descriptor as a durable
+- * `fusion.chat-surface` Side Chat placement for the addressed view. A
+- * transient `surfaceId`, a mismatched view, or a non-side host is rejected and
+- * simply renders nothing.
+- */
+-function parseSideChatDescriptor(value: unknown, viewId: string): {
+-  threadId: string;
+-  descriptor: ComponentDescriptor;
+-} | null {
+-  if (!isPlainRecord(value)) return null;
+-  if (value.componentTypeId !== SIDE_CHAT_COMPONENT_TYPE) return null;
+-  if (!boundedIdentity(value.componentInstanceId)) return null;
+-  const input = value.input;
+-  if (!isPlainRecord(input)) return null;
+-  if (Object.prototype.hasOwnProperty.call(input, 'surfaceId')) return null;
+-  if (!boundedIdentity(input.workspaceId)
+-    || !boundedIdentity(input.threadGroupId)
+-    || !boundedIdentity(input.threadId)) return null;
+-  if (input.viewId !== viewId) return null;
+-  if (input.host !== SIDE_CHAT_HOST) return null;
+-  return { threadId: input.threadId, descriptor: value as unknown as ComponentDescriptor };
+-}
+-
+-/** Open Side Chat placements for one entry, in stable insertion order. */
+-export function readOpenSideChatPlacements(
+-  entry: ThreadWorksurfaceEntry | null,
+-  viewId: string,
+-): SideChatPlacement[] {
+-  const placements = entry?.managedComponentPlacements;
+-  if (!isPlainRecord(placements)) return [];
+-  const result: SideChatPlacement[] = [];
+-  for (const [placementId, record] of Object.entries(placements)) {
+-    if (!isPlainRecord(record) || record.disposition !== 'open') continue;
+-    if (!boundedIdentity(placementId)) continue;
+-    const parsed = parseSideChatDescriptor(record.descriptor, viewId);
+-    if (!parsed) continue;
+-    result.push({ placementId, threadId: parsed.threadId, descriptor: parsed.descriptor });
+-  }
+-  return result;
+-}
+-
+ export function buildSideChatTabRecord(placement: SideChatPlacement): TabContentRecord {
+   return {
+     tabId: placement.placementId,
+diff --git a/fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts b/fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts
+index 65343e03..1ea260a1 100644
+--- a/fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts
++++ b/fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts
+@@ -21,6 +21,7 @@
+  */
+ 
+ import { useMemo } from 'react';
++import { readOpenSideChatPlacements } from '../../lib/chat/side-chat-placements';
+ import { usePanelStore } from '../../state/panelStore';
+ import { getCurrentThreadGroupId } from '../../state/slices/chatSurfaceSlice';
+ import {
+@@ -34,7 +35,6 @@ import type { ViewTabAdapterModel } from '../view-tabs/viewTabAdapters';
+ import {
+   composeAdapterlessSideChatRail,
+   composeSideChatAdapter,
+-  readOpenSideChatPlacements,
+   type SideChatBridgeContext,
+ } from './sideChatBridge';
+ 
+diff --git a/fusion-studio-client/src/screenshots/chatScreenshotCapture.ts b/fusion-studio-client/src/screenshots/chatScreenshotCapture.ts
+index 368fe82d..e99b3be6 100644
+--- a/fusion-studio-client/src/screenshots/chatScreenshotCapture.ts
++++ b/fusion-studio-client/src/screenshots/chatScreenshotCapture.ts
+@@ -5,6 +5,9 @@
+ 
+ import { useChatFileLinkStore } from '../state/chatFileLinkStore';
+ import { usePanelStore } from '../state/panelStore';
++import { getCurrentThreadGroupId, getThreadGroupPopulation } from '../state/slices/chatSurfaceSlice';
++import { getWorksurfaceEntry } from '../state/slices/worksurfaceSlice';
++import { readOpenSideChatPlacements } from '../lib/chat/side-chat-placements';
+ import { createSendToChatAttachment } from '../lib/chat-file-links/send-to-chat-reference-label';
+ import type { ChatLinkAttachment } from '../lib/chat-file-links/file-link-types';
+ import { showToast } from '../lib/toast';
+@@ -17,25 +20,63 @@ const OWNER_CHANGED_MESSAGE = 'Screenshot was not attached because the chat chan
+ export interface ScreenshotAttachmentOwner {
+   workspaceId: string;
+   threadId: string;
+-  /** Only the Main Chat owns screenshot attachment; Secondary Chat is retired. */
+-  surface: 'primary';
++  surface: 'primary' | 'side-tab';
++  selection?: { viewId: string | null; threadGroupId: string };
++  /** Connected composer lifetime; omitted for the global/header action. */
++  mount?: {
++    surfaceId: string;
++    selectionScope: 'view' | 'session';
++    isCurrent: () => boolean;
++  };
+ }
+ 
+ function currentPrimaryOwner(
+   state: ReturnType<typeof usePanelStore.getState>,
+ ): ScreenshotAttachmentOwner | null {
+-  if (!state.activeWorkspaceId || !state.currentThreadId) return null;
+-  return {
+-    workspaceId: state.activeWorkspaceId,
+-    threadId: state.currentThreadId,
+-    surface: 'primary',
+-  };
++  const workspaceId = state.activeWorkspaceId;
++  if (!workspaceId) return null;
++  const viewId = state.currentPanel;
++  const threadGroupId = getCurrentThreadGroupId(state, workspaceId, viewId);
++  const row = getThreadGroupPopulation(state, workspaceId, viewId)
++    .find((candidate) => candidate.threadGroupId === threadGroupId);
++  if (row?.threadId && row.threadGroupId) {
++    return { workspaceId, threadId: row.threadId, surface: 'primary',
++      selection: { viewId, threadGroupId: row.threadGroupId } };
++  }
++  if (!state.currentThreadId) return null;
++  return { workspaceId, threadId: state.currentThreadId, surface: 'primary' };
+ }
+ 
+-function isCurrentOwner(owner: ScreenshotAttachmentOwner): boolean {
+-  const state = usePanelStore.getState();
+-  return state.activeWorkspaceId === owner.workspaceId
+-    && state.currentThreadId === owner.threadId;
++function isCurrentOwner(
++  owner: ScreenshotAttachmentOwner,
++  state = usePanelStore.getState(),
++): boolean {
++  if (state.activeWorkspaceId !== owner.workspaceId) return false;
++  if (owner.mount && (!owner.mount.surfaceId || !owner.mount.isCurrent())) return false;
++  if (!owner.selection) {
++    // Legacy is an intentional fallback only while no qualified Main exists.
++    const current = currentPrimaryOwner(state);
++    return owner.surface === 'primary' && !current?.selection
++      && current?.threadId === owner.threadId;
++  }
++  const { viewId, threadGroupId } = owner.selection;
++  // Content component tabs stay mounted when WorkspacePanel becomes hidden.
++  // Their owning view must still be the shell's active view at every await.
++  if (viewId !== null && state.currentPanel !== viewId) return false;
++  if (owner.surface === 'side-tab') {
++    if (!viewId || !owner.mount) return false;
++    return readOpenSideChatPlacements(
++      getWorksurfaceEntry(state, owner.workspaceId, viewId, threadGroupId), viewId,
++    ).some(({ threadId, descriptor }) => threadId === owner.threadId
++      && descriptor.input.workspaceId === owner.workspaceId
++      && descriptor.input.threadGroupId === threadGroupId);
++  }
++  if (!owner.mount && state.currentPanel !== viewId) return false;
++  if (owner.mount?.selectionScope !== 'session'
++    && getCurrentThreadGroupId(state, owner.workspaceId, viewId) !== threadGroupId) return false;
++  const row = getThreadGroupPopulation(state, owner.workspaceId, viewId)
++    .find((candidate) => candidate.threadGroupId === threadGroupId);
++  return row?.threadId === owner.threadId;
+ }
+ 
+ function screenshotName(savedPath: string): string {
+@@ -106,13 +147,13 @@ export async function captureAndAttachScreenshot(
+ ): Promise<ChatLinkAttachment | null> {
+   const panelState = usePanelStore.getState();
+   // Snapshot the complete owner and socket from one state read before the
+-  // first await. Composer callers pass their exact Main Chat owner; global
++  // first await. Composer callers pass their exact mounted session owner; global
+   // capture defaults to the primary owner from this same read.
+   const owner = requestedOwner ?? currentPrimaryOwner(panelState);
+   const socket = panelState.ws;
+   const capturePage = window.electronAPI?.capturePage;
+ 
+-  if (!owner || !isCurrentOwner(owner)) {
++  if (!owner || !isCurrentOwner(owner, panelState)) {
+     showToast(OWNER_CHANGED_MESSAGE);
+     return null;
+   }
+diff --git a/fusion-studio-client/src/lib/chat/side-chat-placements.ts b/fusion-studio-client/src/lib/chat/side-chat-placements.ts
+new file mode 100644
+index 00000000..36090dbf
+--- /dev/null
++++ b/fusion-studio-client/src/lib/chat/side-chat-placements.ts
+@@ -0,0 +1,64 @@
++/** Read the existing service-managed open Side Chat placement lane. */
++import type { ComponentDescriptor } from '../../components/view-tabs/componentTabTypes';
++import type { ThreadWorksurfaceEntry } from '../worksurface/types';
++
++export const SIDE_CHAT_COMPONENT_TYPE = 'fusion.chat-surface';
++export const SIDE_CHAT_HOST = 'side-tab';
++
++export interface SideChatPlacement {
++  placementId: string;
++  threadId: string;
++  descriptor: ComponentDescriptor;
++}
++
++function isPlainRecord(value: unknown): value is Record<string, unknown> {
++  if (typeof value !== 'object' || value === null || Array.isArray(value)) return false;
++  const prototype = Object.getPrototypeOf(value);
++  return prototype === Object.prototype || prototype === null;
++}
++
++function boundedIdentity(value: unknown): value is string {
++  return typeof value === 'string' && value.length > 0 && value.trim() === value;
++}
++
++/**
++ * Validate one persisted managed-placement descriptor as a durable
++ * `fusion.chat-surface` Side Chat placement for the addressed view. A
++ * transient `surfaceId`, a mismatched view, or a non-side host is rejected and
++ * simply renders nothing.
++ */
++function parseSideChatDescriptor(value: unknown, viewId: string): {
++  threadId: string;
++  descriptor: ComponentDescriptor;
++} | null {
++  if (!isPlainRecord(value)) return null;
++  if (value.componentTypeId !== SIDE_CHAT_COMPONENT_TYPE) return null;
++  if (!boundedIdentity(value.componentInstanceId)) return null;
++  const input = value.input;
++  if (!isPlainRecord(input)) return null;
++  if (Object.prototype.hasOwnProperty.call(input, 'surfaceId')) return null;
++  if (!boundedIdentity(input.workspaceId)
++    || !boundedIdentity(input.threadGroupId)
++    || !boundedIdentity(input.threadId)) return null;
++  if (input.viewId !== viewId) return null;
++  if (input.host !== SIDE_CHAT_HOST) return null;
++  return { threadId: input.threadId, descriptor: value as unknown as ComponentDescriptor };
++}
++
++/** Open Side Chat placements for one entry, in stable insertion order. */
++export function readOpenSideChatPlacements(
++  entry: ThreadWorksurfaceEntry | null,
++  viewId: string,
++): SideChatPlacement[] {
++  const placements = entry?.managedComponentPlacements;
++  if (!isPlainRecord(placements)) return [];
++  const result: SideChatPlacement[] = [];
++  for (const [placementId, record] of Object.entries(placements)) {
++    if (!isPlainRecord(record) || record.disposition !== 'open') continue;
++    if (!boundedIdentity(placementId)) continue;
++    const parsed = parseSideChatDescriptor(record.descriptor, viewId);
++    if (!parsed) continue;
++    result.push({ placementId, threadId: parsed.threadId, descriptor: parsed.descriptor });
++  }
++  return result;
++}

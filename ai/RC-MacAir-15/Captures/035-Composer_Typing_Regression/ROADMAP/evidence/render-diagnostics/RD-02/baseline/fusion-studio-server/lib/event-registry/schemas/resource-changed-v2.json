@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fusion://schemas/projection/resource-changed/v2",
+  "title": "ResourceChangedV2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "type", "version", "projectionId", "sourceActivityId", "sourceEdgeId",
+    "workspaceId", "resourceKind", "changeKind", "relation", "panel", "path",
+    "occurredAt", "workspaceEpoch", "state", "snapshotId"
+  ],
+  "properties": {
+    "type": { "const": "resource:changed" },
+    "version": { "const": 2 },
+    "projectionId": { "$ref": "#/$defs/uuid" },
+    "sourceActivityId": { "$ref": "#/$defs/uuid" },
+    "sourceEdgeId": { "$ref": "#/$defs/uuid" },
+    "workspaceId": { "$ref": "#/$defs/boundedId" },
+    "resourceKind": { "const": "file" },
+    "changeKind": { "const": "state_observed" },
+    "relation": { "enum": ["first_observation", "changed", "unchanged"] },
+    "panel": { "const": "file-viewer" },
+    "path": { "$ref": "#/$defs/path" },
+    "occurredAt": { "type": "integer", "minimum": 0 },
+    "workspaceEpoch": { "$ref": "#/$defs/uuid" },
+    "checkpointEventId": { "$ref": "#/$defs/uuid" },
+    "checkpointObservationId": { "$ref": "#/$defs/uuid" },
+    "snapshotId": { "$ref": "#/$defs/uuid" },
+    "state": { "enum": ["bytes", "absent"] },
+    "resourceId": { "$ref": "#/$defs/uuid" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "relation": { "enum": ["first_observation", "changed"] } }, "required": ["relation"] },
+      "then": { "required": ["checkpointEventId", "checkpointObservationId"] },
+      "else": {
+        "not": { "anyOf": [ { "required": ["checkpointEventId"] }, { "required": ["checkpointObservationId"] } ] }
+      }
+    },
+    {
+      "if": { "properties": { "state": { "const": "bytes" } }, "required": ["state"] },
+      "then": { "required": ["resourceId"] },
+      "else": { "not": { "required": ["resourceId"] } }
+    }
+  ],
+  "$defs": {
+    "uuid": { "type": "string", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$" },
+    "boundedId": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "path": { "type": "string", "minLength": 1, "maxLength": 4096 }
+  }
+}

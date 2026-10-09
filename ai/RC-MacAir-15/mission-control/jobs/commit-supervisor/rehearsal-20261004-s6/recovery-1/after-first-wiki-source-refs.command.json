@@ -1,0 +1,30 @@
+{
+  "actor": "/root/s6_supervisor_recovery_1",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "command": [
+    "git",
+    "-C",
+    "/Users/rccurtrightjr./projects/fs-dev",
+    "for-each-ref",
+    "--format=%(refname)%00%(objectname)"
+  ],
+  "started": "2026-10-04T20:42:16.385336+00:00",
+  "finished": "2026-10-04T20:42:16.392052+00:00",
+  "exit_code": 0,
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "GIT_LITERAL_PATHSPECS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "inherited_git_variables_removed": "ALL GIT_* repository/index/object/alternate variables",
+  "stdout_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/after-first-wiki-source-refs.stdout",
+    "sha256": "2137fda44918eee605a707a4931a0f12f57125dbab104179ca490556d5e74976",
+    "size": 7435
+  },
+  "stderr_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/after-first-wiki-source-refs.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  }
+}

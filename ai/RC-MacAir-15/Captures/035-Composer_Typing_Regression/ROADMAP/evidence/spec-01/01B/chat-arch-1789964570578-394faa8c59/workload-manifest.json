@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "R9-INDICATOR-DISTINCTION",
+      "name": "R9 prompt-acceptance, finalization, activity, idle, and blocked-renderer indicator distinctions"
+    }
+  ],
+  "fixture": "fresh disposable profile, migrated fusion.db, fresh empty Capture workspace",
+  "adapter": "canonical deterministic OpenCode iterator at 20 text frames/second",
+  "scenarioInventory": "R1-R9 concrete IDs and later owning contracts in scenario-inventory.mjs"
+}

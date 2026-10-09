@@ -1,0 +1,250 @@
+#!/usr/bin/env python3
+"""Read-only rehearsal of integration review decisions, never agent gate proof."""
+
+import argparse
+import copy
+import json
+import sys
+
+
+LENSES = (
+    "Behavior & Verification", "Standards Compliance", "Integrations & Dependencies",
+    "Forward Compatibility", "Wiki Impact",
+)
+COMPONENTS = {"target", "sources", "owned", "configuration", "fixtures", "authority", "preparation"}
+MATERIAL = {"critical", "high", "material"}
+STATUSES = {"open", "repair-assigned", "repair-reported", "handoff-validated",
+            "resolved", "advisory", "not-supported", "deferred"}
+ISSUE_FIELDS = {"question", "checked_sources", "affected_behavior", "provider", "consumer",
+                "evidence", "unknowns", "resolver", "route", "release_condition",
+                "preserved_progress", "next_safe_action"}
+
+
+def require(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+def dependencies_current(dependencies, candidate):
+    """Compare covered components, allowing a bounded owned-path subset."""
+    if not dependencies or not set(dependencies) <= COMPONENTS:
+        return False
+    for component, value in dependencies.items():
+        if component == "owned":
+            if not isinstance(value, dict) or not value:
+                return False
+            if any(path not in candidate[component] or candidate[component][path] != state
+                   for path, state in value.items()):
+                return False
+        elif candidate[component] != value:
+            return False
+    return True
+
+
+def disposition_applies(event, finding, candidate, status):
+    return (event.get("status") == status and bool(event.get("validation_evidence"))
+            and event.get("dependencies") == candidate
+            and event.get("finding_evidence") == finding.get("evidence"))
+
+
+def rejection_applies(event, finding, candidate):
+    return finding.get("validated") is False and disposition_applies(event, finding, candidate, "not-supported")
+
+
+def assess(packet):
+    require(isinstance(packet, dict), "packet must be an object")
+    phase = packet.get("phase")
+    require(phase in {"initial", "worker-handoff", "final"}, "unknown phase")
+    assigned_paths = packet.get("assigned_paths", [])
+    if phase == "worker-handoff":
+        require(assigned_paths, "bounded handoff assignment paths required")
+    candidate = packet.get("candidate", {})
+    require(set(candidate) == COMPONENTS, "complete candidate identity required")
+    require(isinstance(candidate["owned"], dict) and candidate["owned"], "owned inventory required")
+    require(all(isinstance(state, dict) and state for state in candidate["owned"].values()),
+            "explicit owned byte/deletion identities required")
+    require(candidate["target"] and candidate["authority"] and candidate["preparation"],
+            "target, authority and recipe required")
+    findings = copy.deepcopy(packet.get("findings", []))
+    histories = copy.deepcopy(packet.get("dispositions", {}))
+    if phase == "worker-handoff":
+        for finding in findings:
+            history = histories.get(finding.get("id"), [])
+            if history and history[-1].get("status") == "repair-reported":
+                require(finding.get("assigned_paths"), "original finding assignment required")
+                assigned_paths = sorted(set(assigned_paths) | set(finding["assigned_paths"]))
+    out = {"state": "unmet-gate", "return": "REVIEW_COMPLETE",
+           "result": "insufficient-evidence", "candidate": candidate,
+           "invalidated": [], "unaffected": [], "gaps": [], "raw_reports": [],
+           "findings": findings, "dispositions": histories, "repair_packet": None,
+           "hold_packet": None, "dispatch_actions": [], "agent_gate_proof": False}
+
+    claims = {}
+    for claim in packet.get("evidence", []):
+        require(claim.get("id") and claim["id"] not in claims, "unique evidence IDs required")
+        claims[claim["id"]] = claim
+        valid = dependencies_current(claim.get("dependencies", {}), candidate)
+        valid = valid and bool(claim.get("raw_path"))
+        out["unaffected" if valid else "invalidated"].append(claim["id"])
+    checks = packet.get("required_checks")
+    require(isinstance(checks, list) and checks, "required check IDs must be explicit")
+    for check in checks:
+        if check not in out["unaffected"]:
+            out["gaps"].append("missing/current evidence: " + check)
+        elif claims[check].get("result") != "pass":
+            out["gaps"].append("failed check: " + check)
+
+    issue = packet.get("issue")
+    if issue:
+        require(issue.get("kind") in {"intent", "prerequisite", "gate"}, "unknown issue kind")
+        require(ISSUE_FIELDS <= set(issue), "complete bounded issue packet required")
+        require(all(issue[key] not in (None, "", []) for key in ISSUE_FIELDS - {"unknowns", "preserved_progress"}),
+                "issue must name evidence, resolver and observable release")
+
+    excluded = set(packet.get("participants", []))
+    orchestrator = packet.get("orchestrator_id")
+    require(orchestrator, "actual assigned manager/orchestrator ID required")
+    if phase == "final" and orchestrator in excluded:
+        out["gaps"].append("final orchestrator participated in earlier work")
+    reviewer_ids = set()
+    lenses = set()
+    current_finding_ids = set()
+    current_material = []
+    for review in packet.get("reviews", []):
+        identity = review.get("identity")
+        require(identity and identity not in reviewer_ids, "unique reviewer IDs required")
+        reviewer_ids.add(identity)
+        out["raw_reports"].append(copy.deepcopy(review))
+        independent = identity not in excluded and identity != orchestrator
+        independent = independent and all(review.get(key) is True for key in
+                                          ("terminal", "clean_room", "read_only", "root_inherited"))
+        current = dependencies_current(review.get("dependencies", {}), candidate)
+        if phase in {"initial", "final"}:
+            current = current and review.get("dependencies") == candidate
+        else:
+            current = current and set(assigned_paths) <= set(review.get("dependencies", {}).get("owned", {}))
+        if not independent or not current or not review.get("raw_path"):
+            out["gaps"].append("unavailable/stale/non-independent reviewer: " + identity)
+            continue
+        lenses.update(review.get("lenses", []))
+        if review.get("result") not in {"clean", "findings"}:
+            out["gaps"].append("insufficient review evidence: " + identity)
+        if review.get("result") == "findings" and not review.get("findings"):
+            out["gaps"].append("missing raw findings: " + identity)
+        findings.extend(copy.deepcopy(review.get("findings", [])))
+        current_material.extend(f for f in review.get("findings", []) if f.get("severity") in MATERIAL)
+        current_finding_ids.update(f.get("id") for f in current_material)
+    if not reviewer_ids:
+        out["gaps"].append("missing independent reviewer")
+    if phase in {"initial", "final"}:
+        out["gaps"].extend("missing lens: " + lens for lens in LENSES if lens not in lenses)
+
+    stable = {}
+    for finding in findings:
+        fid = finding.get("id")
+        require(fid, "stable finding ID required")
+        require(finding.get("severity") in MATERIAL | {"advisory"}, "separate severity required")
+        require(finding.get("confidence") in {"low", "medium", "high"}, "separate confidence required")
+        history = histories.setdefault(fid, [])
+        require(all(event.get("status") in STATUSES for event in history), "unknown disposition")
+        # Keep duplicate raw reports; route one root-cause ID with linked evidence.
+        rank = {"advisory": 0, "material": 1, "high": 2, "critical": 3}
+        if fid not in stable or rank[finding["severity"]] > rank[stable[fid]["severity"]]:
+            stable[fid] = finding
+        if not history:
+            history.append({"status": "advisory" if finding["severity"] == "advisory" else "open",
+                            "evidence": finding.get("evidence"), "actor": orchestrator})
+    out["findings"] = findings
+    material = []
+    supported_current = {}
+    for finding in current_material:
+        supported = all(finding.get(key) for key in ("authority", "path", "impact", "evidence"))
+        rejected = rejection_applies(histories[finding["id"]][-1], finding, candidate)
+        advisory = finding.get("validated") is False and disposition_applies(
+            histories[finding["id"]][-1], finding, candidate, "advisory")
+        if supported and finding.get("validated") is True:
+            fid = finding["id"]
+            if fid not in supported_current or rank[finding["severity"]] > rank[supported_current[fid]["severity"]]:
+                supported_current[fid] = finding
+        if not (supported and finding.get("validated") is True) and not rejected and not advisory:
+            out["gaps"].append("unvalidated current material claim: " + finding["id"])
+    # Current supported evidence drives routing; raw historical claims remain intact.
+    stable.update(supported_current)
+    for fid, finding in supported_current.items():
+        if histories[fid][-1]["status"] in {"not-supported", "resolved", "handoff-validated", "advisory"}:
+            histories[fid].append({"status": "open", "actor": orchestrator,
+                                   "reason": "fresh supported material evidence", "evidence": finding["evidence"],
+                                   "candidate": candidate})
+    for fid, finding in stable.items():
+        dimensions = all(finding.get(key) for key in ("authority", "path", "impact", "evidence"))
+        supported = dimensions and finding.get("validated") is True
+        status = histories[fid][-1]["status"]
+        if finding["severity"] == "advisory":
+            continue
+        if fid not in supported_current and disposition_applies(histories[fid][-1], finding, candidate, "advisory"):
+            continue
+        if rejection_applies(histories[fid][-1], finding, candidate):
+            continue
+        if not supported:
+            out["gaps"].append("unvalidated material claim: " + fid)
+            continue
+        handoff = claims.get(histories[fid][-1].get("handoff_id"), {})
+        accepted_handoff = handoff.get("id") in out["unaffected"] and handoff.get("kind") == "worker-handoff"
+        accepted_handoff = accepted_handoff and handoff.get("result") == "pass"
+        accepted_handoff = accepted_handoff and handoff.get("fresh_independent") is True
+        assignment = set(finding.get("assigned_paths", []))
+        handoff_paths = set(handoff.get("assigned_paths", []))
+        covered_paths = set(handoff.get("dependencies", {}).get("owned", {}))
+        accepted_handoff = accepted_handoff and bool(assignment) and finding["path"] in assignment
+        accepted_handoff = accepted_handoff and assignment <= handoff_paths <= covered_paths
+        if status in {"handoff-validated", "resolved"} and not accepted_handoff:
+            out["gaps"].append("missing current independent handoff: " + fid)
+        if phase == "worker-handoff" and status == "repair-reported" and fid not in current_finding_ids:
+            continue  # The clean assignment gate below may validate this repair.
+        if fid in current_finding_ids:
+            material.append(finding)
+            continue
+        if status not in {"handoff-validated", "resolved"}:
+            material.append(finding)
+    if material:
+        unavailable_gate = any(not gap.startswith("failed check:") for gap in out["gaps"])
+        out.update(state="unmet-gate" if unavailable_gate else "repair", result="findings")
+        out["repair_packet"] = {"finding_ids": [f["id"] for f in material],
+                                "findings": material, "manager": orchestrator,
+                                "candidate": candidate, "return": "READY_FOR_HANDOFF_REVIEW"}
+    elif not out["gaps"] and not issue:
+        out.update(state="review-complete", result="clean")
+        if phase == "worker-handoff":
+            out.update(state="handoff-validated", **{"return": "HANDOFF_VALIDATED"})
+            for fid in stable:
+                if histories[fid][-1]["status"] == "repair-reported":
+                    histories[fid].append({"status": "handoff-validated", "actor": orchestrator,
+                                           "reviewers": sorted(reviewer_ids), "candidate": candidate,
+                                           "assigned_paths": assigned_paths})
+    elif out["gaps"] and all(gap.startswith("failed check:") for gap in out["gaps"]):
+        out.update(state="repair", result="findings")
+        out["repair_packet"] = {"failed_checks": out["gaps"], "manager": orchestrator,
+                                "candidate": candidate, "return": "READY_FOR_HANDOFF_REVIEW"}
+    if issue:
+        out.update(state={"intent": "needs-owner", "prerequisite": "waiting-dependency",
+                          "gate": "unmet-gate"}[issue["kind"]], result="insufficient-evidence")
+        out["hold_packet"] = copy.deepcopy(issue)
+    return out
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--packet", required=True)
+    args = parser.parse_args()
+    try:
+        with open(args.packet, encoding="utf-8") as handle:
+            result = assess(json.load(handle))
+    except (ValueError, TypeError, KeyError, OSError) as error:
+        print(json.dumps({"state": "REFUSED", "reason": str(error), "dispatch_actions": []}))
+        return 2
+    print(json.dumps(result, indent=2, sort_keys=True))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,0 +1,31 @@
+{
+  "observed_at": "2026-10-07T16:27:17.774990+00:00",
+  "role": "Root read-only product inspection; coordinator-owned record",
+  "baseline": "Accepted M1 before M2 edits, HEAD a4a4262587a7f72f89f5b9b9c2f54878fe5381bb; retained M1 source seal",
+  "inspected": [
+    "mic/MicTrigger.tsx",
+    "mic/VoiceRecorder.tsx",
+    "mic/useAudioCapture.ts",
+    "clipboard/ClipboardTrigger.tsx",
+    "recent-files/RecentFilesTrigger.tsx",
+    "components/chat/useChatSessionActions.ts",
+    "components/chat/useChatMountInteractions.ts",
+    "components/chat/ChatDiagnosticDetails.tsx",
+    "components/chat/ChatComposerAddMenu.tsx",
+    "components/hover-icon-modal/useHoverIconModal.ts",
+    "components/hover-icon-modal/HoverIconModalParts.tsx",
+    "components/chat/ConnectedChatComposer.tsx",
+    "screenshots/chatScreenshotCapture.ts"
+  ],
+  "observations": [
+    "Original clipboard selected path awaits value before callback; top path awaits list then selected flow. Capture once before first source work, not at completion.",
+    "Original recent top awaits WS response before callback; row selection is synchronous. Source panel/socket independent of captured destination.",
+    "Original Ask AI resolves redacted report before insertion callback. Capture explicit originating composer at Ask AI start; View/Copy remain separate.",
+    "Original mic onstop transcribes even when stopRecording(true), and asynchronous permission/start/response can outlive closure. Operation cancellation must prevent material completion and bounded source resources cleanup without recording redesign.",
+    "Original stopRecording cleanup depends on callback identity; retained mount rerenders must not accidentally cancel a valid in-flight operation.",
+    "Hover modal container mounts children only when isOpen; synchronous onOpen can begin before VoiceRecorder automatic permission effect. Preserve opening ordering.",
+    "External material callbacks directly write attachments/use mutable input ref; replace with shared consumer. Ordinary editor typing/removal and independent Send remain existing owners.",
+    "Screenshot-only lifetime/fallback/direct-store contract intentionally remains M3; do not misreport complete convergence in M2."
+  ],
+  "classification": "Expected approved-scope repairs/inspection risks; no new owner decision. Communicated to builder; independent acceptance inspection will assess actual implementation."
+}

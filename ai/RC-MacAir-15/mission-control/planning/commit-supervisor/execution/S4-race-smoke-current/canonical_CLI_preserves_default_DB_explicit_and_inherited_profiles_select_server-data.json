@@ -1,0 +1,6 @@
+{
+  "test": "canonical CLI preserves default DB; explicit and inherited profiles select server-data",
+  "fixture": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-mc5aYU",
+  "injected": true,
+  "files": []
+}

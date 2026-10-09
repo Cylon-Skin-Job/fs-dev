@@ -1,0 +1,88 @@
+{
+  "runId": "chat-arch-1789963441425-63e04890b1",
+  "status": "passed",
+  "results": [
+    {
+      "id": "F1-PUBLIC-ROUTE",
+      "code": 0,
+      "signal": null,
+      "pid": 9716,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 4885
+    },
+    {
+      "id": "FAULT-SERVER-ADMISSION",
+      "code": 0,
+      "signal": null,
+      "pid": 10533,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 4363
+    },
+    {
+      "id": "FAULT-TRANSPORT-ACK",
+      "code": 0,
+      "signal": null,
+      "pid": 11193,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 4314
+    },
+    {
+      "id": "FAULT-SAVE-ACK",
+      "code": 0,
+      "signal": null,
+      "pid": 11833,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 4683
+    },
+    {
+      "id": "R1-F2-F3-COMPOSER",
+      "code": 0,
+      "signal": null,
+      "pid": 12512,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 73645
+    },
+    {
+      "id": "R2-NO-ENQUEUE",
+      "code": 0,
+      "signal": null,
+      "pid": 20810,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 6245
+    },
+    {
+      "id": "R5-R6-PUBLIC-ACTIONS",
+      "code": 0,
+      "signal": null,
+      "pid": 21785,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 14380
+    },
+    {
+      "id": "R1-R9-CONTRACT-INVENTORY",
+      "code": 0,
+      "signal": null,
+      "pid": 23656,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 416
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

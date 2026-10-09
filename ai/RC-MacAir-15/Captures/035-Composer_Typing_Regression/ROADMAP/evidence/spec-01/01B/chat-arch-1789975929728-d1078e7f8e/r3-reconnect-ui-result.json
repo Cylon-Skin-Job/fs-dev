@@ -1,0 +1,161 @@
+{
+  "caseId": "R3-RECONNECT-UI",
+  "status": "blocked",
+  "authenticatedShell": true,
+  "startupPanelRetry": 0,
+  "fixture": "F5",
+  "owner": "SPEC-02/02C",
+  "missingContracts": [
+    "request-id",
+    "receipt-persistence",
+    "automatic-reconnect-status-recovery"
+  ],
+  "assertionsEvaluated": false,
+  "statusEndpointFabricated": false,
+  "promptContentRecorded": false,
+  "promptSha256": "3104ce1f83cf65829ace38bb73b8a8dd13c996a68078a6d4ce74714605b9a7c4",
+  "transport": {
+    "beforeReconnect": {
+      "sentTypes": {
+        "shell-auth:proof": 1,
+        "office:palette_get": 1,
+        "state:get": 2,
+        "thread:list": 8,
+        "screenshot:list": 1,
+        "file_content_request": 53,
+        "set_panel": 2,
+        "file_tree_request": 65,
+        "state:set": 5,
+        "workspace:state_push": 1,
+        "thread:open-assistant": 1,
+        "thread:open": 1,
+        "state:worksurface_get": 1,
+        "thread:warm": 1,
+        "prompt": 1
+      },
+      "receivedTypes": {
+        "shell-auth:challenge": 1,
+        "connected": 1,
+        "workspace:init": 1,
+        "panel_config": 1,
+        "shell-auth:authenticated": 1,
+        "office:palette_state": 1,
+        "screenshot:list": 1,
+        "thread:list": 10,
+        "file_content_response": 53,
+        "state:result": 7,
+        "panel_changed": 2,
+        "file_tree_response": 65,
+        "error": 1,
+        "thread:created": 1,
+        "thread:opened": 2,
+        "wire_ready": 1,
+        "state:worksurface_result": 1,
+        "turn_begin": 1,
+        "thread:state_changed": 2,
+        "step_begin": 1,
+        "thinking": 1,
+        "tool_call": 1,
+        "tool_call_args": 1,
+        "tool_result": 1,
+        "status_update": 1,
+        "content": 3,
+        "turn_end": 1,
+        "exchange_metadata": 1,
+        "chat-turn:saved": 1
+      },
+      "promptRequestIds": [
+        null
+      ],
+      "acceptanceRequestIds": [],
+      "statusRequests": []
+    },
+    "afterReconnect": {
+      "sentTypes": {
+        "shell-auth:proof": 2,
+        "office:palette_get": 2,
+        "state:get": 2,
+        "thread:list": 9,
+        "screenshot:list": 2,
+        "file_content_request": 61,
+        "set_panel": 3,
+        "file_tree_request": 66,
+        "state:set": 5,
+        "workspace:state_push": 2,
+        "thread:open-assistant": 1,
+        "thread:open": 1,
+        "state:worksurface_get": 2,
+        "thread:warm": 1,
+        "prompt": 1
+      },
+      "receivedTypes": {
+        "shell-auth:challenge": 2,
+        "connected": 2,
+        "workspace:init": 2,
+        "panel_config": 2,
+        "shell-auth:authenticated": 2,
+        "office:palette_state": 1,
+        "screenshot:list": 1,
+        "thread:list": 10,
+        "file_content_response": 53,
+        "state:result": 7,
+        "panel_changed": 2,
+        "file_tree_response": 65,
+        "error": 1,
+        "thread:created": 1,
+        "thread:opened": 2,
+        "wire_ready": 1,
+        "state:worksurface_result": 1,
+        "turn_begin": 1,
+        "thread:state_changed": 2,
+        "step_begin": 1,
+        "thinking": 1,
+        "tool_call": 1,
+        "tool_call_args": 1,
+        "tool_result": 1,
+        "status_update": 1,
+        "content": 3,
+        "turn_end": 1,
+        "exchange_metadata": 1,
+        "chat-turn:saved": 1
+      },
+      "promptRequestIds": [
+        null
+      ],
+      "acceptanceRequestIds": [],
+      "statusRequests": []
+    }
+  },
+  "observations": {
+    "acceptanceAckDropped": true,
+    "requestIdAvailable": false,
+    "statusRequestAvailable": false,
+    "statusRecoveryAvailable": false,
+    "statusOutcome": null,
+    "statusTurnId": null,
+    "sameRendererUi": {
+      "userBubbleCount": 0,
+      "composerEnabled": false,
+      "visibleRecoveryStatusSeen": false
+    },
+    "userBubbleCount": 1,
+    "providerDispatchCount": 1,
+    "persistence": {
+      "exchangeCount": 1,
+      "activityCount": 1,
+      "activityTurnIds": [
+        "6d8e785a-d14c-4eb4-982b-f9612698fcb6"
+      ],
+      "receiptTables": [],
+      "receiptRows": 0
+    }
+  },
+  "violations": [],
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": null
+}

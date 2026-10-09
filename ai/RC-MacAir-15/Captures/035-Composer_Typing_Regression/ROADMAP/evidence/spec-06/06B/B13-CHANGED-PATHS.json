@@ -1,0 +1,52 @@
+[
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/native-activation-probe.mjs",
+    "before": null,
+    "after": "a2aa1ca33fa98be5b225d0b9a78076b25aaf7d8873bf1c201d6513c2f82d3003"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/native-activation-probe.test.mjs",
+    "before": null,
+    "after": "a4f0a0144d4802bff0769fa38836c70fe16ea501299b63797f3c39948f576d95"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/node-inspector-observation.mjs",
+    "before": null,
+    "after": "b77d690c2d2eeacdf2b6180e081e092d6248dad76c3bb1bd96f7d072cb454ed7"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/node-inspector-observation.test.mjs",
+    "before": null,
+    "after": "72917b827db8d5b5d400b03fd4feb5bde6be8dd04d4b2a05be4fd979c5e45c81"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/owner-foreground.mjs",
+    "before": "f6e4d0f3f6f4025773f46f3be02f7636180ba16251de3a5b44ee53ef2c4d79ac",
+    "after": "99bac92c725e0e0ff10bab336356f97003cacafce97a4bc8dac89ad1b5dce360"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/r1-sustained-electron.mjs",
+    "before": "02e0fe163e36e49eba3ebfb6bf3be5cee7f738cf0f6e6b9e81627f3617e27970",
+    "after": "adb079d17476c235b48e26380ada5c9a13cfbeb66cc5936f21b5cd33c08220fb"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/run.mjs",
+    "before": "fac2d56c611ac1ac3ab0580fbcd79aefd99e399f5cdc1b412e1322f37c3913f2",
+    "after": "a8fd99b7e2004de5d31c1bf300cff8a34f6f0a8577fdaf5a13cb97c961a06933"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/scenario-inventory.mjs",
+    "before": "a05124c8b8d554c29b2bc50492c29c25e4ceebbeddad53c3377bf0e2d2c9504f",
+    "after": "60b89c4dc956e3f4229c17e4c60d3da4bf18dc29b05fffee604dc297a012666f"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/watched-setup-trace.mjs",
+    "before": "7227a5bc5eb0164f65f89e8e939c3b3a15d34f02f7825ff4ebfd86b1df7e0f01",
+    "after": "bb8754cfae8de21f9fc462f6b3bc33c4bab685792a997cc98c9d4795cbf4e0f5"
+  },
+  {
+    "path": "fusion-studio-client/e2e/foreground-failure-evidence.spec.ts",
+    "before": null,
+    "after": "39a52d915e71681af4c3272e95a2069550a0317ec2e79bfcad5652bb13ff5576"
+  }
+]

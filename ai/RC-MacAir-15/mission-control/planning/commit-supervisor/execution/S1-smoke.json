@@ -1,0 +1,63 @@
+{
+  "command": "public capture/verify/guard/restore CLI via tests/snapshot_fixture.py",
+  "temporary_root": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/commit-supervisor-s1-smoke-mvgs3nx3",
+  "job": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/commit-supervisor-s1-smoke-mvgs3nx3/job",
+  "results": [
+    {
+      "result": "CAPTURED",
+      "manifest_sha256": "9123316530e5276c56fbb23163d3fa6af4b9138216cf24c7a83e14713a0fe273",
+      "paths": 10,
+      "target_commit": "d15792920731f85e45b743519d4af2b807d95a9c"
+    },
+    {
+      "result": "VERIFIED",
+      "payloads_valid": true,
+      "matches_checkpoint": true,
+      "status_equal": true,
+      "current_sha256": "7519ae2c14158f5e43326120a19cafc11f10a79b1b3d955e03dc0cfdc430651d",
+      "manifest_sha256": "9123316530e5276c56fbb23163d3fa6af4b9138216cf24c7a83e14713a0fe273"
+    },
+    {
+      "result": "VERIFIED",
+      "payloads_valid": true,
+      "matches_checkpoint": false,
+      "status_equal": false,
+      "current_sha256": "2bcf5a7c90970f42d584503aae87fc80679606345326fde744f0652b4d1db92f",
+      "manifest_sha256": "9123316530e5276c56fbb23163d3fa6af4b9138216cf24c7a83e14713a0fe273"
+    },
+    {
+      "result": "GUARDED",
+      "expected_sha256": "2bcf5a7c90970f42d584503aae87fc80679606345326fde744f0652b4d1db92f"
+    },
+    {
+      "result": "REFUSED",
+      "reason": "current-byte collision; nothing restored"
+    },
+    {
+      "result": "GUARDED",
+      "expected_sha256": "f3c4ec49d178eefade1811e6439fa6eed841e82549f1adfca986e8aad84252ab"
+    },
+    {
+      "result": "RESTORED",
+      "index_worktree_equal": true,
+      "status_equal": true,
+      "restored_sha256": "4de34d77ad76e53ee526e0f119968cee794c58bb999d40ebaae3c74819ae8757",
+      "manifest_sha256": "9123316530e5276c56fbb23163d3fa6af4b9138216cf24c7a83e14713a0fe273"
+    },
+    {
+      "result": "VERIFIED",
+      "payloads_valid": true,
+      "matches_checkpoint": true,
+      "status_equal": true,
+      "current_sha256": "559fda01d0526b5700425996ac3fd9697a22691641fa9d540a13eccc8ec822e0",
+      "manifest_sha256": "9123316530e5276c56fbb23163d3fa6af4b9138216cf24c7a83e14713a0fe273"
+    }
+  ],
+  "source_refs_index_preserved": true,
+  "source_worktree_sentinels_preserved": true,
+  "unrelated_candidate_index_worktree_preserved": true,
+  "collision_non_mutating": true,
+  "semantic_readback_equal": true,
+  "baseline_sha256": "4de34d77ad76e53ee526e0f119968cee794c58bb999d40ebaae3c74819ae8757",
+  "runtime": "none; normal/Alpha process/profile untouched"
+}

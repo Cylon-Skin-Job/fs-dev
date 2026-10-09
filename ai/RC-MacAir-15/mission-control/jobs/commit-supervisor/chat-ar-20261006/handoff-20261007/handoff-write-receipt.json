@@ -1,0 +1,44 @@
+{
+  "at": "2026-10-07T09:11:36.751942+00:00",
+  "author": "Codex side chat (ephemeral), /root",
+  "owner_request": "Create a handoff.",
+  "handoff": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/HANDOFF-COMPLETED-BUILD-2026-10-07.md",
+  "published_commit": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "published_tree": "1c80f83c6c4b2b61e42c4dbb988c1f942b672ade",
+  "verified_seals": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/final-review-pass-02/seal.json",
+      "sha256": "2088562ddcb0f8c2aa6b6b3dcbb2ed3d78e105033ebcdd31a21d49a033aff03b",
+      "members": 14
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/publication-restart-20261007/completion-seal.json",
+      "sha256": "69650c1811bfbe9ab9d1eb146c8654e59ae17782f0b8f9c4abd75b5456121a52",
+      "members": 34
+    }
+  ],
+  "changed_documents": [
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/HANDOFF-COMPLETED-BUILD-2026-10-07.md",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/TICKET.md",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/BULLETIN.md",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/index.json"
+  ],
+  "preimages": {
+    "TICKET.md": "adddc01c66bbfb4e6b7db9a8b261b66f54457c523e55c5624b5a6ba2a5c35084",
+    "BULLETIN.md": "d358ffef0dbb44288ca1b6a127fb3acaa741e1e82bb538654074e166a28fabcf",
+    "index.json": "859b232ddbf3acd72981886ede6f01d1c8000cc4c0d8a0b16f5ce575084417c3",
+    "CHECKPOINT.json": "67dd4dc6fbba88712a0b61f95e79d6656f2fd5e34d65425d5f7f7e689f90a897"
+  },
+  "resulting_files": {
+    "HANDOFF-COMPLETED-BUILD-2026-10-07.md": "a4b4895940f72e3352446770625023e7c925a1369fb5f611dd03b478d742ee89",
+    "TICKET.md": "57cc051eeb4eb589042a1e30214a0da8dae6cc6091cf03593f3f7d9c49140faf",
+    "BULLETIN.md": "4ec2e40f69f8a5d810755bcb14cc97478becce02f86f43facefe9867ecae8be0",
+    "index.json": "197f69427a38a1c49ea42911565ef08a39a0d75e849ceff9b38492bb035ddf2c",
+    "CHECKPOINT.json": "67dd4dc6fbba88712a0b61f95e79d6656f2fd5e34d65425d5f7f7e689f90a897"
+  },
+  "launchpad_main_registry_preserved": true,
+  "source_git_head_and_index_preserved": true,
+  "new_commit_push_restart_or_dispatch": false,
+  "support_index_static": true,
+  "validation_pending": true
+}

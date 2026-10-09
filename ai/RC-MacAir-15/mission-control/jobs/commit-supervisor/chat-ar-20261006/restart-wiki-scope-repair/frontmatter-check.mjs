@@ -1,0 +1,15 @@
+const fs=require('fs'), cp=require('child_process'),crypto=require('crypto');
+const matter=require('/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter');
+const repo='/private/tmp/chat-ar-integration-r6pe5gmi/candidate';
+const source='/Users/rccurtrightjr./projects/fs-dev';
+const path='ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md';
+const git=(...a)=>cp.execFileSync('git',['--no-optional-locks','-C',repo,...a]);
+const sha=b=>crypto.createHash('sha256').update(b).digest('hex');
+const current=fs.readFileSync(repo+'/'+path), target=git('show','3356e1b73cc5d44028eac5baa02fd542a8bbc385:'+path), original=fs.readFileSync(source+'/'+path);
+const a=matter(current.toString()),b=matter(target.toString()),o=matter(original.toString());
+const script=git('show',':restart-fusion.sh').toString();
+const parent=fs.readFileSync(repo+'/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md','utf8');
+const support=['scripts/fusion-restart.mjs','scripts/fusion-restart-target.mjs','scripts/fusion-restart-processes.mjs','scripts/fusion-restart-probe.mjs'];
+const checks={current_equals_target:current.equals(target),source_equals_preimage:sha(original)==='ccf7a76b4201ce3f5a95b29816f72f85cf1506b6f94172a581c100170dd4b94e',same_name:a.data.name===o.data.name,same_description:a.data.description===o.data.description,parent_exact_link_present:parent.includes('[Fusion Restart](004-Fusion_Restart/PAGE.md) - '+a.data.description),original_target_metadata_preserved:JSON.stringify(a.data)===JSON.stringify(b.data),no_new_timestamp:a.data.metadata['last-modified']===undefined,no_new_helper_refs:a.data.metadata['source-files'].length===0,no_unsupported_current_claims:!/(--user-data|CDP|verified owned process tree|selected profile)/.test(a.content),index_restart_matches_target:git('show',':restart-fusion.sh').equals(git('show','3356e1b73cc5d44028eac5baa02fd542a8bbc385:restart-fusion.sh')),helpers_remain_excluded_from_index:support.every(p=>git('ls-files','--stage','--',p).length===0),script_launchservices:script.includes('open -n "$ELECTRON_APP" --args "$ELECTRON_MAIN"'),script_build:script.includes('npm run build'),script_port_file_wait:script.includes('SERVER_READY=$(cat "$ELECTRON_PORT_FILE"'),script_listener_wait:script.includes('lsof -i:"$SERVER_READY"'),script_live_url:script.includes('Server URL:   http://localhost:$SERVER_READY')};
+console.log(JSON.stringify({checks,current_frontmatter:a.data,current_sha256:sha(current),target_sha256:sha(target),source_sha256:sha(original),script_index_sha256:sha(Buffer.from(script)),article_index_sha256:sha(git('show',':'+path)),article_index_entry:git('ls-files','--stage','--',path).toString().trim(),parser_path:require.resolve('/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter'),parser_sha256:sha(fs.readFileSync(require.resolve('/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter')))},null,2));
+if(Object.values(checks).some(v=>v!==true)) process.exit(1);

@@ -1,0 +1,38 @@
+{
+  "runId": "chat-arch-1789968197939-2e3e5b4bbf",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R3-LOST-ACK-STATUS",
+      "code": 0,
+      "signal": null,
+      "pid": 70650,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 6946
+    },
+    {
+      "id": "R4-DISTINCT-ATTEMPTS",
+      "code": 0,
+      "signal": null,
+      "pid": 71254,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 10987
+    },
+    {
+      "id": "R4-DUPLICATE-MISMATCH-LATE",
+      "code": 0,
+      "signal": null,
+      "pid": 72014,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 29514
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

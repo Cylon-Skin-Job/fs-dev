@@ -1,0 +1,44 @@
+{
+  "at": "2026-10-09T01:03:49.913555+00:00",
+  "checks": [
+    {
+      "receipt": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/server-full-01.json",
+      "receipt_sha256": "c9dfbedc3377809ead671f4a31774f0482ddcecdeef70ede475307b71286dabb",
+      "exit_code": 0,
+      "dependency_count": 19,
+      "dependency_mismatches": [
+        "fusion-studio-server/native/secure-file-observer/build/Release/secure_file_observer.node",
+        "node",
+        "python3",
+        "npm"
+      ],
+      "interpretation": "Retained dated evidence only; not a fresh execution."
+    },
+    {
+      "receipt": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/server-focused-01.json",
+      "receipt_sha256": "4f6f8451b6e191bef700329ed6b35a4b0ce9efd678b71b280f3c550ed41879c2",
+      "exit_code": 0,
+      "dependency_count": 19,
+      "dependency_mismatches": [
+        "fusion-studio-server/native/secure-file-observer/build/Release/secure_file_observer.node",
+        "node",
+        "python3",
+        "npm"
+      ],
+      "interpretation": "Retained dated evidence only; not a fresh execution."
+    },
+    {
+      "receipt": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/native-01.json",
+      "receipt_sha256": "d0005a37e366321f0b7a986f4d64e7c4c1e7ac87c9a7ab25b832a806331294cf",
+      "exit_code": 0,
+      "dependency_count": 19,
+      "dependency_mismatches": [
+        "fusion-studio-server/native/secure-file-observer/build/Release/secure_file_observer.node",
+        "node",
+        "python3",
+        "npm"
+      ],
+      "interpretation": "Retained dated evidence only; not a fresh execution."
+    }
+  ]
+}

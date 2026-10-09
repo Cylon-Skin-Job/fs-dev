@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-04T17:05:36.584825+00:00",
+  "actor": "/root",
+  "scope": "Read-only current-source inspection, not a replacement domain gate",
+  "raw_derivative_exact": true,
+  "commands": 4,
+  "current_review_dependencies_match": {
+    "candidate": 17,
+    "authority": 54,
+    "configuration": 1
+  },
+  "recovery_union_manifest_sha256": "5227a7a7d38dddec138aff13c16f2ee8a22bda1a53657f203a47d80857827617",
+  "owned_leaves": 130,
+  "version_creation_after_capture": "Actual capture/verify command receipts precede fresh Wiki leaf dispatch"
+}

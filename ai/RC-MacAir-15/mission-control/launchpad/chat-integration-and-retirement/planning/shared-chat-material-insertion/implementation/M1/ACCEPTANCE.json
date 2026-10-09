@@ -1,0 +1,28 @@
+{
+  "status": "M1_ACCEPTED",
+  "scope": "Approved M1 only; downstream source adoption and final acceptance remain",
+  "accepted_at": "2026-10-07T16:21:05.852907+00:00",
+  "owner_authority": "OWNER-APPROVAL.md unchanged exact candidate",
+  "HEAD": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "source_packet": "orchestrator-checks/acceptance-inputs-01.json",
+  "source_packet_sha256": "31da2489becd69dde160bdb00a7aeebe367fd3653d8811a0f527dd288f1fbf50",
+  "builder": "/root/m1_builder",
+  "builder_handoff": "HANDOFF.json",
+  "builder_review": "/root/m1_builder/builder_review_01 CLEAN",
+  "orchestrator": "/root",
+  "inspection": "orchestrator-checks/inspection-01.json plus receipt correction addendum",
+  "checks": [
+    "orchestrator-checks/build-02.json",
+    "orchestrator-checks/renderer-02.json"
+  ],
+  "evidence_addendum": "orchestrator-checks/acceptance-evidence-addendum-01.json",
+  "deviations": "orchestrator-checks/deviations-01.json M1-D01\u2013D06 accepted",
+  "acceptance_reviewer": "/root/m1_acceptance_review_01",
+  "acceptance_report": "ORCHESTRATOR-ACCEPTANCE-REVIEW-01.md",
+  "acceptance_report_sha256": "cc950627d83fb3c4a432fd282342af3d0865355dfc5a210e6d72fbfd1762d3f7",
+  "terminal_lifecycle": "builder and both reviewers completed; close_agent unavailable",
+  "downstream_impact": "Compatible shared seam; M2/M3 preserve activation/authority/stores and regression suite",
+  "next_safe_action": "Fresh M2 builder, no renewed owner approval required within approved SPEC",
+  "whole_SPEC_owner_acceptance": "pending",
+  "publication": "not authorized"
+}

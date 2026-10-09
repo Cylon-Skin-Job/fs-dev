@@ -1,0 +1,19 @@
+{
+  "at": "2026-09-27T06:39:53.349994+00:00",
+  "sourceCount": 1964,
+  "sourceSha256": "4e4aab06f4da76e16aa50e02bffd8a3b98d8472d28528559735477ab6b88e9c4",
+  "buildCount": 200,
+  "buildSha256": "b070d633863382e48ea2f6d677a92cfe65b9a4dea79caa87975711c109c70b03",
+  "configCount": 2,
+  "configSha256": "7da4458133f72ba943d05562750c30b8237cb48c53ec38fc3fb5956376196510",
+  "changedPaths": [
+    "fusion-studio-client/e2e/chat-architecture/human-session-launch.mjs",
+    "fusion-studio-client/e2e/chat-architecture/human-session-observer.mjs",
+    "fusion-studio-client/e2e/chat-architecture/human-session-ownership.mjs",
+    "fusion-studio-client/e2e/chat-architecture/human-session-recording.mjs",
+    "fusion-studio-client/e2e/chat-architecture/human-session.mjs",
+    "fusion-studio-client/e2e/chat-architecture/human-session.test.mjs",
+    "fusion-studio-client/e2e/human-session-observer.spec.ts"
+  ],
+  "predecessors": "all seven files new; existing B20 source unchanged"
+}

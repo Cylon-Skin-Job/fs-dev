@@ -1,0 +1,7 @@
+{
+  "acceptedSourceManifest": "RD-02/root-source.json",
+  "acceptedSourceManifestSha256": "0a7dc263147fac3a29de1bd528cc940bf6cb44e720e147086a39b7e14d1c0ad7",
+  "acceptedSourceEntriesPresentInRuntimeStage": 1672,
+  "mismatches": [],
+  "note": "Client e2e launch/test support and other nonruntime inventory paths are not staged; runtime source directly compared to accepted hashes. All200 accepted build entries separately verified."
+}

@@ -1,0 +1,33 @@
+{
+  "at": "2026-10-05T03:21:12.390022+00:00",
+  "actor": "/root",
+  "result": "S6_ACCEPTED",
+  "builder": "/root/s6_builder",
+  "builder_terminal": "S6-root-builder-terminal.json",
+  "fresh_own_reviewer": "/root/s6_builder/s6_full_review_1",
+  "fresh_root_reviewer": "/root/s6_acceptance_1",
+  "root_review": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-acceptance-review-1.md",
+    "sha256": "6434b6a9192b87b4ee084394fa0de3077d12f07a1a4710bedcf57c47af67ea38",
+    "native_terminal": true,
+    "result": "CLEAN"
+  },
+  "current_manifest_sha256": "5a3cd688a30036095af7da276907543961331fe3a11bd7fa2db89486d98357aa",
+  "original_criteria": 15,
+  "refined_criteria": 19,
+  "S6_deviation_contexts": 91,
+  "all_classified": true,
+  "material_findings": [],
+  "advisory": "Restart Wiki unwrapped paragraph preference; current hard wrapping has no factual/observable acceptance impact; optional future prose normalization",
+  "inspection": [
+    "S6-root-current-frozen-inputs.json",
+    "S6-root-current-python-dependency-readback.json",
+    "S6-root-closeout-readback.json",
+    "S6-root-recovery-inspection.json",
+    "S6-root-builder-terminal.json"
+  ],
+  "remaining": "Full current suite, final preservation/static checks and fresh whole SPEC integration gate; owner setup acceptance afterward",
+  "current_ready": false,
+  "protected_live_DB_bytes": "volatile; identity preserved; no copy/restore",
+  "historical_closure": "Unavailable API; actual native terminals observed"
+}

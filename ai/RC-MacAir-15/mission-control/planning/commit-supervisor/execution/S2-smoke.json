@@ -1,0 +1,124 @@
+{
+  "label": "synthetic public CLI rehearsal, not actual agent gate proof",
+  "commands": [
+    {
+      "name": "initial-material",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke/initial-material.json"
+      ],
+      "packet_sha256": "6e2e4d9482297c9e0fbb740d2647658ae00e8ce0f20da0e6f7b6045eaee30c2a",
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke/initial-material-result.json",
+      "exit_code": 0,
+      "state": "repair",
+      "return": "REVIEW_COMPLETE",
+      "result": "findings",
+      "agent_gate_proof": false
+    },
+    {
+      "name": "fresh-worker-handoff",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke/fresh-worker-handoff.json"
+      ],
+      "packet_sha256": "321ff8a3308fa84431c440a6949a202a5f49bf00d08d08d5c2402775d514065b",
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke/fresh-worker-handoff-result.json",
+      "exit_code": 0,
+      "state": "handoff-validated",
+      "return": "HANDOFF_VALIDATED",
+      "result": "clean",
+      "agent_gate_proof": false
+    },
+    {
+      "name": "fresh-final",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke/fresh-final.json"
+      ],
+      "packet_sha256": "3dc1a4843d0b33cf06666b453a0cf58f5f20d364d5803fe7818911bdfb59ed0e",
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke/fresh-final-result.json",
+      "exit_code": 0,
+      "state": "review-complete",
+      "return": "REVIEW_COMPLETE",
+      "result": "clean",
+      "agent_gate_proof": false
+    },
+    {
+      "name": "target-drift",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke/target-drift.json"
+      ],
+      "packet_sha256": "b9e525a18eaf556f2677733203a073f0ebf879e7dfd67e21590833def5a7460d",
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke/target-drift-result.json",
+      "exit_code": 0,
+      "state": "unmet-gate",
+      "return": "REVIEW_COMPLETE",
+      "result": "insufficient-evidence",
+      "agent_gate_proof": false
+    },
+    {
+      "name": "missing-reviewer",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke/missing-reviewer.json"
+      ],
+      "packet_sha256": "a5025be4844c2d6022cb54c282346dc474c7791570ccd97614355a604c8452a9",
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke/missing-reviewer-result.json",
+      "exit_code": 0,
+      "state": "unmet-gate",
+      "return": "REVIEW_COMPLETE",
+      "result": "insufficient-evidence",
+      "agent_gate_proof": false
+    },
+    {
+      "name": "missing-intent",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke/missing-intent.json"
+      ],
+      "packet_sha256": "309d3d4622d5b8ecc622e6f0c22d973151bfee39c28dfc4979eb2fd885214a40",
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke/missing-intent-result.json",
+      "exit_code": 0,
+      "state": "needs-owner",
+      "return": "REVIEW_COMPLETE",
+      "result": "insufficient-evidence",
+      "agent_gate_proof": false
+    },
+    {
+      "name": "missing-prerequisite",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke/missing-prerequisite.json"
+      ],
+      "packet_sha256": "3d7ee4d09a008e1d238b91a0380e06959d32a8b2a8e02c4fbbdddfbdd950f371",
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke/missing-prerequisite-result.json",
+      "exit_code": 0,
+      "state": "waiting-dependency",
+      "return": "REVIEW_COMPLETE",
+      "result": "insufficient-evidence",
+      "agent_gate_proof": false
+    }
+  ]
+}

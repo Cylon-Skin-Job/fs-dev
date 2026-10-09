@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "F1-PUBLIC-ROUTE",
+      "name": "fresh empty Capture create/open/type/Send/Stop and DB/UI readback"
+    },
+    {
+      "id": "FAULT-SERVER-ADMISSION",
+      "name": "authenticated public-route server admission throw remains distinct from transport"
+    },
+    {
+      "id": "FAULT-TRANSPORT-ACK",
+      "name": "authenticated public-route message acceptance with dropped outbound ACK"
+    }
+  ],
+  "fixture": "fresh disposable profile, migrated fusion.db, fresh empty Capture workspace",
+  "adapter": "canonical deterministic OpenCode iterator at 20 text frames/second"
+}

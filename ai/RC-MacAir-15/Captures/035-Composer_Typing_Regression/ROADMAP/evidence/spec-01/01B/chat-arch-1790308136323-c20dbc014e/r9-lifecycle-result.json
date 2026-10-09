@@ -1,0 +1,13 @@
+{
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": {
+    "name": "TimeoutError",
+    "message": "page.waitForFunction: Timeout 15000ms exceeded.",
+    "stack": "page.waitForFunction: Timeout 15000ms exceeded.\n    at /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r9-electron.mjs:125:22"
+  }
+}

@@ -1,0 +1,150 @@
+--- pre-final-repair/fusion-studio-client/e2e/chat-architecture/server-focused-regressions.mjs
++++ fusion-studio-client/e2e/chat-architecture/server-focused-regressions.mjs
+@@ -30,6 +30,7 @@
+   'test/thread/thread-runtime-controller.test.js',
+   'test/thread/stop-timeout-recovery.test.js',
+   'test/thread/exited-drain-retirement.test.js',
++  'test/thread/provider-termination.test.js',
+   'test/thread/thread-activation-lifecycle.test.js',
+   'test/thread/thread-crud-active-turn-reconnect.test.js',
+   'test/thread/thread-group-lifecycle.test.js',
+--- pre-final-repair/fusion-studio-server/lib/thread/provider-termination.js
++++ fusion-studio-server/lib/thread/provider-termination.js
+@@ -92,6 +92,8 @@
+   } catch (_graceError) {
+     try { wireProcess?.kill?.('SIGKILL'); } catch (_signalError) {}
+     await awaitBoundedProviderTermination(terminationPromise(), forceMs);
++  } finally {
++    eventWaiter?.cancel();
+   }
+ }
+ 
+--- pre-final-repair/fusion-studio-server/test/thread/provider-termination.test.js
++++ fusion-studio-server/test/thread/provider-termination.test.js
+@@ -0,0 +1,126 @@
++'use strict';
++
++const { EventEmitter } = require('node:events');
++const { SessionManager } = require('../../lib/thread/session-manager');
++const { SessionLifecycle } = require('../../lib/thread/session-lifecycle');
++const { terminateProviderProcessAndWait } = require('../../lib/thread/provider-termination');
++const { threadRuntimeManager } = require('../../lib/thread/thread-runtime-manager');
++const fixtures = [];
++const flush = async () => { for (let i = 0; i < 12; i++) await Promise.resolve(); };
++beforeEach(() => jest.useFakeTimers());
++afterEach(() => {
++  for (const f of fixtures.splice(0)) {
++    for (const timer of f.sessions.timeouts.values()) clearTimeout(timer);
++    f.sessions.timeouts.clear(); f.sessions.activeSessions.clear();
++  }
++  threadRuntimeManager.runtimes.clear(); jest.useRealTimers();
++});
++
++function eventedWire() {
++  const wire = new EventEmitter(); wire.killed = false;
++  wire.kill = jest.fn(() => { wire.killed = true; return true; });
++  const unrelatedExit = jest.fn(); const unrelatedClose = jest.fn();
++  wire.on('exit', unrelatedExit); wire.on('close', unrelatedClose);
++  return { wire, unrelatedExit, unrelatedClose };
++}
++
++async function lifecycleFixture() {
++  const sessions = new SessionManager({ providerCloseGraceMs: 10, providerCloseForceMs: 10 });
++  const index = { list: jest.fn(async () => []), activate: jest.fn(async () => {}),
++    markResumed: jest.fn(async () => {}), suspend: jest.fn(async () => {}) };
++  const lifecycle = new SessionLifecycle({ workspaceId: 'termination-fixture',
++    projectRoot: '/tmp/termination-fixture', index, sessionManager: sessions, mirror: {} });
++  const f = { sessions, index, lifecycle, ...eventedWire() };
++  f.owner = await lifecycle.openSession('thread', f.wire, {}, { workspaceEpoch: 'epoch' });
++  fixtures.push(f); return f;
++}
++
++function expectListeners(wire, before) {
++  expect(wire.listeners('exit')).toEqual(before.exit);
++  expect(wire.listeners('close')).toEqual(before.close);
++}
++const listeners = wire => ({ exit: wire.listeners('exit'), close: wire.listeners('close') });
++
++test('repeated real session close timeouts dispose only their waiter and preserve late lifecycle exit recovery', async () => {
++  const f = await lifecycleFixture(); const before = listeners(f.wire);
++  expect(before.exit).toHaveLength(2); // Unrelated listener plus real lifecycle observer.
++  expect(before.close).toHaveLength(1);
++  for (let attempt = 0; attempt < 3; attempt++) {
++    const closing = expect(f.sessions.closeSessionAndWait('thread'))
++      .rejects.toThrow('Provider process did not close during workspace retirement');
++    await jest.advanceTimersByTimeAsync(21); await closing;
++    expectListeners(f.wire, before);
++    expect(f.sessions.getSession('thread')).toBe(f.owner);
++    expect(f.owner.state).toBe('stopping');
++    expect(f.owner.closePromise).toBeUndefined();
++    expect(f.sessions.timeouts.size).toBe(0);
++    expect(jest.getTimerCount()).toBe(0);
++    expect(f.index.suspend).not.toHaveBeenCalled();
++  }
++  const signalCount = f.wire.kill.mock.calls.length;
++  f.wire.exitCode = 0; f.wire.emit('exit', 0, null);
++  await f.owner.exitReconciliation;
++  expect(f.sessions.getSession('thread')).toBeUndefined();
++  expect(f.index.suspend).toHaveBeenCalledTimes(1);
++  expect(f.unrelatedExit).toHaveBeenCalledTimes(1);
++  expect(f.wire.listeners('exit')).toEqual([f.unrelatedExit]);
++  expect(f.wire.listeners('close')).toEqual([f.unrelatedClose]);
++  expect(f.wire.kill).toHaveBeenCalledTimes(signalCount);
++  f.wire.emit('close', 0, null); expect(f.unrelatedClose).toHaveBeenCalledTimes(1);
++});
++
++test.each(['SIGTERM', 'SIGKILL'])('successful %s termination disposes waiter without removing unrelated listeners', async closeSignal => {
++  const { wire, unrelatedExit, unrelatedClose } = eventedWire(); const before = listeners(wire);
++  wire.kill.mockImplementation(signal => {
++    wire.killed = true;
++    if (signal === closeSignal) queueMicrotask(() => wire.emit('close', null, signal));
++    return true;
++  });
++  const terminating = terminateProviderProcessAndWait(wire, 10, 10);
++  await jest.advanceTimersByTimeAsync(11); await terminating;
++  expect(wire.kill.mock.calls.map(([signal]) => signal))
++    .toEqual(closeSignal === 'SIGTERM' ? ['SIGTERM'] : ['SIGTERM', 'SIGKILL']);
++  expectListeners(wire, before);
++  expect(unrelatedClose).toHaveBeenCalledTimes(1);
++  expect(unrelatedExit).not.toHaveBeenCalled();
++  expect(jest.getTimerCount()).toBe(0);
++});
++
++test('custom termination promise remains authoritative over early process events and owns no event waiter', async () => {
++  const { wire } = eventedWire(); const before = listeners(wire);
++  let complete; wire._waitForTermination = jest.fn(() => new Promise(resolve => { complete = resolve; }));
++  let done = false;
++  const terminating = terminateProviderProcessAndWait(wire, 10, 10).then(() => { done = true; });
++  wire.emit('exit', 0, null); await flush();
++  expect(done).toBe(false); expectListeners(wire, before);
++  complete(); await terminating;
++  expect(done).toBe(true); expectListeners(wire, before);
++  expect(wire.kill).toHaveBeenCalledTimes(1);
++  expect(jest.getTimerCount()).toBe(0);
++});
++
++test('rejected custom termination contract preserves its failure and all external listeners', async () => {
++  const { wire } = eventedWire(); const before = listeners(wire);
++  wire._waitForTermination = jest.fn(async () => { throw new Error('custom termination failed'); });
++  await expect(terminateProviderProcessAndWait(wire, 10, 10)).rejects.toThrow('custom termination failed');
++  expect(wire.kill.mock.calls.map(([signal]) => signal)).toEqual(['SIGTERM', 'SIGKILL']);
++  expectListeners(wire, before); expect(jest.getTimerCount()).toBe(0);
++});
++
++test('failed old termination cleans its waiter without releasing or signalling a replacement provider', async () => {
++  const f = await lifecycleFixture(); const before = listeners(f.wire);
++  const closing = expect(f.sessions.closeSessionAndWait('thread')).rejects.toThrow('Provider process did not close');
++  const replacementWire = eventedWire().wire;
++  const replacement = { ...f.owner, wireProcess: replacementWire, workspaceEpoch: 'replacement', state: 'active' };
++  delete replacement.closePromise;
++  f.sessions.activeSessions.set('thread', replacement);
++  await jest.advanceTimersByTimeAsync(21); await closing;
++  expectListeners(f.wire, before);
++  expect(f.sessions.getSession('thread')).toBe(replacement);
++  expect(replacementWire.kill).not.toHaveBeenCalled();
++  f.wire.exitCode = 0; f.wire.emit('exit', 0, null); await flush();
++  expect(f.sessions.getSession('thread')).toBe(replacement);
++  expect(replacement.state).toBe('active');
++  expect(f.index.suspend).not.toHaveBeenCalled();
++  expect(replacementWire.kill).not.toHaveBeenCalled();
++});

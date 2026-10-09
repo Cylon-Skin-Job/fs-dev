@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "kind": "ACTUAL_SUPERVISOR_PROVIDER_HOLD",
+  "scope": "REHEARSAL_ONLY",
+  "at": "2026-10-04T13:40:03.091709+00:00",
+  "actor": "/root/s6_supervisor_provider_1",
+  "manager_report_recipient": "/root",
+  "job": "rehearsal-20261004-s6",
+  "spec": "SPEC-COMMIT-SUPERVISOR-01:S6",
+  "state": "waiting-dependency",
+  "issue_id": "FIXTURE_PROVIDER_01",
+  "provider": "fixture-sample-provider",
+  "consumer": "checklist-view",
+  "resolver": "/root",
+  "checked_sources": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/authority.md",
+      "sha256": "d56710db1edba2ba6ef8798975fb1fb4808a301b0ea2e46bcb81d6645e251010"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-fixture-authority-approval.json",
+      "sha256": "33ac9507b74ff700dc7f25e16a0bc19eb903082e96d51d049f11365afaabeb8d"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/test-controller-controls.json",
+      "sha256": "724e5234bc2834ec67f5f1e268c5d6a11a057607e867622281371f3bca8cb483"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-supervisor-provider-assignment.md",
+      "sha256": "fc32e46aee5eecf9761228df9053f5090af4c6c398fec453ed2e17c08142b13b"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-preparation-acceptance.json",
+      "sha256": "4989cf4bf4714b2671a504a806be8ace411dad858270a4a77704ed202b0e089a"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-private-paths.json",
+      "sha256": "4a2147669b54de1366bc6cfb7e8b7102b888990eadb2ba3760714b8464c01665"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/SPEC.md",
+      "sha256": "6d7b351db87e535b0950f94c42c61d503a3ac3fef6587299dfc024c7887df664"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/approval-receipt.md",
+      "sha256": "0de192d5c5f0e422a3ab3301a4376c32b120667f61b03b63f661c0502c150a56"
+    }
+  ],
+  "question": "Will /root provide the exact labeled rehearsal sample-provider release receipt with authoritative sample bytes and hash, existing baseline full ID, explicitly simulated fixture landed and separately labeled adoption evidence?",
+  "requested": {
+    "receipt_kind": "REHEARSAL_ONLY_PROVIDER_RELEASE",
+    "samples": [
+      {
+        "id": "draft",
+        "label": "Draft report"
+      },
+      {
+        "id": "review",
+        "label": "Review sources"
+      },
+      {
+        "id": "send",
+        "label": "Send summary"
+      }
+    ],
+    "sample_sha256": "REQUIRED: SHA-256 of exact root-supplied authoritative sample artifact/bytes, with path or exact encoding so replacement independently reads and checks it. No release hash is currently supplied; do not invent or infer release from controller source.",
+    "observed_controller_sha256": "2b9276858645f88d423fb044816deb3b84049b1be09e74369353549d712f2412",
+    "existing_baseline_full_id": "d15792920731f85e45b743519d4af2b807d95a9c",
+    "fixture_landed": "Must be explicitly simulated REHEARSAL_ONLY, not actual Git target landing.",
+    "adoption_evidence": "Must be separately labeled REHEARSAL_ONLY simulated consumer adoption evidence; landing and adoption are distinct."
+  },
+  "observable_release_condition": "Actual terminal predecessor is observed, /root explicitly supplies REHEARSAL_ONLY_PROVIDER_RELEASE containing these exact three IDs/labels, reproducible sample hash and existing baseline full ID, explicitly simulated fixture landed plus separately labeled adoption evidence; replacement checks those fields against raw authority/current bytes and resumes only affected work on explicit root assignment. No completion label is sufficient.",
+  "preserved_progress": [
+    "Exact installed role fallback loaded/acknowledged and actual CWD/permissions verified.",
+    "Accepted S1\u2013S5 definitions and preparation authority retained without upgrading acceptance.",
+    "Substantive disjoint job intake/deduplication/current authority/ref/index/status/profile sentinels.",
+    "New original immutable recovery for 128 leaves captured and verified publicly; both runtime watcher leaves declared absent/job-created.",
+    "Job-owned runtime config derived without changing preparation config or selecting final wording."
+  ],
+  "affected_work": "Provider-dependent initial integration review/acceptance cannot advance. This turn stops after all independent bounded intake is saved.",
+  "unknowns": [
+    "Provider sample release receipt/hash/adoption not supplied.",
+    "FIXTURE_INTENT_01 remains unresolved: N remaining versus N remaining of 3. No summaryFormat is guessed; later actual intent terminal is still required.",
+    "Actual integration review/repair/Wiki/final/runtime/owner-wait/fix/recovery/closeout remain pending."
+  ],
+  "recommendation": "Root test controller supplies only the labeled release evidence after this actual terminal return, then issues a bounded replacement assignment. No investigation or prerequisite build dispatch is necessary.",
+  "next_safe_action": "End intentionally in waiting-dependency. Do not poll, auto-resume, dispatch, schedule or release own hold. Root may assign replacement only after actual terminal and observable labeled release.",
+  "git_operation_authority": "NONE",
+  "prerequisite_build_authority": "NONE",
+  "current_checkpoint_manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery/manifest.json",
+  "current_checkpoint_manifest_sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb",
+  "checkpoint_current_state_sha256": "ee63a5c309a1a72dd36db462f520931e777a701acd237c9350d2d5eee4cf6d73"
+}

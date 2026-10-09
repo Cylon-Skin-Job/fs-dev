@@ -1,0 +1,38 @@
+{
+  "runId": "chat-arch-1790044385683-97d022dbec",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R5-CURRENT-ACTIONS",
+      "code": 0,
+      "signal": null,
+      "pid": 92576,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 14804
+    },
+    {
+      "id": "R5-CURRENT-OWNER",
+      "code": 0,
+      "signal": null,
+      "pid": 94470,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 2640
+    },
+    {
+      "id": "R5-DIAGNOSTIC-APPEND",
+      "code": 0,
+      "signal": null,
+      "pid": 94790,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 2952
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

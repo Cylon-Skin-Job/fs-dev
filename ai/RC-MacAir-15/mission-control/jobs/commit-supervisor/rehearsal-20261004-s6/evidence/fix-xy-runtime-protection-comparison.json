@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-04T19:27:59.133308+00:00",
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "before": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-protection-pre-runtime.json",
+    "sha256": "3b2eda35dc1b6c3e21f4591518bd243341e2ef4ee8f8870a4bd760a927c94ba2"
+  },
+  "after": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-protection-post-runtime.json",
+    "sha256": "277d508ad5741f9f7d527b0d8603bd247beb2a181eb45334b7ee00155d678ce4"
+  },
+  "excluded": [
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/",
+    "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/"
+  ],
+  "equal": [
+    "head",
+    "refs",
+    "index",
+    "source_build_caches",
+    "processes"
+  ],
+  "other_unowned_changes": [],
+  "profile_identity_changes": [],
+  "profile_limit": "Active normal/Alpha hashes volatile; dev/inode/existence/mode equality only. No copied user contents. Whole installed tests20 and current55/17/authority source closure bound separately in runtime-source-pre/post."
+}

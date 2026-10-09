@@ -1,0 +1,50 @@
+{
+  "at": "2026-10-04T16:05:11.298849+00:00",
+  "scope": "ROOT_INSPECTION_EXCLUDED_FROM_FRESH_GATES",
+  "owner": "/root",
+  "raw": {
+    "first-canonical-runtime-command.json": "711a50b83e7c2e9ae559432ffa87b51106cbe38eb4e98a97ab559925b33a08ef",
+    "first-preinitializer-reset.json": "3d20e937d82e9450429b456b8cd6a623bebea85224e8f994cf56f43c6d860ad5",
+    "first-preinitializer-reset.json.png": "0783015b10fc6961322738856f5c78d1a44fcba35e3334c6e9b45d5f3fe09b7b",
+    "first-ui-acceptance.json": "f2f77b67fc7817086ece5c3cbba326a9333edf6d61c0d7c955a929a43b309c8e"
+  },
+  "full_raw_runtime_and_reset_and_UI_read": true,
+  "reset_screenshot_visually_inspected": true,
+  "assessment": "Actual selected private build exit0 and runtime main5349/server5358/profileMC-S6/initialized connection11samples2s; real preinitializer allfalse3 remaining of3 with original three labels. Current real UI3\u21922\u21921\u21922, ordinaryreloadretains2,all0/all3; built-inGuide actual current prose and reload connection. Known build warnings retained. Watcher, failure controls, protected post-runtime readback and terminal owner packet still pending; no overall owner or SPEC readiness inferred.",
+  "updated_at": "2026-10-04T16:07:59.989600+00:00",
+  "full_new_live_readback_helper_read": true,
+  "additional_raw": {
+    "first_live_readback.mjs": "46e35c558b485dbbb76946592c03b25154ece6cd02641a2b923b20f9e5f032be",
+    "evidence/first-watcher.json": "0ff50628e0b0499a3e12c3837d08d64306e88bba638421192b45580551314953",
+    "evidence/first-owner-checked-state.json": "bb1d33b525eae8dec2b814de13ff5d0a5870d1eee3cded909a3a097fe49a197e",
+    "evidence/first-protection-pre-runtime.json": "927b4697bd4f9da772738b001dbe8b62737de5e08ea9ea786fd293f2efa69b5d",
+    "evidence/first-protection-post-runtime.json": "70938adb7c0a5e35cb5fada9e68e341e6d9c4eb759eaa104b6ff424ab778fe3c"
+  },
+  "ordinary_watcher_event": "611887c2-fb02-4d23-a7a3-f4bf7f3f5674",
+  "known_persisted_checked_precondition_for_future_fix": {
+    "at": "2026-10-04T16:04:25.613Z",
+    "checks": [
+      true,
+      false,
+      false
+    ],
+    "summary": "2 remaining of 3",
+    "ordinary_shell_reload_retained": true
+  },
+  "protection_comparison": {
+    "head_equal": true,
+    "refs_equal": true,
+    "physical_index_record_equal": true,
+    "193_source_cache_records_equal": true,
+    "changed_existing_unowned": [],
+    "new_unowned_count": 15,
+    "all_new_paths_inside_owned_J": true,
+    "all4protected_process_identity_records_equal": true,
+    "profile_storage_dev_inode_mode_exists_preserved": true,
+    "volatile_hash_differences": [
+      "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server-data/fusion.db",
+      "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/data/fusion.db"
+    ],
+    "limits": "Live source/Alpha databases continued normal writes; no direct DB/profile write/copy/restore by rehearsal. Time-qualified storage identities and protected process boundaries preserved; do not claim byte-unchanged live DBs."
+  }
+}

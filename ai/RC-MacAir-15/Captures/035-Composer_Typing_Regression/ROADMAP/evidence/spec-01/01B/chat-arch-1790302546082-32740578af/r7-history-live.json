@@ -1,0 +1,12 @@
+{
+  "caseId": "R7-HISTORY-LIVE-OBSERVATION",
+  "status": "passed",
+  "observations": [
+    "twenty canonical content frames delivered at 50ms intervals invoke zero completed formatter/history renderer work",
+    "history DOM identity, selection, scroll position, tool expansion, links, and bookmark chrome survive the live frontier",
+    "metadata revision changes only the addressed message and does not rerun unchanged Markdown formatting",
+    "same-id hydration with edited content remounts bounded row caches and cannot display stale content or metadata"
+  ],
+  "cacheLifetime": "mounted completed-message row; retirement/hydration unmount releases derived useMemo values",
+  "privateContentRecorded": false
+}

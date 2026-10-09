@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-07T00:29:34.167079+00:00",
+  "repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "argv": [
+    "git",
+    "-C",
+    "/Users/rccurtrightjr./projects/fs-dev",
+    "add",
+    "-A",
+    "-f",
+    "--pathspec-from-file=/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/04-source-stage-paths.z",
+    "--pathspec-file-nul"
+  ],
+  "finished": "2026-10-07T00:29:34.304519+00:00",
+  "exit_code": 0,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

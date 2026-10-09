@@ -1,0 +1,13 @@
+{
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": {
+    "name": "Error",
+    "message": "page.evaluate: ReferenceError: coverageFunctions is not defined\n    at eval (eval at evaluate (:290:30), <anonymous>:24:7)\n    at UtilityScript.evaluate (<anonymous>:292:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+    "stack": "page.evaluate: ReferenceError: coverageFunctions is not defined\n    at eval (eval at evaluate (:290:30), <anonymous>:24:7)\n    at UtilityScript.evaluate (<anonymous>:292:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at measureWindow (/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r1-electron.mjs:166:30)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r1-electron.mjs:269:23"
+  }
+}

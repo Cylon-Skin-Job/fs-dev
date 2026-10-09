@@ -1,0 +1,141 @@
+{
+  "agent_gate_proof": false,
+  "candidate": {
+    "authority": {
+      "SPEC": "approved"
+    },
+    "configuration": {
+      "profile": "disposable"
+    },
+    "fixtures": {
+      "oracle": "correct"
+    },
+    "owned": {
+      "code.py": {
+        "index": "base",
+        "mode": "100644",
+        "worktree": "fixed"
+      }
+    },
+    "preparation": "replay-owned-bytes",
+    "sources": [
+      "source-1"
+    ],
+    "target": "target-1"
+  },
+  "dispatch_actions": [],
+  "dispositions": {
+    "F1": [
+      {
+        "actor": "fixture-manager",
+        "evidence": "fixture/repro.log",
+        "status": "open"
+      },
+      {
+        "actor": "fixture-writer",
+        "status": "repair-reported"
+      },
+      {
+        "actor": "fixture-manager",
+        "candidate": {
+          "authority": {
+            "SPEC": "approved"
+          },
+          "configuration": {
+            "profile": "disposable"
+          },
+          "fixtures": {
+            "oracle": "correct"
+          },
+          "owned": {
+            "code.py": {
+              "index": "base",
+              "mode": "100644",
+              "worktree": "fixed"
+            }
+          },
+          "preparation": "replay-owned-bytes",
+          "sources": [
+            "source-1"
+          ],
+          "target": "target-1"
+        },
+        "handoff_id": "F1-handoff",
+        "reviewers": [
+          "fixture-handoff-reviewer"
+        ],
+        "status": "handoff-validated"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "assigned_paths": [
+        "code.py"
+      ],
+      "authority": "approved behavior criterion",
+      "confidence": "medium",
+      "evidence": "fixture/repro.log",
+      "id": "F1",
+      "impact": "accepted input returns incorrect result",
+      "path": "code.py",
+      "severity": "high",
+      "validated": true
+    }
+  ],
+  "gaps": [
+    "missing current independent handoff: F1"
+  ],
+  "hold_packet": null,
+  "invalidated": [],
+  "raw_reports": [
+    {
+      "clean_room": true,
+      "dependencies": {
+        "authority": {
+          "SPEC": "approved"
+        },
+        "configuration": {
+          "profile": "disposable"
+        },
+        "fixtures": {
+          "oracle": "correct"
+        },
+        "owned": {
+          "code.py": {
+            "index": "base",
+            "mode": "100644",
+            "worktree": "fixed"
+          }
+        },
+        "preparation": "replay-owned-bytes",
+        "sources": [
+          "source-1"
+        ],
+        "target": "target-1"
+      },
+      "findings": [],
+      "identity": "fixture-final-reviewer",
+      "lenses": [
+        "Behavior & Verification",
+        "Standards Compliance",
+        "Integrations & Dependencies",
+        "Forward Compatibility",
+        "Wiki Impact"
+      ],
+      "raw_path": "fixture/review-1.md",
+      "read_only": true,
+      "result": "clean",
+      "root_inherited": true,
+      "terminal": true
+    }
+  ],
+  "repair_packet": null,
+  "result": "insufficient-evidence",
+  "return": "REVIEW_COMPLETE",
+  "state": "unmet-gate",
+  "unaffected": [
+    "behavior",
+    "F1-handoff"
+  ]
+}

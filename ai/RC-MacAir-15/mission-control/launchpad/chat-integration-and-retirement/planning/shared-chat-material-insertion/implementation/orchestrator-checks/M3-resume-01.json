@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-07T22:34:24.673156+00:00",
+  "owner_direction": "Unlocked. Set caffeinate for 4 hours and restart.",
+  "desktop_unlocked": "Verified bounded ioreg observation before resume",
+  "caffeinate": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/caffeinate-4h-01.json",
+  "caffeinate_pid": 15210,
+  "source_seal_sha256": "6fcef6edfdf2439a45eec626a1d854ed67db209b7c78988a6aeaa48a713fd316",
+  "source_count": 65,
+  "source_mismatches": [],
+  "dist_count": 191,
+  "dist_mismatches": [],
+  "scope": "Resume same M3 native evidence and required gates under approved SPEC; no new implementation scope/publication."
+}

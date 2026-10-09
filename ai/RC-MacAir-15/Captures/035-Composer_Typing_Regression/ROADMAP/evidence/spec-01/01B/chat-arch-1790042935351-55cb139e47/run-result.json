@@ -1,0 +1,22 @@
+{
+  "runId": "chat-arch-1790042935351-55cb139e47",
+  "status": "failed",
+  "results": [
+    {
+      "id": "R5-CURRENT-ACTIONS",
+      "code": 1,
+      "signal": null,
+      "pid": 73918,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 14529
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "R5-CURRENT-ACTIONS exited 1",
+    "stack": "Error: R5-CURRENT-ACTIONS exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:376:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

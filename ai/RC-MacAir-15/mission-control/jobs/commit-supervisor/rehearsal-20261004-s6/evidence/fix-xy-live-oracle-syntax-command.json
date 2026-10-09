@@ -1,0 +1,14 @@
+{
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "started": "2026-10-04T16:39:03.143078+00:00",
+  "finished": "2026-10-04T16:39:03.189683+00:00",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "command": [
+    "node",
+    "--check",
+    "jobs/commit-supervisor/rehearsal-20261004-s6/fix_xy_live_smoke.mjs"
+  ],
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": ""
+}

@@ -1,0 +1,305 @@
+--- pre-root-repair/ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/004-Stop_And_Interrupted_Turns/PAGE.md
++++ ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/004-Stop_And_Interrupted_Turns/PAGE.md
+@@ -66,3 +66,16 @@
+ reconciliation if the session still exists. Reconciliation rechecks the exact
+ session after queued work and drain retirement. Metadata suspension completes
+ before provider admission is released; late cleanup cannot cool a replacement.
++
++
++### Observed exit after failed drain retirement
++
++An accepted drain can exist before `turn_begin`. If bounded Stop fails and its
++exact provider later exits, SessionLifecycle waits up to five seconds for that
++captured iterator to settle, including a rejected completion, instead of replaying
++the cached failed Stop. It clears only the still-owned completed drain through
++the canonical runtime API and suspends metadata before releasing the session.
++Active Stop ownership and session/runtime/drain replacements are rechecked across
++awaits and before/after metadata. Still-pending completion or failed metadata
++retains the discoverable session for an explicit retirement retry; no saved ACK
++is fabricated and no additional provider signal is sent after observed exit.
+--- pre-root-repair/ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md
++++ ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md
+@@ -545,3 +545,16 @@
+ Unchanged dependencies outside its inventory (including the thread barrel,
+ registry, and worksurface cleanup) are external boundaries; this check does not
+ claim a complete repository dependency graph.
++
++
++### Observed exit after failed drain retirement
++
++An accepted drain can exist before `turn_begin`. If bounded Stop fails and its
++exact provider later exits, SessionLifecycle waits up to five seconds for that
++captured iterator to settle, including a rejected completion, instead of replaying
++the cached failed Stop. It clears only the still-owned completed drain through
++the canonical runtime API and suspends metadata before releasing the session.
++Active Stop ownership and session/runtime/drain replacements are rechecked across
++awaits and before/after metadata. Still-pending completion or failed metadata
++retains the discoverable session for an explicit retirement retry; no saved ACK
++is fabricated and no additional provider signal is sent after observed exit.
+--- pre-root-repair/ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md
++++ ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md
+@@ -307,3 +307,16 @@
+ claim a complete repository dependency graph.
+ 
+ `wire/terminal-saved-delivery.js` owns a bounded transport-only late saved-ACK fallback after Stop's3s effect grace. It shares event-local successful-delivery receipts with the normal broadcaster, so only one real saved frame is sent. It holds no provider or canonical runtime state;30s expiry requires history/reconnect recovery for any later save. The existing event-effect wait accepts cancellation for listener/timer cleanup.
++
++
++### Observed exit after failed drain retirement
++
++An accepted drain can exist before `turn_begin`. If bounded Stop fails and its
++exact provider later exits, SessionLifecycle waits up to five seconds for that
++captured iterator to settle, including a rejected completion, instead of replaying
++the cached failed Stop. It clears only the still-owned completed drain through
++the canonical runtime API and suspends metadata before releasing the session.
++Active Stop ownership and session/runtime/drain replacements are rechecked across
++awaits and before/after metadata. Still-pending completion or failed metadata
++retains the discoverable session for an explicit retirement retry; no saved ACK
++is fabricated and no additional provider signal is sent after observed exit.
+--- pre-root-repair/fusion-studio-client/e2e/chat-architecture/server-focused-regressions.mjs
++++ fusion-studio-client/e2e/chat-architecture/server-focused-regressions.mjs
+@@ -29,6 +29,7 @@
+   'test/ws/privileged-thread-public-route.integration.test.js',
+   'test/thread/thread-runtime-controller.test.js',
+   'test/thread/stop-timeout-recovery.test.js',
++  'test/thread/exited-drain-retirement.test.js',
+   'test/thread/thread-activation-lifecycle.test.js',
+   'test/thread/thread-crud-active-turn-reconnect.test.js',
+   'test/thread/thread-group-lifecycle.test.js',
+--- pre-root-repair/fusion-studio-server/lib/thread/session-lifecycle.js
++++ fusion-studio-server/lib/thread/session-lifecycle.js
+@@ -5,6 +5,7 @@
+ const sessionRepository = require('./session-repository');
+ const repository = require('../thread-groups/repository');
+ const { threadRuntimeManager } = require('./thread-runtime-manager');
++const { awaitBoundedDrainCompletion } = require('./canonical-drain-context');
+ 
+ class SessionLifecycle {
+   constructor({ workspaceId, projectId, projectRoot, index, sessionManager, mirror }) {
+@@ -146,6 +147,8 @@
+ 
+   async closeSession(threadId, options = {}) {
+     const activeSession = this.sessionManager.getSession(threadId);
++    if (activeSession?.stopFinalization) return false;
++    const expectedWire = activeSession?.wireProcess;
+     const runtimeIdentity = {
+       workspaceId: this.workspaceId,
+       projectRoot: this.projectRoot,
+@@ -154,13 +157,37 @@
+       threadId,
+     };
+     const ownership = threadRuntimeManager.captureOwnership(runtimeIdentity);
+-    if (runtimeIdentity.workspaceEpoch) {
++    if (activeSession?.providerExitObserved && runtimeIdentity.workspaceEpoch) {
++      // Actual exit proves this provider no longer needs a Stop signal. A
++      // previous bounded Stop may have left a rejected retirement promise;
++      // recover through the captured iterator completion, never that promise.
++      const drain = threadRuntimeManager.getActiveDrain(runtimeIdentity);
++      if (drain) {
++        if (!drain.completion) throw new Error('Exited provider drain has no completion lifecycle');
++        // Iterator rejection is still settled: after proven provider exit it
++        // cannot publish more events. Do not confuse failure with pending work.
++        await awaitBoundedDrainCompletion(Promise.allSettled([drain.completion]));
++        if (this.sessionManager.getSession(threadId) !== activeSession
++          || activeSession.wireProcess !== expectedWire
++          || (activeSession.workspaceEpoch || null) !== runtimeIdentity.workspaceEpoch
++          || activeSession.stopFinalization
++          || !threadRuntimeManager.isOwnershipCurrent(ownership)) return false;
++        threadRuntimeManager.clearActiveDrainIfCurrent(runtimeIdentity, drain.drainId);
++      }
++    } else if (runtimeIdentity.workspaceEpoch) {
+       await threadRuntimeManager.retireActiveDrain(runtimeIdentity);
+     } else {
+       await threadRuntimeManager.retireResourceDrains(runtimeIdentity);
+     }
+-    if (this.sessionManager.getSession(threadId) !== activeSession) return false;
++    if (this.sessionManager.getSession(threadId) !== activeSession
++      || activeSession?.wireProcess !== expectedWire) return false;
++    const canRelease = () => this.sessionManager.getSession(threadId) === activeSession
++      && activeSession?.wireProcess === expectedWire && !activeSession?.stopFinalization
++      && (activeSession?.workspaceEpoch || null) === runtimeIdentity.workspaceEpoch
++      && (ownership ? threadRuntimeManager.isOwnershipCurrent(ownership)
++        : !threadRuntimeManager.getRuntime(runtimeIdentity));
+     const closed = await this.sessionManager.closeSessionAndWait(threadId, { ...options,
++      canRelease,
+       beforeRelease: () => this.index.suspend(threadId),
+     });
+     if (!closed) return false;
+--- pre-root-repair/fusion-studio-server/lib/thread/session-manager.js
++++ fusion-studio-server/lib/thread/session-manager.js
+@@ -251,7 +251,9 @@
+       throw forceError;
+     }
+     if (this.activeSessions.get(threadId) !== session) return false;
++    if (options.canRelease && !options.canRelease()) return false;
+     if (options.beforeRelease) await options.beforeRelease();
++    if (options.canRelease && !options.canRelease()) return false;
+     if (this.activeSessions.get(threadId) === session) this.activeSessions.delete(threadId);
+     return true;
+   }
+--- pre-root-repair/fusion-studio-server/test/thread/exited-drain-retirement.test.js
++++ fusion-studio-server/test/thread/exited-drain-retirement.test.js
+@@ -0,0 +1,164 @@
++'use strict';
++
++// Real accepted-before-turn_begin drain, bound Stop, bounded provider close and
++// session lifecycle. Only the OS child boundary and metadata store are fakes.
++jest.mock('../../lib/thread/ThreadWebSocketHandler', () => ({ getState: () => null }));
++const { EventEmitter } = require('node:events');
++const { SessionManager } = require('../../lib/thread/session-manager');
++const { SessionLifecycle } = require('../../lib/thread/session-lifecycle');
++const { threadRuntimeManager: runtime } = require('../../lib/thread/thread-runtime-manager');
++const { stopRuntimeTurn } = require('../../lib/thread/runtime-stop');
++const { terminateProviderProcessAndWait } = require('../../lib/thread/provider-termination');
++const { createCanonicalDrainControl, createCanonicalRouteContext } = require('../../lib/thread/canonical-drain-context');
++const fixtures = [];
++const flush = async () => { for (let i = 0; i < 15; i++) await Promise.resolve(); };
++beforeEach(() => jest.useFakeTimers());
++afterEach(() => {
++  for (const f of fixtures.splice(0)) {
++    for (const timer of f.sessions.timeouts.values()) clearTimeout(timer);
++    f.sessions.timeouts.clear(); f.sessions.activeSessions.clear();
++  }
++  runtime.runtimes.clear(); jest.useRealTimers();
++});
++
++async function setup() {
++  const key = { workspaceId: 'exited-drain', projectRoot: '/tmp/exited-drain-fixture',
++    workspaceEpoch: 'epoch-1', scope: 'project', threadId: 'thread' };
++  const sessions = new SessionManager();
++  const index = { list: jest.fn(async () => []), activate: jest.fn(async () => {}),
++    markResumed: jest.fn(async () => {}), suspend: jest.fn(async () => {}) };
++  const lifecycle = new SessionLifecycle({ ...key, index, sessionManager: sessions, mirror: {} });
++  const wire = new EventEmitter(); wire.kill = jest.fn(() => true);
++  const ws = { readyState: 1, send: jest.fn() };
++  const session = await lifecycle.openSession(key.threadId, wire, ws, { workspaceEpoch: key.workspaceEpoch });
++  const operations = { ...key, getSession: sessions.getSession.bind(sessions),
++    beginSessionRetirement: sessions.beginSessionRetirement.bind(sessions),
++    completeStoppedSession: lifecycle.completeStoppedSession.bind(lifecycle),
++    reconcileProviderExit: lifecycle.reconcileProviderExit.bind(lifecycle) };
++  const stopHarness = jest.fn(() => terminateProviderProcessAndWait(wire, 10, 10));
++  const control = createCanonicalDrainControl({ drainId: 'prebegin-drain', runtimeKey: key,
++    touchThreadSession() {}, stopHarness });
++  const route = createCanonicalRouteContext({ ...key, workspace: 'workspace:exited-drain',
++    acceptedUserInput: 'fixture accepted prompt', attachments: [] });
++  runtime.claimActiveDrain(key, control, route); runtime.markInFlight(key);
++  const ownership = runtime.captureOwnership(key);
++  let complete; let reject;
++  const completion = new Promise((resolve, fail) => { complete = resolve; reject = fail; });
++  // Production iterator tasks have a consumer even if retirement fails first.
++  completion.catch(() => {});
++  runtime.bindActiveDrainLifecycle(key, control.drainId, { completion,
++    retire: () => stopRuntimeTurn({ ws, session: { workspaceEpoch: key.workspaceEpoch },
++      clientMsg: { threadId: key.threadId }, allowInactiveDrain: true, returnOutcome: true,
++      runtimeBinding: { sessions: operations, wire, runtimeKey: key, drainId: control.drainId, ownership } }) });
++  const f = { key, sessions, index, lifecycle, wire, ws, session, control, stopHarness, complete, reject };
++  fixtures.push(f); return f;
++}
++
++async function failInitialClose(f) {
++  const closing = expect(f.lifecycle.closeSession(f.key.threadId)).rejects.toThrow('Canonical drain retirement failed');
++  await jest.advanceTimersByTimeAsync(21); await closing;
++  expect(f.sessions.getSession(f.key.threadId)).toBe(f.session);
++  expect(f.session.state).toBe('stopping');
++  expect(runtime.getRuntimeState(f.key)).toBe('stopping');
++  expect(runtime.getActiveDrain(f.key)).not.toBeNull();
++  expect(f.sessions.timeouts.size).toBe(0);
++  expect(f.index.suspend).not.toHaveBeenCalled();
++  expect(f.stopHarness).toHaveBeenCalledTimes(1);
++}
++function exit(f) { f.wire.exitCode = 0; f.wire.emit('exit', 0, null); return f.session.exitReconciliation; }
++function expectReleased(f) {
++  expect(f.sessions.getSession(f.key.threadId)).toBeUndefined();
++  expect(runtime.getRuntimeState(f.key)).toBe('cold');
++  expect(runtime.getActiveDrain(f.key)).toBeNull();
++  expect(f.index.suspend).toHaveBeenCalledTimes(1);
++  expect(f.stopHarness).toHaveBeenCalledTimes(1);
++  expect(f.wire.kill).toHaveBeenCalledTimes(2);
++  expect(f.ws.send).not.toHaveBeenCalled();
++}
++
++test.each(['fulfilled', 'rejected'])('exact late exit recovers the failed real Stop after iterator %s', async outcome => {
++  const f = await setup(); await failInitialClose(f);
++  if (outcome === 'fulfilled') f.complete(); else f.reject(new Error('iterator failed'));
++  await exit(f); expectReleased(f);
++});
++
++test('exit waits for delayed iterator settlement before clearing the drain or suspending', async () => {
++  const f = await setup(); await failInitialClose(f);
++  const recovering = exit(f); await jest.advanceTimersByTimeAsync(4_000);
++  expect(runtime.getActiveDrain(f.key)).not.toBeNull();
++  expect(f.index.suspend).not.toHaveBeenCalled();
++  f.complete(); await recovering; expectReleased(f);
++});
++
++test('pending iterator times out boundedly, remains discoverable and permits retry after settlement', async () => {
++  const f = await setup(); await failInitialClose(f);
++  const recovering = expect(exit(f)).rejects.toThrow('Canonical drain did not retire in time');
++  await jest.advanceTimersByTimeAsync(5_001); await recovering; await flush();
++  expect(runtime.getActiveDrain(f.key)).not.toBeNull();
++  expect(f.sessions.getSession(f.key.threadId)).toBe(f.session);
++  expect(f.index.suspend).not.toHaveBeenCalled();
++  f.complete(); await expect(f.lifecycle.closeSession(f.key.threadId)).resolves.toBe(true);
++  expectReleased(f);
++});
++
++test('metadata failure retains the exited session; exact retry suspends before admission release', async () => {
++  const f = await setup(); await failInitialClose(f); f.complete();
++  f.index.suspend.mockRejectedValueOnce(new Error('metadata unavailable'));
++  await expect(exit(f)).rejects.toThrow('metadata unavailable'); await flush();
++  expect(f.sessions.getSession(f.key.threadId)).toBe(f.session);
++  expect(runtime.getRuntimeState(f.key)).toBe('stopping');
++  expect(runtime.getActiveDrain(f.key)).toBeNull();
++  await expect(f.lifecycle.closeSession(f.key.threadId)).resolves.toBe(true);
++  expect(f.sessions.getSession(f.key.threadId)).toBeUndefined();
++  expect(runtime.getRuntimeState(f.key)).toBe('cold');
++  expect(f.index.suspend).toHaveBeenCalledTimes(2);
++  expect(f.stopHarness).toHaveBeenCalledTimes(1);
++});
++
++test('active Stop token reserves cleanup even after exact exit and settled iterator', async () => {
++  const f = await setup(); await failInitialClose(f); f.complete(); f.session.stopFinalization = {};
++  expect(exit(f)).toBeUndefined();
++  await expect(f.lifecycle.closeSession(f.key.threadId)).resolves.toBe(false);
++  expect(f.index.suspend).not.toHaveBeenCalled();
++  delete f.session.stopFinalization; f.lifecycle.reconcileProviderExit(f.key.threadId, f.session);
++  await f.session.exitReconciliation; expectReleased(f);
++});
++
++test.each(['session', 'wire', 'epoch', 'runtime', 'drain'])('delayed completion cannot clear, suspend or release a replacement %s', async kind => {
++  const f = await setup(); await failInitialClose(f); const recovering = exit(f); await flush();
++  let replacement;
++  if (kind === 'session') {
++    replacement = { ...f.session, wireProcess: { kill: jest.fn() }, workspaceEpoch: 'epoch-2' };
++    f.sessions.activeSessions.set(f.key.threadId, replacement);
++  } else if (kind === 'wire') {
++    replacement = { kill: jest.fn() }; f.session.wireProcess = replacement;
++  } else if (kind === 'epoch') {
++    f.session.workspaceEpoch = 'epoch-2';
++  } else {
++    if (kind === 'runtime') runtime.runtimes.delete(runtime.makeKey(f.key));
++    runtime.claimActiveDrain(f.key, { drainId: 'replacement-drain' }); runtime.markInFlight(f.key);
++    replacement = runtime.getActiveDrain(f.key);
++  }
++  f.complete(); await expect(recovering).resolves.toBe(false);
++  expect(f.index.suspend).not.toHaveBeenCalled();
++  expect(f.stopHarness).toHaveBeenCalledTimes(1);
++  if (kind === 'session') expect(f.sessions.getSession(f.key.threadId)).toBe(replacement);
++  else if (kind === 'wire' || kind === 'epoch') {
++    expect(f.sessions.getSession(f.key.threadId)).toBe(f.session);
++    expect(runtime.getActiveDrain(f.key).drainId).toBe(f.control.drainId);
++    expect(runtime.getRuntimeState(f.key)).toBe('stopping');
++    if (kind === 'wire') expect(replacement.kill).not.toHaveBeenCalled();
++  }
++  else { expect(runtime.getActiveDrain(f.key)).toBe(replacement); expect(runtime.getRuntimeState(f.key)).toBe('in_flight'); }
++});
++
++test('a replacement drain during suspension cannot be cooled or release its session', async () => {
++  const f = await setup(); await failInitialClose(f); f.complete();
++  let finishMetadata; f.index.suspend.mockImplementationOnce(() => new Promise(resolve => { finishMetadata = resolve; }));
++  const recovering = exit(f); await flush(); expect(f.index.suspend).toHaveBeenCalledTimes(1);
++  runtime.claimActiveDrain(f.key, { drainId: 'new-during-metadata' }); runtime.markInFlight(f.key);
++  finishMetadata(); await expect(recovering).resolves.toBe(false);
++  expect(f.sessions.getSession(f.key.threadId)).toBe(f.session);
++  expect(runtime.getActiveDrain(f.key).drainId).toBe('new-during-metadata');
++  expect(runtime.getRuntimeState(f.key)).toBe('in_flight');
++});

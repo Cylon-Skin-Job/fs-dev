@@ -1,0 +1,62 @@
+{
+  "runId": "chat-arch-1790243312056-358efb0d3d",
+  "status": "failed",
+  "results": [
+    {
+      "id": "R2-NO-ENQUEUE",
+      "code": 0,
+      "signal": null,
+      "pid": 18208,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 7423
+    },
+    {
+      "id": "R3-LOST-ACK-STATUS",
+      "code": 0,
+      "signal": null,
+      "pid": 19379,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 7325
+    },
+    {
+      "id": "R3-RECONNECT-UI",
+      "code": 0,
+      "signal": null,
+      "pid": 20346,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 11417
+    },
+    {
+      "id": "R4-DISTINCT-ATTEMPTS",
+      "code": 0,
+      "signal": null,
+      "pid": 21759,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 10715
+    },
+    {
+      "id": "R4-DISTINCT-RECEIPTS",
+      "code": 1,
+      "signal": null,
+      "pid": 23080,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 39665
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "R4-DISTINCT-RECEIPTS exited 1",
+    "stack": "Error: R4-DISTINCT-RECEIPTS exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:422:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

@@ -1,0 +1,7 @@
+[
+  "restart-fusion.sh",
+  "scripts/fusion-restart.mjs",
+  "scripts/fusion-restart-target.mjs",
+  "scripts/fusion-restart-processes.mjs",
+  "scripts/fusion-restart-probe.mjs"
+]

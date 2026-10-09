@@ -1,0 +1,135 @@
+{
+  "at": "2026-10-04T19:32:35.998204+00:00",
+  "environment": {
+    "GIT_OPTIONAL_LOCKS": "0"
+  },
+  "candidate_repository": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "source_repository": "/Users/rccurtrightjr./projects/fs-dev",
+  "target_ref": "refs/remotes/origin/agent/exact-workspace-paths",
+  "target_baseline": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "ordered_source_commits": [
+    {
+      "commit": "d15792920731f85e45b743519d4af2b807d95a9c",
+      "ref": "HEAD",
+      "repo": "/Users/rccurtrightjr./projects/fs-dev"
+    }
+  ],
+  "proposed_private_branch": "codex/s6-rehearsal-fix-xy",
+  "current_branch": "detached",
+  "origin": {
+    "kind": "local clone provenance only",
+    "url": "/Users/rccurtrightjr./projects/fs-dev",
+    "publication_destination": null
+  },
+  "hypothetical_only": true,
+  "actual_authority": "NONE",
+  "actual_operations": [],
+  "actual_local_commit_ids": [],
+  "candidate_identity": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-owner-runtime-identity.json",
+    "sha256": "def301f6c8111aee84a6a450eb2e1898dd26dcd6df887a1462cefc0edff38e48"
+  },
+  "current_fixed_manifest": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/fix-xy/recovery/manifest.json",
+    "sha256": "fd15619a9ebd65f9600e6867054ddd15dbaef589a607d2177c9f3528e33f5e9e"
+  },
+  "candidate_paths_and_fingerprints": {
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js": {
+      "sha256": "48ae78dfda264edb62fadf5bdd72e1f07c2f5b54b127ddb7296c41188f2d70bf",
+      "mode": "0o100644",
+      "size": 885
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js": {
+      "sha256": "55bb735409a940717d683a9256a7d55f467a92576923e26fe829518d3effa87e",
+      "mode": "0o100644",
+      "size": 709
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html": {
+      "sha256": "968e599ca4814c3a8e246d9d12ee985e0cf8a9ef8e3cd6d55e6b4a9a9b62f480",
+      "mode": "0o100644",
+      "size": 431
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css": {
+      "sha256": "f0e280d99afff67dda2c753192697d63dd74d20140794537f6cb2ae774ae8f0d",
+      "mode": "0o100644",
+      "size": 450
+    },
+    "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md": {
+      "sha256": "5f09372532fa58527e844bd0f60678e592e48cbf2f92cd38ee611c209afb6b8b",
+      "mode": "0o100644",
+      "size": 2218
+    },
+    "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-080936.md": {
+      "sha256": "e2877b2a21a23cce18a7b079d1532a8c7a5a8f30467e369248d75e9750ce527c",
+      "mode": "0o100644",
+      "size": 596
+    },
+    "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-095624.md": {
+      "sha256": "a3d372eba6208c2fbee71cd046f305a91fc7c44185c5dae42b5da50e5cbcfdce",
+      "mode": "0o100644",
+      "size": 1620
+    }
+  },
+  "commands_NOT_EXECUTED": [
+    [
+      "git",
+      "-C",
+      "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+      "switch",
+      "-c",
+      "codex/s6-rehearsal-fix-xy"
+    ],
+    [
+      "git",
+      "-C",
+      "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+      "add",
+      "--",
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js",
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js",
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html",
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css",
+      "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md",
+      "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-080936.md",
+      "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-095624.md"
+    ],
+    [
+      "git",
+      "-C",
+      "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+      "commit",
+      "--only",
+      "-m",
+      "Rehearsal: revise checklist label and reset completion",
+      "--",
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js",
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js",
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html",
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css",
+      "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md",
+      "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-080936.md",
+      "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-095624.md"
+    ]
+  ],
+  "operation_roles": [
+    "Private branch creation changes only private candidate ref IF later actually authorized.",
+    "add stages only seven specified correction/version leaves IF later authorized.",
+    "commit --only creates local correction snapshot limited to seven leaves IF later authorized; preserves unrelated original staged sentinels. It creates the commit; no publication operation is proposed."
+  ],
+  "limits": "REHEARSAL_ONLY hypothetical packet, executable Git authority NONE. Correction snapshot retains original uncommitted capsule/fixture inputs and is not a standalone runnable feature/publication. All owned130/full4355 input fingerprints, dirty input/index/worktree/base bytes/modes/deletions/symlink/odd paths preserved in fixed manifest. Before any operation could become real, actual exact candidate/operation owner approval plus immediate current refs/index/worktree/config/check/runtime/recovery/nonconflicting writers/destination/uncertain outcome reconciliation are mandatory. Changed bytes invalidate any earlier approval.",
+  "excluded_runtime_evidence": [
+    "rehearsal-workspace/ai/MC-S6/watcher-proof-runtime-1.md",
+    "rehearsal-workspace/ai/MC-S6/watcher-proof-runtime-2.md"
+  ],
+  "separate_denied_operations": {
+    "push": "NONE; no publishing destination",
+    "fetch_pull": "NONE",
+    "PR_create_merge": "NONE",
+    "merge_rebase_cherry_pick": "NONE",
+    "target_landing": "NONE",
+    "production_consumer_adoption": "NONE",
+    "Alpha_pull_build_install_restart": "NONE",
+    "source_shared_ref_index_mutation": "NONE"
+  },
+  "protected_index": "Original staged README/binary/executable/symlink/deletion/odd-path/capsule/runtime seeds retained. Physical source/candidate and semantic candidate indices remain exact, no staging occurred."
+}

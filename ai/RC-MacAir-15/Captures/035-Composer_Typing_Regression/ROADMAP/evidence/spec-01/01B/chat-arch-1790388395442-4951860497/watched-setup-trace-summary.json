@@ -1,0 +1,95 @@
+{
+  "status": "closed",
+  "gaps": [],
+  "documents": {
+    "ffc9f5e3-f7f6-46ba-8388-9de6b2f6f5fd": {
+      "timeOrigin": 1790388401310.3,
+      "overflow": 0,
+      "emitFailures": 0,
+      "trafficOverflow": 0
+    }
+  },
+  "main": {
+    "overflow": 0,
+    "observationErrors": 0,
+    "coverage": [
+      {
+        "label": "window.show",
+        "status": "wrapped"
+      },
+      {
+        "label": "window.showInactive",
+        "status": "wrapped"
+      },
+      {
+        "label": "window.hide",
+        "status": "wrapped"
+      },
+      {
+        "label": "window.minimize",
+        "status": "wrapped"
+      },
+      {
+        "label": "window.restore",
+        "status": "wrapped"
+      },
+      {
+        "label": "window.focus",
+        "status": "wrapped"
+      },
+      {
+        "label": "window.blur",
+        "status": "wrapped"
+      },
+      {
+        "label": "window.moveTop",
+        "status": "wrapped"
+      },
+      {
+        "label": "app.show",
+        "status": "wrapped"
+      },
+      {
+        "label": "app.hide",
+        "status": "wrapped"
+      },
+      {
+        "label": "app.focus",
+        "status": "wrapped"
+      },
+      {
+        "label": "webContents.focus",
+        "status": "wrapped"
+      }
+    ],
+    "stopped": true
+  },
+  "renderer": {
+    "documentId": "ffc9f5e3-f7f6-46ba-8388-9de6b2f6f5fd",
+    "timeOrigin": 1790388401310.3,
+    "overflow": 0,
+    "emitFailures": 0,
+    "trafficOverflow": 0,
+    "restored": true
+  },
+  "processExitObserved": true,
+  "identity": {
+    "pid": 45584,
+    "windowId": 1
+  },
+  "written": 384,
+  "journalOverflow": 0,
+  "journalWriteErrors": 0,
+  "driver": {
+    "overflow": 0,
+    "observationErrors": 0,
+    "coverage": [
+      {
+        "label": "fixture.page.bringToFront",
+        "status": "wrapped"
+      }
+    ],
+    "stopped": true
+  },
+  "complete": true
+}

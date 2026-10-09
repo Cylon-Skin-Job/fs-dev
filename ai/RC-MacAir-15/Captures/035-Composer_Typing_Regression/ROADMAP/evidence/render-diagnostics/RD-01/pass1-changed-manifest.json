@@ -1,0 +1,15 @@
+{
+  "fusion-studio-client/e2e/support/working-activity-working-cases.ts": "4fe2709f8eab2c2d5dbf7206f09c20a1f09173afa95db13bef02da347aa36922",
+  "fusion-studio-client/e2e/visible-wait.spec.ts": "d8e1e5bef9773e0c5e0ca460a1fdf29e2b60a01905435d31c8e9428e1ae6103f",
+  "fusion-studio-client/src/components/LiveSegmentRenderer.tsx": "5a07f999a2c2060740cf16a6cc36ecc9c2f7e414e5a7db64b9d3f05f7e285de2",
+  "fusion-studio-client/src/components/MessageList.tsx": "0d213e420c0b3fa7cf89d455e9df03914e5258928c6fcb6869c23eaf84865b3c",
+  "fusion-studio-client/src/components/chat/ConnectedChatHistory.tsx": "23c35fc2a645ec4cebb6f9ba03cd6b8536e669ff9d1d82e90b0bd11f973e3208",
+  "fusion-studio-client/src/components/chat/VisibleWaitActivity.tsx": "591104ce59a89d9aa0f641d4c64732a2daa79d04beb4f534f43f87992a192036",
+  "fusion-studio-client/src/components/chat/WorkingActivity.tsx": "6e840a1d88d4be1e3af3ab02f71dcbdea40ea35878da877f6d565774f18034f0",
+  "fusion-studio-client/src/lib/reveal/grouped-summary.ts": "20e553292ca748fc5d187c0bf956d9e7060df45a8f6e108b101f1bcacacd4316",
+  "fusion-studio-client/src/lib/reveal/orchestrator.ts": "b40f3eb85984d2f769b1612b51ee73574a4bf9ea63b83d669f8d4ce12f658c09",
+  "fusion-studio-client/src/lib/reveal/progress.ts": "84d272a3b7a36da8e77936e3f22947ab7fad98672678f8646e471d5b619f6e96",
+  "fusion-studio-client/src/lib/reveal/types.ts": "968bcb140d4dda3b760ec34796d6d777fef5c9f2e6c23df08da5335745ae06e3",
+  "fusion-studio-client/src/lib/text/text-animate.ts": "65a712a52a7e20635ab64e320f6e8262481126ef9b064f73ca55220587c7ddc3",
+  "fusion-studio-client/src/lib/tool-animate.ts": "8351e3282958e47f25875867141dccde57ae5e210bb00fb39f55a56b58a8692b"
+}

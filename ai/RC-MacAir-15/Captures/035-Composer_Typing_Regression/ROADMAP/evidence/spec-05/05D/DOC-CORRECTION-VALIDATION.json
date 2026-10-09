@@ -1,0 +1,13 @@
+{
+  "beforeManifest": "2547d232a740954a9fab064306cd656408a6a030a66f6ec79966c7edc7a7636b",
+  "currentManifest": "a84b392d37a10e1b1a40cb3374205fbf98ec34837626c241d1d48db823491c7f",
+  "onlyChangedSincePreviousCandidate": [
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md",
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md"
+  ],
+  "sourceDependencies": 1605,
+  "sourceDependencyMismatches": [],
+  "productRuntimeGatesReused": true,
+  "reruns": []
+}

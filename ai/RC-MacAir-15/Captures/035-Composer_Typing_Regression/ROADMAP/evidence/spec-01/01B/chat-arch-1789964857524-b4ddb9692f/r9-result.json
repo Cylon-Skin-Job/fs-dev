@@ -1,0 +1,55 @@
+{
+  "caseId": "R9-INDICATOR-DISTINCTION",
+  "status": "passed",
+  "states": [
+    {
+      "label": "prompt-acceptance",
+      "observedAt": 676.0999999046326,
+      "composerDisabled": true,
+      "warming": 1,
+      "completing": 0,
+      "stop": 0,
+      "send": 0,
+      "assistantActivity": 0
+    },
+    {
+      "label": "turn-finalization",
+      "observedAt": 684.5999999046326,
+      "composerDisabled": true,
+      "warming": 0,
+      "completing": 1,
+      "stop": 0,
+      "send": 0,
+      "assistantActivity": 0
+    },
+    {
+      "label": "active-work",
+      "observedAt": 696.8000001907349,
+      "composerDisabled": false,
+      "warming": 0,
+      "completing": 0,
+      "stop": 1,
+      "send": 0,
+      "assistantActivity": 1
+    },
+    {
+      "label": "idle",
+      "observedAt": 703.2000002861023,
+      "composerDisabled": false,
+      "warming": 0,
+      "completing": 0,
+      "stop": 0,
+      "send": 1,
+      "assistantActivity": 0
+    }
+  ],
+  "blockedRenderer": {
+    "label": "blocked-renderer",
+    "startedAt": 704,
+    "endedAt": 779,
+    "composerDisabledBefore": false,
+    "composerDisabledAfter": false
+  },
+  "distinction": "disabled-state indicators are DOM/state claims; a blocked renderer is measured wall time while the composer remains enabled",
+  "contentCaptured": false
+}

@@ -1,0 +1,215 @@
+{
+  "at": "2026-10-04T21:06:23.190513+00:00",
+  "owner": "/root",
+  "scope": "SECOND recovery actual artifacts only; full S6/whole acceptance pending",
+  "entries": [
+    {
+      "id": "R1-D1",
+      "original_criterion": "Exact installed role/CWD/permissions/root inheritance loading",
+      "actual_change": "Supported default runtime explicitly loaded exact SKILL/TOML/contracts/standards",
+      "reason_authority": "Bound assignment and session portability contract",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/activation.json"
+      ],
+      "observable_effect": "No model/effort override or host configuration change",
+      "checks": [
+        "Current source hashes, verified actual CWD/separate roots, native identity"
+      ],
+      "risk": "Concrete model/effort/native loader metadata unexposed",
+      "downstream_consumer_impact": "Root closeout retains actual fallback and loader limit",
+      "owning_classification": "accepted within this explicit recovery assignment",
+      "classification_owner": "/root",
+      "root_classification": "accepted",
+      "proposed_classification": "accepted",
+      "owner": "/root/s6_supervisor_recovery_1",
+      "classification": "accepted",
+      "classified_at": "2026-10-04T21:06:23.190513+00:00",
+      "root_basis": "Actual activation/current contracts/native role fallback observed; no override or config change. Exposed loader limit retained.",
+      "root_evidence": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-root-recovery-inspection.json"
+    },
+    {
+      "id": "R1-D2",
+      "original_criterion": "Use public helpers while preserving all original immutable archives and prior guards",
+      "actual_change": "Unique public-controls jobs contain exact copied immutable manifest/sidecar/payload sets; only their mutable guards/readbacks are consumed",
+      "reason_authority": "Public CLI exposes only default <job>/restore-guard.json. Root explicitly authorized exact control copies through direct native message; no new capture",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/public-control-copy-equality.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/public-controls",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/saved-fixed-fresh-guard.json"
+      ],
+      "observable_effect": "Original owners/repo/scopes/hashes retained; every old guard and all1844 earlier job leaves remain in place unchanged",
+      "checks": [
+        "Exclusive copy byte/mode/mtime equality, actual public restore/verify, original namespace verify after every restore"
+      ],
+      "risk": "Copies have different physical inodes; original archive and guard identities remain exact",
+      "downstream_consumer_impact": "Root/S6 gate must distinguish control namespaces from immutable original checkpoints; no installed capability change",
+      "owning_classification": "accepted within this explicit recovery assignment",
+      "classification_owner": "/root",
+      "root_classification": "accepted",
+      "proposed_classification": "accepted",
+      "owner": "/root/s6_supervisor_recovery_1",
+      "classification": "accepted",
+      "classified_at": "2026-10-04T21:06:23.190513+00:00",
+      "root_basis": "Root-authorized exclusive copied controls independently checked exact bytes/mode/mtime and original owners/scopes. All six original archives, saved guard and1844 old records preserved; actual public restores and original-namespace verifies inspected.",
+      "root_evidence": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-root-recovery-inspection.json"
+    },
+    {
+      "id": "R1-D3",
+      "original_criterion": "Read current contracts and schedule facts without guessing runtime dependencies",
+      "actual_change": "Initial system python3 read-only inspection failed to import tomllib; inspection then used available python3.12 -B",
+      "reason_authority": "Installed predecessor command/runtime and Python3.12 support already available; no install/config change",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/diagnostic-attempts.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/independent-entry-inspection.json"
+      ],
+      "observable_effect": "First attempt made no candidate/source/profile writes; complete subsequent inspection succeeded",
+      "checks": [
+        "Original tool exception retained;104 full raw JSON records/78 command payload receipts independently parsed/readback"
+      ],
+      "risk": "Default python3 cannot run this tomllib inspection",
+      "downstream_consumer_impact": "Root/successor uses the recorded Python3.12 executable; not a product defect",
+      "owning_classification": "accepted within this explicit recovery assignment",
+      "classification_owner": "/root",
+      "root_classification": "accepted",
+      "proposed_classification": "accepted",
+      "owner": "/root/s6_supervisor_recovery_1",
+      "classification": "accepted",
+      "classified_at": "2026-10-04T21:06:23.190513+00:00",
+      "root_basis": "Read-only diagnostic retained; current correct executable inspection complete. No product dependency/config effects.",
+      "root_evidence": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-root-recovery-inspection.json"
+    },
+    {
+      "id": "R1-D4",
+      "original_criterion": "Protect all current normal/Alpha identities using UID/start/exe/entry/CWD/environment/profile facts",
+      "actual_change": "An initial local comparator expected cwd in every systemProcesses descendant record and stopped. Corrected extraction uses actual saved ps/lsof/environment fields for all13",
+      "reason_authority": "Some non-renderer helpers are not pre-enriched by systemProcesses; raw per-PID observations already exist",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/entry_inspection.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/independent-entry-inspection.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/diagnostic-attempts.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/final-preservation-proof.json"
+      ],
+      "observable_effect": "No effect or signal occurred; protected identities agree in five actual current samples",
+      "checks": [
+        "Exact13 UID/start/command/CWD/executable/machine/profile/ancestry comparisons; current private tree/listeners absent"
+      ],
+      "risk": "Raw full environment records remain local and may contain sensitive environmental values",
+      "downstream_consumer_impact": "Root inspects bounded normalized identity facts; no remote publication authorized",
+      "owning_classification": "accepted within this explicit recovery assignment",
+      "classification_owner": "/root",
+      "root_classification": "accepted",
+      "proposed_classification": "accepted",
+      "owner": "/root/s6_supervisor_recovery_1",
+      "classification": "accepted",
+      "classified_at": "2026-10-04T21:06:23.190513+00:00",
+      "root_basis": "Root independently reconstructed all13 process identities directly from five saved raw ps/lsof/environment samples, including CWD/executable/profile/machine/ancestry.",
+      "root_evidence": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-root-recovery-inspection.json"
+    },
+    {
+      "id": "R1-D5",
+      "original_criterion": "Prove public collision refusal nonmutating for candidate/source scope",
+      "actual_change": "After actual REFUSED, a local raw whole-source-porcelain equality assertion stopped because new recovery-1 receipts appeared. Corrected only the proof using exact J/E NUL-safe exclusions",
+      "reason_authority": "Root explicitly directed correction using assigned J/E records plus all outside leaves/staged entries/physical index/ref/config; no new authority",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/collision_and_fixed.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/continue_fixed.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/collision-nonmutation-proof.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/diagnostic-attempts.json"
+      ],
+      "observable_effect": "Full candidate4355/physical index/guard unchanged during refusal; source11977/index/flags/refs unchanged. Existing refusal was retained and not replayed; only known collision bytes undone",
+      "checks": [
+        "Before/after full relevant state equality, NUL-safe status with exact source J/E exclusions, full raw candidate/source stage/flags/config/ref/remotes/reflogs/physical indexes"
+      ],
+      "risk": "Whole source porcelain differs legitimately from evidence records; it must not be represented as byte-identical",
+      "downstream_consumer_impact": "Root/outer gates retain the failed proof and qualified successful correction; actual helper refusal passed",
+      "owning_classification": "accepted within this explicit recovery assignment",
+      "classification_owner": "/root",
+      "root_classification": "accepted",
+      "proposed_classification": "accepted",
+      "owner": "/root/s6_supervisor_recovery_1",
+      "classification": "accepted",
+      "classified_at": "2026-10-04T21:06:23.190513+00:00",
+      "root_basis": "Actual exit1 refusal and before/after full states/physical indexes checked; source NUL status correctly excludes only J/E. Failed local proof remains historical and no collision replay.",
+      "root_evidence": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-root-recovery-inspection.json"
+    },
+    {
+      "id": "R1-D6",
+      "original_criterion": "Fully inspect required bound sources/raw facts with bounded outputs",
+      "actual_change": "Oversized output requests truncated; required document sections were reread in smaller calls, and full raw JSON/command/payload structures were independently parsed and compared",
+      "reason_authority": "Read-only evidence scale; no source rewrite or lost raw receipts",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/activation.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/independent-entry-inspection.json"
+      ],
+      "observable_effect": "Full original governing contracts/standards and recovery state inspected; source/old evidence preserved",
+      "checks": [
+        "104 full raw predecessor JSON structures,78 raw commands, six archive/payload validation sets,165 current authority hashes"
+      ],
+      "risk": "Large raw structures were programmatically inspected rather than all echoed into the conversation",
+      "downstream_consumer_impact": "Root retains full saved raw files for its separate inspection; no prior verdict replaces raw verification",
+      "owning_classification": "accepted within this explicit recovery assignment",
+      "classification_owner": "/root",
+      "root_classification": "accepted",
+      "proposed_classification": "accepted",
+      "owner": "/root/s6_supervisor_recovery_1",
+      "classification": "accepted",
+      "classified_at": "2026-10-04T21:06:23.190513+00:00",
+      "root_basis": "All27 pins/191 raw receipts/16criteria/full snapshots and sources inspected programmatically and complete required narrative sections read.",
+      "root_evidence": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-root-recovery-inspection.json"
+    },
+    {
+      "id": "R1-D7",
+      "original_criterion": "Verify saved interrupted binary index/work bytes independently",
+      "actual_change": "Saved initial staged OID/full current state matched before mutation; actual immutable staged object bytes were separately read after original restore. Actual working preimage was saved before collision",
+      "reason_authority": "Content-addressed saved OID remains available in private candidate; explicit time qualification retained",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/saved-interrupted-raw-bytes-validation.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/saved-interrupted-stage-blob-readback.command.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/collision-known-original.bin"
+      ],
+      "observable_effect": "Actual38-byte staged and50-byte work values independently match predecessor raw hex/hashes, differ and contain0/ff",
+      "checks": [
+        "Saved initial actual index OID match, actual git cat-file blob receipt, raw work preimage hash/hex"
+      ],
+      "risk": "Stage-byte readback is subsequent; it is not described as a contemporaneous pre-control cat-file command",
+      "downstream_consumer_impact": "Root/S6 gate keeps exact timing and immutable-OID derivation separate from original stage/work restoration",
+      "owning_classification": "accepted within this explicit recovery assignment",
+      "classification_owner": "/root",
+      "root_classification": "accepted",
+      "proposed_classification": "accepted",
+      "owner": "/root/s6_supervisor_recovery_1",
+      "classification": "accepted",
+      "classified_at": "2026-10-04T21:06:23.190513+00:00",
+      "root_basis": "Full binary index readback hashes and Git blob identities checked; precontrol work bytes and subsequent immutableOID timing remain qualified.",
+      "root_evidence": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-root-recovery-inspection.json"
+    },
+    {
+      "id": "R1-D8",
+      "original_criterion": "Preserve protected live storage without claiming stable active DB content",
+      "actual_change": "All11 storage identities unchanged; normal/Alpha DB hash/stat deltas recorded separately",
+      "reason_authority": "Original runtime ownership/recovery boundary; no protected/profile/live-server DB copy/restore permitted",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/initial.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/after-original.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/final-preservation-proof.json"
+      ],
+      "observable_effect": "Protected app roots/descendants unchanged, private disposable profile bytes/metadata unchanged throughout this turn",
+      "checks": [
+        "Existence/kind/mode/dev/inode equality and raw before/after metadata/hash samples"
+      ],
+      "risk": "Running protected DBs naturally changed size/hash/mtime; no byte-stability claim",
+      "downstream_consumer_impact": "Root/closeout reports process and storage boundaries, not database content equality",
+      "owning_classification": "accepted within this explicit recovery assignment",
+      "classification_owner": "/root",
+      "root_classification": "accepted",
+      "proposed_classification": "accepted",
+      "owner": "/root/s6_supervisor_recovery_1",
+      "classification": "accepted",
+      "classified_at": "2026-10-04T21:06:23.190513+00:00",
+      "root_basis": "Root independently current-checked all11 protected storage identities and unchanged disposable profile leaves; no live DB content stability claim or profile restore.",
+      "root_evidence": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-root-recovery-inspection.json"
+    }
+  ],
+  "owner_rulings_required": [],
+  "downstream_required_correction": []
+}

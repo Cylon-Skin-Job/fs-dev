@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-07T23:05:24.359119+00:00",
+  "raw_search": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/orchestrator-checks/CALLER-CROSS-SEAM-01.txt",
+  "raw_sha256": "1bd3c3d86baab8a826148772e3c55e56ae71d5aa429939c1bef71cf8b9c51263",
+  "source_scope": "Current external callers/shared material/controller plus ordinary editor and distinct new creation/prefill integration",
+  "matches": [
+    "src/lib/chat-material-commit.ts:42:    store.addPendingAttachment(workspaceId, threadId, attachment);",
+    "src/lib/chat-material-commit.ts:61:  store.setDraft(workspaceId, threadId, next);",
+    "src/lib/chat-action-creation.ts:109:      drafts.setDraft(created.workspaceId, created.threadId!, next);",
+    "src/components/chat/ConnectedChatComposer.tsx:114:    useChatComposerDraftStore.getState().setDraft(workspaceId, threadId, text);"
+  ],
+  "interpretation": "Single shared addPendingAttachment/setDraft material mutation. Remaining draft mutations are ordinary connected editor typing and explicit new creation/prefill. No dead event/current target generic material bypass match.",
+  "server_skip": {
+    "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/fusion-studio-server/test/harness/compat.test.js",
+    "sha256": "b8ee5c9b839b9cc36badc695b5eb91862266b4a55195c41d38ac04f1ddc66426",
+    "baseline_equal": true,
+    "line": 194,
+    "name": "new mode spawns via harness",
+    "scope": "Existing skipped real harness compat spawn test; no new skip/current producer change; current native deterministic actual server SendACKDB is distinct proof, no provider cert."
+  }
+}

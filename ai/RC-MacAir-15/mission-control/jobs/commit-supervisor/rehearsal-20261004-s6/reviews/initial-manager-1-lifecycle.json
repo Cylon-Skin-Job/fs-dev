@@ -1,0 +1,91 @@
+{
+  "kind": "ACTUAL_REVIEWER_LIFECYCLE",
+  "mode": "initial",
+  "scope": "REHEARSAL_ONLY",
+  "manager": "/root/s6_supervisor_candidate_1/initial_review_manager_1",
+  "supervisor": "/root/s6_supervisor_candidate_1",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "actual_memory_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "candidate": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "candidate_identity_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-initial-identity.json",
+  "candidate_identity_sha256": "3de6328afa457b966aba13566273a7e83023c9525de97eb53ec87ffcafa8c3bd",
+  "manager_profile": "supported-default fallback with exact installed skill/profile/session/workflow/review-gate explicitly read and acknowledged before writes",
+  "settings": {
+    "root_inherited": true,
+    "model_override": false,
+    "reasoning_effort_override": false,
+    "concrete_values": "not exposed; not invented"
+  },
+  "effective_host": {
+    "sandbox_mode": "danger-full-access",
+    "approval_policy": "never",
+    "assignment_write_boundary": "manager reports and allocated reviewer raw report only"
+  },
+  "reviewers": [
+    {
+      "identity": "/root/s6_supervisor_candidate_1/initial_review_manager_1/all_lenses_reviewer_1",
+      "agent_type": "clean-room-reviewer",
+      "fork_turns": "none",
+      "spawn_status": "observed successful actual spawn",
+      "spawn_response": {
+        "task_name": "/root/s6_supervisor_candidate_1/initial_review_manager_1/all_lenses_reviewer_1"
+      },
+      "observed_status": "completed",
+      "observed_at": "2026-10-04 14:07:34 UTC",
+      "raw_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/initial-reviewer-1.raw.md",
+      "terminal_result": {
+        "return": "REVIEW_COMPLETE",
+        "result": "findings",
+        "mode": "initial",
+        "scope": "REHEARSAL_ONLY",
+        "reported_at": "2026-10-04T14:15:03.764865+00:00",
+        "host_terminal_observed_at": "2026-10-04 14:26:09 UTC",
+        "coverage": "all five lenses",
+        "finding_ids": [
+          "S6-I1-001",
+          "S6-I1-002",
+          "S6-I1-003"
+        ],
+        "attestations": {
+          "clean_room": true,
+          "read_only": true,
+          "root_inherited": true,
+          "terminal": true,
+          "original_authorities_loaded": true,
+          "actual_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control"
+        }
+      },
+      "closure": {
+        "tool_available": false,
+        "attempted": false,
+        "reason": "close_agent is not exposed; best-effort lifecycle recording only"
+      },
+      "raw_report_sha256": "b6268c64c098c48f1de81a55a2c41c8480f63264d50cf8f51cb9665b19eccd6c",
+      "raw_preservation": "Reviewer returned terminal body inline; manager preserved it verbatim as Markdown with final LF, readback SHA verified.",
+      "report_write_boundary": "Exact global clean-room-reviewer profile prohibits file edits; reviewer wrote no files."
+    }
+  ],
+  "tree_depth_from_root": 3,
+  "read_only_candidate": true,
+  "prior_verdicts_or_author_reports_read": false,
+  "events": [
+    {
+      "at": "2026-10-04 14:07:34 UTC",
+      "event": "actual fresh child running observed via collaboration.list_agents; all five lenses assigned, original raw authorities/current candidate/checks only"
+    },
+    {
+      "at": "2026-10-04 14:26:09 UTC",
+      "event": "Actual child completed status and verbatim terminal result observed via collaboration.list_agents; no close_agent exposed, lifecycle recorded without treating absence as blocked."
+    },
+    {
+      "at": "2026-10-04 14:26:09 UTC",
+      "event": "Manager independently validated all three findings and final readback: 128 owned entries,45 authority entries,1 configuration entry and NUL index/status records match current identity; no candidate mutation."
+    }
+  ],
+  "manager_terminal": {
+    "return": "REVIEW_COMPLETE",
+    "result": "findings",
+    "at": "2026-10-04 14:26:09 UTC",
+    "report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/initial-manager-1.md"
+  }
+}

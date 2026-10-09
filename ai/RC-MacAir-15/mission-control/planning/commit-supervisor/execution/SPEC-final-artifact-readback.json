@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-05T04:53:53.832433+00:00",
+  "result": "FINAL_OWNER_ARTIFACT_READBACK_PASSED",
+  "report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md",
+  "report_sha256": "da27c283678cf7137a38fec70e5641472e169007e0570905a96f055f09a730b6",
+  "full_field_contexts": 119,
+  "unique_ids": 113,
+  "source_snapshots": 19,
+  "local_report_links_resolve": 31,
+  "slices": "6 accepted",
+  "gate": "actual independent CLEAN / completed",
+  "required_repairs": [],
+  "owner_rulings_required": [],
+  "initial_diagnostic_qualification": "Initial artifact assertions incorrectly required nonempty files lists and uniform list type. 21 pure procedural/no-file contexts truthfully use files: []; one original procedural entry uses prose string. All original eight fields are present and preserved without rewriting them. Failed initial diagnostic assertions are not represented as successful checks. No artifact/source change or suite/gate replay occurred."
+}

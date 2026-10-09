@@ -1,0 +1,48 @@
+{
+  "runId": "chat-arch-1790303497603-c3c65ba1fc",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R8-PRE-RECEIPT-UPGRADE",
+      "code": 0,
+      "signal": null,
+      "pid": 27209,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 10434
+    },
+    {
+      "id": "R8-SESSION-LIFECYCLE",
+      "code": 0,
+      "signal": null,
+      "pid": 28778,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 10260
+    },
+    {
+      "id": "R5-DIAGNOSTIC-APPEND",
+      "code": 0,
+      "signal": null,
+      "pid": 30373,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 3147
+    },
+    {
+      "id": "R5-CURRENT-OWNER",
+      "code": 0,
+      "signal": null,
+      "pid": 30756,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 2755
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

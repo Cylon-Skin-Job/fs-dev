@@ -1,0 +1,28 @@
+{
+  "caseId": "R6-LIFETIME-BOUNDARIES",
+  "mode": "enforce",
+  "status": "failed",
+  "exitCode": 1,
+  "assertions": [
+    "prompt wait retired-socket listener ownership",
+    "complete same-workspace competing open listener and draft readback",
+    "prompt resolution and create completion listener cleanup"
+  ],
+  "observations": {
+    "promptLifetime": {
+      "retiredSocketListeners": 1,
+      "newSocketListeners": 0
+    },
+    "unrelatedOpen": {
+      "completeSameWorkspaceCompetingFrame": true,
+      "listenerPreserved": false,
+      "draftPreserved": false
+    },
+    "createLifetime": null,
+    "promptCompletion": {
+      "listenersBefore": 0,
+      "listenersAfterResolution": 1
+    }
+  },
+  "productSourcePatched": false
+}

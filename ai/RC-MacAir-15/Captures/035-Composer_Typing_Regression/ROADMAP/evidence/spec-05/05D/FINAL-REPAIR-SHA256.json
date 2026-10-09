@@ -1,0 +1,17 @@
+[
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/server-focused-regressions.mjs",
+    "before": "899cbb254eb3f5b2fa8bfab2cc149cc4762cd130c01254a6c5bb339575e24c15",
+    "after": "9d06bdddfe891bcf037b07bc06c631dd37a2f05625ae16d5709d20a6a20f7a81"
+  },
+  {
+    "path": "fusion-studio-server/lib/thread/provider-termination.js",
+    "before": "659554ff4ca75844f8df2e1c071f3834c30e3b062faf581a7fc73276318abaa5",
+    "after": "f70cacad959ade9afc1a72855f5d4e230f0ab46677bb7548dd109eaf2ab80f1b"
+  },
+  {
+    "path": "fusion-studio-server/test/thread/provider-termination.test.js",
+    "before": null,
+    "after": "cdf3349159670d28cc05f57c6d3a379992c0e4653dbe2d516de0823d1aa5eac0"
+  }
+]

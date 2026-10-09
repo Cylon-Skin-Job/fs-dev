@@ -1,0 +1,208 @@
+{
+  "at": "2026-10-07T22:37:02.050569+00:00",
+  "state": "Prepared current path inventory only; not review dispatch/acceptance",
+  "rows": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/SPEC.md",
+      "sha256": "063562058007928d07477913a1ba05e43a2d191d6e42a0e9cb1d6a6e5c71659e",
+      "role": "approved authority/guidance"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/TICKET.md",
+      "sha256": "730b6c92efa396eeb3abdc5ee6c522c692c790db9c288346d141ad57817e0074",
+      "role": "approved authority/guidance"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/OWNER-REQUEST.md",
+      "sha256": "71dd8441f4ee79f9c0688ec335de0a553d9dfd6f4a6b2b60a93d8f222a529c1d",
+      "role": "approved authority/guidance"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/OWNER-APPROVAL.md",
+      "sha256": "459e03d05c8e2144db863cb9e31d46586e80fe2912641ee7157abbfae9a4b942",
+      "role": "approved authority/guidance"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2-DISPATCH.md",
+      "sha256": "dd698a684c5b22c968f31d267d59731ced490206a90b39aa51478089a29d497f",
+      "role": "approved authority/guidance"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M1/ACCEPTANCE.json",
+      "sha256": "8aa8348999d710d3fbbbf7bfb8cdafacbef2e02070f03cba3c576ac8cb59cd75",
+      "role": "approved authority/guidance"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/session-contract.md",
+      "sha256": "d82d5a815a94f8c27b64d1d90aa0085790e3d98408c011e86d6126dd1bd9b570",
+      "role": "approved authority/guidance"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-slice-builder/SKILL.md",
+      "sha256": "c4ca4bf6f739ea4bea811b6de41cbea6685ad0abd89543f77df33a8e95ccca94",
+      "role": "approved authority/guidance"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-review-gate/SKILL.md",
+      "sha256": "cc738b3ecebca875b1f6d4460d26c3185dd3b3dd2a93550086742995a0c6c56a",
+      "role": "approved authority/guidance"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/AGENTS.md",
+      "sha256": "41dc4e9dc4d58e7505cb6fc37b500129502231293894b5f90eda9398315e001d",
+      "role": "approved authority/guidance"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/005-User_Profile_Preferences_and_Design_Philosophy/PAGE.md",
+      "sha256": "45fa9f630563d79935d5a461b308c823c0db3ded5c23817ba6d4c8a06c794ed5",
+      "role": "current product Wiki"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md",
+      "sha256": "696afb2d3ec027256e783957c3461eb03300db0b97b34b3e62162977c22ed42f",
+      "role": "current product Wiki"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/PAGE.md",
+      "sha256": "afdbf7bb3403cdf176a6fad3867536bdb68c1587e1ba36a5997aba362781d977",
+      "role": "current product Wiki"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md",
+      "sha256": "db5cf6e804b9b100142b0caf9f22d2039ab97eab6e17d87fca24ef835f5f6a10",
+      "role": "current product Wiki"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md",
+      "sha256": "c7fb7b31252fe7fa3fd4ac990c03831ebe075867f912c6244694a637a0f1a55f",
+      "role": "current product Wiki"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+      "sha256": "2ca9937fd14648f9af85e6b3effd151c0107811b4eadacb551a7938ef00b4ceb",
+      "role": "current product Wiki"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "sha256": "a89486b49f342c611331ec9874908d4a47aa0c4ace9dde968762b63936f23d14",
+      "role": "current product Wiki"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "sha256": "3558d01fb05ea0a0c926b2432bcf538d2c68dfb21306e915b55ad5b037c07861",
+      "role": "current product Wiki"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/PAGE.md",
+      "sha256": "955d09f7f9aba6928e7c41d9b462912705aad70d39b869ca3d24d062435610b6",
+      "role": "current product Wiki"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/001-Wiki_Viewer_UI_Context/PAGE.md",
+      "sha256": "b4ba96fbe02a02b9c343f34bcb7de6e8cb2362cdda20dfcd9896fc9eb0235ac9",
+      "role": "current product Wiki"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/002-File_Viewer_UI_Context/PAGE.md",
+      "sha256": "fa1cbc58c49cc09fe505a3c4fd4df4b9c358d7a9bd0b77437faf091c77d7e102",
+      "role": "current product Wiki"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md",
+      "sha256": "de3995c68ae84f3b0fa389c6af0327e21dd08f30ac9ffbc7548b76f80ac393d7",
+      "role": "current product Wiki"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/001-Architecture_Routing/PAGE.md",
+      "sha256": "4c5fcbf62912c9e8ff6d3d0e1ec07016145e1f1c90c792a162dfcc3ca1b0bfba",
+      "role": "current product Wiki"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/002-Frontend_UI/PAGE.md",
+      "sha256": "18a093c333a610ec8d2c77661b29744f1fae6e9ca8f4e113148fee10a0d9fc18",
+      "role": "current product Wiki"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/PAGE.md",
+      "sha256": "2b4e55ed7580659b35a91d13f5a7b781960c659868027dd8b6ea6f79e609b105",
+      "role": "current product Wiki"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/004-WebSocket_Protocol/PAGE.md",
+      "sha256": "5b77528cec69d60c11c0487a349ec1cfb0b9a47eb69c213dedd1fbf1797dbad6",
+      "role": "current product Wiki"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "sha256": "25689bb9d2540fff061040ed14f5dc9789a4d9ceaa49662a4e0a1e448f5b0ee0",
+      "role": "current product Wiki"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md",
+      "sha256": "bd3e7be468289ac0a6ee6502cd8b9fc340f03fd7568deb59370ed00cc3b2a7a3",
+      "role": "current product Wiki"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/008-Testing_And_Smoke_Slices/PAGE.md",
+      "sha256": "e7319750bd27b7ccdad8e5e451b9779044e8fc7a713fc6d461113b409b39018d",
+      "role": "current product Wiki"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3-DISPATCH.md",
+      "sha256": "e1df476ad24b4a9c11a9b72d7a086c3d0da575c1c1f45fd1508bec765c9c54b7",
+      "role": "authority/current source context"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-orchestrator/SKILL.md",
+      "sha256": "2cf5f52c9ce9a795a66ee3cf97e7cb3b37bbbc9bc59f3f073f1a12cddcab100c",
+      "role": "authority/current source context"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md",
+      "sha256": "71585cb63d185136da2dec2379630718be91283b0a69938115cf76251db9a821",
+      "role": "authority/current source context"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/PAGE.md",
+      "sha256": "06b897d771c58ce2ce25612f2cfaaf71c1aef24f4028eb4ea0eaac8134837891",
+      "role": "authority/current source context"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md",
+      "sha256": "b0be25a9a244ce38b1427f6dd5b2f63dcac4806a5fe7b9eee47816cd848fb6ed",
+      "role": "authority/current source context"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/fusion-studio-server/AGENTS.md",
+      "sha256": "00d56bfd0e50a512bd1d8e76110c6882ce7d9cbdac58782839ee6426c1d54fd2",
+      "role": "routed product/Wiki guidance"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/AGENTS.md",
+      "sha256": "9d353611f3b5ac94efa92048d1c0f8879d71786bcf1b641f915a0f695f5ef697",
+      "role": "routed product/Wiki guidance"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md",
+      "sha256": "b8e14ae251fa373b559f97b67db5a3b3d2288f2b5d1893d3dbbb2900bd74566e",
+      "role": "routed product/Wiki guidance"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/001-Style_Guide/PAGE.md",
+      "sha256": "28ae2301be3115e22b6d69691fb5208e2625945998393071874b9a1fbee70629",
+      "role": "routed product/Wiki guidance"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/003-Updating_Wikis/PAGE.md",
+      "sha256": "ec1739e2d693c07c5691fa3624b200915ea1c65257a09b75c853ff1c181a1a78",
+      "role": "routed product/Wiki guidance"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/PAGE.md",
+      "sha256": "2ea02f01a6b71621e59c7b198e53af019194cc4620efdb0ffd8a7199cdadc637",
+      "role": "routed product/Wiki guidance"
+    }
+  ],
+  "read_policy": "Complete approved SPEC/owner instruction, exact primary skill/session contract, current product standards and routed pages; approved original normative Wiki available in primary checkout. Current seven changed Wiki claims are deliverables, not new owner scope.",
+  "updated_at": "2026-10-07T22:37:57.208326+00:00"
+}

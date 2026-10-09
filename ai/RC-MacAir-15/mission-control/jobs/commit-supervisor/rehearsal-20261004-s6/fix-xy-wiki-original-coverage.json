@@ -1,0 +1,113 @@
+{
+  "at": "2026-10-04T16:47:34.227533+00:00",
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "scope": "Original entire three-page Wiki plus X/Y; beyond metadata; no missing subject inferred merely from file lists",
+  "source_root": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "target_baseline": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "code_settlement": "Current clean independent original-affected handoff plus required checks; evidence/fix-xy-code-handoff-acceptance.json",
+  "sources": {
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html": {
+      "sha256": "968e599ca4814c3a8e246d9d12ee985e0cf8a9ef8e3cd6d55e6b4a9a9b62f480",
+      "mode": "0o100644",
+      "mtime_ns": 1791131595943075582,
+      "bytes": 431
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css": {
+      "sha256": "f0e280d99afff67dda2c753192697d63dd74d20140794537f6cb2ae774ae8f0d",
+      "mode": "0o100644",
+      "mtime_ns": 1791131595943524332,
+      "bytes": 450
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js": {
+      "sha256": "55bb735409a940717d683a9256a7d55f467a92576923e26fe829518d3effa87e",
+      "mode": "0o100644",
+      "mtime_ns": 1791131595942223914,
+      "bytes": 709
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js": {
+      "sha256": "48ae78dfda264edb62fadf5bdd72e1f07c2f5b54b127ddb7296c41188f2d70bf",
+      "mode": "0o100644",
+      "mtime_ns": 1791131595941706872,
+      "bytes": 885
+    },
+    "scripts/fusion-restart-target.mjs": {
+      "sha256": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+      "mode": "0o100644",
+      "mtime_ns": 1791118139076237010,
+      "bytes": 5520
+    },
+    "scripts/fusion-restart.mjs": {
+      "sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+      "mode": "0o100644",
+      "mtime_ns": 1791118139076413719,
+      "bytes": 6372
+    }
+  },
+  "pages": {
+    "rehearsal-workspace/ai/MC-S6/Wiki/PAGE.md": {
+      "sha256": "09d0c7fd6ad2882d50c137412194c6060f2e6d9668d7d3a3e1569f3274ea3a6c",
+      "mode": "0o100644",
+      "mtime_ns": 1791118139075267633,
+      "bytes": 219
+    },
+    "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/002-Navigation_Guide/PAGE.md": {
+      "sha256": "7a3058e3ca2a0b793e6c4831487b53098a49c4c80f2f3d91f8a2dbe6463b28ed",
+      "mode": "0o100644",
+      "mtime_ns": 1791118139075062550,
+      "bytes": 434
+    },
+    "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md": {
+      "sha256": "a3d372eba6208c2fbee71cd046f305a91fc7c44185c5dae42b5da50e5cbcfdce",
+      "mode": "0o100644",
+      "mtime_ns": 1791127125004254272,
+      "bytes": 1620
+    }
+  },
+  "article_scope": [
+    {
+      "subject": "Checklist behavior",
+      "canonical_article": "001-Checklist/001-Checklist_Guide/PAGE.md",
+      "required_facts": [
+        "Review report/current stable draft ID",
+        "Review sources and Send summary",
+        "all three rows/checkboxes visible",
+        "completion/reversal and exact3\u21922\u21921\u21922 / reload retaining review / all0 / all3",
+        "N remaining of 3 counts incomplete tasks",
+        "Reset completion immediately clears and persists all3; reload retains reset",
+        "ordinary reload retains completion versus full canonical restart reset",
+        "useful Navigation crosslink"
+      ],
+      "disposition": "repair after settled code; all reader facts fit existing Guide"
+    },
+    {
+      "subject": "Navigation",
+      "canonical_article": "001-Checklist/002-Navigation_Guide/PAGE.md",
+      "required_facts": [
+        "tool rail selects view",
+        "Checklist custom iframe and Wiki React built-in",
+        "selecting either retains the other view",
+        "Checklist Guide link"
+      ],
+      "disposition": "retain exact bytes, timestamp and mtime; unchanged shell route dependencies verified"
+    },
+    {
+      "subject": "Root reading purpose",
+      "canonical_article": "PAGE.md",
+      "required_facts": [
+        "Checklist section purpose"
+      ],
+      "disposition": "retain exact bytes, timestamp and mtime"
+    }
+  ],
+  "data_instruction_absences": {
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/AGENTS.md": true,
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/.agents/wiki-session-contract.md": true,
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/.agents/skills/wiki-research/SKILL.md": true,
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/.agents/skills/wiki-repair/SKILL.md": true,
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/.agents/skills/wiki-audit/SKILL.md": true
+  },
+  "procedure_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki",
+  "structure": "unchanged; no new article/navigation/generation/Sync Wiki Context/manual hierarchy assigned",
+  "limits": "Source-based disposition only; independent Wiki review builds own original coverage from source/raw pages; actual UI/runtime later",
+  "settled_source_identity": "c3550adee994701e1de95927c8044985ae9c964f5ae1a4523345182512a8f721"
+}

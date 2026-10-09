@@ -21,6 +21,12 @@ let sequence = 0;
 
 /** Request resources live here, outside the invoking React mount. */
 export function consumeCreationAction(request: ChatActionRequest): void {
+  // No current producer uses prompt resolution for insertion. Do not recurse
+  // into the retired address-only material bypass after asynchronous resolve.
+  if (request.target === 'current' && request.delivery !== 'send') {
+    request.complete({ status: 'failed', reason: 'unsupported' });
+    return;
+  }
   const origin = request.capturedAddress;
   const binding = useWorkspaceStore.getState();
   const panel = usePanelStore.getState();

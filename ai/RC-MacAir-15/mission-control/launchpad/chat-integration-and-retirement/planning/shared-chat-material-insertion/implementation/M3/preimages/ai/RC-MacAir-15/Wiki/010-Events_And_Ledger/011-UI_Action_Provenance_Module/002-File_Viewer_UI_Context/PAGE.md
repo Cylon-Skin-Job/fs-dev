@@ -1,0 +1,36 @@
+---
+name: File Viewer UI Context
+description: Current connected File save context and attachment owners, with the future prompt UI-action adapter boundary.
+metadata:
+  source-files:
+    - fusion-studio-client/src/components/view-tabs/fileConnectedTabs.ts
+    - fusion-studio-client/src/lib/save-action-context.ts
+    - fusion-studio-client/src/state/fileDataStore.ts
+    - fusion-studio-client/src/components/file-explorer/FileViewer.tsx
+    - fusion-studio-client/src/components/file-explorer/FileDocumentPresenter.tsx
+    - fusion-studio-client/src/components/SendToChatButton.tsx
+    - fusion-studio-client/src/lib/resource-path.ts
+    - fusion-studio-client/src/lib/chat-action-controller.ts
+    - fusion-studio-client/src/components/chat/useChatSessionActions.ts
+  last-modified: "2026-09-28T04:56:08Z"
+---
+
+Status: the underlying provenance assessment was source-inspected on 2026-09-19; this cleanup rechecked attachment staging and send ownership against the current development source. The connected File owner supplies optional tab/component context to mediated saves; File reading and Chat attachment staging exist. A File prompt-with-resource `ui.action` adapter is not implemented. Tests were inspected, not rerun; no live UI or Alpha claim is made.
+
+## Current context source
+
+`readActiveFileConnectedTabContext` reads the mounted connected File runtime's current collection and active component descriptor. `readSaveActionContext(panel)` uses it only when its workspace and view match the save's initiating registered panel. It copies bounded `tabId`, `componentTypeId`, `componentInstanceId`, `presenterId` and optional `targetKey`; no matching component yields only available workspace/view context. The accessor's active tab is not a canonical resource identity, and `targetKey` does not authorize a filesystem path.
+
+The reader does not reconstruct tab identity from global legacy file-store tabs, navigation history, an attachment ID or a React key. The server sanitizer checks bounded shape and workspace echo, not actual current tab existence. The saved record is a historical snapshot with no live view-state writeback. [UI Action And Context Provenance](../../003-Provenance_Model/007-UI_Action_And_Context_Provenance_Schema/PAGE.md) gives the full reader → store → save route → durable operation/fact → query chain.
+
+The policy-ready `FileDocumentPresenter` and fallback `FileViewer` consume the central File content store. They are readers/attachment surfaces, not current mediated text-save editors. Production Office/Email saves use the store; their initiating panel does not automatically match the connected File owner. Thus the carrier's support for File tab context is not evidence of a File save gesture or all-view context coverage.
+
+## Current attachments and future pair
+
+`SendToChatButton` resolves panel-relative attachment paths through `resource-path` and stages them through the Chat action bridge. At composer send time `useChatSessionActions` reads workspace/session-owned pending attachments and uses the ordinary prompt route. Tree navigation, tab changes, staging and prompt send do not currently emit a general `ui.action` fact.
+
+File and Wiki Viewer are the selected first pair for future prompt-with-resource provenance. The proposed `chat.send_with_resource` intent would distinguish the active File context at send from each attached subject, which can come from another panel or an earlier selection. A configured File content root may be a subdirectory; a future adapter must respect authoritative root resolution rather than assume a panel-relative path is already workspace-relative.
+
+Before building that adapter, approve current-owner selectors, context/subject schema and absence behavior, server admission/path validation, sensitive-field policy, bounds and scheduling/failure semantics. The earlier activity-tab mapping and private-token envelope are proposals; they must be checked against the connected-owner architecture before implementation. Do not promote a tab/path/attachment ID to a resource ID or causal link. Optional context capture must preserve the independently accepted prompt/attachment operation, including its order.
+
+The [UI Action Provenance Module](../PAGE.md) owns shared design. Future acceptance must exercise staging separately from actual send, matching and unavailable connected owners, cross-panel subjects, stale workspace context, persistence/query and a real display consumer. Existing save-context tests do not certify that future prompt adapter or an audit UI.

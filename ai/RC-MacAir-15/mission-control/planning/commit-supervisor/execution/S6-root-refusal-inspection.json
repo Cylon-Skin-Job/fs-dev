@@ -1,0 +1,32 @@
+{
+  "at": "2026-10-04T20:00:05.589589+00:00",
+  "actor": "/root",
+  "scope": "ROOT_INSPECTION_EXCLUDED_FROM_FRESH_GATES",
+  "actual_observer": "/root/s6_supervisor_refusal_1",
+  "native_terminal": "Actual FINAL_ANSWER unmet-gate/currentreadyfalse plus root exact-subtree native completed; no descendants. close_agent unavailable.",
+  "four_independent_actual_mismatches_validated": true,
+  "actual_diagnostic_failure": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/fault-module-check.command.json",
+  "initial_default_node_check0_qualified": true,
+  "full_source_helpers_report_appendix_checkpoint_proof_lifecycle9deviations_read": true,
+  "independent_raw_before_after_comparison": "candidate4355/source11977/cache193/private461/historical950/process8 and protected storageidentity11; source/candidate refs/config/physical/semanticindices same; source status additions in assignedEJ only.",
+  "limits": "Two normal/Alpha active database raw hashes/size/mtime differ; identities retained, no protected byte-equality assertion or restoration. Node default-check0 is not syntax certification. Retired prior actors covered by actual stored native terminal receipts, no invented current observation.",
+  "current_ready": false,
+  "observed_candidate_or_runtime_mutations": [],
+  "checkpoint_sha256": "25c858473d539f7eac8706439c5dff061e2f74445839411ef864b453f8f31134",
+  "raw_files_sha256": {
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/report.md": "44cf39fabae4d4df532e287e1391c126638d0f716715bc47b343607b130f5912",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/report-appendix.md": "8c17f83e6c6ae606490765916d19c12c5be42b2195d7bbee2a5155ed9c35675c",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/checkpoint.json": "25c858473d539f7eac8706439c5dff061e2f74445839411ef864b453f8f31134",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/inspection.json": "23e7ef792cd6ab82877104eff7c1be163ab0648d3ecd5ae762673862b8570e5e",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/before.json": "83b645afa504deadce719660a2c7946ac67d989619e460e050647c0deced5e54",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/after.json": "3a81a8e3d8a8ecd8afa77343db63c5136d2b2c81ee73eaf56c2fd80613299d8c",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/protection-comparison.json": "0f48c5489fb7ab2120dd971bf296cdae6c9281fd02dec403d651243f73f856f9",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/zero-observer-mutation-proof.json": "3a9a38d101db1067992ca62238745cd5350c1abf0c51a80be220c5837a7b0b7b",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/deviations.json": "b992b17f158acea1c98bb959ca1a964211fd3e5d446bf7eef05357ad0325333f",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/lifecycle.json": "aed76d34b02e4437fd68aa91669ce30e96f132bd8d5d178c1447d2193b0ebda0",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/first-wiki-recovery-readback.json": "8bb306deeeabc243197ea650d07d9c1159c38af47cdf15cd15def33258d6ae8b",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/final-artifact-readback.json": "4e25dde329b605a0e0b944d9e964b45750dbdc7509cf3b3235345bdf0393eafc"
+  },
+  "actual_publication_authority": "NONE",
+  "next_safe_action": "Root exact private control restore; separately activate first interruption actual Supervisor turn."
+}

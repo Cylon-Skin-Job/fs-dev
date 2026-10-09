@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "kind": "ACTUAL_SUPERVISOR_PROVIDER_RELEASE_VALIDATION",
+  "scope": "REHEARSAL_ONLY",
+  "at": "2026-10-04T13:49:08.784033+00:00",
+  "actor": "/root/s6_supervisor_intent_1",
+  "provider_issue": "FIXTURE_PROVIDER_01",
+  "provider": "fixture-sample-provider",
+  "consumer": "checklist-view",
+  "resolver": "/root",
+  "result": "RELEASE_VALIDATED_FOR_FIXTURE_PREREQUISITE_ONLY",
+  "receipt_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-provider-release.json",
+  "receipt_sha256": "640826099fcb1fc2e283b81384a1faba514d98fa2072d7550ce97ee6a6c714df",
+  "sample_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-provider-sample.json",
+  "sample_sha256": "d5fdc410a26a65471c519e1accb2745b93813bf7123299e77e2d95e41de1be40",
+  "exact_sample": [
+    {
+      "id": "draft",
+      "label": "Draft report"
+    },
+    {
+      "id": "review",
+      "label": "Review sources"
+    },
+    {
+      "id": "send",
+      "label": "Send summary"
+    }
+  ],
+  "existing_baseline_full_id": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "source_candidate_target_all_match": true,
+  "original_authority_sha256": "d56710db1edba2ba6ef8798975fb1fb4808a301b0ea2e46bcb81d6645e251010",
+  "consumer_source_path": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js",
+  "consumer_source_sha256": "2b9276858645f88d423fb044816deb3b84049b1be09e74369353549d712f2412",
+  "consumer_task_readback": [
+    {
+      "id": "draft",
+      "label": "Draft report"
+    },
+    {
+      "id": "review",
+      "label": "Review sources"
+    },
+    {
+      "id": "send",
+      "label": "Send summary"
+    }
+  ],
+  "preparation_ui_raw": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-public-ui-observation.json",
+  "preparation_ui_sha256": "37602cf4d680ec84edf4765fdff8d6d97c2f3020c3488925f8db920359ba5f72",
+  "preparation_ui_started": "2026-10-04T12:42:15.328Z",
+  "preparation_ui_finished": "2026-10-04T12:42:18.774Z",
+  "preparation_ui_seven_samples_labels_match": true,
+  "preparation_ui_limit": "Historical real preparation observation verifies label readback at its recorded time only; no current repaired numerical behavior, successful runtime or production adoption claim.",
+  "predecessor": {
+    "identity": "/root/s6_supervisor_provider_1",
+    "terminal": "completed",
+    "return": "waiting-dependency",
+    "observed_via": "Actual collaboration.list_agents on this turn plus parent E terminal/ledger receipt; only lifecycle used from other earlier agents text.",
+    "release_issued_after_observed_terminal": true,
+    "close_agent": "unavailable"
+  },
+  "fixture_landed": {
+    "kind": "REHEARSAL_ONLY_SIMULATED_LANDING",
+    "simulated": true,
+    "existing_baseline_full_id": "d15792920731f85e45b743519d4af2b807d95a9c",
+    "actual_landing": false,
+    "new_commits": false
+  },
+  "simulated_consumer_adoption": {
+    "kind": "REHEARSAL_ONLY_SIMULATED_CONSUMER_ADOPTION",
+    "separate_from_landing": true,
+    "production_adoption": false,
+    "current_fixture_source": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js",
+    "current_fixture_source_sha256": "2b9276858645f88d423fb044816deb3b84049b1be09e74369353549d712f2412",
+    "actual_preparation_ui_labels_raw": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-public-ui-observation.json",
+    "actual_preparation_ui_sha256": "37602cf4d680ec84edf4765fdff8d6d97c2f3020c3488925f8db920359ba5f72",
+    "scope": "Private fixture source plus time-qualified real preparation UI label readback only; successor independently checks current source/task identity."
+  },
+  "actual_landing": "NONE",
+  "actual_production_adoption": "NONE",
+  "actual_new_commit": "NONE",
+  "git_operation_authority": "NONE",
+  "prerequisite_build_authority": "NONE",
+  "historical_provider_hold_preserved": {
+    "json": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/provider-hold.json",
+    "json_sha256": "e0cb89103c22d7ab039d1a9d4535ceb5bcc99ba2a6b5d889864127f31e8c99f9",
+    "report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/provider-hold-report.md",
+    "report_sha256": "e4bab70c3ac55ca7b98f19c5b7129c35f4632771d1a660f520d5574ab61b4f15"
+  },
+  "intent_state": "FIXTURE_INTENT_01 UNRELEASED",
+  "no_completed_intake_replay": true
+}

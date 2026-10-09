@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-05T03:28:39.580815+00:00",
+  "unowned_total": 15942,
+  "current_differences": [
+    {
+      "path": "ai/RC-MacAir-15/System/Views/002-file-viewer/state/state.json",
+      "baseline": {
+        "mode": 384,
+        "kind": "file",
+        "sha256": "a3d0bd604ca496a8924c11e120f84fe12ea0a1ffd7c6c58452c007ade8f02345"
+      },
+      "current": {
+        "kind": "file",
+        "mode": 384,
+        "sha256": "a5795ffa17dcf9db35d5a70082f7e79d55d570a34b4357bf7849107d965e0f94"
+      },
+      "current_mtime_UTC": "2026-10-04T22:01:09.029208+00:00",
+      "dev": 16777230,
+      "ino": 259045826
+    }
+  ]
+}

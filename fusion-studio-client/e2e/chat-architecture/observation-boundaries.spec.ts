@@ -20,13 +20,15 @@ async function buildHarness(): Promise<string> {
   const source = `
     import React from 'react';
     import { createRoot } from 'react-dom/client';
+    import { useWorkspaceStore } from ${JSON.stringify(path.resolve('src/state/workspaceStore.ts'))};
+    import { installProductSendCapability } from ${JSON.stringify(path.resolve('src/lib/ws/product-send.ts'))};
     import { usePanelStore } from ${JSON.stringify(panelStore)};
     import { useChatComposerDraftStore } from ${JSON.stringify(draftStore)};
     import { useChatFileLinkStore } from ${JSON.stringify(attachmentStore)};
     import { useChatSubmissionStore } from ${JSON.stringify(submissionStore)};
     import { ChatSessionHost } from ${JSON.stringify(host)};
     import { ChatSurfaceComponentMount } from ${JSON.stringify(componentMount)};
-    import { dispatchChatAction } from ${JSON.stringify(action)};
+    import { dispatchChatAction, beginChatMaterial, commitChatMaterial } from ${JSON.stringify(action)};
     import { installChatActionConsumer } from ${JSON.stringify(actionController)};
     import { handleChatDiagnosticReportFrame } from ${JSON.stringify(diagnosticHandlers)};
 
@@ -41,7 +43,14 @@ async function buildHarness(): Promise<string> {
     }
     const sockets=[];
     function socket(name) { const value=new FixtureSocket(name); sockets.push(value); return value; }
-    const first=socket('first');
+    function authorize(value) {
+      installProductSendCapability({ socket: value, generation: 'fixture-generation', isAuthenticated: () => true,
+        captureBinding: workspaceId => ({workspaceId,workspaceEpoch:'fixture-epoch',bindingRevision:1,bindingSerial:1}),
+        isBindingCurrent: binding => binding.workspaceId === 'fixture-workspace',
+        sendProductResult: (serialized, policy, current) => { if (!current()) return {status:'not_enqueued',reason:'stale_binding'}; value.send(serialized); return {status:'enqueued',transport:'socket'}; } });
+    }
+    const first=socket('first'); authorize(first);
+    useWorkspaceStore.setState({activeWorkspaceId:'fixture-workspace',workspaceEpoch:'fixture-epoch',bindingRevision:1,bindingSerial:1,hasReceivedInit:true});
     const row=(threadId, groupId, viewId, overrides={})=>({threadId,threadGroupId:groupId,workspaceId:'fixture-workspace',viewId,
       currentPrimaryThreadId:threadId,currentPrimarySequence:1,memberCount:1,createdAt:1,updatedAt:1,
       entry:{name:threadId,createdAt:'2026-01-01T00:00:00.000Z',messageCount:0,status:'active',harnessId:'opencode',harnessConfig:{}},...overrides});
@@ -61,7 +70,7 @@ async function buildHarness(): Promise<string> {
         placementId:'side-placement-a',disposition:'open',updatedAt:'2026-01-01T00:00:00.000Z',descriptor:{schemaVersion:1,
           componentTypeId:'fusion.chat-surface',componentInstanceId:'chat-side:side-placement-a',targetKey:'side-placement-a',
           input:{workspaceId:'fixture-workspace',viewId:'capture-viewer',threadGroupId:'group-a',threadId:'thread-a',host:'side-tab'}}}}};
-    usePanelStore.setState({activeWorkspaceId:'fixture-workspace',currentPanel:'panel-a',currentThreadId:'thread-b',chatActive:true,ws:first,
+    usePanelStore.setState({activeWorkspaceId:'fixture-workspace',currentPanel:'capture-viewer',currentThreadId:'thread-b',chatActive:true,ws:first,
       threads:[movedGroup,otherGroup],
       projectChats:{'thread-a':empty(),'thread-b':empty(),'thread-c':empty()},viewStates:{},contextUsageByThread:{},tokenUsageByThread:{},wireReadyByThread:{},
       harnessSelectionByThread:{},threadGroupsByWorkspaceAndView:{'fixture-workspace':{'capture-viewer':[movedGroup],'wiki-viewer':[otherGroup]}},
@@ -85,7 +94,13 @@ async function buildHarness(): Promise<string> {
       React.createElement('div',{id:'side-after-move','data-placement':'side-placement-a','data-group-id':'group-a','data-side-thread-id':'thread-a'},React.createElement(ChatSurfaceComponentMount,{descriptor:descriptor('chat-side:side-placement-a','thread-a','group-a','capture-viewer','side-tab')}))); }
     root.render(React.createElement(LifetimeHost));
     window.__archObs={
-      dispatch:dispatchChatAction,
+      dispatch: async action => {
+        if(action.target !== 'current' || action.delivery !== 'insert') return dispatchChatAction(action);
+        const owner=Object.values(usePanelStore.getState().mountedChats).find(owner=>owner.threadId===action.address.threadId && owner.host==='side-tab');
+        const begun=beginChatMaterial(owner??null);
+        return begun.status==='ready' ? commitChatMaterial(begun.operation, action.attachment ? {attachment:action.attachment} : {text:action.content}) : begun;
+      },
+      rawDispatch:dispatchChatAction,
       sent:()=>sockets.map(item=>({name:item.name,sent:item.sent.slice()})),
       listenerCounts:()=>sockets.map(item=>({name:item.name,message:item.count('message'),readyState:item.readyState})),
       emit:(index,message)=>sockets[index].emit(message),
@@ -94,7 +109,7 @@ async function buildHarness(): Promise<string> {
       unmount:()=>root.unmount(),
       remountLifetime:()=>{root=createRoot(document.querySelector('#root'));root.render(React.createElement(LifetimeHost));},
       mountDiagnostic:()=>{root.unmount();root=createRoot(document.querySelector('#root'));root.render(React.createElement(DiagnosticHost));},
-      reconnect:()=>{const next=socket('reconnected');usePanelStore.setState({ws:next});return sockets.length-1;},
+      reconnect:()=>{const next=socket('reconnected');authorize(next);usePanelStore.setState({ws:next});return sockets.length-1;},
       mountMatrix:()=>{root.unmount();root=createRoot(document.querySelector('#root'));root.render(React.createElement(MountMatrix));},
       setIndicatorState:(mode)=>{
         useChatSubmissionStore.getState().clearSession('fixture-workspace','thread-b');
@@ -399,4 +414,13 @@ test('R5 diagnostic Ask AI appends after an unknown attempt without resending', 
   const prompts = await page.evaluate(() => (window as any).__archObs.sent()
     .flatMap((item: any) => item.sent).filter((frame: any) => frame.type === 'prompt'));
   expect(prompts).toHaveLength(0);
+});
+
+test('retired address-only current insert rejects without mutation or source work', async ({page}) => {
+  await mount(page);
+  const observed=await page.evaluate(async()=>{const f=(window as any).__archObs; const before=f.drafts();
+    const result=await f.rawDispatch({target:'current',delivery:'insert',content:'FORBIDDEN',address:{workspaceId:'fixture-workspace',viewId:'capture-viewer',threadGroupId:'group-a',threadId:'thread-b'}});
+    return {result,before,after:f.drafts(),sent:f.sent()};});
+  expect(observed.result).toEqual({status:'failed',reason:'unsupported'}); expect(observed.after).toEqual(observed.before);
+  expect(observed.sent.flatMap((s:any)=>s.sent).filter((f:any)=>f.type==='prompt')).toHaveLength(0);
 });

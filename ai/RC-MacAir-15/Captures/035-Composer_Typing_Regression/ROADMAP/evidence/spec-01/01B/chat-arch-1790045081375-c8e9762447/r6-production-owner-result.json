@@ -1,0 +1,45 @@
+{
+  "systemSetupReadiness": {
+    "id": "R5-SYSTEM-FIXTURE-READINESS",
+    "sourceCapsuleVerified": true,
+    "boundedRebind": false,
+    "initial": null,
+    "final": {
+      "workspaceLabel": "R5 System Fixture",
+      "connected": true,
+      "projectionFrames": [
+        {
+          "workspaceId": "system-files",
+          "unavailable": false,
+          "viewIds": [
+            "capture-viewer",
+            "file-viewer",
+            "wiki-viewer",
+            "issues-viewer",
+            "agents-viewer",
+            "system-viewer"
+          ]
+        }
+      ],
+      "railTitles": [
+        "Captures",
+        "Files",
+        "Wiki",
+        "Issues",
+        "Agents",
+        "System"
+      ]
+    }
+  },
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": {
+    "name": "AssertionError",
+    "message": "R6 competing open needs an existing authenticated System thread",
+    "stack": "AssertionError [ERR_ASSERTION]: R6 competing open needs an existing authenticated System thread\n    at exerciseProductionR6 (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r5-r6-electron.mjs:379:10)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r5-r6-electron.mjs:802:7"
+  }
+}

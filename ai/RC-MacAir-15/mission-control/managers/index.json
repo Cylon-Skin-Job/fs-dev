@@ -1,0 +1,134 @@
+{
+  "schema_version": 2,
+  "name": "Mission Control manager homes",
+  "description": "Role homes and shared manager recordkeeping design.",
+  "repository_root": "../../../..",
+  "wiki_root": "../../Wiki",
+  "documents": [
+    {
+      "path": "recordkeeping.md",
+      "kind": "recordkeeping_contract",
+      "authority": "owner direction with labeled design proposals",
+      "description": "Shared record ownership, manager operations, status observations and cutover design.",
+      "lifecycle": "Maintained within the assigned manager/setup scope; preserve source attribution and distinguish proposed design from deployment.",
+      "read_before": [],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Owner direction and source",
+          "description": "Owner direction and source"
+        },
+        {
+          "key": "s2",
+          "heading": "Folder layout and minimal entry packet",
+          "description": "Folder layout and minimal entry packet"
+        },
+        {
+          "key": "s3",
+          "heading": "Sources of truth and intended writers",
+          "description": "Sources of truth and intended writers"
+        },
+        {
+          "key": "s4",
+          "heading": "Workfolder catalog contract",
+          "description": "Workfolder catalog contract"
+        },
+        {
+          "key": "s5",
+          "heading": "Manager operation records",
+          "description": "Manager operation records"
+        },
+        {
+          "key": "s6",
+          "heading": "Issues, decisions and handoffs",
+          "description": "Issues, decisions and handoffs"
+        },
+        {
+          "key": "s7",
+          "heading": "Status-check record",
+          "description": "Status-check record"
+        },
+        {
+          "key": "s8",
+          "heading": "Existing records and cutover",
+          "description": "Existing records and cutover"
+        },
+        {
+          "key": "s9",
+          "heading": "Verification and next step",
+          "description": "Verification and next step"
+        }
+      ]
+    },
+    {
+      "path": "handoff.md",
+      "kind": "handoff",
+      "authority": "setup evidence and explicit pending work",
+      "description": "Current local checkpoint and next setup action.",
+      "lifecycle": "Maintained within the assigned manager/setup scope; preserve source attribution and distinguish proposed design from deployment.",
+      "read_before": [
+        "recordkeeping.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Current state",
+          "description": "Current state"
+        },
+        {
+          "key": "s2",
+          "heading": "Next action and unresolved choices",
+          "description": "Next action and unresolved choices"
+        },
+        {
+          "key": "s3",
+          "heading": "Source and result",
+          "description": "Source and result"
+        }
+      ]
+    }
+  ],
+  "support_files": [
+    {
+      "path": "AGENTS.md",
+      "description": "Local scope, entry and record maintenance instructions.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Scope and entry",
+          "description": "Scope and entry"
+        },
+        {
+          "key": "s2",
+          "heading": "Record ownership",
+          "description": "Record ownership"
+        },
+        {
+          "key": "s3",
+          "heading": "Authority and evidence",
+          "description": "Authority and evidence"
+        },
+        {
+          "key": "s4",
+          "heading": "Maintenance",
+          "description": "Maintenance"
+        }
+      ]
+    },
+    {
+      "path": "index.json",
+      "description": "Static routing metadata; no live session identities or progress state."
+    },
+    {
+      "path": "BULLETIN.md",
+      "description": "Cross-folder adoption handoff; advisory coordination only.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Cross-folder adoption",
+          "description": "Cross-folder adoption"
+        }
+      ]
+    }
+  ]
+}

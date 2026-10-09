@@ -1,0 +1,12 @@
+{
+  "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/process-readback.mjs",
+  "source_sha256": "d613490af7beaed4aaa1767786f3b7a93db853cfbe477d74458b3e9ac9bce89b",
+  "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-process-readback.mjs",
+  "output_sha256": "2fec2b15f8099b8fcca22a0759c2c19e2ed38346ae18a1837de813d9e33c5923",
+  "mechanical_changes": [
+    "exact output namespace to exclusive root E/SPEC-final-preservation",
+    "actor literal to actual /root"
+  ],
+  "execution": "NOT executed; require all six accepted and final verification activation",
+  "effects": "read-only process selection/raw observations plus exclusive output receipts, no stop/restart/signals"
+}

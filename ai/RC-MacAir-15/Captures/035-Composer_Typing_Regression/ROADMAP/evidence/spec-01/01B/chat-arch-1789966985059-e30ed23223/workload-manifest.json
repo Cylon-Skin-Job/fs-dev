@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "F1-PUBLIC-ROUTE",
+      "name": "fresh empty Capture create/open/type/Send/Stop and DB/UI readback"
+    },
+    {
+      "id": "FAULT-SERVER-ADMISSION",
+      "name": "authenticated public-route server admission throw remains distinct from transport"
+    },
+    {
+      "id": "FAULT-TRANSPORT-ACK",
+      "name": "authenticated public-route message acceptance with dropped outbound ACK"
+    },
+    {
+      "id": "FAULT-SAVE-ACK",
+      "name": "authenticated durable exchange with dropped saved-turn acknowledgement"
+    },
+    {
+      "id": "R1-F2-F3-COMPOSER",
+      "name": "R1 matched startup, warm, and fixed-45-second-settled production composer observation over F2/F3"
+    },
+    {
+      "id": "R2-NO-ENQUEUE",
+      "name": "R2 authenticated disconnect-before-click and enqueue-throw/race characterization"
+    },
+    {
+      "id": "R3-LOST-ACK-STATUS",
+      "name": "R3 executable future lost-ACK receipt/status assertion (blocked on SPEC-02)"
+    },
+    {
+      "id": "R4-DISTINCT-ATTEMPTS",
+      "name": "R4 executable future distinct-attempt request identity assertion (blocked on SPEC-02)"
+    },
+    {
+      "id": "R4-DUPLICATE-MISMATCH-LATE",
+      "name": "R4 executable future duplicate/mismatch/late-response assertion (blocked on SPEC-02)"
+    },
+    {
+      "id": "R5-R6-PUBLIC-ACTIONS",
+      "name": "R5 actual action callers and R6 production listener ownership through authenticated shell"
+    },
+    {
+      "id": "R5-DIAGNOSTIC-APPEND",
+      "name": "R5 actual diagnostic Ask AI append path preserves draft and does not auto-send"
+    },
+    {
+      "id": "R9-INDICATOR-DISTINCTION",
+      "name": "R9 authenticated F2/F5 prompt, turn, indicator, and blocked-renderer lifecycle distinctions"
+    },
+    {
+      "id": "R1-R9-CONTRACT-INVENTORY",
+      "name": "R1-R9 concrete inventory, deterministic F2-F5 contracts, and fail-closed future assertions"
+    }
+  ],
+  "fixture": "fresh disposable profile, migrated fusion.db, fresh empty Capture workspace",
+  "adapter": "canonical deterministic OpenCode iterator at 20 text frames/second",
+  "scenarioInventory": "R1-R9 concrete IDs and later owning contracts in scenario-inventory.mjs",
+  "enforcementGroup": []
+}

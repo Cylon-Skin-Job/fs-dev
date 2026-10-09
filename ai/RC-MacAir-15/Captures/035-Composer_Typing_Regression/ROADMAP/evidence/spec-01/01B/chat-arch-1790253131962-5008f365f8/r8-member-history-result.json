@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/opt/homebrew/Cellar/node/25.6.1/bin/node",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/@playwright/test/cli.js",
+    "test",
+    "--config=playwright.chat-architecture.config.ts",
+    "e2e/chat-surface-identity.spec.ts",
+    "--grep",
+    "history-only|late thread:opened|model selection|passive thread:open",
+    "--output",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790253131962-5008f365f8/member-history-test-results"
+  ],
+  "status": "passed",
+  "exitCode": 0,
+  "error": null,
+  "assertions": [
+    "exact session history",
+    "different selected group preserved",
+    "pending Main opens preserved even for same group",
+    "portable selection and late-frame compatibility"
+  ]
+}

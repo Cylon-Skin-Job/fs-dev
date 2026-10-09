@@ -1,0 +1,86 @@
+{
+  "observed_at": "2026-10-07T17:02:29.714823+00:00",
+  "phase": "pre-M3 dependency preflight; not coverage adoption/final acceptance",
+  "historical_receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/unaffected-evidence-dependencies.json",
+  "historical_receipt_sha256": "9ffa19551b86394fd8e9863fae19bff42762ed2381de2f604660e0f7b5febd6a",
+  "retained_claims": [
+    "accepted startup/lease/retirement focused186",
+    "accepted server full3265 native pretest",
+    "actual guarded productionserver normal/fact-failure",
+    "actual owner OpenCode persistence/passive-reopen evidence"
+  ],
+  "retention_limit": "Fresh exact input equality supports retained raw evidence scope; it is not a new server/provider run or general shutdown proof.",
+  "selected_electron_rows": [
+    {
+      "path": "fusion-studio-client/electron/authorized-ipc.cjs",
+      "historical_candidate": {
+        "kind": "file",
+        "sha256": "2bc4151c61a81c77c1ca656af296c91daa9692d5e02ea042c04a7127f9191e78",
+        "mode": "0o644"
+      },
+      "observed_current": {
+        "kind": "file",
+        "sha256": "2bc4151c61a81c77c1ca656af296c91daa9692d5e02ea042c04a7127f9191e78",
+        "mode": "0o644"
+      },
+      "unchanged": true
+    },
+    {
+      "path": "fusion-studio-client/electron/build-preload.mjs",
+      "historical_candidate": {
+        "kind": "file",
+        "sha256": "398c159ba2891ca42b39c9feefe131210e5ea1ea421df836f6926836aff0742a",
+        "mode": "0o644"
+      },
+      "observed_current": {
+        "kind": "file",
+        "sha256": "398c159ba2891ca42b39c9feefe131210e5ea1ea421df836f6926836aff0742a",
+        "mode": "0o644"
+      },
+      "unchanged": true
+    },
+    {
+      "path": "fusion-studio-client/electron/ipc/screenshot-handlers.cjs",
+      "historical_candidate": {
+        "kind": "file",
+        "sha256": "3ad9d6be65a725d5cbad46cd35d6ed7a3ff0ede5109400c996192679ba9f07aa",
+        "mode": "0o644"
+      },
+      "observed_current": {
+        "kind": "file",
+        "sha256": "3ad9d6be65a725d5cbad46cd35d6ed7a3ff0ede5109400c996192679ba9f07aa",
+        "mode": "0o644"
+      },
+      "unchanged": true
+    },
+    {
+      "path": "fusion-studio-client/electron/ipc/screenshot-handlers.test.cjs",
+      "historical_candidate": {
+        "kind": "file",
+        "sha256": "1dc78749eec9327d3605d5ee163fa2fb6c18e9d5f17ef87a926b6ca6382c0ba9",
+        "mode": "0o644"
+      },
+      "observed_current": {
+        "kind": "file",
+        "sha256": "1dc78749eec9327d3605d5ee163fa2fb6c18e9d5f17ef87a926b6ca6382c0ba9",
+        "mode": "0o644"
+      },
+      "unchanged": true
+    },
+    {
+      "path": "fusion-studio-client/electron/preload.cjs",
+      "historical_candidate": {
+        "kind": "file",
+        "sha256": "a87aaefb6d60425ec30013a6a1b8a2a3e21d50208a6c1727adc0be9968adef05",
+        "mode": "0o644"
+      },
+      "observed_current": {
+        "kind": "file",
+        "sha256": "b200cc4f24c59ca53c4aebda40cdeeb8e3743da06fceb3006eb8b0a63a93ece3",
+        "mode": "0o644"
+      },
+      "unchanged": false
+    }
+  ],
+  "scope_limit": "Selected unchanged Electron screenshot inputs only. Changed renderer/native screenshot route always renews actual native proof. Full-server/build mandatory irrespective of equality. M3 must rebind final current inputs and fresh independent reviewer coverage before adopting any retained original Electron gallery claim."
+}

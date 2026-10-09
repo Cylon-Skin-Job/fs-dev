@@ -1,0 +1,75 @@
+{
+  "at": "2026-10-04T10:31:58.507876+00:00",
+  "frozen_covered_bytes_current": true,
+  "smoke_observation_files": [
+    {
+      "raw": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-smoke/foreign_checkout_shared_profile_wrong_machine_orphan_renderer_mode_collision_refuse_before_effects.json",
+      "test": "foreign checkout/shared profile, wrong machine, orphan renderer, mode collision refuse before effects",
+      "file_observations": 0,
+      "sha256": "1a562611c1cb92153fa79cad6f0fdd83e2f42bad4c652edca7e8d79f895af896"
+    },
+    {
+      "raw": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-smoke/canonical_CLI_preserves_default_DB_explicit_and_inherited_profiles_select_server-data.json",
+      "test": "canonical CLI preserves default DB; explicit and inherited profiles select server-data",
+      "file_observations": 0,
+      "sha256": "750c78a9fe45c7aedd5fda11147a52a47485b91843f7036b59a61db78d2ecb53"
+    },
+    {
+      "raw": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-smoke/injected_post-launch_failures_withhold_readiness_preserve_DBs_unrelated_caches_release_lock.json",
+      "test": "injected post-launch failures withhold readiness, preserve DBs/unrelated caches, release lock",
+      "file_observations": 10,
+      "sha256": "79d8c0ef77a26d5b57daea8d14944a9bb3ac02305fc437f7baaca824f396dbc7"
+    },
+    {
+      "raw": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-smoke/CLI_rejects_unsafe_Alpha_ambiguous_arguments_without_profile_changes.json",
+      "test": "CLI rejects unsafe/Alpha/ambiguous arguments without profile changes",
+      "file_observations": 0,
+      "sha256": "fdb862012b7c6575c7a438f6dd4b31ab7ec0a4d8d3262745076cd9e15309ad0c"
+    },
+    {
+      "raw": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-smoke/launch_environment_preserves_default_DB_mode_and_resolves_selected_profile_machine_TMPDIR.json",
+      "test": "launch environment preserves default DB mode and resolves selected profile/machine/TMPDIR",
+      "file_observations": 0,
+      "sha256": "e08d67e8a16ca3d5fa05462d62886b4f1f52b625038347c6e8a0c1da2d3d89b5"
+    },
+    {
+      "raw": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-smoke/selected-only_tree_includes_children_and_preserves_same-checkout_other_profile_and_Alpha.json",
+      "test": "selected-only tree includes children and preserves same-checkout other profile and Alpha",
+      "file_observations": 0,
+      "sha256": "f1f84e9ca0a26eb3abcd7bebf29d69cfc94a621fbdb1deca22dcc36a06358c93"
+    },
+    {
+      "raw": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-smoke/runtime_identity_rejects_wrong-path_profile_server_renderer_instead_of_certifying_a_port.json",
+      "test": "runtime identity rejects wrong-path/profile/server/renderer instead of certifying a port",
+      "file_observations": 0,
+      "sha256": "5b5adcfff4ebd913c105587a7a721831abbdeaa06dd15781d41b905cc6e4b5e3"
+    },
+    {
+      "raw": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-smoke/borrowed_Electron_runtime_and_linked_runtime_storage_refuse_without_effects.json",
+      "test": "borrowed Electron runtime and linked runtime storage refuse without effects",
+      "file_observations": 1,
+      "sha256": "3df9798963ff333231250fd391674f85ce62fd557897b2b9da9dc75d24aa89d5"
+    },
+    {
+      "raw": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-smoke/linked_profile_database_storage_refuses_before_build_profile_cache_mutation.json",
+      "test": "linked profile database storage refuses before build/profile/cache mutation",
+      "file_observations": 2,
+      "sha256": "a6dcb44f1a7a48aa5936f8ddee19736d281c187485146247782c65f289c5cf48"
+    },
+    {
+      "raw": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-smoke/exact_renderer_profile_avoids_Alpha_prefix_collision_and_CLI_profile_overrides_absent_environment.json",
+      "test": "exact renderer profile avoids Alpha prefix collision and CLI profile overrides absent environment",
+      "file_observations": 0,
+      "sha256": "cf05c603b1eeaba2488d71af203ed7e8b30ebe9fe9669dde6ef0413e995dec13"
+    },
+    {
+      "raw": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-smoke/actual_disposable_Node_tree_ownership_termination_preserves_another_live_profile.json",
+      "test": "actual disposable Node tree ownership/termination preserves another live profile",
+      "file_observations": 2,
+      "sha256": "e5a6c16b0c6a78a10d23a4359d5aa352cbd19b89230ef79d8a579beffcfdf90a"
+    }
+  ],
+  "zero_live_app_claim": true,
+  "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "index_sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966"
+}

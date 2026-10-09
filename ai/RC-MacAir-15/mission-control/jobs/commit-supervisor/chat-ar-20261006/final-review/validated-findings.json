@@ -1,0 +1,182 @@
+[
+  {
+    "id": "FINAL-DOC-001",
+    "at": "2026-10-06T22:34:29.096315+00:00",
+    "covered_tree": "1befa26e94a3487ef91d309665ff389b2e959b65",
+    "originating_reviewer": "/root/chat_commit_final_review/final_docs",
+    "independent_validator": "/root/chat_commit_final_review",
+    "lens": [
+      "Wiki Impact",
+      "Integrations & Dependencies",
+      "Behavior & Verification"
+    ],
+    "severity": "material",
+    "confidence": "high",
+    "disposition": "open",
+    "materiality": {
+      "authority": "Owner follow-up accepts coherent ready documentation; workflow Wiki Impact/current-byte source truth and publication dependency closure required. Original screenshot/retirement authority does not include publishing excluded MC restart support.",
+      "artifact": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md and its published restart-fusion.sh/source refs",
+      "impact": "Published isolated restart --user-data command is rejected; ownership, cache-isolation and sustained-shell-readiness safeguards described as current are absent from published implementation. User/controller cannot rely on the article to execute or verify the claimed isolated flow.",
+      "direct_evidence": "Staged article and staged script inspected directly from supplied tree; absent support paths checked with ls-tree. No restart executed."
+    },
+    "evidence": {
+      "article_sha256": "ccf7a76b4201ce3f5a95b29816f72f85cf1506b6f94172a581c100170dd4b94e",
+      "staged_restart_script_sha256": "a02c0fa38ffcd89e488ef1785cf83dd2f3476230d8fbaf4916063e9dcedd7380",
+      "support_paths_absent_from_staged_tree": {
+        "scripts/fusion-restart.mjs": true,
+        "scripts/fusion-restart-target.mjs": true,
+        "scripts/fusion-restart-processes.mjs": true,
+        "scripts/fusion-restart-probe.mjs": true
+      },
+      "article_relevant_lines": [
+        {
+          "line": 28,
+          "text": "`--user-data /absolute/disposable/profile`. The explicit profile overrides"
+        },
+        {
+          "line": 35,
+          "text": "Before runtime effects, the script checks selected checkout/profile ownership."
+        },
+        {
+          "line": 36,
+          "text": "It builds the client before stopping the verified owned process tree, rejects"
+        },
+        {
+          "line": 38,
+          "text": "`Cache`, `Code Cache`, `GPUCache`, `Local Storage`, `Session Storage` and stale"
+        },
+        {
+          "line": 40,
+          "text": "local Electron executable directly with `electron/main.cjs`; that shell owns"
+        },
+        {
+          "line": 44,
+          "text": "Readiness requires matching main/server/renderer executable paths, entry paths,"
+        },
+        {
+          "line": 45,
+          "text": "CWD, profile, machine, ancestry and listener ownership. A loopback CDP probe"
+        }
+      ],
+      "script_relevant_lines": [
+        {
+          "line": 13,
+          "text": "  echo \"Usage: $0 [--repo /absolute/repository/path] [--machine machine-id] [--dry-run]\""
+        },
+        {
+          "line": 37,
+          "text": "      echo \"ERROR: unknown argument: $1\" >&2"
+        },
+        {
+          "line": 119,
+          "text": "pkill -9 -f \"fusion-studio-server/server\\.js\" 2>/dev/null || true"
+        },
+        {
+          "line": 120,
+          "text": "pkill -9 -f \"electron/main\\.cjs\" 2>/dev/null || true"
+        },
+        {
+          "line": 121,
+          "text": "pkill -9 -f \"$ELECTRON_MAIN\" 2>/dev/null || true"
+        },
+        {
+          "line": 122,
+          "text": "pkill -9 -f \"$ELECTRON_BIN\" 2>/dev/null || true"
+        },
+        {
+          "line": 128,
+          "text": "ELECTRON_USER_DATA=\"$HOME/Library/Application Support/Fusion Studio\""
+        },
+        {
+          "line": 134,
+          "text": "cd \"$PROJECT_DIR/fusion-studio-client\" && npm run build"
+        },
+        {
+          "line": 149,
+          "text": "env -u FUSION_APP_USER_DATA FUSION_LOCAL_MACHINE=\"$MACHINE_ID\" \\"
+        },
+        {
+          "line": 150,
+          "text": "  open -n \"$ELECTRON_APP\" --args \"$ELECTRON_MAIN\""
+        },
+        {
+          "line": 153,
+          "text": "SERVER_READY=\"\""
+        },
+        {
+          "line": 156,
+          "text": "    SERVER_READY=$(cat \"$ELECTRON_PORT_FILE\" 2>/dev/null || echo \"\")"
+        },
+        {
+          "line": 157,
+          "text": "    if [ -n \"$SERVER_READY\" ] && lsof -i:\"$SERVER_READY\" >/dev/null 2>&1; then"
+        },
+        {
+          "line": 174,
+          "text": "if [ -z \"$SERVER_READY\" ] || ! lsof -i:\"$SERVER_READY\" >/dev/null 2>&1; then"
+        },
+        {
+          "line": 186,
+          "text": "echo \"Server URL:   http://localhost:$SERVER_READY\""
+        }
+      ]
+    },
+    "repair_packet": {
+      "manager": "Commit Supervisor /root",
+      "assignment_scope": "Reconcile support-dependent operational Wiki/current source claims with actual publication unit, preserving dated history and source checkout.",
+      "suggested_bounded_routes": [
+        "Defer support-dependent article changes with the pending cohesive MC setup unit, retaining baseline truth and checking current links; or explicitly distinguish future/excluded private support from published current behavior across affected operational docs.",
+        "If owner grants a separately cohesive support publication unit, include required exact dependencies with its distinct authorization and current checks; this review does not grant that authority."
+      ],
+      "verification": "Publication tree article commands/source-files/current-behavior claims agree with publication tree actual restart implementation; document no new safeguards as landed while their support is excluded. Fresh independent handoff then whole final review current bindings required."
+    },
+    "state": "findings/repair work; not an owner-intent hold, runtime activation or publication grant",
+    "violated_wiki_rule": "Wiki Style Guide Source Accountability, lines88\u201393, actual source files and behavior",
+    "manager_selected_bounded_route": "Commit Supervisor /root selected restoring ONLY this article to exact HEAD3356 baseline, retaining existing dated versions/source current article and leaving excluded support unit pending. This is a proposed assigned repair, not a performed correction or resolved disposition.",
+    "citation_correction": "Raw doc reviewer cites original SPEC section7 item9; correct location is section8 integration acceptance item9. Original R07 and Wiki Source Accountability independently supply the same mandatory truth/source obligation. Raw report remains unchanged."
+  },
+  {
+    "id": "FINAL-DOC-A01",
+    "severity": "advisory",
+    "confidence": "high",
+    "disposition": "advisory",
+    "title": "Historical merge, Alpha and checkpoint locators are absent from publication",
+    "evidence": [
+      {
+        "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/TICKET.md",
+        "lines": [
+          11,
+          33,
+          35
+        ]
+      },
+      {
+        "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/CAPTURE.md",
+        "lines": [
+          14,
+          20,
+          22
+        ]
+      }
+    ],
+    "historical_source_receipts": [
+      {
+        "path": "implementation/FINAL-ROADMAP/MERGE-RECEIPT.json",
+        "bytes": 553,
+        "sha256": "79a8dbd64bee71001be789675dda326bfdf6fbedf652b1caddfe3b8f122b7c3e",
+        "publication_present": false
+      },
+      {
+        "path": "implementation/FINAL-ROADMAP/ALPHA-DEPLOYMENT.json",
+        "bytes": 1145,
+        "sha256": "4b6dad87ba3b1cec61cf95d9bc4973baa40e32d5679dc44532df69b91ddfd2f1",
+        "publication_present": false
+      }
+    ],
+    "observable_limit": "Published relative links cannot resolve these historical receipts locally.",
+    "materiality_limit": "No required new acceptance dependency is shown; records explicitly distinguish historical observations from current runtime health.",
+    "scope_expansion_requested": false,
+    "independent_validator": "/root/chat_commit_final_review",
+    "validation_reason": "Direct TICKET/CAPTURE source inspection confirms explicit dated historical receipts and no new current acceptance dependency. Source receipts exist; candidate absent. Current mandatory five original planning companions match. Authority/material acceptance violation dimension is not established."
+  }
+]

@@ -1,0 +1,75 @@
+{
+  "environment": {
+    "GIT_OPTIONAL_LOCKS": "0"
+  },
+  "candidate_repository": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "source_repository": "/Users/rccurtrightjr./projects/fs-dev",
+  "target_baseline": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "proposed_private_branch": "codex/s6-rehearsal-first",
+  "current_branch": "detached",
+  "origin": {
+    "kind": "local clone provenance only",
+    "url": "/Users/rccurtrightjr./projects/fs-dev",
+    "publication_destination": null
+  },
+  "hypothetical_only": true,
+  "actual_authority": "NONE",
+  "actual_operations": [],
+  "candidate_paths_and_sha256": {
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js": "7a325bf81452d0d785c22fb4bc7cc4950c4abd2c4e6a68604ff683c1d4990b0d",
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js": "fc3c3da3961bbd8ba1d9f0d1a320dd8f8baf514e0fc0a7d158d5c474ddfe36a5",
+    "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md": "a3d372eba6208c2fbee71cd046f305a91fc7c44185c5dae42b5da50e5cbcfdce",
+    "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-080936.md": "e2877b2a21a23cce18a7b079d1532a8c7a5a8f30467e369248d75e9750ce527c"
+  },
+  "commands_NOT_EXECUTED": [
+    [
+      "git",
+      "-C",
+      "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+      "switch",
+      "-c",
+      "codex/s6-rehearsal-first"
+    ],
+    [
+      "git",
+      "-C",
+      "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+      "add",
+      "--",
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js",
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js",
+      "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md",
+      "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-080936.md"
+    ],
+    [
+      "git",
+      "-C",
+      "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+      "commit",
+      "--only",
+      "-m",
+      "Rehearsal: correct checklist count and guide",
+      "--",
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js",
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js",
+      "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md",
+      "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-080936.md"
+    ]
+  ],
+  "operation_roles": [
+    "private branch creation changes only private candidate ref if later authorized",
+    "add stages only four proposed correction leaves if later authorized",
+    "commit --only creates a local correction snapshot limited to four leaves, preserving unrelated staged inputs if later authorized"
+  ],
+  "limits": "Hypothetical correction snapshot depends on retained original uncommitted fixture inputs; it is not a standalone runnable feature/publication proposal. No real staging/branch/ref/commit operation is authorized or occurred. Before each hypothetical operation could become real, obtain exact current actual owner permission and revalidate candidate/ref/index/worktree/dependencies/runtime/recovery/nonconflicting writers/destination. No permission carries to changed bytes.",
+  "separate_denied_operations": {
+    "push": "NONE; no publishing remote/destination proposed",
+    "fetch_pull": "NONE",
+    "PR_create_merge": "NONE",
+    "merge_rebase_cherry_pick": "NONE",
+    "target_landing": "NONE",
+    "production_consumer_adoption": "NONE",
+    "Alpha_pull_build_install_restart": "NONE"
+  },
+  "protected_index": "Unrelated original staged README/checkpoint.bin/executable/link/staged.txt/restart script/odd-path seeds retained; exact current index raw in owner identity/fixed manifest. Runtime watcher document is excluded from correction commit scope."
+}

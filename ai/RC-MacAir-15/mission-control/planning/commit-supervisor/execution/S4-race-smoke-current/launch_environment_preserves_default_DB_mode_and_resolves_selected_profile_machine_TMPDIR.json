@@ -1,0 +1,6 @@
+{
+  "test": "launch environment preserves default DB mode and resolves selected profile/machine/TMPDIR",
+  "fixture": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-hNKf3E",
+  "injected": true,
+  "files": []
+}

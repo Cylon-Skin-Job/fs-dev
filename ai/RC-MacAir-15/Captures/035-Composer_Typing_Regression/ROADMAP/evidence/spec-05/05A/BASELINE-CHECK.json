@@ -1,0 +1,74 @@
+[
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/run.mjs",
+    "sha256": "87357686802161f4cd159516f698cf1961b8d49d9233f1b941c9397eb4e2f604",
+    "start": "87357686802161f4cd159516f698cf1961b8d49d9233f1b941c9397eb4e2f604",
+    "matches": true
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/server-focused-regressions.mjs",
+    "sha256": "ac3f5b02dc8ece0d9da249e9b3e840fdf1094c23b8527e2f7e63288fab702bff",
+    "start": "ac3f5b02dc8ece0d9da249e9b3e840fdf1094c23b8527e2f7e63288fab702bff",
+    "matches": true
+  },
+  {
+    "path": "fusion-studio-server/test/thread/thread-group-lifecycle.test.js",
+    "sha256": "3f85c98460f18ad173f2ada4d5cabc0079462479f2d808e4ac6b3dabbdc7df29",
+    "start": "3f85c98460f18ad173f2ada4d5cabc0079462479f2d808e4ac6b3dabbdc7df29",
+    "matches": true
+  },
+  {
+    "path": "fusion-studio-server/test/thread/session-manager.test.js",
+    "sha256": "1a2ca4cece72cea41c3c5565417b02d2adee3a5a2af998868bdf481608b62dbb",
+    "start": "1a2ca4cece72cea41c3c5565417b02d2adee3a5a2af998868bdf481608b62dbb",
+    "matches": true
+  },
+  {
+    "path": "fusion-studio-server/test/ws/prompt-submission-recovery.integration.test.js",
+    "sha256": "2f87821d71dff7fe9cc5e5ba3ee747b341ce638252e45d772392aa2f3e9e6939",
+    "start": "2f87821d71dff7fe9cc5e5ba3ee747b341ce638252e45d772392aa2f3e9e6939",
+    "matches": true
+  },
+  {
+    "path": "fusion-studio-server/lib/thread-groups/link-service.js",
+    "sha256": "cf622effb98978feba19467404f912754d96cc77d9790f7f3c7718e6982e0bc4",
+    "start": "cf622effb98978feba19467404f912754d96cc77d9790f7f3c7718e6982e0bc4",
+    "matches": true
+  },
+  {
+    "path": "fusion-studio-server/lib/thread-groups/service.js",
+    "sha256": "04b0c9f2ce1816408679323a60bf4465232f4f4861e5c0f87e0e9cd5f30f3705",
+    "start": "04b0c9f2ce1816408679323a60bf4465232f4f4861e5c0f87e0e9cd5f30f3705",
+    "matches": true
+  },
+  {
+    "path": "fusion-studio-server/lib/thread-groups/delete-service.js",
+    "sha256": "3854f65e5068f789b4e41440a4360161d249ea63bdd66cff5fd7731b9fb3b6af",
+    "start": "3854f65e5068f789b4e41440a4360161d249ea63bdd66cff5fd7731b9fb3b6af",
+    "matches": true
+  },
+  {
+    "path": "fusion-studio-server/lib/thread-groups/member-service.js",
+    "sha256": "d93980f29ab4251231682a9d3338f36a89b08a293f1ac6fb6de14973cdfbf2dd",
+    "start": "d93980f29ab4251231682a9d3338f36a89b08a293f1ac6fb6de14973cdfbf2dd",
+    "matches": true
+  },
+  {
+    "path": "fusion-studio-server/lib/thread-groups/selection-service.js",
+    "sha256": "14eb23a52b50dc3c65663a12bf00c3c01d6f491db662ebed3e5129b23da41dfd",
+    "start": "14eb23a52b50dc3c65663a12bf00c3c01d6f491db662ebed3e5129b23da41dfd",
+    "matches": true
+  },
+  {
+    "path": "fusion-studio-server/lib/thread-groups/move-service.js",
+    "sha256": "f4bb5f3775aeb4073662ce8d690ba300f6c469c0a2fd64af5d4488e6876c298d",
+    "start": "f4bb5f3775aeb4073662ce8d690ba300f6c469c0a2fd64af5d4488e6876c298d",
+    "matches": true
+  },
+  {
+    "path": "fusion-studio-server/lib/thread/ThreadManager.js",
+    "sha256": "fa9e1f7c67010858f078f6f19fc62ba82a64392fb4daf9b8e8d7451fc8f29114",
+    "start": "fa9e1f7c67010858f078f6f19fc62ba82a64392fb4daf9b8e8d7451fc8f29114",
+    "matches": true
+  }
+]

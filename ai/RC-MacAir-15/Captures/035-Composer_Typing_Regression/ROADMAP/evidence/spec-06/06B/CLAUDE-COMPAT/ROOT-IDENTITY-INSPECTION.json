@@ -1,0 +1,22 @@
+{
+  "at": "2026-09-27T07:32:31.395894+00:00",
+  "manifests": {
+    "source": {
+      "count": 1964,
+      "sha256": "fce657085b6658dac3de5ea828a3afc6e0829281f32239d2989771f9ad2b3686",
+      "mismatches": []
+    },
+    "build": {
+      "count": 200,
+      "sha256": "b070d633863382e48ea2f6d677a92cfe65b9a4dea79caa87975711c109c70b03",
+      "mismatches": []
+    }
+  },
+  "predecessorMismatches": [],
+  "actualDelta": [
+    "fusion-studio-server/lib/harness/child-environment.js",
+    "fusion-studio-server/test/harness/child-environment.test.js",
+    "fusion-studio-server/test/harness/opencode/harness-send-message.test.js"
+  ],
+  "exactDeltaMatches": true
+}

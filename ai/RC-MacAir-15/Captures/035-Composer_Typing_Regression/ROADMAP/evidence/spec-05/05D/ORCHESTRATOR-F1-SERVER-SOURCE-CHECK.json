@@ -1,0 +1,22 @@
+{
+  "runId": "server-full-1790252292977-ba95081d",
+  "sourceCount": 1606,
+  "sourceMismatches": [],
+  "result": {
+    "runId": "server-full-1790252292977-ba95081d",
+    "status": "passed",
+    "result": {
+      "code": 0,
+      "signal": null,
+      "pid": 25512,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 77530
+    },
+    "failure": null,
+    "ownedRunRootRemoved": true
+  },
+  "nativePretest": "npm test invokes build:native-observer",
+  "provider": "real current source; tests declare their own mocks"
+}

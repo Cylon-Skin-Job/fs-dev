@@ -1,0 +1,281 @@
+{
+  "at": "2026-10-04T16:26:14.808234+00:00",
+  "owner": "/root",
+  "scope": "ROOT_CLASSIFICATION_EXCLUDED_FROM_FRESH_GATES",
+  "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/first-deviations.json",
+  "source_sha256": "947bb50defc6ce89aacead6dc1f0f6ff2b809060dd07a26accc8601376fad248",
+  "entries": [
+    {
+      "original_domain_record": {
+        "id": "S6-FIRST-D1",
+        "original_criterion": "Every reused required check has exact commands/results/logs/current dependencies",
+        "actual_change": "Proportionately reran unchanged55Python/17Node suites when original raw logs lacked invocation receipts",
+        "reason_authority": "Installed workflow current-byte evidence and actual initial manager provenance inquiry",
+        "files": [
+          "jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-python-suite-command.json",
+          "jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-node-suite-command.json"
+        ],
+        "observable_effect": "Current complete raw invocation/result evidence passes55/17; no fixture/product change",
+        "checks": [
+          "55Python PASS",
+          "17Node PASS",
+          "35 source dependencies current"
+        ],
+        "risk": "Temporary disposable test processes only, with protected-profile zero-signal assertions; not live app success",
+        "downstream_consumer": "Current independent gates and owner packet",
+        "downstream_impact": "Closes check-provenance gap without relabeling earlier logs",
+        "classification": "accepted"
+      },
+      "root_classification": "accepted",
+      "root_basis": "Original/released established fixture intent and proportionate job-only execution/provenance correction. Root inspected actual changed source/current raw commands/preimages/original coverage/gates/live runtime and current source/protection/index. No criterion waived, no new product decision/publication authority.",
+      "historical_pending_scope": "Early R1/R2/R3/D4 source-only pending fields are time-qualified original observations; later actual code/Wiki/final gates plus runtime acceptance and root independent live/publicverify checks fulfill those release conditions. Current concrete first ownerwait native terminal observed.",
+      "current_release_evidence": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-runtime-acceptance.json",
+      "downstream_SPEC_impact": "none"
+    },
+    {
+      "original_domain_record": {
+        "id": "S6-FIRST-D2",
+        "original_criterion": "Fresh independent original-assignment handoff receives only original intent/current raw evidence, no author diagnoses/prior conclusions",
+        "actual_change": "Mixed worker-check file exposed assessment metadata; immutable command-only derivative created and invalid pass explicitly excluded",
+        "reason_authority": "Installed review independence contract and parent boundary inquiry; reviewer honest exposure receipt",
+        "files": [
+          "code-handoff-original-assignment.md",
+          "evidence/first-code-command-only.json",
+          "evidence/first-code-review-independence-correction.json"
+        ],
+        "observable_effect": "No source change or acceptance; fresh replacement gate required after actual terminal",
+        "checks": [
+          "exact eleven receipt value equality",
+          "original full-file hash/JSON-pointer provenance",
+          "actual reviewer exposure message"
+        ],
+        "risk": "Reviewer2 cannot certify clean-room acceptance",
+        "downstream_consumer": "Code handoff, settled Wiki, final review, owner packet",
+        "downstream_impact": "Invalid pass retained/excluded; fresh reviewer3 clean/current terminal supplies replacement independence, no criterion waiver",
+        "classification": "accepted"
+      },
+      "root_classification": "accepted",
+      "root_basis": "Original/released established fixture intent and proportionate job-only execution/provenance correction. Root inspected actual changed source/current raw commands/preimages/original coverage/gates/live runtime and current source/protection/index. No criterion waived, no new product decision/publication authority.",
+      "historical_pending_scope": "Early R1/R2/R3/D4 source-only pending fields are time-qualified original observations; later actual code/Wiki/final gates plus runtime acceptance and root independent live/publicverify checks fulfill those release conditions. Current concrete first ownerwait native terminal observed.",
+      "current_release_evidence": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-runtime-acceptance.json",
+      "downstream_SPEC_impact": "none"
+    },
+    {
+      "original_domain_record": {
+        "id": "S6-FIRST-R1",
+        "original_criterion": "Count incomplete tasks; 3\u21922\u21921\u21922/reload2/zero/all3",
+        "actual_change": "Replace total-row count with count of !completed at existing refresh seam",
+        "reason_authority": "Original released fixture intent, validated initial findings and bounded repair assignment",
+        "files": [
+          "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js"
+        ],
+        "observable_effect": "Incomplete summary follows reversible completion; nine source scenarios and syntax pass",
+        "checks": [
+          "eleven raw receipts exit0",
+          "exact two-leaf delta / full128 preimages unchanged",
+          "live public-route proof later required"
+        ],
+        "risk": "Actual browser/reload/fullrestart proof pending; storage mechanics and stable IDs/labels/visible rows unchanged",
+        "downstream_consumer": "Checklist iframe, original three-page Wiki, independent handoff/final/runtime",
+        "downstream_impact": "Technical correction under settled intent; fresh code handoff still pending",
+        "classification": "accepted"
+      },
+      "root_classification": "accepted",
+      "root_basis": "Original/released established fixture intent and proportionate job-only execution/provenance correction. Root inspected actual changed source/current raw commands/preimages/original coverage/gates/live runtime and current source/protection/index. No criterion waived, no new product decision/publication authority.",
+      "historical_pending_scope": "Early R1/R2/R3/D4 source-only pending fields are time-qualified original observations; later actual code/Wiki/final gates plus runtime acceptance and root independent live/publicverify checks fulfill those release conditions. Current concrete first ownerwait native terminal observed.",
+      "current_release_evidence": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-runtime-acceptance.json",
+      "downstream_SPEC_impact": "none"
+    },
+    {
+      "original_domain_record": {
+        "id": "S6-FIRST-R2",
+        "original_criterion": "Root-resolved exact N remaining of 3",
+        "actual_change": "Append released of 3 to existing summary template",
+        "reason_authority": "Original released fixture intent, validated initial findings and bounded repair assignment",
+        "files": [
+          "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js"
+        ],
+        "observable_effect": "Exact released text at all nine source samples and syntax pass",
+        "checks": [
+          "eleven raw receipts exit0",
+          "exact two-leaf delta / full128 preimages unchanged",
+          "live public-route proof later required"
+        ],
+        "risk": "Actual browser/reload/fullrestart proof pending; storage mechanics and stable IDs/labels/visible rows unchanged",
+        "downstream_consumer": "Checklist iframe, original three-page Wiki, independent handoff/final/runtime",
+        "downstream_impact": "Technical correction under settled intent; fresh code handoff still pending",
+        "classification": "accepted"
+      },
+      "root_classification": "accepted",
+      "root_basis": "Original/released established fixture intent and proportionate job-only execution/provenance correction. Root inspected actual changed source/current raw commands/preimages/original coverage/gates/live runtime and current source/protection/index. No criterion waived, no new product decision/publication authority.",
+      "historical_pending_scope": "Early R1/R2/R3/D4 source-only pending fields are time-qualified original observations; later actual code/Wiki/final gates plus runtime acceptance and root independent live/publicverify checks fulfill those release conditions. Current concrete first ownerwait native terminal observed.",
+      "current_release_evidence": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-runtime-acceptance.json",
+      "downstream_SPEC_impact": "none"
+    },
+    {
+      "original_domain_record": {
+        "id": "S6-FIRST-D3",
+        "original_criterion": "Installed roles execute under actual supported runtime and inherited root settings",
+        "actual_change": "Supported default roles explicitly load exact installed skill/TOML; capacity-error clean reviewer1 supplies no assessment and later fresh retry preserves same inherited settings",
+        "reason_authority": "Exact executable assignment and installed fallback/lifecycle contract",
+        "files": [
+          "activation-first-candidate.json",
+          "lifecycle-first-candidate.json",
+          "reviews/code-handoff-1-error.raw.json"
+        ],
+        "observable_effect": "Real role/procedure loading and agent lifecycle documented; no model/settings override or waived gate",
+        "checks": [
+          "pre-write acknowledgments",
+          "actual native child identities/terminal observations",
+          "exact installed skill/profile hashes"
+        ],
+        "risk": "Concrete root model/effort and native TOML loader are unexposed, not invented",
+        "downstream_consumer": "All gates and owner packet",
+        "downstream_impact": "Same root settings inherited on replacements; independent acceptance still required",
+        "classification": "accepted"
+      },
+      "root_classification": "accepted",
+      "root_basis": "Original/released established fixture intent and proportionate job-only execution/provenance correction. Root inspected actual changed source/current raw commands/preimages/original coverage/gates/live runtime and current source/protection/index. No criterion waived, no new product decision/publication authority.",
+      "historical_pending_scope": "Early R1/R2/R3/D4 source-only pending fields are time-qualified original observations; later actual code/Wiki/final gates plus runtime acceptance and root independent live/publicverify checks fulfill those release conditions. Current concrete first ownerwait native terminal observed.",
+      "current_release_evidence": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-runtime-acceptance.json",
+      "downstream_SPEC_impact": "none"
+    },
+    {
+      "original_domain_record": {
+        "id": "S6-FIRST-D4",
+        "original_criterion": "Complete candidate workflow includes actual public iframe/reload/fullrestart verification",
+        "actual_change": "Bounded leaf self-check executes exact-source VM/minimalDOM/inmemory-storage scenarios, with actual live proof allocated to later Supervisor runtime phase",
+        "reason_authority": "Original bounded repair assignment / installed separation of source self-check and successful live app",
+        "files": [
+          "workers/code-repair-1-scenarios.mjs",
+          "evidence/first-code-command-only.json"
+        ],
+        "observable_effect": "Source behavior/hydration checks pass; no mock or VM result claimed as app success",
+        "checks": [
+          "nine scenario samples",
+          "both module syntax exit0",
+          "later live criteria explicitly pending"
+        ],
+        "risk": "Actual UI integration unverified until later runtime proof",
+        "downstream_consumer": "Independent handoff/final and owner runtime",
+        "downstream_impact": "No criterion relaxed; later actual live proof mandatory before readiness",
+        "classification": "accepted"
+      },
+      "root_classification": "accepted",
+      "root_basis": "Original/released established fixture intent and proportionate job-only execution/provenance correction. Root inspected actual changed source/current raw commands/preimages/original coverage/gates/live runtime and current source/protection/index. No criterion waived, no new product decision/publication authority.",
+      "historical_pending_scope": "Early R1/R2/R3/D4 source-only pending fields are time-qualified original observations; later actual code/Wiki/final gates plus runtime acceptance and root independent live/publicverify checks fulfill those release conditions. Current concrete first ownerwait native terminal observed.",
+      "current_release_evidence": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-runtime-acceptance.json",
+      "downstream_SPEC_impact": "none"
+    },
+    {
+      "original_domain_record": {
+        "id": "S6-FIRST-R3",
+        "original_criterion": "Complete original completion/reversal/visible-row/count/reload/fullrestart documentation in existing Guide, retained root/Nav bytes/times, exclusive fullpreimage and exactsources/actualUTC metadata",
+        "actual_change": "Guide behavior prose rewritten, four owning exactcode paths/actual quotedUTC time added; complete596byte version created only after129union capture; useful links/prose retained",
+        "reason_authority": "Original approved fixture/Wiki obligations and established current code/restart owners",
+        "files": [
+          "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-080936.md",
+          "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md",
+          "workers/wiki-repair-1.md",
+          "workers/wiki-repair-1-commands.json",
+          "workers/wiki-repair-1-verify.py"
+        ],
+        "observable_effect": "Current guide explains all original reader facts; no source feature or navigation structure change",
+        "checks": [
+          "sixactualcommands exit0",
+          "complete129/all4354 exact2leaf delta",
+          "all50authorities/35suitedeps unchanged",
+          "gray-matter/source/link/preimage/retainedtime readbacks"
+        ],
+        "risk": "Actual built-in Wiki/browser/restart still mandatory later; timestamp certifies edit only",
+        "downstream_consumer": "Wiki readers, independent Wiki/final/runtime/owner gates",
+        "downstream_impact": "No new article/consolidation/retirement/generation needed; independent currentWiki acceptance remains pending",
+        "classification": "accepted"
+      },
+      "root_classification": "accepted",
+      "root_basis": "Original/released established fixture intent and proportionate job-only execution/provenance correction. Root inspected actual changed source/current raw commands/preimages/original coverage/gates/live runtime and current source/protection/index. No criterion waived, no new product decision/publication authority.",
+      "historical_pending_scope": "Early R1/R2/R3/D4 source-only pending fields are time-qualified original observations; later actual code/Wiki/final gates plus runtime acceptance and root independent live/publicverify checks fulfill those release conditions. Current concrete first ownerwait native terminal observed.",
+      "current_release_evidence": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-runtime-acceptance.json",
+      "downstream_SPEC_impact": "none"
+    },
+    {
+      "original_domain_record": {
+        "id": "FINAL-PROCEDURE-01",
+        "original_criterion": "All Git reads use GIT_OPTIONAL_LOCKS=0",
+        "actual_change": "Initial pwd/root-discovery shell used git rev-parse --show-toplevel without the environment prefix",
+        "reason_authority": "Required read-only repository resolution; omitted prefix on initial call",
+        "files": "No files changed by rev-parse; only own review reports writable",
+        "observable_effect": "Repository root resolved; no index/ref mutation",
+        "checks": "All subsequent Git readbacks use GIT_OPTIONAL_LOCKS=0; protected/candidate refs and physical indexes match checkpoint after review",
+        "risk": "None evidenced for pure rev-parse; mandatory flag retained for subsequent inventory",
+        "downstream_consumer": "Supervisor review lifecycle",
+        "downstream_impact": "No candidate or required-check invalidation",
+        "owning_classification": "Supervisor accepted advisory procedural deviation: literal optional-lock-prefix omission on initial pure root-discovery read; no evidenced source/candidate index/ref change and current gate remains valid",
+        "classification": "accepted"
+      },
+      "root_classification": "accepted",
+      "root_basis": "Original/released established fixture intent and proportionate job-only execution/provenance correction. Root inspected actual changed source/current raw commands/preimages/original coverage/gates/live runtime and current source/protection/index. No criterion waived, no new product decision/publication authority.",
+      "historical_pending_scope": "Early R1/R2/R3/D4 source-only pending fields are time-qualified original observations; later actual code/Wiki/final gates plus runtime acceptance and root independent live/publicverify checks fulfill those release conditions. Current concrete first ownerwait native terminal observed.",
+      "current_release_evidence": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-runtime-acceptance.json",
+      "downstream_SPEC_impact": "none"
+    },
+    {
+      "original_domain_record": {
+        "id": "S6-FIRST-D5",
+        "original_criterion": "Supplemental actual current ownership/listener/profile-DB receipt must execute and preserve raw result",
+        "actual_change": "Job-only supplemental receipt script parse failed before execution due literal newline escaping; preserved failed source/raw exit1, corrected escaping and executed unique successful receipt",
+        "reason_authority": "Supervisor-owned additional read-only evidence under actual first-runtime scope",
+        "files": [
+          "first_runtime_identity-syntax-failed.mjs",
+          "first_runtime_identity.mjs",
+          "evidence/first-current-runtime-identity-command.json",
+          "evidence/first-current-runtime-identity-corrected-command.json",
+          "evidence/first-runtime-identity-script-correction.json"
+        ],
+        "observable_effect": "No candidate/app/process signal effect from failed parse; corrected actual receipt confirms current main/server/renderers/listeners, exact profile DB open and six selected processes",
+        "checks": [
+          "corrected Node exit0",
+          "current validateRuntime actual process inspection",
+          "profile DB lsof readback",
+          "protected normal/Alpha process/source sentinels unchanged"
+        ],
+        "risk": "Failure receipt cannot supply ownership proof; successful unique corrected receipt supplies it",
+        "downstream_consumer": "Supervisor runtime acceptance and first owner packet",
+        "downstream_impact": "No source/Wiki/gate dependency changed; original live canonical evidence and strict successful UI retained",
+        "classification": "accepted"
+      },
+      "root_classification": "accepted",
+      "root_basis": "Original/released established fixture intent and proportionate job-only execution/provenance correction. Root inspected actual changed source/current raw commands/preimages/original coverage/gates/live runtime and current source/protection/index. No criterion waived, no new product decision/publication authority.",
+      "historical_pending_scope": "Early R1/R2/R3/D4 source-only pending fields are time-qualified original observations; later actual code/Wiki/final gates plus runtime acceptance and root independent live/publicverify checks fulfill those release conditions. Current concrete first ownerwait native terminal observed.",
+      "current_release_evidence": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-runtime-acceptance.json",
+      "downstream_SPEC_impact": "none"
+    },
+    {
+      "id": "S6-FIRST-REPORT-ERRATUM",
+      "original_SPEC_text": "Exact recorded source/recovery identities; preserve prior evidence",
+      "actual_change": "Corrected abbreviated original manifest suffix in current report and created new evidence-index-final; original immutable history/report/index retained.",
+      "reason": "Terse report abbreviation typo; all full authoritative hashes already correct.",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/first-candidate-report.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-report-erratum.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-owner-evidence-index-final.json"
+      ],
+      "checks": {
+        "final34indexedfiles_all_match": true,
+        "raw_erratum": {
+          "kind": "REPORT_ABBREVIATION_ERRATUM",
+          "source_current_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/first-candidate-report.md",
+          "prior_sha256": "aa44e65216b09cd9f4a4cfac595c4ce25f7314000718c7e4e94c03f0f299c9f9",
+          "current_sha256": "6ce02c98ecc3b76cc034cf06eb1a511a472d270419f7adaf0ea6d868bd887aec",
+          "correction": "Original manifest abbreviated suffix corrected from7834fb to2834fb; full exact identity in owner packet, checkpoint, manifests and current evidence remains f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb",
+          "history": "Existing immutable history report preserves original text; this separate erratum qualifies it",
+          "candidate_or_gate_effect": "NONE"
+        }
+      },
+      "observable_effect": "Report text accurately points to original manifest; no source/gate/runtime change.",
+      "risk": "Historical original text remains qualified by explicit erratum.",
+      "downstream_SPEC_impact": "none",
+      "classification": "accepted"
+    }
+  ]
+}

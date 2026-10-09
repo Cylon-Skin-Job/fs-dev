@@ -7,7 +7,8 @@
       "materialIcon": "all_inclusive",
       "accentColor": "#10B981",
       "order": 0,
-      "model": "fireworks-ai/accounts/fireworks/models/deepseek-v4-flash-0731",
+      "model": "togetherai/deepseek-ai/DeepSeek-V4.1-Flash",
+      "variant": "high",
       "thinking": true
     },
     "kimi": {

@@ -1,0 +1,31 @@
+{
+  "command": [
+    "git",
+    "-C",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+    "cat-file",
+    "-p",
+    "d15792920731f85e45b743519d4af2b807d95a9c"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "GIT_LITERAL_PATHSPECS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "started": "2026-10-04T19:52:02.892027+00:00",
+  "finished": "2026-10-04T19:52:02.896414+00:00",
+  "exit_code": 0,
+  "stdout": "tree 9ed96e903f550fe4a45c203487296c6d4d500a14\nparent 551a74313d099724cdb3d76ead04e940ae88f223\nauthor Cylon-Skin-Job <105960223+Cylon-Skin-Job@users.noreply.github.com> 1790823355 -0700\ncommitter Cylon-Skin-Job <105960223+Cylon-Skin-Job@users.noreply.github.com> 1790823355 -0700\n\nRecord combined merge verification and linked follow-up\n",
+  "stderr": "",
+  "stdout_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/inspection2-baseline-object.stdout",
+    "sha256": "7d19474b02237ff87ab66b2c6c48689711924d52e04dd021177624fb47eaf1c9",
+    "size": 336
+  },
+  "stderr_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/inspection2-baseline-object.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  }
+}

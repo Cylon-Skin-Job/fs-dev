@@ -1,6 +1,18 @@
 {
-  "defaultProvider": "fireworks",
+  "defaultProvider": "togetherai",
   "providers": [
+    {
+      "id": "togetherai",
+      "label": "Together AI",
+      "defaultModel": "togetherai/deepseek-ai/DeepSeek-V4.1-Flash",
+      "models": [
+        {
+          "id": "togetherai/deepseek-ai/DeepSeek-V4.1-Flash",
+          "name": "DeepSeek V4.1 Flash",
+          "variants": ["low", "high", "max"]
+        }
+      ]
+    },
     {
       "id": "fireworks",
       "label": "Fireworks AI",

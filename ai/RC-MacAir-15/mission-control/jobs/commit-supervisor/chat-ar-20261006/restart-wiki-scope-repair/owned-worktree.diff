@@ -1,0 +1,85 @@
+diff --git a/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md b/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md
+index ccf1ac39..441285d9 100644
+--- a/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md
++++ b/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md
+@@ -2,64 +2,26 @@
+ name: Fusion Restart
+ description: Fusion restart script behavior and when to use it for chat validation.
+ metadata:
+-  source-files:
+-    - restart-fusion.sh
+-    - scripts/fusion-restart.mjs
+-    - scripts/fusion-restart-target.mjs
+-    - scripts/fusion-restart-processes.mjs
+-    - scripts/fusion-restart-probe.mjs
+-  last-modified: "2026-10-04T21:16:40Z"
++  incoming-edges:
++    - Chat Testing And Operations
++    - Chat Electron Playwright
++  outgoing-edges: []
++  source-files: []
++  connected-skills: []
++  related-trigger-files: []
+ ---
+ 
+-Use the selected checkout's canonical `restart-fusion.sh` for final visual
+-validation of the real development app shell or when client bundle changes
+-must reach the running Electron app. In this development checkout:
++The restart script lives at the root of this repository:
+ 
+-```bash
+-/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh \
+-  --repo /Users/rccurtrightjr./projects/fs-dev \
+-  --machine RC-MacAir-15
++```text
++/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh
+ ```
+ 
+-`--repo` selects the exact Git worktree root; it defaults to the script's own
+-checkout. `--machine` overrides `FUSION_LOCAL_MACHINE`, with `RC-MacAir-15` as
+-the fallback, and requires that checkout's `ai/<machine>/System` tree. For an
+-isolated candidate, run its own script with its own machine tree and add
+-`--user-data /absolute/disposable/profile`. The explicit profile overrides
+-`FUSION_APP_USER_DATA`. With neither setting, Electron uses the ordinary Fusion
+-Studio profile and the unpackaged server uses the checkout's
+-`fusion-studio-server/data/fusion.db`. An explicit or inherited profile instead
+-owns `<profile>/server-data/fusion.db`, even if its path names the ordinary
+-profile. Profile selection therefore also selects server database ownership.
++It kills previous Fusion/Electron/server processes, builds the client, launches
++Electron through macOS LaunchServices, waits for the Electron-owned server port
++file, and prints the live server URL.
+ 
+-Before runtime effects, the script checks selected checkout/profile ownership.
+-It builds the client before stopping the verified owned process tree, rejects
+-conflicting or ambiguous ownership, then clears only the selected profile's
+-`Cache`, `Code Cache`, `GPUCache`, `Local Storage`, `Session Storage` and stale
+-`server.port`. Databases are preserved. It launches the selected checkout's
+-local Electron executable directly with `electron/main.cjs`; that shell owns
+-the selected `fusion-studio-server/server.js` child. Another checkout's Electron
+-runtime is not borrowed.
++Use it for final visual validation of the real app shell or when client bundle
++changes must be reflected in the running Electron app.
+ 
+-Readiness requires matching main/server/renderer executable paths, entry paths,
+-CWD, profile, machine, ancestry and listener ownership. A loopback CDP probe
+-uses the selected client's existing Playwright dependency to observe
+-`fusion-shell://app/` connected after `workspace:init`, repeatedly over two
+-seconds, and then rechecks live process identity. A port file or listening
+-server alone cannot establish readiness. Missing probe support, a disconnected
+-renderer or wrong identity withholds readiness and reports the failure.
+-
+-Per-run target, verification/failure evidence and launch/Electron/renderer logs
+-are under `<profile>/fusion-restart/run-*/`. Server logs are in the checkout's
+-`fusion-studio-server/server-live.log` for default mode, or
+-`<profile>/server-live.log` for explicit/inherited mode. A failed run may leave
+-its selected app available for diagnosis; report the shown evidence path and
+-check any lock's writer before removal. `--dry-run` reports resolved paths
+-without restarting or proving app health.
+-
+-The script excludes Alpha checkout, app, profile and machine identities.
+-Alpha updates and restarts follow the repository's separate owner-governed
+-workflow, including both Alpha identity variables. See
+-[Testing And Operations](../PAGE.md) and
+-[Electron Playwright](../003-Playwright_Electron/PAGE.md) for the surrounding
+-chat validation requirements.
++Because it opens a GUI app, tool runs may require approval.

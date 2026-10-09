@@ -1,0 +1,33 @@
+{
+  "head": "88637d11c65be53d4f2ad0f049f64a07fa3db1de",
+  "files": [
+    {
+      "relativePath": "fusion-studio-client/electron/main.cjs",
+      "sha256": "22d254036040a367782656c3d29730e719dae3056d6d54f4ada94f2ed1bca260"
+    },
+    {
+      "relativePath": "fusion-studio-client/electron/server-spawn.cjs",
+      "sha256": "6fb9d7200858dbba74c649ec8dde6c703052c4429423a07f8b8e6648731b275e"
+    },
+    {
+      "relativePath": "fusion-studio-client/dist/index.html",
+      "sha256": "ecdb06477d948a061348d31f7b7db944791ebb87caf4d9b5ce75c796f5d9d99b"
+    },
+    {
+      "relativePath": "fusion-studio-server/server.js",
+      "sha256": "293e3f56f7c61aa855d8e116fe901cb58db86eedf69cce3ac2e4ad865ad62a07"
+    },
+    {
+      "relativePath": "fusion-studio-server/lib/harness/registry.js",
+      "sha256": "ac07f0adad5080ef21f482b60eb2027b97fadb060780f63e6d43191b20fed2f4"
+    },
+    {
+      "relativePath": "fusion-studio-server/lib/db/migrations/044_thread_group_placement_outbox.js",
+      "sha256": "08197c2b84835c63890ab292db11ebf68d5f697295c54f894a8d8298fb322d12"
+    },
+    {
+      "relativePath": "fusion-studio-client/e2e/chat-architecture/deterministic-opencode-adapter.cjs",
+      "sha256": "93796c2f711f01bf851fafc3a5a809e278f63cff1652e7d00482af4b738bd01e"
+    }
+  ]
+}

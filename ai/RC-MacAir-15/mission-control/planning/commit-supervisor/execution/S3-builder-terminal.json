@@ -1,0 +1,67 @@
+{
+  "time": "2026-10-04T09:58:55.697001+00:00",
+  "work": "SPEC-COMMIT-SUPERVISOR-01",
+  "slice": "S3",
+  "builder": "/root/s3_builder",
+  "state": "READY_FOR_ORCHESTRATOR_REVIEW",
+  "reviewers": [
+    {
+      "identity": "/root/s3_builder/s3_builder_review_1",
+      "agent_type": "clean-room-reviewer",
+      "fork_turns": "none",
+      "root_model_effort_inherited": true,
+      "override": false,
+      "result": "CLEAN",
+      "terminal_confirmed_by": "list_agents",
+      "close_agent": "unavailable",
+      "report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-builder-review-1.md",
+      "report_sha256": "ac49049f35daecc6ab255c529562d8432e679e8c685ad6f924e70dc4e976b92d"
+    }
+  ],
+  "current_manifest_sha256": "1bb96ef15f4ed49b8988034c702c2607375d2f8c7e9ba6fa02a45c9108fd0a78",
+  "covered_frozen_manifest_sha256": "1bb96ef15f4ed49b8988034c702c2607375d2f8c7e9ba6fa02a45c9108fd0a78",
+  "artifacts": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+      "sha256": "f30199373a1e5fbd59d3f3425dcaa2553839d32b70ec62681cca1f26f357acbe",
+      "lines": 315
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/job-template.md",
+      "sha256": "2631f5ba8734a764ca3a4c9bb11b4bf1a8375b81331c259a9f5d35ceab6de5a3",
+      "lines": 102
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/wiki-handoff.md",
+      "sha256": "4d9198cfa72345335294ea3046c6895e10827ec65456ff2c0339c5e8f247c432",
+      "lines": 143
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+      "sha256": "5694da42dabb5e5ca14f95fb35f559c8b2e54c6f0f287db57cb71372de9fe79f",
+      "lines": 271
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+      "sha256": "86041f2634b107fc85f7c15d0f397b59ad8fb0b648ae9990a7b7e592977fa22e",
+      "lines": 122
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/wiki_fixture.py",
+      "sha256": "cd2a1024f2acad7844a06406b7ff3f1794a016da21ffdd2d04abfae859e7a6de",
+      "lines": 175
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_wiki_handoff.py",
+      "sha256": "5a35d5586b11af10fea182f3ec45f44c19a14117223e7a54d5328b5e7afe4269",
+      "lines": 187
+    }
+  ],
+  "frozen_evidence_verified": true,
+  "source_revisions_verified": true,
+  "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "source_index_sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+  "builder_packet": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-builder.md",
+  "builder_packet_sha256": "a7ac07e7bff2165a3fdd02312cf7ff2959878173473f2b606b99fb934f085ac6",
+  "owning_acceptance_pending": true
+}

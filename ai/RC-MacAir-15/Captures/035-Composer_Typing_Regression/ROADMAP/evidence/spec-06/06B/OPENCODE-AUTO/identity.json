@@ -1,0 +1,23 @@
+{
+  "at": "2026-09-27T08:19:22.923298+00:00",
+  "source": {
+    "files": 1964,
+    "sha256": "559e477742fd8436d7fc702786aefd465166b07fdd0b9eb37e5e251d8f5ee844"
+  },
+  "build": {
+    "files": 200,
+    "sha256": "b070d633863382e48ea2f6d677a92cfe65b9a4dea79caa87975711c109c70b03"
+  },
+  "changedPaths": [
+    {
+      "path": "fusion-studio-server/lib/harness/opencode/index.js",
+      "before": "03c75fe26bb0a9c7682e917563758ddcf12cc781690fd8bcf5e2bbc399a6ffcb",
+      "after": "344c6a8ed07e05124bfdaf3d4e7974456147e883a0602b09b2c081733d0eda70"
+    },
+    {
+      "path": "fusion-studio-server/test/harness/opencode/harness-send-message.test.js",
+      "before": "09c961e189311c92fbfc3c4d8dbbd7c7ca1398b98524ab813f3dda5ccdb8bf26",
+      "after": "eecdbb378d3e1b380e4240d811f04a99239a0d4d8ab47c215c915eac9da7aa06"
+    }
+  ]
+}

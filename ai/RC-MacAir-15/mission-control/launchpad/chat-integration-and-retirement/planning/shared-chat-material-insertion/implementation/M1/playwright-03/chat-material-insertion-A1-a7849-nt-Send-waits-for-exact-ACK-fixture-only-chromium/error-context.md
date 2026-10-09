@@ -1,0 +1,83 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - button "chat_paste_go" [ref=e4]
+    - button "chat_paste_go" [ref=e5]
+    - group "Document actions" [ref=e6]:
+      - button "link_2" [ref=e7] [cursor=pointer]:
+        - generic [ref=e8]: link_2
+      - button "chat_paste_go" [ref=e9] [cursor=pointer]:
+        - generic [ref=e10]: chat_paste_go
+  - generic [ref=e12]:
+    - complementary [ref=e13]:
+      - generic [ref=e14]:
+        - button "Hide threads" [ref=e15]: dock_to_right
+        - combobox "Thread view" [ref=e16] [cursor=pointer]:
+          - option "Active Threads" [selected]
+          - option "Archive"
+      - button "edit_squareNew chat" [ref=e17]
+      - separator [ref=e18]
+      - generic [ref=e19]:
+        - generic [ref=e20]:
+          - generic [ref=e21]:
+            - generic "Main material" [ref=e22]: Main material●
+            - button "More options" [ref=e23]: more_vert
+          - generic [ref=e25]: 0 msgs · 12/31/2025
+        - generic [ref=e26]:
+          - generic [ref=e27]:
+            - generic "Other material" [ref=e28]: Other material●
+            - button "More options" [ref=e29]: more_vert
+          - generic [ref=e31]: 0 msgs · 12/31/2025
+    - generic [ref=e32]:
+      - button "More options" [ref=e35]: event_list
+      - generic [ref=e38]: Start a conversation
+      - generic [ref=e40]:
+        - generic "Chat attachments" [ref=e41]:
+          - article "/source-workspace/files/real-source.ts" [ref=e42]:
+            - generic [ref=e43]: draft
+            - generic [ref=e44]: real-source.tsTS file
+            - button "Remove file:real-source.ts" [ref=e45]: close
+          - article "/source-workspace/files/folder" [ref=e46]:
+            - generic [ref=e47]: folder
+            - generic [ref=e48]: folderFolder
+            - button "Remove folder:folder" [ref=e49]: close
+        - textbox "Ask about wiki-viewer..." [disabled] [ref=e53]: MAIN DRAFT
+        - generic [ref=e54]:
+          - generic [ref=e55]:
+            - button "Add" [ref=e57] [cursor=pointer]:
+              - generic [ref=e58]: add
+            - button "Mode" [ref=e60]: shield_lockMode
+          - generic [ref=e61]:
+            - 'button "Context usage: 0%" [ref=e63]'
+            - button "DeepSeek V4 Flash" [ref=e65]: DeepSeek V4 Flashkeyboard_arrow_down
+            - button "Voice input (click to open)" [ref=e67] [cursor=pointer]:
+              - generic [ref=e68]: mic
+            - button "Connecting thread runtime" [disabled] [ref=e70]
+  - generic [ref=e71]:
+    - tablist "wiki-viewer" [ref=e73]:
+      - tab "wiki-viewer" [ref=e74]: tabwiki-viewer
+      - tab "Side Chat" [selected] [ref=e75]: tabSide Chat
+      - button "Close Side Chat" [ref=e76]: close
+    - generic [ref=e77]:
+      - generic [ref=e78]:
+        - generic [ref=e79]:
+          - button "Show threads" [ref=e80]: dock_to_right
+          - button "New chat" [ref=e81]: edit_square
+        - button "More options" [ref=e83]: event_list
+      - generic [ref=e86]: Start a conversation
+      - generic [ref=e88]:
+        - textbox "Ask about chat-surface-component-material-side-component..." [ref=e92]: SIDE DRAFT
+        - generic [ref=e93]:
+          - generic [ref=e94]:
+            - button "Add" [ref=e96] [cursor=pointer]:
+              - generic [ref=e97]: add
+            - button "Mode" [ref=e99]: shield_lockMode
+          - generic [ref=e100]:
+            - 'button "Context usage: 0%" [ref=e102]'
+            - button "DeepSeek V4 Flash" [ref=e104]: DeepSeek V4 Flashkeyboard_arrow_down
+            - button "Voice input (click to open)" [ref=e106] [cursor=pointer]:
+              - generic [ref=e107]: mic
+            - button "Send message" [ref=e109]: arrow_upward
+```

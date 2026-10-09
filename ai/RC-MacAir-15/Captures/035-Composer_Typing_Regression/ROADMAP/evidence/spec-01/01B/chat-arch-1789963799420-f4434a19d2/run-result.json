@@ -1,0 +1,18 @@
+{
+  "runId": "chat-arch-1789963799420-f4434a19d2",
+  "status": "passed",
+  "results": [
+    {
+      "id": "SHELL-VIEW-BOUND",
+      "code": 0,
+      "signal": null,
+      "pid": 38859,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 6447
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

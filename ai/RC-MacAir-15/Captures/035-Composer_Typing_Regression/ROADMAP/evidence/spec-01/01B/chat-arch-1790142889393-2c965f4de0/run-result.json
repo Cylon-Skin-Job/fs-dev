@@ -1,0 +1,18 @@
+{
+  "runId": "chat-arch-1790142889393-2c965f4de0",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R1-COMPOSER-CORRECTNESS",
+      "code": 0,
+      "signal": null,
+      "pid": 93313,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 2870
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

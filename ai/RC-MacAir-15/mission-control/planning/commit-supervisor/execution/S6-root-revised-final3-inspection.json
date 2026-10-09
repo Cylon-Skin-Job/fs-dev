@@ -1,0 +1,24 @@
+{
+  "at": "2026-10-04T19:26:43.747621+00:00",
+  "actor": "/root",
+  "scope": "revised S6 source/check gate only",
+  "actual_native_manager_and_child_completed": true,
+  "native_observation": "root exact-subtree list_agents full manager and reviewer terminal reports",
+  "full_report_and_lifecycle_read": true,
+  "raw_paths_sha256": {
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-manager-3.md": "051d948ed72f3fd5aa3c558cc3dab44c6cdbbb5a83577f16648e08115f442d0c",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-manager-3-lifecycle.json": "0194ed9ffb44e36124f02d4947479b2b6d0fc6e51f5eae9c6082509d8627af13",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-reviewer-3.raw.md": "8d5b30ee5336864717ade91eba5b50170161fe0b7dc9a7b7ed2a59a51cdec92e"
+  },
+  "current_authority_config_and_app_Wiki_fingerprints_checked": 87,
+  "current55_binding_root_inspection": "S6-root-renewed-python-binding-inspection.json",
+  "independence": "fresh fork-none root inherited no overrides; strict neutral-only child messages; no prior assessment supplied",
+  "accepted_forward_repairs": [
+    "F-ALL5-01 renewed full current55 evidence",
+    "FINAL2-INDEPENDENCE-001 / F-ALL5-02 different fresh actual clean gate"
+  ],
+  "historical_qualification": "Earlier incomplete55/current1 receipts and invalid final2 assessment remain immutable and do not certify current acceptance; Node17 historical binary bytes unavailable.",
+  "runtime_required": true,
+  "current_runtime_or_owner_readiness_granted": false,
+  "findings": []
+}

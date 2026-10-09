@@ -1,0 +1,73 @@
+{
+  "at": "2026-10-07T22:46:23.911504+00:00",
+  "status": "IN_PROGRESS_BUILDER_GATE",
+  "builder": "/root/m3_builder",
+  "manager": "/root",
+  "candidate": "sha256:65b324647b7e52f0426f7b2005849d053f4f239420fab07c848170b21ec1d3f3",
+  "slice": "M3",
+  "productFrozen": true,
+  "sourceSeal": "implementation/M3/SOURCE-SEAL.json",
+  "sourceSealSha256": "35cda972a106468eaa279c60da9ef51fc04ec23333f03de4226269b84e14ad07",
+  "builderReview": {
+    "status": "pending",
+    "reason": "Fresh independent gate is now the sole remaining builder requirement; all required checks complete."
+  },
+  "requiredCompleted": [
+    "build-03",
+    "server-full-01",
+    "server-focused-01",
+    "renderer-05",
+    "wiki-02",
+    "native-18"
+  ],
+  "requiredPending": [
+    "Fresh materially CLEAN builder review"
+  ],
+  "capability": "implementation/M3/NATIVE-CAPABILITY.json",
+  "reports": [
+    "BUILDER-REPORT.md",
+    "CRITERIA.md",
+    "CALLER-INVENTORY.md",
+    "CALLER-SWEEP.json",
+    "DEVIATIONS.md",
+    "SELF-REVIEW.md",
+    "CHECKS.json",
+    "LIFECYCLE.json",
+    "UNCHANGED-DEPENDENCIES.json",
+    "NATIVE-SUMMARY.json",
+    "NONNATIVE-RETENTION-01.json",
+    "SEAL-PRESERVATION.json"
+  ],
+  "nextSafeAction": "Fresh read-only builder gate over current frozen source and complete raw packet; root may independently run native. Any validated repair must be announced before writes and renew affected evidence.",
+  "nonNativeRootChecks": "implementation/M3/orchestrator-checks/NONNATIVE-CHECKS-01.json",
+  "nonNativeRootChecksSha256": "7fd8b106bc6bfdea46eeedb389dfd6309a56840fb7c7ca997e2dd9286c8bb036",
+  "reportBindings": {
+    "BUILDER-REPORT.md": "85d6ae1736dfb1a0eb0725501e64191978cf2ed1df4338727dc1a0ecf16613b3",
+    "CALLER-INVENTORY.md": "ebffd266d3c5c8286d3df98ea4484988c5b9f82e32666ba16cf7e8184d38a990",
+    "CALLER-SWEEP.json": "92698c32cbce92ba1fd085dc71315394f792e4fd83eecddab352af53078884ae",
+    "CAPABILITY-CLEANUP.json": "023dcac34537a223081774bb23dcdba0471bb6865054622e5c8b15dc5270c329",
+    "CHECKS.json": "8902846a91f9b542cb7a97f6748da212cbd0e9eddd4dfc6cc64ea83b9e280ec0",
+    "CRITERIA.md": "6414289961339ed8c1ee35a13158b6555ebd615cab70b8072d3da789c9f232a7",
+    "DEVIATIONS.md": "118971edb3d08647c91c5b6d24ffd7b1cbfc5ccd3d64ef27468fc06bb857cd65",
+    "LIFECYCLE.json": "d4543f319a7d3ca5f140774041c41b067152a63bf01a62e98579e4f792df2126",
+    "M3-slice-01.patch": "b7016b1009bb156dcbfc8f9eba8cf8126747c9cc6a54adf4e25572fd45ebd59a",
+    "M3-slice.patch": "45a9e7bc4ecd9a8ef9341bbd81d26352592ac4f18f116fc2976cf525dd599f9c",
+    "NATIVE-CAPABILITY.json": "80e2cc775ffbe4a48fc3994b15c7ee86fc0361bbd43b3553e70f8cc9c757ce7d",
+    "NATIVE-SUMMARY.json": "804e6540874255d3f1f215b52fd5cad62c292eddd26db14c06c1977237e9bd9a",
+    "NONNATIVE-RETENTION-01.json": "9e5696a0306ef19f26ec4b5b53b9abbefc82820384688396252d98106580fffe",
+    "RESUME-01.json": "b730e134401f1008685850e6697e7138ed08fc7244273f03874279f6500bf465",
+    "SEAL-PRESERVATION.json": "0a9bf8bab61a56c3ad29d5dcb8d8f9de32ee2db2a517c6a441dc9a84f8bdce77",
+    "SELF-REVIEW.md": "d82b015b5d121e07d956e8382e659f614ecbad6f8f28871efeb77bb8c1173434",
+    "SOURCE-SEAL-01.json": "6fcef6edfdf2439a45eec626a1d854ed67db209b7c78988a6aeaa48a713fd316",
+    "SOURCE-SEAL-02.json": "2d8d3778f5dda29d54fa3f08e4de5fe52e6a0c261d5e103e3b62f3599198d13c",
+    "SOURCE-SEAL-03.json": "47e9fe2792bd347d4bf53f5ef04af2bbb50487294a08f2fa9e69c83f9e62cc11",
+    "SOURCE-SEAL.json": "35cda972a106468eaa279c60da9ef51fc04ec23333f03de4226269b84e14ad07",
+    "START.json": "2801b2f6b6a556b7ba40600bd0d275db394da1aa2ce41d32a01dc95e66c52250",
+    "UNCHANGED-DEPENDENCIES.json": "08c88f63e1ceb451f842231b180c04ab60858c8a6d0e99ddd95d3336492c0a32",
+    "caller-sweep.raw.txt": "787d9f8805d476c868920b8106867f25ce8faab7878e6daaf662b2b5cc8fa553",
+    "seal.py": "51aa2c7015e82dcbdbcbf431f4936cdc9adc54893cf499fd98d20ea565a28a53"
+  },
+  "native": "implementation/M3/native-18/native-receipt.json",
+  "nativeSha256": "96b107e3f731294fbd35274f99ca3ca2ae272558b7ecdce2461c63cc38c485a2",
+  "ownership": "Product writer frozen; report-only until review finding validated. Parent root owns separate acceptance/final gates."
+}

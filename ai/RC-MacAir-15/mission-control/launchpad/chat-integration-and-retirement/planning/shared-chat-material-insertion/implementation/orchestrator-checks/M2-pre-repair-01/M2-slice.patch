@@ -1,0 +1,1690 @@
+--- pre-M2/fusion-studio-client/e2e/chat-composer-screenshot-menu.spec.ts
++++ M2/fusion-studio-client/e2e/chat-composer-screenshot-menu.spec.ts
+@@ -39,8 +39,7 @@
+ 
+   expect(appSource).toContain('void captureAndAttachScreenshot()');
+   expect(appSource).toContain('onClick={handleControlCamera}');
+-  expect(footerSource).toContain('onAttach={onAddAttachment}');
+-  expect(footerSource).toContain('onInsert={onInsertText}');
++  expect(footerSource).toContain('beginMaterial={beginMaterial}');
+   expect(footerSource).not.toContain('<ScreenshotsTrigger');
+   expect(addMenuSource).toContain('void captureAndAttachScreenshot(screenshotOwner)');
+   expect(addMenuSource).toContain('control_camera');
+@@ -48,15 +47,15 @@
+   expect(gallerySource).toContain("triggerVariant?: 'icon' | 'submenu'");
+   expect(gallerySource).toContain('<span>Screenshots</span>');
+   expect(gallerySource).toContain('chevron_right');
+-  expect(addMenuSource).toContain('<ClipboardTrigger onInsert={handleInsert} triggerVariant="submenu" />');
+-  expect(addMenuSource).toContain('<RecentFilesTrigger onInsert={handleInsert} triggerVariant="submenu" />');
++  expect(addMenuSource).toContain('<ClipboardTrigger beginMaterial={handleBegin} triggerVariant="submenu" />');
++  expect(addMenuSource).toContain('<RecentFilesTrigger beginMaterial={handleBegin} triggerVariant="submenu" />');
+   expect(clipboardSource).toContain('<span>Clipboard</span>');
+   expect(clipboardSource).toContain('listPage(0, 1)');
+   expect(clipboardSource).toContain('fetchEntryValue(entry.id)');
+   expect(clipboardSource).toContain('handleInsertTopRanked()');
+   expect(editsSource).toContain('<span>Edits</span>');
+   expect(editsSource).toContain('requestRecentFiles(1)');
+-  expect(editsSource).toContain('onInsert?.(mostRecent.path)');
++  expect(editsSource).toContain('await begin.source.text(mostRecent.path)');
+ 
+   await page.setContent(`
+     <style>${dropdownCss}\n${hoverModalCss}\n${chatAreaCss}</style>
+--- pre-M2/fusion-studio-client/e2e/chat-material-insertion.spec.ts
++++ M2/fusion-studio-client/e2e/chat-material-insertion.spec.ts
+@@ -2,6 +2,7 @@
+ import { expect, test, type Page } from '@playwright/test';
+ import { build } from 'vite';
+ import path from 'node:path';
++import { registerMaterialSourceCases } from './support/chat-material-source-cases';
+ 
+ let bundle: Promise<string>;
+ async function mount(page: Page) {
+@@ -305,3 +306,5 @@
+   await expect(editor(page, 'main')).toHaveValue('MAIN DRAFT');
+   expect((await snapshot(page)).attachments).toEqual({});
+ });
++
++registerMaterialSourceCases({ mount, call, snapshot, editor, key, noAutoSend });
+--- pre-M2/fusion-studio-client/e2e/support/chat-material-fixture.tsx
++++ M2/fusion-studio-client/e2e/support/chat-material-fixture.tsx
+@@ -9,6 +9,8 @@
+ import { ViewTabStrip } from '../../src/components/view-tabs/ViewTabStrip';
+ import { useSideChatRailAdapter } from '../../src/components/chat/useSideChatRailAdapter';
+ import { ChatSurfaceComponentMount } from '../../src/components/chat/ChatSurfaceComponentMount';
++import { ChatSurface } from '../../src/components/chat/ChatSurface';
++import { useChatSessionHost } from '../../src/components/chat/useChatSessionHost';
+ import { ChatSessionHost } from '../../src/components/chat/ChatSessionHost';
+ import { ViewChatHost } from '../../src/components/chat/ViewChatHost';
+ import { SendToChatButton } from '../../src/components/SendToChatButton';
+@@ -18,7 +20,8 @@
+ import { registerToastSetter } from '../../src/lib/toast';
+ import { handleThreadMessage } from '../../src/lib/ws/thread-handlers';
+ import { handleWorksurfaceMessage } from '../../src/lib/ws/worksurface-handlers';
+-import { installProductSendCapability } from '../../src/lib/ws/product-send';
++import { exchange } from './working-activity-wire';
++import { installMaterialSources } from './chat-material-source-fixture';
+ 
+ const W = 'material-workspace', V = 'wiki-viewer', G = 'material-group', M = 'main-session', S = 'side-session';
+ const frames: any[] = [], notices: string[] = [];
+@@ -35,6 +38,15 @@
+ const roots = { get 'file-viewer'() { sourceReads++; return '/source-workspace/files'; }, 'wiki-viewer': '/source-workspace/wiki' };
+ function sendTransport(value: string) {
+   const frame = JSON.parse(value); frames.push(frame);
++  if (frame.type === 'thread:open-assistant') queueMicrotask(() => {
++    const row = { threadId: 'created-main', threadGroupId: 'created-group', viewId: V, entry: entry('Created material') }; rows.unshift(row);
++    handleThreadMessage({ type: 'thread:created', workspaceId: W, viewId: V, threadId: row.threadId, threadGroupId: row.threadGroupId, thread: row.entry } as never);
++    handleThreadMessage({ type: 'thread:opened', workspaceId: W, viewId: V, threadId: row.threadId, threadGroupId: row.threadGroupId, thread: row.entry, exchanges: [] } as never);
++  });
++  if (frame.type === 'thread:open' && !frame.historyOnly) {
++    const row = rows.find(item => item.threadGroupId === frame.threadGroupId);
++    if (row) queueMicrotask(() => handleThreadMessage({ type: 'thread:opened', workspaceId: W, viewId: V, threadId: row.threadId, threadGroupId: row.threadGroupId, thread: row.entry, exchanges: [] } as never));
++  }
+   if (['state:worksurface_get', 'state:worksurface_put'].includes(frame.type)) queueMicrotask(() => {
+     const state = usePanelStore.getState(), stored = state.worksurfaceEntries[`${W}::${V}::${frame.threadGroupId}`];
+     const entry = frame.type === 'state:worksurface_put' ? { ...stored, schemaVersion: 1,
+@@ -46,26 +58,9 @@
+       applied: true, acknowledged: true } as never);
+   });
+ }
+-const socket = { readyState: WebSocket.OPEN, send: sendTransport } as WebSocket;
+-installProductSendCapability({ socket, generation: 'material-fixture', isAuthenticated: () => true,
+-  captureBinding: (id) => id === W ? { workspaceId: W, workspaceEpoch: 'material-epoch', bindingRevision: 1, bindingSerial: 1 } : null,
+-  isBindingCurrent: () => usePanelStore.getState().activeWorkspaceId === W,
+-  sendProductResult: (value, _policy, current) => {
+-    if (!current()) return { status: 'not_enqueued', reason: 'stale_binding' };
+-    const frame = JSON.parse(value); sendTransport(value);
+-    if (frame.type === 'thread:open-assistant') queueMicrotask(() => {
+-      const row = { threadId: 'created-main', threadGroupId: 'created-group', viewId: V, entry: entry('Created material') };
+-      rows.unshift(row);
+-      handleThreadMessage({ type: 'thread:created', workspaceId: W, viewId: V, threadId: row.threadId, threadGroupId: row.threadGroupId, thread: row.entry } as never);
+-      handleThreadMessage({ type: 'thread:opened', workspaceId: W, viewId: V, threadId: row.threadId, threadGroupId: row.threadGroupId, thread: row.entry, exchanges: [] } as never);
+-    });
+-    if (frame.type === 'thread:open' && !frame.historyOnly) {
+-      const row = rows.find((item) => item.threadGroupId === frame.threadGroupId);
+-      if (row) queueMicrotask(() => handleThreadMessage({ type: 'thread:opened', workspaceId: W, viewId: V,
+-        threadId: row.threadId, threadGroupId: row.threadGroupId, thread: row.entry, exchanges: [] } as never));
+-    }
+-    return { status: 'enqueued', destination: 'socket' };
+-  } });
++async function initialize() {
++const sources = await installMaterialSources(sendTransport);
++const socket = sources.socket;
+ useWorkspaceStore.setState({ activeWorkspaceId: W, workspaceEpoch: 'material-epoch', bindingSerial: 1, bindingRevision: 1, hasReceivedInit: true });
+ usePanelStore.setState({ activeWorkspaceId: W, currentPanel: V, currentThreadId: 'stale-legacy', chatActive: true,
+   ws: socket, threads: rows, panelRoots: roots, panelConfigs: [], viewStates: {},
+@@ -78,9 +73,24 @@
+ registerToastSetter((message) => notices.push(message));
+ installChatActionConsumer(); installChatActionConsumer();
+ let held: any, lastResult: any, abortController: AbortController;
+-let renderControl: any;
++let renderControl: any, reusable: any, oldBegin: any, oldSource: any;
+ const fixture = {
+   notices, frames,
++  captureCallback: () => { oldBegin = reusable.refs.materialRef.current; oldSource = oldBegin().source; },
++  staleBegin: () => oldBegin().status,
++  staleText: async () => (await oldSource.text('STALE TEXT')).status,
++  staleAttachment: async () => (await oldSource.attachment({ id: 'stale', kind: 'file', label: 'stale', path: '/source/stale', sourceName: 'files' })).status,
++  diagnostic: (thread: string) => {
++    const saved = exchange('FAILED PROMPT', [{ type: 'text', content: 'PARTIAL' }], 91);
++    saved.metadata = { turnId: 'material-diagnostic-turn', terminalError: { kind: 'runtime', code: 'MODEL_RESPONSE_FAILED',
++      message: 'The model response failed before it completed.', recoverable: true, diagnosticId: 'material-diagnostic-id' } };
++    handleThreadMessage({ type: 'thread:opened', workspaceId: W, viewId: V, threadGroupId: G, threadId: thread,
++      historyOnly: true, thread: entry('Diagnostic material'), exchanges: [saved] } as never);
++  },
++  sourceFrame: sources.emit,
++  cold: (thread: string) => usePanelStore.setState({ wireReadyByThread: { ...usePanelStore.getState().wireReadyByThread, [thread]: false } }),
++  failWarm: () => usePanelStore.setState({ warmThread: () => { throw new Error('test-owned warm failure'); } }),
++  holdSource: sources.hold, releaseSource: sources.release, sourcePending: sources.pending,
+   begin: (surface?: string) => {
+     held = beginChatMaterial(surface ? usePanelStore.getState().mountedChats[surface] : undefined);
+     return held.status;
+@@ -97,7 +107,7 @@
+     active: usePanelStore.getState().activeMountedChat?.threadId ?? null,
+     activeSurface: usePanelStore.getState().activeMountedChat?.surfaceId ?? null,
+     mounts: Object.values(usePanelStore.getState().mountedChats).map(({ threadId, generation, surfaceId, binding, componentInstanceId }) => ({ threadId, generation, surfaceId, binding, componentInstanceId })),
+-    sourceReads, frames, notices, result: lastResult?.status }),
++    sourceReads, sourceCounts: sources.reads, frames, notices, result: lastResult?.status }),
+   lose: (what: string) => {
+     const state = usePanelStore.getState();
+     if (what === 'workspace') { usePanelStore.setState({ activeWorkspaceId: 'foreign' }); usePanelStore.setState({ activeWorkspaceId: W }); }
+@@ -123,13 +133,21 @@
+   const rail = useSideChatRailAdapter(V, null);
+   return rail ? <ViewTabStrip {...rail} /> : null;
+ }
++function Reusable({ thread, active }: { thread: string; active: boolean }) {
++  const projection = useChatSessionHost({ workspaceId: W, viewId: V, threadGroupId: thread === M ? G : 'other-group',
++    threadId: thread, surfaceId: 'material-reused-component', host: 'main', panel: V, isActive: active });
++  reusable = projection;
++  return <ChatSurface {...projection.identity} shell={projection.shell} header={projection.header} composer={projection.composer}
++    actions={projection.actions} refs={projection.refs} panel={V} onToggleThreads={projection.onToggleThreads} screenshotSelection="session" />;
++}
+ function Fixture() {
+-  const [state, setState] = useState({ main: true, side: true, collapsed: false, extra: false, foreign: false, explicit: false });
++  const [state, setState] = useState({ main: true, side: true, collapsed: false, extra: false, foreign: false, explicit: false, reuse: false, reuseThread: M, active: true });
+   renderControl = (patch: any) => setState((old) => ({ ...old, ...patch }));
+   return <>
+     <div id="resource"><SendToChatButton panel="file-viewer" relativePath="real-source.ts" />
+       <SendToChatButton panel="wiki-viewer" relativePath="Topic/PAGE.md" title="Attach wiki" />
+       <FloatingPathActions panel="file-viewer" relativePath="folder" /></div>
++    {state.reuse && <div id="reuse"><Reusable thread={state.reuseThread} active={state.active} /></div>}
+     {state.main && <div id="main">{state.collapsed
+       ? <ChatSessionHost panel={V} workspaceId={W} viewId={V} threadGroupId={G} threadId={M} host="main" collapsed />
+       : <ViewChatHost panel={V} workspaceId={W} viewId={V} />}</div>}
+@@ -142,3 +160,6 @@
+   </>;
+ }
+ createRoot(document.querySelector('#root')!).render(<StrictMode><Fixture /></StrictMode>);
++
++}
++void initialize();
+--- pre-M2/fusion-studio-client/e2e/support/chat-material-source-cases.ts
++++ M2/fusion-studio-client/e2e/support/chat-material-source-cases.ts
+@@ -0,0 +1,257 @@
++/** Source-focused cases registered in the cumulative material suite. */
++import { expect, test, type Page } from '@playwright/test';
++interface Context {
++  mount: (page: Page) => Promise<void>;
++  call: (page: Page, name: string, arg?: any) => Promise<any>;
++  snapshot: (page: Page) => Promise<any>;
++  editor: (page: Page, host: string) => ReturnType<Page['locator']>;
++  key: (thread: string) => string;
++  noAutoSend: (page: Page) => Promise<void>;
++}
++export function registerMaterialSourceCases({ mount, call, snapshot, editor, key, noAutoSend }: Context) {
++
++const addMenu = async (page: Page, host: string) => page.locator(`#${host}`).getByRole('button', { name: 'Add', exact: true }).click();
++const sourceAction = async (page: Page, host: string, kind: string, row = 1) => {
++  await addMenu(page, host);
++  const scope = page.locator(`#${host}`);
++  if (kind === 'clipboard-top') await scope.getByRole('menuitem', { name: 'Insert top clipboard item' }).click();
++  if (kind === 'recent-top') await scope.getByRole('menuitem', { name: 'Insert most recently edited file' }).click();
++  if (kind === 'clipboard-row') {
++    await scope.getByRole('menuitem', { name: 'Browse clipboard history' }).click();
++    await page.locator('.rv-hover-icon-modal-row').filter({ hasText: `Clipboard row ${row}` }).click();
++  }
++  if (kind === 'recent-row') {
++    await scope.getByRole('menuitem', { name: 'Browse recent edits' }).click();
++    await page.locator('.rv-hover-icon-modal-row').filter({ hasText: 'recent.ts' }).click();
++  }
++  if (kind === 'gallery') {
++    await scope.getByRole('menuitem', { name: 'Browse screenshots' }).click();
++    await page.locator('.rv-hover-icon-modal-row').filter({ hasText: 'gallery' }).click();
++  }
++};
++for (const host of ['main', 'side']) for (const kind of ['clipboard-top', 'clipboard-row', 'recent-top', 'recent-row', 'gallery']) {
++  test(`A06 ${host} ${kind} begins at actual action and uses its own composer`, async ({ page }) => {
++    await mount(page);
++    await editor(page, host).evaluate(el => (el as HTMLTextAreaElement).setSelectionRange(0, 4));
++    await editor(page, host === 'main' ? 'side' : 'main').focus();
++    await sourceAction(page, host, kind);
++    const content = kind.startsWith('clipboard') ? 'CLIPBOARD 1' : '/source/recent.ts';
++    if (kind === 'gallery') {
++      await expect(page.locator(`#${host} .rv-chat-attachment-pill`)).toHaveCount(1);
++      expect((await snapshot(page)).attachments[key(host === 'main' ? 'main-session' : 'side-session')].attachments[0].path).toBe('/source/Data/Screenshots/gallery.png');
++    } else await expect(editor(page, host)).toHaveValue(`${content} DRAFT`);
++    await expect(editor(page, host === 'main' ? 'side' : 'main')).toHaveValue(host === 'main' ? 'SIDE DRAFT' : 'MAIN DRAFT');
++    await noAutoSend(page);
++  });
++}
++for (const kind of ['clipboard-top', 'recent-top']) {
++  test(`A07/A16 deferred ${kind} keeps retained owner and fresh selection after typing/focus`, async ({ page }) => {
++    await mount(page); await call(page, 'holdSource', kind === 'clipboard-top' ? 'clipboard-list' : 'recent');
++    await sourceAction(page, 'main', kind);
++    await editor(page, 'main').fill('INTERVENING TYPING');
++    await editor(page, 'main').evaluate(el => (el as HTMLTextAreaElement).setSelectionRange(0, 0));
++    await editor(page, 'side').focus(); await call(page, 'foreignView', true);
++    await call(page, 'releaseSource', kind === 'clipboard-top' ? 'clipboard-list' : 'recent');
++    await expect(editor(page, 'main')).toHaveValue(`${kind === 'clipboard-top' ? 'CLIPBOARD 1' : '/source/recent.ts'}INTERVENING TYPING`);
++    await expect(editor(page, 'side')).toHaveValue('SIDE DRAFT');
++    expect(await editor(page, 'side').evaluate(el => el === document.activeElement)).toBe(true);
++    await noAutoSend(page);
++  });
++}
++test('A16 stale editor value safely paragraph-appends to latest owner draft', async ({ page }) => {
++  await mount(page); await call(page, 'holdSource', 'clipboard-use-1');
++  await sourceAction(page, 'main', 'clipboard-top');
++  await editor(page, 'main').fill('LATEST OWNER');
++  await editor(page, 'main').evaluate(el => { (el as HTMLTextAreaElement).value = 'STALE DOM'; (el as HTMLTextAreaElement).setSelectionRange(0, 5); });
++  await call(page, 'releaseSource', 'clipboard-use-1');
++  await expect(editor(page, 'main')).toHaveValue('LATEST OWNER\n\nCLIPBOARD 1');
++});
++for (const host of ['side', 'explicit']) {
++  test(`A08 deferred ${host} source survives unrelated Main selection`, async ({ page }) => {
++    await mount(page); if (host === 'explicit') { await call(page, 'render', { explicit: true }); await expect(editor(page, host)).toHaveValue('MAIN DRAFT'); }
++    await call(page, 'holdSource', 'recent');
++    await sourceAction(page, host, 'recent-top');
++    await page.locator('#main .rv-chat-item-text[title="Other material"]').first().click();
++    await expect(editor(page, 'main')).toHaveValue('');
++    await call(page, 'releaseSource', 'recent');
++    await expect(editor(page, host)).toHaveValue(/\/source\/recent.ts/);
++    await noAutoSend(page);
++  });
++}
++for (const loss of ['rebind', 'unmount', 'placement', 'hydration', 'workspace', 'binding']) {
++  test(`A09/A11/A13 real deferred clipboard cancels on ${loss} and does not revive`, async ({ page }) => {
++    await mount(page); const host = loss === 'rebind' ? 'main' : 'side';
++    await call(page, 'holdSource', 'clipboard-use-1'); await sourceAction(page, host, 'clipboard-top');
++    if (loss === 'rebind') {
++      await page.locator('#main .rv-chat-item-text[title="Other material"]').first().click();
++      await page.locator('#main .rv-chat-item-text[title="Main material"]').first().click();
++    } else if (loss === 'unmount') {
++      await call(page, 'render', { side: false }); await expect(editor(page, 'side')).toHaveCount(0);
++      await call(page, 'render', { side: true }); await expect(editor(page, 'side')).toHaveValue('SIDE DRAFT');
++    } else await call(page, 'lose', loss);
++    const before = await snapshot(page);
++    await call(page, 'releaseSource', 'clipboard-use-1');
++    await expect.poll(async () => (await snapshot(page)).notices.at(-1)).toBe('Unable to add material to chat');
++    expect((await snapshot(page)).drafts).toEqual(before.drafts);
++    expect((await snapshot(page)).attachments).toEqual(before.attachments);
++    await noAutoSend(page);
++  });
++}
++test('A09/A16 old callbacks after genuine same-instance tuple reuse reject before write or focus', async ({ page }) => {
++  await mount(page); await call(page, 'render', { reuse: true }); await expect(editor(page, 'reuse')).toHaveValue('MAIN DRAFT');
++  const node = await editor(page, 'reuse').elementHandle();
++  await call(page, 'captureCallback');
++  await call(page, 'render', { reuseThread: 'other-main' }); await expect(editor(page, 'reuse')).toHaveValue('');
++  expect(await editor(page, 'reuse').evaluate((el, old: any) => el === old, node)).toBe(true);
++  await editor(page, 'side').focus();
++  const before = await snapshot(page);
++  expect(await call(page, 'staleBegin')).toBe('unavailable');
++  expect(await call(page, 'staleText')).toBe('cancelled');
++  expect(await call(page, 'staleAttachment')).toBe('cancelled');
++  expect((await snapshot(page)).drafts).toEqual(before.drafts); expect((await snapshot(page)).attachments).toEqual(before.attachments);
++  expect(await editor(page, 'side').evaluate(el => el === document.activeElement)).toBe(true);
++  await call(page, 'render', { reuseThread: 'main-session' }); await expect(editor(page, 'reuse')).toHaveValue('MAIN DRAFT');
++  expect(await call(page, 'staleText')).toBe('cancelled');
++});
++test('A12 concurrent source requests complete out of order only once in their own owners', async ({ page }) => {
++  await mount(page); await call(page, 'holdSource', 'clipboard-use-1'); await call(page, 'holdSource', 'clipboard-use-2');
++  await sourceAction(page, 'main', 'clipboard-row', 1); await sourceAction(page, 'side', 'clipboard-row', 2);
++  await call(page, 'releaseSource', 'clipboard-use-2'); await expect(editor(page, 'side')).toHaveValue(/CLIPBOARD 2/);
++  await expect(editor(page, 'main')).toHaveValue('MAIN DRAFT');
++  await call(page, 'releaseSource', 'clipboard-use-1'); await expect(editor(page, 'main')).toHaveValue(/CLIPBOARD 1/);
++  const before = await snapshot(page);
++  await call(page, 'sourceFrame', { type: 'clipboard:use', id: 1, value: 'WRONG DUPLICATE' });
++  expect((await snapshot(page)).revisions).toEqual(before.revisions);
++  await noAutoSend(page);
++});
++for (const phase of ['pending', 'unknown']) {
++  test(`A15 ${phase} gates actual source preparation and suppresses warm as appropriate`, async ({ page }) => {
++    await mount(page); await call(page, 'pending', phase); const before = await snapshot(page);
++    await sourceAction(page, 'main', 'clipboard-top');
++    if (phase === 'pending') {
++      expect((await snapshot(page)).sourceCounts['clipboard-list']).toBeUndefined();
++      expect((await snapshot(page)).drafts).toEqual(before.drafts);
++    } else await expect(editor(page, 'main')).toHaveValue(/CLIPBOARD 1/);
++    expect((await snapshot(page)).frames.filter((f: any) => f.type === 'thread:warm' && f.threadId === 'main-session')).toEqual([]);
++    await noAutoSend(page);
++  });
++}
++test('A15 own source warms captured thread; suppressed/failed warming preserves valid insertion', async ({ page }) => {
++  await mount(page); await call(page, 'cold', 'side-session'); await sourceAction(page, 'side', 'gallery');
++  await expect(page.locator('#side .rv-chat-attachment-pill')).toHaveCount(1);
++  expect((await snapshot(page)).frames.filter((f: any) => f.type === 'thread:warm').map((f: any) => f.threadId)).toEqual(['side-session']);
++  await call(page, 'render', { reuse: true, active: false }); await expect(editor(page, 'reuse')).toHaveValue('MAIN DRAFT');
++  await call(page, 'cold', 'main-session'); await sourceAction(page, 'reuse', 'gallery');
++  await expect(page.locator('#reuse .rv-chat-attachment-pill')).toHaveCount(1);
++  expect((await snapshot(page)).frames.filter((f: any) => f.type === 'thread:warm').map((f: any) => f.threadId)).toEqual(['side-session']);
++  await call(page, 'render', { active: true }); await call(page, 'failWarm');
++  await sourceAction(page, 'reuse', 'clipboard-top'); await expect(editor(page, 'reuse')).toHaveValue(/CLIPBOARD 1/);
++  await noAutoSend(page);
++});
++for (const host of ['main', 'side']) {
++  test(`A16 ${host} microphone completion keeps own material lease`, async ({ page }) => {
++    await mount(page); await page.locator(`#${host}`).getByRole('button', { name: 'Voice input (click to open)', exact: true }).click();
++    await expect(page.locator('.rv-voice-recorder__title')).toHaveText('Recording');
++    await call(page, 'holdSource', 'transcribe'); await page.locator('.rv-voice-recorder').getByRole('button', { name: 'Send', exact: true }).click();
++    await expect.poll(async () => (await snapshot(page)).sourceCounts.transcribe).toBe(1);
++    await editor(page, host === 'main' ? 'side' : 'main').focus();
++    await call(page, 'releaseSource', 'transcribe');
++    await expect(editor(page, host)).toHaveValue(/MIC TRANSCRIPT/);
++    expect(await editor(page, host === 'main' ? 'side' : 'main').evaluate(el => el === document.activeElement)).toBe(true);
++    await noAutoSend(page);
++  });
++}
++for (const phase of ['permission', 'recording', 'processing']) {
++  test(`A09/A11 mic explicit cancel during ${phase} prevents late source completion`, async ({ page }) => {
++    await mount(page); if (phase === 'permission') await call(page, 'holdSource', 'permission');
++    await page.locator('#main').getByRole('button', { name: 'Voice input (click to open)', exact: true }).click();
++    await expect(page.locator('.rv-voice-recorder__title')).toHaveText('Recording');
++    if (phase === 'processing') {
++      await call(page, 'holdSource', 'transcribe'); await page.locator('.rv-voice-recorder').getByRole('button', { name: 'Send', exact: true }).click();
++      await expect.poll(async () => (await snapshot(page)).sourceCounts.transcribe).toBe(1);
++      await page.keyboard.press('Escape'); await call(page, 'releaseSource', 'transcribe');
++    } else {
++      await page.locator('.rv-voice-recorder').getByRole('button', { name: 'Cancel', exact: true }).click();
++      if (phase === 'permission') await call(page, 'releaseSource', 'permission');
++    }
++    await expect(page.locator('.rv-voice-recorder')).toHaveCount(0);
++    await expect(editor(page, 'main')).toHaveValue('MAIN DRAFT');
++    if (phase !== 'processing') expect((await snapshot(page)).sourceCounts.transcribe).toBeUndefined();
++    if (phase === 'permission') {
++      expect((await snapshot(page)).sourceCounts['recorder-start']).toBeUndefined();
++      await expect.poll(async () => (await snapshot(page)).sourceCounts['track-stop']).toBe(1);
++    }
++    await noAutoSend(page);
++  });
++}
++for (const cancel of [false, true]) {
++  test(`A16 diagnostic begins before retrieval and ${cancel ? 'cancels on real rebind' : 'survives other focus'}`, async ({ page }) => {
++    await mount(page); await call(page, 'diagnostic', 'main-session');
++    await call(page, 'holdSource', 'diagnostic');
++    await page.locator('#main').getByRole('button', { name: 'Ask AI', exact: true }).click();
++    await expect.poll(async () => (await snapshot(page)).sourceCounts.diagnostic).toBe(1);
++    if (cancel) await page.locator('#main .rv-chat-item-text[title="Other material"]').first().click();
++    await editor(page, 'side').focus(); await call(page, 'releaseSource', 'diagnostic');
++    if (cancel) {
++      await expect(editor(page, 'main')).toHaveValue('');
++      expect((await snapshot(page)).drafts[key('main-session')]).toBe('MAIN DRAFT');
++    } else await expect(editor(page, 'main')).toHaveValue(/MAIN DRAFT\n\nPlease help.*[\s\S]*SAFE REDACTED DETAIL/);
++    await expect(editor(page, 'side')).toHaveValue('SIDE DRAFT');
++    expect((await snapshot(page)).frames.filter((f: any) => f.type === 'thread:warm' && f.threadId === 'main-session')).toEqual([]);
++    await noAutoSend(page);
++  });
++}
++
++for (const kind of ['clipboard-top', 'recent-top', 'gallery']) {
++  test(`A06 adapterless Side ${kind} uses placement authority without Main rows`, async ({ page }) => {
++    await mount(page); await call(page, 'adapterless'); await sourceAction(page, 'side', kind);
++    if (kind === 'gallery') await expect(page.locator('#side .rv-chat-attachment-pill')).toHaveCount(1);
++    else await expect(editor(page, 'side')).toHaveValue(kind === 'clipboard-top' ? /CLIPBOARD 1/ : /recent.ts/);
++    await noAutoSend(page);
++  });
++}
++for (const phase of ['permission', 'processing']) {
++  test(`A09 microphone tuple rebind during ${phase} cancels old preparation permanently`, async ({ page }) => {
++    await mount(page); await call(page, 'render', { reuse: true }); await expect(editor(page, 'reuse')).toHaveValue('MAIN DRAFT');
++    await call(page, 'holdSource', phase === 'permission' ? 'permission' : 'transcribe');
++    await page.locator('#reuse').getByRole('button', { name: 'Voice input (click to open)', exact: true }).click();
++    await expect(page.locator('.rv-voice-recorder__title')).toHaveText('Recording');
++    if (phase === 'processing') {
++      await page.locator('.rv-voice-recorder').getByRole('button', { name: 'Send', exact: true }).click();
++      await expect.poll(async () => (await snapshot(page)).sourceCounts.transcribe).toBe(1);
++    }
++    await call(page, 'render', { reuseThread: 'other-main' }); await expect(editor(page, 'reuse')).toHaveValue('');
++    await call(page, 'releaseSource', phase === 'permission' ? 'permission' : 'transcribe');
++    await call(page, 'render', { reuseThread: 'main-session' }); await expect(editor(page, 'reuse')).toHaveValue('MAIN DRAFT');
++    if (phase === 'permission') {
++      expect((await snapshot(page)).sourceCounts['recorder-start']).toBeUndefined();
++      await expect.poll(async () => (await snapshot(page)).sourceCounts['track-stop']).toBe(1);
++    }
++    await noAutoSend(page);
++  });
++}
++for (const kind of ['clipboard-top', 'recent-top']) {
++  test(`A13 source failure from actual ${kind} leaves composer owners unchanged`, async ({ page }) => {
++    await mount(page); const held = kind === 'clipboard-top' ? 'clipboard-use-1' : 'recent';
++    await call(page, 'holdSource', held); const before = await snapshot(page);
++    await sourceAction(page, 'main', kind);
++    await expect.poll(async () => (await snapshot(page)).sourceCounts[kind === 'clipboard-top' ? 'clipboard-use' : 'recent']).toBe(1);
++    await call(page, 'sourceFrame', kind === 'clipboard-top'
++      ? { type: 'clipboard:error', requestType: 'clipboard:use', id: 1, message: 'source failed' }
++      : { type: 'recent_files_response', panel: 'wiki-viewer', success: false, error: 'source failed' });
++    await expect.poll(async () => (await snapshot(page)).notices.at(-1)).toBe('Unable to add material to chat');
++    await call(page, 'releaseSource', held);
++    expect((await snapshot(page)).drafts).toEqual(before.drafts);
++    expect((await snapshot(page)).attachments).toEqual(before.attachments);
++    await noAutoSend(page);
++  });
++}
++test('A16 prepared emoji records once through its existing editor side effect', async ({ page }) => {
++  await mount(page); await call(page, 'holdSource', 'clipboard-use-1'); await sourceAction(page, 'main', 'clipboard-top');
++  await call(page, 'sourceFrame', { type: 'clipboard:use', id: 1, value: '😀' });
++  await expect(editor(page, 'main')).toHaveValue(/😀/);
++  await call(page, 'releaseSource', 'clipboard-use-1');
++  expect((await snapshot(page)).frames.filter((f: any) => f.type === 'emoji_recents:record' && f.emoji === '😀')).toHaveLength(1);
++  await noAutoSend(page);
++});
++}
+--- pre-M2/fusion-studio-client/e2e/support/chat-material-source-fixture.ts
++++ M2/fusion-studio-client/e2e/support/chat-material-source-fixture.ts
+@@ -0,0 +1,103 @@
++/** Controlled transport/native source responses; production source APIs and consumers stay real. */
++import { connectWs } from '../../src/lib/ws-client';
++import { usePanelStore } from '../../src/state/panelStore';
++
++export async function installMaterialSources(sendProduct: (value: string) => void) {
++  const reads: Record<string, number> = {}, holds = new Set<string>(), pending: { kind: string; done: () => void }[] = [];
++  const count = (kind: string) => { reads[kind] = (reads[kind] ?? 0) + 1; };
++  const defer = (kind: string, done: () => void) => {
++    if (holds.has(kind)) pending.push({ kind, done }); else queueMicrotask(done);
++  };
++  const emit = (data: unknown) => raw.dispatchEvent(new MessageEvent('message', { data: JSON.stringify(data) }));
++  const native = window.WebSocket;
++  let raw: FixtureSocket;
++  class FixtureSocket extends EventTarget {
++    static OPEN = native.OPEN; static CLOSED = native.CLOSED; static CONNECTING = native.CONNECTING; static CLOSING = native.CLOSING;
++    readyState = native.OPEN; bufferedAmount = 0;
++    constructor() {
++      super(); raw = this;
++      queueMicrotask(() => {
++        this.dispatchEvent(new Event('open'));
++        const now = Date.now();
++        emit({ type: 'shell-auth:challenge', version: 1, connectionId: 'material-connection', serverNonce: 'n'.repeat(43),
++          generation: 'material_fixture_generation', issuedAt: now, expiresAt: now + 30000 });
++      });
++    }
++    dispatchEvent(event: Event) {
++      const dispatched = super.dispatchEvent(event);
++      const handler = (this as any)[`on${event.type}`];
++      if (typeof handler === 'function') handler.call(this, event);
++      return dispatched;
++    }
++    close() { this.readyState = native.CLOSED; this.dispatchEvent(new Event('close')); }
++    send(value: string) {
++      const f = JSON.parse(value);
++      if (f.type === 'shell-auth:proof') { queueMicrotask(() => emit({ type: 'shell-auth:authenticated', version: 1 })); return; }
++      sendProduct(value);
++      if (f.type === 'clipboard:list') {
++        count('clipboard-list'); defer('clipboard-list', () => emit({ type: 'clipboard:list', items: [clipboard(1), clipboard(2)], total: 2 }));
++      }
++      if (f.type === 'clipboard:use') {
++        count('clipboard-use'); defer(`clipboard-use-${f.id}`, () => emit({ type: 'clipboard:use', id: f.id, value: `CLIPBOARD ${f.id}` }));
++      }
++      if (f.type === 'recent_files_request') {
++        count('recent'); defer('recent', () => emit({ type: 'recent_files_response', panel: f.panel, success: true,
++          files: [{ name: 'recent.ts', path: '/source/recent.ts', mtime: 100, size: 1024 }] }));
++      }
++      if (f.type === 'chat-turn:diagnostic:get') {
++        count('diagnostic'); defer('diagnostic', () => emit({ ...f, type: 'chat-turn:diagnostic:report', report: {
++          version: 1, harnessId: 'opencode', category: 'runtime', message: 'SAFE REDACTED DETAIL',
++          hadRenderableOutput: false, hadToolCalls: false, truncatedFields: [] } }));
++      }
++    }
++  }
++  const clipboard = (id: number) => ({ id, type: 'text', preview: `Clipboard row ${id}`, source: 'fixture', last_used_at: id, created_at: id });
++  Object.defineProperty(window, 'WebSocket', { configurable: true, value: FixtureSocket });
++  const sourceFetch: typeof fetch = async (url, options) => {
++    const pathname = new URL(String(url), location.href).pathname;
++    if (pathname === '/api/transcribe') {
++      count('transcribe');
++      return new Promise<Response>((resolve, reject) => {
++        options?.signal?.addEventListener('abort', () => { count('transcribe-abort'); reject(new DOMException('aborted', 'AbortError')); }, { once: true });
++        defer('transcribe', () => resolve(new Response(JSON.stringify({ success: true, text: 'MIC TRANSCRIPT' }), { status: 200 })));
++      });
++    }
++    return new Response(JSON.stringify({ success: true, items: [] }), { status: 200 });
++  };
++  Object.defineProperty(window, 'fetch', { configurable: true, value: sourceFetch });
++  Object.defineProperty(window, 'electronAPI', { configurable: true, value: {
++    getRuntimeDescriptor: async () => ({ generation: 'material_fixture_generation', httpOrigin: 'http://127.0.0.1:43177', webSocketUrl: 'ws://127.0.0.1:43177' }),
++    onRuntimeDescriptorChanged: () => () => {},
++    authorizeShellChallenge: async (challenge: any, rendererNonce: string) => ({ type: 'shell-auth:proof', version: 1, connectionId: challenge.connectionId, serverNonce: challenge.serverNonce, generation: challenge.generation, expiresAt: challenge.expiresAt, rendererNonce, proof: 'p'.repeat(43) }),
++    listScreenshots: async () => { count('gallery'); return [{ name: 'gallery.png', path: '/source/Data/Screenshots/gallery.png' }]; },
++    readScreenshot: async () => ({ base64: '', mimeType: 'image/png' }),
++  } });
++  const stream = () => ({ getTracks: () => [{ stop: () => count('track-stop') }] }) as unknown as MediaStream;
++  Object.defineProperty(navigator, 'mediaDevices', { configurable: true, value: {
++    getUserMedia: async () => { count('permission'); return new Promise<MediaStream>(resolve => defer('permission', () => resolve(stream()))); },
++    enumerateDevices: async () => [],
++  } });
++  Object.defineProperty(navigator, 'permissions', { configurable: true, value: { query: async () => ({ state: 'granted' }) } });
++  class Recorder {
++    static isTypeSupported = () => true;
++    state = 'inactive'; onstop?: () => void; ondataavailable?: (event: { data: Blob }) => void;
++    start() { this.state = 'recording'; count('recorder-start'); }
++    stop() { this.state = 'inactive'; this.ondataavailable?.({ data: new Blob(['x'.repeat(2048)]) }); queueMicrotask(() => this.onstop?.()); }
++  }
++  Object.defineProperty(window, 'MediaRecorder', { configurable: true, value: Recorder });
++  Object.defineProperty(window, 'AudioContext', { configurable: true, value: class {
++    state = 'running'; close = async () => {}; resume = async () => {};
++    createMediaStreamSource = () => ({ connect: () => {} });
++    createAnalyser = () => ({ fftSize: 0, smoothingTimeConstant: 0, frequencyBinCount: 32, getByteFrequencyData: () => {} });
++  } });
++  connectWs();
++  await new Promise<void>((resolve) => {
++    const ready = () => { if (usePanelStore.getState().ws) resolve(); else setTimeout(ready, 0); }; ready();
++  });
++  return { socket: usePanelStore.getState().ws!, reads,
++    hold: (kind: string) => holds.add(kind),
++    release: (kind: string) => { holds.delete(kind); pending.filter(item => item.kind === kind).forEach(item => { pending.splice(pending.indexOf(item), 1); item.done(); }); },
++    pending: () => pending.map(item => item.kind),
++    emit,
++  };
++}
+--- pre-M2/fusion-studio-client/src/clipboard/ClipboardTrigger.tsx
++++ M2/fusion-studio-client/src/clipboard/ClipboardTrigger.tsx
+@@ -2,11 +2,12 @@
+  * @module ClipboardTrigger
+  * @role Icon button that triggers the clipboard popover.
+  *
+- * Click on a row → fetch value via clipboard:use → call onInsert(value) so
+- * the chat input receives the text. Secret-typed rows render their stored
++ * Click on a row → capture its composer → fetch via clipboard:use → commit
++ * prepared text through the shared material owner. Secret-typed rows render their stored
+  * fingerprint as the preview. Per-row trash-can deletes via clipboard:delete.
+  */
+ 
++import type { BeginChatMaterialSource, ChatMaterialSource } from '../lib/chat-material-source';
+ import { useEffect, useState, useRef } from 'react';
+ import {
+   useHoverIconModal,
+@@ -25,11 +26,11 @@
+ import './Clipboard.css';
+ 
+ interface ClipboardTriggerProps {
+-  onInsert?: (text: string) => void;
++  beginMaterial?: BeginChatMaterialSource;
+   triggerVariant?: 'icon' | 'submenu';
+ }
+ 
+-export function ClipboardTrigger({ onInsert, triggerVariant = 'icon' }: ClipboardTriggerProps) {
++export function ClipboardTrigger({ beginMaterial, triggerVariant = 'icon' }: ClipboardTriggerProps) {
+   const [popoverPos, setPopoverPos] = useState<{ left: number; bottom: number } | null>(null);
+   const listRef = useRef<HTMLDivElement>(null);
+   const items = useClipboardStore((s) => s.items);
+@@ -65,34 +66,32 @@
+     close,
+   } = useHoverIconModal({
+     onOpen: handleOpen,
+-    id: 'clipboard',
+   });
+ 
+   // Reverse items so newest is at bottom.
+   const displayItems = [...items].reverse();
+ 
+-  const handleSelect = async (entry: ClipboardEntry) => {
+-    if (!onInsert) {
+-      console.warn('[Clipboard] onInsert handler not wired; entry click ignored');
+-      return;
+-    }
++  const prepareEntry = async (entry: ClipboardEntry, source: ChatMaterialSource) => {
+     try {
+       const value = await fetchEntryValue(entry.id);
+-      onInsert(value);
+-    } catch (err) {
+-      console.error('[Clipboard] fetchEntryValue failed:', err);
+-    }
+-  };
+-
++      await source.text(value);
++    } catch {
++      await source.fail();
++    }
++  };
++  const handleSelect = (entry: ClipboardEntry) => {
++    const begin = beginMaterial?.();
++    if (begin?.status === 'ready') void prepareEntry(entry, begin.source);
++  };
+   const handleInsertTopRanked = async () => {
++    const begin = beginMaterial?.();
++    if (begin?.status !== 'ready') return;
+     try {
+       const { items: rankedItems } = await listPage(0, 1);
+-      const topRanked = rankedItems[0];
+-      if (topRanked) {
+-        await handleSelect(topRanked);
+-      }
+-    } catch (err) {
+-      console.error('[Clipboard] Failed to insert top-ranked item:', err);
++      if (rankedItems[0] && !begin.source.signal.aborted) await prepareEntry(rankedItems[0], begin.source);
++      else await begin.source.fail();
++    } catch {
++      await begin.source.fail();
+     }
+   };
+ 
+--- pre-M2/fusion-studio-client/src/components/ChatInput.tsx
++++ M2/fusion-studio-client/src/components/ChatInput.tsx
+@@ -31,6 +31,9 @@
+   getText: () => string;
+   focus: () => void;
+   clearText: () => void;
++  recordMaterialText?: (text: string) => void;
++  readSelection?: () => { value: string; start: number; end: number } | null;
++  restoreCaret?: (value: string, cursor: number, isCurrent: () => boolean) => void;
+ }
+ 
+ interface ChatInputProps {
+@@ -130,6 +133,20 @@
+   }, [onDraftChange]);
+ 
+   useImperativeHandle(ref, () => ({
++    recordMaterialText: recordEmojiRecentsFromText,
++    readSelection: () => {
++      const node = textareaRef.current;
++      return node?.isConnected ? { value: node.value, start: node.selectionStart, end: node.selectionEnd } : null;
++    },
++    restoreCaret: (value: string, cursor: number, isCurrent: () => boolean) => {
++      const node = textareaRef.current;
++      window.requestAnimationFrame(() => {
++        if (isCurrent() && node?.isConnected && document.activeElement === node && node.value === value) {
++          node.setSelectionRange(cursor, cursor);
++          setCursorIndex(cursor);
++        }
++      });
++    },
+     insertText: (newText: string) => {
+       const textarea = textareaRef.current;
+       if (!textarea) return;
+--- pre-M2/fusion-studio-client/src/components/MessageList.tsx
++++ M2/fusion-studio-client/src/components/MessageList.tsx
+@@ -61,7 +61,7 @@
+     route: ChatDiagnosticRouteIds,
+   ) => Promise<ValidatedChatTurnDiagnosticReport | null>;
+   onCopyDiagnostic: (text: string) => Promise<void>;
+-  onAskAIWithDiagnostic: (text: string) => Promise<boolean | 'pending-acceptance'>;
++  onAskAIWithDiagnostic: (prepare: () => Promise<string | null>) => Promise<boolean | 'pending-acceptance'>;
+   askAIWithDiagnosticEnabled: boolean;
+ }
+ 
+--- pre-M2/fusion-studio-client/src/components/chat/ChatAreaFooter.tsx
++++ M2/fusion-studio-client/src/components/chat/ChatAreaFooter.tsx
+@@ -17,6 +17,7 @@
+ import { ChatComposerModeMenu } from './ChatComposerModeMenu';
+ import { ChatComposerModelMenu } from './ChatComposerModelMenu';
+ import { ChatComposerContextMeter } from './ChatComposerContextMeter';
++import type { BeginChatMaterialSource } from '../../lib/chat-material-source';
+ import type { ChatLinkAttachment } from '../../lib/chat-file-links/file-link-types';
+ import type { TokenUsage } from '../../types';
+ import type { ScreenshotAttachmentOwner } from '../../screenshots/chatScreenshotCapture';
+@@ -38,8 +39,7 @@
+   submissionFeedback: string;
+   canCheckSubmissionStatus: boolean;
+   onCheckSubmissionStatus: () => void;
+-  onInsertText: (text: string) => void;
+-  onAddAttachment: (attachment: ChatLinkAttachment) => void;
++  beginMaterial: BeginChatMaterialSource;
+   onWarmIntent: () => void;
+   contextUsage: number;
+   tokenUsage: TokenUsage | null;
+@@ -69,8 +69,7 @@
+   submissionFeedback,
+   canCheckSubmissionStatus,
+   onCheckSubmissionStatus,
+-  onInsertText,
+-  onAddAttachment,
++  beginMaterial,
+   onWarmIntent,
+   contextUsage,
+   tokenUsage,
+@@ -110,8 +109,7 @@
+         <div className="rv-chat-composer-meta-row">
+           <div className="rv-chat-composer-tools-left">
+             <ChatComposerAddMenu
+-              onAttach={onAddAttachment}
+-              onInsert={onInsertText}
++              beginMaterial={beginMaterial}
+               screenshotOwner={screenshotOwner}
+             />
+             <ChatComposerModeMenu />
+@@ -124,7 +122,7 @@
+               selection={modelSelection}
+               onChangeSelection={onModelSelectionChange}
+             />
+-            <MicTrigger onInsert={onInsertText} />
++            <MicTrigger beginMaterial={beginMaterial} />
+             {isTurnFinalizing ? (
+               <div
+                 className="rv-chat-completing-indicator"
+--- pre-M2/fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx
++++ M2/fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx
+@@ -9,15 +9,14 @@
+ import type { ScreenshotAttachmentOwner } from '../../screenshots/chatScreenshotCapture';
+ import { ClipboardTrigger } from '../../clipboard';
+ import { RecentFilesTrigger } from '../../recent-files';
+-import type { ChatLinkAttachment } from '../../lib/chat-file-links/file-link-types';
++import type { BeginChatMaterialSource } from '../../lib/chat-material-source';
+ 
+ interface ChatComposerAddMenuProps {
+-  onAttach: (attachment: ChatLinkAttachment) => void;
+-  onInsert: (text: string) => void;
++  beginMaterial: BeginChatMaterialSource;
+   screenshotOwner: ScreenshotAttachmentOwner | null;
+ }
+ 
+-export function ChatComposerAddMenu({ onAttach, onInsert, screenshotOwner }: ChatComposerAddMenuProps) {
++export function ChatComposerAddMenu({ beginMaterial, screenshotOwner }: ChatComposerAddMenuProps) {
+   const [open, setOpen] = useState(false);
+   const rootRef = useRef<HTMLDivElement>(null);
+ 
+@@ -45,15 +44,11 @@
+     if (screenshotOwner) void captureAndAttachScreenshot(screenshotOwner);
+   }, [screenshotOwner]);
+ 
+-  const handleAttach = useCallback((attachment: ChatLinkAttachment) => {
+-    setOpen(false);
+-    onAttach(attachment);
+-  }, [onAttach]);
+-
+-  const handleInsert = useCallback((text: string) => {
+-    setOpen(false);
+-    onInsert(text);
+-  }, [onInsert]);
++  const handleBegin = useCallback<BeginChatMaterialSource>((options) => {
++    const result = beginMaterial(options);
++    if (result.status === 'ready') setOpen(false);
++    return result;
++  }, [beginMaterial]);
+ 
+   return (
+     <div className="rv-chat-composer-add" ref={rootRef}>
+@@ -83,12 +78,12 @@
+               <span className="material-symbols-outlined" aria-hidden="true">control_camera</span>
+             </button>
+             <ScreenshotsTrigger
+-              onAttach={handleAttach}
++              beginMaterial={handleBegin}
+               triggerVariant="submenu"
+             />
+           </div>
+-          <ClipboardTrigger onInsert={handleInsert} triggerVariant="submenu" />
+-          <RecentFilesTrigger onInsert={handleInsert} triggerVariant="submenu" />
++          <ClipboardTrigger beginMaterial={handleBegin} triggerVariant="submenu" />
++          <RecentFilesTrigger beginMaterial={handleBegin} triggerVariant="submenu" />
+         </div>
+       )}
+     </div>
+--- pre-M2/fusion-studio-client/src/components/chat/ChatDiagnosticDetails.tsx
++++ M2/fusion-studio-client/src/components/chat/ChatDiagnosticDetails.tsx
+@@ -47,7 +47,7 @@
+ interface ChatDiagnosticDetailsProps extends ChatDiagnosticRouteIds {
+   onRequest: (route: ChatDiagnosticRouteIds) => Promise<ValidatedChatTurnDiagnosticReport | null>;
+   onCopy: (text: string) => Promise<void>;
+-  onAskAI: (text: string) => Promise<boolean | 'pending-acceptance'>;
++  onAskAI: (prepare: () => Promise<string | null>) => Promise<boolean | 'pending-acceptance'>;
+   askAIEnabled: boolean;
+ }
+ 
+@@ -151,16 +151,12 @@
+   };
+ 
+   const handleAskAI = async () => {
+-    const resolved = await resolveReport();
+-    if (!resolved) return;
+-    if (mounted.current && identityRef.current === identity) {
+-      const applied = await onAskAI(`${ASK_AI_INTRO}${resolved.text}`);
+-      if (!mounted.current || identityRef.current !== identity) return;
+-      setKeyedState({
+-        identity,
+-        state: applied === true ? 'inserted' : applied === 'pending-acceptance' ? 'acceptance-pending' : 'composer-unavailable',
+-      });
+-    }
++    const applied = await onAskAI(async () => {
++      const resolved = await resolveReport();
++      return resolved && mounted.current && identityRef.current === identity ? `${ASK_AI_INTRO}${resolved.text}` : null;
++    });
++    if (!mounted.current || identityRef.current !== identity) return;
++    setKeyedState({ identity, state: applied === true ? 'inserted' : applied === 'pending-acceptance' ? 'acceptance-pending' : 'composer-unavailable' });
+   };
+ 
+   const disabled = state === 'loading' || state === 'unavailable';
+--- pre-M2/fusion-studio-client/src/components/chat/ChatSurface.tsx
++++ M2/fusion-studio-client/src/components/chat/ChatSurface.tsx
+@@ -101,6 +101,7 @@
+         composer={composer}
+         actions={actions}
+         inputRef={refs.inputRef}
++              materialRef={refs.materialRef}
+       />
+     </section>
+   );
+--- pre-M2/fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx
++++ M2/fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx
+@@ -17,6 +17,7 @@
+ import type { ChatLinkAttachment } from '../../lib/chat-file-links/file-link-types';
+ import type { ChatSurfaceActions, ChatSurfaceComposerPresentation, ChatSurfaceRefs } from './chatSurfaceContract';
+ import { ChatAreaFooter } from './ChatAreaFooter';
++import { useComposerMaterialSource } from './useComposerMaterialSource';
+ import { useMountedChatBinding } from './useMountedChatBinding';
+ import type { ScreenshotAttachmentOwner } from '../../screenshots/chatScreenshotCapture';
+ 
+@@ -38,6 +39,7 @@
+   composer: ChatSurfaceComposerPresentation;
+   actions: ChatSurfaceActions;
+   inputRef: ChatSurfaceRefs['inputRef'];
++  materialRef: ChatSurfaceRefs['materialRef'];
+ }
+ 
+ export const ConnectedChatComposer = memo(function ConnectedChatComposer({
+@@ -56,13 +58,15 @@
+   composer,
+   actions,
+   inputRef,
++  materialRef,
+ }: ConnectedChatComposerProps) {
+   const ownerReady = Boolean(workspaceId && hasThread && threadId);
+   const materialIdentity = useMemo(() => ownerReady && viewId ? {
+     workspaceId, viewId, threadGroupId, threadId, surfaceId, host,
+     binding: screenshotSelection, componentInstanceId,
+   } : null, [ownerReady, workspaceId, viewId, threadGroupId, threadId, surfaceId, host, screenshotSelection, componentInstanceId]);
+-  useMountedChatBinding(materialIdentity);
++  const materialLease = useMountedChatBinding(materialIdentity);
++  const beginMaterial = useComposerMaterialSource(materialLease, inputRef, materialRef, isActive);
+   const screenshotViewActive = usePanelStore(
+     (state) => viewId === null || state.currentPanel === viewId,
+   );
+@@ -150,8 +154,7 @@
+       submissionFeedback={submissionFeedback}
+       canCheckSubmissionStatus={canCheckSubmissionStatus}
+       onCheckSubmissionStatus={actions.onCheckSubmissionStatus}
+-      onInsertText={actions.onInsertText}
+-      onAddAttachment={actions.onAddAttachment}
++      beginMaterial={beginMaterial}
+       onWarmIntent={actions.onWarmIntent}
+       contextUsage={contextUsage}
+       tokenUsage={tokenUsage}
+--- pre-M2/fusion-studio-client/src/components/chat/chatSurfaceContract.ts
++++ M2/fusion-studio-client/src/components/chat/chatSurfaceContract.ts
+@@ -9,9 +9,9 @@
+  * connected host that projects application state into it.
+  */
+ 
+-import type { RefObject } from 'react';
++import type { RefObject, MutableRefObject } from 'react';
++import type { BeginChatMaterialSource } from '../../lib/chat-material-source';
+ import type { HarnessStatus } from '../../types';
+-import type { ChatLinkAttachment } from '../../lib/chat-file-links/file-link-types';
+ import type { ChatDiagnosticRouteIds } from '../../lib/ws/chat-diagnostic-handlers';
+ import type { ValidatedChatTurnDiagnosticReport } from '../../lib/chat/diagnostic-report';
+ 
+@@ -80,8 +80,6 @@
+   onCheckSubmissionStatus: () => void;
+   onStop: () => void;
+   onWarmIntent: () => void;
+-  onInsertText: (text: string) => void;
+-  onAddAttachment: (attachment: ChatLinkAttachment) => void;
+   onCreateThread: () => void;
+   onHarnessSelect: (harnessId: string, modelId?: string) => void;
+   onToggleContent: () => void;
+@@ -98,7 +96,7 @@
+     route: ChatDiagnosticRouteIds,
+   ) => Promise<ValidatedChatTurnDiagnosticReport | null>;
+   onCopyDiagnostic: (text: string) => Promise<void>;
+-  onAskAIWithDiagnostic: (text: string) => Promise<boolean | 'pending-acceptance'>;
++  onAskAIWithDiagnostic: (prepare: () => Promise<string | null>) => Promise<boolean | 'pending-acceptance'>;
+ }
+ 
+ export interface ChatSurfaceProps extends ChatMountIdentity {
+@@ -118,6 +116,9 @@
+   getText: () => string;
+   focus: () => void;
+   clearText: () => void;
++  recordMaterialText?: (text: string) => void;
++  readSelection?: () => { value: string; start: number; end: number } | null;
++  restoreCaret?: (value: string, cursor: number, isCurrent: () => boolean) => void;
+ }
+ 
+ /**
+@@ -129,6 +130,7 @@
+   lastUserMsgRef: RefObject<HTMLDivElement | null>;
+   scrollRef: RefObject<HTMLDivElement | null>;
+   inputRef: RefObject<ChatSurfaceInputHandle | null>;
++  materialRef: MutableRefObject<BeginChatMaterialSource | null>;
+ }
+ 
+ /** Stable, collision-safe DOM id suffix for one mounted surface. */
+--- pre-M2/fusion-studio-client/src/components/chat/useChatMountInteractions.ts
++++ M2/fusion-studio-client/src/components/chat/useChatMountInteractions.ts
+@@ -66,15 +66,13 @@
+   }, [workspaceId, threadId]);
+ 
+   const focusInput = useCallback(() => inputRef.current?.focus(), []);
+-  const insertText = useCallback((text: string) => inputRef.current?.insertText(text), []);
+-  const refs: ChatSurfaceRefs = useMemo(
++  const refs: Omit<ChatSurfaceRefs, 'materialRef'> = useMemo(
+     () => ({ headerRef, lastUserMsgRef, scrollRef, inputRef }),
+     [],
+   );
+   return {
+     refs,
+     focusInput,
+-    insertText,
+     cliPickerOpen,
+     setCliPickerOpen,
+     isSendingForCurrentThread: sendingTarget?.threadId === threadId,
+--- pre-M2/fusion-studio-client/src/components/chat/useChatSessionActions.ts
++++ M2/fusion-studio-client/src/components/chat/useChatSessionActions.ts
+@@ -6,7 +6,7 @@
+  * shell or presentation parent to draft, transcript, or live-turn state.
+  */
+ 
+-import { useCallback, useMemo, type Dispatch, type SetStateAction } from 'react';
++import { useCallback, useMemo, type Dispatch, type SetStateAction, type MutableRefObject } from 'react';
+ import { openDiagnostics } from '../../lib/diagnostics/tabs';
+ import { chatSurfaceDomId } from './chatSurfaceContract';
+ import { usePanelStore } from '../../state/panelStore';
+@@ -29,8 +29,7 @@
+   selectGroupModel,
+   viewGroupMarkdown,
+ } from '../../lib/chat/thread-group-command-controller';
+-import { dispatchChatAction } from '../../lib/chat-action';
+-import type { ChatLinkAttachment } from '../../lib/chat-file-links/file-link-types';
++import type { BeginChatMaterialSource } from '../../lib/chat-material-source';
+ import {
+   requestChatTurnDiagnostic,
+   type ChatDiagnosticRouteIds,
+@@ -55,8 +54,7 @@
+   isActive: boolean;
+   selectableHarnessCount: number;
+   setCliPickerOpen: Dispatch<SetStateAction<boolean>>;
+-  focusInput: () => void;
+-  insertText: (text: string) => void;
++  materialRef: MutableRefObject<BeginChatMaterialSource | null>;
+ }
+ 
+ export interface ChatSessionActionProjection {
+@@ -77,8 +75,7 @@
+   isActive,
+   selectableHarnessCount,
+   setCliPickerOpen,
+-  focusInput,
+-  insertText,
++  materialRef,
+ }: UseChatSessionActionsOptions): ChatSessionActionProjection {
+   const sendMessage = usePanelStore((state) => state.sendMessage);
+   const warmThread = usePanelStore((state) => state.warmThread);
+@@ -86,7 +83,6 @@
+   const setConnectingHarnessForSurface = usePanelStore(
+     (state) => state.setConnectingHarnessForSurface,
+   );
+-  const addPendingAttachment = useChatFileLinkStore((state) => state.addPendingAttachment);
+ 
+   const hasPendingAcceptance = useCallback((targetThreadId: string) => {
+     if (!targetThreadId || !workspaceId) return false;
+@@ -155,18 +151,6 @@
+     if (threadId) requestPromptStatus(workspaceId, threadId);
+   }, [threadId, workspaceId]);
+ 
+-  const handleAddAttachment = useCallback((attachment: ChatLinkAttachment) => {
+-    if (!threadId) return;
+-    warmCurrentThread();
+-    addPendingAttachment(workspaceId, threadId, attachment);
+-    focusInput();
+-  }, [addPendingAttachment, focusInput, threadId, warmCurrentThread, workspaceId]);
+-
+-  const handleInsertText = useCallback((text: string) => {
+-    warmCurrentThread();
+-    insertText(text);
+-  }, [insertText, warmCurrentThread]);
+-
+   const groupAddress = useMemo(
+     () => ({ workspaceId, threadGroupId, threadId }),
+     [threadGroupId, threadId, workspaceId],
+@@ -256,21 +240,18 @@
+   const handleCopyDiagnostic = useCallback(async (text: string) => {
+     await writeAndRecord(text, 'chat-diagnostic');
+   }, []);
+-  const handleAskAIWithDiagnostic = useCallback(async (text: string): Promise<boolean | 'pending-acceptance'> => {
+-    if (!threadGroupId || !threadId) return false;
+-    const phase = useChatSubmissionStore.getState().attemptsByOwner[
+-      chatSubmissionOwnerKey(workspaceId, threadId)
+-    ]?.phase;
+-    if (phase === 'pending') return 'pending-acceptance';
+-    const result = await dispatchChatAction({
+-      content: text,
+-      target: 'current',
+-      delivery: 'insert',
+-      address: { workspaceId, viewId, threadGroupId, threadId, surfaceId },
+-    });
+-    if (result.status === 'failed' && result.reason === 'busy') return 'pending-acceptance';
+-    return result.status === 'applied';
+-  }, [surfaceId, threadGroupId, threadId, viewId, workspaceId]);
++  const handleAskAIWithDiagnostic = useCallback(async (prepare: () => Promise<string | null>): Promise<boolean | 'pending-acceptance'> => {
++    const begin = materialRef.current?.({ append: true, warm: false });
++    if (!begin || begin.status !== 'ready') return begin?.status === 'unavailable' && begin.reason === 'busy' ? 'pending-acceptance' : false;
++    try {
++      const text = await prepare();
++      const result = text ? await begin.source.text(text) : await begin.source.fail();
++      return result.status === 'unavailable' && result.reason === 'busy' ? 'pending-acceptance' : result.status === 'applied';
++    } catch {
++      await begin.source.fail();
++      return false;
++    }
++  }, [materialRef]);
+ 
+   const handleToggleCliPicker = useCallback(
+     () => setCliPickerOpen((value) => !value),
+@@ -283,8 +264,6 @@
+     onCheckSubmissionStatus: handleCheckSubmissionStatus,
+     onStop: handleStop,
+     onWarmIntent: warmCurrentThread,
+-    onInsertText: handleInsertText,
+-    onAddAttachment: handleAddAttachment,
+     onCreateThread: handleCreateThread,
+     onHarnessSelect: handleHarnessSelect,
+     onToggleContent: handleToggleContent,
+@@ -300,7 +279,6 @@
+     onCopyDiagnostic: handleCopyDiagnostic,
+     onAskAIWithDiagnostic: handleAskAIWithDiagnostic,
+   }), [
+-    handleAddAttachment,
+     handleAskAIWithDiagnostic,
+     handleCheckSubmissionStatus,
+     handleCloseCliPicker,
+@@ -308,7 +286,6 @@
+     handleCopyLink,
+     handleCreateThread,
+     handleHarnessSelect,
+-    handleInsertText,
+     handleModelSelectionChange,
+     handleMoveToSideChat,
+     handleRename,
+--- pre-M2/fusion-studio-client/src/components/chat/useChatSessionHost.ts
++++ M2/fusion-studio-client/src/components/chat/useChatSessionHost.ts
+@@ -90,6 +90,10 @@
+   const harnessStatuses = useHarnessStatuses();
+   const selectableHarnesses = useSelectableHarnesses(harnessStatuses);
+   const mount = useChatMountInteractions(workspaceId, threadId);
++  // Each owner tuple gets a separate adapter slot; stale action closures cannot read a rebound editor.
++  const materialRef = useMemo(() => ({ current: null }),
++    [workspaceId, viewId, threadGroupId, threadId, surfaceId, host, componentInstanceId]);
++  const refs = useMemo(() => ({ ...mount.refs, materialRef }), [mount.refs, materialRef]);
+   const isActive = hasThread && isActivePanel;
+ 
+   const actionProjection = useChatSessionActions({
+@@ -104,8 +108,7 @@
+     isActive,
+     selectableHarnessCount: selectableHarnesses.length,
+     setCliPickerOpen: mount.setCliPickerOpen,
+-    focusInput: mount.focusInput,
+-    insertText: mount.insertText,
++    materialRef,
+   });
+ 
+   useEffect(() => {
+@@ -190,7 +193,7 @@
+     header,
+     composer,
+     actions: { ...actionProjection.actions, onActivate },
+-    refs: mount.refs,
++    refs,
+     onToggleThreads: actionProjection.onToggleThreads,
+     onToggleContent: actionProjection.onToggleContent,
+   };
+--- pre-M2/fusion-studio-client/src/components/chat/useComposerMaterialSource.ts
++++ M2/fusion-studio-client/src/components/chat/useComposerMaterialSource.ts
+@@ -0,0 +1,83 @@
++/** Adapts one committed composer lifetime to the existing material action owner. */
++import { useCallback, useLayoutEffect, useRef } from 'react';
++import { beginChatMaterial, commitChatMaterial, validateChatMaterial } from '../../lib/chat-action';
++import type { BeginChatMaterialSource } from '../../lib/chat-material-source';
++import { showToast } from '../../lib/toast';
++import { usePanelStore } from '../../state/panelStore';
++import { chatComposerDraftOwnerKey, useChatComposerDraftStore } from '../../state/chatComposerDraftStore';
++import { chatSubmissionOwnerKey, useChatSubmissionStore } from '../../state/chatSubmissionStore';
++import type { MountedChatBinding } from '../../state/slices/mountedChatState';
++import type { ChatSurfaceRefs } from './chatSurfaceContract';
++
++export function useComposerMaterialSource(
++  lease: { current: MountedChatBinding | null },
++  inputRef: ChatSurfaceRefs['inputRef'],
++  materialRef: ChatSurfaceRefs['materialRef'],
++  isActive: boolean,
++): BeginChatMaterialSource {
++  const controllers = useRef(new Set<AbortController>());
++  useLayoutEffect(() => () => { controllers.current.forEach(controller => controller.abort()); controllers.current.clear(); }, [lease]);
++  const warmEligible = useRef(isActive);
++  warmEligible.current = isActive;
++  const begin = useCallback<BeginChatMaterialSource>((options) => {
++    const cancel = new AbortController();
++    const started = beginChatMaterial(lease.current, cancel.signal);
++    if (started.status !== 'ready') {
++      showToast(started.status === 'unavailable' && started.reason === 'busy' ? 'Wait for message acceptance' : 'Chat target unavailable');
++      return started;
++    }
++    controllers.current.add(cancel);
++    const operation = started.operation, owner = operation.owner;
++    const editor = inputRef.current;
++    const current = () => lease.current === owner && !validateChatMaterial(operation);
++    const present = (result: Awaited<ReturnType<typeof commitChatMaterial>>) => {
++      if (result.status !== 'applied' && result.status !== 'noop') {
++        showToast(result.status === 'unavailable' && result.reason === 'busy' ? 'Wait for message acceptance' : 'Unable to add material to chat');
++        return;
++      }
++      // Warm remains best effort and targets only this captured session.
++      const phase = useChatSubmissionStore.getState().attemptsByOwner[chatSubmissionOwnerKey(owner.workspaceId, owner.threadId)]?.phase;
++      if (options?.warm !== false && current() && warmEligible.current && phase !== 'pending' && phase !== 'unknown') {
++        try { usePanelStore.getState().warmThread(owner.threadId); } catch { /* Local insertion remains successful. */ }
++      }
++    };
++    return { status: 'ready', source: {
++      signal: cancel.signal,
++      cancel: () => { cancel.abort(); controllers.current.delete(cancel); },
++      fail: async () => {
++        const result = await commitChatMaterial(operation, { sourceFailure: true });
++        controllers.current.delete(cancel);
++        present(result);
++        return result;
++      },
++      attachment: async (attachment) => {
++        const result = await commitChatMaterial(operation, { attachment });
++        controllers.current.delete(cancel);
++        present(result);
++        return result;
++      },
++      text: async (text) => {
++        // Never read the current/rebound editor before validating the captured lifetime.
++        const live = current() && !options?.append ? editor?.readSelection?.() : null;
++        const store = useChatComposerDraftStore.getState(), key = chatComposerDraftOwnerKey(owner.workspaceId, owner.threadId);
++        const selection = live && live.value === (store.draftsByOwner[key] ?? '')
++          ? { ...live, surfaceId: owner.surfaceId, generation: owner.generation, revision: store.revisionsByOwner[key] ?? 0 } : undefined;
++        const result = await commitChatMaterial(operation, { text, selection });
++        controllers.current.delete(cancel);
++        present(result);
++        if (result.status === 'applied' && current()) {
++          if (!options?.append) editor?.recordMaterialText?.(text);
++          const value = useChatComposerDraftStore.getState().draftsByOwner[key] ?? '';
++          const cursor = selection ? selection.start + text.length : value.length;
++          editor?.restoreCaret?.(value, cursor, current);
++        }
++        return result;
++      },
++    } };
++  }, [lease, inputRef]);
++  useLayoutEffect(() => {
++    materialRef.current = begin;
++    return () => { if (materialRef.current === begin) materialRef.current = null; };
++  }, [materialRef, begin]);
++  return begin;
++}
+--- pre-M2/fusion-studio-client/src/components/chat/useMountedChatBinding.ts
++++ M2/fusion-studio-client/src/components/chat/useMountedChatBinding.ts
+@@ -1,17 +1,21 @@
+ /** Registers the committed composer lifetime with the existing Chat state owner. */
+-import { useLayoutEffect } from 'react';
++import { useLayoutEffect, useMemo } from 'react';
+ import { useWorkspaceStore } from '../../state/workspaceStore';
+ import { usePanelStore } from '../../state/panelStore';
+-import { mountedChatIsHydrated, type MountedChatIdentity } from '../../state/slices/mountedChatState';
++import { mountedChatIsHydrated, type MountedChatBinding, type MountedChatIdentity } from '../../state/slices/mountedChatState';
+ 
+-export function useMountedChatBinding(identity: MountedChatIdentity | null): void {
++export function useMountedChatBinding(identity: MountedChatIdentity | null) {
+   const workspaceReady = useWorkspaceStore(state => state.hasReceivedInit && state.activeWorkspaceId === identity?.workspaceId && Boolean(state.workspaceEpoch));
+   const workspaceSerial = useWorkspaceStore(state => state.bindingSerial);
+   const hydrated = usePanelStore((state) => Boolean(identity && mountedChatIsHydrated(state, identity)));
+   const retirement = usePanelStore((state) => identity ? state.chatMountRetirements[identity.surfaceId] ?? 0 : 0);
++  const lease = useMemo<{ current: MountedChatBinding | null }>(() => ({ current: null }),
++    [identity, hydrated, retirement, workspaceReady, workspaceSerial]);
+   useLayoutEffect(() => {
+     if (!identity || !hydrated || !workspaceReady) return;
+     const binding = usePanelStore.getState().registerMountedChat(identity);
+-    return () => { if (binding) usePanelStore.getState().unregisterMountedChat(binding); };
+-  }, [identity, hydrated, retirement, workspaceReady, workspaceSerial]);
++    lease.current = binding;
++    return () => { lease.current = null; if (binding) usePanelStore.getState().unregisterMountedChat(binding); };
++  }, [identity, hydrated, retirement, workspaceReady, workspaceSerial, lease]);
++  return lease;
+ }
+--- pre-M2/fusion-studio-client/src/components/hover-icon-modal/useHoverIconModal.ts
++++ M2/fusion-studio-client/src/components/hover-icon-modal/useHoverIconModal.ts
+@@ -118,8 +118,11 @@
+ 
+     const handleClick = (e: MouseEvent) => {
+       const target = e.target as Node;
+-      const inTrigger = triggerRef.current?.contains(target) ?? false;
+-      const inPopover = popoverRef.current?.contains(target) ?? false;
++      // A command can replace its button before this document listener runs.
++      // The original event path still records that the click began inside.
++      const path = e.composedPath();
++      const inTrigger = Boolean(triggerRef.current && (path.includes(triggerRef.current) || triggerRef.current.contains(target)));
++      const inPopover = Boolean(popoverRef.current && (path.includes(popoverRef.current) || popoverRef.current.contains(target)));
+ 
+       if (!inTrigger && !inPopover) {
+         close();
+--- pre-M2/fusion-studio-client/src/lib/chat-material-source.ts
++++ M2/fusion-studio-client/src/lib/chat-material-source.ts
+@@ -0,0 +1,13 @@
++/** Portable source callbacks; destination and store ownership stay with the Chat action. */
++import type { ChatLinkAttachment } from './chat-file-links/file-link-types';
++import type { ChatMaterialResult } from './chat-material-target';
++export interface ChatMaterialSource {
++  readonly signal: AbortSignal;
++  text: (text: string) => Promise<ChatMaterialResult>;
++  attachment: (attachment: ChatLinkAttachment) => Promise<ChatMaterialResult>;
++  fail: () => Promise<ChatMaterialResult>;
++  cancel: () => void;
++}
++export type BeginChatMaterialSource = (options?: { append?: boolean; warm?: boolean }) =>
++  | { status: 'ready'; source: ChatMaterialSource }
++  | Exclude<ChatMaterialResult, { status: 'applied' | 'noop' }>;
+--- pre-M2/fusion-studio-client/src/mic/MicTrigger.tsx
++++ M2/fusion-studio-client/src/mic/MicTrigger.tsx
+@@ -3,6 +3,7 @@
+  * @role Microphone button with voice input modal
+  */
+ 
++import type { BeginChatMaterialSource, ChatMaterialSource } from '../lib/chat-material-source';
+ import { useCallback, useMemo, useState, useEffect, useRef } from 'react';
+ import type { MouseEvent as ReactMouseEvent } from 'react';
+ import {
+@@ -16,10 +17,12 @@
+ import './VoiceRecorder.css';
+ 
+ interface MicTriggerProps {
+-  onInsert?: (text: string) => void;
++  beginMaterial?: BeginChatMaterialSource;
+ }
+ 
+-export function MicTrigger({ onInsert }: MicTriggerProps) {
++export function MicTrigger({ beginMaterial }: MicTriggerProps) {
++  const [source, setSource] = useState<ChatMaterialSource | null>(null);
++  const sourceRef = useRef<ChatMaterialSource | null>(null);
+   const [popoverPos, setPopoverPos] = useState<{ left: number; bottom: number } | null>(null);
+   const [menuPos, setMenuPos] = useState<{ left: number; top: number } | null>(null);
+   const [promptOpen, setPromptOpen] = useState(false);
+@@ -51,8 +54,19 @@
+   }, []);
+ 
+   const handleOpen = useCallback(() => {
+-    warmTranscription();
+-  }, [warmTranscription]);
++    sourceRef.current?.cancel();
++    const begin = beginMaterial?.();
++    const next = begin?.status === 'ready' ? begin.source : null;
++    sourceRef.current = next;
++    setSource(next);
++    if (next) warmTranscription();
++  }, [beginMaterial, warmTranscription]);
++  const cancelSource = useCallback(() => {
++    sourceRef.current?.cancel();
++    sourceRef.current = null;
++    setSource(null);
++  }, []);
++  useEffect(() => () => { sourceRef.current?.cancel(); }, []);
+ 
+   const {
+     isOpen,
+@@ -64,7 +78,7 @@
+     close,
+   } = useHoverIconModal({
+     onOpen: handleOpen,
+-    id: 'mic',
++    onClose: cancelSource,
+     triggerMode: 'click', // Mic opens on click only, no hover preview
+     stayOpenOnLeave: true, // Once open, stays open until Escape/Enter/click outside
+   });
+@@ -80,15 +94,12 @@
+   }, [isOpen, triggerRef]);
+ 
+   const handleTranscribe = useCallback((text: string) => {
+-    if (onInsert && text.trim()) {
+-      onInsert(text.trim());
+-    }
++    if (source && text.trim()) void source.text(text.trim());
++    // Completion may close the source UI, but must not cancel a committed insertion.
++    sourceRef.current = null;
+     close();
+-  }, [onInsert, close]);
+-
+-  const handleClose = useCallback(() => {
+-    close();
+-  }, [close]);
++  }, [source, close]);
++  const handleClose = useCallback(() => { close(); }, [close]);
+ 
+   const handleContextMenu = useCallback((event: ReactMouseEvent) => {
+     event.preventDefault();
+@@ -219,11 +230,12 @@
+         popoverProps={popoverProps}
+       >
+         <HoverIconModalList listRef={listRef}>
+-          <VoiceRecorder
++          {source && <VoiceRecorder
+             onTranscribe={handleTranscribe}
+             onClose={handleClose}
+             maxDuration={60}
+-          />
++            signal={source.signal}
++          />}
+         </HoverIconModalList>
+       </HoverIconModalContainer>
+ 
+--- pre-M2/fusion-studio-client/src/mic/VoiceRecorder.tsx
++++ M2/fusion-studio-client/src/mic/VoiceRecorder.tsx
+@@ -16,9 +16,10 @@
+   onTranscribe: (text: string) => void;
+   onClose: () => void;
+   maxDuration?: number;
++  signal?: AbortSignal;
+ }
+ 
+-export function VoiceRecorder({ onTranscribe, onClose, maxDuration }: VoiceRecorderProps) {
++export function VoiceRecorder({ onTranscribe, onClose, maxDuration, signal }: VoiceRecorderProps) {
+   const {
+     recorderState,
+     timeLeft,
+@@ -30,7 +31,7 @@
+     handleRetry,
+     circumference,
+     maxDuration: duration,
+-  } = useAudioCapture({ maxDuration, onTranscribe, onClose });
++  } = useAudioCapture({ maxDuration, onTranscribe, onClose, signal });
+ 
+   if (recorderState === 'checking_permission') {
+     return (
+--- pre-M2/fusion-studio-client/src/mic/useAudioCapture.ts
++++ M2/fusion-studio-client/src/mic/useAudioCapture.ts
+@@ -5,6 +5,7 @@
+ 
+ interface UseAudioCaptureOptions {
+   maxDuration?: number;
++  signal?: AbortSignal;
+   onTranscribe: (text: string) => void;
+   onClose: () => void;
+ }
+@@ -27,12 +28,13 @@
+ /**
+  * Find the best microphone device - prefers built-in Mac microphone over Continuity (iPhone)
+  */
+-async function getBuiltInMicrophoneDeviceId(): Promise<string | undefined> {
++async function getBuiltInMicrophoneDeviceId(signal?: AbortSignal): Promise<string | undefined> {
++  let tempStream: MediaStream | undefined;
+   try {
+-    const tempStream = await navigator.mediaDevices.getUserMedia({ audio: true });
++    tempStream = await navigator.mediaDevices.getUserMedia({ audio: true });
++    if (signal?.aborted) return undefined;
+     const devices = await navigator.mediaDevices.enumerateDevices();
+     const audioInputs = devices.filter(d => d.kind === 'audioinput');
+-    tempStream.getTracks().forEach(track => track.stop());
+ 
+     const builtInPatterns = [
+       /macbook.*microphone/i,
+@@ -76,6 +78,8 @@
+   } catch (error) {
+     console.warn('[VoiceRecorder] Could not enumerate devices:', error);
+     return undefined;
++  } finally {
++    tempStream?.getTracks().forEach(track => track.stop());
+   }
+ }
+ 
+@@ -83,6 +87,7 @@
+   maxDuration = DEFAULT_MAX_DURATION,
+   onTranscribe,
+   onClose,
++  signal,
+ }: UseAudioCaptureOptions): UseAudioCaptureReturn {
+   const [recorderState, setRecorderState] = useState<RecorderState>('checking_permission');
+   const [timeLeft, setTimeLeft] = useState(maxDuration);
+@@ -97,8 +102,14 @@
+   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+   const animationRef = useRef<number | null>(null);
+   const permissionCheckedRef = useRef(false);
++  const cancelledRef = useRef(false);
++  const callbacks = useRef({ onClose, onTranscribe });
++  callbacks.current = { onClose, onTranscribe };
++  const remainingTime = useRef(timeLeft);
++  remainingTime.current = timeLeft;
+ 
+   const stopRecording = useCallback((cancelled = false) => {
++    if (cancelled) cancelledRef.current = true;
+     // CRITICAL order: timer → animation → MediaRecorder → tracks → AudioContext
+     if (timerRef.current) {
+       clearInterval(timerRef.current);
+@@ -127,11 +138,12 @@
+     setAudioLevel(0);
+ 
+     if (cancelled) {
+-      onClose();
+-    }
+-  }, [onClose]);
++      callbacks.current.onClose();
++    }
++  }, []);
+ 
+   const sendForTranscription = useCallback(async (audioBlob: Blob) => {
++    if (cancelledRef.current || signal?.aborted) return;
+     setRecorderState('processing');
+ 
+     // Defensive: reject empty or near-empty recordings client-side so the
+@@ -149,13 +161,15 @@
+       const formData = new FormData();
+       formData.append('audio', audioBlob, 'recording.webm');
+       formData.append('language', 'auto');
+-      formData.append('duration', String(maxDuration - timeLeft));
++      formData.append('duration', String(maxDuration - remainingTime.current));
+ 
+       const response = await fetchServer('/api/transcribe', {
+         method: 'POST',
+-        body: formData
++        body: formData,
++        signal,
+       });
+ 
++      if (cancelledRef.current || signal?.aborted) return;
+       if (!response.ok) {
+         const errText = await response.text().catch(() => `HTTP ${response.status}`);
+         throw new Error(errText);
+@@ -163,26 +177,30 @@
+ 
+       const result = await response.json();
+ 
++      if (cancelledRef.current || signal?.aborted) return;
+       if (result.success && result.text) {
+-        onTranscribe(result.text);
++        callbacks.current.onTranscribe(result.text);
+       } else {
+         throw new Error(result.error || 'Transcription failed');
+       }
+     } catch (error) {
++      if (cancelledRef.current || signal?.aborted) return;
+       console.error('Transcription error:', error);
+       setRecorderState('permission_denied');
+       setErrorMessage('Transcription failed. Please try again.');
+     }
+-  }, [maxDuration, timeLeft, onTranscribe]);
++  }, [maxDuration, signal]);
+ 
+   const startRecording = useCallback(async () => {
++    if (cancelledRef.current || signal?.aborted) return;
+     try {
+       setRecorderState('recording');
+       setTimeLeft(maxDuration);
+       setAudioLevel(0);
+       chunksRef.current = [];
+ 
+-      const deviceId = await getBuiltInMicrophoneDeviceId();
++      const deviceId = await getBuiltInMicrophoneDeviceId(signal);
++      if (cancelledRef.current || signal?.aborted) return;
+ 
+       const stream = await navigator.mediaDevices.getUserMedia({
+         audio: {
+@@ -192,6 +210,7 @@
+           sampleRate: 16000
+         }
+       });
++      if (cancelledRef.current || signal?.aborted) { stream.getTracks().forEach(track => track.stop()); return; }
+       streamRef.current = stream;
+ 
+       audioContextRef.current = new AudioContext();
+@@ -200,6 +219,7 @@
+         await audioContextRef.current.resume();
+       }
+ 
++      if (cancelledRef.current || signal?.aborted || !audioContextRef.current) return;
+       const source = audioContextRef.current.createMediaStreamSource(stream);
+       analyserRef.current = audioContextRef.current.createAnalyser();
+       analyserRef.current.fftSize = 256;
+@@ -225,6 +245,7 @@
+       try {
+         mediaRecorderRef.current = new MediaRecorder(stream, { mimeType });
+       } catch (error) {
++        if (cancelledRef.current || signal?.aborted) return;
+         console.error('Failed to start recording:', error);
+         setRecorderState('permission_denied');
+         setErrorMessage('Could not access microphone. Please check permissions.');
+@@ -238,6 +259,7 @@
+       };
+ 
+       mediaRecorderRef.current.onstop = async () => {
++        if (cancelledRef.current || signal?.aborted) return;
+         const blob = new Blob(chunksRef.current, { type: mimeType });
+         await sendForTranscription(blob);
+       };
+@@ -255,17 +277,19 @@
+       }, 1000);
+ 
+     } catch (error) {
++      if (cancelledRef.current || signal?.aborted) return;
+       console.error('Failed to start recording:', error);
+       setRecorderState('permission_denied');
+       setErrorMessage('Could not access microphone. Please check permissions.');
+     }
+-  }, [maxDuration, sendForTranscription, stopRecording]);
++  }, [maxDuration, sendForTranscription, stopRecording, signal]);
+ 
+   const checkExistingPermission = useCallback(async () => {
+     try {
+       if (navigator.permissions && navigator.permissions.query) {
+         const result = await navigator.permissions.query({ name: 'microphone' as PermissionName });
+ 
++        if (cancelledRef.current || signal?.aborted) return;
+         if (result.state === 'granted') {
+           startRecording();
+           return;
+@@ -279,9 +303,10 @@
+       }
+       setRecorderState('permission_needed');
+     } catch {
++      if (cancelledRef.current || signal?.aborted) return;
+       setRecorderState('permission_needed');
+     }
+-  }, [startRecording]);
++  }, [startRecording, signal]);
+ 
+   const requestPermissionAndRecord = useCallback(async () => {
+     setErrorMessage(null);
+@@ -292,7 +317,7 @@
+       setRecorderState('permission_denied');
+       setErrorMessage('Microphone access was denied. Please enable it in your browser settings.');
+     }
+-  }, [startRecording]);
++  }, [startRecording, signal]);
+ 
+   const handleCancel = useCallback(() => {
+     stopRecording(true);
+@@ -310,10 +335,14 @@
+     checkExistingPermission();
+   }, [checkExistingPermission]);
+ 
+-  // Cleanup on unmount
++  // Cancellation and retirement stop preparation without invoking a rebound completion.
+   useEffect(() => {
+-    return () => stopRecording(true);
+-  }, [stopRecording]);
++    cancelledRef.current = false;
++    const cancel = () => stopRecording(true);
++    signal?.addEventListener('abort', cancel, { once: true });
++    if (signal?.aborted) cancel();
++    return () => { signal?.removeEventListener('abort', cancel); cancelledRef.current = true; stopRecording(); };
++  }, [signal, stopRecording]);
+ 
+   // Keyboard shortcut: Enter to stop recording and submit (capture phase)
+   useEffect(() => {
+--- pre-M2/fusion-studio-client/src/recent-files/RecentFilesTrigger.tsx
++++ M2/fusion-studio-client/src/recent-files/RecentFilesTrigger.tsx
+@@ -3,6 +3,7 @@
+  * @role Icon button showing recently edited files
+  */
+ 
++import type { BeginChatMaterialSource } from '../lib/chat-material-source';
+ import { useCallback, useState, useEffect, useRef } from 'react';
+ import { usePanelStore } from '../state/panelStore';
+ import {
+@@ -24,11 +25,11 @@
+ }
+ 
+ interface RecentFilesTriggerProps {
+-  onInsert?: (text: string) => void;
++  beginMaterial?: BeginChatMaterialSource;
+   triggerVariant?: 'icon' | 'submenu';
+ }
+ 
+-export function RecentFilesTrigger({ onInsert, triggerVariant = 'icon' }: RecentFilesTriggerProps) {
++export function RecentFilesTrigger({ beginMaterial, triggerVariant = 'icon' }: RecentFilesTriggerProps) {
+   const [files, setFiles] = useState<RecentFile[]>([]);
+   const [loading, setLoading] = useState(false);
+   const [popoverPos, setPopoverPos] = useState<{ left: number; bottom: number } | null>(null);
+@@ -99,16 +100,21 @@
+   }, [requestRecentFiles]);
+ 
+   const handleInsertMostRecent = useCallback(async () => {
++    const begin = beginMaterial?.();
++    if (begin?.status !== 'ready') return;
+     try {
+       const recentFiles = await requestRecentFiles(1);
+       const mostRecent = [...recentFiles].sort((a, b) => b.mtime - a.mtime)[0];
+       if (mostRecent) {
+-        onInsert?.(mostRecent.path);
++        await begin.source.text(mostRecent.path);
++      } else {
++        await begin.source.fail();
+       }
+     } catch (err) {
+       console.error('[RecentFiles] Failed to insert most recently edited file:', err);
+-    }
+-  }, [onInsert, requestRecentFiles]);
++      await begin.source.fail();
++    }
++  }, [beginMaterial, requestRecentFiles]);
+ 
+   const handleOpen = useCallback(() => {
+     if (files.length === 0) {
+@@ -126,7 +132,6 @@
+     close,
+   } = useHoverIconModal({
+     onOpen: handleOpen,
+-    id: 'recent-files',
+   });
+ 
+   const {
+@@ -136,7 +141,7 @@
+   } = useListNavigation<RecentFile>({
+     items: files,
+     isOpen,
+-    onSelect: (file) => onInsert?.(file.path),
++    onSelect: (file) => { const begin = beginMaterial?.(); if (begin?.status === 'ready') void begin.source.text(file.path); },
+     onClose: close,
+     selectFromBottom: true,
+   });
+--- pre-M2/fusion-studio-client/src/screenshots/ScreenshotsTrigger.tsx
++++ M2/fusion-studio-client/src/screenshots/ScreenshotsTrigger.tsx
+@@ -4,7 +4,7 @@
+  */
+ 
+ import { useCallback, useState, useEffect, useMemo, useRef } from 'react';
+-import type { ChatLinkAttachment } from '../lib/chat-file-links/file-link-types';
++import type { BeginChatMaterialSource } from '../lib/chat-material-source';
+ import { createSendToChatAttachment } from '../lib/chat-file-links/send-to-chat-reference-label';
+ import {
+   useHoverIconModal,
+@@ -28,11 +28,11 @@
+ }
+ 
+ interface ScreenshotsTriggerProps {
+-  onAttach?: (attachment: ChatLinkAttachment) => void;
++  beginMaterial?: BeginChatMaterialSource;
+   triggerVariant?: 'icon' | 'submenu';
+ }
+ 
+-export function ScreenshotsTrigger({ onAttach, triggerVariant = 'icon' }: ScreenshotsTriggerProps) {
++export function ScreenshotsTrigger({ beginMaterial, triggerVariant = 'icon' }: ScreenshotsTriggerProps) {
+   const [screenshots, setScreenshots] = useState<Array<{ name: string; path: string }>>([]);
+   const [loading, setLoading] = useState(false);
+   const [popoverPos, setPopoverPos] = useState<{ left: number; bottom: number } | null>(null);
+@@ -138,18 +138,19 @@
+     close,
+   } = useHoverIconModal({
+     onOpen: handleOpen,
+-    id: 'screenshots',
+   });
+ 
+   const visibleItems = useMemo(() => screenshotItems.slice(-20), [screenshotItems]);
+ 
+   const handleSelect = useCallback((item: ScreenshotItem) => {
+-    onAttach?.(createSendToChatAttachment({
++    const begin = beginMaterial?.();
++    if (begin?.status !== 'ready') return;
++    void begin.source.attachment(createSendToChatAttachment({
+       panel: 'screenshots',
+       relativePath: `Data/Screenshots/${item.name}`,
+       absolutePath: item.path,
+     }));
+-  }, [onAttach]);
++  }, [beginMaterial]);
+ 
+   const {
+     selectedIndex,

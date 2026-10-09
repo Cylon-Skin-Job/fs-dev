@@ -1,0 +1,89 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - generic [ref=e5]:
+    - button "More options" [ref=e8]: event_list
+    - generic [ref=e11]: Start a conversation
+    - generic [ref=e13]:
+      - textbox "Ask about same-visible..." [ref=e17]: exact insertion
+      - generic [ref=e18]:
+        - generic [ref=e19]:
+          - button "Add" [ref=e21] [cursor=pointer]:
+            - generic [ref=e22]: add
+          - button "Mode" [ref=e24]: shield_lockMode
+        - generic [ref=e25]:
+          - 'button "Context usage: 0%" [ref=e27]'
+          - button "DeepSeek V4 Flash" [ref=e29]: DeepSeek V4 Flashkeyboard_arrow_down
+          - button "Voice input (click to open)" [ref=e31] [cursor=pointer]:
+            - generic [ref=e32]: mic
+          - button "Send message" [ref=e34]: arrow_upward
+  - generic [ref=e36]:
+    - button "More options" [ref=e39]: event_list
+    - generic [ref=e42]: Start a conversation
+    - generic [ref=e44]:
+      - textbox "Click a thread in this rv-sidebar to activate" [disabled] [ref=e48]: exact insertion
+      - generic [ref=e49]:
+        - generic [ref=e50]:
+          - button "Add" [ref=e52] [cursor=pointer]:
+            - generic [ref=e53]: add
+          - button "Mode" [ref=e55]: shield_lockMode
+        - generic [ref=e56]:
+          - 'button "Context usage: 0%" [ref=e58]'
+          - button "DeepSeek V4 Flash" [ref=e60]: DeepSeek V4 Flashkeyboard_arrow_down
+          - button "Voice input (click to open)" [ref=e62] [cursor=pointer]:
+            - generic [ref=e63]: mic
+          - button "Send message" [ref=e65]: arrow_upward
+  - generic [ref=e67]:
+    - button "More options" [ref=e70]: event_list
+    - generic [ref=e73]: Start a conversation
+    - generic [ref=e75]:
+      - textbox "Ask about chat-surface-component-primary-instance..." [ref=e79]
+      - generic [ref=e80]:
+        - generic [ref=e81]:
+          - button "Add" [ref=e83] [cursor=pointer]:
+            - generic [ref=e84]: add
+          - button "Mode" [ref=e86]: shield_lockMode
+        - generic [ref=e87]:
+          - 'button "Context usage: 0%" [ref=e89]'
+          - button "DeepSeek V4 Flash" [ref=e91]: DeepSeek V4 Flashkeyboard_arrow_down
+          - button "Voice input (click to open)" [ref=e93] [cursor=pointer]:
+            - generic [ref=e94]: mic
+          - button "Send message" [ref=e96]: arrow_upward
+  - generic [ref=e98]:
+    - button "More options" [ref=e101]: event_list
+    - generic [ref=e104]: Start a conversation
+    - generic [ref=e106]:
+      - textbox "Ask about chat-surface-component-other-instance..." [ref=e110]
+      - generic [ref=e111]:
+        - generic [ref=e112]:
+          - button "Add" [ref=e114] [cursor=pointer]:
+            - generic [ref=e115]: add
+          - button "Mode" [ref=e117]: shield_lockMode
+        - generic [ref=e118]:
+          - 'button "Context usage: 0%" [ref=e120]'
+          - button "DeepSeek V4 Flash" [ref=e122]: DeepSeek V4 Flashkeyboard_arrow_down
+          - button "Voice input (click to open)" [ref=e124] [cursor=pointer]:
+            - generic [ref=e125]: mic
+          - button "Send message" [ref=e127]: arrow_upward
+  - generic [ref=e129]:
+    - generic [ref=e130]:
+      - generic [ref=e131]:
+        - button "Show threads" [ref=e132]: dock_to_right
+        - button "New chat" [ref=e133]: edit_square
+      - button "More options" [ref=e135]: event_list
+    - generic [ref=e138]: Start a conversation
+    - generic [ref=e140]:
+      - textbox "Ask about chat-surface-component-chat-side:side-placement-a..." [ref=e144]: exact insertion
+      - generic [ref=e145]:
+        - generic [ref=e146]:
+          - button "Add" [ref=e148] [cursor=pointer]:
+            - generic [ref=e149]: add
+          - button "Mode" [ref=e151]: shield_lockMode
+        - generic [ref=e152]:
+          - 'button "Context usage: 0%" [ref=e154]'
+          - button "DeepSeek V4 Flash" [ref=e156]: DeepSeek V4 Flashkeyboard_arrow_down
+          - button "Voice input (click to open)" [ref=e158] [cursor=pointer]:
+            - generic [ref=e159]: mic
+          - button "Send message" [ref=e161]: arrow_upward
+```

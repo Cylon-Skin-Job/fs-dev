@@ -444,3 +444,11 @@ test('refused later prompt preserves a prior accepted attempt and its original A
   expect(await page.evaluate(() => (window as any).__wsFixture.submission('capture-thread-a')))
     .toMatchObject({ requestId: accepted.requestId, phase: 'accepted' });
 });
+
+test('retired current prompt-resolution insertion rejects before source work', async () => {
+  const { consumeCreationAction } = await import('../src/lib/chat-action-creation');
+  let result: unknown;
+  consumeCreationAction({ target: 'current', delivery: 'insert', promptId: 'unused-current-insert',
+    capturedAddress: null, claim: () => {}, complete: value => { result = value; } });
+  expect(result).toEqual({ status: 'failed', reason: 'unsupported' });
+});

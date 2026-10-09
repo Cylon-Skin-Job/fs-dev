@@ -1,0 +1,66 @@
+{
+  "at": "2026-10-09T01:14:57.732784+00:00",
+  "records": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/checks/client-build.json",
+      "sha256": "643f76e31ab68ebfaa4c69da63989f0a6538ac075f4318532e4fafa9ceec3dee",
+      "bytes": 514
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/checks/client-build.stdout",
+      "sha256": "ed24eaadbd1a3bec8d51b678b3fa1867332de4585792f843a5f3baad02657f47",
+      "bytes": 16674
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/checks/renderer.json",
+      "sha256": "d54812e554e4322dbe117919287e109361d463e73b26e84c113d6904c0c530db",
+      "bytes": 1240
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/checks/renderer.stdout",
+      "sha256": "948471269598028dde1772a1e107cbda4ff0f7c6350ee4d917cf93b538c644a8",
+      "bytes": 53039
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/checks/renderer-02.json",
+      "sha256": "3ffb6abf3037f3f9b88dc2bf9bf468181b986a1285d3cb2b26a6bf8dd0b7211f",
+      "bytes": 1316
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/checks/renderer-02.stdout",
+      "sha256": "72a5972c8ca16db0e8d228ffe9527e5de0f1d24d2b138e744cef75e1a7c2e579",
+      "bytes": 52371
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/checks/wiki.json",
+      "sha256": "8ea1a882ea53991d5129e9fbc73a17057ad42523ddc31df89cf354a1562a93f3",
+      "bytes": 545
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/checks/wiki.stdout",
+      "sha256": "53a6c982266e5a3ccf9667eea19b7b4f3e590acc473f2be76a007c75554e2caa",
+      "bytes": 962
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/checks/server-full.json",
+      "sha256": "a2a6421bf05dbc09fffb98e2490d8d3f002560db7e66385fab2c02176a3b1549",
+      "bytes": 644
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/checks/server-full.stdout",
+      "sha256": "e4c7c279dd942b30a8fd168eb7045e0914fbaccb00d1e0ecd84a17ffd9fffb68",
+      "bytes": 20415
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/checks/native.json",
+      "sha256": "a4a14672d03a40e58981939561b636f35636ff6b3fd5181f45948ec88f81fd4e",
+      "bytes": 758
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/checks/native.stdout",
+      "sha256": "412b2e58fdf05266546d2335ab7a19928388960b2703171a17a6992e74bfdeee",
+      "bytes": 189
+    }
+  ],
+  "global_log_ignore": "Fresh raw logs copied as .stdout for durable Git publication; original private .log files remain intact."
+}

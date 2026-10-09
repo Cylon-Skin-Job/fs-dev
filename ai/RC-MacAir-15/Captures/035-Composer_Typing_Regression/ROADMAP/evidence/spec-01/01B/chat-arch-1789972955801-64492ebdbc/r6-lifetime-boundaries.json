@@ -1,0 +1,11 @@
+{
+  "caseId": "R6-LIFETIME-BOUNDARIES",
+  "mode": "enforce",
+  "status": "failed",
+  "exitCode": 1,
+  "assertions": [
+    "prompt wait retired-socket listener ownership",
+    "create wait ignores unrelated open and cancels at lifetime boundary"
+  ],
+  "productSourcePatched": false
+}

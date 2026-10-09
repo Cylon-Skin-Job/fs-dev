@@ -1,0 +1,38 @@
+{
+  "at": "2026-10-06T23:05:33.497705+00:00",
+  "state": "PREPARED_NOT_EXECUTED",
+  "candidate": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+  "tree": "1c80f83c6c4b2b61e42c4dbb988c1f942b672ade",
+  "machine": "RC-MacAir-15",
+  "runtime_support_published": false,
+  "profile_scope": "Fresh owned os.tmpdir root; explicit profile and sole scratch workspace; no source/development/Alpha DB copy or restore.",
+  "provider_scope": "No agent provider prompts; prior authenticated provider proof retained for unchanged dependencies.",
+  "recipe_artifacts": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/prepare-runtime.cjs",
+      "sha256": "95d0752be4499a4ddfe0d6220cc1f11569afd7a107f093d66f8ae422f41a0dde"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/capture-protection.mjs",
+      "sha256": "b18b490bac6768a50d2e2701c734aa7e1d112f3be8a9c4b836f25366525919e1"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/runtime-chat-smoke.cjs",
+      "sha256": "5bd39cb11ddaf1d96d6cf7ebfdfca882a8f2e74487be92893d197b1dff9417fd"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/runtime-wiki-smoke.cjs",
+      "sha256": "6a0489849f08d1beb4bc34c60c3ab72151a832320a206415a357a2544d884884"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/stop-runtime.mjs",
+      "sha256": "a5c91075c30ed15f507ed4f148ed117d4196a30aecae94523435ebf470c24421"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/verify-candidate.py",
+      "sha256": "79dff73c5e48c7708f1eb64dc45da0b27b5b6f531c2a69e736140dd793ad0434"
+    }
+  ],
+  "environment_flags_present": [],
+  "pass": 2
+}

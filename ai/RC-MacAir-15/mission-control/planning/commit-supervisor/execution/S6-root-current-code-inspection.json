@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-04T14:44:47.109771+00:00",
+  "actor": "/root",
+  "kind": "ROOT_ASSESSMENT_EXCLUDED_FROM_FRESH_GATES",
+  "inspected_complete_sources": {
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js": "7a325bf81452d0d785c22fb4bc7cc4950c4abd2c4e6a68604ff683c1d4990b0d",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js": "fc3c3da3961bbd8ba1d9f0d1a320dd8f8baf514e0fc0a7d158d5c474ddfe36a5"
+  },
+  "observed_behavior": "Incomplete filter count and resolved exact format; unchanged stable original sample labels, rows, reversal and persistence. No future fix X/Y.",
+  "inspected_complete_job_harnesses": [
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/supervisor_candidate_tools.py",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/code-repair-1-scenarios.mjs",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/code-repair-1-verify.py"
+  ],
+  "raw_selfcheck_observation": "11 source/check receipts exist; pre/post source binding and VM scenario commands exit zero. Source VM evidence explicitly excludes real app/browser storage/restart.",
+  "lifecycle": "Leaf remains active at last native observation; no handoff acceptance/readiness asserted. Await terminal and distinct fresh gate."
+}

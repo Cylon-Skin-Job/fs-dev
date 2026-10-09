@@ -1,0 +1,25 @@
+{
+  "runId": "boot-1789993371214-82d255a4",
+  "mode": "--smoke",
+  "port": 59983,
+  "baseURL": "http://127.0.0.1:59983",
+  "total": 1,
+  "byStatus": {
+    "unexpected": 1
+  },
+  "setupFailures": [],
+  "cases": [
+    {
+      "id": "prompt-ownership.slice-c.spec.ts > Slice C: composer drafts swap immediately by thread and preserve pending retry ownership",
+      "file": "prompt-ownership.slice-c.spec.ts",
+      "status": "unexpected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "failed",
+          "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeEnabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.rv-chat-messages ~ * textarea, section textarea').first()\nExpected: enabled\nReceived: disabled\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeEnabled\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.rv-chat-messages ~ * textarea, section textarea').first()\u001b[22m\n\u001b[2m    9 × locator resolved to <textarea rows=\"2\" disabled class=\"rv-chat-input\" placeholder=\"Ask about wa shell view...\">A-OWNED-DRAFT</textarea>\u001b[22m\n\u001b[2m      - unexpected value \"disabled\"\u001b[22m\n"
+        }
+      ]
+    }
+  ]
+}

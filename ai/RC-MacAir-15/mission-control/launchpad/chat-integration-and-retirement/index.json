@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "name": "CHAT-AR integration and retirement",
-  "description": "Establish a reproducible current chat baseline, finish applicable retirement and verification, and hand stable chat contracts to plugin consumers.",
+  "description": "Chat integration and retirement records, bounded owner-directed next-ticket planning, and separate follow-on harness routing.",
   "repository_root": "../../../../..",
   "wiki_root": "../../../Wiki",
   "workflow": [
@@ -238,6 +238,11 @@
           "description": "Re-entry and records"
         },
         {
+          "key": "s6",
+          "heading": "Main-chat startup",
+          "description": "Main identity verification, registration, cursor preservation and side-chat boundaries."
+        },
+        {
           "key": "s4",
           "heading": "Boundaries",
           "description": "Boundaries"
@@ -263,6 +268,13 @@
     {
       "path": "index.json",
       "description": "Static document routing schema."
+    },
+    {
+      "path": "CHECKPOINT.json",
+      "kind": "checkpoint_registry",
+      "authority": "coordination",
+      "description": "Verified main-task identity and live checkpoint boundary; history is read through Codex's built-in task reader.",
+      "lifecycle": "Initialized by the main task at startup; advanced by the state-only helper after a validated native-reader checkpoint is saved."
     },
     {
       "path": "planning/chat-transport-simplification/PLANNING.md",
@@ -478,6 +490,368 @@
           "description": "Evidence and limits"
         }
       ]
+    },
+    {
+      "path": "HANDOFF-COMPLETED-BUILD-2026-10-07.md",
+      "description": "Owner-requested integration handoff, source references and resumption boundaries.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Current result and authority",
+          "description": "Current result and authority"
+        },
+        {
+          "key": "s2",
+          "heading": "Completed work and verification",
+          "description": "Completed work and verification"
+        },
+        {
+          "key": "s3",
+          "heading": "Published checkout and runtime identities",
+          "description": "Published checkout and runtime identities"
+        },
+        {
+          "key": "s4",
+          "heading": "Pending work and evidence limits",
+          "description": "Pending work and evidence limits"
+        },
+        {
+          "key": "s5",
+          "heading": "Successor entry and next safe action",
+          "description": "Successor entry and next safe action"
+        },
+        {
+          "key": "s6",
+          "heading": "Evidence map",
+          "description": "Evidence map"
+        }
+      ]
+    },
+    {
+      "path": "planning/shared-chat-material-insertion/OWNER-REQUEST.md",
+      "description": "Original owner authority for the shared material insertion ticket and planning-only hold.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Product instruction",
+          "description": "Product instruction"
+        },
+        {
+          "key": "s2",
+          "heading": "Planning-only instruction",
+          "description": "Planning-only instruction"
+        },
+        {
+          "key": "s3",
+          "heading": "Authority and evidence limits",
+          "description": "Authority and evidence limits"
+        }
+      ]
+    },
+    {
+      "path": "planning/shared-chat-material-insertion/PLANNING.md",
+      "description": "Scoped Creation Supervisor coordination and planning handoff.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Assignment and authority",
+          "description": "Assignment and authority"
+        },
+        {
+          "key": "s2",
+          "heading": "Intake and preflight",
+          "description": "Intake and preflight"
+        },
+        {
+          "key": "s3",
+          "heading": "Ownership and deliverables",
+          "description": "Ownership and deliverables"
+        },
+        {
+          "key": "s4",
+          "heading": "State and next action",
+          "description": "State and next action"
+        }
+      ]
+    },
+    {
+      "path": "planning/shared-chat-material-insertion/TICKET.md",
+      "description": "Next shared chat material insertion ticket, owner coverage, dependencies and scope.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Outcome and scope",
+          "description": "Outcome and scope"
+        },
+        {
+          "key": "s2",
+          "heading": "Package index and authority",
+          "description": "Package index and authority"
+        },
+        {
+          "key": "s3",
+          "heading": "Intent coverage",
+          "description": "Intent coverage"
+        },
+        {
+          "key": "s4",
+          "heading": "Source-backed diagnosis",
+          "description": "Source-backed diagnosis"
+        },
+        {
+          "key": "s5",
+          "heading": "Dependencies and issue disposition",
+          "description": "Dependencies and issue disposition"
+        },
+        {
+          "key": "s6",
+          "heading": "Boundaries and handoff",
+          "description": "Boundaries and handoff"
+        }
+      ]
+    },
+    {
+      "path": "planning/shared-chat-material-insertion/SPEC.md",
+      "description": "Single executable planning candidate for shared chat material insertion, slices and future acceptance.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "1. Objective, authority and entry prerequisites",
+          "description": "1. Objective, authority and entry prerequisites"
+        },
+        {
+          "key": "s2",
+          "heading": "2. Maintained guidance and compliance map",
+          "description": "2. Maintained guidance and compliance map"
+        },
+        {
+          "key": "s3",
+          "heading": "3. Existing owners and complete caller disposition",
+          "description": "3. Existing owners and complete caller disposition"
+        },
+        {
+          "key": "s4",
+          "heading": "4. Observable destination and insertion contract",
+          "description": "4. Observable destination and insertion contract"
+        },
+        {
+          "key": "s5",
+          "heading": "5. Dependency-ordered vertical slices",
+          "description": "5. Dependency-ordered vertical slices"
+        },
+        {
+          "key": "s6",
+          "heading": "6. Acceptance matrix",
+          "description": "6. Acceptance matrix"
+        },
+        {
+          "key": "s7",
+          "heading": "7. Exact verification and proportional invalidation",
+          "description": "7. Exact verification and proportional invalidation"
+        },
+        {
+          "key": "s8",
+          "heading": "8. Exact Wiki scope and downstream adoption",
+          "description": "8. Exact Wiki scope and downstream adoption"
+        },
+        {
+          "key": "s9",
+          "heading": "9. Integration and implementation handoff gates",
+          "description": "9. Integration and implementation handoff gates"
+        }
+      ]
+    },
+    {
+      "path": "planning/shared-chat-material-insertion/CANDIDATE.json",
+      "description": "Exact normative candidate identity and artifact hashes."
+    },
+    {
+      "path": "planning/shared-chat-material-insertion/reports/author-source-evidence.json",
+      "description": "Source fingerprints, entry-point inventory and planning evidence limits."
+    },
+    {
+      "path": "planning/shared-chat-material-insertion/reports/STAGE-REPORT.md",
+      "description": "Managed candidate-stage handoff, finding disposition, current evidence and independent gate identities.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Status and next safe action",
+          "description": "Status and next safe action"
+        },
+        {
+          "key": "s2",
+          "heading": "Assignment, authority and separate environment checks",
+          "description": "Assignment, authority and separate environment checks"
+        },
+        {
+          "key": "s3",
+          "heading": "Exact candidate and work completed",
+          "description": "Exact candidate and work completed"
+        },
+        {
+          "key": "s4",
+          "heading": "Accepted evidence and independent gates",
+          "description": "Accepted evidence and independent gates"
+        },
+        {
+          "key": "s5",
+          "heading": "Source freshness, checks and limits",
+          "description": "Source freshness, checks and limits"
+        },
+        {
+          "key": "s6",
+          "heading": "Owned changes and return boundary",
+          "description": "Owned changes and return boundary"
+        }
+      ]
+    },
+    {
+      "path": "planning/shared-chat-material-insertion/reports/CANDIDATE-STAGE-REVIEW-01.md",
+      "description": "Fresh assembled candidate-stage validation of the current normative candidate.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Verdict and assembled scope",
+          "description": "Verdict and assembled scope"
+        },
+        {
+          "key": "s2",
+          "heading": "Identity, independence and separate capability checks",
+          "description": "Identity, independence and separate capability checks"
+        },
+        {
+          "key": "s3",
+          "heading": "Exact candidate, prerequisites and freshness",
+          "description": "Exact candidate, prerequisites and freshness"
+        },
+        {
+          "key": "s4",
+          "heading": "Four-perspective assembled coverage",
+          "description": "Four-perspective assembled coverage"
+        },
+        {
+          "key": "s5",
+          "heading": "Consequential cross-assignment traces",
+          "description": "Consequential cross-assignment traces"
+        },
+        {
+          "key": "s6",
+          "heading": "Findings, deferrals and evidence limits",
+          "description": "Findings, deferrals and evidence limits"
+        }
+      ]
+    },
+    {
+      "path": "planning/shared-chat-material-insertion/reports/CANDIDATE-HANDOFF-REVIEW-02.md",
+      "description": "Fresh repaired author-handoff review and explicit unchanged coverage accounting.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Verdict and assignment",
+          "description": "Verdict and assignment"
+        },
+        {
+          "key": "s2",
+          "heading": "Identity, independence and runtime verification",
+          "description": "Identity, independence and runtime verification"
+        },
+        {
+          "key": "s3",
+          "heading": "Exact input identity and freshness",
+          "description": "Exact input identity and freshness"
+        },
+        {
+          "key": "s4",
+          "heading": "Explicit unchanged-coverage accounting",
+          "description": "Explicit unchanged-coverage accounting"
+        },
+        {
+          "key": "s5",
+          "heading": "Four-perspective coverage",
+          "description": "Four-perspective coverage"
+        },
+        {
+          "key": "s6",
+          "heading": "Independent verification-authority assessment",
+          "description": "Independent verification-authority assessment"
+        },
+        {
+          "key": "s7",
+          "heading": "Finding disposition, deferrals and handoff limits",
+          "description": "Finding disposition, deferrals and handoff limits"
+        }
+      ]
+    },
+    {
+      "path": "planning/shared-chat-material-insertion/reports/RELEASE-VALIDATION-01.md",
+      "description": "Fresh whole-candidate independent release readiness report; owner implementation approval remains separate.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Verdict and complete review scope",
+          "description": "Verdict and complete review scope"
+        },
+        {
+          "key": "s2",
+          "heading": "Identity, independence and separate environment checks",
+          "description": "Identity, independence and separate environment checks"
+        },
+        {
+          "key": "s3",
+          "heading": "Exact inputs and prerequisite provenance",
+          "description": "Exact inputs and prerequisite provenance"
+        },
+        {
+          "key": "s4",
+          "heading": "Four-perspective release coverage",
+          "description": "Four-perspective release coverage"
+        },
+        {
+          "key": "s5",
+          "heading": "Consequential raw-source traces",
+          "description": "Consequential raw-source traces"
+        },
+        {
+          "key": "s6",
+          "heading": "Finding, advisory and deferral dispositions",
+          "description": "Finding, advisory and deferral dispositions"
+        },
+        {
+          "key": "s7",
+          "heading": "Source freshness and inspection boundaries",
+          "description": "Source freshness and inspection boundaries"
+        },
+        {
+          "key": "s8",
+          "heading": "Actual operations, future checks and return boundary",
+          "description": "Actual operations, future checks and return boundary"
+        }
+      ]
+    },
+    {
+      "path": "planning/shared-chat-material-insertion/OWNER-APPROVAL.md",
+      "description": "Exact-candidate owner implementation approval and retained acceptance/publication boundaries.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Owner instruction and exact scope",
+          "description": "Owner instruction and exact scope"
+        },
+        {
+          "key": "s2",
+          "heading": "Implementation authority and retained gates",
+          "description": "Implementation authority and retained gates"
+        },
+        {
+          "key": "s3",
+          "heading": "Handoff",
+          "description": "Handoff"
+        }
+      ]
+    },
+    {
+      "path": "planning/shared-chat-material-insertion/ORCHESTRATOR-DISPATCH.json",
+      "description": "Dated exact-candidate persistent session creation and verified initial preflight receipt."
     }
   ]
 }

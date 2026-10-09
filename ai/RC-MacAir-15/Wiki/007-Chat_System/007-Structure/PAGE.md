@@ -40,7 +40,16 @@ metadata:
     - fusion-studio-client/src/hooks/useFloatingWindow.ts
     - fusion-studio-client/src/components/email/EmailComposeWindow.tsx
     - fusion-studio-client/src/components/email/EmailComposeLayer.tsx
-  last-modified: "2026-09-29T04:09:49Z"
+    - fusion-studio-client/src/lib/chat-action-controller.ts
+    - fusion-studio-client/src/lib/chat-action.ts
+    - fusion-studio-client/src/lib/chat-material-target.ts
+    - fusion-studio-client/src/lib/chat-material-commit.ts
+    - fusion-studio-client/src/state/slices/mountedChatState.ts
+    - fusion-studio-client/src/components/chat/useMountedChatBinding.ts
+    - fusion-studio-client/src/components/chat/useComposerMaterialSource.ts
+    - fusion-studio-client/src/screenshots/chatScreenshotCapture.ts
+    - fusion-studio-client/src/components/SendToChatButton.tsx
+  last-modified: "2026-10-07T20:18:16Z"
 ---
 
 Cleanup review: current renderer host composition and replaced source owners were rechecked against development source. Older verification dates and unrelated runtime claims retain their stated scope; no runtime or Alpha validation was performed in this pass.
@@ -263,6 +272,12 @@ The private send boundary is used by the current chat callers in `chatSlice` (pr
 host/port boundary. `fusion-studio-server/lib/http/shell-cors.js` is the sole
 HTTP CORS grant for the shell origin. Connection authentication is separate
 from both, and no authentication owner publishes a fact.
+
+## Prepared material route
+
+`chat-action.ts` exposes compose-only begin/commit alongside the independent explicit Send/System creation API. `chat-action-controller.ts` retains one app-lifetime consumer. `chat-material-target.ts` validates captured mounted/workspace authority; `chat-material-commit.ts` performs the synchronous exact-owner draft or attachment mutation. `mountedChatState.ts` composes transient registration, activation and irreversible retirement through the existing Chat state slice, without persisting active DOM identity.
+
+`useMountedChatBinding.ts` registers each committed composer generation. `ConnectedChatComposer.tsx` supplies explicit camera and prepared-source callbacks; `useComposerMaterialSource.ts` captures source cancellation, latest-owner cursor data and eligible warming. `ChatComposerAddMenu.tsx`, screenshot gallery, clipboard, recents, mic and diagnostic controls supply material to this one consumer. `chatScreenshotCapture.ts` owns actual capture/save correlation and resource cleanup, with no separate destination resolver or attachment-store writer. `SendToChatButton.tsx` captures global activity before resolving the source panel path. The dead `fusion:chat-insert` compatibility listener is removed.
 
 ## Current Host And Window Boundaries
 

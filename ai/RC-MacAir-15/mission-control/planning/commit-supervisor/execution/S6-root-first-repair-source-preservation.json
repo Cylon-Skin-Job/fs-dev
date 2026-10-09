@@ -1,0 +1,23 @@
+{
+  "at": "2026-10-04T14:48:00.097430+00:00",
+  "kind": "ROOT_RAW_PRESERVATION_CHECK",
+  "source_unowned_baseline_entries_checked": 15943,
+  "source_absences_checked": 68,
+  "owned_baseline_exclusions": 22,
+  "excluded_namespaces": [
+    "ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/",
+    "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/",
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/"
+  ],
+  "drift": {},
+  "source_cache_entries": 193,
+  "source_cache_drift": {},
+  "source_head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "source_physical_index_sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+  "index_matches_original": true,
+  "scope_limit": "Installed slice-owned source paths separately bound by accepted revisions; no live profile hash-stability assertion. This read does not mutate source.",
+  "parser_correction": {
+    "raw_attempt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-root-first-repair-source-preservation-parser-attempt.json",
+    "reason": "Initial parser used kind missing while baseline encodes kind absent; all68 entries are still absent. No filesystem change or real drift occurred."
+  }
+}

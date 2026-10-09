@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-04T10:09:41.577922+00:00",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "branch": "agent/exact-workspace-paths",
+  "index_sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+  "files": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh",
+      "sha256": "a02c0fa38ffcd89e488ef1785cf83dd2f3476230d8fbaf4916063e9dcedd7380",
+      "mode": 33261,
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-preimages/0"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/skills/fusion-electron-restart/SKILL.md",
+      "sha256": "bf4a3dba3a1f2f5bf41c3d91197adfbd31fa0cb9f60adb67069599fad008e91a",
+      "mode": 33188,
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-preimages/1"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+      "sha256": "f30199373a1e5fbd59d3f3425dcaa2553839d32b70ec62681cca1f26f357acbe",
+      "mode": 33188,
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-preimages/2"
+    }
+  ],
+  "processes": "48636     1 /Applications/Fusion Studio Alpha.app/Contents/MacOS/Fusion Studio\n48653 48636 /opt/homebrew/bin/node /Applications/Fusion Studio Alpha.app/Contents/Resources/fusion-studio-server/server.js\n77002     1 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs\n77007 77002 /opt/homebrew/bin/node /Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js\n"
+}

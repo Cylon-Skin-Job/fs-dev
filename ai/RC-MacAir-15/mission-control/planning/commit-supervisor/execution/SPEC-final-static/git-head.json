@@ -1,0 +1,20 @@
+{
+  "actor": "/root",
+  "argv": [
+    "git",
+    "-C",
+    "/Users/rccurtrightjr./projects/fs-dev",
+    "rev-parse",
+    "HEAD"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "started": "2026-10-05T03:30:31.316057+00:00",
+  "finished": "2026-10-05T03:30:31.324582+00:00",
+  "exit": 0,
+  "stdout_hex": "643135373932393230373331663835653435623734333531396434616632623830376439356139630a",
+  "stderr_hex": "",
+  "env_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  }
+}

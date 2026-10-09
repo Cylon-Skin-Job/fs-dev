@@ -1,0 +1,50 @@
+[
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-roadmap-creator/references/planning-contract.md#validation-and-repair-rules"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "registry.md#workspace-and-session-bindings"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "launchpad/template/AGENTS.md#use-the-starter-documents-to-guide-discussion"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "decisions.md#d-020--owner-directed-ticket-changes-by-any-agent"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "template-review.md#p-001--intake-shaping-and-numbered-ticket-conversations"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "domain-routing.md#governing-sessions-in-subordinate-folders"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/record-templates.md",
+    "target": "investigation-contract.md#assignment-packet"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/record-templates.md",
+    "target": "investigation-contract.md#report-and-synthesis"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "target": "decisions.md#d-024--commit-supervisor-and-one-integrated-workflow-spec"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": "decisions.md#d-024--commit-supervisor-and-one-integrated-workflow-spec"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": "todo.md#mc-t09--build-the-commit-supervisor"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": "todo.md#mc-t09--build-the-commit-supervisor"
+  }
+]

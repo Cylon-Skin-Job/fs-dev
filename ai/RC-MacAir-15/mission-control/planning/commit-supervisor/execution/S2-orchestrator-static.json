@@ -1,0 +1,94 @@
+{
+  "files_match": true,
+  "AST_TOML_links": "pass",
+  "S1_bytes": "unchanged; workflow append only",
+  "records": [
+    {
+      "argv": [
+        "/Users/rccurtrightjr./.local/bin/uv",
+        "run",
+        "--offline",
+        "--with",
+        "PyYAML",
+        "python",
+        "/Users/rccurtrightjr./.codex/skills/.system/skill-creator/scripts/quick_validate.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-code-review-orchestrator"
+      ],
+      "code": 0,
+      "stdout": "Skill is valid!\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/rccurtrightjr./.local/bin/uv",
+        "run",
+        "--offline",
+        "--with",
+        "PyYAML",
+        "python",
+        "/Users/rccurtrightjr./.codex/skills/.system/skill-creator/scripts/quick_validate.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-repair-worker"
+      ],
+      "code": 0,
+      "stdout": "Skill is valid!\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/rccurtrightjr./.local/bin/uv",
+        "run",
+        "--offline",
+        "--with",
+        "PyYAML",
+        "python",
+        "/Users/rccurtrightjr./.codex/skills/.system/skill-creator/scripts/quick_validate.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-review-gate"
+      ],
+      "code": 0,
+      "stdout": "Skill is valid!\n",
+      "stderr": ""
+    },
+    {
+      "smoke": "initial-material",
+      "state": "repair",
+      "result": "findings",
+      "agent_gate_proof": false
+    },
+    {
+      "smoke": "fresh-worker-handoff",
+      "state": "handoff-validated",
+      "result": "clean",
+      "agent_gate_proof": false
+    },
+    {
+      "smoke": "fresh-final",
+      "state": "review-complete",
+      "result": "clean",
+      "agent_gate_proof": false
+    },
+    {
+      "smoke": "target-drift",
+      "state": "unmet-gate",
+      "result": "insufficient-evidence",
+      "agent_gate_proof": false
+    },
+    {
+      "smoke": "missing-reviewer",
+      "state": "unmet-gate",
+      "result": "insufficient-evidence",
+      "agent_gate_proof": false
+    },
+    {
+      "smoke": "missing-intent",
+      "state": "needs-owner",
+      "result": "insufficient-evidence",
+      "agent_gate_proof": false
+    },
+    {
+      "smoke": "missing-prerequisite",
+      "state": "waiting-dependency",
+      "result": "insufficient-evidence",
+      "agent_gate_proof": false
+    }
+  ]
+}

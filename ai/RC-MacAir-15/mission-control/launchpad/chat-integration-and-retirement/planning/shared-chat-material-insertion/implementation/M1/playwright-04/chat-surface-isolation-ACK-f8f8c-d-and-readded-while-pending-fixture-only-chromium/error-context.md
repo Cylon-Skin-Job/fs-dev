@@ -1,0 +1,43 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - generic [ref=e5]:
+    - button "More options" [ref=e8]: event_list
+    - generic [ref=e11]: Start a conversation
+    - generic [ref=e13]:
+      - generic "Chat attachments" [ref=e14]:
+        - article "same.png" [ref=e15]:
+          - generic [ref=e16]: image
+          - generic [ref=e17]: same.pngPNG image
+          - button "Remove undefined" [ref=e18]: close
+      - status [ref=e19]: Message not sent. Check the connection and try again.
+      - textbox "Ask about isolation-a..." [active] [ref=e23]: ATTACHMENT-SNAPSHOT
+      - generic [ref=e24]:
+        - generic [ref=e25]:
+          - button "Add" [ref=e27] [cursor=pointer]:
+            - generic [ref=e28]: add
+          - button "Mode" [ref=e30]: shield_lockMode
+        - generic [ref=e31]:
+          - 'button "Context usage: 0%" [ref=e33]'
+          - button "DeepSeek V4 Flash" [ref=e35]: DeepSeek V4 Flashkeyboard_arrow_down
+          - button "Voice input (click to open)" [ref=e37] [cursor=pointer]:
+            - generic [ref=e38]: mic
+          - button "Send message" [ref=e40]: arrow_upward
+  - generic [ref=e42]:
+    - button "More options" [ref=e45]: event_list
+    - generic [ref=e48]: Start a conversation
+    - generic [ref=e50]:
+      - textbox "Ask about isolation-b..." [ref=e54]
+      - generic [ref=e55]:
+        - generic [ref=e56]:
+          - button "Add" [ref=e58] [cursor=pointer]:
+            - generic [ref=e59]: add
+          - button "Mode" [ref=e61]: shield_lockMode
+        - generic [ref=e62]:
+          - 'button "Context usage: 0%" [ref=e64]'
+          - button "DeepSeek V4 Flash" [ref=e66]: DeepSeek V4 Flashkeyboard_arrow_down
+          - button "Voice input (click to open)" [ref=e68] [cursor=pointer]:
+            - generic [ref=e69]: mic
+          - button "Send message" [ref=e71]: arrow_upward
+```

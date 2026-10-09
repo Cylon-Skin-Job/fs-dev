@@ -1,0 +1,18 @@
+{
+  "runId": "chat-arch-1790240839156-896d4dd935",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R8-MIRROR-RECOVERY",
+      "code": 0,
+      "signal": null,
+      "pid": 64089,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 11729
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

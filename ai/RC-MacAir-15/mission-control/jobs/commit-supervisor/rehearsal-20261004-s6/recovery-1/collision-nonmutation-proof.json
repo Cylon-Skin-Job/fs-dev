@@ -1,0 +1,55 @@
+{
+  "at": "2026-10-04T20:40:18.499765+00:00",
+  "actor": "/root/s6_supervisor_recovery_1",
+  "actual_public_refusal": {
+    "result": "REFUSED",
+    "reason": "current-byte collision; nothing restored"
+  },
+  "receipt": {
+    "actor": "/root/s6_supervisor_recovery_1",
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "command": [
+      "python3.12",
+      "-B",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+      "restore",
+      "--job",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/public-controls/fixed",
+      "--repo",
+      "/private/tmp/mc-s6-commit-supervisor-20261004/candidate"
+    ],
+    "started": "2026-10-04T20:38:49.912656+00:00",
+    "finished": "2026-10-04T20:38:50.365962+00:00",
+    "exit_code": 1,
+    "environment_overrides": {
+      "GIT_OPTIONAL_LOCKS": "0",
+      "GIT_LITERAL_PATHSPECS": "1",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "inherited_git_variables_removed": "ALL GIT_* repository/index/object/alternate variables",
+    "stdout_raw": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/fixed-actual-collision-refusal.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "stderr_raw": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/fixed-actual-collision-refusal.stderr",
+      "sha256": "2e56fe98b1f1baabcb70ef56a438e0f85a5ce6335973c42f5fc082a7584a9159",
+      "size": 76
+    }
+  },
+  "full_candidate4355_index_work_ref_protected_exact": true,
+  "physical_candidate_and_source_indexes_exact": true,
+  "candidate_all_NUL_status_index_flags_stage_refs_config_remotes_reflogs_exact": true,
+  "source_scoped_NUL_status_exact": true,
+  "source_status_exclusions": [
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/",
+    "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/"
+  ],
+  "source_raw_status_qualification": "Whole source porcelain includes explicitly assigned recovery-1 receipts written between samples; all other full NUL-safe entries and11977 leaves remain exact",
+  "source11977_cache193_history1844_archive6_exact": true,
+  "saved_guard_exact": true,
+  "failed_proof_attempt": "collision_and_fixed.py stopped after public refusal at raw whole-source status equality; no restore executed. Saved snapshots are reused, no collision/helper replay",
+  "before": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/collision-before-refusal.json",
+  "after": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/collision-after-refusal.json"
+}

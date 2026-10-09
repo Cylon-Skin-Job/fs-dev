@@ -1,0 +1,17 @@
+{
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "started": "2026-10-04T16:27:32.337420+00:00",
+  "finished": "2026-10-04T16:27:33.086426+00:00",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "command": [
+    "python3.12",
+    "-B",
+    ".agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+    "verify",
+    "--job",
+    "jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/first"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"result\": \"VERIFIED\", \"payloads_valid\": true, \"matches_checkpoint\": true, \"status_equal\": true, \"current_sha256\": \"6ea76d84ae4ccea79caa693874ded92d88b1c58f73aa6ba0952a9bf2a8b70b06\", \"manifest_sha256\": \"5bf3fb69c13aacfd60afcb384de2c9975fc917ad3f1f7a49b9176073b7b34d96\"}\n",
+  "stderr": ""
+}

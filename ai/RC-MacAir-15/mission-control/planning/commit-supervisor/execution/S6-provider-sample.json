@@ -1,0 +1,14 @@
+[
+  {
+    "id": "draft",
+    "label": "Draft report"
+  },
+  {
+    "id": "review",
+    "label": "Review sources"
+  },
+  {
+    "id": "send",
+    "label": "Send summary"
+  }
+]

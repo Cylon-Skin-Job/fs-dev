@@ -1,0 +1,17 @@
+{
+  "caseId": "R5-DIAGNOSTIC-APPEND",
+  "status": "passed",
+  "actualModules": [
+    "ChatDiagnosticDetails",
+    "LegacyChatHost",
+    "ChatInput",
+    "chat-diagnostic-handlers"
+  ],
+  "observations": [
+    "explicit Ask AI retrieves one validated diagnostic report",
+    "existing draft is preserved byte-for-byte and diagnostic text is appended",
+    "no prompt is sent automatically",
+    "visible inserted status is rendered"
+  ],
+  "privateContentRecorded": false
+}

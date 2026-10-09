@@ -1,0 +1,105 @@
+{
+  "state": "READY_FOR_ORCHESTRATOR_REVIEW",
+  "at": "2026-10-04T10:36:11.928859+00:00",
+  "work_id": "SPEC-COMMIT-SUPERVISOR-01",
+  "slice": "S4",
+  "builder": "/root/s4_builder",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "memory_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "implementation_checkout": "/Users/rccurtrightjr./projects/fs-dev",
+  "branch": "agent/exact-workspace-paths",
+  "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "index_sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+  "candidate_id": "sha256:c12ff1fff3c391e5183eea219553c547a91e461d9cb114c21719b37cfe209d02",
+  "effective_permissions": "danger-full-access/never; assigned scope only",
+  "root_model_effort": "inherited, no overrides",
+  "current_manifest_sha256": "7e970ff51235b3bce44b42e26b3f8ba6b459ed08e5e842723becb2fa7c4e527f",
+  "reviewers": [
+    {
+      "identity": "/root/s4_builder/s4_builder_review_1",
+      "agent_type": "clean-room-reviewer",
+      "fork_turns": "none",
+      "root_model_effort_inherited": true,
+      "overrides": false,
+      "result": "CLEAN",
+      "terminal_confirmed_by": "list_agents completed",
+      "close_agent": "unavailable",
+      "raw_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-builder-review-1.md",
+      "raw_report_sha256": "3c2240dcb6d1bfbc42f978a4d874c4bee1064352e961183a367c3825f7c16b0e",
+      "inline_report_saved_by": "/root/s4_builder; exact raw terminal text",
+      "frozen_packet": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-pass-1/manifest.json"
+    }
+  ],
+  "first_materially_clean_pass": 1,
+  "deviations": [
+    {
+      "id": "S4-D1",
+      "original_criterion": "Own canonical restart script, bounded procedure correction and focused tests; advisory expected files; no app architecture change",
+      "actual": "Add four cohesive R/scripts/fusion-restart*.mjs modules; canonical shell forwards to target/process/probe/coordinator support",
+      "reason": "Safe process/profile selection and real initialized-shell verification need distinct cohesive responsibilities; each module below 200 lines",
+      "authority": "Approved S4 necessary bounded integration plus explicit root authorization for cohesive scripts support",
+      "paths": [
+        "R/restart-fusion.sh",
+        "R/scripts/fusion-restart-target.mjs",
+        "R/scripts/fusion-restart-processes.mjs",
+        "R/scripts/fusion-restart-probe.mjs",
+        "R/scripts/fusion-restart.mjs"
+      ],
+      "checks": "bash -n; four node syntax checks;14 focused tests; actual read-only default/Alpha selector;55 cumulative tests",
+      "observable_effect": "No global pkill/pidfiles/borrowed runtime; explicit/inherited/default storage resolution; selected-only effects and actual CDP shell connection gate",
+      "risk": "macOS ps/lsof and selected Playwright/Electron dependencies are required; unsupported observations fail honestly; actual app success unproven until S6",
+      "downstream_consumer": "S5 runtime routing and S6 candidate copies/real runtime",
+      "downstream_impact": "Copy all four support modules with canonical script; actual isolated app/UI proof still required",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "S4-D2",
+      "original_criterion": "Workflow runtime section/reference; preserve accepted predecessor bytes and purposeful file responsibility",
+      "actual": "Append 10-line runtime route to workflow and add cohesive runtime-handoff.md reference",
+      "reason": "Keeps accepted workflow prefix byte-identical and complete runtime procedure separate under file-size guidance",
+      "authority": "Approved S4 workflow runtime section, manager explicitly allows bounded cohesive runtime reference",
+      "paths": [
+        "K/references/workflow.md",
+        "K/references/runtime-handoff.md"
+      ],
+      "checks": "7 Markdown links resolve; accepted prefix exact;14 focused/55 cumulative and source preservation",
+      "observable_effect": "Full ownership/environment/runtime/diagnostic/recovery and readiness procedure is discoverable without broadening role/publication authority",
+      "risk": "Reference link must remain packaged; current static links checked",
+      "downstream_consumer": "S5 top-level entry; S6 executing supervisor",
+      "downstream_impact": "Follow reference and preserve exact S4 support dependencies; no new feature",
+      "proposed_classification": "accepted"
+    }
+  ],
+  "preimages": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh",
+      "sha256": "a02c0fa38ffcd89e488ef1785cf83dd2f3476230d8fbaf4916063e9dcedd7380",
+      "mode": 33261,
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-preimages/0"
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/skills/fusion-electron-restart/SKILL.md",
+      "sha256": "bf4a3dba3a1f2f5bf41c3d91197adfbd31fa0cb9f60adb67069599fad008e91a",
+      "mode": 33188,
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-preimages/1"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+      "sha256": "f30199373a1e5fbd59d3f3425dcaa2553839d32b70ec62681cca1f26f357acbe",
+      "mode": 33188,
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-preimages/2"
+    }
+  ],
+  "new_originally_absent_paths": [
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs",
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs",
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs",
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/runtime-handoff.md",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs"
+  ],
+  "checks": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-checks.json",
+  "protected_processes": "48636     1 /Applications/Fusion Studio Alpha.app/Contents/MacOS/Fusion Studio\n48653 48636 /opt/homebrew/bin/node /Applications/Fusion Studio Alpha.app/Contents/Resources/fusion-studio-server/server.js\n77002     1 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs\n77007 77002 /opt/homebrew/bin/node /Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js\n",
+  "live_app_success": "Not run; S6 required",
+  "next_safe_action": "Orchestrator independently inspect/rerun, assign separate acceptance before S5; no further slice/publication authority"
+}

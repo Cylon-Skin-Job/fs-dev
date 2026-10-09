@@ -1,0 +1,96 @@
+{
+  "at": "2026-10-04T16:09:42.600534+00:00",
+  "result": "ACTUAL_PRIVATE_RUNTIME_ACCEPTED",
+  "scope": "REHEARSAL_ONLY",
+  "live_success": "Actual selected canonical app only; no injected success",
+  "receipts": {
+    "first-canonical-runtime": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-canonical-runtime-command.json",
+      "sha256": "711a50b83e7c2e9ae559432ffa87b51106cbe38eb4e98a97ab559925b33a08ef"
+    },
+    "first-preinitializer-reset": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-preinitializer-reset-command.json",
+      "sha256": "fe800617620efb5d5f02e79b6b7dbd339e203d9fa3f2ddbf340219acae4d651c"
+    },
+    "first-ui-acceptance": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-ui-acceptance-command.json",
+      "sha256": "0d3555b95b2d361d89561182e14601430ce81e7cca6c7324a724525474eddcac"
+    },
+    "first-owner-checked-state": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-owner-checked-state-command.json",
+      "sha256": "41d348e166267fed6252afe9f0a04067e1ea2bd19ea26ea01fbe6a7a4bf1f07c"
+    },
+    "first-watcher": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-watcher-command.json",
+      "sha256": "ee1a3522b3c9a0b11112cd764fd4bca552ab304c9d53b3e00eb40e2398414d90"
+    },
+    "first-current-runtime-identity-corrected": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-current-runtime-identity-corrected-command.json",
+      "sha256": "98dcd7fc0773f42b9a5dee7680981a5d86e3927913c6aeb1ea43d90a582feb85"
+    },
+    "first-fixed-capture": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-fixed-capture-command.json",
+      "sha256": "edfed88db1e705f43e187a9dc74c056b0a895e4da1a46a5671a01c0745d9aac4"
+    },
+    "first-fixed-verify": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-fixed-verify-command.json",
+      "sha256": "1add2bb836a200d5a9fb425ee1ed4683d01bd90caa0f6ef34ea4b9c41256cca4"
+    }
+  },
+  "run": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-bFErPY",
+  "verified": {
+    "state": "RUNTIME_VERIFIED",
+    "mainPid": 5349,
+    "serverPid": 5358,
+    "rendererPids": [
+      5416,
+      5944
+    ],
+    "serverPort": 62275,
+    "debugPort": 62274,
+    "mainExecutable": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+    "mainEntry": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/electron/main.cjs",
+    "mainCwd": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client",
+    "serverExecutable": "/opt/homebrew/Cellar/node/25.6.1/bin/node",
+    "serverEntry": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-server/server.js",
+    "serverCwd": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client",
+    "rendererExecutables": [
+      "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer)",
+      "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer)"
+    ],
+    "profile": "/private/tmp/mc-s6-commit-supervisor-20261004/profile",
+    "machine": "MC-S6",
+    "serverUserData": "/private/tmp/mc-s6-commit-supervisor-20261004/profile",
+    "connectedAfterWorkspaceInit": true,
+    "samples": 11,
+    "durationMs": 2000,
+    "serverUrl": "http://localhost:62275",
+    "repo": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+    "client": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client",
+    "main": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/electron/main.cjs",
+    "server": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-server/server.js",
+    "profileMode": "explicit",
+    "defaultProfile": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio",
+    "bin": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+    "runtime": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart",
+    "portFile": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/server.port",
+    "dryRun": false,
+    "database": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/server-data/fusion.db",
+    "serverLog": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/server-live.log",
+    "run": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-bFErPY",
+    "logFile": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-bFErPY/launch.log",
+    "electronLog": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-bFErPY/tmp/fusion-electron.log",
+    "rendererLog": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-bFErPY/tmp/electron-renderer.log"
+  },
+  "preinitializer_reset": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-preinitializer-reset.json",
+  "checked_precondition": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-restart-checked-precondition.json",
+  "strict_ui_wiki": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-ui-acceptance.json",
+  "deliberately_checked_owner_state": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-owner-checked-state.json",
+  "ordinary_watcher": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-watcher.json",
+  "failure_oracles": "Current17passing Node raw receipt covers wrong-path/profile/dead-server/disconnected-renderer withholding, unrelated/Alpha zero-signal and ownership/race cases; exact35dependencies match, failure injection never live success",
+  "current_dependency_bridge": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-runtime-current-dependency-bridge.json",
+  "protected_readback": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-protection-runtime-comparison.json",
+  "raw_runtime_archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-runtime-raw-files.json",
+  "warnings": "Build succeeded with existing gray-matter eval, static/dynamic import and chunk-size warnings plus npm update notice; no new candidate finding evidenced",
+  "owner_scope": "First intentional owner wait only; no fix-X/Y/refusal/recovery/cleanup/Git/publication authority"
+}

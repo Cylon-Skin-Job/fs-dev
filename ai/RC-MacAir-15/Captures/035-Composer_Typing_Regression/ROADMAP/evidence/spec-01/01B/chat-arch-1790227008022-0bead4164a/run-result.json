@@ -1,0 +1,58 @@
+{
+  "runId": "chat-arch-1790227008022-0bead4164a",
+  "status": "passed",
+  "results": [
+    {
+      "id": "F1-PUBLIC-ROUTE",
+      "code": 0,
+      "signal": null,
+      "pid": 89605,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 5763
+    },
+    {
+      "id": "R1-F2-F3-COMPOSER",
+      "code": 0,
+      "signal": null,
+      "pid": 90458,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 180135
+    },
+    {
+      "id": "R1-COMPOSER-CORRECTNESS",
+      "code": 0,
+      "signal": null,
+      "pid": 10662,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 3510
+    },
+    {
+      "id": "R7-HISTORY-LIVE",
+      "code": 0,
+      "signal": null,
+      "pid": 11101,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 3843
+    },
+    {
+      "id": "R9-INDICATOR-DISTINCTION",
+      "code": 0,
+      "signal": null,
+      "pid": 11570,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 10889
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

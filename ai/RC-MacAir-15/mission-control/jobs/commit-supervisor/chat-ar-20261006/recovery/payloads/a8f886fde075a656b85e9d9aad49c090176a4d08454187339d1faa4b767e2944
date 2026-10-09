@@ -1,0 +1,81 @@
+---
+id: RCC-0091
+title: 'Issues Viewer — tabbed local, remote, and cross-machine sources'
+assignee: rccurtrightjr
+created: 2026-05-22T12:00:00.000Z
+author: rccurtrightjr
+state: open
+---
+
+Redesign the Issues viewer around multiple issue sources instead of migrating it to an iframe.
+
+The iframe/custom app path is only for user-created custom apps. The built-in Fusion Studio views remain first-party installed views. Issues viewer is one of those built-in views.
+
+The Issues viewer should support local machine tickets, remote API-backed GitHub/GitLab issues, and read/browse access to other synced machine issue folders under the new `ai/<machine>/` workspace paradigm.
+
+**Related spec:** `docs/AI_WORKSPACE_TEMPLATE_V2_SPEC.md`
+
+---
+
+## What Needs to Happen
+
+1. **Do not migrate Issues viewer to iframe**
+   - Remove iframe migration framing from this task.
+   - Keep Issues viewer as a built-in Fusion Studio view.
+   - Reserve iframe/custom-viewer behavior for user-created custom apps only.
+
+2. **Add source tabs**
+   - `Local` — local machine issues from the configured `ai/<local-machine>/Issues/` folder.
+   - `GitHub` — GitHub issues loaded fresh through the GitHub API.
+   - `GitLab` — GitLab issues loaded fresh through the GitLab API.
+   - Other machine tabs — one tab per synced `ai/<machine>/Issues/` folder found in the repo.
+
+3. **Local tab behavior**
+   - Local tickets are filesystem/local workflow state for this machine only.
+   - Local tickets can drive local autonomous agents without polluting GitHub or GitLab.
+   - Local issue files live under the configured local machine folder, not a global `ai/<machine>/Issues/` path.
+
+4. **GitHub and GitLab tab behavior**
+   - Fetch fresh issue state from the API when the Issues viewer opens, refreshes, or switches to the remote tab.
+   - Interactions with GitHub/GitLab issues use the API, not local markdown storage.
+   - These tabs are for shared/big-picture/project-level issue tracking and delegation.
+
+5. **Other machine tab behavior**
+   - Scan sibling folders under `ai/` for `Issues/` folders.
+   - Show a tab for each discovered non-local machine with issues.
+   - These tabs expose repo-synced local issue folders from other machines for inspection and coordination.
+   - Do not automatically ingest other machine tickets into the local machine's active workflow unless an explicit pull/ingest action or hook does so.
+
+6. **Cross-machine ticket handoff flow**
+   - A user or machine can add tickets to another machine's `ai/<machine>/Issues/` folder and push them.
+   - A GitHub/GitLab ticket can tell the target machine to pull those tickets.
+   - A hook on the target machine can see that remote ticket, pull the repo, ingest its local machine tickets, and start executing them.
+
+7. **Board UX still needs redesign**
+   - Keep the useful redesign goals: source tabs, columns, create ticket, detail panel, archive/templates, priority, labels, assignee, search, and filters.
+   - The redesign should be source-aware: Local/GitHub/GitLab/other-machine tickets may have different allowed actions.
+
+---
+
+## Files That Will Likely Change
+
+- Issues viewer client components and state.
+- Server issue source/discovery APIs.
+- GitHub/GitLab issue connector code.
+- Local issue filesystem paths under `ai/<local-machine>/Issues/`.
+- Cross-machine issue folder discovery under sibling `ai/<machine>/Issues/` folders.
+- Existing `ai/<machine>/Issues/` path consumers during migration.
+
+---
+
+## Smoke Tests
+
+- [ ] Issues viewer remains a built-in Fusion Studio view, not an iframe custom app.
+- [ ] Source tabs render: Local, GitHub, GitLab, plus discovered machine tabs.
+- [ ] Local tab reads from configured `ai/<local-machine>/Issues/`.
+- [ ] GitHub tab fetches fresh data from GitHub API and actions write through API.
+- [ ] GitLab tab fetches fresh data from GitLab API and actions write through API.
+- [ ] Other machine tabs appear only for sibling `ai/<machine>/Issues/` folders.
+- [ ] Other machine tickets do not automatically enter local execution state.
+- [ ] Local ticket creation does not create GitHub/GitLab issues unless explicitly requested.
+- [ ] Search/filter/detail panel work across source types with source-aware allowed actions.

@@ -1,0 +1,68 @@
+{
+  "at": "2026-10-05T04:51:37.895307+00:00",
+  "actor": "/root",
+  "entries": [
+    {
+      "id": "SPEC-FINAL-REF-TEMPORAL-D1",
+      "scope": "Final preservation temporal qualification",
+      "original_source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-internal-ref-readback.json",
+      "original_requirement": "Preserve source/shared branch, index and unrelated state; qualify later observations instead of attributing unrelated live changes",
+      "actual_change": "Later root and independent reviewer readbacks found three removed and one new refs/codex/turn-diffs/checkpoints entry; every surviving ref and heads/remotes/stash match, as do HEAD/index/config/remotes/reflogs",
+      "reason_authority": "Actual later raw delta requires narrowing historical all-refs equality; no source repair or writer attribution is justified",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-static/git-refs.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-internal-ref-readback.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md"
+      ],
+      "checks": "Independent reviewer current comparison at 2026-10-05T04:42:20.375647Z and root command-only readback agree on exact delta. Raw baseline hex receipt unchanged; commands clear inherited GIT* and set optional locks0; no ref mutation",
+      "observable_effect": "Final report does not claim present all-ref equality. Shared branches and required recovery archives remain exact",
+      "risk": "Internal-ref writer and causal origin are unestablished; no restoration or checkpoint cleanup attempted",
+      "downstream_impact": "Compatible evidence/time qualification only; no product or downstream SPEC correction"
+    },
+    {
+      "id": "SPEC-FINAL-REVIEW2-P01",
+      "scope": "Fresh final reviewer procedure",
+      "original_source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+      "original_requirement": "Read-only exact-file independent review; failed or truncated diagnostics are not proof",
+      "actual_change": "Fresh reviewer corrected read-helper parse/lookup/oversized-output failures and a checker-only symlink-mode representation assumption through bounded reads; exact target bytes and current fingerprints match",
+      "reason_authority": "Retain self-disclosed procedure without inventing successful initial reads or changing product",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-review-2-progress.raw.json"
+      ],
+      "checks": "Exact native final and four preserved progress messages; fresh actual CLEAN/END with strict whitelist observed. All101/74/35/15/142 and3309 domain fingerprints match, plus current dependencies",
+      "observable_effect": "No source/evidence/runtime effect, no excluded history exposure, no suite replay; corrected reads support acceptance",
+      "risk": "Fingerprint coverage is distinct from semantic/visual coverage; database contents/process replay were excluded and retained raw checks reused honestly",
+      "downstream_impact": "Report-only procedure; no required downstream correction"
+    },
+    {
+      "id": "SPEC-FINAL-COORDINATION-P02",
+      "scope": "Root final bookkeeping diagnostics",
+      "original_source": "/Users/rccurtrightjr./.codex/sessions/2026/10/04/rollout-2026-10-04T00-58-05-01a105eb-8add-7e12-a454-a96b64465cca.jsonl",
+      "original_requirement": "Preserve exact native evidence and distinguish failed diagnostics from successful current proof; Git read environment must be explicit",
+      "actual_change": "Root re-entry pure root lookup omitted explicit GIT environment/optional-lock settings. A draft delete/add patch was rejected, a heading-count assertion failed before writing, and first late-ref schema probe assumed stdout rather than stdout_hex. Bounded corrections produced the exact intended draft and raw hex ref readback",
+      "reason_authority": "Pure root coordination correction; existing frozen source/review packets remain unchanged",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report-draft.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-internal-ref-readback.json"
+      ],
+      "checks": "Actual failed diagnostics retained in verified root rollout; no draft write on either failed attempt, no Git mutation observed, current HEAD/index remain exact; corrected exact native capture and ref raw receipt preserved",
+      "observable_effect": "No product/source/runtime change; no failing probe or missing flag is retroactively certified",
+      "risk": "Initial lookup setting was omitted; no unsupported claim about that invocation. Completed check suites were not replayed",
+      "downstream_impact": "Coordination-only qualification; no later SPEC correction"
+    }
+  ],
+  "native_clean_gate": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+    "size": 21090,
+    "sha256": "403c11eda1663b11d538ad62891daebe043ac22923b24b15464f509c96429802"
+  },
+  "ref_raw_readback": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-internal-ref-readback.json",
+    "size": 16054,
+    "sha256": "75b039bf6675a328b1b01235d1c5f45f8a91ee5ab978e14d91764ef45686767c"
+  },
+  "product_changed": false,
+  "passing_suites_replayed": false,
+  "fresh_gate_repeated": false
+}

@@ -1,0 +1,178 @@
+{
+  "runId": "chat-arch-1789975929728-d1078e7f8e",
+  "status": "passed",
+  "results": [
+    {
+      "id": "F1-PUBLIC-ROUTE",
+      "code": 0,
+      "signal": null,
+      "pid": 64316,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 4621
+    },
+    {
+      "id": "FAULT-SERVER-ADMISSION",
+      "code": 0,
+      "signal": null,
+      "pid": 64723,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 4065
+    },
+    {
+      "id": "FAULT-TRANSPORT-ACK",
+      "code": 0,
+      "signal": null,
+      "pid": 65068,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 4469
+    },
+    {
+      "id": "FAULT-SAVE-ACK",
+      "code": 0,
+      "signal": null,
+      "pid": 65454,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 4687
+    },
+    {
+      "id": "R1-F2-F3-COMPOSER",
+      "code": 0,
+      "signal": null,
+      "pid": 65844,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 224219
+    },
+    {
+      "id": "R2-NO-ENQUEUE",
+      "code": 0,
+      "signal": null,
+      "pid": 79354,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 6135
+    },
+    {
+      "id": "R3-LOST-ACK-STATUS",
+      "code": 0,
+      "signal": null,
+      "pid": 79898,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 7035
+    },
+    {
+      "id": "R3-RECONNECT-UI",
+      "code": 0,
+      "signal": null,
+      "pid": 80414,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 7073
+    },
+    {
+      "id": "R4-DISTINCT-ATTEMPTS",
+      "code": 0,
+      "signal": null,
+      "pid": 80929,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 11181
+    },
+    {
+      "id": "R4-DISTINCT-RECEIPTS",
+      "code": 0,
+      "signal": null,
+      "pid": 81696,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 10506
+    },
+    {
+      "id": "R4-LATE-DRAFT-RECOVERY",
+      "code": 0,
+      "signal": null,
+      "pid": 82424,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 29851
+    },
+    {
+      "id": "R4-DUPLICATE-MISMATCH",
+      "code": 0,
+      "signal": null,
+      "pid": 84397,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 7806
+    },
+    {
+      "id": "R5-R6-PUBLIC-ACTIONS",
+      "code": 0,
+      "signal": null,
+      "pid": 84958,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 35655
+    },
+    {
+      "id": "R5-DIAGNOSTIC-APPEND",
+      "code": 0,
+      "signal": null,
+      "pid": 87351,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 2855
+    },
+    {
+      "id": "R6-LIFETIME-BOUNDARIES",
+      "code": 0,
+      "signal": null,
+      "pid": 87549,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 2897
+    },
+    {
+      "id": "R9-INDICATOR-DISTINCTION",
+      "code": 0,
+      "signal": null,
+      "pid": 87753,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 11030
+    },
+    {
+      "id": "R1-R9-CONTRACT-INVENTORY",
+      "code": 0,
+      "signal": null,
+      "pid": 88600,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 491
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

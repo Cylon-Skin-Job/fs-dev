@@ -1,0 +1,131 @@
+{
+  "at": "2026-10-04T11:06:48.040333+00:00",
+  "ui_yaml": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/agents/openai.yaml",
+      "sha256": "1b938e91f8799afb36273459f1172b18b7e45aceed5b9cb2b81af9d9c86ce82d",
+      "yaml_parse": true,
+      "skill_prompt": true,
+      "policy": {
+        "allow_implicit_invocation": false
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-code-review-orchestrator/agents/openai.yaml",
+      "sha256": "24a3b0515c3c858cf7af6a3a3887a2b943b4a6bf4ea799b33faef87cc38517a8",
+      "yaml_parse": true,
+      "skill_prompt": true,
+      "policy": {
+        "allow_implicit_invocation": true
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-repair-worker/agents/openai.yaml",
+      "sha256": "71f4602466de516b59a8fabbb225a61a51dcfe7922deb2a46e08b95ba39cd47b",
+      "yaml_parse": true,
+      "skill_prompt": true,
+      "policy": {
+        "allow_implicit_invocation": true
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mission-control/agents/openai.yaml",
+      "sha256": "37b9c90f34ac7045b8d28ac85dad78e64a2640819bf5f89f1a20b5c82fa80d28",
+      "yaml_parse": true,
+      "skill_prompt": true,
+      "policy": {
+        "allow_implicit_invocation": false
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/monitor/agents/openai.yaml",
+      "sha256": "6abdafbf4d0c6279d6754e2c76feb2d0d3b464bc018f395607136549e446f6bb",
+      "yaml_parse": true,
+      "skill_prompt": true,
+      "policy": {
+        "allow_implicit_invocation": false
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/status/agents/openai.yaml",
+      "sha256": "46f07704f05e2d4f1776f6f7ec1b14242753a7e459a4be7af5a4ed3719b7e454",
+      "yaml_parse": true,
+      "skill_prompt": true,
+      "policy": {
+        "allow_implicit_invocation": true
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-implementation-supervisor/agents/openai.yaml",
+      "sha256": "95d424faefc5311901c5f2f8909ead5a2bccfb3470ab8cb7bb98a853a007a07a",
+      "yaml_parse": true,
+      "skill_prompt": true,
+      "policy": {
+        "allow_implicit_invocation": true
+      }
+    }
+  ],
+  "local_fragments_checked": 12,
+  "local_fragments": [
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/record-templates.md",
+      "target": "investigation-contract.md#assignment-packet",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/investigation-contract.md"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/record-templates.md",
+      "target": "investigation-contract.md#report-and-synthesis",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/investigation-contract.md"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+      "target": ".agents/skills/mc-roadmap-creator/references/planning-contract.md#validation-and-repair-rules",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-creator/references/planning-contract.md"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+      "target": "registry.md#workspace-and-session-bindings",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+      "target": "launchpad/template/AGENTS.md#use-the-starter-documents-to-guide-discussion",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/template/AGENTS.md"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+      "target": "decisions.md#d-020--owner-directed-ticket-changes-by-any-agent",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/decisions.md"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+      "target": "template-review.md#p-001--intake-shaping-and-numbered-ticket-conversations",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/template-review.md"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+      "target": "domain-routing.md#governing-sessions-in-subordinate-folders",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/domain-routing.md"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+      "target": "decisions.md#d-024--commit-supervisor-and-one-integrated-workflow-spec",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/decisions.md"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+      "target": "decisions.md#d-024--commit-supervisor-and-one-integrated-workflow-spec",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/decisions.md"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+      "target": "todo.md#mc-t09--build-the-commit-supervisor",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+      "target": "todo.md#mc-t09--build-the-commit-supervisor",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md"
+    }
+  ]
+}

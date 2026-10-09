@@ -1,0 +1,22 @@
+{
+  "runId": "chat-arch-1789963047597-100d4e9bce",
+  "status": "failed",
+  "results": [
+    {
+      "id": "R5-R6-PUBLIC-ACTIONS",
+      "code": 1,
+      "signal": null,
+      "pid": 82991,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 44445
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "R5-R6-PUBLIC-ACTIONS exited 1",
+    "stack": "Error: R5-R6-PUBLIC-ACTIONS exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:276:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

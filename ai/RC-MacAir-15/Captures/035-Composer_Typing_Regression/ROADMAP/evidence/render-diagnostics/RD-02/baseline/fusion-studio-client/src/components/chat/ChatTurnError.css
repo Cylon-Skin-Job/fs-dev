@@ -1,0 +1,36 @@
+/*
+ * ChatTurnError — durable safe terminal error row (RCC-0108 SPEC-05 Slice B,
+ * parent §4.13). Visual vocabulary matches the existing shared tool-error
+ * presentation (ToolsPanel.css .rv-tool-error-*): red semibold title, muted
+ * context, red pre-wrapped body on neutral chat chrome. Every value traces
+ * to a CSS variable with a fallback; nothing is hardcoded.
+ */
+.rv-chat-turn-error {
+  --turn-error-color: var(--error, #ef4444);
+  display: grid;
+  gap: var(--space-xs, 4px);
+  padding: var(--space-xs, 4px) 0;
+  margin: var(--space-xs, 4px) 0 var(--space-md, 12px);
+  font-size: var(--font-size-sm, 13px);
+}
+
+.rv-chat-turn-error-title {
+  color: var(--turn-error-color);
+  font-weight: var(--font-weight-semibold, 600);
+}
+
+/* Safe catalog code in muted context text (§4.13). */
+.rv-chat-turn-error-code {
+  color: var(--text-muted, var(--text-dim, currentColor));
+  font-size: var(--font-size-xs, 12px);
+}
+
+/* Compact, deduplicated safe message — same red/error treatment, pre-wrapped. */
+.rv-chat-turn-error-message {
+  color: var(--turn-error-color);
+  opacity: var(--opacity-high, 0.88);
+  margin: 0;
+  white-space: pre-wrap;
+  font: inherit;
+  overflow-wrap: anywhere;
+}

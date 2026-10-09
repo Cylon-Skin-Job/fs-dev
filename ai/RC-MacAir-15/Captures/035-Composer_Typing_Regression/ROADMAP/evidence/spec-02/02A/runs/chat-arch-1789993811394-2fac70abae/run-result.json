@@ -1,0 +1,28 @@
+{
+  "runId": "chat-arch-1789993811394-2fac70abae",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R2-NO-ENQUEUE",
+      "code": 0,
+      "signal": null,
+      "pid": 93333,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 6476
+    },
+    {
+      "id": "R4-DISTINCT-ATTEMPTS",
+      "code": 0,
+      "signal": null,
+      "pid": 94345,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 11189
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

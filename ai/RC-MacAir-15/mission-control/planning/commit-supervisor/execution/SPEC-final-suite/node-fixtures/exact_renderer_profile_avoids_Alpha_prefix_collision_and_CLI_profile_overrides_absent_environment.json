@@ -1,0 +1,6 @@
+{
+  "test": "exact renderer profile avoids Alpha prefix collision and CLI profile overrides absent environment",
+  "fixture": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-Tgy5bI",
+  "injected": true,
+  "files": []
+}

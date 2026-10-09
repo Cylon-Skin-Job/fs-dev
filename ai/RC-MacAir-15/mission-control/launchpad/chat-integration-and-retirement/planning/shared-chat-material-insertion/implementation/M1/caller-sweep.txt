@@ -1,0 +1,76 @@
+fusion-studio-client/src/clipboard/ClipboardTrigger.tsx:5: * Click on a row → fetch value via clipboard:use → call onInsert(value) so
+fusion-studio-client/src/clipboard/ClipboardTrigger.tsx:28:  onInsert?: (text: string) => void;
+fusion-studio-client/src/clipboard/ClipboardTrigger.tsx:32:export function ClipboardTrigger({ onInsert, triggerVariant = 'icon' }: ClipboardTriggerProps) {
+fusion-studio-client/src/clipboard/ClipboardTrigger.tsx:75:    if (!onInsert) {
+fusion-studio-client/src/clipboard/ClipboardTrigger.tsx:76:      console.warn('[Clipboard] onInsert handler not wired; entry click ignored');
+fusion-studio-client/src/clipboard/ClipboardTrigger.tsx:81:      onInsert(value);
+fusion-studio-client/src/recent-files/RecentFilesTrigger.tsx:27:  onInsert?: (text: string) => void;
+fusion-studio-client/src/recent-files/RecentFilesTrigger.tsx:31:export function RecentFilesTrigger({ onInsert, triggerVariant = 'icon' }: RecentFilesTriggerProps) {
+fusion-studio-client/src/recent-files/RecentFilesTrigger.tsx:106:        onInsert?.(mostRecent.path);
+fusion-studio-client/src/recent-files/RecentFilesTrigger.tsx:111:  }, [onInsert, requestRecentFiles]);
+fusion-studio-client/src/recent-files/RecentFilesTrigger.tsx:139:    onSelect: (file) => onInsert?.(file.path),
+fusion-studio-client/src/emojis/EmojiTrigger.tsx:10:  onInsert?: (text: string) => void;
+fusion-studio-client/src/emojis/EmojiTrigger.tsx:18:  onInsert,
+fusion-studio-client/src/emojis/EmojiTrigger.tsx:24:  void onInsert;
+fusion-studio-client/src/lib/chat-action.ts:25:  sourceViewId?: string;
+fusion-studio-client/src/lib/chat-action.ts:70:export function dispatchChatAction(action: ChatActionPayload): Promise<ChatActionResult> {
+fusion-studio-client/src/lib/chat-action.ts:71:  const capturedAddress = action.address ?? captureChatActionAddress(action.sourceViewId);
+fusion-studio-client/src/lib/chat-action-controller.ts:67:    store.addPendingAttachment(workspaceId, threadId, request.attachment);
+fusion-studio-client/src/lib/chat-action-controller.ts:81:    store.setDraft(workspaceId, threadId, next);
+fusion-studio-client/src/mic/MicTrigger.tsx:19:  onInsert?: (text: string) => void;
+fusion-studio-client/src/mic/MicTrigger.tsx:22:export function MicTrigger({ onInsert }: MicTriggerProps) {
+fusion-studio-client/src/mic/MicTrigger.tsx:83:    if (onInsert && text.trim()) {
+fusion-studio-client/src/mic/MicTrigger.tsx:84:      onInsert(text.trim());
+fusion-studio-client/src/mic/MicTrigger.tsx:87:  }, [onInsert, close]);
+fusion-studio-client/src/screenshots/index.ts:10:export { captureAndAttachScreenshot, SCREENSHOT_FLASH_EVENT } from './chatScreenshotCapture';
+fusion-studio-client/src/screenshots/chatScreenshotCapture.ts:20:export interface ScreenshotAttachmentOwner {
+fusion-studio-client/src/screenshots/chatScreenshotCapture.ts:33:function currentPrimaryOwner(
+fusion-studio-client/src/screenshots/chatScreenshotCapture.ts:35:): ScreenshotAttachmentOwner | null {
+fusion-studio-client/src/screenshots/chatScreenshotCapture.ts:51:  owner: ScreenshotAttachmentOwner,
+fusion-studio-client/src/screenshots/chatScreenshotCapture.ts:58:    const current = currentPrimaryOwner(state);
+fusion-studio-client/src/screenshots/chatScreenshotCapture.ts:145:export async function captureAndAttachScreenshot(
+fusion-studio-client/src/screenshots/chatScreenshotCapture.ts:146:  requestedOwner?: ScreenshotAttachmentOwner,
+fusion-studio-client/src/screenshots/chatScreenshotCapture.ts:152:  const owner = requestedOwner ?? currentPrimaryOwner(panelState);
+fusion-studio-client/src/screenshots/chatScreenshotCapture.ts:192:    useChatFileLinkStore.getState().addPendingAttachment(
+fusion-studio-client/src/components/SystemViewer.tsx:6:import { dispatchChatAction } from '../lib/chat-action';
+fusion-studio-client/src/components/SystemViewer.tsx:83:    const result = await dispatchChatAction({
+fusion-studio-client/src/components/SystemViewer.tsx:92:      sourceViewId: 'system-viewer',
+fusion-studio-client/src/state/chatFileLinkStore.ts:14:  addPendingAttachment: (
+fusion-studio-client/src/state/chatFileLinkStore.ts:94:  addPendingAttachment: (workspaceId, threadId, attachment) => set((state) => {
+fusion-studio-client/src/state/chatComposerDraftStore.ts:6:  setDraft: (workspaceId: string, threadId: string, text: string) => void;
+fusion-studio-client/src/state/chatComposerDraftStore.ts:20:  setDraft: (workspaceId, threadId, text) => set((state) => ({
+fusion-studio-client/src/components/App.tsx:35:  captureAndAttachScreenshot,
+fusion-studio-client/src/components/App.tsx:76:    void captureAndAttachScreenshot();
+fusion-studio-client/src/lib/chat-action-creation.ts:1:import { dispatchChatAction, type ChatActionAddress, type ChatActionRequest, type ChatActionResult } from './chat-action';
+fusion-studio-client/src/lib/chat-action-creation.ts:90:      void dispatchChatAction({ content: resolved, target: 'current', delivery: 'send',
+fusion-studio-client/src/lib/chat-action-creation.ts:103:      drafts.setDraft(created.workspaceId, created.threadId!, next);
+fusion-studio-client/src/lib/chat-action-creation.ts:152:      else void dispatchChatAction({ content: resolved, target: 'current',
+fusion-studio-client/src/lib/chat-material-commit.ts:42:    store.addPendingAttachment(workspaceId, threadId, attachment);
+fusion-studio-client/src/lib/chat-material-commit.ts:61:  store.setDraft(workspaceId, threadId, next);
+fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx:8:import { captureAndAttachScreenshot } from '../../screenshots/chatScreenshotCapture';
+fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx:9:import type { ScreenshotAttachmentOwner } from '../../screenshots/chatScreenshotCapture';
+fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx:16:  onInsert: (text: string) => void;
+fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx:17:  screenshotOwner: ScreenshotAttachmentOwner | null;
+fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx:20:export function ChatComposerAddMenu({ onAttach, onInsert, screenshotOwner }: ChatComposerAddMenuProps) {
+fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx:45:    if (screenshotOwner) void captureAndAttachScreenshot(screenshotOwner);
+fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx:55:    onInsert(text);
+fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx:56:  }, [onInsert]);
+fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx:90:          <ClipboardTrigger onInsert={handleInsert} triggerVariant="submenu" />
+fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx:91:          <RecentFilesTrigger onInsert={handleInsert} triggerVariant="submenu" />
+fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx:21:import type { ScreenshotAttachmentOwner } from '../../screenshots/chatScreenshotCapture';
+fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx:78:  const screenshotOwner = useMemo<ScreenshotAttachmentOwner | null>(() => ownerReady ? {
+fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx:126:    useChatComposerDraftStore.getState().setDraft(workspaceId, threadId, text);
+fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx:153:      onInsertText={actions.onInsertText}
+fusion-studio-client/src/components/chat/chatSurfaceContract.ts:83:  onInsertText: (text: string) => void;
+fusion-studio-client/src/components/chat/useChatSessionActions.ts:32:import { dispatchChatAction } from '../../lib/chat-action';
+fusion-studio-client/src/components/chat/useChatSessionActions.ts:89:  const addPendingAttachment = useChatFileLinkStore((state) => state.addPendingAttachment);
+fusion-studio-client/src/components/chat/useChatSessionActions.ts:161:    addPendingAttachment(workspaceId, threadId, attachment);
+fusion-studio-client/src/components/chat/useChatSessionActions.ts:163:  }, [addPendingAttachment, focusInput, threadId, warmCurrentThread, workspaceId]);
+fusion-studio-client/src/components/chat/useChatSessionActions.ts:265:    const result = await dispatchChatAction({
+fusion-studio-client/src/components/chat/useChatSessionActions.ts:286:    onInsertText: handleInsertText,
+fusion-studio-client/src/components/chat/ChatAreaFooter.tsx:22:import type { ScreenshotAttachmentOwner } from '../../screenshots/chatScreenshotCapture';
+fusion-studio-client/src/components/chat/ChatAreaFooter.tsx:41:  onInsertText: (text: string) => void;
+fusion-studio-client/src/components/chat/ChatAreaFooter.tsx:53:  screenshotOwner: ScreenshotAttachmentOwner | null;
+fusion-studio-client/src/components/chat/ChatAreaFooter.tsx:72:  onInsertText,
+fusion-studio-client/src/components/chat/ChatAreaFooter.tsx:114:              onInsert={onInsertText}
+fusion-studio-client/src/components/chat/ChatAreaFooter.tsx:127:            <MicTrigger onInsert={onInsertText} />

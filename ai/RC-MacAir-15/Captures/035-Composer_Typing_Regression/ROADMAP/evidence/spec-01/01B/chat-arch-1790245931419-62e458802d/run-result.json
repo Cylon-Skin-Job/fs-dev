@@ -1,0 +1,32 @@
+{
+  "runId": "chat-arch-1790245931419-62e458802d",
+  "status": "failed",
+  "results": [
+    {
+      "id": "R8-OWNER-GRAPH",
+      "code": 0,
+      "signal": null,
+      "pid": 7128,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 117
+    },
+    {
+      "id": "R8-UI-LIFECYCLE",
+      "code": 1,
+      "signal": null,
+      "pid": 7152,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 38467
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "R8-UI-LIFECYCLE exited 1",
+    "stack": "Error: R8-UI-LIFECYCLE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:437:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

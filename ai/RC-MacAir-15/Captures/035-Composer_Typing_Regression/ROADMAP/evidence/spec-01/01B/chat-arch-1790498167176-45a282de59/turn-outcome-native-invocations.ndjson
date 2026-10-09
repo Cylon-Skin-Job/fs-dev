@@ -1,0 +1,14 @@
+{"mode":"denied","pid":95890,"auto":true,"claudeDisabled":true,"at":1790498171346}
+{"mode":"success","pid":96014,"auto":true,"claudeDisabled":true,"at":1790498172503}
+{"mode":"recovered","pid":96336,"auto":true,"claudeDisabled":true,"at":1790498175214}
+{"mode":"denied-only","pid":96667,"auto":true,"claudeDisabled":true,"at":1790498178226}
+{"mode":"tool-calls","pid":96756,"auto":true,"claudeDisabled":true,"at":1790498179036}
+{"mode":"pending","pid":96845,"auto":true,"claudeDisabled":true,"at":1790498179832}
+{"mode":"reasoning","pid":96927,"auto":true,"claudeDisabled":true,"at":1790498180630}
+{"mode":"empty","pid":97000,"auto":true,"claudeDisabled":true,"at":1790498181237}
+{"mode":"nonzero","pid":97069,"auto":true,"claudeDisabled":true,"at":1790498181816}
+{"mode":"compat-text","pid":97162,"auto":true,"claudeDisabled":true,"at":1790498182615}
+{"mode":"compat-tool","pid":97313,"auto":true,"claudeDisabled":true,"at":1790498183929}
+{"mode":"terminal-nonzero","pid":97538,"auto":true,"claudeDisabled":true,"at":1790498185904}
+{"mode":"duplicate","pid":97693,"auto":true,"claudeDisabled":true,"at":1790498187336}
+{"mode":"stop","pid":97837,"auto":true,"claudeDisabled":true,"at":1790498188669}

@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "R8-PRE-RECEIPT-UPGRADE",
+      "name": "Pre-receipt SQLite upgrade preserves null-view and view-bound history through authenticated route and restart"
+    },
+    {
+      "id": "R8-SESSION-LIFECYCLE",
+      "name": "R8 session create/open/warm/close/capacity and transactional faults through isolated public routes"
+    },
+    {
+      "id": "R5-DIAGNOSTIC-APPEND",
+      "name": "R5 actual diagnostic Ask AI append path preserves draft and does not auto-send"
+    },
+    {
+      "id": "R5-CURRENT-OWNER",
+      "name": "R5 exact current insert/send bridge across duplicate mounts"
+    }
+  ],
+  "fixture": "fresh disposable profile, migrated fusion.db, fresh empty Capture workspace",
+  "adapter": "canonical deterministic OpenCode iterator at 20 text frames/second",
+  "scenarioInventory": "R1-R9 concrete IDs and later owning contracts in scenario-inventory.mjs",
+  "enforcementGroup": [
+    "R1-STARTUP-F2-F3",
+    "R1-WARM-F2-F3",
+    "R1-SETTLED45-F2-F3",
+    "R1-DENSE-F2",
+    "R1-COMPOSER-INPUT",
+    "R1-COMPOSER-LOCALITY",
+    "R2-DISCONNECT-BEFORE-CLICK",
+    "R2-ENQUEUE-THROW-RACE",
+    "R3-LOST-ACK-STATUS",
+    "R3-RECONNECT-UI",
+    "R4-DISTINCT-ATTEMPTS",
+    "R4-DISTINCT-RECEIPTS",
+    "R4-DUPLICATE-MISMATCH",
+    "R4-LATE-DRAFT-RECOVERY",
+    "R5-FILE-ACTION",
+    "R5-WIKI-ACTION",
+    "R5-OFFICE-ACTION",
+    "R5-SYSTEM-PROMPT-NEW",
+    "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+    "R5-SOURCE-SWITCH",
+    "R5-TEXT-INSERT",
+    "R5-DIAGNOSTIC-APPEND",
+    "R5-NO-TARGET-CONSUMER",
+    "R6-PROMPT-UNMOUNT",
+    "R6-CREATE-RECONNECT",
+    "R6-UNRELATED-OPEN-LISTENERS",
+    "R6-PROMPT-CREATE-COMPLETION",
+    "R6-PRODUCTION-ACTION-OWNER",
+    "R7-STREAM-STOP-SAVE",
+    "R7-HISTORY-LIVE-OBSERVATION",
+    "R8-GROUP-BACKEND-MATRIX",
+    "R8-UI-LIFECYCLE",
+    "R8-EXACT-MEMBER-HYDRATION",
+    "R7-R8-RUNTIME-OWNERSHIP",
+    "R8-MIRROR-RECOVERY",
+    "R8-SESSION-LIFECYCLE",
+    "R8-PRE-RECEIPT-UPGRADE"
+  ]
+}

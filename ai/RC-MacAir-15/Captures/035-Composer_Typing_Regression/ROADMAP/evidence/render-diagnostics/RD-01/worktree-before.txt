@@ -1,0 +1,575 @@
+ M ai/RC-MacAir-15/Captures/001-Captures/machine-sync-sharing-model.md
+ M ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/ISSUES.md
+ M ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/ROADMAP-LEDGER.md
+ M ai/RC-MacAir-15/Captures/030-Plugin_System/capture-map.md
+ M ai/RC-MacAir-15/Captures/030-Plugin_System/changelog.md
+ M ai/RC-MacAir-15/Issues/content/tickets.json
+ M ai/RC-MacAir-15/Issues/inbox/RCC-0087.md
+ M ai/RC-MacAir-15/Issues/inbox/RCC-0089.md
+ M ai/RC-MacAir-15/Issues/inbox/RCC-0091.md
+ M ai/RC-MacAir-15/Issues/inbox/RCC-0092.md
+ M ai/RC-MacAir-15/Issues/inbox/RCC-0106.md
+ M ai/RC-MacAir-15/System/Views/001-capture-viewer/state/state.json
+ M ai/RC-MacAir-15/System/Views/002-file-viewer/state/state.json
+ M ai/RC-MacAir-15/System/config/cli.json
+ M ai/RC-MacAir-15/System/config/opencode-models.json
+ M ai/RC-MacAir-15/System/state/state.json
+ M ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/001-Style_Guide/PAGE.md
+ M ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/002-Creating_Wikis/PAGE.md
+ M ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/003-Updating_Wikis/PAGE.md
+ M ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/PAGE.md
+ M ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md
+ M ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md
+ M ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/001-Workspace_Paradigm/PAGE.md
+ M ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md
+ M ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/003-Adding_Workspaces/PAGE.md
+ M ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/000-Wiki_View/PAGE.md
+ M ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/006-Frontmatter_Model/PAGE.md
+ M ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/005-Browser/PAGE.md
+ M ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md
+ M ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/011-System_Manager/PAGE.md
+ M ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/012-Viewer_Search/PAGE.md
+ M ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/PAGE.md
+ M ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/014-Office_Viewer/PAGE.md
+ D ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/PAGE.md
+ M ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md
+ M ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md
+ M ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/PAGE.md
+ M ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md
+ M ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md
+ M ai/RC-MacAir-15/Wiki/005-Enforcement/002-Themes_And_State/PAGE.md
+ M ai/RC-MacAir-15/Wiki/006-System_Manager/001-Workspaces_&_Views/PAGE.md
+ M ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/PAGE.md
+ M ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md
+ M ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/PAGE.md
+ M ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md
+ M ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/001-Thread_Identity/PAGE.md
+ M ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/PAGE.md
+ M ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md
+ M ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/PAGE.md
+ M ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/PAGE.md
+ M ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/004-Stop_And_Interrupted_Turns/PAGE.md
+ M ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/005-Reply_Payloads/PAGE.md
+ M ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/PAGE.md
+ M ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md
+ M ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/002-Thread_Header/PAGE.md
+ M ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/PAGE.md
+ M ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/PAGE.md
+ M ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/001-Smoke_Tests/PAGE.md
+ M ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/003-Playwright_Electron/PAGE.md
+ M ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md
+ M ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md
+ M ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/002-Tool_Call_Provenance_Schema/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/007-UI_Action_And_Context_Provenance_Schema/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/008-Audit_Query_And_Review_Provenance_Schema/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/009-Assistant_Query_And_Review_Loops/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/001-Wiki_Viewer_UI_Context/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/002-File_Viewer_UI_Context/PAGE.md
+ M ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/PAGE.md
+ M fusion-studio-client/e2e/chat-component-registration.spec.ts
+ M fusion-studio-client/e2e/chat-surface-concurrency-smoke.mjs
+ M fusion-studio-client/e2e/chat-surface-identity.spec.ts
+ M fusion-studio-client/e2e/chat-surface-isolation.spec.ts
+ M fusion-studio-client/e2e/file-viewer-read-projection-source.spec.ts
+ M fusion-studio-client/e2e/move-chat-to-side-chat.spec.ts
+ M fusion-studio-client/e2e/office/fixture-lifecycle.mjs
+ M fusion-studio-client/e2e/office/fixture-lifecycle.test.mjs
+ M fusion-studio-client/e2e/office/global-setup.mjs
+ M fusion-studio-client/e2e/office/global-teardown.mjs
+ M fusion-studio-client/e2e/office/parent-lifecycle-watch.cjs
+ M fusion-studio-client/e2e/office/parent-lifecycle-watch.test.cjs
+ M fusion-studio-client/e2e/office/run-isolated-electron.mjs
+ M fusion-studio-client/e2e/prompt-ownership.slice-c.spec.ts
+ M fusion-studio-client/e2e/runtime-transport.spec.ts
+ M fusion-studio-client/e2e/side-chat-adapterless-native.spec.ts
+ M fusion-studio-client/e2e/side-chat-electron-smoke.mjs
+ M fusion-studio-client/e2e/side-chat-isolation.spec.ts
+ M fusion-studio-client/e2e/side-chat-placement-recovery.spec.ts
+ M fusion-studio-client/e2e/support/working-activity-ws-fixture.ts
+ M fusion-studio-client/e2e/thread-bootstrap-order.spec.ts
+ M fusion-studio-client/e2e/thread-worksurface-builtins.spec.ts
+ M fusion-studio-client/e2e/thread-worksurface-electron-smoke.mjs
+ M fusion-studio-client/e2e/thread-worksurface-restart.spec.ts
+ M fusion-studio-client/e2e/threaded-chat-host.spec.ts
+ M fusion-studio-client/e2e/worksurface-harness.ts
+ M fusion-studio-client/playwright.office.config.ts
+ M fusion-studio-client/src/components/App.tsx
+ M fusion-studio-client/src/components/ChatArea.css
+ M fusion-studio-client/src/components/ChatArea.tsx
+ M fusion-studio-client/src/components/ChatInput.tsx
+ M fusion-studio-client/src/components/ContentArea.tsx
+ M fusion-studio-client/src/components/InstantSegmentRenderer.tsx
+ M fusion-studio-client/src/components/LiveSegmentRenderer.tsx
+ M fusion-studio-client/src/components/MessageList.tsx
+ M fusion-studio-client/src/components/SendToChatButton.tsx
+ M fusion-studio-client/src/components/Sidebar.tsx
+ M fusion-studio-client/src/components/SystemViewer.tsx
+ M fusion-studio-client/src/components/ToolCallBlock.tsx
+ M fusion-studio-client/src/components/capture/CaptureTiles.tsx
+ M fusion-studio-client/src/components/chat/ChatAreaFooter.tsx
+ M fusion-studio-client/src/components/chat/ChatAreaHeader.tsx
+ M fusion-studio-client/src/components/chat/ChatDiagnosticDetails.tsx
+ M fusion-studio-client/src/components/chat/ChatLinkAttachments.tsx
+ M fusion-studio-client/src/components/chat/ChatSurface.tsx
+ M fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx
+ D fusion-studio-client/src/components/chat/LegacyChatHost.tsx
+ M fusion-studio-client/src/components/chat/ThreadRail.tsx
+ M fusion-studio-client/src/components/chat/ViewChatHost.tsx
+ D fusion-studio-client/src/components/chat/ViewWorksurfaceDock.css
+ D fusion-studio-client/src/components/chat/ViewWorksurfaceDock.tsx
+ M fusion-studio-client/src/components/chat/chatSurfaceContract.ts
+ M fusion-studio-client/src/components/chat/chatSurfaceRegistrationContract.ts
+ D fusion-studio-client/src/components/chat/useLegacyChatHost.ts
+ M fusion-studio-client/src/components/chat/useViewChatHost.ts
+ M fusion-studio-client/src/components/email/EmailGrid.tsx
+ M fusion-studio-client/src/components/file-explorer/FileExplorer.tsx
+ M fusion-studio-client/src/components/office/OfficeGrid.tsx
+ D fusion-studio-client/src/components/sidebar/useSidebar.ts
+ M fusion-studio-client/src/components/wiki/WikiExplorer.tsx
+ M fusion-studio-client/src/lib/chat-action.ts
+ M fusion-studio-client/src/lib/icon-registry.ts
+ M fusion-studio-client/src/lib/runtime-transport.ts
+ M fusion-studio-client/src/lib/worksurface/sideChatViews.ts
+ M fusion-studio-client/src/lib/worksurface/worksurfaceController.ts
+ M fusion-studio-client/src/lib/worksurface/worksurfaceFrames.ts
+ M fusion-studio-client/src/lib/ws-client.ts
+ M fusion-studio-client/src/lib/ws/activity-stream-handler.ts
+ M fusion-studio-client/src/lib/ws/snapshot-restore.ts
+ M fusion-studio-client/src/lib/ws/stream-handlers.ts
+ M fusion-studio-client/src/lib/ws/thread-handlers.ts
+ M fusion-studio-client/src/lib/ws/turn-lifecycle.ts
+ M fusion-studio-client/src/lib/ws/workspace-handlers.ts
+ M fusion-studio-client/src/state/chatComposerDraftStore.ts
+ M fusion-studio-client/src/state/chatFileLinkStore.ts
+ M fusion-studio-client/src/state/panelStore.ts
+ M fusion-studio-client/src/state/panelStoreTypes.ts
+ M fusion-studio-client/src/state/slices/chatSlice.ts
+ M fusion-studio-client/src/state/slices/chatSurfaceSlice.ts
+ M fusion-studio-client/src/state/slices/worksurfaceSlice.ts
+ M fusion-studio-client/src/types/chat.ts
+ M fusion-studio-client/src/types/websocket.ts
+ M fusion-studio-server/lib/event-bus.js
+ M fusion-studio-server/lib/harness/child-environment.js
+ M fusion-studio-server/lib/harness/opencode/failure-marker-builder.js
+ M fusion-studio-server/lib/harness/opencode/index.js
+ M fusion-studio-server/lib/startup.js
+ M fusion-studio-server/lib/thread-groups/delete-service.js
+ M fusion-studio-server/lib/thread-groups/link-service.js
+ M fusion-studio-server/lib/thread-groups/member-service.js
+ M fusion-studio-server/lib/thread-groups/move-service.js
+ M fusion-studio-server/lib/thread-groups/placement-delivery.js
+ M fusion-studio-server/lib/thread-groups/repository.js
+ M fusion-studio-server/lib/thread-groups/selection-service.js
+ M fusion-studio-server/lib/thread-groups/service.js
+ M fusion-studio-server/lib/thread/HistoryFile.js
+ M fusion-studio-server/lib/thread/ThreadIndex.js
+ M fusion-studio-server/lib/thread/ThreadManager.js
+ M fusion-studio-server/lib/thread/ThreadWebSocketHandler.js
+ M fusion-studio-server/lib/thread/canonical-drain-context.js
+ M fusion-studio-server/lib/thread/session-manager.js
+ M fusion-studio-server/lib/thread/thread-crud.js
+ M fusion-studio-server/lib/thread/thread-messages.js
+ M fusion-studio-server/lib/thread/thread-runtime-automation.js
+ M fusion-studio-server/lib/thread/thread-runtime-controller.js
+ M fusion-studio-server/lib/thread/thread-runtime-manager.js
+ M fusion-studio-server/lib/wire/wire-broadcaster.js
+ M fusion-studio-server/lib/ws/client-message-router.js
+ M fusion-studio-server/lib/ws/thread-ws-handlers.js
+ M fusion-studio-server/test/event-registry/migration.test.js
+ M fusion-studio-server/test/fusion/system-wiki-view-path-migration.test.js
+ M fusion-studio-server/test/harness/child-environment.test.js
+ M fusion-studio-server/test/harness/opencode/harness-send-message.test.js
+ M fusion-studio-server/test/thread/audit-subscriber-chatlog-finalize.test.js
+ M fusion-studio-server/test/thread/session-manager.test.js
+ M fusion-studio-server/test/thread/thread-activation-lifecycle.test.js
+ M fusion-studio-server/test/thread/thread-crud-active-turn-reconnect.test.js
+ M fusion-studio-server/test/thread/thread-crud-cli-policy.test.js
+ M fusion-studio-server/test/thread/thread-group-delete-recovery.test.js
+ M fusion-studio-server/test/thread/thread-group-lifecycle.test.js
+ M fusion-studio-server/test/thread/thread-group-migration.test.js
+ M fusion-studio-server/test/thread/thread-group-placement-outbox-migration.test.js
+ M fusion-studio-server/test/thread/thread-group-worksurface-cleanup-migration.test.js
+ M fusion-studio-server/test/thread/thread-manager-chatlog-path.test.js
+ M fusion-studio-server/test/thread/thread-manager-chatlog-sync.test.js
+ M fusion-studio-server/test/thread/thread-messages.test.js
+ M fusion-studio-server/test/thread/thread-runtime-automation.test.js
+ M fusion-studio-server/test/thread/thread-runtime-controller.test.js
+ M fusion-studio-server/test/views/view-relocation-journal.test.js
+ M fusion-studio-server/test/ws/client-message-router.test.js
+ M fusion-studio-server/test/ws/privileged-thread-handlers.test.js
+ M fusion-studio-server/test/ws/privileged-thread-persistence.integration.test.js
+ M fusion-studio-server/test/ws/privileged-thread-public-route.integration.test.js
+ M fusion-studio-server/test/ws/prompt-canonical-route.integration.test.js
+ M fusion-studio-server/test/ws/thread-group-move-side-chat.integration.test.js
+ M fusion-studio-server/test/ws/thread-group-worksurface-cleanup.integration.test.js
+?? ai/RC-MacAir-15/Captures/001-Captures/2026-09-21-issue-ticket-triage-round-1.md
+?? ai/RC-MacAir-15/Captures/001-Captures/2026-09-21-symlinks-send-to-chat-investigation.md
+?? ai/RC-MacAir-15/Captures/001-Captures/chat-packet-role-handoff-2026-09-14.md
+?? ai/RC-MacAir-15/Captures/001-Captures/fusion-server-knowledge-sync-and-instance-identity.md
+?? ai/RC-MacAir-15/Captures/001-Captures/session-handoff-2026-09-18.md
+?? ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/SPEC-12-HARNESS-LIFETIME-AND-RESOURCE-BOUNDS.md
+?? ai/RC-MacAir-15/Captures/009-Office-Editor-Temp/SPEC-12-IMPLEMENTATION-REPORT.md
+?? ai/RC-MacAir-15/Captures/031-Remote_Access/
+?? ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/
+?? ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/
+?? ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/
+?? ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/
+?? ai/RC-MacAir-15/Captures/037-Plugin_Integration_And_Parallel_Roadmaps/
+?? ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/
+?? ai/RC-MacAir-15/Captures/039-Mission_Control_Master_Vision/
+?? ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/.versions/2026-09-21-062734.md
+?? ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/.versions/2026-09-21-062824.md
+?? ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/.versions/2026-09-21-063002.md
+?? ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/.versions/2026-09-21-063723.md
+?? ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/.versions/2026-09-23-065012.md
+?? ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/.versions/2026-09-23-065033.md
+?? ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/.versions/2026-09-23-065040.md
+?? ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/001-Style_Guide/.versions/2026-09-19-033208.md
+?? ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/001-Style_Guide/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/002-Creating_Wikis/.versions/2026-09-19-033208.md
+?? ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/002-Creating_Wikis/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/003-Updating_Wikis/.versions/2026-09-19-033208.md
+?? ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/003-Updating_Wikis/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/.versions/2026-09-19-033208.md
+?? ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/.versions/2026-09-21-062744.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/.versions/2026-09-21-052454.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/.versions/2026-09-21-062824.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/.versions/2026-09-21-063001.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/.versions/2026-09-21-063722.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/.versions/2026-09-23-063439.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/.versions/2026-09-23-065039.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/001-Workspace_Paradigm/.versions/2026-09-21-053148.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/001-Workspace_Paradigm/.versions/2026-09-21-063001.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/001-Workspace_Paradigm/.versions/2026-09-21-063722.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/.versions/2026-09-21-053157.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/.versions/2026-09-21-063001.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/.versions/2026-09-21-063722.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/.versions/2026-09-23-063439.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/.versions/2026-09-23-065039.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/003-Adding_Workspaces/.versions/2026-09-21-053201.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/003-Adding_Workspaces/.versions/2026-09-21-053432.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/003-Adding_Workspaces/.versions/2026-09-21-053904.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/003-Adding_Workspaces/.versions/2026-09-21-063001.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/003-Adding_Workspaces/.versions/2026-09-21-063659.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/003-Adding_Workspaces/.versions/2026-09-21-063722.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/000-Wiki_View/.versions/2026-09-21-061254.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/000-Wiki_View/.versions/2026-09-21-061313.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/000-Wiki_View/.versions/2026-09-21-063001.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/000-Wiki_View/.versions/2026-09-21-063722.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/006-Frontmatter_Model/.versions/2026-09-19-033208.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/006-Frontmatter_Model/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/005-Browser/.versions/2026-09-21-061254.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/005-Browser/.versions/2026-09-21-061313.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/005-Browser/.versions/2026-09-21-063001.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/005-Browser/.versions/2026-09-21-063722.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/.versions/2026-09-21-061254.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/.versions/2026-09-21-061313.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/.versions/2026-09-21-061515.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/.versions/2026-09-21-061916.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/.versions/2026-09-21-063001.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/.versions/2026-09-21-063722.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/.versions/2026-09-23-063439.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/.versions/2026-09-23-065040.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/008-Agent_View/
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/009-Issues_View/
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/011-System_Manager/.versions/2026-09-21-054717.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/011-System_Manager/.versions/2026-09-21-063001.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/011-System_Manager/.versions/2026-09-21-063722.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/012-Viewer_Search/.versions/2026-09-21-054717.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/012-Viewer_Search/.versions/2026-09-21-055341.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/012-Viewer_Search/.versions/2026-09-21-063001.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/012-Viewer_Search/.versions/2026-09-21-063722.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/.versions/2026-09-19-021443.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/.versions/2026-09-21-054717.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/.versions/2026-09-21-054752.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/.versions/2026-09-21-055341.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/.versions/2026-09-21-055758.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/.versions/2026-09-21-063001.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/.versions/2026-09-21-063723.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/014-Office_Viewer/.versions/2026-09-21-061254.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/014-Office_Viewer/.versions/2026-09-21-061313.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/014-Office_Viewer/.versions/2026-09-21-063001.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/014-Office_Viewer/.versions/2026-09-21-063723.md
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/015-Capture_View/
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/016-Calendar_View/
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/017-Email_View/
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/018-Contacts_View/
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/019-Library_View/
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/020-Media_View/
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/023-View_Catalog/
+?? ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/024-Developer_Map/
+?? ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-09-19-025843.md
+?? ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-09-19-040021.md
+?? ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-09-21-054717.md
+?? ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-09-21-054914.md
+?? ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-09-21-063002.md
+?? ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-09-21-063723.md
+?? ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/.versions/2026-09-21-054717.md
+?? ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/.versions/2026-09-21-055758.md
+?? ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/.versions/2026-09-21-063002.md
+?? ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/.versions/2026-09-21-063723.md
+?? ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/.versions/2026-09-19-031038.md
+?? ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/.versions/2026-09-19-032540.md
+?? ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/.versions/2026-09-19-040021.md
+?? ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/.versions/2026-09-19-025843.md
+?? ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/.versions/2026-09-19-040021.md
+?? ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/.versions/2026-09-21-054717.md
+?? ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/.versions/2026-09-21-063002.md
+?? ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/.versions/2026-09-21-063723.md
+?? ai/RC-MacAir-15/Wiki/005-Enforcement/002-Themes_And_State/.versions/2026-09-21-054717.md
+?? ai/RC-MacAir-15/Wiki/005-Enforcement/002-Themes_And_State/.versions/2026-09-21-063002.md
+?? ai/RC-MacAir-15/Wiki/005-Enforcement/002-Themes_And_State/.versions/2026-09-21-063723.md
+?? ai/RC-MacAir-15/Wiki/006-System_Manager/001-Workspaces_&_Views/.versions/2026-09-21-062735.md
+?? ai/RC-MacAir-15/Wiki/006-System_Manager/001-Workspaces_&_Views/.versions/2026-09-21-063002.md
+?? ai/RC-MacAir-15/Wiki/006-System_Manager/001-Workspaces_&_Views/.versions/2026-09-21-063723.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/.versions/2026-09-19-020136.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/.versions/2026-09-19-022019.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/.versions/2026-09-19-022758.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/.versions/2026-09-19-024336.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/.versions/2026-09-19-020136.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/.versions/2026-09-19-022758.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/001-Vision/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-013212.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-013652.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-020136.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-022019.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-022758.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-023606.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/.versions/2026-09-19-013212.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/.versions/2026-09-19-013652.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/.versions/2026-09-19-023606.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/004-Changelog/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/.versions/2026-09-19-020136.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/.versions/2026-09-19-020824.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/001-Thread_Identity/.versions/2026-09-19-020136.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/001-Thread_Identity/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/.versions/2026-09-19-024336.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/.versions/2026-09-19-021443.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/.versions/2026-09-19-022019.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/.versions/2026-09-19-024336.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/.versions/2026-09-19-020824.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/.versions/2026-09-19-021443.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/.versions/2026-09-19-023606.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/.versions/2026-09-19-024336.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/005-Reply_Payloads/.versions/2026-09-19-023606.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/005-Reply_Payloads/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-013212.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-013652.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-022758.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-023606.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-024336.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/.versions/2026-09-19-023606.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/002-Thread_Header/.versions/2026-09-19-022758.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/002-Thread_Header/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/.versions/2026-09-19-021443.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/.versions/2026-09-19-022758.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/.versions/2026-09-19-024336.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/005-Menus_And_Modals/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/.versions/2026-09-19-024336.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/001-Smoke_Tests/.versions/2026-09-19-023606.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/001-Smoke_Tests/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/003-Playwright_Electron/.versions/2026-09-19-024336.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/003-Playwright_Electron/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-020136.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-020824.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-022019.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-022758.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-024336.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/.versions/2026-09-19-022758.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/.versions/2026-09-19-023606.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/.versions/2026-09-19-024336.md
+?? ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/.versions/2026-09-19-033431.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-09-19-025843.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-09-19-030133.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-09-19-040021.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/.versions/2026-09-19-025843.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/.versions/2026-09-19-040021.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/.versions/2026-09-19-025843.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/.versions/2026-09-19-030133.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/.versions/2026-09-19-040021.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/.versions/2026-09-19-031038.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/.versions/2026-09-19-040021.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/.versions/2026-09-19-031038.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/.versions/2026-09-19-040021.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/.versions/2026-09-19-031038.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/.versions/2026-09-19-032620.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/.versions/2026-09-19-040021.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/.versions/2026-09-19-033554.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/002-Tool_Call_Provenance_Schema/.versions/2026-09-19-033554.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/002-Tool_Call_Provenance_Schema/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/.versions/2026-09-19-032330.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/.versions/2026-09-19-040021.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/.versions/2026-09-19-031038.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/.versions/2026-09-19-040021.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/.versions/2026-09-19-032330.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/.versions/2026-09-19-040021.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/.versions/2026-09-19-034705.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/.versions/2026-09-19-034812.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/007-UI_Action_And_Context_Provenance_Schema/.versions/2026-09-19-034705.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/007-UI_Action_And_Context_Provenance_Schema/.versions/2026-09-19-034812.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/007-UI_Action_And_Context_Provenance_Schema/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/008-Audit_Query_And_Review_Provenance_Schema/.versions/2026-09-19-034705.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/008-Audit_Query_And_Review_Provenance_Schema/.versions/2026-09-19-034812.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/008-Audit_Query_And_Review_Provenance_Schema/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/.versions/2026-09-19-031038.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/.versions/2026-09-19-031209.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/.versions/2026-09-19-040021.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/.versions/2026-09-19-032330.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/.versions/2026-09-19-040021.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/.versions/2026-09-19-032330.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/.versions/2026-09-19-040021.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/.versions/2026-09-19-032330.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/.versions/2026-09-19-032540.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/.versions/2026-09-19-040021.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/.versions/2026-09-19-040308.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/.versions/2026-09-19-034705.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/.versions/2026-09-19-034812.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/009-Assistant_Query_And_Review_Loops/.versions/2026-09-19-033554.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/009-Assistant_Query_And_Review_Loops/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-031038.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-031102.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-031421.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-040021.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/.versions/2026-09-19-034705.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/.versions/2026-09-19-034812.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/001-Wiki_Viewer_UI_Context/.versions/2026-09-19-034705.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/001-Wiki_Viewer_UI_Context/.versions/2026-09-19-034812.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/001-Wiki_Viewer_UI_Context/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/002-File_Viewer_UI_Context/.versions/2026-09-19-034705.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/002-File_Viewer_UI_Context/.versions/2026-09-19-034812.md
+?? ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/002-File_Viewer_UI_Context/.versions/2026-09-19-045220.md
+?? ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/
+?? ai/RC-MacAir-15/mission-control/
+?? fusion-studio-client/e2e/app-composition-keys.spec.ts
+?? fusion-studio-client/e2e/chat-architecture/
+?? fusion-studio-client/e2e/composer-latency-probe.mjs
+?? fusion-studio-client/e2e/composer-regression-probe.mjs
+?? fusion-studio-client/e2e/foreground-failure-evidence.spec.ts
+?? fusion-studio-client/e2e/human-session-observer.spec.ts
+?? fusion-studio-client/e2e/icon-registry.spec.ts
+?? fusion-studio-client/e2e/instant-collapse.spec.ts
+?? fusion-studio-client/e2e/native-composition-control.spec.ts
+?? fusion-studio-client/e2e/office/harness-bounds.mjs
+?? fusion-studio-client/e2e/soak-observation.spec.ts
+?? fusion-studio-client/e2e/system-viewer-action-outcome.spec.ts
+?? fusion-studio-client/e2e/view-bound-shell-smoke.mjs
+?? fusion-studio-client/e2e/watched-pointer.spec.ts
+?? fusion-studio-client/e2e/watched-trace.spec.ts
+?? fusion-studio-client/playwright.chat-architecture.config.ts
+?? fusion-studio-client/src/components/WorkspacePanel.tsx
+?? fusion-studio-client/src/components/chat/ChatSessionHost.tsx
+?? fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx
+?? fusion-studio-client/src/components/chat/ConnectedChatHeader.tsx
+?? fusion-studio-client/src/components/chat/ConnectedChatHistory.tsx
+?? fusion-studio-client/src/components/chat/ThreadRailRowMenu.tsx
+?? fusion-studio-client/src/components/chat/useChatMountInteractions.ts
+?? fusion-studio-client/src/components/chat/useChatSessionActions.ts
+?? fusion-studio-client/src/components/chat/useChatSessionHost.ts
+?? fusion-studio-client/src/lib/chat-action-controller.ts
+?? fusion-studio-client/src/lib/chat-action-creation.ts
+?? fusion-studio-client/src/lib/chat/message-revisions.ts
+?? fusion-studio-client/src/lib/chat/prompt-submission-recovery.ts
+?? fusion-studio-client/src/lib/chat/thread-group-command-controller.ts
+?? fusion-studio-client/src/lib/composition-key.ts
+?? fusion-studio-client/src/lib/worksurface/worksurfaceDeletion.ts
+?? fusion-studio-client/src/lib/ws/thread-history.ts
+?? fusion-studio-client/src/lib/ws/thread-markdown.ts
+?? fusion-studio-client/src/state/chatSubmissionStore.ts
+?? fusion-studio-server/data/backups/
+?? fusion-studio-server/lib/db/migrations/045_prompt_submission_receipts.js
+?? fusion-studio-server/lib/harness/opencode/session-retirement.js
+?? fusion-studio-server/lib/harness/opencode/turn-outcome.js
+?? fusion-studio-server/lib/thread-groups/action-result-repository.js
+?? fusion-studio-server/lib/thread-groups/delete-transaction.js
+?? fusion-studio-server/lib/thread-groups/mirror-repository.js
+?? fusion-studio-server/lib/thread-groups/projection-outbox-repository.js
+?? fusion-studio-server/lib/thread-groups/session-transactions.js
+?? fusion-studio-server/lib/thread-groups/startup-reconciliation.js
+?? fusion-studio-server/lib/thread/automation-drain.js
+?? fusion-studio-server/lib/thread/automation-runtime-activation.js
+?? fusion-studio-server/lib/thread/automation-turn-context.js
+?? fusion-studio-server/lib/thread/chatlog-mirror.js
+?? fusion-studio-server/lib/thread/mirror-journal.js
+?? fusion-studio-server/lib/thread/prompt-submission-repository.js
+?? fusion-studio-server/lib/thread/prompt-submission-service.js
+?? fusion-studio-server/lib/thread/provider-termination.js
+?? fusion-studio-server/lib/thread/runtime-activation.js
+?? fusion-studio-server/lib/thread/runtime-dispatch.js
+?? fusion-studio-server/lib/thread/runtime-identity.js
+?? fusion-studio-server/lib/thread/runtime-prompt-admission.js
+?? fusion-studio-server/lib/thread/runtime-response.js
+?? fusion-studio-server/lib/thread/runtime-session-activation.js
+?? fusion-studio-server/lib/thread/runtime-session-binding.js
+?? fusion-studio-server/lib/thread/runtime-stop.js
+?? fusion-studio-server/lib/thread/session-lifecycle.js
+?? fusion-studio-server/lib/thread/session-metadata.js
+?? fusion-studio-server/lib/thread/session-repository.js
+?? fusion-studio-server/lib/thread/thread-open-handler.js
+?? fusion-studio-server/lib/thread/turn-application-context.js
+?? fusion-studio-server/lib/wire/terminal-saved-delivery.js
+?? fusion-studio-server/lib/ws/thread-action-handler.js
+?? fusion-studio-server/lib/ws/thread-action-protocol.js
+?? fusion-studio-server/lib/ws/thread-provider-binding.js
+?? fusion-studio-server/test/harness/opencode/turn-outcome.test.js
+?? fusion-studio-server/test/thread/exited-drain-retirement.test.js
+?? fusion-studio-server/test/thread/provider-termination.test.js
+?? fusion-studio-server/test/thread/stop-timeout-recovery.test.js
+?? fusion-studio-server/test/thread/thread-panel-rebind.test.js
+?? fusion-studio-server/test/ws/prompt-submission-recovery.integration.test.js

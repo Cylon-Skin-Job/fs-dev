@@ -1,0 +1,22 @@
+{
+  "runId": "chat-arch-1790242729832-0d3149ed38",
+  "status": "failed",
+  "results": [
+    {
+      "id": "R7-R8-RUNTIME-OWNERSHIP",
+      "code": 1,
+      "signal": null,
+      "pid": 99434,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 2250
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "R7-R8-RUNTIME-OWNERSHIP exited 1",
+    "stack": "Error: R7-R8-RUNTIME-OWNERSHIP exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:422:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

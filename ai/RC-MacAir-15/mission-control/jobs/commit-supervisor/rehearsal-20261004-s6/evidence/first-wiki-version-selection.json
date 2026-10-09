@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-04T15:09:36.582459+00:00",
+  "actual_local_selection_time": "2026-10-04T08:09:36.581815-07:00",
+  "local_zone": "PDT",
+  "exact_candidate_relative_leaf": "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-080936.md",
+  "pre_creation_exists": false,
+  "job_created": true,
+  "union_owned_leaf_count": 129,
+  "union_job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/first-wiki-1",
+  "original_manifest_unchanged": {
+    "exists": true,
+    "sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb",
+    "mode": "0o100444",
+    "kind": "file"
+  },
+  "creation_authority": "Wiki leaf only after public immutable union capture and verify"
+}

@@ -1,0 +1,117 @@
+{
+  "caseId": "R4-DISTINCT-ATTEMPTS",
+  "status": "blocked",
+  "authenticatedShell": true,
+  "startupPanelRetry": 0,
+  "fixture": "F4",
+  "owner": "SPEC-02/02A",
+  "missingContracts": [
+    "request-id"
+  ],
+  "assertionsEvaluated": false,
+  "statusEndpointFabricated": false,
+  "promptContentRecorded": false,
+  "submittedSnapshotSha256": "f2c9a406bae531a92687f3fc2d6f0438f317dd40637a1a18c11668d62edb9cd0",
+  "revisedDraftSha256": "88158b129557cf9182e184bb48c5fc5747087e838b790bd2652428ac09d2dd36",
+  "transport": {
+    "sentTypes": {
+      "shell-auth:proof": 1,
+      "office:palette_get": 1,
+      "state:get": 1,
+      "thread:list": 7,
+      "screenshot:list": 1,
+      "file_content_request": 53,
+      "set_panel": 1,
+      "file_tree_request": 64,
+      "state:set": 5,
+      "thread:open-assistant": 1,
+      "thread:open": 1,
+      "state:worksurface_get": 1,
+      "thread:warm": 2,
+      "prompt": 2,
+      "screenshot:capture": 1,
+      "screenshot:request": 1
+    },
+    "receivedTypes": {
+      "shell-auth:challenge": 1,
+      "connected": 1,
+      "workspace:init": 1,
+      "panel_config": 1,
+      "shell-auth:authenticated": 1,
+      "thread:list": 10,
+      "screenshot:list": 1,
+      "panel_changed": 1,
+      "file_content_response": 53,
+      "office:palette_state": 1,
+      "state:result": 6,
+      "file_tree_response": 64,
+      "thread:created": 1,
+      "thread:opened": 2,
+      "state:worksurface_result": 1,
+      "wire_ready": 1,
+      "message:sent": 2,
+      "turn_begin": 2,
+      "thread:state_changed": 4,
+      "step_begin": 2,
+      "thinking": 2,
+      "tool_call": 2,
+      "tool_call_args": 2,
+      "tool_result": 2,
+      "status_update": 2,
+      "content": 6,
+      "turn_end": 2,
+      "exchange_metadata": 2,
+      "chat-turn:saved": 2,
+      "screenshot:updated": 1,
+      "screenshot:data": 1
+    },
+    "promptRequestIds": [
+      null,
+      null
+    ],
+    "acceptanceRequestIds": [
+      null,
+      null
+    ],
+    "statusRequests": []
+  },
+  "observations": {
+    "requestIdsPresent": [
+      false,
+      false
+    ],
+    "persistence": {
+      "exchangeCount": 2,
+      "activityCount": 2,
+      "activityTurnIds": [
+        "9d7407f5-948f-4659-bbd0-dfdb097286e7",
+        "b0490777-8d02-4acd-a64c-cf4b404f99f3"
+      ],
+      "receiptTables": [],
+      "receiptRows": 0
+    },
+    "providerDispatchCount": 2,
+    "acceptedTurnIds": [
+      [
+        null,
+        null
+      ],
+      [
+        null,
+        null
+      ]
+    ],
+    "lateAckUi": {
+      "draftRetained": true,
+      "userBubbleCount": 3
+    }
+  },
+  "violations": [],
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": null
+}

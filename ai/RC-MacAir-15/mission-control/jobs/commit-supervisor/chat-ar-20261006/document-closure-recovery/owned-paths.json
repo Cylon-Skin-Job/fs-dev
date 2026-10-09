@@ -1,0 +1,1299 @@
+{
+  "owner": "/root",
+  "conflicting_writers": [],
+  "source_repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "paths": [
+    {
+      "path": "ai/RC-MacAir-15/Captures/031-Remote_Access/Browser-MVP-2026-09-19/SOURCE-SNAPSHOT.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/031-Remote_Access/Browser-MVP-2026-09-19/artifact-hashes.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/BASELINE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/EXECUTION-BASELINE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/PART-01-CHECKS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/PART-01-SNAPSHOTS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/PART-02-CHECKS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/PART-02-SNAPSHOTS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/PART-03-CHECKS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/PART-03-SNAPSHOTS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/PART-04-CHECKS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/PART-04-SNAPSHOTS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/PART-05-CHECKS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/PART-05-SNAPSHOTS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/PART-06-CHECKS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/PART-06-SNAPSHOTS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/PART-06-SOURCE-AUDIT.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/PART-07-CHECKS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/PART-07-SNAPSHOTS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/PART-07-SWEEP.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/TIMESTAMP-UPDATE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/verify-part-00.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/verify-part-01.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/verify-part-02.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/verify-part-03.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/verify-part-04.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/verify-part-05.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/verify-part-06.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/033-Chat_Wiki_Reconciliation/verify-part-07.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/BASELINE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/CANDIDATE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/EXECUTION-BASELINE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/FINAL-ARTICLE-HASHES.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/PAGE-MAP.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S00-CHECKS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S00-FILE-MANIFEST.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S00-INPUT-INVENTORY.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S01-CHANGE-MANIFEST.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S01-CHECKS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S01-FILE-MANIFEST.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S01-PAGES.diff",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S01-SOURCE-EVIDENCE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S02-CHANGE-MANIFEST.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S02-CHECKS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S02-FILE-MANIFEST.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S02-PAGES.diff",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S02-SOURCE-EVIDENCE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S03-CHANGE-MANIFEST.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S03-CHECKS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S03-FILE-MANIFEST.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S03-PAGES.diff",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S03-RUN-LOG.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S03-SOURCE-EVIDENCE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S03-SUPPLEMENT-MANIFEST.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S04-ANCHOR-CHECK.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S04-CHANGE-MANIFEST.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S04-CHECKS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S04-FILE-MANIFEST.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S04-PAGES.diff",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S04-RUN-LOG.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S04-SOURCE-EVIDENCE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S04-SUPPLEMENT-MANIFEST.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S05-CHANGE-MANIFEST.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S05-CHECKS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S05-FILE-MANIFEST.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S05-PAGES.diff",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S05-RUN-LOG.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S05-SOURCE-EVIDENCE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S05-SUPPLEMENT-MANIFEST.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S06-CHANGE-MANIFEST.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S06-CHECKS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S06-DISPOSITIONS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S06-FILE-MANIFEST.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S06-PAGES.diff",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S06-SOURCE-EVIDENCE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/S06-SUPPLEMENT-MANIFEST.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/TIMESTAMP-UPDATE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/TIMESTAMP-VERIFICATION.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s00-inventory.cjs",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s00-verify.cjs",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s01-verify.cjs",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s02-evidence.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s02-verify.cjs",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s02-write.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s03-evidence.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s03-verify.cjs",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s03-write.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s04-evidence.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s04-verify.cjs",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s04-write.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s05-evidence.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s05-repair.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s05-verify.cjs",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s05-write.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s06-evidence.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s06-manifest.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s06-verify.cjs",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/034-Provenance_Wiki_Reconciliation/s06-write.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/BASELINE-LINKS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/BASELINE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/CLAIMS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/EDIT-RECEIPTS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/PAGE-MAP.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/PREPARATION-CHECKS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/PROFILE-CENSUS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/S01-PENDING-LINKS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/S05-NAVIGATION.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/S05-RETIREMENT.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/SOURCES.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/TEMPLATE-CENSUS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/TIMESTAMP-RECEIPT-PRE-REPAIR.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/TIMESTAMP-RECEIPT.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T115421055594Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T115421846923Z-baseline.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T115450501866Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T115453312757Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T115645612870Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T115645665918Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T115730396354Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T115730449322Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T115733058789Z-baseline.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T120239052244Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T120239118247Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T120402844674Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T120402898689Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T120420451438Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T120420521629Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T120430034817Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T120430088930Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T120812066829Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T120812183369Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T120905300105Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T120905516033Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T121134647555Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T121134737163Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T121152253959Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T121152341727Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T121320895213Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T121320980227Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T121535702171Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T121535817394Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T121649246421Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T121649471860Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T121837654709Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T121837708769Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T121944781565Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T121944835087Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T122106906112Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T122107013237Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T122152507913Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T122152721124Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T122515680314Z-slice-S01.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T122515831209Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T122843389150Z-slice-S01.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T122907728091Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T123207291436Z-slice-S02.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T123301263648Z-slice-S02.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T123301435554Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T123356217106Z-slice-S02.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T123446291720Z-slice-S02.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T123539978722Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T123915347417Z-slice-S02.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T123926756409Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T124308609708Z-slice-S02.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T124720718745Z-slice-S03.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T124854658690Z-slice-S03.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T124854942630Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T124928016664Z-slice-S03.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T124928300840Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T125353373743Z-slice-S03.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T125353656201Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T125806435181Z-slice-S03.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T125806724217Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T130228867810Z-slice-S03.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T130332983840Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T130429179894Z-slice-S03.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T130429467689Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T130836139763Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T130836216791Z-slice-S03.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T131303058388Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T131303121267Z-slice-S04.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T131318184758Z-slice-S04.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T131428624845Z-slice-S04.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T131521379782Z-slice-S04.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T131925045032Z-slice-S04.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T132233950889Z-slice-S04.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T132345979862Z-slice-S04.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T132756412051Z-slice-S05.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T132834488630Z-final.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T132935403267Z-final.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T133006488078Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T133010456732Z-final.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T133238345399Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T133242310702Z-final.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T133740259405Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T133744386695Z-final.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T134157053421Z-final.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T134643777979Z-final.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T134649711423Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T134855852766Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T134900315420Z-final.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T134909833974Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/runs/20260921T134914298584Z-final.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/s05-navigation.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/s05-stamp.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/validate-wiki.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/036-Workspaces_And_Views_Wiki/wiki-edit.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/ADDITIONAL-SOURCES.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/BASELINE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/CLAIMS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/COVERAGE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/EDIT-RECEIPTS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/FINAL-RECEIPT.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/NAVIGATION-BASELINE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/ORCHESTRATOR-FINAL-BYTES.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/PAGE-MAP.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S00-FINAL-RECEIPT.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S00-OUTPUTS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S01-HYGIENE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S01-OUTPUTS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S01-SOURCE-INSPECTION.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S01-WRITES.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S02-HYGIENE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S02-OUTPUTS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S02-SOURCE-INSPECTION.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S02-WRITES.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S03-HYGIENE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S03-LIFECYCLE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S03-OUTPUTS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S03-SOURCE-INSPECTION.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S03-WRITES.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-FINAL-RECEIPT.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-HYGIENE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-LIFECYCLE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-OUTPUTS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-PROPOSALS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-PROSE-DIFF.patch",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-SOURCE-INSPECTION.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S04-WRITES.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S05-FINAL-RECEIPT.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S05-HYGIENE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S05-LIFECYCLE.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S05-OUTPUTS.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S05-PREIMAGES.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S05-PROSE-DIFF.patch",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S05-SOURCE-INSPECTION.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/S05-WRITES.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/SOURCES.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/TIMESTAMP-RECEIPT.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T123855532635Z-baseline.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T123855865454Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T123855922045Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124000190763Z-navigation.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124000227804Z-baseline.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124000466723Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124000572378Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124115759783Z-writer-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124115998778Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124116103639Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124215785986Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124216303245Z-writer-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124216408461Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124401499254Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124401603940Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124447925893Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124448450595Z-writer-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124448556475Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124508354291Z-final.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124538104090Z-final.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124556008173Z-writer-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124556386170Z-navigation.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124611965743Z-baseline.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124612366171Z-navigation.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124812272918Z-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124812790027Z-writer-self-test.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124812894629Z-slice-S00.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124833328472Z-final.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124833721286Z-navigation.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T124900539143Z-baseline.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T125441302654Z-slice-S01.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T125626540680Z-slice-S01.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T125905344223Z-slice-S01.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T130718808013Z-slice-S02.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T130844559903Z-slice-S02.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T131035815995Z-slice-S02.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T131129110573Z-slice-S02.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T132048372713Z-slice-S03.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T132150677418Z-slice-S03.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T132518619277Z-slice-S03.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T132540920890Z-slice-S03.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T133618260006Z-slice-S04.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T133716675000Z-slice-S04.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T134129716750Z-slice-S04.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T135025080037Z-navigation.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T135033502891Z-navigation.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T135247239933Z-slice-S05.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T135255938453Z-final.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T135338501628Z-final.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T135829766148Z-slice-S05.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T135832744199Z-final.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T140422221018Z-final.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/runs/20260923T141118056563Z-final.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/s04-evidence.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/s04-proposals.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/s05-evidence.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/s05-navigation.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/s05-stamp.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/validate-wiki.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/wiki-edit.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/038-Platform_And_Plugins_Wiki/writer-self-test.py",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Captures/039-Mission_Control_Master_Vision/mission-control.html",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-harness-repair-and-testing/index.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/governed-events-and-ledger/index.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/plugin-foundation/index.json",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/plugin-views-and-provisioning/index.json",
+      "job_created": true
+    }
+  ],
+  "shared_repos": [
+    "/Users/rccurtrightjr./projects/fs-dev"
+  ],
+  "source_refs": [
+    {
+      "repo": "/Users/rccurtrightjr./projects/fs-dev",
+      "ref": "refs/heads/agent/exact-workspace-paths"
+    },
+    {
+      "repo": "/Users/rccurtrightjr./projects/fs-dev",
+      "ref": "refs/remotes/origin/main"
+    },
+    {
+      "repo": "/Users/rccurtrightjr./projects/fs-dev",
+      "ref": "refs/heads/main"
+    }
+  ],
+  "target_ref": "HEAD",
+  "authority_paths": [
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/assignment.md",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/COMPLETED-WORK-OWNER-ACCEPTANCE.md",
+    "/Users/rccurtrightjr./projects/fs-dev/AGENTS.md",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md"
+  ],
+  "preparation": "Second supplement before any replay: independently classified other-capture historical proof/helper companions and static sibling Launchpad record indexes. Data-only archival helpers are not executed product modules or new authority. No live DB/cache/traces.",
+  "runtime": {
+    "boundary": "disposable profile and sole disposable workspace outside both checkouts",
+    "deps": "APFS private file copies of existing client/server node_modules; no borrowed Electron executable",
+    "normal_and_alpha": "read-only protection identity; no DB copy/restore",
+    "recovery_limits": "snapshot recovers candidate files/index only, not profile/database/runtime effects"
+  },
+  "ignored_runtime_paths": []
+}

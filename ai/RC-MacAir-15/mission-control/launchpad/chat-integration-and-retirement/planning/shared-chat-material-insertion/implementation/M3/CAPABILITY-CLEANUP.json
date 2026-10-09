@@ -1,0 +1,16 @@
+{
+  "at": "2026-10-07T20:58:44.127356+00:00",
+  "status": "PASS_CLEANUP_ONLY",
+  "scope": "Expected locked-desktop admission failure with fixture absent; does not discharge native acceptance",
+  "receipt": "implementation/M3/native-14/native-receipt.json",
+  "receipt_sha256": "e554e2bc1a37ab9e46a4ad6190f4c703b15bc3cb4e3952949535a8b58a79b113",
+  "native_source_sha256": "a1164a5a1a9ad80f30ab443630f376bdc99d9559d63f3d37ee9fdab7780c625f",
+  "expected_error": {
+    "name": "AssertionError",
+    "message": "native desktop focus unavailable while locked\n\ntrue !== false\n"
+  },
+  "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-RaHAug",
+  "tempRootPresent": false,
+  "runtimeCreated": false,
+  "evidenceRetained": true
+}

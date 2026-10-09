@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-04T13:10:31.205735+00:00",
+  "status": "READY_FOR_ORCHESTRATOR_REVIEW (PREPARATION ONLY)",
+  "builder": "/root/s6_builder",
+  "reviewer": "/root/s6_builder/s6_prep_review_1",
+  "reviewer_status": "completed CLEAN",
+  "frozen_artifact_dependency_mismatches": [],
+  "terminal_report_only_delta": "status and exact gate/lifecycle/residual/checklist/package metadata appended",
+  "files": {
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-builder.md": "76a260281711a1788942abd78cd394d55cb944bf19563497467eec5b8ba33f60",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-builder-review-1.md": "d59c8fc04246fe8d38a447398754034d95d450424421acc3effbcc5e24005bd7",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/prep-freeze.json": "ecaa405bd30b1fb5bbe1ef44a0f271971c7fe72d55a833f7abb6bae8cdc8a7b5",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/review-lifecycle.json": "df9b9e159601af155c60463979e32a9be74238fbed8c2e1018283617ff78c48c",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/postreview-frozen-readback.json": "2a96a24e37a00419d676500b76b183bee99f84f7c6086a1613b8b185a59f430b",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/postreview-preservation-summary.json": "1746d168983a746853ac2e150b9e6add3d955d4726da64169d96ace3c8735e11",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/final-protection-after-review.json": "5e523701f31986e291bc61dacc93fc33987b03f31edd3ca99d3b4d00b1fd54e4"
+  },
+  "actual_S6_completion": false,
+  "actual_supervisor_dispatch": "root only after separate preparation acceptance",
+  "owned_runtime": "stopped and independently zero",
+  "close_agent": "unavailable"
+}

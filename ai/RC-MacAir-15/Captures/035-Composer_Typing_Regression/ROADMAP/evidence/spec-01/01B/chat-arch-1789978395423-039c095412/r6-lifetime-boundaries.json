@@ -1,0 +1,33 @@
+{
+  "caseId": "R6-LIFETIME-BOUNDARIES",
+  "requestedMode": "enforce",
+  "executionMode": "characterize",
+  "gateRole": "source-only Legacy host hazard; not authenticated production R6 enforcement",
+  "status": "passed",
+  "exitCode": 0,
+  "assertions": [
+    "prompt wait retired-socket listener ownership",
+    "complete same-workspace competing open listener and draft readback",
+    "prompt resolution and create completion listener cleanup"
+  ],
+  "observations": {
+    "promptLifetime": {
+      "retiredSocketListeners": 1,
+      "newSocketListeners": 0
+    },
+    "unrelatedOpen": {
+      "completeSameWorkspaceCompetingFrame": true,
+      "listenerPreserved": false,
+      "draftPreserved": false
+    },
+    "createLifetime": {
+      "retiredSocketListeners": 0,
+      "newSocketListeners": 0
+    },
+    "promptCompletion": {
+      "listenersBefore": 0,
+      "listenersAfterResolution": 1
+    }
+  },
+  "productSourcePatched": false
+}

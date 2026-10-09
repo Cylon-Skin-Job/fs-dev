@@ -1,0 +1,63 @@
+{
+  "files": 1972,
+  "sourceManifestSHA256": "d624f16b1b95480dd7c8aff284ab55a95d9bdaefe6cdc5c8d48084d2f4ec78ba",
+  "actualDelta": [
+    "fusion-studio-client/e2e/support/working-activity-working-cases.ts",
+    "fusion-studio-client/e2e/visible-wait.spec.ts",
+    "fusion-studio-client/src/components/LiveSegmentRenderer.tsx",
+    "fusion-studio-client/src/components/MessageList.tsx",
+    "fusion-studio-client/src/components/chat/ConnectedChatHistory.tsx",
+    "fusion-studio-client/src/components/chat/VisibleWaitActivity.tsx",
+    "fusion-studio-client/src/components/chat/WorkingActivity.tsx",
+    "fusion-studio-client/src/lib/reveal/grouped-summary.ts",
+    "fusion-studio-client/src/lib/reveal/orchestrator.ts",
+    "fusion-studio-client/src/lib/reveal/progress.ts",
+    "fusion-studio-client/src/lib/reveal/types.ts",
+    "fusion-studio-client/src/lib/text/text-animate.ts",
+    "fusion-studio-client/src/lib/tool-animate.ts"
+  ],
+  "unownedChanges": [],
+  "declaredChangedNotInDelta": [],
+  "candidateMismatches": {
+    "changed-manifest.json": [],
+    "source-manifest.json": []
+  },
+  "predecessors": {
+    "fusion-studio-client/src/components/LiveSegmentRenderer.tsx": {
+      "copyMatches": true,
+      "acceptedBaselineMatches": true
+    },
+    "fusion-studio-client/src/components/chat/WorkingActivity.tsx": {
+      "copyMatches": true,
+      "acceptedBaselineMatches": true
+    },
+    "fusion-studio-client/src/components/MessageList.tsx": {
+      "copyMatches": true,
+      "acceptedBaselineMatches": true
+    },
+    "fusion-studio-client/src/components/chat/ConnectedChatHistory.tsx": {
+      "copyMatches": true,
+      "acceptedBaselineMatches": true
+    },
+    "fusion-studio-client/src/lib/text/text-animate.ts": {
+      "copyMatches": true,
+      "acceptedBaselineMatches": true
+    },
+    "fusion-studio-client/src/lib/reveal/orchestrator.ts": {
+      "copyMatches": true,
+      "acceptedBaselineMatches": true
+    },
+    "fusion-studio-client/src/lib/reveal/types.ts": {
+      "copyMatches": true,
+      "acceptedBaselineMatches": true
+    },
+    "fusion-studio-client/src/lib/reveal/grouped-summary.ts": {
+      "copyMatches": true,
+      "acceptedBaselineMatches": true
+    },
+    "fusion-studio-client/src/lib/tool-animate.ts": {
+      "copyMatches": true,
+      "acceptedBaselineMatches": true
+    }
+  }
+}

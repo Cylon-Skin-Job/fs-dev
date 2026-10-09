@@ -1,0 +1,66 @@
+{
+  "at": "2026-10-04T11:10:52.997838+00:00",
+  "root_independent_fragment_checks": [
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/record-templates.md",
+      "target": "investigation-contract.md#assignment-packet",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/investigation-contract.md"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/record-templates.md",
+      "target": "investigation-contract.md#report-and-synthesis",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/investigation-contract.md"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+      "target": ".agents/skills/mc-roadmap-creator/references/planning-contract.md#validation-and-repair-rules",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-creator/references/planning-contract.md"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+      "target": "registry.md#workspace-and-session-bindings",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+      "target": "launchpad/template/AGENTS.md#use-the-starter-documents-to-guide-discussion",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/template/AGENTS.md"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+      "target": "decisions.md#d-020--owner-directed-ticket-changes-by-any-agent",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/decisions.md"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+      "target": "template-review.md#p-001--intake-shaping-and-numbered-ticket-conversations",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/template-review.md"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+      "target": "domain-routing.md#governing-sessions-in-subordinate-folders",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/domain-routing.md"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+      "target": "decisions.md#d-024--commit-supervisor-and-one-integrated-workflow-spec",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/decisions.md"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+      "target": "decisions.md#d-024--commit-supervisor-and-one-integrated-workflow-spec",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/decisions.md"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+      "target": "todo.md#mc-t09--build-the-commit-supervisor",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+      "target": "todo.md#mc-t09--build-the-commit-supervisor",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md"
+    }
+  ],
+  "count": 12
+}

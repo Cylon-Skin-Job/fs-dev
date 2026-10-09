@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "workId": "CHAT-MATERIAL-SPEC-01",
+  "ticket": "CHAT-MATERIAL-01",
+  "state": "OWNER_ACCEPTED",
+  "recorded_at": "2026-10-08T01:28:49.699401+00:00",
+  "authority": "Direct human completion acceptance in this conversation",
+  "owner_instruction": "Accepted",
+  "context": "Reply to completed-SPEC summary with final independent CLEAN, passing required checks and SPEC-FINAL-REPORT.md link.",
+  "recorded_by": "Codex side chat (ephemeral), SPEC Orchestrator /root",
+  "persistent_chat_id": "01a11655-f57c-76c1-b12b-b127815efa24",
+  "host": "local",
+  "accepted_scope": "Completed CHAT-MATERIAL-SPEC-01 implementation summary, reviewed integrated candidate, reported deviations and residual limits; required completed-SPEC owner checkpoint satisfied.",
+  "approved_candidate": "sha256:65b324647b7e52f0426f7b2005849d053f4f239420fab07c848170b21ec1d3f3",
+  "accepted_source_seal": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/SOURCE-SEAL.json",
+    "sha256": "35cda972a106468eaa279c60da9ef51fc04ec23333f03de4226269b84e14ad07",
+    "role": "Frozen65 integratedsource"
+  },
+  "accepted_completed_summary": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/SPEC-FINAL-REPORT-PRE-OWNER-ACCEPTANCE.md",
+    "sha256": "b557be6f43848d66664904ec3f8f71e4ddeff96fd02b565cc2f614ea96526866"
+  },
+  "accepted_completed_manifest": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/SPEC-FINAL-MANIFEST-PRE-OWNER-ACCEPTANCE.json",
+    "sha256": "7e8e038601b9eead90343a01a62b7fa439fb9b1d84386bfd2cf6de35403e3ce2"
+  },
+  "final_review": {
+    "identity": "/root/final_integration_review_01",
+    "state": "terminal completed",
+    "result": "REVIEW_COMPLETE CLEAN",
+    "report": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md",
+      "sha256": "d77ac55af618dd5bb794b92a6c80a8c366a28d6ff7a6191ba525dcf4a66aed63",
+      "role": "Verbatimterminalresponse"
+    },
+    "input_packet": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/FINAL-REVIEW-INPUTS-01.json",
+      "sha256": "5729c1996e458936ca56d9073dd0821bbbeda4652c37a691f7c9ae98a9228fe4",
+      "role": "Frozenfreshinputwithoutpriorreviewverdicts"
+    }
+  },
+  "current_source_check": {
+    "at": "2026-10-08T01:28:49.699401+00:00",
+    "checkout": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev",
+    "branch": "codex/chat-material-01",
+    "HEAD": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+    "sealed_product_count": 65,
+    "differences_from_accepted_seal": [],
+    "interpretation": "Acceptance applies to the exact delivered summary/seal; this is a source check, not a rerun of runtime tests."
+  },
+  "next_safe_action": "Await an explicitly assigned integration or follow-on action; no following SPEC was assigned.",
+  "publication": "Commit-producing commands, push/merge and Alpha remain separately gated; none authorized by this completion acceptance.",
+  "preservation": {
+    "pre_acceptance_records": {
+      "SPEC-FINAL-MANIFEST.json": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/SPEC-FINAL-MANIFEST-PRE-OWNER-ACCEPTANCE.json",
+        "sha256": "7e8e038601b9eead90343a01a62b7fa439fb9b1d84386bfd2cf6de35403e3ce2"
+      },
+      "SPEC-FINAL-REPORT.md": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/SPEC-FINAL-REPORT-PRE-OWNER-ACCEPTANCE.md",
+        "sha256": "b557be6f43848d66664904ec3f8f71e4ddeff96fd02b565cc2f614ea96526866"
+      },
+      "ACCEPTANCE-STATE.json": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/ACCEPTANCE-STATE-PRE-OWNER-ACCEPTANCE.json",
+        "sha256": "fe31ce840ec1d55110f48e07a55ebdb82d9eafa9fec033f46ede5375842d045f"
+      },
+      "SLICE-AND-DEVIATION-LEDGER.md": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/SLICE-AND-DEVIATION-LEDGER-PRE-OWNER-ACCEPTANCE.md",
+        "sha256": "d059bf122260c345236dcc16f898af4d425f4d1aaaa91bbd091c2365dfd31207"
+      }
+    },
+    "checkpoint_sha256": "67dd4dc6fbba88712a0b61f95e79d6656f2fd5e34d65425d5f7f7e689f90a897",
+    "checkpoint_changed": false,
+    "product_edits": false
+  },
+  "caffeinate": {
+    "observed_at": "2026-10-08T01:28:49.699401+00:00",
+    "pid": 15210,
+    "active": true,
+    "command": "15210 02:54:25 /usr/bin/caffeinate -dimsu -t 14400",
+    "original_expiry_UTC": "2026-10-08T02:34:24.673156Z",
+    "action": "read-only observation; no restart/extension/termination"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "observed_at": "2026-10-07T17:15:24.203956+00:00",
+  "source_authority_mismatches": [],
+  "built_output_mismatches": [],
+  "dist_file_count": 191,
+  "all_checks_terminal": true,
+  "all_dependencies_preserved": true,
+  "ports_retired": true,
+  "reviewed_seal_sha256": "7177c3cc452e4391e3c5e31bb682532c358b7ade99e252a4cbc54b3029b82883"
+}

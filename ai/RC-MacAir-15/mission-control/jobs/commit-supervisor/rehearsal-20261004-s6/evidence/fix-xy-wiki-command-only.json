@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "kind": "IMMUTABLE_EXACT_COMMAND_ONLY_DERIVATIVE",
+  "source_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-wiki-1-commands.json",
+  "source_sha256": "4fdfeaca276fa284dde5303ea5b5f6518de2976b514c9c36bfe292728d5d5f16",
+  "created_by": "/root/s6_supervisor_fix_xy_1",
+  "provenance": [
+    {
+      "json_pointer": "/0",
+      "receipt": {
+        "command": [
+          "python3.12",
+          "-B",
+          "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+          "verify",
+          "--job",
+          "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/fix-xy-wiki-1"
+        ],
+        "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+        "started": "2026-10-04T17:06:15.433021+00:00",
+        "finished": "2026-10-04T17:06:16.232887+00:00",
+        "exit_code": 0,
+        "stdout": "{\"result\": \"VERIFIED\", \"payloads_valid\": true, \"matches_checkpoint\": true, \"status_equal\": true, \"current_sha256\": \"4b6ecb6cfbd6cea78ea82773364b0af26d353f8633b0c3b265c3bb7cb70c596f\", \"manifest_sha256\": \"5227a7a7d38dddec138aff13c16f2ee8a22bda1a53657f203a47d80857827617\"}\n",
+        "stderr": ""
+      }
+    },
+    {
+      "json_pointer": "/1",
+      "receipt": {
+        "command": [
+          "python3.12",
+          "-B",
+          "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-wiki-1-work.py",
+          "precheck"
+        ],
+        "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+        "started": "2026-10-04T17:06:16.232932+00:00",
+        "finished": "2026-10-04T17:06:16.670134+00:00",
+        "exit_code": 0,
+        "stdout": "{\"at\": \"2026-10-04T17:06:16.634789+00:00\", \"owned_leaves\": 130, \"manifest_sha256\": \"5227a7a7d38dddec138aff13c16f2ee8a22bda1a53657f203a47d80857827617\", \"dependencies_read_back\": 114, \"full_union_equal\": true, \"page_sha256\": \"a3d372eba6208c2fbee71cd046f305a91fc7c44185c5dae42b5da50e5cbcfdce\", \"version_absent\": true}\n",
+        "stderr": ""
+      }
+    },
+    {
+      "json_pointer": "/2",
+      "receipt": {
+        "command": [
+          "python3.12",
+          "-B",
+          "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-wiki-1-work.py",
+          "write"
+        ],
+        "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+        "started": "2026-10-04T17:06:33.948085+00:00",
+        "finished": "2026-10-04T17:06:34.966075+00:00",
+        "exit_code": 0,
+        "stdout": "{\n  \"captured_at\": \"2026-10-04T17:06:34.599599+00:00\",\n  \"preimage_path\": \"/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-095624.md\",\n  \"complete_preimage_bytes\": 1620,\n  \"preimage_sha256\": \"a3d372eba6208c2fbee71cd046f305a91fc7c44185c5dae42b5da50e5cbcfdce\",\n  \"dependencies_rechecked_at\": \"2026-10-04T17:06:34.959913+00:00\",\n  \"write_clock\": \"2026-10-04T17:06:34.959920+00:00\",\n  \"quoted_last_modified\": \"2026-10-04T17:06:34Z\",\n  \"written_at\": \"2026-10-04T17:06:34.960121+00:00\",\n  \"final_page\": {\n    \"exists\": true,\n    \"kind\": \"file\",\n    \"sha256\": \"5f09372532fa58527e844bd0f60678e592e48cbf2f92cd38ee611c209afb6b8b\",\n    \"mode\": \"0o100644\",\n    \"mtime_ns\": 1791133594960000239,\n    \"bytes\": 2218\n  },\n  \"final_version\": {\n    \"exists\": true,\n    \"kind\": \"file\",\n    \"sha256\": \"a3d372eba6208c2fbee71cd046f305a91fc7c44185c5dae42b5da50e5cbcfdce\",\n    \"mode\": \"0o100644\",\n    \"mtime_ns\": 1791133594599550684,\n    \"bytes\": 1620\n  }\n}\n",
+        "stderr": ""
+      }
+    },
+    {
+      "json_pointer": "/3",
+      "receipt": {
+        "command": [
+          "python3.12",
+          "-B",
+          "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-wiki-1-work.py",
+          "check"
+        ],
+        "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+        "started": "2026-10-04T17:06:34.966341+00:00",
+        "finished": "2026-10-04T17:06:35.429993+00:00",
+        "exit_code": 0,
+        "stdout": "{\n  \"at\": \"2026-10-04T17:06:35.414186+00:00\",\n  \"result\": \"SELF_CHECK_PASSED\",\n  \"independent_acceptance\": false,\n  \"candidate_root\": \"/private/tmp/mc-s6-commit-supervisor-20261004/candidate\",\n  \"candidate_head\": \"d15792920731f85e45b743519d4af2b807d95a9c\",\n  \"candidate_branch\": null,\n  \"full_130_changes\": [\n    \"rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-095624.md\",\n    \"rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md\"\n  ],\n  \"unchanged_128_owned\": true,\n  \"index_refs_configuration_and_protected_repositories_unchanged\": true,\n  \"unrelated_candidate_entries_unchanged\": true,\n  \"source_authority_configuration_and_35_suite_dependencies_unchanged\": true,\n  \"root_navigation_bytes_metadata_times_and_mtimes_unchanged\": true,\n  \"preimage_exact_full_page_and_historical_metadata\": true,\n  \"links\": [\n    \"../002-Navigation_Guide/PAGE.md\"\n  ],\n  \"current_pages\": {\n    \"rehearsal-workspace/ai/MC-S6/Wiki/PAGE.md\": {\n      \"exists\": true,\n      \"kind\": \"file\",\n      \"sha256\": \"09d0c7fd6ad2882d50c137412194c6060f2e6d9668d7d3a3e1569f3274ea3a6c\",\n      \"mode\": \"0o100644\",\n      \"mtime_ns\": 1791118139075267633,\n      \"bytes\": 219\n    },\n    \"rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/002-Navigation_Guide/PAGE.md\": {\n      \"exists\": true,\n      \"kind\": \"file\",\n      \"sha256\": \"7a3058e3ca2a0b793e6c4831487b53098a49c4c80f2f3d91f8a2dbe6463b28ed\",\n      \"mode\": \"0o100644\",\n      \"mtime_ns\": 1791118139075062550,\n      \"bytes\": 434\n    },\n    \"rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md\": {\n      \"exists\": true,\n      \"kind\": \"file\",\n      \"sha256\": \"5f09372532fa58527e844bd0f60678e592e48cbf2f92cd38ee611c209afb6b8b\",\n      \"mode\": \"0o100644\",\n      \"mtime_ns\": 1791133594960000239,\n      \"bytes\": 2218\n    }\n  },\n  \"version\": {\n    \"exists\": true,\n    \"kind\": \"file\",\n    \"sha256\": \"a3d372eba6208c2fbee71cd046f305a91fc7c44185c5dae42b5da50e5cbcfdce\",\n    \"mode\": \"0o100644\",\n    \"mtime_ns\": 1791133594599550684,\n    \"bytes\": 1620\n  },\n  \"full_current_state_sha256\": \"06d12190e744de5e5e1ef258f8725054ddb2bb973c668ed64d297f53ff0777e6\",\n  \"limits\": \"Source/documentation self-check only; no independent acceptance, product test rerun or actual app/runtime verification.\"\n}\n",
+        "stderr": ""
+      }
+    },
+    {
+      "json_pointer": "/4",
+      "receipt": {
+        "command": [
+          "node",
+          "-e",
+          "const fs=require('node:fs');const matter=require(process.cwd()+'/fusion-studio-client/node_modules/gray-matter');const parsed=matter(fs.readFileSync(process.argv[1],'utf8'));if(!parsed.data.name||!parsed.data.description||typeof parsed.data.metadata['last-modified']!=='string')process.exit(1);console.log(JSON.stringify(parsed.data,null,2));",
+          "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md"
+        ],
+        "cwd": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "started": "2026-10-04T17:07:26.940381+00:00",
+        "finished": "2026-10-04T17:07:27.011540+00:00",
+        "exit_code": 0,
+        "stdout": "{\n  \"name\": \"Checklist Guide\",\n  \"description\": \"How to complete, reset and revisit the disposable checklist.\",\n  \"metadata\": {\n    \"source-files\": [\n      \"rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js\",\n      \"rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js\",\n      \"rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html\",\n      \"scripts/fusion-restart-target.mjs\",\n      \"scripts/fusion-restart.mjs\"\n    ],\n    \"last-modified\": \"2026-10-04T17:06:34Z\"\n  }\n}\n",
+        "stderr": ""
+      }
+    }
+  ],
+  "scope": "Verbatim whole pure command objects. Author report, separate mixed metadata and previous diagnoses excluded; executable self-check stdout is source/document mechanics only."
+}

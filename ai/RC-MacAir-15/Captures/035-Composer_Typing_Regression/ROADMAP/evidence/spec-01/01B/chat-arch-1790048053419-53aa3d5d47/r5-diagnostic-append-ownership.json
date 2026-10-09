@@ -1,0 +1,24 @@
+{
+  "pid": 84472,
+  "command": [
+    "/opt/homebrew/Cellar/node/25.6.1/bin/node",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/owned-case-supervisor.mjs",
+    "chat-architecture-owner-chat-arch-1790048053419-53aa3d5d47",
+    "72035",
+    "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790048053419-53aa3d5d47-xBq3xj",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r5-diagnostic-playwright.mjs",
+    "chat-architecture-owner-chat-arch-1790048053419-53aa3d5d47",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790048053419-53aa3d5d47",
+    "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790048053419-53aa3d5d47-xBq3xj"
+  ],
+  "startedAt": 1790048157024,
+  "token": "chat-architecture-owner-chat-arch-1790048053419-53aa3d5d47",
+  "ownedRunRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790048053419-53aa3d5d47-xBq3xj",
+  "refusalPolicy": [
+    "live Fusion Studio profile",
+    "live Alpha profile",
+    "development fusion.db",
+    "unrelated PID",
+    "port 3001"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "headings": [
+    "Wiki Guidance\n\nHow the Fusion Studio wiki works — style guide, creating and updating wiki content, and the audit workflow. Start here before writing wiki pages."
+  ],
+  "content": [
+    "Wiki Guidance\n\nHow the Fusion Studio wiki works — style guide, creating and updating wiki content, and the audit workflow. Start here before writing wiki pages.\n\nWhat Is This?\n\nFusion Studio is an Electron + React + Node.js desktop workspace app for managing project folders, file/wiki/document views, and AI-assisted chat threads. It owns the workspace shell, persistence, routing, and rendering; AI inference is delegated to configured harnesses like OpenCode.\n\nThis wiki is the living documentation for that app — its architecture, rules, subsystems, and operations. It is dual-use: written for human readers and read raw by AI agents.\n\nHow It's Organized\n\nSections are numbered folders (NNN-Name). A section's 000- child is its front page: hand-written guidance on top, a script-maintained contents block below. Main articles are real articles whose folder PAGE.md carries the content and links its sub-articles. The full rules live in Style Guide.\n\nHow to use this wiki\n\nStart with the relevant section front page, then follow the topic links and source files named by an article. Read the depth needed for the current question. Reusable agent skills may hold repeatable capabilities; this wiki records Fusion Studio’s durable architecture, decisions, open choices and context. Keep each explanation in its owning article and link to it elsewhere. Use code and tests to establish observed behavior; local code comments can still clarify implementation. A task’s current instructions take precede"
+  ],
+  "selected": [
+    "menu_bookWiki Guide\nlink_2\nchat_paste_go"
+  ],
+  "errors": [],
+  "nav": [
+    "Wiki Guidance"
+  ]
+}

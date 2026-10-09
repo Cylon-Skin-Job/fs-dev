@@ -1,0 +1,32 @@
+{
+  "command": [
+    "lsof",
+    "-a",
+    "-p",
+    "31036",
+    "-d",
+    "cwd,txt",
+    "-Fn"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "GIT_LITERAL_PATHSPECS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "started": "2026-10-04T19:50:19.881700+00:00",
+  "finished": "2026-10-04T19:50:19.900485+00:00",
+  "exit_code": 0,
+  "stdout": "p31036\nfcwd\nn/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client\nftxt\nn/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer)\nftxt\nn/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Squirrel.framework/Versions/A/Squirrel\nftxt\nn/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Mantle.framework/Versions/A/Mantle\nftxt\nn/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/ReactiveObjC.framework/Versions/A/ReactiveObjC\nftxt\nn/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/v8_context_snapshot.arm64.bin\nftxt\nn/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/chrome_100_percent.pak\nftxt\nn/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/chrome_200_percent.pak\nftxt\nn/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/en.lproj/locale.pak\nftxt\nn/usr/lib/dyld\nftxt\nn/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Libraries/libffmpeg.dylib\nftxt\nn/usr/share/icu/icudt76l.dat\nftxt\nn/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/icudtl.dat\nftxt\nn/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/resources.pak\nftxt\nn/System/Library/Fonts/SFNS.ttf\nftxt\nn/System/Library/Fonts/Times.ttc\nftxt\nn/System/Library/Fonts/Supplemental/Arial.ttf\nftxt\nn/System/Library/Fonts/Supplemental/Arial Bold.ttf\nftxt\nn/System/Library/Fonts/\u30d2\u30e9\u30ad\u3099\u30ce\u89d2\u30b3\u3099\u30b7\u30c3\u30af W3.ttc\nftxt\nn/System/Library/Fonts/Menlo.ttc\nftxt\nn/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Electron Framework\n",
+  "stderr": "",
+  "stdout_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/before-process-files-31036.stdout",
+    "sha256": "6ea30c2bb11ed3e860cba402c6ead1c3dcf560f83cc3ff1347d51828d9f81866",
+    "size": 2889
+  },
+  "stderr_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/before-process-files-31036.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "fusion-studio-client/e2e/instant-collapse.spec.ts": {
+    "before": null,
+    "current": "a54287dd52ab0e4448299704c6d968894cb68773da397a1fa35c3a163c19e5f9"
+  },
+  "fusion-studio-client/src/components/LiveSegmentRenderer.tsx": {
+    "before": "9e0b3913e6c3bd5f5ccb7362ca24390275075d9352940511eba2f84dbd37498b",
+    "current": "f237473f6e6e0d3fb12fdc05bd70a2d9ff968a8d779276a0424b6f11ce9b22a4"
+  },
+  "fusion-studio-client/src/components/ToolCallBlock.tsx": {
+    "before": "58a7d9fd0bb44f296882c9d5c0cb623dd849b405d870fdf344176ff32df457c2",
+    "current": "6a7f40f8f0aa31a1715968fa568cb1b92f52a866518c234cae60e5cc2dedba02"
+  }
+}

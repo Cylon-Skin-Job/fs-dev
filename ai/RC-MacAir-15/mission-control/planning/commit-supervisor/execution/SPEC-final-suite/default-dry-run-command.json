@@ -1,0 +1,24 @@
+{
+  "actor": "/root",
+  "argv": [
+    "bash",
+    "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh",
+    "--dry-run"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev",
+  "started_at": "2026-10-05T03:23:27.453234+00:00",
+  "finished_at": "2026-10-05T03:23:27.519873+00:00",
+  "exit_code": 0,
+  "stdout": "{\n  \"state\": \"DRY_RUN_ONLY\",\n  \"repo\": \"/Users/rccurtrightjr./projects/fs-dev\",\n  \"client\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client\",\n  \"main\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs\",\n  \"server\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js\",\n  \"machine\": \"RC-MacAir-15\",\n  \"profile\": \"/Users/rccurtrightjr./Library/Application Support/Fusion Studio\",\n  \"profileMode\": \"default\",\n  \"defaultProfile\": \"/Users/rccurtrightjr./Library/Application Support/Fusion Studio\",\n  \"bin\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron\",\n  \"runtime\": \"/Users/rccurtrightjr./Library/Application Support/Fusion Studio/fusion-restart\",\n  \"portFile\": \"/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server.port\",\n  \"dryRun\": true,\n  \"database\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/data/fusion.db\",\n  \"serverLog\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server-live.log\"\n}\n",
+  "stderr": "",
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "executable": {
+    "exists": true,
+    "kind": "file",
+    "mode": "0o100555",
+    "sha256": "c372d1d6d4f07e0a917f3660aa79df00cbb50323972c22c3d90ec17d2096d039"
+  }
+}

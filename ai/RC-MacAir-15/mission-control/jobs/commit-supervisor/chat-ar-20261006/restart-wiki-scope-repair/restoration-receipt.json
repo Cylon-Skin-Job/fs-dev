@@ -1,0 +1,34 @@
+{
+  "assigned_paths": [
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md"
+  ],
+  "at": "2026-10-06T22:52:56.282111+00:00",
+  "candidate": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+  "candidate_article_index_remains_preimage": true,
+  "candidate_index_raw_and_semantic_unchanged": true,
+  "candidate_refs_unchanged": true,
+  "changed_candidate_paths": [
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md"
+  ],
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "current_article_sha256": "fa7ecb9041a4d4c9f2f24cba9386b3e844a6dbe98c9af52063b05fe90345a9f0",
+  "current_article_size": 819,
+  "finding": "FINAL-DOC-001",
+  "independent_review_performed_by_worker": false,
+  "manager": "/root",
+  "memory_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "mode": "100644/0644",
+  "preimage_article_sha256": "ccf7a76b4201ce3f5a95b29816f72f85cf1506b6f94172a581c100170dd4b94e",
+  "preimage_manifest_sha256": "b3b4526b10f15e1a7305fbb55bdf62660c95dba41d58f3a29c35d3840b506977",
+  "root_must_stage_only_this_entry_and_remove_current_revision_from_publication_selectors": true,
+  "runtime_effects": false,
+  "sealed_review_unchanged": true,
+  "source": "/Users/rccurtrightjr./projects/fs-dev",
+  "source_article_versions_and_dependencies_unchanged": true,
+  "source_index_raw_and_semantic_refs_unchanged": true,
+  "state": "WORKTREE_RESTORED_PENDING_INDEPENDENT_REVIEW",
+  "target": "3356e1b73cc5d44028eac5baa02fd542a8bbc385",
+  "target_entry": "100644 blob 441285d978daaee194b9c9cdfb864cff4a80b731\tai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md",
+  "unrelated_candidate_leaves_checked": 5623,
+  "worker": "/root/restart_wiki_scope_repair"
+}

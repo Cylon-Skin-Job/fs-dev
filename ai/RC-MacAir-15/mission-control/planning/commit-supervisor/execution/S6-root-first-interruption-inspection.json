@@ -1,0 +1,76 @@
+{
+  "at": "2026-10-04T20:25:06.365568+00:00",
+  "actor": "/root",
+  "kind": "ACTUAL_FIRST_INTERRUPTION_ROOT_INSPECTION",
+  "native_completion": "Actual FINAL_ANSWER and exact collaboration.list_agents completed observed; no children; close_agent unavailable",
+  "report_fully_read": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/report.md",
+  "full_helpers_read": [
+    "preservation.py",
+    "process-readback.mjs"
+  ],
+  "checkpoint_sha256": "144bb5ef8f195a403cd596bc593f543c7b11a0f7b7c0a216305d49936e972008",
+  "manifest_sha256": "a885cde0f24e25d9cea6437edad6b9258f365d3a2db08bcb426d690195e4291a",
+  "guard_sha256": "1055f07580fde5b8be0fdb7754d5d584c6167442225eb79acb9e62c16be59a7e",
+  "guard_current_matches": true,
+  "raw_command_receipts_verified": 78,
+  "owned": 130,
+  "candidate_inventory": 4355,
+  "exact_changed_paths": [
+    "rehearsal-inputs/checkpoint.bin",
+    "rehearsal-inputs/future-addition.txt"
+  ],
+  "all_other_owned_and_unrelated_equal": true,
+  "source_leaves_equal": 11977,
+  "source_caches_equal": 193,
+  "original_job_leaves_equal": 1224,
+  "source_physical_index_preserved": true,
+  "actual_stop_selected": 6,
+  "owned_after_stop": 0,
+  "protected_roots_tree_equal": [
+    4,
+    13
+  ],
+  "protected_storage_identity_equal": 11,
+  "active_database_content_qualification": "Normal/Alpha DB hashes/stat changed naturally; no byte-equality or copy/restoration claim. Disposable profile shutdown effects retained outside source recovery.",
+  "archives": [
+    {
+      "job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6",
+      "manifest_sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb",
+      "owned": 128,
+      "payloads": 117
+    },
+    {
+      "job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/first-wiki-1",
+      "manifest_sha256": "36c99f10ccdc4eed268e2859d2f737eac282181784ea0385572e64d3221c7e75",
+      "owned": 129,
+      "payloads": 117
+    },
+    {
+      "job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/first",
+      "manifest_sha256": "5bf3fb69c13aacfd60afcb384de2c9975fc917ad3f1f7a49b9176073b7b34d96",
+      "owned": 129,
+      "payloads": 118
+    },
+    {
+      "job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/fix-xy-wiki-1",
+      "manifest_sha256": "5227a7a7d38dddec138aff13c16f2ee8a22bda1a53657f203a47d80857827617",
+      "owned": 130,
+      "payloads": 118
+    },
+    {
+      "job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/fix-xy",
+      "manifest_sha256": "fd15619a9ebd65f9600e6867054ddd15dbaef589a607d2177c9f3528e33f5e9e",
+      "owned": 130,
+      "payloads": 119
+    },
+    {
+      "job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/fixed-checkpoint",
+      "manifest_sha256": "a885cde0f24e25d9cea6437edad6b9258f365d3a2db08bcb426d690195e4291a",
+      "owned": 130,
+      "payloads": 119
+    }
+  ],
+  "no_restore_in_first_turn": true,
+  "successor_recovery_complete": false,
+  "next": "Separately activate different fresh actual installed Supervisor for SECOND recovery turn only."
+}

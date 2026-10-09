@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-04T14:58:58.588323+00:00",
+  "observed": "actual native FINAL_ANSWER",
+  "actor": "/root/s6_supervisor_candidate_1/code_handoff_review_2",
+  "return": "REVIEW_COMPLETE/insufficient-evidence",
+  "raw_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/code-handoff-2.raw.md",
+  "raw_sha256": "7672fd36e20c15011f4cad21fc7085c0c3b487611d3618aa85923f1f9681b0b4",
+  "no_handoff_acceptance": true,
+  "fresh_replacement_authorized": "original installed workflow fresh gate after actual terminal; corrected raw-only packet"
+}

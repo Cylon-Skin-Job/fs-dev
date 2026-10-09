@@ -1,0 +1,39 @@
+{
+  "at": "2026-10-05T03:33:28.295342+00:00",
+  "actor": "/root/spec_final_review_1",
+  "manager": "/root",
+  "agent_type": "clean-room-reviewer",
+  "fork_turns": "none",
+  "model_effort_override": false,
+  "settings": "Inherited root; concrete model/effort/native loader metadata unexposed",
+  "permissions": "danger-full-access / never; strict read-only scope",
+  "assignment": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-assignment.md",
+  "sha256": "01ac88562314915786f7ab5934df0d6b06af66ae9ad0e9bb7101b75e3112bff7",
+  "native_state": "completed",
+  "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-current-manifest.json",
+  "manifest_sha256": "4389d876a90a77f81a0543d8723f990c5b331575d6d8736c7e1bf8f202f4a248",
+  "predecessor": "Actual fresh root S6 reviewer completed with no children; current source frozen",
+  "close_agent": "Unavailable; no closure claimed",
+  "scope": "Original whole SPEC integration; one fresh independent pass, inline report only",
+  "terminal_observed_at": "2026-10-05T04:17:40.720749+00:00",
+  "native_terminal_result": "REVIEW_COMPLETE / FINDINGS concerning review-gate provenance",
+  "raw_report": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-review-1.raw.md",
+    "exists": true,
+    "kind": "file",
+    "mode": 33060,
+    "size": 27456,
+    "sha256": "b442816d3df04f7bda5433597518a775d7b08ee5071670339ba2c44c3f81027f"
+  },
+  "gate_admissible": false,
+  "finding": "R-P01: actual excluded conversation exposure in S5 inventory output",
+  "raw_capture": {
+    "method": "exact native agent_message payload from verified root rollout",
+    "rollout": "/Users/rccurtrightjr./.codex/sessions/2026/10/04/rollout-2026-10-04T00-58-05-01a105eb-8add-7e12-a454-a96b64465cca.jsonl",
+    "line": 11132,
+    "timestamp": "2026-10-05T04:06:59.768Z",
+    "message_id": "amsg_01a10a3e-55b8-7fe0-ad91-434664548c6e"
+  },
+  "children": [],
+  "repair": "Different fresh reviewer with strict file whitelist; no product change or test replay"
+}

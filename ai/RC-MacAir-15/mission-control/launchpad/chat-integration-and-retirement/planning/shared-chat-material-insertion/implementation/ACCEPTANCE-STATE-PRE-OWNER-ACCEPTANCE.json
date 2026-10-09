@@ -1,0 +1,811 @@
+{
+  "workId": "CHAT-MATERIAL-SPEC-01",
+  "authority": "Approved SPEC sections 4-9; unchanged candidate",
+  "rows": {
+    "A01": {
+      "state": "verified_technical_completion",
+      "required": true,
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-02.json"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M1",
+          "acceptance": "M1/ACCEPTANCE.json",
+          "source_seal": "M1/orchestrator-checks/acceptance-inputs-01.json",
+          "raw_check": "M1/orchestrator-checks/renderer-02.json",
+          "limit": "Accepted M1 global-resource/shared-boundary and controlled fixture coverage only; exact composer sources/cameras/native/server readback remain later gates."
+        },
+        {
+          "slice": "M2",
+          "gate_state": "M2 accepted through all distinct slice gates",
+          "source_seal": "M2/SOURCE-SEAL.json",
+          "raw_check": "M2/orchestrator-checks/renderer-01.json",
+          "build": "M2/orchestrator-checks/build-01.json",
+          "limit": "Controlled source/media/WS browser lane only; own source UI/consumer/stores rendered, cumulative M1 and ordinary command oracles. No actual camera PNG/save/server DB/provider/Wiki certification; M3/final required.",
+          "acceptance": "M2/ACCEPTANCE.json"
+        },
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "limit": "Full slice coverage; final post-accepted integration checks/review pending."
+        }
+      ]
+    },
+    "A02": {
+      "state": "verified_technical_completion",
+      "required": true,
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-02.json"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M1",
+          "acceptance": "M1/ACCEPTANCE.json",
+          "source_seal": "M1/orchestrator-checks/acceptance-inputs-01.json",
+          "raw_check": "M1/orchestrator-checks/renderer-02.json",
+          "limit": "Accepted M1 global-resource/shared-boundary and controlled fixture coverage only; exact composer sources/cameras/native/server readback remain later gates."
+        },
+        {
+          "slice": "M2",
+          "gate_state": "M2 accepted through all distinct slice gates",
+          "source_seal": "M2/SOURCE-SEAL.json",
+          "raw_check": "M2/orchestrator-checks/renderer-01.json",
+          "build": "M2/orchestrator-checks/build-01.json",
+          "limit": "Controlled source/media/WS browser lane only; own source UI/consumer/stores rendered, cumulative M1 and ordinary command oracles. No actual camera PNG/save/server DB/provider/Wiki certification; M3/final required.",
+          "acceptance": "M2/ACCEPTANCE.json"
+        },
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "limit": "Full slice coverage; final post-accepted integration checks/review pending."
+        }
+      ]
+    },
+    "A03": {
+      "state": "verified_technical_completion",
+      "required": true,
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-02.json"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M1",
+          "acceptance": "M1/ACCEPTANCE.json",
+          "source_seal": "M1/orchestrator-checks/acceptance-inputs-01.json",
+          "raw_check": "M1/orchestrator-checks/renderer-02.json",
+          "limit": "Accepted M1 global-resource/shared-boundary and controlled fixture coverage only; exact composer sources/cameras/native/server readback remain later gates."
+        },
+        {
+          "slice": "M2",
+          "gate_state": "M2 accepted through all distinct slice gates",
+          "source_seal": "M2/SOURCE-SEAL.json",
+          "raw_check": "M2/orchestrator-checks/renderer-01.json",
+          "build": "M2/orchestrator-checks/build-01.json",
+          "limit": "Controlled source/media/WS browser lane only; own source UI/consumer/stores rendered, cumulative M1 and ordinary command oracles. No actual camera PNG/save/server DB/provider/Wiki certification; M3/final required.",
+          "acceptance": "M2/ACCEPTANCE.json"
+        },
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "limit": "Full slice coverage; final post-accepted integration checks/review pending."
+        }
+      ]
+    },
+    "A04": {
+      "state": "verified_technical_completion",
+      "required": true,
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-02.json"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M1",
+          "acceptance": "M1/ACCEPTANCE.json",
+          "source_seal": "M1/orchestrator-checks/acceptance-inputs-01.json",
+          "raw_check": "M1/orchestrator-checks/renderer-02.json",
+          "limit": "Accepted M1 global-resource/shared-boundary and controlled fixture coverage only; exact composer sources/cameras/native/server readback remain later gates."
+        },
+        {
+          "slice": "M2",
+          "gate_state": "M2 accepted through all distinct slice gates",
+          "source_seal": "M2/SOURCE-SEAL.json",
+          "raw_check": "M2/orchestrator-checks/renderer-01.json",
+          "build": "M2/orchestrator-checks/build-01.json",
+          "limit": "Controlled source/media/WS browser lane only; own source UI/consumer/stores rendered, cumulative M1 and ordinary command oracles. No actual camera PNG/save/server DB/provider/Wiki certification; M3/final required.",
+          "acceptance": "M2/ACCEPTANCE.json"
+        },
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "limit": "Full slice coverage; final post-accepted integration checks/review pending."
+        }
+      ]
+    },
+    "A05": {
+      "state": "verified_technical_completion",
+      "required": true,
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-02.json"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M1",
+          "acceptance": "M1/ACCEPTANCE.json",
+          "source_seal": "M1/orchestrator-checks/acceptance-inputs-01.json",
+          "raw_check": "M1/orchestrator-checks/renderer-02.json",
+          "limit": "Accepted M1 global-resource/shared-boundary and controlled fixture coverage only; exact composer sources/cameras/native/server readback remain later gates."
+        },
+        {
+          "slice": "M2",
+          "gate_state": "M2 accepted through all distinct slice gates",
+          "source_seal": "M2/SOURCE-SEAL.json",
+          "raw_check": "M2/orchestrator-checks/renderer-01.json",
+          "build": "M2/orchestrator-checks/build-01.json",
+          "limit": "Controlled source/media/WS browser lane only; own source UI/consumer/stores rendered, cumulative M1 and ordinary command oracles. No actual camera PNG/save/server DB/provider/Wiki certification; M3/final required.",
+          "acceptance": "M2/ACCEPTANCE.json"
+        },
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "limit": "Full slice coverage; final post-accepted integration checks/review pending."
+        }
+      ]
+    },
+    "A06": {
+      "state": "verified_technical_completion",
+      "required": true,
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-02.json"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M2",
+          "gate_state": "M2 accepted through all distinct slice gates",
+          "source_seal": "M2/SOURCE-SEAL.json",
+          "raw_check": "M2/orchestrator-checks/renderer-01.json",
+          "build": "M2/orchestrator-checks/build-01.json",
+          "limit": "Controlled source/media/WS browser lane only; own source UI/consumer/stores rendered, cumulative M1 and ordinary command oracles. No actual camera PNG/save/server DB/provider/Wiki certification; M3/final required.",
+          "acceptance": "M2/ACCEPTANCE.json"
+        },
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "limit": "Full slice coverage; final post-accepted integration checks/review pending."
+        }
+      ]
+    },
+    "A07": {
+      "state": "verified_technical_completion",
+      "required": true,
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-02.json"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M1",
+          "acceptance": "M1/ACCEPTANCE.json",
+          "source_seal": "M1/orchestrator-checks/acceptance-inputs-01.json",
+          "raw_check": "M1/orchestrator-checks/renderer-02.json",
+          "limit": "Accepted M1 global-resource/shared-boundary and controlled fixture coverage only; exact composer sources/cameras/native/server readback remain later gates."
+        },
+        {
+          "slice": "M2",
+          "gate_state": "M2 accepted through all distinct slice gates",
+          "source_seal": "M2/SOURCE-SEAL.json",
+          "raw_check": "M2/orchestrator-checks/renderer-01.json",
+          "build": "M2/orchestrator-checks/build-01.json",
+          "limit": "Controlled source/media/WS browser lane only; own source UI/consumer/stores rendered, cumulative M1 and ordinary command oracles. No actual camera PNG/save/server DB/provider/Wiki certification; M3/final required.",
+          "acceptance": "M2/ACCEPTANCE.json"
+        },
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "limit": "Full slice coverage; final post-accepted integration checks/review pending."
+        }
+      ]
+    },
+    "A08": {
+      "state": "verified_technical_completion",
+      "required": true,
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-02.json"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M1",
+          "acceptance": "M1/ACCEPTANCE.json",
+          "source_seal": "M1/orchestrator-checks/acceptance-inputs-01.json",
+          "raw_check": "M1/orchestrator-checks/renderer-02.json",
+          "limit": "Accepted M1 global-resource/shared-boundary and controlled fixture coverage only; exact composer sources/cameras/native/server readback remain later gates."
+        },
+        {
+          "slice": "M2",
+          "gate_state": "M2 accepted through all distinct slice gates",
+          "source_seal": "M2/SOURCE-SEAL.json",
+          "raw_check": "M2/orchestrator-checks/renderer-01.json",
+          "build": "M2/orchestrator-checks/build-01.json",
+          "limit": "Controlled source/media/WS browser lane only; own source UI/consumer/stores rendered, cumulative M1 and ordinary command oracles. No actual camera PNG/save/server DB/provider/Wiki certification; M3/final required.",
+          "acceptance": "M2/ACCEPTANCE.json"
+        },
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "limit": "Full slice coverage; final post-accepted integration checks/review pending."
+        }
+      ]
+    },
+    "A09": {
+      "state": "verified_technical_completion",
+      "required": true,
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-02.json"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M1",
+          "acceptance": "M1/ACCEPTANCE.json",
+          "source_seal": "M1/orchestrator-checks/acceptance-inputs-01.json",
+          "raw_check": "M1/orchestrator-checks/renderer-02.json",
+          "limit": "Accepted M1 global-resource/shared-boundary and controlled fixture coverage only; exact composer sources/cameras/native/server readback remain later gates."
+        },
+        {
+          "slice": "M2",
+          "gate_state": "M2 accepted through all distinct slice gates",
+          "source_seal": "M2/SOURCE-SEAL.json",
+          "raw_check": "M2/orchestrator-checks/renderer-01.json",
+          "build": "M2/orchestrator-checks/build-01.json",
+          "limit": "Controlled source/media/WS browser lane only; own source UI/consumer/stores rendered, cumulative M1 and ordinary command oracles. No actual camera PNG/save/server DB/provider/Wiki certification; M3/final required.",
+          "acceptance": "M2/ACCEPTANCE.json"
+        },
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "limit": "Full slice coverage; final post-accepted integration checks/review pending."
+        }
+      ]
+    },
+    "A10": {
+      "state": "verified_technical_completion",
+      "required": true,
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-02.json"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "limit": "Full slice coverage; final post-accepted integration checks/review pending."
+        }
+      ]
+    },
+    "A11": {
+      "state": "verified_technical_completion",
+      "required": true,
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-02.json"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "limit": "Full slice coverage; final post-accepted integration checks/review pending."
+        }
+      ]
+    },
+    "A12": {
+      "state": "verified_technical_completion",
+      "required": true,
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-02.json"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M1",
+          "acceptance": "M1/ACCEPTANCE.json",
+          "source_seal": "M1/orchestrator-checks/acceptance-inputs-01.json",
+          "raw_check": "M1/orchestrator-checks/renderer-02.json",
+          "limit": "Accepted M1 global-resource/shared-boundary and controlled fixture coverage only; exact composer sources/cameras/native/server readback remain later gates."
+        },
+        {
+          "slice": "M2",
+          "gate_state": "M2 accepted through all distinct slice gates",
+          "source_seal": "M2/SOURCE-SEAL.json",
+          "raw_check": "M2/orchestrator-checks/renderer-01.json",
+          "build": "M2/orchestrator-checks/build-01.json",
+          "limit": "Controlled source/media/WS browser lane only; own source UI/consumer/stores rendered, cumulative M1 and ordinary command oracles. No actual camera PNG/save/server DB/provider/Wiki certification; M3/final required.",
+          "acceptance": "M2/ACCEPTANCE.json"
+        },
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "limit": "Full slice coverage; final post-accepted integration checks/review pending."
+        }
+      ]
+    },
+    "A13": {
+      "state": "verified_technical_completion",
+      "required": true,
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-02.json"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M1",
+          "acceptance": "M1/ACCEPTANCE.json",
+          "source_seal": "M1/orchestrator-checks/acceptance-inputs-01.json",
+          "raw_check": "M1/orchestrator-checks/renderer-02.json",
+          "limit": "Accepted M1 global-resource/shared-boundary and controlled fixture coverage only; exact composer sources/cameras/native/server readback remain later gates."
+        },
+        {
+          "slice": "M2",
+          "gate_state": "M2 accepted through all distinct slice gates",
+          "source_seal": "M2/SOURCE-SEAL.json",
+          "raw_check": "M2/orchestrator-checks/renderer-01.json",
+          "build": "M2/orchestrator-checks/build-01.json",
+          "limit": "Controlled source/media/WS browser lane only; own source UI/consumer/stores rendered, cumulative M1 and ordinary command oracles. No actual camera PNG/save/server DB/provider/Wiki certification; M3/final required.",
+          "acceptance": "M2/ACCEPTANCE.json"
+        },
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "limit": "Full slice coverage; final post-accepted integration checks/review pending."
+        }
+      ]
+    },
+    "A14": {
+      "state": "verified_technical_completion",
+      "required": true,
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-02.json"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "limit": "Full slice coverage; final post-accepted integration checks/review pending."
+        }
+      ]
+    },
+    "A15": {
+      "state": "verified_technical_completion",
+      "required": true,
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-02.json"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M1",
+          "acceptance": "M1/ACCEPTANCE.json",
+          "source_seal": "M1/orchestrator-checks/acceptance-inputs-01.json",
+          "raw_check": "M1/orchestrator-checks/renderer-02.json",
+          "limit": "Accepted M1 global-resource/shared-boundary and controlled fixture coverage only; exact composer sources/cameras/native/server readback remain later gates."
+        },
+        {
+          "slice": "M2",
+          "gate_state": "M2 accepted through all distinct slice gates",
+          "source_seal": "M2/SOURCE-SEAL.json",
+          "raw_check": "M2/orchestrator-checks/renderer-01.json",
+          "build": "M2/orchestrator-checks/build-01.json",
+          "limit": "Controlled source/media/WS browser lane only; own source UI/consumer/stores rendered, cumulative M1 and ordinary command oracles. No actual camera PNG/save/server DB/provider/Wiki certification; M3/final required.",
+          "acceptance": "M2/ACCEPTANCE.json"
+        },
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "limit": "Full slice coverage; final post-accepted integration checks/review pending."
+        }
+      ]
+    },
+    "A16": {
+      "state": "verified_technical_completion",
+      "required": true,
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-02.json"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M1",
+          "acceptance": "M1/ACCEPTANCE.json",
+          "source_seal": "M1/orchestrator-checks/acceptance-inputs-01.json",
+          "raw_check": "M1/orchestrator-checks/renderer-02.json",
+          "limit": "Accepted M1 global-resource/shared-boundary and controlled fixture coverage only; exact composer sources/cameras/native/server readback remain later gates."
+        },
+        {
+          "slice": "M2",
+          "gate_state": "M2 accepted through all distinct slice gates",
+          "source_seal": "M2/SOURCE-SEAL.json",
+          "raw_check": "M2/orchestrator-checks/renderer-01.json",
+          "build": "M2/orchestrator-checks/build-01.json",
+          "limit": "Controlled source/media/WS browser lane only; own source UI/consumer/stores rendered, cumulative M1 and ordinary command oracles. No actual camera PNG/save/server DB/provider/Wiki certification; M3/final required.",
+          "acceptance": "M2/ACCEPTANCE.json"
+        },
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "limit": "Full slice coverage; final post-accepted integration checks/review pending."
+        }
+      ]
+    },
+    "A17": {
+      "state": "verified_technical_completion",
+      "required": true,
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-02.json"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M1",
+          "acceptance": "M1/ACCEPTANCE.json",
+          "source_seal": "M1/orchestrator-checks/acceptance-inputs-01.json",
+          "raw_check": "M1/orchestrator-checks/renderer-02.json",
+          "limit": "Accepted M1 global-resource/shared-boundary and controlled fixture coverage only; exact composer sources/cameras/native/server readback remain later gates."
+        },
+        {
+          "slice": "M2",
+          "gate_state": "M2 accepted through all distinct slice gates",
+          "source_seal": "M2/SOURCE-SEAL.json",
+          "raw_check": "M2/orchestrator-checks/renderer-01.json",
+          "build": "M2/orchestrator-checks/build-01.json",
+          "limit": "Controlled source/media/WS browser lane only; own source UI/consumer/stores rendered, cumulative M1 and ordinary command oracles. No actual camera PNG/save/server DB/provider/Wiki certification; M3/final required.",
+          "acceptance": "M2/ACCEPTANCE.json"
+        },
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "limit": "Full slice coverage; final post-accepted integration checks/review pending."
+        }
+      ]
+    }
+  },
+  "requirements": {
+    "R-01": {
+      "state": "verified_technical_completion",
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M1",
+          "acceptance": "M1/ACCEPTANCE.json",
+          "limit": "M1 scope only; full requirement disposition awaits current integrated result."
+        },
+        {
+          "slice": "M2",
+          "gate_state": "M2 accepted through all distinct slice gates",
+          "raw_check": "M2/orchestrator-checks/renderer-01.json",
+          "limit": "M2 local source/identity/insertion and current165case verification scope only; direct cameras/full native/Wiki/server/final requirements remain pending.",
+          "acceptance": "M2/ACCEPTANCE.json"
+        },
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "source_seal": "M3/SOURCE-SEAL.json",
+          "current_native": "M3/orchestrator-checks/native-04/native-receipt.json",
+          "current_renderer": "M3/orchestrator-checks/renderer-01.json",
+          "limit": "Full current integrated slice coverage; mandatory post-accepted final fullsuite/fresh final reviewer still pending."
+        }
+      ]
+    },
+    "R-02": {
+      "state": "verified_technical_completion",
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M1",
+          "acceptance": "M1/ACCEPTANCE.json",
+          "limit": "M1 scope only; full requirement disposition awaits current integrated result."
+        },
+        {
+          "slice": "M2",
+          "gate_state": "M2 accepted through all distinct slice gates",
+          "raw_check": "M2/orchestrator-checks/renderer-01.json",
+          "limit": "M2 local source/identity/insertion and current165case verification scope only; direct cameras/full native/Wiki/server/final requirements remain pending.",
+          "acceptance": "M2/ACCEPTANCE.json"
+        },
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "source_seal": "M3/SOURCE-SEAL.json",
+          "current_native": "M3/orchestrator-checks/native-04/native-receipt.json",
+          "current_renderer": "M3/orchestrator-checks/renderer-01.json",
+          "limit": "Full current integrated slice coverage; mandatory post-accepted final fullsuite/fresh final reviewer still pending."
+        }
+      ]
+    },
+    "R-03": {
+      "state": "verified_technical_completion",
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M2",
+          "gate_state": "M2 accepted through all distinct slice gates",
+          "raw_check": "M2/orchestrator-checks/renderer-01.json",
+          "limit": "M2 local source/identity/insertion and current165case verification scope only; direct cameras/full native/Wiki/server/final requirements remain pending.",
+          "acceptance": "M2/ACCEPTANCE.json"
+        },
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "source_seal": "M3/SOURCE-SEAL.json",
+          "current_native": "M3/orchestrator-checks/native-04/native-receipt.json",
+          "current_renderer": "M3/orchestrator-checks/renderer-01.json",
+          "limit": "Full current integrated slice coverage; mandatory post-accepted final fullsuite/fresh final reviewer still pending."
+        }
+      ]
+    },
+    "R-04": {
+      "state": "verified_technical_completion",
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M1",
+          "acceptance": "M1/ACCEPTANCE.json",
+          "limit": "M1 scope only; full requirement disposition awaits current integrated result."
+        },
+        {
+          "slice": "M2",
+          "gate_state": "M2 accepted through all distinct slice gates",
+          "raw_check": "M2/orchestrator-checks/renderer-01.json",
+          "limit": "M2 local source/identity/insertion and current165case verification scope only; direct cameras/full native/Wiki/server/final requirements remain pending.",
+          "acceptance": "M2/ACCEPTANCE.json"
+        },
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "source_seal": "M3/SOURCE-SEAL.json",
+          "current_native": "M3/orchestrator-checks/native-04/native-receipt.json",
+          "current_renderer": "M3/orchestrator-checks/renderer-01.json",
+          "limit": "Full current integrated slice coverage; mandatory post-accepted final fullsuite/fresh final reviewer still pending."
+        }
+      ]
+    },
+    "R-05": {
+      "state": "verified_technical_completion",
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M1",
+          "acceptance": "M1/ACCEPTANCE.json",
+          "limit": "M1 scope only; full requirement disposition awaits current integrated result."
+        },
+        {
+          "slice": "M2",
+          "gate_state": "M2 accepted through all distinct slice gates",
+          "raw_check": "M2/orchestrator-checks/renderer-01.json",
+          "limit": "M2 local source/identity/insertion and current165case verification scope only; direct cameras/full native/Wiki/server/final requirements remain pending.",
+          "acceptance": "M2/ACCEPTANCE.json"
+        },
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "source_seal": "M3/SOURCE-SEAL.json",
+          "current_native": "M3/orchestrator-checks/native-04/native-receipt.json",
+          "current_renderer": "M3/orchestrator-checks/renderer-01.json",
+          "limit": "Full current integrated slice coverage; mandatory post-accepted final fullsuite/fresh final reviewer still pending."
+        }
+      ]
+    },
+    "R-06": {
+      "state": "verified_technical_completion",
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M1",
+          "acceptance": "M1/ACCEPTANCE.json",
+          "limit": "M1 scope only; full requirement disposition awaits current integrated result."
+        },
+        {
+          "slice": "M2",
+          "gate_state": "M2 accepted through all distinct slice gates",
+          "raw_check": "M2/orchestrator-checks/renderer-01.json",
+          "limit": "M2 local source/identity/insertion and current165case verification scope only; direct cameras/full native/Wiki/server/final requirements remain pending.",
+          "acceptance": "M2/ACCEPTANCE.json"
+        },
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "source_seal": "M3/SOURCE-SEAL.json",
+          "current_native": "M3/orchestrator-checks/native-04/native-receipt.json",
+          "current_renderer": "M3/orchestrator-checks/renderer-01.json",
+          "limit": "Full current integrated slice coverage; mandatory post-accepted final fullsuite/fresh final reviewer still pending."
+        }
+      ]
+    },
+    "R-07": {
+      "state": "verified_technical_completion",
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "source_seal": "M3/SOURCE-SEAL.json",
+          "current_native": "M3/orchestrator-checks/native-04/native-receipt.json",
+          "current_renderer": "M3/orchestrator-checks/renderer-01.json",
+          "limit": "Full current integrated slice coverage; mandatory post-accepted final fullsuite/fresh final reviewer still pending."
+        }
+      ]
+    },
+    "R-08": {
+      "state": "verified_technical_completion",
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M1",
+          "acceptance": "M1/ACCEPTANCE.json",
+          "limit": "M1 scope only; full requirement disposition awaits current integrated result."
+        },
+        {
+          "slice": "M2",
+          "gate_state": "M2 accepted through all distinct slice gates",
+          "raw_check": "M2/orchestrator-checks/renderer-01.json",
+          "limit": "M2 local source/identity/insertion and current165case verification scope only; direct cameras/full native/Wiki/server/final requirements remain pending.",
+          "acceptance": "M2/ACCEPTANCE.json"
+        },
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "source_seal": "M3/SOURCE-SEAL.json",
+          "current_native": "M3/orchestrator-checks/native-04/native-receipt.json",
+          "current_renderer": "M3/orchestrator-checks/renderer-01.json",
+          "limit": "Full current integrated slice coverage; mandatory post-accepted final fullsuite/fresh final reviewer still pending."
+        }
+      ]
+    },
+    "R-09": {
+      "state": "verified_technical_completion",
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M1",
+          "acceptance": "M1/ACCEPTANCE.json",
+          "limit": "M1 scope only; full requirement disposition awaits current integrated result."
+        },
+        {
+          "slice": "M2",
+          "gate_state": "M2 accepted through all distinct slice gates",
+          "raw_check": "M2/orchestrator-checks/renderer-01.json",
+          "limit": "M2 local source/identity/insertion and current165case verification scope only; direct cameras/full native/Wiki/server/final requirements remain pending.",
+          "acceptance": "M2/ACCEPTANCE.json"
+        },
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "source_seal": "M3/SOURCE-SEAL.json",
+          "current_native": "M3/orchestrator-checks/native-04/native-receipt.json",
+          "current_renderer": "M3/orchestrator-checks/renderer-01.json",
+          "limit": "Full current integrated slice coverage; mandatory post-accepted final fullsuite/fresh final reviewer still pending."
+        }
+      ]
+    },
+    "R-10": {
+      "state": "verified_technical_completion",
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-02.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+      ],
+      "slice_evidence": [
+        {
+          "slice": "M1",
+          "acceptance": "M1/ACCEPTANCE.json",
+          "limit": "M1 scope only; full requirement disposition awaits current integrated result."
+        },
+        {
+          "slice": "M2",
+          "gate_state": "M2 accepted through all distinct slice gates",
+          "raw_check": "M2/orchestrator-checks/renderer-01.json",
+          "limit": "M2 local source/identity/insertion and current165case verification scope only; direct cameras/full native/Wiki/server/final requirements remain pending.",
+          "acceptance": "M2/ACCEPTANCE.json"
+        },
+        {
+          "slice": "M3",
+          "gate_state": "accepted through all distinct slice gates",
+          "acceptance": "M3/ACCEPTANCE.json",
+          "source_seal": "M3/SOURCE-SEAL.json",
+          "current_native": "M3/orchestrator-checks/native-04/native-receipt.json",
+          "current_renderer": "M3/orchestrator-checks/renderer-01.json",
+          "limit": "Full current integrated slice coverage; mandatory post-accepted final fullsuite/fresh final reviewer still pending."
+        }
+      ]
+    }
+  },
+  "final_mandatory_checks": {
+    "fresh_full_server_Jest": "PASS final-integration-01/server-full-01.json; final gate pending",
+    "fresh_client_build": "PASS final-integration-01/build-01.json; aggregate gate pending",
+    "current_renderer_lane": "PASS final renderer02 exact16suite269/269 unchanged; renderer01 precondition failure preserved/unattributed",
+    "real_native_png_save_attachment": "PASS final-integration-01/native-01.json; final gate pending",
+    "server_ACK_persistence_metadata_readback": "PASS actual final native4ACK/DB readbacks; final gate pending",
+    "Wiki_source_render_readback": "PASS final-integration-01/wiki-01.json; final gate pending",
+    "fresh_final_independent_review": "CLEAN /root/final_integration_review_01, FINAL-INTEGRATION-REVIEW-01.md"
+  },
+  "completed_SPEC_owner_acceptance": "pending explicit owner acceptance of completedSPEC summary; implementationapproval is separate",
+  "publication": "not authorized; no commit-producing/push/merge/Alpha operations",
+  "updated_at": "2026-10-07T23:47:14.644146+00:00",
+  "aggregate_note": "SPEC_READY_FOR_OWNER_REVIEW. All27 criteria technicallyverified, all3 slicesaccepted, finalrequiredchecksPASS, independentintegratedCLEAN, exacttemporaryserverlinkremoved. Humancompletionacceptance pending.",
+  "current_execution_hold": null
+}

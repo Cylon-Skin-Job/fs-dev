@@ -1,0 +1,220 @@
+{
+  "runId": "human-1790544782494-7dc3b427",
+  "token": "chat-architecture-owner-chat-arch-human-1790544782494-7dc3b427",
+  "driverPid": 38743,
+  "status": "closed",
+  "startedAt": 1790544782494,
+  "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/render-diagnostics/HUMAN-RESUME/human-1790544782494-7dc3b427",
+  "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790494814495-ca038557-SYwgRn",
+  "stageRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790494814495-ca038557-SYwgRn/stage-human-1790544782494-7dc3b427",
+  "profileRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790494814495-ca038557-SYwgRn/profile",
+  "workspaceRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790494814495-ca038557-SYwgRn/workspace",
+  "recording": true,
+  "automaticExpiry": false,
+  "humanReady": true,
+  "skippedResourceSamples": 0,
+  "retainedToken": "chat-architecture-owner-chat-arch-human-1790494814495-ca038557",
+  "resumedFrom": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-06/06B/human-1790494814495-ca038557/session.json",
+  "profileBackup": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790494814495-ca038557-SYwgRn/recovery-before-resume-20260927T212650Z",
+  "before": {
+    "workspaces": [
+      {
+        "id": "human-test",
+        "label": "Instrumented Human Test",
+        "icon": "open_run",
+        "description": null,
+        "repo_path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790494814495-ca038557-SYwgRn/workspace/Human-Test",
+        "sort_order": 0,
+        "created_at": "2026-09-27 07:40:17",
+        "type": "code",
+        "ribbon_visible": 1,
+        "ribbon_sort_order": 0
+      }
+    ],
+    "threads": [
+      {
+        "thread_id": "2026-09-27T00-40-17-717",
+        "harness_id": "opencode",
+        "harnessConfigSha256": "8edb827dd651a3d0a91e4cb9b28198a6c27f8f07b06c6db613db0f86e93d5030"
+      },
+      {
+        "thread_id": "2026-09-27T01-25-18-759",
+        "harness_id": "opencode",
+        "harnessConfigSha256": "5150b65eb2db05b45760a5deecf445511977d6d5465c136358ad8fa540194f7d"
+      }
+    ],
+    "exchanges": [
+      {
+        "id": 1,
+        "thread_id": "2026-09-27T00-40-17-717",
+        "seq": 1
+      },
+      {
+        "id": 2,
+        "thread_id": "2026-09-27T00-40-17-717",
+        "seq": 2
+      },
+      {
+        "id": 3,
+        "thread_id": "2026-09-27T00-40-17-717",
+        "seq": 3
+      },
+      {
+        "id": 4,
+        "thread_id": "2026-09-27T00-40-17-717",
+        "seq": 4
+      },
+      {
+        "id": 5,
+        "thread_id": "2026-09-27T00-40-17-717",
+        "seq": 5
+      },
+      {
+        "id": 6,
+        "thread_id": "2026-09-27T00-40-17-717",
+        "seq": 6
+      },
+      {
+        "id": 7,
+        "thread_id": "2026-09-27T00-40-17-717",
+        "seq": 7
+      },
+      {
+        "id": 8,
+        "thread_id": "2026-09-27T00-40-17-717",
+        "seq": 8
+      },
+      {
+        "id": 9,
+        "thread_id": "2026-09-27T00-40-17-717",
+        "seq": 9
+      },
+      {
+        "id": 10,
+        "thread_id": "2026-09-27T01-25-18-759",
+        "seq": 1
+      },
+      {
+        "id": 11,
+        "thread_id": "2026-09-27T01-25-18-759",
+        "seq": 2
+      }
+    ]
+  },
+  "loadedStageManifestSha256": "c44154b33601fe6afec82aec9d3c73d11abaed517597ee379aab6d4f074d1d12",
+  "pid": 38775,
+  "port": 63241,
+  "project": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790494814495-ca038557-SYwgRn/workspace/Human-Test",
+  "surface": {
+    "threadId": "2026-09-27T01-25-18-759",
+    "diagnosticsRightmost": true,
+    "diagnosticsClosed": true,
+    "historyVisible": true,
+    "composerEnabled": true
+  },
+  "threadId": "2026-09-27T01-25-18-759",
+  "after": {
+    "workspaces": [
+      {
+        "id": "human-test",
+        "label": "Instrumented Human Test",
+        "icon": "open_run",
+        "description": null,
+        "repo_path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790494814495-ca038557-SYwgRn/workspace/Human-Test",
+        "sort_order": 0,
+        "created_at": "2026-09-27 07:40:17",
+        "type": "code",
+        "ribbon_visible": 1,
+        "ribbon_sort_order": 0
+      }
+    ],
+    "threads": [
+      {
+        "thread_id": "2026-09-27T00-40-17-717",
+        "harness_id": "opencode",
+        "harnessConfigSha256": "8edb827dd651a3d0a91e4cb9b28198a6c27f8f07b06c6db613db0f86e93d5030"
+      },
+      {
+        "thread_id": "2026-09-27T01-25-18-759",
+        "harness_id": "opencode",
+        "harnessConfigSha256": "5150b65eb2db05b45760a5deecf445511977d6d5465c136358ad8fa540194f7d"
+      }
+    ],
+    "exchanges": [
+      {
+        "id": 1,
+        "thread_id": "2026-09-27T00-40-17-717",
+        "seq": 1
+      },
+      {
+        "id": 2,
+        "thread_id": "2026-09-27T00-40-17-717",
+        "seq": 2
+      },
+      {
+        "id": 3,
+        "thread_id": "2026-09-27T00-40-17-717",
+        "seq": 3
+      },
+      {
+        "id": 4,
+        "thread_id": "2026-09-27T00-40-17-717",
+        "seq": 4
+      },
+      {
+        "id": 5,
+        "thread_id": "2026-09-27T00-40-17-717",
+        "seq": 5
+      },
+      {
+        "id": 6,
+        "thread_id": "2026-09-27T00-40-17-717",
+        "seq": 6
+      },
+      {
+        "id": 7,
+        "thread_id": "2026-09-27T00-40-17-717",
+        "seq": 7
+      },
+      {
+        "id": 8,
+        "thread_id": "2026-09-27T00-40-17-717",
+        "seq": 8
+      },
+      {
+        "id": 9,
+        "thread_id": "2026-09-27T00-40-17-717",
+        "seq": 9
+      },
+      {
+        "id": 10,
+        "thread_id": "2026-09-27T01-25-18-759",
+        "seq": 1
+      },
+      {
+        "id": 11,
+        "thread_id": "2026-09-27T01-25-18-759",
+        "seq": 2
+      }
+    ]
+  },
+  "serverUrl": "http://127.0.0.1:63241",
+  "windowId": 1,
+  "title": "HUMAN TEST — human-1790544782494-7dc3b427",
+  "lastRendererBatchAt": 1790546242345,
+  "readyAt": 1790544785806,
+  "smokeTerminal": {
+    "kind": "wire",
+    "at": 1790545770288,
+    "direction": "inbound",
+    "type": "turn_end",
+    "threadId": "2026-09-27T01-25-18-759",
+    "turnId": "511b85d4-f3e6-4a2a-b58e-3e25d13a21cf",
+    "streamSeq": 110,
+    "reason": "stop"
+  },
+  "closeReason": "owner-window-closed",
+  "lingeringOwnedPids": [],
+  "endedAt": 1790546245260,
+  "retainedForDiagnosis": true
+}

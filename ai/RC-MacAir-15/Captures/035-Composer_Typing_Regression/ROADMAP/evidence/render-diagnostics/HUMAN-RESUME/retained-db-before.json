@@ -1,0 +1,198 @@
+{
+  "tables": {
+    "workspaces": {
+      "count": 1,
+      "rowsHash": "b2e9d91ce8939e2d0bf8d7f2b173920aef48ca4f7d54b638e4c22953720a5f28"
+    },
+    "threads": {
+      "count": 2,
+      "rowsHash": "782fe9eecb9998de0667de3b299bf4e5b231bbc3b3fb785028b7519b20d306c2"
+    },
+    "thread_groups": {
+      "count": 2,
+      "rowsHash": "e0bdf3011a9dee2f25baeeed9b6d165a9d4b7926b86d0354c38071fab79f2e30"
+    },
+    "exchanges": {
+      "count": 11,
+      "rowsHash": "c7609c558d0bbc3a5c33b5f85f47699ee21cdd58ff5c10ff895bb25a57431607"
+    },
+    "system_config": {
+      "count": 9,
+      "rowsHash": "19dac554fb3f2bb48d9a9390daae5924332913e097bb380f0acc8a6edc8bd232"
+    },
+    "prompt_submission_receipts": {
+      "count": 11,
+      "rowsHash": "1c92aa2ada847789c924dd128a87e1d4915773c301d3084eacc59078498d89db"
+    }
+  },
+  "selected": [
+    {
+      "key": "last_active_workspace_id",
+      "value": "human-test",
+      "updated_at": 1790494817277,
+      "tab": null,
+      "section": null,
+      "icon": null,
+      "description": null,
+      "surface_when": null,
+      "wiki_slug": null,
+      "sort_order": 0
+    }
+  ],
+  "schema": {
+    "workspaces": [
+      "id",
+      "label",
+      "icon",
+      "description",
+      "repo_path",
+      "sort_order",
+      "created_at",
+      "type",
+      "ribbon_visible",
+      "ribbon_sort_order"
+    ],
+    "threads": [
+      "thread_id",
+      "view_id",
+      "name",
+      "created_at",
+      "resumed_at",
+      "message_count",
+      "status",
+      "updated_at",
+      "harness_id",
+      "harness_config",
+      "project_id",
+      "scope",
+      "workspace_id"
+    ],
+    "thread_groups": [
+      "group_id",
+      "workspace_id",
+      "view_id",
+      "name",
+      "current_primary_thread_id",
+      "created_at",
+      "updated_at"
+    ],
+    "exchanges": [
+      "id",
+      "thread_id",
+      "seq",
+      "ts",
+      "user_input",
+      "assistant",
+      "metadata"
+    ],
+    "system_config": [
+      "key",
+      "value",
+      "updated_at",
+      "tab",
+      "section",
+      "icon",
+      "description",
+      "surface_when",
+      "wiki_slug",
+      "sort_order"
+    ],
+    "prompt_submission_receipts": [
+      "workspace_id",
+      "thread_id",
+      "request_id",
+      "fingerprint",
+      "snapshot_json",
+      "turn_id",
+      "generation",
+      "outcome",
+      "execution",
+      "reason",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "workspaces": [
+    {
+      "id": "human-test",
+      "label": "Instrumented Human Test",
+      "icon": "open_run",
+      "description": null,
+      "repo_path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790494814495-ca038557-SYwgRn/workspace/Human-Test",
+      "sort_order": 0,
+      "created_at": "2026-09-27 07:40:17",
+      "type": "code",
+      "ribbon_visible": 1,
+      "ribbon_sort_order": 0
+    }
+  ],
+  "threads": [
+    {
+      "thread_id": "2026-09-27T00-40-17-717",
+      "harness_id": "opencode",
+      "harness_config": "{\"opencodeSessionId\":\"ses_f1e313f4bffek7X1JnL2BR6gM9\"}"
+    },
+    {
+      "thread_id": "2026-09-27T01-25-18-759",
+      "harness_id": "opencode",
+      "harness_config": "{\"opencodeSessionId\":\"ses_f1e07919effekEnKHp5BPmgQpe\"}"
+    }
+  ],
+  "exchangeIdentities": [
+    {
+      "id": 1,
+      "thread_id": "2026-09-27T00-40-17-717",
+      "seq": 1
+    },
+    {
+      "id": 2,
+      "thread_id": "2026-09-27T00-40-17-717",
+      "seq": 2
+    },
+    {
+      "id": 3,
+      "thread_id": "2026-09-27T00-40-17-717",
+      "seq": 3
+    },
+    {
+      "id": 4,
+      "thread_id": "2026-09-27T00-40-17-717",
+      "seq": 4
+    },
+    {
+      "id": 5,
+      "thread_id": "2026-09-27T00-40-17-717",
+      "seq": 5
+    },
+    {
+      "id": 6,
+      "thread_id": "2026-09-27T00-40-17-717",
+      "seq": 6
+    },
+    {
+      "id": 7,
+      "thread_id": "2026-09-27T00-40-17-717",
+      "seq": 7
+    },
+    {
+      "id": 8,
+      "thread_id": "2026-09-27T00-40-17-717",
+      "seq": 8
+    },
+    {
+      "id": 9,
+      "thread_id": "2026-09-27T00-40-17-717",
+      "seq": 9
+    },
+    {
+      "id": 10,
+      "thread_id": "2026-09-27T01-25-18-759",
+      "seq": 1
+    },
+    {
+      "id": 11,
+      "thread_id": "2026-09-27T01-25-18-759",
+      "seq": 2
+    }
+  ]
+}

@@ -24,7 +24,7 @@
 - **Locator:** [HANDOFF-CHOKIDAR-AND-HARNESS-2026-10-05.md](../chat-integration-and-retirement/HANDOFF-CHOKIDAR-AND-HARNESS-2026-10-05.md), “Current position”, “Other OpenCode harness issues retained for later work” and “Next safe action”.
 - **Revision:** SHA-256 9ce666a9ae0413399d912da8fe2df9f7ef088bfe06e2bf212e4346ef15e4119c; report dated 2026-10-05 16:08 UTC.
 - **Checked:** 2026-10-05T16:19:23Z initially; re-read and same SHA-256 verified 2026-10-05T16:46:22Z for this import.
-- **Supports:** Current-build identity/outstanding verification and six historical findings with OpenCode v1.18.32 applicability and qualifications.
+- **Supports:** Historical October 5 build identity/waiting state and six findings with OpenCode v1.18.32 applicability/qualifications. Build status is superseded by REF-007; the harness evidence remains a historical starting point.
 - **Limitations:** Prior report, not fresh tests or current runtime health. Both named temporary files (`observations.json` and connection-comparison `summary.json`) were absent at recheck. Raw fixtures/native frames/fingerprints were not recovered. Baseline/version applicability needs rechecking; no source file or task is moved/reassigned.
 - **Related:** [CAPTURE](CAPTURE.md), I-001–I-006 in [ISSUES](ISSUES.md), source [TICKET](../chat-integration-and-retirement/TICKET.md), REF-004/005/006.
 
@@ -75,11 +75,74 @@
 ### REF-006 — Current-build dependency and concurrency observation
 
 - **Kind:** dependency_and_task_observation
-- **Status:** observed_not_closed
+- **Status:** historical_observation; build wait superseded by REF-007
 - **Source:** [CHAT-AR-SPEC-01 implementation ledger](../chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md), REF-002 handoff, `list_threads` and compact `wait_threads` snapshot of the separate build audit.
 - **Locator:** Ledger “Independent gates and final integration”; existing orchestrator `01a1042c-09df-7473-a1e1-f458eee6b93d`; **1. Chokidar Build Audit & Repair**, `01a10cda-f556-7733-954b-132a648d8d11`, local, active turn `01a10cec-84b1-7ba2-ae3c-8bf96413db28`. No messages sent to either task.
 - **Revision:** Ledger SHA-256 `8efd20ee63567330fab117435feaf9e1014b3ba269c0a895c10d75b3d8710240`; retirement candidate `sha256:ca56e1d90d0c252940ca67d1467bb6be06ed95f907fcab602d25b1bad1482144`. Repository identity for this intake: `/Users/rccurtrightjr./projects/fs-dev`, branch `agent/exact-workspace-paths`, HEAD `d15792920731f85e45b743519d4af2b807d95a9c`, dirty; not an accepted follow-on implementation baseline.
 - **Checked:** Ledger/hash 2026-10-05T16:46:22Z; task/concurrency and repository identity 2026-10-05T16:47:32Z. No other active destination-folder writer appeared in the inspected task list; destination hashes were checked immediately before editing.
-- **Supports:** Current-build ownership stays separate. The inspected ledger reports `NATIVE_CHECK_WAITING_OWNER_MANUAL_RESULT` with actual chat and final integration outstanding. The separate build-audit chat was active; its latest repair/acceptance packet must be re-read before releasing follow-on product work.
-- **Limitations:** Mutable source/task observations, not live app verification. The older ledger's wait state is not asserted to be the active audit's final disposition. Reports may change during that work; no closure or task reassignment is inferred.
+- **Supports:** The October 5 observation recorded separate build ownership, `NATIVE_CHECK_WAITING_OWNER_MANUAL_RESULT` and an active build-audit chat. This remains dated provenance; REF-007 now satisfies the completed-build prerequisite.
+- **Limitations:** Historical source/task observations, not live app verification or a present hold. Do not resume the older waiting gates. No task identity or assignment transfers from this observation.
 - **Related:** [D-002](DECISIONS.md#d-002--finish-the-current-build-before-follow-on-harness-work), [TICKET](TICKET.md), REF-002.
+
+### REF-007 — Accepted build closeout and publication packet
+
+- **Kind:** acceptance_review_and_operation_receipts
+- **Status:** inspected; sealed records verified
+- **Source:** Integration and Retirement completed-build handoff and linked immutable Commit Supervisor job `chat-ar-20261006`.
+- **Locator:** [HANDOFF-COMPLETED-BUILD-2026-10-07.md](../chat-integration-and-retirement/HANDOFF-COMPLETED-BUILD-2026-10-07.md), read including October 8 addendum; [completed-work owner acceptance](../chat-integration-and-retirement/planning/startup-integrity-repair/COMPLETED-WORK-OWNER-ACCEPTANCE.md); [original/repair final implementation report](../chat-integration-and-retirement/planning/startup-integrity-repair/implementation/SPEC-FINAL-REPORT.md), acceptance/R3/provenance sections; source [TICKET](../chat-integration-and-retirement/TICKET.md). Job evidence:
+  - [final-review-pass-02/report.md](../../jobs/commit-supervisor/chat-ar-20261006/final-review-pass-02/report.md) and adjacent seal.json.
+  - [operations-recorded.json](../../jobs/commit-supervisor/chat-ar-20261006/operations-recorded.json): original local commit/landing operation receipt, whose no-push/no-Alpha fields retain their original scope.
+  - [runtime-acceptance.json](../../jobs/commit-supervisor/chat-ar-20261006/runtime-acceptance.json) and [runtime-preservation-receipt.json](../../jobs/commit-supervisor/chat-ar-20261006/runtime-preservation-receipt.json).
+  - [publication-restart report](../../jobs/commit-supervisor/chat-ar-20261006/publication-restart-20261007/report.md), [completion.json](../../jobs/commit-supervisor/chat-ar-20261006/publication-restart-20261007/completion.json), [completion-seal.json](../../jobs/commit-supervisor/chat-ar-20261006/publication-restart-20261007/completion-seal.json): later push/development restart/Alpha sync-build-install-restart receipts.
+- **Revision:** Published commit `a4a4262587a7f72f89f5b9b9c2f54878fe5381bb`, tree `1c80f83c6c4b2b61e42c4dbb988c1f942b672ade`. Current handoff SHA-256 `28177c987e9b203b61fb68c1cbcaa03a171294c88ca7b05a2d040052d126e158`; final review report `383600a1238b1318dac82e12f65f1843589b14d84da43f3c990735020ea7dd5d`; publication report `a8869d9ed16575dfad0e91eb8602cc1d06c0c62c61206ee01da976938359fe72`; completion `770671183ca4e99462d7782a2c7721415fc412ae78196ba57d84c69530c1474d`. All 14 final-review seal members and 34 publication/deployment seal members matched at recheck.
+- **Checked:** 2026-10-09T00:51:41Z–00:52:11Z, October 8 PDT; linked owner-acceptance/R3 sections read afterward. Primary checkout verified `/Users/rccurtrightjr./projects/fs-dev`, `main`, same published HEAD. This is a commit anchor; actual dirty files/config/runtime still require binding for a later assignment.
+- **Supports:** Both build contracts are owner accepted, independently integrated and published; no authorized build action remained unfinished at closeout. Accepted R3 real OpenCode proof covers two usable chats, three completed persisted exchanges and passive ordered reopening. Final pass 02 is CLEAN with dependency-bound retention; checks include 34 focused screenshot/106 cumulative renderer tests, client build, 19 focused server suites/186 passes, 221 full suites/3,265 passes/one existing skipped Kimi TODO, retained on 832 unchanged server/Electron dependencies. Private candidate also checked two chats, three PNG captures and six Wiki articles; it was stopped. Development/Alpha restart receipts establish dated identity and sustained connection; Alpha registry retained six workspaces and fs-dev selection.
+- **Limitations:** No new tests/provider sends/deployment or fresh runtime inspection by this receiver. Deployment receipts did not send another provider prompt and do not verify later Alpha model adoption. Private preservation covers five physical files and 25 foreign process tuples in its repeat window; original physical/logical DB equality remains unproved. The owner-waived 45-minute soak remains unperformed; fixture cleanup is not broad graceful-shutdown certification. Deferred restart-support helpers/current article and unrelated uncommitted work remain outside the pushed product commit; no publication of those units is authorized here. Earlier October 5 waits and pre-operation no-push fields are historical, not contradictory current holds.
+- **Related:** [D-002](DECISIONS.md#d-002--finish-the-current-build-before-follow-on-harness-work), [TICKET](TICKET.md), [CAPTURE](CAPTURE.md), REF-006/008.
+
+### REF-008 — Alpha model failure and authorized configuration correction
+
+- **Kind:** incident_report_controlled_reproduction_and_config_readback
+- **Status:** source packet inspected; corrected default independently read back; real response unverified
+- **Source:** October 8 addendum in REF-007, source task **Map Fusion–OpenCode chat failure states**, and receiver's narrow read-only model/config fingerprint.
+- **Locator:** [Alpha addendum](../chat-integration-and-retirement/HANDOFF-COMPLETED-BUILD-2026-10-07.md#october-8-addendum--alpha-model-lookup-failure-and-configuration-correction). Original attempts:
+  - Turn `c22a7b0c-a849-4fca-9df8-0ecca10119e7`; thread `2026-10-07T02-18-51-726`; session `ses_eea55c2dfffePNXkdj0Pzz61ry`; October 7 09:20:40 UTC.
+  - Turn `c63bed3e-d0ca-44c8-aa2b-1b3d2af837f1`; thread `2026-10-01T16-04-16-060`; session `ses_eea5539a2ffeLLRBubtht4cMgO`; October 7 09:21:15 UTC.
+  - Source incident evidence: Alpha profile `server-live.log` lines 109019–109064 at diagnosis, profile `server-data/fusion.db` receipt/diagnostic metadata, and `/Users/rccurtrightjr./.local/share/opencode/opencode.db` native model/session metadata. These runtime stores were not newly queried here.
+  - Controlled scratch paths `/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/alpha-model-check-n3sfic5z` and `alpha-model-detail-sb79d_fu`; detailed error ref `err_9554c629`. Source chat retains command results.
+  - Corrected [Alpha fs-dev cli.json](../../../../RC-Alpha/System/config/cli.json): `harnesses.opencode.model` only. Source authorization/correction turn at REF-010.
+- **Revision:** Source addendum dated `2026-10-08T22:33:47Z`, whole handoff hash at REF-007. Readback model `togetherai/deepseek-ai/DeepSeek-V4.1-Flash`; config SHA-256 `7b9c2ca63a7e743301b81ae8e0d8a47463a71b4d24983ab28daaf1c80d0b914c` at receiver check. Diagnosed installed OpenCode version v1.18.32.
+- **Checked:** Source packet/conversation and read-only default/config hash 2026-10-09T00:52:11Z, October 8 PDT. Both named newer scratch directories existed at that check; their contents were not recopied or independently rerun. Earlier missing 401/429/comparison artifact finding remains unchanged.
+- **Supports:** Alpha selected obsolete Fireworks `deepseek-v4-flash-0731`; both attempts spawned/returned native IDs, had no stored ID at launch, and exited 1 before output. Native session model metadata plus isolated debug reproduction identify local `ProviderModelNotFoundError`; JSON wrapped it as `UnknownError`, Fusion surfaced generic `HARNESS_PROCESS_EXIT`. No captured HTTP status; distinct from controlled 401/429 and pre-PID EBADF. Source correction changed only default model to Together, preserving thinking/other settings; no code/catalog/credential/DB/bundle/restart/provider/publication operation was part of that correction. Receiver confirms current default value only. Compared adapter/translator/tap/outcome files matched at diagnosis; both live servers had 21 numeric descriptors/47 lsof rows.
+- **Limitations:** Original Alpha detailed native error was not saved; reproduction remains distinct from incident evidence. No key fallback, retry, Together outage, stale-session cause or descriptor cause established. Source-reported semantic single-field comparison was not independently repeated against the absent pre-edit config. Existing harness runtime snapshots/per-thread overrides can differ from the corrected default; a real Alpha response after correction is unverified. No catalog is added here. Temporary directory presence is not durable transcript recovery; dated PIDs are not present operation targets.
+- **Related:** I-001, I-003, [CAPTURE](CAPTURE.md), REF-007/009/010.
+
+### REF-009 — Source-checked OpenCode error references
+
+- **Kind:** versioned_primary_reference_map
+- **Status:** source-reported inspection retained; no new web retrieval by receiver
+- **Source:** Owner's error-list question and source-chat response inspected at REF-010; delegated packet's October 8 official-doc/source locators.
+- **Locator:** [Official troubleshooting/common issues](https://docs.opencode.ai/docs/troubleshooting/#common-issues); version-bound [session schemas](https://github.com/anomalyco/opencode/blob/v1.18.32/packages/core/src/v1/session.ts), [provider definitions](https://github.com/anomalyco/opencode/blob/v1.18.32/packages/opencode/src/provider/provider.ts), and [message conversion](https://github.com/anomalyco/opencode/blob/v1.18.32/packages/opencode/src/session/message-v2.ts).
+- **Revision:** Source checked October 8; code locators explicitly v1.18.32. Official guide is mutable and partial, not an exhaustive versioned catalog.
+- **Checked:** Source-chat answer/packet retrieved October 8 PDT, 2026-10-09T00:52:11Z. This reference preserves the originating inspection; it is not receiver verification of the latest release or each linked schema.
+- **Supports:** Source map names `ProviderModelNotFoundError`, `ProviderInitError`, `AI_APICallError`; versioned error schema coverage reported includes `ProviderAuthError`, `APIError` with optional statusCode/isRetryable, `MessageAbortedError`, `MessageOutputLengthError`, `StructuredOutputError`, `ContextOverflowError`, `ContentFilterError`. A later mapping can inspect underlying error → native JSON representation → Fusion feedback, retaining exposed status/retryability.
+- **Limitations:** Mapping is an assistant proposal, not owner-approved implementation or proof of live UI translation. Re-read exact definitions/conversion when planning a bounded change; do not infer exhaustive error coverage from a common-errors guide.
+- **Related:** I-001, I-002, REF-008/010, [CAPTURE](CAPTURE.md).
+
+### REF-010 — Owner-authorized transfer and source conversation
+
+- **Kind:** conversation_authority_and_evidence
+- **Status:** received and inspected
+- **Source:** **Map Fusion–OpenCode chat failure states**, `01a0ea32-f152-77a2-afc2-b73e8976685a`, host local; owner-authorized incoming handoff to existing **Track OpenCode failure modes**.
+- **Locator:** Built-in `read_thread`, latest four settled turns:
+  - `01a11922-12e3-7513-aeee-9720afc2db4d`, user `01a11922-14cd-7610-b906-aaa8534cbd0b`: Alpha/Macbook diagnosis request; assistant `msg_0830b0caa15bed42016ac6f2eb42fc87d29172282bed2b122a`: obsolete model, reproduction and incident limits.
+  - `01a11da5-fe35-7921-a98d-bba4ea15159d`, user `01a11da5-ffe8-72c0-a248-a3845518d726`: set Alpha to Together DeepSeek 4.1 Flash and record handoff; assistant `msg_0830b0caa15bed42016ac81a7899c087d29838414d551e4e9e`: correction and unverified real-response limit.
+  - `01a11da9-a23f-77e2-b31f-cb877951775f`, user `01a11da9-a29a-7e50-a400-5df5d0bc9ef0`: documented-error-list question; assistant `msg_0830b0caa15bed42016ac81b281b2c87d2b7480bef4f73e639`: partial guide/versioned sources/mapping proposal.
+  - `01a11e23-7b20-7ed3-846f-b3b9323d83a4`, user `01a11e23-7b73-7203-b5ee-d84aa5423109`: “Pass all handoff information to the following chat: codex://threads/01a10cf2-cd72-7c50-af8d-27588c6a17e6”; source final confirms delivery.
+- **Revision:** Exact source-native turn/message IDs, all completed; newest transfer final at source updatedAt `1791507063`. The receiver's role/main identity is not inferred from this source UUID or destination mention.
+- **Checked:** 2026-10-09T00:52:11Z, October 8 PDT; built-in reader. Source was idle; inspected app task list showed no other active chat in the exact destination CWD. Destination hashes were checked before writing.
+- **Supports:** Explicit owner authorization for the one-way packet delivery, source diagnosis/correction and documentary intake under D-003/D-004. Closeout is corroborated by actual REF-007 files/seals; source statements alone do not replace those receipts.
+- **Limitations:** Latest four settled turns, not exhaustive history or tool-output reconstruction; no checkpoint advanced. Packet receipt does not authorize reciprocal messaging, product execution, runtime operation, publication/deployment or main rebinding. Source's separate next assignments are not inherited.
+- **Related:** [D-004](DECISIONS.md#d-004--receive-the-completed-build-and-alpha-incident-handoff), REF-007/008/009, [TICKET](TICKET.md).
+
+October 8 handoff reconciled by Codex side chat (ephemeral), 2026-10-09T00:56:36Z.

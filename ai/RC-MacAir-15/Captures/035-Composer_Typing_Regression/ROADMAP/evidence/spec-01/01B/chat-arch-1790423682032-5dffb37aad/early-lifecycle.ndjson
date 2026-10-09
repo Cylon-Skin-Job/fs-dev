@@ -1,0 +1,4 @@
+{"source":"early-driver","pid":97756,"wallMs":1790423867485,"monoMs":185378.864208,"timeOrigin":1790423682107.998,"kind":"cleanup-without-returned-runtime","ownedPid":null}
+{"source":"early-driver","pid":97756,"wallMs":1790423867486,"monoMs":185379.491875,"timeOrigin":1790423682107.998,"kind":"failed-launch-cleanup-boundary","lingeringOwnedPidCount":0}
+{"source":"early-driver","pid":97756,"wallMs":1790423867625,"monoMs":185518.769,"timeOrigin":1790423682107.998,"kind":"fixture-cleanup-completion","cleanup":{"dbQuickCheck":"ok","portFileRemoved":true,"fixtureRootsRemoved":true},"lingeringOwnedPidCount":0}
+{"source":"early-driver","pid":97756,"wallMs":1790423867625,"monoMs":185518.904041,"timeOrigin":1790423682107.998,"kind":"main-summary-observation","status":"unavailable"}

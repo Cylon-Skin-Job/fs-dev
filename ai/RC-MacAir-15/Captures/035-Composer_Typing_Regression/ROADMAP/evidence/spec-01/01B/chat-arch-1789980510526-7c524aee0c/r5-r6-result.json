@@ -1,0 +1,13 @@
+{
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": {
+    "name": "TimeoutError",
+    "message": "locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.rv-panel[data-panel=\"system-viewer\"].active') to be visible\u001b[22m\n",
+    "stack": "locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.rv-panel[data-panel=\"system-viewer\"].active') to be visible\u001b[22m\n\n    at selectPanel (/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs:68:15)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r5-r6-electron.mjs:557:25"
+  }
+}

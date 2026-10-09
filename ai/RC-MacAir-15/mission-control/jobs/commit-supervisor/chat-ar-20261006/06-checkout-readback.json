@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-07T00:30:24.110312+00:00",
+  "status": "LOCAL_MAIN_SELECTED",
+  "repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "branch": "main",
+  "head": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "tree": "1c80f83c6c4b2b61e42c4dbb988c1f942b672ade",
+  "staged_paths": 0,
+  "owned_unstaged_paths": 0,
+  "owned_leaves_exact": 1668,
+  "unselected_leaves_exact": 20303,
+  "old_agent_ref": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "remote_origin_main": "3356e1b73cc5d44028eac5baa02fd542a8bbc385",
+  "network_used": false
+}

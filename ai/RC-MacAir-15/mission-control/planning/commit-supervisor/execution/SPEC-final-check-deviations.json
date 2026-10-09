@@ -1,0 +1,88 @@
+{
+  "at": "2026-10-05T03:31:38.550274+00:00",
+  "entries": [
+    {
+      "id": "SPEC-FINAL-CHECK-D1",
+      "original_requirement": "Final full applicable suite with exact commands/results/current source and executable provenance",
+      "actual_change": "Final Node17 command exited0 with default spec output. Root TAP-only summary assertion failed; separate continuation validated all17 named passes/fail0/skip0/cancel0 and current pre/post source/executable bindings, then only remaining syntax/default dry-run commands.",
+      "reason_authority": "Mechanical read-only report-format correction; actual successful suites retained and never replayed",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite-runner.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite-continuation.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite/node-command.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite/node-post.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite/runner-assertion-failure.json"
+      ],
+      "checks": "Actual final55/3809/82 and17passed; original immediate source comparison executed before format assertion, later saved exact post/current comparison matches; all remaining commands exit0",
+      "observable_effect": "No product/source/runtime change; completes actual required suite evidence without relabeling original failed wrapper",
+      "risk": "Immediate post object from failed wrapper was not persisted; exact later comparison and original equality assertion are retained honestly. Prior historical Node executable remains unbound; final current executable is bound.",
+      "downstream_impact": "Compatible check/accounting correction and temporal qualification; no product repair/owner ruling/downstream SPEC correction; retain complete facts in whole SPEC gate and owner handoff",
+      "classification": "accepted",
+      "classification_owner": "/root",
+      "classified_at": "2026-10-05T03:31:38.550274+00:00",
+      "root_basis": "Actual final55/3809/82 and17passed; original immediate source comparison executed before format assertion, later saved exact post/current comparison matches; all remaining commands exit0"
+    },
+    {
+      "id": "SPEC-FINAL-CHECK-D2",
+      "original_requirement": "Validate installed Markdown links and original fixture public routes",
+      "actual_change": "First static checker resolved two literal article-template links at source template directory and failed. Continued against exact installer-declared original Wiki article paths; reused already-passed index/eight-validator receipts.",
+      "reason_authority": "Template location and installed public route are distinct; full installer source/current Wiki links inspected; no product/doc rewrite",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-static-checks.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-static-continuation.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-static/template-installed-link-contexts.json"
+      ],
+      "checks": "Current installed template/article link contexts, all links/fragments, current index and eight skill validators checked",
+      "observable_effect": "Corrected check scope only; original template content still deliberately seeds initial behavioral/documentation findings",
+      "risk": "Excluded raw template path resolution is replaced by concrete installed path validation; not a blanket Markdown skip.",
+      "downstream_impact": "Compatible check/accounting correction and temporal qualification; no product repair/owner ruling/downstream SPEC correction; retain complete facts in whole SPEC gate and owner handoff",
+      "classification": "accepted",
+      "classification_owner": "/root",
+      "classified_at": "2026-10-05T03:31:38.550274+00:00",
+      "root_basis": "Current installed template/article link contexts, all links/fragments, current index and eight skill validators checked"
+    },
+    {
+      "id": "SPEC-FINAL-CHECK-D3",
+      "original_requirement": "Protect normal/Alpha runtime identities while abandoning private preview; preserve time-qualified exact evidence",
+      "actual_change": "Latest read-only process sample contains14 protected identities. Historical13 includes three departed renderer helpers; four new renderer helpers started22:01Z, before final tests. All4 main/server roots and10 surviving identities are exact; all14 current UID/start/exe/CWD/profile/machine/ancestry/raw identities checked.",
+      "reason_authority": "Normal live renderer lifecycles continue outside controlled rehearsal; no restart/signal/DB restore introduced to impose old process count",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-preservation-check.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-preservation-continuation.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-preservation/final-processes.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-preservation/result.json"
+      ],
+      "checks": "Actual selected empty/private listeners absent; current14 raw identities, original10 equality/fourroot equality, departed3 absent, new4 profile/exe/machine/ancestry and pretest start verified",
+      "observable_effect": "Keeps current normal/Alpha processes untouched and current14/historical13 facts separate",
+      "risk": "Origin of later renderer lifecycle is unobserved; no actor attribution or eternal process-count/identity freeze claim.",
+      "downstream_impact": "Compatible check/accounting correction and temporal qualification; no product repair/owner ruling/downstream SPEC correction; retain complete facts in whole SPEC gate and owner handoff",
+      "classification": "accepted",
+      "classification_owner": "/root",
+      "classified_at": "2026-10-05T03:31:38.550274+00:00",
+      "root_basis": "Actual selected empty/private listeners absent; current14 raw identities, original10 equality/fourroot equality, departed3 absent, new4 profile/exe/machine/ancestry and pretest start verified"
+    },
+    {
+      "id": "SPEC-FINAL-CHECK-D4",
+      "original_requirement": "Preserve unrelated working files; treat owner/current-workspace changes as authorized and avoid generated/runtime rewrites",
+      "actual_change": "One of15942 original unowned leaves is later live file-viewer state, saved22:01:09Z. Full21:24 closeout proves original state at rehearsal closeout; current runtime JSON/mode/hash retained. Other15941 unowned entries and68absences remain exact.",
+      "reason_authority": "Current normal UI state is outside this SPEC product/recovery ownership; bounded source writer and exact timestamps inspected; preserve current owner state",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-static-continuation.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-static-continuation-2.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-unowned-current-differences.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-static-state-derivation.json"
+      ],
+      "checks": "Full original unowned comparison, single exact current path/schema/mode/hash/time and prior snapshot, source caches193/sharedGit/schedules; corrected scoped probes read actual writer/resolver",
+      "observable_effect": "Current unrelated UI state preserved; no code/dependency drift, undo or source repair",
+      "risk": "No direct writer/owner attribution for later state; no all-unowned-byte equality claim beyond retained controlled samples. Exception is exactly one named live state leaf.",
+      "downstream_impact": "Compatible check/accounting correction and temporal qualification; no product repair/owner ruling/downstream SPEC correction; retain complete facts in whole SPEC gate and owner handoff",
+      "classification": "accepted",
+      "classification_owner": "/root",
+      "classified_at": "2026-10-05T03:31:38.550274+00:00",
+      "root_basis": "Full original unowned comparison, single exact current path/schema/mode/hash/time and prior snapshot, source caches193/sharedGit/schedules; corrected scoped probes read actual writer/resolver"
+    }
+  ],
+  "original_native_check_failures_retained": true,
+  "candidate_product_bytes_unchanged": true,
+  "passing_suites_replayed": false
+}

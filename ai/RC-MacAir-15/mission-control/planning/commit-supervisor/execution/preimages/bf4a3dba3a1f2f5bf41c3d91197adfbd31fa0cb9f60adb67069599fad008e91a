@@ -1,0 +1,26 @@
+---
+name: fusion-electron-restart
+description: Fully rebuild, clear cached renderer/session state, and restart the Fusion Studio development app and its server from the intended checkout or worktree. In a Fusion Studio development context, use whenever the user asks to refresh or restart the app, Fusion, Fusion Studio, Electron, or the server, including when frontend changes appear stale. Do not use for unrelated apps or servers, or for the packaged Fusion Studio Alpha app, which follows the repository's separate Alpha workflow.
+---
+
+# Fusion Electron Restart
+
+Use the repository's canonical `restart-fusion.sh` so a refresh or restart request completes the entire job without choosing among modes. It always rebuilds the client, stops Fusion for the selected development profile, clears `Cache`, `Code Cache`, `GPUCache`, `Local Storage`, and `Session Storage`, relaunches Electron and its server from the intended checkout, and verifies the live renderer/server connection.
+
+## Run it
+
+1. Resolve and honor the checkout or worktree the user is testing. Read its `AGENTS.md` and confirm it contains `fusion-studio-client/`, `fusion-studio-server/`, and `restart-fusion.sh`.
+2. Resolve the machine identity when the checkout has multiple `ai/<machine>/System` trees. The current development identity is normally `RC-MacAir-15`.
+3. Run the checkout's own script. A direct request to refresh or restart Fusion, the app, Electron, or the server authorizes this full restart and cache/session reset.
+
+```bash
+/absolute/path/to/checkout/restart-fusion.sh \
+  --repo /absolute/path/to/checkout \
+  --machine RC-MacAir-15
+```
+
+The script handles worktree-aware process selection, client build, cache clearing, relaunch, and health verification. It may borrow Electron's downloaded runtime from another worktree, but product code, server storage, and logs remain tied to the selected checkout. Use `--dry-run` only when target resolution is genuinely uncertain; it is not part of the normal restart workflow.
+
+Never use this skill for `/Applications/Fusion Studio Alpha.app`, the Alpha source checkout, or the Alpha user-data profile. Follow the repository's separate Alpha restart workflow, including both Alpha identity variables.
+
+Report the checkout, machine identity, and verified server URL. If verification fails, report the log path shown by the script and do not silently fall back to another checkout's product code.

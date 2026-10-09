@@ -1,0 +1,221 @@
+{
+  "sourceManifestSha256": "f057e0ad94b78fd805824ab925f8a05567d7d7ea0fd1f2516bc2da8ae2197f20",
+  "files": [
+    {
+      "path": "fusion-studio-client/e2e/chat-architecture/run.mjs",
+      "matches": true,
+      "lines": 443
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-architecture/server-focused-regressions.mjs",
+      "matches": true,
+      "lines": 158
+    },
+    {
+      "path": "fusion-studio-server/lib/thread-groups/placement-delivery.js",
+      "matches": true,
+      "lines": 256
+    },
+    {
+      "path": "fusion-studio-server/lib/thread-groups/repository.js",
+      "matches": true,
+      "lines": 654
+    },
+    {
+      "path": "fusion-studio-server/lib/thread-groups/session-transactions.js",
+      "matches": true,
+      "lines": 99
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/HistoryFile.js",
+      "matches": true,
+      "lines": 192
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/ThreadManager.js",
+      "matches": true,
+      "lines": 844
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/chatlog-mirror.js",
+      "matches": true,
+      "lines": 174
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/mirror-journal.js",
+      "matches": true,
+      "lines": 16
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/session-lifecycle.js",
+      "matches": true,
+      "lines": 192
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/thread-runtime-automation.js",
+      "matches": true,
+      "lines": 635
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/thread-runtime-controller.js",
+      "matches": true,
+      "lines": 1297
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/thread-runtime-manager.js",
+      "matches": true,
+      "lines": 554
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/thread-ws-handlers.js",
+      "matches": true,
+      "lines": 778
+    },
+    {
+      "path": "fusion-studio-server/test/thread/thread-activation-lifecycle.test.js",
+      "matches": true,
+      "lines": 1233
+    },
+    {
+      "path": "fusion-studio-server/test/thread/thread-group-delete-recovery.test.js",
+      "matches": true,
+      "lines": 451
+    },
+    {
+      "path": "fusion-studio-server/test/thread/thread-manager-chatlog-sync.test.js",
+      "matches": true,
+      "lines": 264
+    },
+    {
+      "path": "fusion-studio-server/test/thread/thread-runtime-automation.test.js",
+      "matches": true,
+      "lines": 1121
+    },
+    {
+      "path": "fusion-studio-server/test/thread/thread-runtime-controller.test.js",
+      "matches": true,
+      "lines": 2919
+    },
+    {
+      "path": "fusion-studio-server/test/ws/privileged-thread-handlers.test.js",
+      "matches": true,
+      "lines": 482
+    },
+    {
+      "path": "fusion-studio-server/test/ws/privileged-thread-public-route.integration.test.js",
+      "matches": true,
+      "lines": 354
+    },
+    {
+      "path": "fusion-studio-server/test/ws/prompt-canonical-route.integration.test.js",
+      "matches": true,
+      "lines": 611
+    },
+    {
+      "path": "fusion-studio-server/test/ws/thread-group-move-side-chat.integration.test.js",
+      "matches": true,
+      "lines": 743
+    },
+    {
+      "path": "fusion-studio-server/test/ws/thread-group-worksurface-cleanup.integration.test.js",
+      "matches": true,
+      "lines": 479
+    }
+  ],
+  "backend": {
+    "runId": "chat-arch-1790240839156-896d4dd935",
+    "status": "passed",
+    "results": [
+      {
+        "id": "R8-MIRROR-RECOVERY",
+        "code": 0,
+        "signal": null,
+        "pid": 64089,
+        "timedOut": false,
+        "interrupted": false,
+        "leakedOwnedPids": [],
+        "elapsedMs": 11729
+      }
+    ],
+    "ownedRunRootRemoved": true,
+    "failure": null
+  },
+  "submit": {
+    "runId": "chat-arch-1790240874102-b6aa6b4854",
+    "status": "passed",
+    "results": [
+      {
+        "id": "R2-NO-ENQUEUE",
+        "code": 0,
+        "signal": null,
+        "pid": 65888,
+        "timedOut": false,
+        "interrupted": false,
+        "leakedOwnedPids": [],
+        "elapsedMs": 7425
+      },
+      {
+        "id": "R3-LOST-ACK-STATUS",
+        "code": 0,
+        "signal": null,
+        "pid": 67008,
+        "timedOut": false,
+        "interrupted": false,
+        "leakedOwnedPids": [],
+        "elapsedMs": 8006
+      },
+      {
+        "id": "R3-RECONNECT-UI",
+        "code": 0,
+        "signal": null,
+        "pid": 68040,
+        "timedOut": false,
+        "interrupted": false,
+        "leakedOwnedPids": [],
+        "elapsedMs": 11407
+      },
+      {
+        "id": "R4-DISTINCT-ATTEMPTS",
+        "code": 0,
+        "signal": null,
+        "pid": 69544,
+        "timedOut": false,
+        "interrupted": false,
+        "leakedOwnedPids": [],
+        "elapsedMs": 10793
+      },
+      {
+        "id": "R4-DISTINCT-RECEIPTS",
+        "code": 0,
+        "signal": null,
+        "pid": 70898,
+        "timedOut": false,
+        "interrupted": false,
+        "leakedOwnedPids": [],
+        "elapsedMs": 11072
+      },
+      {
+        "id": "R4-LATE-DRAFT-RECOVERY",
+        "code": 0,
+        "signal": null,
+        "pid": 72293,
+        "timedOut": false,
+        "interrupted": false,
+        "leakedOwnedPids": [],
+        "elapsedMs": 26319
+      },
+      {
+        "id": "R4-DUPLICATE-MISMATCH",
+        "code": 0,
+        "signal": null,
+        "pid": 75475,
+        "timedOut": false,
+        "interrupted": false,
+        "leakedOwnedPids": [],
+        "elapsedMs": 8362
+      }
+    ],
+    "ownedRunRootRemoved": true,
+    "failure": null
+  }
+}

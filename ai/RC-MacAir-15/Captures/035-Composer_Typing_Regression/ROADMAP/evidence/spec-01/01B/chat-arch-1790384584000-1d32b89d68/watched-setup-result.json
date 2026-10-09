@@ -1,0 +1,193 @@
+{
+  "status": "setup-only-passed",
+  "measurementStarted": false,
+  "scope": "watched-setup-only; no R1/performance credit",
+  "configuredDurationMs": 300000,
+  "configuredCharacters": 9520,
+  "configuredDelayMs": 32,
+  "configuredWallBudgetMs": 456960,
+  "fixture": {
+    "f2": {
+      "id": "F2-DETERMINISTIC-HISTORY-V1",
+      "exchanges": 30,
+      "renderedMessages": 60,
+      "includes": [
+        "text",
+        "code",
+        "lists",
+        "tables",
+        "collapsed-tool-results",
+        "reply-metadata"
+      ],
+      "dense": {
+        "exchanges": 2,
+        "assistantPayloadBytes": 534528,
+        "sha256": "9b06d21b677d93e4479544db39cf56f86eb4d3cd25fb603740407f263e7420dc"
+      }
+    },
+    "f3": {
+      "id": "F3-DETERMINISTIC-WORKSPACE-V1",
+      "algorithm": "label-repeated-to-fixed-byte-count",
+      "counts": {
+        "smallFiles": 1000,
+        "captureFolders": 100,
+        "wikiPages": 100,
+        "officeDocuments": 20
+      },
+      "totalFiles": 1220,
+      "totalContentBytes": 11059200,
+      "root": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790384584000-1d32b89d68-wXJfHw/r1-sustained-project",
+      "everyPathFixtureContained": true,
+      "manifestHash": "421c0ef8f5e255bb333a82a9f26d28c74eb2c8d55e95fc262ad241ed45740079"
+    }
+  },
+  "identity": {
+    "threadId": "2026-09-25T18-03-07-572",
+    "threadGroupId": "tg-6885742d-5bbe-4f32-992a-8a6d63238e20"
+  },
+  "coverageCalibration": {
+    "discovered": [
+      "ChatAreaFooter",
+      "ChatAreaHeader",
+      "ContentArea",
+      "InstantSegmentRenderer",
+      "MessageList",
+      "ThreadRail",
+      "renderTextInstant"
+    ],
+    "invocationCounts": {
+      "renderTextInstant": 30,
+      "MessageList": 1,
+      "InstantSegmentRenderer": 30,
+      "ChatAreaHeader": 17,
+      "ThreadRail": 18,
+      "ContentArea": 9,
+      "ChatAreaFooter": 15
+    }
+  },
+  "preMeasurementQuiescence": {
+    "requiredLifecycle": [
+      "screenshot:capture",
+      "screenshot:updated",
+      "screenshot:request",
+      "screenshot:data"
+    ],
+    "quietMs": 500,
+    "finalTrafficSequence": 889,
+    "lifecycle": [
+      {
+        "sequence": 886,
+        "atMs": 1673.5,
+        "direction": "outbound",
+        "type": "screenshot:capture"
+      },
+      {
+        "sequence": 887,
+        "atMs": 1678.5,
+        "direction": "inbound",
+        "type": "screenshot:updated"
+      },
+      {
+        "sequence": 888,
+        "atMs": 1678.7,
+        "direction": "outbound",
+        "type": "screenshot:request"
+      },
+      {
+        "sequence": 889,
+        "atMs": 1680.9,
+        "direction": "inbound",
+        "type": "screenshot:data"
+      }
+    ]
+  },
+  "observerCalibration": [
+    75
+  ],
+  "settleMs": 45000,
+  "focusEvidence": {
+    "establishment": {
+      "attempts": 1,
+      "elapsedMs": 6,
+      "observation": {
+        "available": true,
+        "focused": true,
+        "visible": true,
+        "minimized": false,
+        "windowId": 1,
+        "title": "ISOLATED ACCEPTANCE — chat-arch-1790384584000-1d32b89d68",
+        "url": "fusion-shell://app/"
+      }
+    },
+    "beforeTyping": {
+      "available": true,
+      "focused": true,
+      "visible": true,
+      "minimized": false,
+      "windowId": 1,
+      "title": "ISOLATED ACCEPTANCE — chat-arch-1790384584000-1d32b89d68",
+      "url": "fusion-shell://app/"
+    }
+  },
+  "ownedFocus": {
+    "pid": 25505,
+    "windowId": 1,
+    "events": [
+      {
+        "type": "installed",
+        "at": 1790384589507,
+        "focused": true,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      },
+      {
+        "type": "show",
+        "at": 1790384597566,
+        "focused": true,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      },
+      {
+        "type": "hide",
+        "at": 1790384627566,
+        "focused": true,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      },
+      {
+        "type": "blur",
+        "at": 1790384627856,
+        "focused": false,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      },
+      {
+        "type": "show",
+        "at": 1790384633604,
+        "focused": false,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      },
+      {
+        "type": "focus",
+        "at": 1790384634144,
+        "focused": true,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      }
+    ],
+    "overflow": 0
+  },
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "lingeringOwnedPids": []
+}

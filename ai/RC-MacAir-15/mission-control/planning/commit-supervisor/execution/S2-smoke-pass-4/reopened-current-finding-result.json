@@ -1,0 +1,202 @@
+{
+  "agent_gate_proof": false,
+  "candidate": {
+    "authority": {
+      "SPEC": "approved"
+    },
+    "configuration": {
+      "profile": "disposable"
+    },
+    "fixtures": {
+      "oracle": "correct"
+    },
+    "owned": {
+      "code.py": {
+        "index": "base",
+        "mode": "100644",
+        "worktree": "bad"
+      }
+    },
+    "preparation": "replay-owned-bytes",
+    "sources": [
+      "source-1"
+    ],
+    "target": "target-1"
+  },
+  "dispatch_actions": [],
+  "dispositions": {
+    "F1": [
+      {
+        "status": "not-supported",
+        "validation_evidence": "prior/rejection.log"
+      },
+      {
+        "actor": "fixture-manager",
+        "candidate": {
+          "authority": {
+            "SPEC": "approved"
+          },
+          "configuration": {
+            "profile": "disposable"
+          },
+          "fixtures": {
+            "oracle": "correct"
+          },
+          "owned": {
+            "code.py": {
+              "index": "base",
+              "mode": "100644",
+              "worktree": "bad"
+            }
+          },
+          "preparation": "replay-owned-bytes",
+          "sources": [
+            "source-1"
+          ],
+          "target": "target-1"
+        },
+        "evidence": "fixture/repro.log",
+        "reason": "fresh supported material evidence",
+        "status": "open"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "assigned_paths": [
+        "code.py"
+      ],
+      "authority": "approved behavior criterion",
+      "confidence": "medium",
+      "evidence": "prior/unsupported.log",
+      "id": "F1",
+      "impact": "accepted input returns incorrect result",
+      "path": "code.py",
+      "severity": "high",
+      "validated": false
+    },
+    {
+      "assigned_paths": [
+        "code.py"
+      ],
+      "authority": "approved behavior criterion",
+      "confidence": "medium",
+      "evidence": "fixture/repro.log",
+      "id": "F1",
+      "impact": "accepted input returns incorrect result",
+      "path": "code.py",
+      "severity": "high",
+      "validated": true
+    }
+  ],
+  "gaps": [],
+  "hold_packet": null,
+  "invalidated": [],
+  "raw_reports": [
+    {
+      "clean_room": true,
+      "dependencies": {
+        "authority": {
+          "SPEC": "approved"
+        },
+        "configuration": {
+          "profile": "disposable"
+        },
+        "fixtures": {
+          "oracle": "correct"
+        },
+        "owned": {
+          "code.py": {
+            "index": "base",
+            "mode": "100644",
+            "worktree": "bad"
+          }
+        },
+        "preparation": "replay-owned-bytes",
+        "sources": [
+          "source-1"
+        ],
+        "target": "target-1"
+      },
+      "findings": [
+        {
+          "assigned_paths": [
+            "code.py"
+          ],
+          "authority": "approved behavior criterion",
+          "confidence": "medium",
+          "evidence": "fixture/repro.log",
+          "id": "F1",
+          "impact": "accepted input returns incorrect result",
+          "path": "code.py",
+          "severity": "high",
+          "validated": true
+        }
+      ],
+      "identity": "fixture-reviewer-1",
+      "lenses": [
+        "Behavior & Verification",
+        "Standards Compliance",
+        "Integrations & Dependencies",
+        "Forward Compatibility",
+        "Wiki Impact"
+      ],
+      "raw_path": "fixture/review-1.md",
+      "read_only": true,
+      "result": "findings",
+      "root_inherited": true,
+      "terminal": true
+    }
+  ],
+  "repair_packet": {
+    "candidate": {
+      "authority": {
+        "SPEC": "approved"
+      },
+      "configuration": {
+        "profile": "disposable"
+      },
+      "fixtures": {
+        "oracle": "correct"
+      },
+      "owned": {
+        "code.py": {
+          "index": "base",
+          "mode": "100644",
+          "worktree": "bad"
+        }
+      },
+      "preparation": "replay-owned-bytes",
+      "sources": [
+        "source-1"
+      ],
+      "target": "target-1"
+    },
+    "finding_ids": [
+      "F1"
+    ],
+    "findings": [
+      {
+        "assigned_paths": [
+          "code.py"
+        ],
+        "authority": "approved behavior criterion",
+        "confidence": "medium",
+        "evidence": "fixture/repro.log",
+        "id": "F1",
+        "impact": "accepted input returns incorrect result",
+        "path": "code.py",
+        "severity": "high",
+        "validated": true
+      }
+    ],
+    "manager": "fixture-manager",
+    "return": "READY_FOR_HANDOFF_REVIEW"
+  },
+  "result": "findings",
+  "return": "REVIEW_COMPLETE",
+  "state": "repair",
+  "unaffected": [
+    "behavior"
+  ]
+}

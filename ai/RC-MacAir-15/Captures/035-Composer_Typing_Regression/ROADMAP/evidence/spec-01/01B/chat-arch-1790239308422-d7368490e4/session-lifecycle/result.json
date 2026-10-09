@@ -1,0 +1,15 @@
+{
+  "runId": "R8-SESSION-LIFECYCLE",
+  "status": "passed",
+  "result": {
+    "code": 0,
+    "signal": null,
+    "pid": 37220,
+    "timedOut": false,
+    "interrupted": false,
+    "leakedOwnedPids": [],
+    "elapsedMs": 8170
+  },
+  "failure": null,
+  "ownedRunRootRemoved": true
+}

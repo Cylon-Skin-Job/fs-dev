@@ -1,0 +1,490 @@
+{
+  "boundary": "Affected owner inventory only; CommonJS and ESM relative edges within inventory; external immediate dependencies explicit. No whole-repository closure claim.",
+  "lineCounts": {
+    "fusion-studio-server/lib/event-bus.js": 172,
+    "fusion-studio-server/lib/thread-groups/action-result-repository.js": 101,
+    "fusion-studio-server/lib/thread-groups/delete-service.js": 251,
+    "fusion-studio-server/lib/thread-groups/delete-transaction.js": 126,
+    "fusion-studio-server/lib/thread-groups/link-service.js": 245,
+    "fusion-studio-server/lib/thread-groups/member-service.js": 229,
+    "fusion-studio-server/lib/thread-groups/mirror-repository.js": 52,
+    "fusion-studio-server/lib/thread-groups/move-service.js": 315,
+    "fusion-studio-server/lib/thread-groups/placement-delivery.js": 256,
+    "fusion-studio-server/lib/thread-groups/projection-outbox-repository.js": 158,
+    "fusion-studio-server/lib/thread-groups/repository.js": 315,
+    "fusion-studio-server/lib/thread-groups/selection-service.js": 100,
+    "fusion-studio-server/lib/thread-groups/service.js": 384,
+    "fusion-studio-server/lib/thread-groups/session-transactions.js": 99,
+    "fusion-studio-server/lib/thread-groups/startup-reconciliation.js": 108,
+    "fusion-studio-server/lib/thread/HistoryFile.js": 192,
+    "fusion-studio-server/lib/thread/ThreadIndex.js": 191,
+    "fusion-studio-server/lib/wire/terminal-saved-delivery.js": 62,
+    "fusion-studio-server/lib/wire/wire-broadcaster.js": 256,
+    "fusion-studio-server/lib/thread/thread-crud.js": 362,
+    "fusion-studio-server/lib/thread/thread-open-handler.js": 167,
+    "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx": 143,
+    "fusion-studio-client/src/lib/ws/thread-handlers.ts": 392,
+    "fusion-studio-client/src/lib/ws/thread-history.ts": 224,
+    "fusion-studio-client/src/lib/ws/thread-markdown.ts": 22,
+    "fusion-studio-client/src/types/websocket.ts": 232,
+    "fusion-studio-server/lib/thread/ThreadManager.js": 263,
+    "fusion-studio-server/lib/thread/ThreadWebSocketHandler.js": 375,
+    "fusion-studio-server/lib/thread/automation-drain.js": 203,
+    "fusion-studio-server/lib/thread/automation-runtime-activation.js": 84,
+    "fusion-studio-server/lib/thread/automation-turn-context.js": 82,
+    "fusion-studio-server/lib/thread/canonical-drain-context.js": 197,
+    "fusion-studio-server/lib/thread/chatlog-mirror.js": 174,
+    "fusion-studio-server/lib/thread/mirror-journal.js": 16,
+    "fusion-studio-server/lib/thread/provider-termination.js": 100,
+    "fusion-studio-server/lib/thread/runtime-activation.js": 211,
+    "fusion-studio-server/lib/thread/runtime-dispatch.js": 266,
+    "fusion-studio-server/lib/thread/runtime-identity.js": 33,
+    "fusion-studio-server/lib/thread/runtime-prompt-admission.js": 249,
+    "fusion-studio-server/lib/thread/runtime-response.js": 74,
+    "fusion-studio-server/lib/thread/runtime-session-activation.js": 98,
+    "fusion-studio-server/lib/thread/runtime-session-binding.js": 67,
+    "fusion-studio-server/lib/thread/runtime-stop.js": 328,
+    "fusion-studio-server/lib/thread/session-lifecycle.js": 266,
+    "fusion-studio-server/lib/thread/session-manager.js": 376,
+    "fusion-studio-server/lib/thread/session-metadata.js": 55,
+    "fusion-studio-server/lib/thread/session-repository.js": 28,
+    "fusion-studio-server/lib/thread/thread-runtime-automation.js": 261,
+    "fusion-studio-server/lib/thread/thread-runtime-controller.js": 7,
+    "fusion-studio-server/lib/thread/thread-runtime-manager.js": 400,
+    "fusion-studio-server/lib/thread/turn-application-context.js": 86,
+    "fusion-studio-server/lib/ws/thread-action-handler.js": 140,
+    "fusion-studio-server/lib/ws/thread-action-protocol.js": 154,
+    "fusion-studio-server/lib/ws/thread-provider-binding.js": 179,
+    "fusion-studio-server/lib/ws/thread-ws-handlers.js": 304
+  },
+  "graph": {
+    "fusion-studio-server/lib/event-bus.js": [],
+    "fusion-studio-server/lib/thread-groups/action-result-repository.js": [],
+    "fusion-studio-server/lib/thread-groups/delete-service.js": [
+      "fusion-studio-server/lib/thread-groups/repository.js"
+    ],
+    "fusion-studio-server/lib/thread-groups/delete-transaction.js": [
+      "fusion-studio-server/lib/thread-groups/repository.js",
+      "fusion-studio-server/lib/thread-groups/delete-service.js"
+    ],
+    "fusion-studio-server/lib/thread-groups/link-service.js": [
+      "fusion-studio-server/lib/thread-groups/repository.js",
+      "fusion-studio-server/lib/thread-groups/placement-delivery.js"
+    ],
+    "fusion-studio-server/lib/thread-groups/member-service.js": [
+      "fusion-studio-server/lib/thread-groups/repository.js",
+      "fusion-studio-server/lib/thread-groups/placement-delivery.js"
+    ],
+    "fusion-studio-server/lib/thread-groups/mirror-repository.js": [],
+    "fusion-studio-server/lib/thread-groups/move-service.js": [
+      "fusion-studio-server/lib/thread-groups/repository.js",
+      "fusion-studio-server/lib/thread-groups/placement-delivery.js"
+    ],
+    "fusion-studio-server/lib/thread-groups/placement-delivery.js": [
+      "fusion-studio-server/lib/thread-groups/repository.js"
+    ],
+    "fusion-studio-server/lib/thread-groups/projection-outbox-repository.js": [],
+    "fusion-studio-server/lib/thread-groups/repository.js": [
+      "fusion-studio-server/lib/thread-groups/mirror-repository.js",
+      "fusion-studio-server/lib/thread-groups/projection-outbox-repository.js",
+      "fusion-studio-server/lib/thread-groups/action-result-repository.js"
+    ],
+    "fusion-studio-server/lib/thread-groups/selection-service.js": [
+      "fusion-studio-server/lib/thread-groups/repository.js"
+    ],
+    "fusion-studio-server/lib/thread-groups/service.js": [
+      "fusion-studio-server/lib/thread-groups/repository.js",
+      "fusion-studio-server/lib/thread-groups/move-service.js",
+      "fusion-studio-server/lib/thread-groups/member-service.js",
+      "fusion-studio-server/lib/thread-groups/link-service.js",
+      "fusion-studio-server/lib/thread-groups/selection-service.js",
+      "fusion-studio-server/lib/thread-groups/delete-service.js"
+    ],
+    "fusion-studio-server/lib/thread-groups/session-transactions.js": [
+      "fusion-studio-server/lib/thread-groups/repository.js"
+    ],
+    "fusion-studio-server/lib/thread-groups/startup-reconciliation.js": [
+      "fusion-studio-server/lib/thread-groups/repository.js",
+      "fusion-studio-server/lib/thread-groups/placement-delivery.js"
+    ],
+    "fusion-studio-server/lib/thread/HistoryFile.js": [
+      "fusion-studio-server/lib/thread/mirror-journal.js"
+    ],
+    "fusion-studio-server/lib/thread/ThreadIndex.js": [],
+    "fusion-studio-server/lib/wire/terminal-saved-delivery.js": [
+      "fusion-studio-server/lib/event-bus.js"
+    ],
+    "fusion-studio-server/lib/wire/wire-broadcaster.js": [
+      "fusion-studio-server/lib/event-bus.js",
+      "fusion-studio-server/lib/wire/terminal-saved-delivery.js"
+    ],
+    "fusion-studio-server/lib/thread/thread-crud.js": [
+      "fusion-studio-server/lib/thread/thread-open-handler.js"
+    ],
+    "fusion-studio-server/lib/thread/thread-open-handler.js": [
+      "fusion-studio-server/lib/thread/thread-runtime-manager.js"
+    ],
+    "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx": [],
+    "fusion-studio-client/src/lib/ws/thread-handlers.ts": [
+      "fusion-studio-client/src/lib/ws/thread-history.ts",
+      "fusion-studio-client/src/lib/ws/thread-markdown.ts"
+    ],
+    "fusion-studio-client/src/lib/ws/thread-history.ts": [],
+    "fusion-studio-client/src/lib/ws/thread-markdown.ts": [],
+    "fusion-studio-client/src/types/websocket.ts": [],
+    "fusion-studio-server/lib/thread/ThreadManager.js": [
+      "fusion-studio-server/lib/thread/ThreadIndex.js",
+      "fusion-studio-server/lib/thread/chatlog-mirror.js",
+      "fusion-studio-server/lib/thread/HistoryFile.js",
+      "fusion-studio-server/lib/thread/session-lifecycle.js",
+      "fusion-studio-server/lib/thread/session-manager.js",
+      "fusion-studio-server/lib/thread-groups/session-transactions.js",
+      "fusion-studio-server/lib/thread-groups/startup-reconciliation.js",
+      "fusion-studio-server/lib/thread-groups/delete-transaction.js",
+      "fusion-studio-server/lib/thread/session-metadata.js",
+      "fusion-studio-server/lib/thread-groups/service.js",
+      "fusion-studio-server/lib/thread-groups/placement-delivery.js"
+    ],
+    "fusion-studio-server/lib/thread/ThreadWebSocketHandler.js": [
+      "fusion-studio-server/lib/thread/runtime-session-activation.js",
+      "fusion-studio-server/lib/thread/thread-crud.js",
+      "fusion-studio-server/lib/thread/thread-runtime-manager.js",
+      "fusion-studio-server/lib/event-bus.js"
+    ],
+    "fusion-studio-server/lib/thread/automation-drain.js": [
+      "fusion-studio-server/lib/thread/thread-runtime-manager.js",
+      "fusion-studio-server/lib/thread/automation-turn-context.js"
+    ],
+    "fusion-studio-server/lib/thread/automation-runtime-activation.js": [
+      "fusion-studio-server/lib/thread/thread-runtime-manager.js",
+      "fusion-studio-server/lib/thread/provider-termination.js"
+    ],
+    "fusion-studio-server/lib/thread/automation-turn-context.js": [
+      "fusion-studio-server/lib/event-bus.js",
+      "fusion-studio-server/lib/thread/thread-runtime-manager.js"
+    ],
+    "fusion-studio-server/lib/thread/canonical-drain-context.js": [],
+    "fusion-studio-server/lib/thread/chatlog-mirror.js": [
+      "fusion-studio-server/lib/thread-groups/repository.js",
+      "fusion-studio-server/lib/thread/mirror-journal.js"
+    ],
+    "fusion-studio-server/lib/thread/mirror-journal.js": [],
+    "fusion-studio-server/lib/thread/provider-termination.js": [],
+    "fusion-studio-server/lib/thread/runtime-activation.js": [
+      "fusion-studio-server/lib/thread/runtime-session-binding.js",
+      "fusion-studio-server/lib/thread/thread-runtime-manager.js",
+      "fusion-studio-server/lib/thread/provider-termination.js",
+      "fusion-studio-server/lib/thread/runtime-response.js",
+      "fusion-studio-server/lib/thread/runtime-identity.js",
+      "fusion-studio-server/lib/thread-groups/session-transactions.js"
+    ],
+    "fusion-studio-server/lib/thread/runtime-dispatch.js": [
+      "fusion-studio-server/lib/thread/thread-runtime-manager.js",
+      "fusion-studio-server/lib/thread/provider-termination.js",
+      "fusion-studio-server/lib/thread/canonical-drain-context.js",
+      "fusion-studio-server/lib/thread/turn-application-context.js",
+      "fusion-studio-server/lib/thread/runtime-stop.js",
+      "fusion-studio-server/lib/thread/runtime-response.js"
+    ],
+    "fusion-studio-server/lib/thread/runtime-identity.js": [],
+    "fusion-studio-server/lib/thread/runtime-prompt-admission.js": [
+      "fusion-studio-server/lib/thread/runtime-session-binding.js",
+      "fusion-studio-server/lib/thread/thread-runtime-manager.js",
+      "fusion-studio-server/lib/thread/canonical-drain-context.js",
+      "fusion-studio-server/lib/thread/runtime-identity.js",
+      "fusion-studio-server/lib/thread/runtime-activation.js",
+      "fusion-studio-server/lib/thread/runtime-dispatch.js",
+      "fusion-studio-server/lib/thread/runtime-response.js"
+    ],
+    "fusion-studio-server/lib/thread/runtime-response.js": [
+      "fusion-studio-server/lib/thread/ThreadWebSocketHandler.js"
+    ],
+    "fusion-studio-server/lib/thread/runtime-session-activation.js": [
+      "fusion-studio-server/lib/thread/thread-runtime-manager.js"
+    ],
+    "fusion-studio-server/lib/thread/runtime-session-binding.js": [
+      "fusion-studio-server/lib/thread/ThreadWebSocketHandler.js"
+    ],
+    "fusion-studio-server/lib/thread/runtime-stop.js": [
+      "fusion-studio-server/lib/thread/runtime-session-binding.js",
+      "fusion-studio-server/lib/wire/terminal-saved-delivery.js",
+      "fusion-studio-server/lib/thread/thread-runtime-manager.js",
+      "fusion-studio-server/lib/thread/provider-termination.js",
+      "fusion-studio-server/lib/thread/runtime-identity.js",
+      "fusion-studio-server/lib/thread/turn-application-context.js",
+      "fusion-studio-server/lib/thread/runtime-response.js",
+      "fusion-studio-server/lib/event-bus.js"
+    ],
+    "fusion-studio-server/lib/thread/session-lifecycle.js": [
+      "fusion-studio-server/lib/thread/session-repository.js",
+      "fusion-studio-server/lib/thread-groups/repository.js",
+      "fusion-studio-server/lib/thread/thread-runtime-manager.js",
+      "fusion-studio-server/lib/thread/canonical-drain-context.js"
+    ],
+    "fusion-studio-server/lib/thread/session-manager.js": [
+      "fusion-studio-server/lib/thread/provider-termination.js"
+    ],
+    "fusion-studio-server/lib/thread/session-metadata.js": [
+      "fusion-studio-server/lib/thread-groups/repository.js"
+    ],
+    "fusion-studio-server/lib/thread/session-repository.js": [],
+    "fusion-studio-server/lib/thread/thread-runtime-automation.js": [
+      "fusion-studio-server/lib/thread/canonical-drain-context.js",
+      "fusion-studio-server/lib/thread/provider-termination.js",
+      "fusion-studio-server/lib/thread/automation-runtime-activation.js",
+      "fusion-studio-server/lib/thread/automation-turn-context.js",
+      "fusion-studio-server/lib/thread/automation-drain.js",
+      "fusion-studio-server/lib/thread/thread-runtime-manager.js",
+      "fusion-studio-server/lib/thread-groups/session-transactions.js"
+    ],
+    "fusion-studio-server/lib/thread/thread-runtime-controller.js": [
+      "fusion-studio-server/lib/thread/runtime-activation.js",
+      "fusion-studio-server/lib/thread/runtime-prompt-admission.js",
+      "fusion-studio-server/lib/thread/runtime-stop.js",
+      "fusion-studio-server/lib/thread/runtime-identity.js"
+    ],
+    "fusion-studio-server/lib/thread/thread-runtime-manager.js": [
+      "fusion-studio-server/lib/thread/runtime-identity.js",
+      "fusion-studio-server/lib/thread/canonical-drain-context.js"
+    ],
+    "fusion-studio-server/lib/thread/turn-application-context.js": [],
+    "fusion-studio-server/lib/ws/thread-action-handler.js": [
+      "fusion-studio-server/lib/thread/ThreadWebSocketHandler.js",
+      "fusion-studio-server/lib/ws/thread-action-protocol.js"
+    ],
+    "fusion-studio-server/lib/ws/thread-action-protocol.js": [],
+    "fusion-studio-server/lib/ws/thread-provider-binding.js": [
+      "fusion-studio-server/lib/thread/thread-runtime-manager.js",
+      "fusion-studio-server/lib/thread/ThreadWebSocketHandler.js",
+      "fusion-studio-server/lib/thread/provider-termination.js"
+    ],
+    "fusion-studio-server/lib/ws/thread-ws-handlers.js": [
+      "fusion-studio-server/lib/ws/thread-provider-binding.js",
+      "fusion-studio-server/lib/ws/thread-action-protocol.js",
+      "fusion-studio-server/lib/ws/thread-action-handler.js",
+      "fusion-studio-server/lib/thread-groups/session-transactions.js"
+    ]
+  },
+  "externalDependencies": {
+    "fusion-studio-server/lib/event-bus.js": [
+      "fusion-studio-server/lib/background-services/safety"
+    ],
+    "fusion-studio-server/lib/thread-groups/action-result-repository.js": [],
+    "fusion-studio-server/lib/thread-groups/delete-service.js": [
+      "fusion-studio-server/lib/thread-groups/action-identity",
+      "fusion-studio-server/lib/thread-groups/group-mutation-lease"
+    ],
+    "fusion-studio-server/lib/thread-groups/delete-transaction.js": [
+      "fusion-studio-server/lib/db",
+      "fusion-studio-server/lib/thread-groups/worksurface-cleanup"
+    ],
+    "fusion-studio-server/lib/thread-groups/link-service.js": [
+      "fusion-studio-server/lib/thread-groups/action-identity",
+      "fusion-studio-server/lib/thread-groups/application-link"
+    ],
+    "fusion-studio-server/lib/thread-groups/member-service.js": [
+      "fusion-studio-server/lib/thread-groups/action-identity",
+      "fusion-studio-server/lib/thread-groups/application-link",
+      "fusion-studio-server/lib/thread-groups/chat-capable-views",
+      "fusion-studio-server/lib/view-state/thread-worksurface"
+    ],
+    "fusion-studio-server/lib/thread-groups/mirror-repository.js": [],
+    "fusion-studio-server/lib/thread-groups/move-service.js": [
+      "fusion-studio-server/lib/thread-groups/action-identity",
+      "fusion-studio-server/lib/thread-groups/group-mutation-lease",
+      "fusion-studio-server/lib/thread-groups/application-link",
+      "fusion-studio-server/lib/thread-groups/ids",
+      "fusion-studio-server/lib/thread-groups/chat-capable-views",
+      "fusion-studio-server/lib/cli-config",
+      "fusion-studio-server/lib/thread/thread-harness-config-policy"
+    ],
+    "fusion-studio-server/lib/thread-groups/placement-delivery.js": [
+      "fusion-studio-server/lib/thread-groups/ids",
+      "fusion-studio-server/lib/view-state/thread-worksurface"
+    ],
+    "fusion-studio-server/lib/thread-groups/projection-outbox-repository.js": [],
+    "fusion-studio-server/lib/thread-groups/repository.js": [],
+    "fusion-studio-server/lib/thread-groups/selection-service.js": [
+      "fusion-studio-server/lib/thread-groups/action-identity",
+      "fusion-studio-server/lib/cli-config",
+      "fusion-studio-server/lib/thread/thread-harness-config-policy"
+    ],
+    "fusion-studio-server/lib/thread-groups/service.js": [
+      "fusion-studio-server/lib/db",
+      "fusion-studio-server/lib/views",
+      "fusion-studio-server/lib/thread-groups/action-identity",
+      "fusion-studio-server/lib/thread-groups/group-mutation-lease",
+      "fusion-studio-server/lib/thread-groups/application-link"
+    ],
+    "fusion-studio-server/lib/thread-groups/session-transactions.js": [
+      "fusion-studio-server/lib/thread-groups/group-mutation-lease",
+      "fusion-studio-server/lib/db"
+    ],
+    "fusion-studio-server/lib/thread-groups/startup-reconciliation.js": [
+      "fusion-studio-server/lib/db",
+      "fusion-studio-server/lib/views/stable-view-id-preflight",
+      "fusion-studio-server/lib/thread-groups/worksurface-cleanup"
+    ],
+    "fusion-studio-server/lib/thread/HistoryFile.js": [
+      "fusion-studio-server/lib/db"
+    ],
+    "fusion-studio-server/lib/thread/ThreadIndex.js": [
+      "fusion-studio-server/lib/db"
+    ],
+    "fusion-studio-server/lib/wire/terminal-saved-delivery.js": [],
+    "fusion-studio-server/lib/wire/wire-broadcaster.js": [],
+    "fusion-studio-server/lib/thread/thread-crud.js": [
+      "fusion-studio-server/lib/thread/chat-search",
+      "fusion-studio-server/lib/cli-config",
+      "fusion-studio-server/lib/thread-groups/ids"
+    ],
+    "fusion-studio-server/lib/thread/thread-open-handler.js": [],
+    "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx": [
+      "fusion-studio-client/src/lib/ws/threadGroupRows",
+      "fusion-studio-client/src/state/panelStore",
+      "fusion-studio-client/src/state/slices/chatSurfaceSlice",
+      "fusion-studio-client/src/state/slices/worksurfaceSlice",
+      "fusion-studio-client/src/state/panelStoreTypes",
+      "fusion-studio-client/src/components/view-tabs/componentTabTypes",
+      "fusion-studio-client/src/components/chat/sideChatBridge",
+      "fusion-studio-client/src/components/chat/ChatSurface",
+      "fusion-studio-client/src/components/chat/useChatSessionHost",
+      "fusion-studio-client/src/components/chat/chatSurfaceContract",
+      "fusion-studio-client/src/components/chat/chatSurfaceRegistrationContract"
+    ],
+    "fusion-studio-client/src/lib/ws/thread-handlers.ts": [
+      "fusion-studio-client/src/state/panelStore",
+      "fusion-studio-client/src/state/chatFileLinkStore",
+      "fusion-studio-client/src/state/chatComposerDraftStore",
+      "fusion-studio-client/src/state/chatSubmissionStore",
+      "fusion-studio-client/src/lib/chat/prompt-submission-recovery",
+      "fusion-studio-client/src/lib/file-tree",
+      "fusion-studio-client/src/lib/toast",
+      "fusion-studio-client/src/lib/ws/threadGroupRows",
+      "fusion-studio-client/src/lib/worksurface/worksurfaceController",
+      "fusion-studio-client/src/lib/worksurface/sideChatViews",
+      "fusion-studio-client/src/types"
+    ],
+    "fusion-studio-client/src/lib/ws/thread-history.ts": [
+      "fusion-studio-client/src/state/panelStore",
+      "fusion-studio-client/src/state/chatFileLinkStore",
+      "fusion-studio-client/src/state/fileStore",
+      "fusion-studio-client/src/state/chatSubmissionStore",
+      "fusion-studio-client/src/lib/chat/prompt-submission-recovery",
+      "fusion-studio-client/src/lib/chat/context-usage",
+      "fusion-studio-client/src/lib/chat/terminal-error",
+      "fusion-studio-client/src/lib/ws/assistant-parts",
+      "fusion-studio-client/src/lib/ws/snapshot-restore",
+      "fusion-studio-client/src/state/slices/chatSurfaceSlice",
+      "fusion-studio-client/src/types"
+    ],
+    "fusion-studio-client/src/lib/ws/thread-markdown.ts": [
+      "fusion-studio-client/src/state/panelStore",
+      "fusion-studio-client/src/lib/file-tree"
+    ],
+    "fusion-studio-client/src/types/websocket.ts": [
+      "fusion-studio-client/src/types/chat",
+      "fusion-studio-client/src/types/workspace"
+    ],
+    "fusion-studio-server/lib/thread/ThreadManager.js": [
+      "fusion-studio-server/lib/db",
+      "fusion-studio-server/lib/thread-groups/group-mutation-lease",
+      "fusion-studio-server/lib/thread-groups/worksurface-cleanup"
+    ],
+    "fusion-studio-server/lib/thread/ThreadWebSocketHandler.js": [
+      "fusion-studio-server/lib/thread/thread-messages",
+      "fusion-studio-server/lib/thread/thread-manager-registry",
+      "fusion-studio-server/lib/wire/process-manager",
+      "fusion-studio-server/lib/ws/workspace-operation-lease"
+    ],
+    "fusion-studio-server/lib/thread/automation-drain.js": [
+      "fusion-studio-server/lib/wire/process-manager",
+      "fusion-studio-server/lib/agent-provenance/turn-authority",
+      "fusion-studio-server/lib/harness/errors",
+      "fusion-studio-server/lib/thread/turn-terminal-error",
+      "fusion-studio-server/lib/thread/harness-diagnostic-service",
+      "fusion-studio-server/lib/thread/terminal-diagnostic-boundary"
+    ],
+    "fusion-studio-server/lib/thread/automation-runtime-activation.js": [
+      "fusion-studio-server/lib/harness/compat",
+      "fusion-studio-server/lib/wire/process-manager"
+    ],
+    "fusion-studio-server/lib/thread/automation-turn-context.js": [
+      "fusion-studio-server/lib/enforcement",
+      "fusion-studio-server/lib/db",
+      "fusion-studio-server/lib/agent-provenance/activity-repository",
+      "fusion-studio-server/lib/agent-provenance/activity-owner",
+      "fusion-studio-server/lib/wire/canonical-chat-event-applier",
+      "fusion-studio-server/lib/wire/canonical-harness-event-bridge"
+    ],
+    "fusion-studio-server/lib/thread/canonical-drain-context.js": [],
+    "fusion-studio-server/lib/thread/chatlog-mirror.js": [
+      "fusion-studio-server/lib/thread/ChatFile",
+      "fusion-studio-server/lib/workspace/ai-paths"
+    ],
+    "fusion-studio-server/lib/thread/mirror-journal.js": [],
+    "fusion-studio-server/lib/thread/provider-termination.js": [],
+    "fusion-studio-server/lib/thread/runtime-activation.js": [
+      "fusion-studio-server/lib/wire/process-manager"
+    ],
+    "fusion-studio-server/lib/thread/runtime-dispatch.js": [
+      "fusion-studio-server/lib/chat-scope",
+      "fusion-studio-server/lib/agent-provenance/turn-authority",
+      "fusion-studio-server/lib/harness/errors",
+      "fusion-studio-server/lib/thread/turn-terminal-error",
+      "fusion-studio-server/lib/thread/harness-diagnostic-service",
+      "fusion-studio-server/lib/thread/terminal-diagnostic-boundary",
+      "fusion-studio-server/lib/thread/prompt-submission-service"
+    ],
+    "fusion-studio-server/lib/thread/runtime-identity.js": [],
+    "fusion-studio-server/lib/thread/runtime-prompt-admission.js": [
+      "fusion-studio-server/lib/wire/process-manager",
+      "fusion-studio-server/lib/thread/prompt-submission-service"
+    ],
+    "fusion-studio-server/lib/thread/runtime-response.js": [],
+    "fusion-studio-server/lib/thread/runtime-session-activation.js": [
+      "fusion-studio-server/lib/wire/process-manager"
+    ],
+    "fusion-studio-server/lib/thread/runtime-session-binding.js": [],
+    "fusion-studio-server/lib/thread/runtime-stop.js": [
+      "fusion-studio-server/lib/wire/process-manager",
+      "fusion-studio-server/lib/agent-provenance/turn-authority"
+    ],
+    "fusion-studio-server/lib/thread/session-lifecycle.js": [],
+    "fusion-studio-server/lib/thread/session-manager.js": [
+      "fusion-studio-server/lib/background-services/safety"
+    ],
+    "fusion-studio-server/lib/thread/session-metadata.js": [
+      "fusion-studio-server/lib/db"
+    ],
+    "fusion-studio-server/lib/thread/session-repository.js": [],
+    "fusion-studio-server/lib/thread/thread-runtime-automation.js": [
+      "fusion-studio-server/lib/chat-scope",
+      "fusion-studio-server/lib/agent-provenance/turn-authority",
+      "fusion-studio-server/lib/thread/thread-manager-registry"
+    ],
+    "fusion-studio-server/lib/thread/thread-runtime-controller.js": [],
+    "fusion-studio-server/lib/thread/thread-runtime-manager.js": [
+      "fusion-studio-server/lib/thread/live-turn-snapshot",
+      "fusion-studio-server/lib/thread/canonical-turn-accumulator"
+    ],
+    "fusion-studio-server/lib/thread/turn-application-context.js": [],
+    "fusion-studio-server/lib/ws/thread-action-handler.js": [
+      "fusion-studio-server/lib/ws/privileged-thread-guard",
+      "fusion-studio-server/lib/thread/prompt-submission-service"
+    ],
+    "fusion-studio-server/lib/ws/thread-action-protocol.js": [],
+    "fusion-studio-server/lib/ws/thread-provider-binding.js": [
+      "fusion-studio-server/lib/harness/compat",
+      "fusion-studio-server/lib/wire/process-manager"
+    ],
+    "fusion-studio-server/lib/ws/thread-ws-handlers.js": [
+      "fusion-studio-server/lib/thread",
+      "fusion-studio-server/lib/thread/thread-harness-config-policy",
+      "fusion-studio-server/lib/ws/privileged-thread-guard",
+      "fusion-studio-server/lib/ws/workspace-operation-lease"
+    ]
+  },
+  "cycles": [],
+  "violations": {}
+}

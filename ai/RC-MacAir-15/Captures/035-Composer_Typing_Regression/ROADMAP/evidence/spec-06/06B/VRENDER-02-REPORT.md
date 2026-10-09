@@ -1,0 +1,13 @@
+# V-RENDER02 — retained foreground prerequisite failure
+
+2026-09-26, current reviewed B15 source1946 SHA467062ff7a638314c164c30f5900507a010a4084823dc72a9f90290404541fe1/build200 SHA6c06602b58f8dc0e4a9b1ed6588c5670b8e628b21044040a581e9e9d55f05234.
+
+Root authorized existing fullrender with optional reviewed owner acquisition after the corrected diagnostic. Command: `FUSION_CHAT_ARCH_OWNER_FOREGROUND_MS=120000 /usr/bin/caffeinate -d node fusion-studio-client/e2e/chat-architecture/run.mjs --suite render --mode enforce`. Console vrender-02.log; raw evidence/spec-01/01B/chat-arch-1790424871492-50a0d12d9d. Started12:14:31.492Z, hard15minute suite deadline. No source changes or new diagnostic.
+
+F1 public route passed6285ms. R1-F2-F3-COMPOSER failed64104ms at the first SETTLED45 prepared-document focus assertion (`R1_FOCUS_LOST_BEFORE_TYPING`). Remaining composer-correctness/five-minute/R7history/R9indicator cases were not executed; no fullrender or five-minute completion claim. No automatic soak/retry launched.
+
+First marked R1 window PID25859/window1 acquired actual native focus for2s at12:14:45.175Z; helper normal mode does not require pointer, so no physical owner click is inferred. Exact READY/acquired state relayed to root with instruction against lateclick. Startup/warm trial1 intervals both recorded exact68character retention, full typing focus intervals valid, zero outgoingframes/longtasks/formatter/siblingrework. Startup wall1924ms/inputp95 .7999997/rAFp95 11.6999998/max12.5999999; warm1915ms/.6000004/13.1999998/14.9000001. These two bounded observations do not satisfy three-trial/fullrender criteria. Raw calibration and ordered current-document screenshot lifecycle are retained.
+
+During the subsequent45secondsettle, owned hide12:15:05.397Z thenblur05.699 occurred; appHiddenfalse/visibletrue/minimizedfalse in recorded states. Final nativefocusedfalse invalidated the settled prerequisite before typing. No actor/cause established; initial acquisition is not durable foreground proof. Strict gates remained intact, no refocus inside measured typing or threshold waiver.
+
+Raw cleanup SQLitequickcheckok/roots+portremoved/no leaks/no timeout or external interruption; ownedrunrootremovedtrue. VRENDER-02-CLEANUP.json at12:16:23.785Z verifies exactroot/token and PIDs24309/24322/24444/25252/25859 absent. All1946source/200build hashes still match. Supervisor8hour assertion untouched. Runtime lane idle after failure, awaiting root disposition; no owner approval/acceptance inferred. Full foreground V-RENDER/five-minute/45minute/native methods and timestamped owner symptom acceptance remain pending;06C barred.

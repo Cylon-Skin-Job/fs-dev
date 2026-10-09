@@ -1,0 +1,30 @@
+{
+  "command": [
+    "git",
+    "-C",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+    "remote",
+    "-v"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "GIT_LITERAL_PATHSPECS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "started": "2026-10-04T19:52:35.968942+00:00",
+  "finished": "2026-10-04T19:52:35.972493+00:00",
+  "exit_code": 0,
+  "stdout": "origin\t/Users/rccurtrightjr./projects/fs-dev (fetch)\norigin\t/Users/rccurtrightjr./projects/fs-dev (push)\n",
+  "stderr": "",
+  "stdout_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/after-candidate-remotes.stdout",
+    "sha256": "1dbd41bb2a2f8430550937a06d19a23bec8caf208cbebeb04221f1d9b99c1c1d",
+    "size": 105
+  },
+  "stderr_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/after-candidate-remotes.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "state": "HANDOFF_PREPARED",
+  "at": "2026-10-07T09:14:13.110574+00:00",
+  "files": {
+    "handoff-write-receipt.json": "a890e1ba0b5866efb00b0de68c4671878a1bf585cc80c8bcb8398b96deac5f45",
+    "CHECKPOINT.json.preimage": "67dd4dc6fbba88712a0b61f95e79d6656f2fd5e34d65425d5f7f7e689f90a897",
+    "diff-check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "index-validation.log": "d8ce4db9cd2aee13a48fbc629a58c9d09d45a14f854ec44a445b18f59c856a2c",
+    "verification-attempt-01.json": "328353d794e2af69fbc3fa8d1a0aab978b0db94296c214c41b416e5c933a41e2",
+    "writer-observation.json": "ab28c39e374fdf055bbf82a127f734471dc252e21608e2d0fb36cef9acd6b8f9",
+    "validation.json": "3b06191616660185f95a4e900f5d1c00b00f5c1bb41a360f87a228f4a25fd75c",
+    "index-validation-pass-02.log": "d8ce4db9cd2aee13a48fbc629a58c9d09d45a14f854ec44a445b18f59c856a2c",
+    "diff-check-pass-02.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "TICKET.md.preimage": "adddc01c66bbfb4e6b7db9a8b261b66f54457c523e55c5624b5a6ba2a5c35084",
+    "index.json.preimage": "859b232ddbf3acd72981886ede6f01d1c8000cc4c0d8a0b16f5ce575084417c3",
+    "BULLETIN.md.preimage": "d358ffef0dbb44288ca1b6a127fb3acaa741e1e82bb538654074e166a28fabcf"
+  },
+  "documents": {
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/HANDOFF-COMPLETED-BUILD-2026-10-07.md": "a4b4895940f72e3352446770625023e7c925a1369fb5f611dd03b478d742ee89",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/TICKET.md": "57cc051eeb4eb589042a1e30214a0da8dae6cc6091cf03593f3f7d9c49140faf",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/BULLETIN.md": "4ec2e40f69f8a5d810755bcb14cc97478becce02f86f43facefe9867ecae8be0",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/index.json": "197f69427a38a1c49ea42911565ef08a39a0d75e849ceff9b38492bb035ddf2c"
+  },
+  "limits": "Documentation handoff and source-readback receipts; no independent product recertification, history checkpoint or publication."
+}

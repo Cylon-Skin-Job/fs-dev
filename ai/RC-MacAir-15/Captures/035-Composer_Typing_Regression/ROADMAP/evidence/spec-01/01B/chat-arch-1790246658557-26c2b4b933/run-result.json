@@ -1,0 +1,68 @@
+{
+  "runId": "chat-arch-1790246658557-26c2b4b933",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R8-OWNER-GRAPH",
+      "code": 0,
+      "signal": null,
+      "pid": 22643,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 118
+    },
+    {
+      "id": "R8-EXACT-MEMBER-HYDRATION",
+      "code": 0,
+      "signal": null,
+      "pid": 22667,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 1669
+    },
+    {
+      "id": "R8-UI-LIFECYCLE",
+      "code": 0,
+      "signal": null,
+      "pid": 22864,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 8875
+    },
+    {
+      "id": "R7-R8-RUNTIME-OWNERSHIP",
+      "code": 0,
+      "signal": null,
+      "pid": 24000,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 12574
+    },
+    {
+      "id": "R8-MIRROR-RECOVERY",
+      "code": 0,
+      "signal": null,
+      "pid": 25833,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 12154
+    },
+    {
+      "id": "R8-SESSION-LIFECYCLE",
+      "code": 0,
+      "signal": null,
+      "pid": 27621,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 9975
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

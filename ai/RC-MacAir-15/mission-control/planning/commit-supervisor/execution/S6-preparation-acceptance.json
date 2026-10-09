@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-04T13:27:30.744980+00:00",
+  "kind": "S6_PREPARATION_ACCEPTED_ONLY",
+  "owner": "/root",
+  "builder": "/root/s6_builder",
+  "builder_gate": "/root/s6_builder/s6_prep_review_1",
+  "acceptance_gate": "/root/s6_prep_acceptance_1",
+  "reviewer_terminal": true,
+  "fork_turns": "none",
+  "settings": "root inherited without overrides",
+  "close_agent": "unavailable",
+  "raw_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-preparation-acceptance-review-1.md",
+  "raw_report_sha256": "94a1c0147763e1eb9a7104907a1a3481f75f310bea97530d1904422a401e4241",
+  "freeze_sha256": "ecaa405bd30b1fb5bbe1ef44a0f271971c7fe72d55a833f7abb6bae8cdc8a7b5",
+  "current_artifacts": "1036unchanged records;1report metadata-only provenance;46dependencies;126candidate leaves verified",
+  "deviations": "D1\u201311,D13accepted;D12downstreamcloseout assigned",
+  "whole_s6_accepted": false,
+  "allowed_next": "Actual installed Commit Supervisor provider-hold intake under S6 original scope",
+  "git_publication_authority": "none",
+  "mc_active": false
+}

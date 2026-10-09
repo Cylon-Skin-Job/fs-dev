@@ -1,0 +1,14 @@
+{
+  "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/checklist-guide.md": {
+    "installed_path": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md",
+    "template_sha256": "e05c868a3f60d3975ce517c02ada96887d4671faed1640e203853bc545d58076",
+    "installed_sha256": "e2877b2a21a23cce18a7b079d1532a8c7a5a8f30467e369248d75e9750ce527c",
+    "link_resolution": "Validate original template link literals against original declared installed article path; seeded content is a behavioral fixture, not approved production prose"
+  },
+  "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/navigation-guide.md": {
+    "installed_path": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/002-Navigation_Guide/PAGE.md",
+    "template_sha256": "4fbe50677f55e83003d8af72f2db702c9ffcea3a514f82feacf56ea3c7983970",
+    "installed_sha256": "7a3058e3ca2a0b793e6c4831487b53098a49c4c80f2f3d91f8a2dbe6463b28ed",
+    "link_resolution": "Validate original template link literals against original declared installed article path; seeded content is a behavioral fixture, not approved production prose"
+  }
+}

@@ -1,0 +1,391 @@
+{
+  "at": "2026-10-04T11:58:34.099429+00:00",
+  "role": "S4-R2 builder",
+  "memory_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "branch": "agent/exact-workspace-paths",
+  "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "index_path": "/Users/rccurtrightjr./projects/fs-dev/.git/index",
+  "index_sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+  "accepted_latest_files": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/job-template.md",
+      "exists": true,
+      "sha256": "21bf5a6b99bb333115c43b594996810159a7a34ddaa360936895cf1ce95d35f8",
+      "expected": "21bf5a6b99bb333115c43b594996810159a7a34ddaa360936895cf1ce95d35f8",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+      "exists": true,
+      "sha256": "27aab53da9edbed9f6ee8ceb4917d7c7531a7de914a3c2df7fb2196b6bd4a20c",
+      "expected": "27aab53da9edbed9f6ee8ceb4917d7c7531a7de914a3c2df7fb2196b6bd4a20c",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+      "exists": true,
+      "sha256": "d85c8ae1828bfe94426bde87527ddc3430d720604c78cfdab775db5982dabc58",
+      "expected": "d85c8ae1828bfe94426bde87527ddc3430d720604c78cfdab775db5982dabc58",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/snapshot_restore.py",
+      "exists": true,
+      "sha256": "37c75d19a2217759086be00274f14d589a5bb64bb6905f323db7ba1969674c2c",
+      "expected": "37c75d19a2217759086be00274f14d589a5bb64bb6905f323db7ba1969674c2c",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/snapshot_state.py",
+      "exists": true,
+      "sha256": "a38ffed0cca07299031c2709773caf33ea9065785bf114b6352141fb3310689b",
+      "expected": "a38ffed0cca07299031c2709773caf33ea9065785bf114b6352141fb3310689b",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/snapshot_fixture.py",
+      "exists": true,
+      "sha256": "79e1cfa9975f1e0b4e2040dd8b259543d207b3a770ee08ce9f171f5f22fbc2d4",
+      "expected": "79e1cfa9975f1e0b4e2040dd8b259543d207b3a770ee08ce9f171f5f22fbc2d4",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_job_snapshot.py",
+      "exists": true,
+      "sha256": "a7f2413aff9807a495c3cd697f14ab813fa254beb8632ea7c2c49b68929010e6",
+      "expected": "a7f2413aff9807a495c3cd697f14ab813fa254beb8632ea7c2c49b68929010e6",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-code-review-orchestrator/SKILL.md",
+      "exists": true,
+      "sha256": "61a2e611803aa918b22b9356e19f1d863a3e7a6ac05cf9cc491f41e175d16129",
+      "expected": "61a2e611803aa918b22b9356e19f1d863a3e7a6ac05cf9cc491f41e175d16129",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-code-review-orchestrator/agents/openai.yaml",
+      "exists": true,
+      "sha256": "24a3b0515c3c858cf7af6a3a3887a2b943b4a6bf4ea799b33faef87cc38517a8",
+      "expected": "24a3b0515c3c858cf7af6a3a3887a2b943b4a6bf4ea799b33faef87cc38517a8",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-code-review-orchestrator.toml",
+      "exists": true,
+      "sha256": "1e06b777794a371a2620a7df3d97caaeb95cb67652b18461e1db6f9744b653e0",
+      "expected": "1e06b777794a371a2620a7df3d97caaeb95cb67652b18461e1db6f9744b653e0",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-repair-worker/SKILL.md",
+      "exists": true,
+      "sha256": "f6aa836695ab3cfb22b256e0bc6c5df5cd64b1a65e2ca75654da59be3972daa9",
+      "expected": "f6aa836695ab3cfb22b256e0bc6c5df5cd64b1a65e2ca75654da59be3972daa9",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-repair-worker/agents/openai.yaml",
+      "exists": true,
+      "sha256": "71f4602466de516b59a8fabbb225a61a51dcfe7922deb2a46e08b95ba39cd47b",
+      "expected": "71f4602466de516b59a8fabbb225a61a51dcfe7922deb2a46e08b95ba39cd47b",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-repair-worker.toml",
+      "exists": true,
+      "sha256": "90d9830f49a41ca63712aca1096a31f9224b9bb06d6adea60a9d715b1364fc81",
+      "expected": "90d9830f49a41ca63712aca1096a31f9224b9bb06d6adea60a9d715b1364fc81",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-review-gate/SKILL.md",
+      "exists": true,
+      "sha256": "cc738b3ecebca875b1f6d4460d26c3185dd3b3dd2a93550086742995a0c6c56a",
+      "expected": "cc738b3ecebca875b1f6d4460d26c3185dd3b3dd2a93550086742995a0c6c56a",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+      "exists": true,
+      "sha256": "15a250fb476407020a98740d443e95b612d075515a3500740d6ed56f2222d496",
+      "expected": "15a250fb476407020a98740d443e95b612d075515a3500740d6ed56f2222d496",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_review_packet.py",
+      "exists": true,
+      "sha256": "7830ec4b4d0b10cbab76e2403bdfceacf78f334e4777835daaaa2fc4e8746504",
+      "expected": "7830ec4b4d0b10cbab76e2403bdfceacf78f334e4777835daaaa2fc4e8746504",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/wiki-handoff.md",
+      "exists": true,
+      "sha256": "4d9198cfa72345335294ea3046c6895e10827ec65456ff2c0339c5e8f247c432",
+      "expected": "4d9198cfa72345335294ea3046c6895e10827ec65456ff2c0339c5e8f247c432",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+      "exists": true,
+      "sha256": "de9ee5cf8ba042caa0ea452b6b67c791ac40bdcf76cbf4a04c0d2555fcb63a68",
+      "expected": "de9ee5cf8ba042caa0ea452b6b67c791ac40bdcf76cbf4a04c0d2555fcb63a68",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+      "exists": true,
+      "sha256": "c752f13b4ba459793a178aee789cf6bd42bf1c39184f2b045b17494980176198",
+      "expected": "c752f13b4ba459793a178aee789cf6bd42bf1c39184f2b045b17494980176198",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/wiki_fixture.py",
+      "exists": true,
+      "sha256": "cd2a1024f2acad7844a06406b7ff3f1794a016da21ffdd2d04abfae859e7a6de",
+      "expected": "cd2a1024f2acad7844a06406b7ff3f1794a016da21ffdd2d04abfae859e7a6de",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_wiki_handoff.py",
+      "exists": true,
+      "sha256": "5a35d5586b11af10fea182f3ec45f44c19a14117223e7a54d5328b5e7afe4269",
+      "expected": "5a35d5586b11af10fea182f3ec45f44c19a14117223e7a54d5328b5e7afe4269",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh",
+      "exists": true,
+      "sha256": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+      "expected": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs",
+      "exists": true,
+      "sha256": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e",
+      "expected": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs",
+      "exists": true,
+      "sha256": "3f5f209457b90e1d0fd44266de7934ee3116d3f7a122a1f9d85a6d9e88d98d56",
+      "expected": "3f5f209457b90e1d0fd44266de7934ee3116d3f7a122a1f9d85a6d9e88d98d56",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs",
+      "exists": true,
+      "sha256": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+      "expected": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs",
+      "exists": true,
+      "sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+      "expected": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/skills/fusion-electron-restart/SKILL.md",
+      "exists": true,
+      "sha256": "ca796770a18e1833ac025c24a881a62b7b07e6ee177bb08aaf00798b7b141153",
+      "expected": "ca796770a18e1833ac025c24a881a62b7b07e6ee177bb08aaf00798b7b141153",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/runtime-handoff.md",
+      "exists": true,
+      "sha256": "1f32dcb413d10288ced451ba8806dfc1b325e280e6919e35165e8a8d70b50694",
+      "expected": "1f32dcb413d10288ced451ba8806dfc1b325e280e6919e35165e8a8d70b50694",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs",
+      "exists": true,
+      "sha256": "0031ecf01c134854a008a9946f7c9f05a8a2e676b7cb73fbe1654cc12dc767c7",
+      "expected": "0031ecf01c134854a008a9946f7c9f05a8a2e676b7cb73fbe1654cc12dc767c7",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md",
+      "exists": true,
+      "sha256": "54cb3ff16f0fae8847341ba38f53af6afd6aa6d84ac4ddb7df9e20faf13888dc",
+      "expected": "54cb3ff16f0fae8847341ba38f53af6afd6aa6d84ac4ddb7df9e20faf13888dc",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/session-contract.md",
+      "exists": true,
+      "sha256": "d82d5a815a94f8c27b64d1d90aa0085790e3d98408c011e86d6126dd1bd9b570",
+      "expected": "d82d5a815a94f8c27b64d1d90aa0085790e3d98408c011e86d6126dd1bd9b570",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/record-templates.md",
+      "exists": true,
+      "sha256": "41a4de158caea4cd1512b839150db77735d3a36cdfbe4fb688059bc8a86732e7",
+      "expected": "41a4de158caea4cd1512b839150db77735d3a36cdfbe4fb688059bc8a86732e7",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/mission-control.md",
+      "exists": true,
+      "sha256": "daff3be04e4c9db92098517de4a7866fb7f9cb86532d1bd60eab6d6f78272f13",
+      "expected": "daff3be04e4c9db92098517de4a7866fb7f9cb86532d1bd60eab6d6f78272f13",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+      "exists": true,
+      "sha256": "7c5c447fc48805dcbea283e1bd7c5e4290b3443496abdb2876c6ccf460fe41b1",
+      "expected": "7c5c447fc48805dcbea283e1bd7c5e4290b3443496abdb2876c6ccf460fe41b1",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+      "exists": true,
+      "sha256": "41fe2c81f6da2ed87e4fd625e60044988fd10c5725da33446ebc360f6ab8cba9",
+      "expected": "41fe2c81f6da2ed87e4fd625e60044988fd10c5725da33446ebc360f6ab8cba9",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+      "exists": true,
+      "sha256": "52ed4a92ffef4a3f6ecd2f128f5e5886a2d1ed496d841e9f83a38481360da937",
+      "expected": "52ed4a92ffef4a3f6ecd2f128f5e5886a2d1ed496d841e9f83a38481360da937",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+      "exists": true,
+      "sha256": "aca67f27b5c1cd4c75e5e8ebfc388c446ff505a9581719e239d6ed40087a49b1",
+      "expected": "aca67f27b5c1cd4c75e5e8ebfc388c446ff505a9581719e239d6ed40087a49b1",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+      "exists": true,
+      "sha256": "e3ffc6d20ff9d31dfe1b0a7f5bbbeabe3351cee9a3c4ec9bc8f990c080dd08ea",
+      "expected": "e3ffc6d20ff9d31dfe1b0a7f5bbbeabe3351cee9a3c4ec9bc8f990c080dd08ea",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/index.json",
+      "exists": true,
+      "sha256": "c93b4e279488456bd2e81b2836f8e1e11a80301af0f0b3d1ba521f9acfbdb460",
+      "expected": "c93b4e279488456bd2e81b2836f8e1e11a80301af0f0b3d1ba521f9acfbdb460",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/config.toml",
+      "exists": true,
+      "sha256": "21558b2f2eae1c44479ea7d5afe5e636a379b8b08f4a79c108715d99f9b81322",
+      "expected": "21558b2f2eae1c44479ea7d5afe5e636a379b8b08f4a79c108715d99f9b81322",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-review-and-merge.toml",
+      "exists": false,
+      "sha256": null,
+      "expected": null,
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-review-and-merge/SKILL.md",
+      "exists": false,
+      "sha256": null,
+      "expected": null,
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-review-and-merge/agents/openai.yaml",
+      "exists": false,
+      "sha256": null,
+      "expected": null,
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mission-control/SKILL.md",
+      "exists": true,
+      "sha256": "49ad5a39b4ca9bc70194f7268b55d7e859c8a1edb6af2398f4cf7499f6972acd",
+      "expected": "49ad5a39b4ca9bc70194f7268b55d7e859c8a1edb6af2398f4cf7499f6972acd",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/monitor/SKILL.md",
+      "exists": true,
+      "sha256": "ddd24895961ae68a0adc53a61f9a1722b9169b6b89da12c9960c0a7816831425",
+      "expected": "ddd24895961ae68a0adc53a61f9a1722b9169b6b89da12c9960c0a7816831425",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/status/references/report-format.md",
+      "exists": true,
+      "sha256": "3cd603a9c454f2a2458b09af2d50ec416768cfa5202f1bd2bf783f26dbf5d557",
+      "expected": "3cd603a9c454f2a2458b09af2d50ec416768cfa5202f1bd2bf783f26dbf5d557",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-implementation-supervisor/SKILL.md",
+      "exists": true,
+      "sha256": "aeff519d09551470d8aadbf6a223bbee89729d96184726addef155492a3b1f38",
+      "expected": "aeff519d09551470d8aadbf6a223bbee89729d96184726addef155492a3b1f38",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md",
+      "exists": true,
+      "sha256": "b4ec0266a8d72f573dd4f3670c671a856ee5cc98b6942aad48683fa22fb14d68",
+      "expected": "b4ec0266a8d72f573dd4f3670c671a856ee5cc98b6942aad48683fa22fb14d68",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/agents/openai.yaml",
+      "exists": true,
+      "sha256": "1b938e91f8799afb36273459f1172b18b7e45aceed5b9cb2b81af9d9c86ce82d",
+      "expected": "1b938e91f8799afb36273459f1172b18b7e45aceed5b9cb2b81af9d9c86ce82d",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-supervisor.toml",
+      "exists": true,
+      "sha256": "01887fdc12c962be5a7438b513836e6269cff1f9683b7a17c2edfbf2aa961044",
+      "expected": "01887fdc12c962be5a7438b513836e6269cff1f9683b7a17c2edfbf2aa961044",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/owner-publication.md",
+      "exists": true,
+      "sha256": "e443f0a689532a42ababb29bf6729a49dc56ba91f6727364f46faafb1ae19785",
+      "expected": "e443f0a689532a42ababb29bf6729a49dc56ba91f6727364f46faafb1ae19785",
+      "matches": true
+    }
+  ],
+  "preimages": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs",
+      "saved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-preimages/fusion-restart-processes.mjs",
+      "sha256": "3f5f209457b90e1d0fd44266de7934ee3116d3f7a122a1f9d85a6d9e88d98d56"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs",
+      "saved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-preimages/test_restart_runtime.mjs",
+      "sha256": "0031ecf01c134854a008a9946f7c9f05a8a2e676b7cb73fbe1654cc12dc767c7"
+    }
+  ],
+  "raw_failure": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/cleanup.log",
+      "sha256": "3fe20eca25aaa17758cfdcaa1fa6923c8fe990999b98b61988170e037b4770d2"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/owned-runtime-stop.json",
+      "sha256": "faa1ee021cdd406e700d666e1b4edfb399958e66e686edc2c6ce392370ec08e4"
+    }
+  ]
+}

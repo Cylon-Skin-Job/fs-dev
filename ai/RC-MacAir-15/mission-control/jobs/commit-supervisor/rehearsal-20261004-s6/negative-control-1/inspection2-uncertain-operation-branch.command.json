@@ -1,0 +1,31 @@
+{
+  "command": [
+    "git",
+    "-C",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+    "show-ref",
+    "--verify",
+    "refs/heads/codex/s6-rehearsal-fix-xy"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "GIT_LITERAL_PATHSPECS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "started": "2026-10-04T19:52:04.840864+00:00",
+  "finished": "2026-10-04T19:52:04.844643+00:00",
+  "exit_code": 128,
+  "stdout": "",
+  "stderr": "fatal: 'refs/heads/codex/s6-rehearsal-fix-xy' - not a valid ref\n",
+  "stdout_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/inspection2-uncertain-operation-branch.stdout",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  "stderr_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/inspection2-uncertain-operation-branch.stderr",
+    "sha256": "9038c72d535917f5765afaf62d33bf9a8494893187f69415f18852d840d35276",
+    "size": 64
+  }
+}

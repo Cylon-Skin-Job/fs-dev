@@ -1,0 +1,30 @@
+{
+  "fusion-studio-client/e2e/chat-architecture/human-session-launch.mjs": {
+    "before": null,
+    "after": "3fe9b7647a4573e93d4ea5804b4e0e834c50b3f2f3670d56d9a79269694f1d24"
+  },
+  "fusion-studio-client/e2e/chat-architecture/human-session-observer.mjs": {
+    "before": null,
+    "after": "39b20a4a12518cd936799621499b2007c1cafc526dd5b3aa4ca02e57f217c4bf"
+  },
+  "fusion-studio-client/e2e/chat-architecture/human-session-ownership.mjs": {
+    "before": null,
+    "after": "811a66f3bb6e79e98ddd14b51b81c1eac4b68ba8730a1c580e4afd7c3fec2c30"
+  },
+  "fusion-studio-client/e2e/chat-architecture/human-session-recording.mjs": {
+    "before": null,
+    "after": "64845e00bee9b42cd7370cab340f519c74ac3f475847abdd0510d960a64ad0fb"
+  },
+  "fusion-studio-client/e2e/chat-architecture/human-session.mjs": {
+    "before": null,
+    "after": "4ab72685773cb5f4a5eebae669f4b7c971215656b8dfb9f219d31295a2f1cedc"
+  },
+  "fusion-studio-client/e2e/chat-architecture/human-session.test.mjs": {
+    "before": null,
+    "after": "3fae9853659716a8a8322cf12ab98c7c4297909958c9679821cb4503562b5e91"
+  },
+  "fusion-studio-client/e2e/human-session-observer.spec.ts": {
+    "before": null,
+    "after": "747f08ad8dd660cc096926312130f9e17e51ddfdcb397676d2a725ddc0d8b17c"
+  }
+}

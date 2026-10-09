@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-04T20:31:54.228353+00:00",
+  "actor": "/root",
+  "work": "SPEC-COMMIT-SUPERVISOR-01/S6",
+  "actual_successor": "/root/s6_supervisor_recovery_1",
+  "original_requirement": "Actual public guarded restore with immutable original checkpoint/guard evidence; exact assigned ownership/private scope preserved",
+  "actual_choice": "Exclusive J/recovery-1/public-controls byte-exact existing checkpoint manifest/sidecar/payload copies for CLI default consumable restore guard; original namespaces independently publicly verified after each restore",
+  "reason": "Actual public CLI exposes only default job/restore-guard.json and consumes it on successful restore. Avoid modifying immutable predecessor guard/evidence while executing actual public path.",
+  "authority": "mc-orchestrator mechanically necessary integration within explicit owner-approved S6 SECOND recovery packet",
+  "allowed": "Exact full copies only into unique assigned recovery-1; no recapture or manifest owner/repo/scope changes; actual recovery P scope unchanged",
+  "required_evidence": "Whole manifest/sidecar/payload bytes and modes equality; original manifests/guards retained; public raw guard/restore/verify on control namespace and original namespace; full-field actor deviation",
+  "classification": "pending actual root inspection; authorized execution, no completeness claim",
+  "product_source_profile_DB_Git_authority": "NONE; no restart or stop replay"
+}

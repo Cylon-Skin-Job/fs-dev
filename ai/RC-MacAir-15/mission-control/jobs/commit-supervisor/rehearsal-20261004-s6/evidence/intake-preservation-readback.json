@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-04T13:37:08.408912+00:00",
+  "source_head_equal": true,
+  "source_refs_equal": true,
+  "source_physical_index_equal": true,
+  "source_unowned_compared": 11957,
+  "source_unowned_changes": [],
+  "source_cache_leaves": 193,
+  "source_caches_equal": true,
+  "explicit_ownership_exclusions": [
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/",
+    "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/"
+  ],
+  "exclusion_reason": "This Supervisor owns only J reports/recovery; parent /root owns disjoint current execution coordination. Neither is product/candidate/shared-index/ref permission. All current governing readset inputs separately rechecked below.",
+  "protected_processes": 4,
+  "protected_process_changes": [],
+  "protected_storage_changed_volatile": [
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/data/fusion.db",
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server-data/fusion.db"
+  ],
+  "protected_storage_identity_changed": [],
+  "profile_hash_limit": "Normal/Alpha live DB hashes can vary; no mutation performed. Stable existence/dev/inode/mode and exact process identity compared.",
+  "private_profile_leaves": 295,
+  "private_profile_changes": [],
+  "authority_readset_changes": []
+}

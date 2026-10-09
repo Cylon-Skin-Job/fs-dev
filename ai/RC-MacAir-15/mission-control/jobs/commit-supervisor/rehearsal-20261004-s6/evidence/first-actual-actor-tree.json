@@ -1,0 +1,124 @@
+{
+  "at": "2026-10-04T16:12:09.583507+00:00",
+  "supervisor": "/root/s6_supervisor_candidate_1",
+  "manager": "/root",
+  "supervisor_state": "active until intentional final owner-wait return; parent must observe actual terminal afterward",
+  "direct_children": [
+    {
+      "identity": "/root/s6_supervisor_candidate_1/initial_review_manager_1",
+      "mode": "initial",
+      "status": "completed",
+      "fork_turns": "none",
+      "overrides": false,
+      "return_state": "REVIEW_COMPLETE/findings",
+      "raw_report": "jobs/commit-supervisor/rehearsal-20261004-s6/reviews/initial-manager-1.md",
+      "raw_sha256": "e4832545ccce59aea7512cdcd258b82eed74869f36291baaec42df9c07e8d8d0",
+      "reviewer_lifecycle": "jobs/commit-supervisor/rehearsal-20261004-s6/reviews/initial-manager-1-lifecycle.json"
+    },
+    {
+      "identity": "/root/s6_supervisor_candidate_1/code_repair_worker_1",
+      "mode": "bounded leaf code repair",
+      "status": "completed",
+      "fork_turns": "none",
+      "overrides": false,
+      "ownership": "two private existing controller/view leaves + unique worker report",
+      "return_state": "READY_FOR_HANDOFF_REVIEW",
+      "raw_report": "jobs/commit-supervisor/rehearsal-20261004-s6/workers/code-repair-1.md",
+      "raw_sha256": "0c572b166732ec81824976d0558390792ddc03ffc1e9281f1cb0d49513f5e94a"
+    },
+    {
+      "identity": "/root/s6_supervisor_candidate_1/code_handoff_review_1",
+      "mode": "original-assignment code handoff",
+      "status": "errored terminal",
+      "error": "Selected model at capacity",
+      "fork_turns": "none",
+      "overrides": false,
+      "assessment": "NONE"
+    },
+    {
+      "identity": "/root/s6_supervisor_candidate_1/code_handoff_review_2",
+      "mode": "original-assignment code handoff",
+      "status": "completed",
+      "fork_turns": "none",
+      "overrides": false,
+      "independence": "invalidated by honestly reported mixed-file assessment exposure; excluded from all fresh gates",
+      "return_state": "REVIEW_COMPLETE/insufficient-evidence",
+      "assessment": "NONE for independent acceptance",
+      "raw_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/code-handoff-2.raw.md",
+      "raw_sha256": "7672fd36e20c15011f4cad21fc7085c0c3b487611d3618aa85923f1f9681b0b4"
+    },
+    {
+      "identity": "/root/s6_supervisor_candidate_1/code_handoff_review_3",
+      "mode": "original-assignment code handoff",
+      "status": "completed",
+      "fork_turns": "none",
+      "overrides": false,
+      "independence": "fresh raw-command-only packet; excludes mixed author/prior verdict fields",
+      "return_state": "REVIEW_COMPLETE/CLEAN",
+      "raw_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/code-handoff-3.raw.md",
+      "raw_sha256": "bbff107ed13103f59820c349cb5a8eda646c30ac728d8a491d0914653fb96baf"
+    },
+    {
+      "identity": "/root/s6_supervisor_candidate_1/wiki_repair_worker_1",
+      "mode": "bounded settled-code Wiki leaf",
+      "status": "completed",
+      "fork_turns": "none",
+      "overrides": false,
+      "ownership": "Checklist Guide PAGE + exact declared .versions/2026-10-04-080936.md + unique workers/wiki-repair-1 outputs",
+      "children_allowed": false,
+      "return_state": "READY_FOR_HANDOFF_REVIEW",
+      "raw_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/wiki-repair-1.md",
+      "raw_sha256": "22148e2c83afbae60ed7806bfff9900e7f6cdf65fe87d345d414b471e021ddcd",
+      "commands_sha256": "131f564f1517d251093f1cafddeb75c52a9703d24b84198da8bb37159f11059b"
+    },
+    {
+      "identity": "/root/s6_supervisor_candidate_1/wiki_handoff_review_1",
+      "mode": "original entire three-page Wiki handoff",
+      "status": "completed",
+      "fork_turns": "none",
+      "overrides": false,
+      "independence": "fresh originalcurrent rawsource/pages/commandonly evidence, no priorverdicts/authordiagnoses",
+      "ownership": "read-only globalclean-room profile; inline rawreport only",
+      "return_state": "REVIEW_COMPLETE/CLEAN",
+      "raw_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/wiki-handoff-1.raw.md",
+      "raw_sha256": "3008c8e63af59a1bca32c9732fcbe6e4132a4ec902b32388e980a4803e948ff1"
+    },
+    {
+      "identity": "/root/s6_supervisor_candidate_1/final_review_manager_1",
+      "mode": "fresh final all5lens integration",
+      "status": "completed",
+      "fork_turns": "none",
+      "overrides": false,
+      "ownership": "unique final-manager-1 report/lifecycle plus own fresh clean reviewer raw persistence; candidate readonly",
+      "independence": "differentfreshmanager; originalwholecurrent/rawonly no priorverdicts/authordiagnoses/rootassessments",
+      "authorized_child": "freshread-only clean-room reviewer fork-none, no grandchildren",
+      "return_state": "REVIEW_COMPLETE/CLEAN",
+      "raw_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/final-manager-1.md",
+      "raw_sha256": "730900e0ea99c160852df883d0f893478ff47d3c12a9aeb7d3d575269de3c4d1",
+      "reviewer_lifecycle": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/final-manager-1-lifecycle.json",
+      "actual_terminal_observed_at": "2026-10-04T16:02:14.264320+00:00"
+    }
+  ],
+  "manager_children": [
+    {
+      "identity": "/root/s6_supervisor_candidate_1/initial_review_manager_1/all_lenses_reviewer_1",
+      "parent": "/root/s6_supervisor_candidate_1/initial_review_manager_1",
+      "status": "native completed",
+      "evidence": "reviews/initial-manager-1-lifecycle.json"
+    },
+    {
+      "identity": "/root/s6_supervisor_candidate_1/final_review_manager_1/final_reviewer_1",
+      "parent": "/root/s6_supervisor_candidate_1/final_review_manager_1",
+      "status": "native completed",
+      "evidence": "reviews/final-manager-1-lifecycle.json"
+    }
+  ],
+  "all_spawn_settings": "fork_turns=none, inherited root model/effort; no overrides",
+  "actual_max_depth": 3,
+  "effective_support": "Actual supervisor\u2192manager\u2192clean-reviewer spawns observed; root observed configured12slots/depth3",
+  "leaf_writers": "code_repair_worker_1 and wiki_repair_worker_1 no children; disjoint exact ownership preserved others",
+  "independence": "fresh original-assignment handoff3 replaces honestly excluded exposure2; fresh all3Wiki and different fresh finalmanager\u2192freshcleanreviewer original/rawonly",
+  "closure": "All authorized children actual terminal; close_agent unavailable; no substitute API invented",
+  "predecessors": "provider and intent actual completed before their respective labeled root releases and this successor assignment",
+  "source": "Native FINAL_ANSWER deliveries and own-prefix native list_agents receipts retained in unique role lifecycles/reports; parent independently observed terminals"
+}

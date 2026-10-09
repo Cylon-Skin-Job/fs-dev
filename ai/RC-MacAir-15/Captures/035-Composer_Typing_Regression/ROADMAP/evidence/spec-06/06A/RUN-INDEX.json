@@ -1,0 +1,2555 @@
+[
+  {
+    "log": "boot-all-01.log",
+    "runId": "boot-1790301951682-5bfb59ef",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/boot-1790301951682-5bfb59ef",
+    "result": {
+      "runId": "boot-1790301951682-5bfb59ef",
+      "kind": "boot",
+      "mode": "--all",
+      "result": {
+        "code": 0,
+        "signal": null,
+        "pid": 72206,
+        "timedOut": false,
+        "interrupted": false,
+        "leakedOwnedPids": [],
+        "elapsedMs": 92446
+      },
+      "failure": null,
+      "ownedRunRootRemoved": true
+    }
+  },
+  {
+    "log": "non-timing-all-01.log",
+    "runId": "chat-arch-1790302098661-00a2b9f243",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790302098661-00a2b9f243",
+    "requested": {
+      "suite": "all",
+      "mode": "enforce",
+      "cases": [
+        "R8-PRE-RECEIPT-UPGRADE",
+        "R8-OWNER-GRAPH",
+        "R8-EXACT-MEMBER-HYDRATION",
+        "R8-UI-LIFECYCLE",
+        "R7-R8-RUNTIME-OWNERSHIP",
+        "R8-MIRROR-RECOVERY",
+        "R8-SESSION-LIFECYCLE",
+        "F1-PUBLIC-ROUTE",
+        "FAULT-SERVER-ADMISSION",
+        "FAULT-TRANSPORT-ACK",
+        "FAULT-SAVE-ACK",
+        "R1-COMPOSER-CORRECTNESS",
+        "R7-HISTORY-LIVE",
+        "R2-NO-ENQUEUE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R4-DUPLICATE-MISMATCH",
+        "R5-R6-PUBLIC-ACTIONS",
+        "R5-CURRENT-ACTIONS",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-CURRENT-OWNER",
+        "R6-LIFETIME-BOUNDARIES",
+        "R9-INDICATOR-DISTINCTION"
+      ],
+      "enforcementGroup": [
+        "R1-STARTUP-F2-F3",
+        "R1-WARM-F2-F3",
+        "R1-SETTLED45-F2-F3",
+        "R1-DENSE-F2",
+        "R1-COMPOSER-INPUT",
+        "R1-COMPOSER-LOCALITY",
+        "R2-DISCONNECT-BEFORE-CLICK",
+        "R2-ENQUEUE-THROW-RACE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-DUPLICATE-MISMATCH",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R5-FILE-ACTION",
+        "R5-WIKI-ACTION",
+        "R5-OFFICE-ACTION",
+        "R5-SYSTEM-PROMPT-NEW",
+        "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+        "R5-SOURCE-SWITCH",
+        "R5-TEXT-INSERT",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-NO-TARGET-CONSUMER",
+        "R6-PROMPT-UNMOUNT",
+        "R6-CREATE-RECONNECT",
+        "R6-UNRELATED-OPEN-LISTENERS",
+        "R6-PROMPT-CREATE-COMPLETION",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R7-STREAM-STOP-SAVE",
+        "R7-HISTORY-LIVE-OBSERVATION",
+        "R8-GROUP-BACKEND-MATRIX",
+        "R8-UI-LIFECYCLE",
+        "R8-EXACT-MEMBER-HYDRATION",
+        "R7-R8-RUNTIME-OWNERSHIP",
+        "R8-MIRROR-RECOVERY",
+        "R8-SESSION-LIFECYCLE",
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "durationMs": null
+    },
+    "result": {
+      "runId": "chat-arch-1790302098661-00a2b9f243",
+      "status": "failed",
+      "results": [
+        {
+          "id": "R8-PRE-RECEIPT-UPGRADE",
+          "code": 0,
+          "signal": null,
+          "pid": 83649,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 10426
+        },
+        {
+          "id": "R8-OWNER-GRAPH",
+          "code": 0,
+          "signal": null,
+          "pid": 85228,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 129
+        },
+        {
+          "id": "R8-EXACT-MEMBER-HYDRATION",
+          "code": 0,
+          "signal": null,
+          "pid": 85252,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 1307
+        },
+        {
+          "id": "R8-UI-LIFECYCLE",
+          "code": 0,
+          "signal": null,
+          "pid": 85419,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 9706
+        },
+        {
+          "id": "R7-R8-RUNTIME-OWNERSHIP",
+          "code": 0,
+          "signal": null,
+          "pid": 86650,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 13194
+        },
+        {
+          "id": "R8-MIRROR-RECOVERY",
+          "code": 0,
+          "signal": null,
+          "pid": 88568,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 13927
+        },
+        {
+          "id": "R8-SESSION-LIFECYCLE",
+          "code": 0,
+          "signal": null,
+          "pid": 90604,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 11163
+        },
+        {
+          "id": "F1-PUBLIC-ROUTE",
+          "code": 0,
+          "signal": null,
+          "pid": 92329,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 4358
+        },
+        {
+          "id": "FAULT-SERVER-ADMISSION",
+          "code": 0,
+          "signal": null,
+          "pid": 93033,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 6252
+        },
+        {
+          "id": "FAULT-TRANSPORT-ACK",
+          "code": 0,
+          "signal": null,
+          "pid": 93899,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 4999
+        },
+        {
+          "id": "FAULT-SAVE-ACK",
+          "code": 0,
+          "signal": null,
+          "pid": 94615,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 4817
+        },
+        {
+          "id": "R1-COMPOSER-CORRECTNESS",
+          "code": 0,
+          "signal": null,
+          "pid": 95358,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 3093
+        },
+        {
+          "id": "R7-HISTORY-LIVE",
+          "code": 0,
+          "signal": null,
+          "pid": 95731,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 4109
+        },
+        {
+          "id": "R2-NO-ENQUEUE",
+          "code": 0,
+          "signal": null,
+          "pid": 96248,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 5909
+        },
+        {
+          "id": "R3-LOST-ACK-STATUS",
+          "code": 0,
+          "signal": null,
+          "pid": 97180,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 7226
+        },
+        {
+          "id": "R3-RECONNECT-UI",
+          "code": 0,
+          "signal": null,
+          "pid": 98124,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 10613
+        },
+        {
+          "id": "R4-DISTINCT-ATTEMPTS",
+          "code": 0,
+          "signal": null,
+          "pid": 99452,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 10796
+        },
+        {
+          "id": "R4-DISTINCT-RECEIPTS",
+          "code": 0,
+          "signal": null,
+          "pid": 1039,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 10794
+        },
+        {
+          "id": "R4-LATE-DRAFT-RECOVERY",
+          "code": 0,
+          "signal": null,
+          "pid": 2399,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 25841
+        },
+        {
+          "id": "R4-DUPLICATE-MISMATCH",
+          "code": 0,
+          "signal": null,
+          "pid": 5589,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 7181
+        },
+        {
+          "id": "R5-R6-PUBLIC-ACTIONS",
+          "code": 1,
+          "signal": null,
+          "pid": 6545,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 19315
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": {
+        "name": "Error",
+        "message": "R5-R6-PUBLIC-ACTIONS exited 1",
+        "stack": "Error: R5-R6-PUBLIC-ACTIONS exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:449:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  },
+  {
+    "log": "non-timing-all-02.log",
+    "runId": "chat-arch-1790302546082-32740578af",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790302546082-32740578af",
+    "requested": {
+      "suite": "all",
+      "mode": "enforce",
+      "cases": [
+        "R8-PRE-RECEIPT-UPGRADE",
+        "R8-OWNER-GRAPH",
+        "R8-EXACT-MEMBER-HYDRATION",
+        "R8-UI-LIFECYCLE",
+        "R7-R8-RUNTIME-OWNERSHIP",
+        "R8-MIRROR-RECOVERY",
+        "R8-SESSION-LIFECYCLE",
+        "F1-PUBLIC-ROUTE",
+        "FAULT-SERVER-ADMISSION",
+        "FAULT-TRANSPORT-ACK",
+        "FAULT-SAVE-ACK",
+        "R1-COMPOSER-CORRECTNESS",
+        "R7-HISTORY-LIVE",
+        "R2-NO-ENQUEUE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R4-DUPLICATE-MISMATCH",
+        "R5-R6-PUBLIC-ACTIONS",
+        "R5-CURRENT-ACTIONS",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-CURRENT-OWNER",
+        "R6-LIFETIME-BOUNDARIES",
+        "R9-INDICATOR-DISTINCTION"
+      ],
+      "enforcementGroup": [
+        "R1-STARTUP-F2-F3",
+        "R1-WARM-F2-F3",
+        "R1-SETTLED45-F2-F3",
+        "R1-DENSE-F2",
+        "R1-COMPOSER-INPUT",
+        "R1-COMPOSER-LOCALITY",
+        "R2-DISCONNECT-BEFORE-CLICK",
+        "R2-ENQUEUE-THROW-RACE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-DUPLICATE-MISMATCH",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R5-FILE-ACTION",
+        "R5-WIKI-ACTION",
+        "R5-OFFICE-ACTION",
+        "R5-SYSTEM-PROMPT-NEW",
+        "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+        "R5-SOURCE-SWITCH",
+        "R5-TEXT-INSERT",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-NO-TARGET-CONSUMER",
+        "R6-PROMPT-UNMOUNT",
+        "R6-CREATE-RECONNECT",
+        "R6-UNRELATED-OPEN-LISTENERS",
+        "R6-PROMPT-CREATE-COMPLETION",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R7-STREAM-STOP-SAVE",
+        "R7-HISTORY-LIVE-OBSERVATION",
+        "R8-GROUP-BACKEND-MATRIX",
+        "R8-UI-LIFECYCLE",
+        "R8-EXACT-MEMBER-HYDRATION",
+        "R7-R8-RUNTIME-OWNERSHIP",
+        "R8-MIRROR-RECOVERY",
+        "R8-SESSION-LIFECYCLE",
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "durationMs": null
+    },
+    "result": {
+      "runId": "chat-arch-1790302546082-32740578af",
+      "status": "passed",
+      "results": [
+        {
+          "id": "R8-PRE-RECEIPT-UPGRADE",
+          "code": 0,
+          "signal": null,
+          "pid": 18113,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 11730
+        },
+        {
+          "id": "R8-OWNER-GRAPH",
+          "code": 0,
+          "signal": null,
+          "pid": 19837,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 129
+        },
+        {
+          "id": "R8-EXACT-MEMBER-HYDRATION",
+          "code": 0,
+          "signal": null,
+          "pid": 19861,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 1423
+        },
+        {
+          "id": "R8-UI-LIFECYCLE",
+          "code": 0,
+          "signal": null,
+          "pid": 20039,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 9148
+        },
+        {
+          "id": "R7-R8-RUNTIME-OWNERSHIP",
+          "code": 0,
+          "signal": null,
+          "pid": 21209,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 13573
+        },
+        {
+          "id": "R8-MIRROR-RECOVERY",
+          "code": 0,
+          "signal": null,
+          "pid": 23165,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 13573
+        },
+        {
+          "id": "R8-SESSION-LIFECYCLE",
+          "code": 0,
+          "signal": null,
+          "pid": 25116,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 10170
+        },
+        {
+          "id": "F1-PUBLIC-ROUTE",
+          "code": 0,
+          "signal": null,
+          "pid": 26706,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 4078
+        },
+        {
+          "id": "FAULT-SERVER-ADMISSION",
+          "code": 0,
+          "signal": null,
+          "pid": 27360,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 3708
+        },
+        {
+          "id": "FAULT-TRANSPORT-ACK",
+          "code": 0,
+          "signal": null,
+          "pid": 27928,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 4439
+        },
+        {
+          "id": "FAULT-SAVE-ACK",
+          "code": 0,
+          "signal": null,
+          "pid": 28574,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 4692
+        },
+        {
+          "id": "R1-COMPOSER-CORRECTNESS",
+          "code": 0,
+          "signal": null,
+          "pid": 29246,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 3362
+        },
+        {
+          "id": "R7-HISTORY-LIVE",
+          "code": 0,
+          "signal": null,
+          "pid": 29645,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 4023
+        },
+        {
+          "id": "R2-NO-ENQUEUE",
+          "code": 0,
+          "signal": null,
+          "pid": 30126,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 6474
+        },
+        {
+          "id": "R3-LOST-ACK-STATUS",
+          "code": 0,
+          "signal": null,
+          "pid": 31123,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 7784
+        },
+        {
+          "id": "R3-RECONNECT-UI",
+          "code": 0,
+          "signal": null,
+          "pid": 32145,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 11234
+        },
+        {
+          "id": "R4-DISTINCT-ATTEMPTS",
+          "code": 0,
+          "signal": null,
+          "pid": 33542,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 10742
+        },
+        {
+          "id": "R4-DISTINCT-RECEIPTS",
+          "code": 0,
+          "signal": null,
+          "pid": 34876,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 10883
+        },
+        {
+          "id": "R4-LATE-DRAFT-RECOVERY",
+          "code": 0,
+          "signal": null,
+          "pid": 36249,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 25201
+        },
+        {
+          "id": "R4-DUPLICATE-MISMATCH",
+          "code": 0,
+          "signal": null,
+          "pid": 39320,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 8023
+        },
+        {
+          "id": "R5-R6-PUBLIC-ACTIONS",
+          "code": 0,
+          "signal": null,
+          "pid": 40351,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 43828
+        },
+        {
+          "id": "R5-CURRENT-ACTIONS",
+          "code": 0,
+          "signal": null,
+          "pid": 45722,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 16204
+        },
+        {
+          "id": "R6-PRODUCTION-ACTION-OWNER",
+          "code": 0,
+          "signal": null,
+          "pid": 47850,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 45616
+        },
+        {
+          "id": "R5-DIAGNOSTIC-APPEND",
+          "code": 0,
+          "signal": null,
+          "pid": 53314,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 3193
+        },
+        {
+          "id": "R5-CURRENT-OWNER",
+          "code": 0,
+          "signal": null,
+          "pid": 53708,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 2690
+        },
+        {
+          "id": "R6-LIFETIME-BOUNDARIES",
+          "code": 0,
+          "signal": null,
+          "pid": 54051,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 44645
+        },
+        {
+          "id": "R9-INDICATOR-DISTINCTION",
+          "code": 0,
+          "signal": null,
+          "pid": 59406,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 11451
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": null
+    }
+  },
+  {
+    "log": "r6-owner-diagnostic-01.log",
+    "runId": "chat-arch-1790302372768-be2227ebc2",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790302372768-be2227ebc2",
+    "requested": {
+      "suite": "actions",
+      "mode": "enforce",
+      "cases": [
+        "R6-PRODUCTION-ACTION-OWNER"
+      ],
+      "enforcementGroup": [
+        "R5-FILE-ACTION",
+        "R5-WIKI-ACTION",
+        "R5-OFFICE-ACTION",
+        "R5-SYSTEM-PROMPT-NEW",
+        "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+        "R5-SOURCE-SWITCH",
+        "R5-TEXT-INSERT",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-NO-TARGET-CONSUMER",
+        "R6-PROMPT-UNMOUNT",
+        "R6-CREATE-RECONNECT",
+        "R6-UNRELATED-OPEN-LISTENERS",
+        "R6-PROMPT-CREATE-COMPLETION",
+        "R6-PRODUCTION-ACTION-OWNER"
+      ],
+      "durationMs": null
+    },
+    "result": {
+      "runId": "chat-arch-1790302372768-be2227ebc2",
+      "status": "failed",
+      "results": [
+        {
+          "id": "R6-PRODUCTION-ACTION-OWNER",
+          "code": 1,
+          "signal": null,
+          "pid": 9197,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 26100
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": {
+        "name": "Error",
+        "message": "R6-PRODUCTION-ACTION-OWNER exited 1",
+        "stack": "Error: R6-PRODUCTION-ACTION-OWNER exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:449:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  },
+  {
+    "log": "r6-owner-diagnostic-02.log",
+    "runId": "chat-arch-1790302468390-c2f8639417",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790302468390-c2f8639417",
+    "requested": {
+      "suite": "actions",
+      "mode": "enforce",
+      "cases": [
+        "R6-PRODUCTION-ACTION-OWNER"
+      ],
+      "enforcementGroup": [
+        "R5-FILE-ACTION",
+        "R5-WIKI-ACTION",
+        "R5-OFFICE-ACTION",
+        "R5-SYSTEM-PROMPT-NEW",
+        "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+        "R5-SOURCE-SWITCH",
+        "R5-TEXT-INSERT",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-NO-TARGET-CONSUMER",
+        "R6-PROMPT-UNMOUNT",
+        "R6-CREATE-RECONNECT",
+        "R6-UNRELATED-OPEN-LISTENERS",
+        "R6-PROMPT-CREATE-COMPLETION",
+        "R6-PRODUCTION-ACTION-OWNER"
+      ],
+      "durationMs": null
+    },
+    "result": {
+      "runId": "chat-arch-1790302468390-c2f8639417",
+      "status": "passed",
+      "results": [
+        {
+          "id": "R6-PRODUCTION-ACTION-OWNER",
+          "code": 0,
+          "signal": null,
+          "pid": 12660,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 44474
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": null
+    }
+  },
+  {
+    "log": "server-full-01.log",
+    "runId": "server-full-1790301856956-22c0b5e3",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-full-1790301856956-22c0b5e3",
+    "result": {
+      "runId": "server-full-1790301856956-22c0b5e3",
+      "kind": "server-full",
+      "mode": null,
+      "result": {
+        "code": 0,
+        "signal": null,
+        "pid": 62392,
+        "timedOut": false,
+        "interrupted": false,
+        "leakedOwnedPids": [],
+        "elapsedMs": 77869
+      },
+      "failure": null,
+      "ownedRunRootRemoved": true
+    }
+  },
+  {
+    "log": "shell-01.log",
+    "runId": "chat-arch-1790302073626-3687418b0f",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790302073626-3687418b0f",
+    "requested": {
+      "suite": "shell",
+      "mode": "enforce",
+      "cases": [
+        "SHELL-VIEW-BOUND"
+      ],
+      "enforcementGroup": [],
+      "durationMs": null
+    },
+    "result": {
+      "runId": "chat-arch-1790302073626-3687418b0f",
+      "status": "passed",
+      "results": [
+        {
+          "id": "SHELL-VIEW-BOUND",
+          "code": 0,
+          "signal": null,
+          "pid": 82772,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 7224
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": null
+    }
+  },
+  {
+    "log": "upgrade-01.log",
+    "runId": "chat-arch-1790300471520-95ad71fb9b",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790300471520-95ad71fb9b",
+    "requested": {
+      "suite": "all",
+      "mode": "enforce",
+      "cases": [
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "enforcementGroup": [
+        "R1-STARTUP-F2-F3",
+        "R1-WARM-F2-F3",
+        "R1-SETTLED45-F2-F3",
+        "R1-DENSE-F2",
+        "R1-COMPOSER-INPUT",
+        "R1-COMPOSER-LOCALITY",
+        "R2-DISCONNECT-BEFORE-CLICK",
+        "R2-ENQUEUE-THROW-RACE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-DUPLICATE-MISMATCH",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R5-FILE-ACTION",
+        "R5-WIKI-ACTION",
+        "R5-OFFICE-ACTION",
+        "R5-SYSTEM-PROMPT-NEW",
+        "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+        "R5-SOURCE-SWITCH",
+        "R5-TEXT-INSERT",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-NO-TARGET-CONSUMER",
+        "R6-PROMPT-UNMOUNT",
+        "R6-CREATE-RECONNECT",
+        "R6-UNRELATED-OPEN-LISTENERS",
+        "R6-PROMPT-CREATE-COMPLETION",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R7-STREAM-STOP-SAVE",
+        "R7-HISTORY-LIVE-OBSERVATION",
+        "R8-GROUP-BACKEND-MATRIX",
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "durationMs": null
+    },
+    "result": {
+      "runId": "chat-arch-1790300471520-95ad71fb9b",
+      "status": "failed",
+      "results": [
+        {
+          "id": "R8-PRE-RECEIPT-UPGRADE",
+          "code": 1,
+          "signal": null,
+          "pid": 96273,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 34025
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": {
+        "name": "Error",
+        "message": "R8-PRE-RECEIPT-UPGRADE exited 1",
+        "stack": "Error: R8-PRE-RECEIPT-UPGRADE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:453:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  },
+  {
+    "log": "upgrade-02.log",
+    "runId": "chat-arch-1790300537688-011d05e3bb",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790300537688-011d05e3bb",
+    "requested": {
+      "suite": "all",
+      "mode": "enforce",
+      "cases": [
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "enforcementGroup": [
+        "R1-STARTUP-F2-F3",
+        "R1-WARM-F2-F3",
+        "R1-SETTLED45-F2-F3",
+        "R1-DENSE-F2",
+        "R1-COMPOSER-INPUT",
+        "R1-COMPOSER-LOCALITY",
+        "R2-DISCONNECT-BEFORE-CLICK",
+        "R2-ENQUEUE-THROW-RACE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-DUPLICATE-MISMATCH",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R5-FILE-ACTION",
+        "R5-WIKI-ACTION",
+        "R5-OFFICE-ACTION",
+        "R5-SYSTEM-PROMPT-NEW",
+        "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+        "R5-SOURCE-SWITCH",
+        "R5-TEXT-INSERT",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-NO-TARGET-CONSUMER",
+        "R6-PROMPT-UNMOUNT",
+        "R6-CREATE-RECONNECT",
+        "R6-UNRELATED-OPEN-LISTENERS",
+        "R6-PROMPT-CREATE-COMPLETION",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R7-STREAM-STOP-SAVE",
+        "R7-HISTORY-LIVE-OBSERVATION",
+        "R8-GROUP-BACKEND-MATRIX",
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "durationMs": null
+    },
+    "result": {
+      "runId": "chat-arch-1790300537688-011d05e3bb",
+      "status": "failed",
+      "results": [
+        {
+          "id": "R8-PRE-RECEIPT-UPGRADE",
+          "code": 1,
+          "signal": null,
+          "pid": 472,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 33663
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": {
+        "name": "Error",
+        "message": "R8-PRE-RECEIPT-UPGRADE exited 1",
+        "stack": "Error: R8-PRE-RECEIPT-UPGRADE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:453:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  },
+  {
+    "log": "upgrade-03.log",
+    "runId": "chat-arch-1790300625213-01795d5a12",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790300625213-01795d5a12",
+    "requested": {
+      "suite": "all",
+      "mode": "enforce",
+      "cases": [
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "enforcementGroup": [
+        "R1-STARTUP-F2-F3",
+        "R1-WARM-F2-F3",
+        "R1-SETTLED45-F2-F3",
+        "R1-DENSE-F2",
+        "R1-COMPOSER-INPUT",
+        "R1-COMPOSER-LOCALITY",
+        "R2-DISCONNECT-BEFORE-CLICK",
+        "R2-ENQUEUE-THROW-RACE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-DUPLICATE-MISMATCH",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R5-FILE-ACTION",
+        "R5-WIKI-ACTION",
+        "R5-OFFICE-ACTION",
+        "R5-SYSTEM-PROMPT-NEW",
+        "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+        "R5-SOURCE-SWITCH",
+        "R5-TEXT-INSERT",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-NO-TARGET-CONSUMER",
+        "R6-PROMPT-UNMOUNT",
+        "R6-CREATE-RECONNECT",
+        "R6-UNRELATED-OPEN-LISTENERS",
+        "R6-PROMPT-CREATE-COMPLETION",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R7-STREAM-STOP-SAVE",
+        "R7-HISTORY-LIVE-OBSERVATION",
+        "R8-GROUP-BACKEND-MATRIX",
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "durationMs": null
+    },
+    "result": {
+      "runId": "chat-arch-1790300625213-01795d5a12",
+      "status": "failed",
+      "results": [
+        {
+          "id": "R8-PRE-RECEIPT-UPGRADE",
+          "code": 1,
+          "signal": null,
+          "pid": 4561,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 33071
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": {
+        "name": "Error",
+        "message": "R8-PRE-RECEIPT-UPGRADE exited 1",
+        "stack": "Error: R8-PRE-RECEIPT-UPGRADE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:453:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  },
+  {
+    "log": "upgrade-04.log",
+    "runId": "chat-arch-1790300702109-d2d55a3a5b",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790300702109-d2d55a3a5b",
+    "requested": {
+      "suite": "all",
+      "mode": "enforce",
+      "cases": [
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "enforcementGroup": [
+        "R1-STARTUP-F2-F3",
+        "R1-WARM-F2-F3",
+        "R1-SETTLED45-F2-F3",
+        "R1-DENSE-F2",
+        "R1-COMPOSER-INPUT",
+        "R1-COMPOSER-LOCALITY",
+        "R2-DISCONNECT-BEFORE-CLICK",
+        "R2-ENQUEUE-THROW-RACE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-DUPLICATE-MISMATCH",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R5-FILE-ACTION",
+        "R5-WIKI-ACTION",
+        "R5-OFFICE-ACTION",
+        "R5-SYSTEM-PROMPT-NEW",
+        "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+        "R5-SOURCE-SWITCH",
+        "R5-TEXT-INSERT",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-NO-TARGET-CONSUMER",
+        "R6-PROMPT-UNMOUNT",
+        "R6-CREATE-RECONNECT",
+        "R6-UNRELATED-OPEN-LISTENERS",
+        "R6-PROMPT-CREATE-COMPLETION",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R7-STREAM-STOP-SAVE",
+        "R7-HISTORY-LIVE-OBSERVATION",
+        "R8-GROUP-BACKEND-MATRIX",
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "durationMs": null
+    },
+    "result": {
+      "runId": "chat-arch-1790300702109-d2d55a3a5b",
+      "status": "failed",
+      "results": [
+        {
+          "id": "R8-PRE-RECEIPT-UPGRADE",
+          "code": 1,
+          "signal": null,
+          "pid": 8353,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 1320
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": {
+        "name": "Error",
+        "message": "R8-PRE-RECEIPT-UPGRADE exited 1",
+        "stack": "Error: R8-PRE-RECEIPT-UPGRADE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:453:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  },
+  {
+    "log": "upgrade-05.log",
+    "runId": "chat-arch-1790300752653-894230224b",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790300752653-894230224b",
+    "requested": {
+      "suite": "all",
+      "mode": "enforce",
+      "cases": [
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "enforcementGroup": [
+        "R1-STARTUP-F2-F3",
+        "R1-WARM-F2-F3",
+        "R1-SETTLED45-F2-F3",
+        "R1-DENSE-F2",
+        "R1-COMPOSER-INPUT",
+        "R1-COMPOSER-LOCALITY",
+        "R2-DISCONNECT-BEFORE-CLICK",
+        "R2-ENQUEUE-THROW-RACE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-DUPLICATE-MISMATCH",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R5-FILE-ACTION",
+        "R5-WIKI-ACTION",
+        "R5-OFFICE-ACTION",
+        "R5-SYSTEM-PROMPT-NEW",
+        "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+        "R5-SOURCE-SWITCH",
+        "R5-TEXT-INSERT",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-NO-TARGET-CONSUMER",
+        "R6-PROMPT-UNMOUNT",
+        "R6-CREATE-RECONNECT",
+        "R6-UNRELATED-OPEN-LISTENERS",
+        "R6-PROMPT-CREATE-COMPLETION",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R7-STREAM-STOP-SAVE",
+        "R7-HISTORY-LIVE-OBSERVATION",
+        "R8-GROUP-BACKEND-MATRIX",
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "durationMs": null
+    },
+    "result": {
+      "runId": "chat-arch-1790300752653-894230224b",
+      "status": "failed",
+      "results": [
+        {
+          "id": "R8-PRE-RECEIPT-UPGRADE",
+          "code": 1,
+          "signal": null,
+          "pid": 8637,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 33596
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": {
+        "name": "Error",
+        "message": "R8-PRE-RECEIPT-UPGRADE exited 1",
+        "stack": "Error: R8-PRE-RECEIPT-UPGRADE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:453:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  },
+  {
+    "log": "upgrade-06.log",
+    "runId": "chat-arch-1790300834439-258c894407",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790300834439-258c894407",
+    "requested": {
+      "suite": "all",
+      "mode": "enforce",
+      "cases": [
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "enforcementGroup": [
+        "R1-STARTUP-F2-F3",
+        "R1-WARM-F2-F3",
+        "R1-SETTLED45-F2-F3",
+        "R1-DENSE-F2",
+        "R1-COMPOSER-INPUT",
+        "R1-COMPOSER-LOCALITY",
+        "R2-DISCONNECT-BEFORE-CLICK",
+        "R2-ENQUEUE-THROW-RACE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-DUPLICATE-MISMATCH",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R5-FILE-ACTION",
+        "R5-WIKI-ACTION",
+        "R5-OFFICE-ACTION",
+        "R5-SYSTEM-PROMPT-NEW",
+        "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+        "R5-SOURCE-SWITCH",
+        "R5-TEXT-INSERT",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-NO-TARGET-CONSUMER",
+        "R6-PROMPT-UNMOUNT",
+        "R6-CREATE-RECONNECT",
+        "R6-UNRELATED-OPEN-LISTENERS",
+        "R6-PROMPT-CREATE-COMPLETION",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R7-STREAM-STOP-SAVE",
+        "R7-HISTORY-LIVE-OBSERVATION",
+        "R8-GROUP-BACKEND-MATRIX",
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "durationMs": null
+    },
+    "result": {
+      "runId": "chat-arch-1790300834439-258c894407",
+      "status": "failed",
+      "results": [
+        {
+          "id": "R8-PRE-RECEIPT-UPGRADE",
+          "code": 1,
+          "signal": null,
+          "pid": 12573,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 33248
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": {
+        "name": "Error",
+        "message": "R8-PRE-RECEIPT-UPGRADE exited 1",
+        "stack": "Error: R8-PRE-RECEIPT-UPGRADE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:453:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  },
+  {
+    "log": "upgrade-07.log",
+    "runId": "chat-arch-1790300900030-4a3e619052",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790300900030-4a3e619052",
+    "requested": {
+      "suite": "all",
+      "mode": "enforce",
+      "cases": [
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "enforcementGroup": [
+        "R1-STARTUP-F2-F3",
+        "R1-WARM-F2-F3",
+        "R1-SETTLED45-F2-F3",
+        "R1-DENSE-F2",
+        "R1-COMPOSER-INPUT",
+        "R1-COMPOSER-LOCALITY",
+        "R2-DISCONNECT-BEFORE-CLICK",
+        "R2-ENQUEUE-THROW-RACE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-DUPLICATE-MISMATCH",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R5-FILE-ACTION",
+        "R5-WIKI-ACTION",
+        "R5-OFFICE-ACTION",
+        "R5-SYSTEM-PROMPT-NEW",
+        "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+        "R5-SOURCE-SWITCH",
+        "R5-TEXT-INSERT",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-NO-TARGET-CONSUMER",
+        "R6-PROMPT-UNMOUNT",
+        "R6-CREATE-RECONNECT",
+        "R6-UNRELATED-OPEN-LISTENERS",
+        "R6-PROMPT-CREATE-COMPLETION",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R7-STREAM-STOP-SAVE",
+        "R7-HISTORY-LIVE-OBSERVATION",
+        "R8-GROUP-BACKEND-MATRIX",
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "durationMs": null
+    },
+    "result": {
+      "runId": "chat-arch-1790300900030-4a3e619052",
+      "status": "failed",
+      "results": [
+        {
+          "id": "R8-PRE-RECEIPT-UPGRADE",
+          "code": 1,
+          "signal": null,
+          "pid": 16363,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 33396
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": {
+        "name": "Error",
+        "message": "R8-PRE-RECEIPT-UPGRADE exited 1",
+        "stack": "Error: R8-PRE-RECEIPT-UPGRADE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:449:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  },
+  {
+    "log": "upgrade-08.log",
+    "runId": "chat-arch-1790300977126-c50f985c35",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790300977126-c50f985c35",
+    "requested": {
+      "suite": "all",
+      "mode": "enforce",
+      "cases": [
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "enforcementGroup": [
+        "R1-STARTUP-F2-F3",
+        "R1-WARM-F2-F3",
+        "R1-SETTLED45-F2-F3",
+        "R1-DENSE-F2",
+        "R1-COMPOSER-INPUT",
+        "R1-COMPOSER-LOCALITY",
+        "R2-DISCONNECT-BEFORE-CLICK",
+        "R2-ENQUEUE-THROW-RACE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-DUPLICATE-MISMATCH",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R5-FILE-ACTION",
+        "R5-WIKI-ACTION",
+        "R5-OFFICE-ACTION",
+        "R5-SYSTEM-PROMPT-NEW",
+        "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+        "R5-SOURCE-SWITCH",
+        "R5-TEXT-INSERT",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-NO-TARGET-CONSUMER",
+        "R6-PROMPT-UNMOUNT",
+        "R6-CREATE-RECONNECT",
+        "R6-UNRELATED-OPEN-LISTENERS",
+        "R6-PROMPT-CREATE-COMPLETION",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R7-STREAM-STOP-SAVE",
+        "R7-HISTORY-LIVE-OBSERVATION",
+        "R8-GROUP-BACKEND-MATRIX",
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "durationMs": null
+    },
+    "result": {
+      "runId": "chat-arch-1790300977126-c50f985c35",
+      "status": "failed",
+      "results": [
+        {
+          "id": "R8-PRE-RECEIPT-UPGRADE",
+          "code": 1,
+          "signal": null,
+          "pid": 20113,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 33155
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": {
+        "name": "Error",
+        "message": "R8-PRE-RECEIPT-UPGRADE exited 1",
+        "stack": "Error: R8-PRE-RECEIPT-UPGRADE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:449:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  },
+  {
+    "log": "upgrade-09.log",
+    "runId": "chat-arch-1790301040998-9a625c27f9",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790301040998-9a625c27f9",
+    "requested": {
+      "suite": "all",
+      "mode": "enforce",
+      "cases": [
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "enforcementGroup": [
+        "R1-STARTUP-F2-F3",
+        "R1-WARM-F2-F3",
+        "R1-SETTLED45-F2-F3",
+        "R1-DENSE-F2",
+        "R1-COMPOSER-INPUT",
+        "R1-COMPOSER-LOCALITY",
+        "R2-DISCONNECT-BEFORE-CLICK",
+        "R2-ENQUEUE-THROW-RACE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-DUPLICATE-MISMATCH",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R5-FILE-ACTION",
+        "R5-WIKI-ACTION",
+        "R5-OFFICE-ACTION",
+        "R5-SYSTEM-PROMPT-NEW",
+        "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+        "R5-SOURCE-SWITCH",
+        "R5-TEXT-INSERT",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-NO-TARGET-CONSUMER",
+        "R6-PROMPT-UNMOUNT",
+        "R6-CREATE-RECONNECT",
+        "R6-UNRELATED-OPEN-LISTENERS",
+        "R6-PROMPT-CREATE-COMPLETION",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R7-STREAM-STOP-SAVE",
+        "R7-HISTORY-LIVE-OBSERVATION",
+        "R8-GROUP-BACKEND-MATRIX",
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "durationMs": null
+    },
+    "result": {
+      "runId": "chat-arch-1790301040998-9a625c27f9",
+      "status": "failed",
+      "results": [
+        {
+          "id": "R8-PRE-RECEIPT-UPGRADE",
+          "code": 1,
+          "signal": null,
+          "pid": 23830,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 3427
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": {
+        "name": "Error",
+        "message": "R8-PRE-RECEIPT-UPGRADE exited 1",
+        "stack": "Error: R8-PRE-RECEIPT-UPGRADE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:449:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  },
+  {
+    "log": "upgrade-10.log",
+    "runId": "chat-arch-1790301071277-cfd1402a61",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790301071277-cfd1402a61",
+    "requested": {
+      "suite": "all",
+      "mode": "enforce",
+      "cases": [
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "enforcementGroup": [
+        "R1-STARTUP-F2-F3",
+        "R1-WARM-F2-F3",
+        "R1-SETTLED45-F2-F3",
+        "R1-DENSE-F2",
+        "R1-COMPOSER-INPUT",
+        "R1-COMPOSER-LOCALITY",
+        "R2-DISCONNECT-BEFORE-CLICK",
+        "R2-ENQUEUE-THROW-RACE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-DUPLICATE-MISMATCH",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R5-FILE-ACTION",
+        "R5-WIKI-ACTION",
+        "R5-OFFICE-ACTION",
+        "R5-SYSTEM-PROMPT-NEW",
+        "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+        "R5-SOURCE-SWITCH",
+        "R5-TEXT-INSERT",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-NO-TARGET-CONSUMER",
+        "R6-PROMPT-UNMOUNT",
+        "R6-CREATE-RECONNECT",
+        "R6-UNRELATED-OPEN-LISTENERS",
+        "R6-PROMPT-CREATE-COMPLETION",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R7-STREAM-STOP-SAVE",
+        "R7-HISTORY-LIVE-OBSERVATION",
+        "R8-GROUP-BACKEND-MATRIX",
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "durationMs": null
+    },
+    "result": {
+      "runId": "chat-arch-1790301071277-cfd1402a61",
+      "status": "failed",
+      "results": [
+        {
+          "id": "R8-PRE-RECEIPT-UPGRADE",
+          "code": 1,
+          "signal": null,
+          "pid": 24396,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 17865
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": {
+        "name": "Error",
+        "message": "R8-PRE-RECEIPT-UPGRADE exited 1",
+        "stack": "Error: R8-PRE-RECEIPT-UPGRADE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:449:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  },
+  {
+    "log": "upgrade-11.log",
+    "runId": "chat-arch-1790301112613-08d9a1a585",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790301112613-08d9a1a585",
+    "requested": {
+      "suite": "all",
+      "mode": "enforce",
+      "cases": [
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "enforcementGroup": [
+        "R1-STARTUP-F2-F3",
+        "R1-WARM-F2-F3",
+        "R1-SETTLED45-F2-F3",
+        "R1-DENSE-F2",
+        "R1-COMPOSER-INPUT",
+        "R1-COMPOSER-LOCALITY",
+        "R2-DISCONNECT-BEFORE-CLICK",
+        "R2-ENQUEUE-THROW-RACE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-DUPLICATE-MISMATCH",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R5-FILE-ACTION",
+        "R5-WIKI-ACTION",
+        "R5-OFFICE-ACTION",
+        "R5-SYSTEM-PROMPT-NEW",
+        "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+        "R5-SOURCE-SWITCH",
+        "R5-TEXT-INSERT",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-NO-TARGET-CONSUMER",
+        "R6-PROMPT-UNMOUNT",
+        "R6-CREATE-RECONNECT",
+        "R6-UNRELATED-OPEN-LISTENERS",
+        "R6-PROMPT-CREATE-COMPLETION",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R7-STREAM-STOP-SAVE",
+        "R7-HISTORY-LIVE-OBSERVATION",
+        "R8-GROUP-BACKEND-MATRIX",
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "durationMs": null
+    },
+    "result": {
+      "runId": "chat-arch-1790301112613-08d9a1a585",
+      "status": "failed",
+      "results": [
+        {
+          "id": "R8-PRE-RECEIPT-UPGRADE",
+          "code": 1,
+          "signal": null,
+          "pid": 26543,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 33231
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": {
+        "name": "Error",
+        "message": "R8-PRE-RECEIPT-UPGRADE exited 1",
+        "stack": "Error: R8-PRE-RECEIPT-UPGRADE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:449:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  },
+  {
+    "log": "upgrade-12.log",
+    "runId": "chat-arch-1790301166680-edb2fca6f4",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790301166680-edb2fca6f4",
+    "requested": {
+      "suite": "all",
+      "mode": "enforce",
+      "cases": [
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "enforcementGroup": [
+        "R1-STARTUP-F2-F3",
+        "R1-WARM-F2-F3",
+        "R1-SETTLED45-F2-F3",
+        "R1-DENSE-F2",
+        "R1-COMPOSER-INPUT",
+        "R1-COMPOSER-LOCALITY",
+        "R2-DISCONNECT-BEFORE-CLICK",
+        "R2-ENQUEUE-THROW-RACE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-DUPLICATE-MISMATCH",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R5-FILE-ACTION",
+        "R5-WIKI-ACTION",
+        "R5-OFFICE-ACTION",
+        "R5-SYSTEM-PROMPT-NEW",
+        "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+        "R5-SOURCE-SWITCH",
+        "R5-TEXT-INSERT",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-NO-TARGET-CONSUMER",
+        "R6-PROMPT-UNMOUNT",
+        "R6-CREATE-RECONNECT",
+        "R6-UNRELATED-OPEN-LISTENERS",
+        "R6-PROMPT-CREATE-COMPLETION",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R7-STREAM-STOP-SAVE",
+        "R7-HISTORY-LIVE-OBSERVATION",
+        "R8-GROUP-BACKEND-MATRIX",
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "durationMs": null
+    },
+    "result": {
+      "runId": "chat-arch-1790301166680-edb2fca6f4",
+      "status": "failed",
+      "results": [
+        {
+          "id": "R8-PRE-RECEIPT-UPGRADE",
+          "code": 1,
+          "signal": null,
+          "pid": 30335,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 33458
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": {
+        "name": "Error",
+        "message": "R8-PRE-RECEIPT-UPGRADE exited 1",
+        "stack": "Error: R8-PRE-RECEIPT-UPGRADE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:449:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  },
+  {
+    "log": "upgrade-13.log",
+    "runId": "chat-arch-1790301222509-dab680e5cd",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790301222509-dab680e5cd",
+    "requested": {
+      "suite": "all",
+      "mode": "enforce",
+      "cases": [
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "enforcementGroup": [
+        "R1-STARTUP-F2-F3",
+        "R1-WARM-F2-F3",
+        "R1-SETTLED45-F2-F3",
+        "R1-DENSE-F2",
+        "R1-COMPOSER-INPUT",
+        "R1-COMPOSER-LOCALITY",
+        "R2-DISCONNECT-BEFORE-CLICK",
+        "R2-ENQUEUE-THROW-RACE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-DUPLICATE-MISMATCH",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R5-FILE-ACTION",
+        "R5-WIKI-ACTION",
+        "R5-OFFICE-ACTION",
+        "R5-SYSTEM-PROMPT-NEW",
+        "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+        "R5-SOURCE-SWITCH",
+        "R5-TEXT-INSERT",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-NO-TARGET-CONSUMER",
+        "R6-PROMPT-UNMOUNT",
+        "R6-CREATE-RECONNECT",
+        "R6-UNRELATED-OPEN-LISTENERS",
+        "R6-PROMPT-CREATE-COMPLETION",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R7-STREAM-STOP-SAVE",
+        "R7-HISTORY-LIVE-OBSERVATION",
+        "R8-GROUP-BACKEND-MATRIX",
+        "R8-UI-LIFECYCLE",
+        "R8-EXACT-MEMBER-HYDRATION",
+        "R7-R8-RUNTIME-OWNERSHIP",
+        "R8-MIRROR-RECOVERY",
+        "R8-SESSION-LIFECYCLE",
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "durationMs": null
+    },
+    "result": {
+      "runId": "chat-arch-1790301222509-dab680e5cd",
+      "status": "failed",
+      "results": [
+        {
+          "id": "R8-PRE-RECEIPT-UPGRADE",
+          "code": 1,
+          "signal": null,
+          "pid": 34169,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 33491
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": {
+        "name": "Error",
+        "message": "R8-PRE-RECEIPT-UPGRADE exited 1",
+        "stack": "Error: R8-PRE-RECEIPT-UPGRADE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:449:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  },
+  {
+    "log": "upgrade-14.log",
+    "runId": "chat-arch-1790301287833-7f27d7c126",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790301287833-7f27d7c126",
+    "requested": {
+      "suite": "all",
+      "mode": "enforce",
+      "cases": [
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "enforcementGroup": [
+        "R1-STARTUP-F2-F3",
+        "R1-WARM-F2-F3",
+        "R1-SETTLED45-F2-F3",
+        "R1-DENSE-F2",
+        "R1-COMPOSER-INPUT",
+        "R1-COMPOSER-LOCALITY",
+        "R2-DISCONNECT-BEFORE-CLICK",
+        "R2-ENQUEUE-THROW-RACE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-DUPLICATE-MISMATCH",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R5-FILE-ACTION",
+        "R5-WIKI-ACTION",
+        "R5-OFFICE-ACTION",
+        "R5-SYSTEM-PROMPT-NEW",
+        "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+        "R5-SOURCE-SWITCH",
+        "R5-TEXT-INSERT",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-NO-TARGET-CONSUMER",
+        "R6-PROMPT-UNMOUNT",
+        "R6-CREATE-RECONNECT",
+        "R6-UNRELATED-OPEN-LISTENERS",
+        "R6-PROMPT-CREATE-COMPLETION",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R7-STREAM-STOP-SAVE",
+        "R7-HISTORY-LIVE-OBSERVATION",
+        "R8-GROUP-BACKEND-MATRIX",
+        "R8-UI-LIFECYCLE",
+        "R8-EXACT-MEMBER-HYDRATION",
+        "R7-R8-RUNTIME-OWNERSHIP",
+        "R8-MIRROR-RECOVERY",
+        "R8-SESSION-LIFECYCLE",
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "durationMs": null
+    },
+    "result": {
+      "runId": "chat-arch-1790301287833-7f27d7c126",
+      "status": "failed",
+      "results": [
+        {
+          "id": "R8-PRE-RECEIPT-UPGRADE",
+          "code": 1,
+          "signal": null,
+          "pid": 38034,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 35928
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": {
+        "name": "Error",
+        "message": "R8-PRE-RECEIPT-UPGRADE exited 1",
+        "stack": "Error: R8-PRE-RECEIPT-UPGRADE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:449:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  },
+  {
+    "log": "upgrade-15.log",
+    "runId": "chat-arch-1790301357228-56b284f30a",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790301357228-56b284f30a",
+    "requested": {
+      "suite": "all",
+      "mode": "enforce",
+      "cases": [
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "enforcementGroup": [
+        "R1-STARTUP-F2-F3",
+        "R1-WARM-F2-F3",
+        "R1-SETTLED45-F2-F3",
+        "R1-DENSE-F2",
+        "R1-COMPOSER-INPUT",
+        "R1-COMPOSER-LOCALITY",
+        "R2-DISCONNECT-BEFORE-CLICK",
+        "R2-ENQUEUE-THROW-RACE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-DUPLICATE-MISMATCH",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R5-FILE-ACTION",
+        "R5-WIKI-ACTION",
+        "R5-OFFICE-ACTION",
+        "R5-SYSTEM-PROMPT-NEW",
+        "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+        "R5-SOURCE-SWITCH",
+        "R5-TEXT-INSERT",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-NO-TARGET-CONSUMER",
+        "R6-PROMPT-UNMOUNT",
+        "R6-CREATE-RECONNECT",
+        "R6-UNRELATED-OPEN-LISTENERS",
+        "R6-PROMPT-CREATE-COMPLETION",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R7-STREAM-STOP-SAVE",
+        "R7-HISTORY-LIVE-OBSERVATION",
+        "R8-GROUP-BACKEND-MATRIX",
+        "R8-UI-LIFECYCLE",
+        "R8-EXACT-MEMBER-HYDRATION",
+        "R7-R8-RUNTIME-OWNERSHIP",
+        "R8-MIRROR-RECOVERY",
+        "R8-SESSION-LIFECYCLE",
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "durationMs": null
+    },
+    "result": {
+      "runId": "chat-arch-1790301357228-56b284f30a",
+      "status": "passed",
+      "results": [
+        {
+          "id": "R8-PRE-RECEIPT-UPGRADE",
+          "code": 0,
+          "signal": null,
+          "pid": 42304,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 10378
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": null
+    }
+  },
+  {
+    "log": "v-all-01.log",
+    "runId": "chat-arch-1790301407459-fcadd8e689",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790301407459-fcadd8e689",
+    "requested": {
+      "suite": "all",
+      "mode": "enforce",
+      "cases": [
+        "R8-PRE-RECEIPT-UPGRADE",
+        "R8-OWNER-GRAPH",
+        "R8-EXACT-MEMBER-HYDRATION",
+        "R8-UI-LIFECYCLE",
+        "R7-R8-RUNTIME-OWNERSHIP",
+        "R8-MIRROR-RECOVERY",
+        "R8-SESSION-LIFECYCLE",
+        "F1-PUBLIC-ROUTE",
+        "FAULT-SERVER-ADMISSION",
+        "FAULT-TRANSPORT-ACK",
+        "FAULT-SAVE-ACK",
+        "R1-F2-F3-COMPOSER",
+        "R1-COMPOSER-CORRECTNESS",
+        "R7-HISTORY-LIVE",
+        "R2-NO-ENQUEUE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R4-DUPLICATE-MISMATCH",
+        "R5-R6-PUBLIC-ACTIONS",
+        "R5-CURRENT-ACTIONS",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-CURRENT-OWNER",
+        "R6-LIFETIME-BOUNDARIES",
+        "R9-INDICATOR-DISTINCTION"
+      ],
+      "enforcementGroup": [
+        "R1-STARTUP-F2-F3",
+        "R1-WARM-F2-F3",
+        "R1-SETTLED45-F2-F3",
+        "R1-DENSE-F2",
+        "R1-COMPOSER-INPUT",
+        "R1-COMPOSER-LOCALITY",
+        "R2-DISCONNECT-BEFORE-CLICK",
+        "R2-ENQUEUE-THROW-RACE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-DUPLICATE-MISMATCH",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R5-FILE-ACTION",
+        "R5-WIKI-ACTION",
+        "R5-OFFICE-ACTION",
+        "R5-SYSTEM-PROMPT-NEW",
+        "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+        "R5-SOURCE-SWITCH",
+        "R5-TEXT-INSERT",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-NO-TARGET-CONSUMER",
+        "R6-PROMPT-UNMOUNT",
+        "R6-CREATE-RECONNECT",
+        "R6-UNRELATED-OPEN-LISTENERS",
+        "R6-PROMPT-CREATE-COMPLETION",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R7-STREAM-STOP-SAVE",
+        "R7-HISTORY-LIVE-OBSERVATION",
+        "R8-GROUP-BACKEND-MATRIX",
+        "R8-UI-LIFECYCLE",
+        "R8-EXACT-MEMBER-HYDRATION",
+        "R7-R8-RUNTIME-OWNERSHIP",
+        "R8-MIRROR-RECOVERY",
+        "R8-SESSION-LIFECYCLE",
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "durationMs": null
+    },
+    "result": {
+      "runId": "chat-arch-1790301407459-fcadd8e689",
+      "status": "failed",
+      "results": [
+        {
+          "id": "R8-PRE-RECEIPT-UPGRADE",
+          "code": 1,
+          "signal": null,
+          "pid": 43911,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 39252
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": {
+        "name": "Error",
+        "message": "R8-PRE-RECEIPT-UPGRADE exited 1",
+        "stack": "Error: R8-PRE-RECEIPT-UPGRADE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:449:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  },
+  {
+    "log": "v-all-02.log",
+    "runId": "chat-arch-1790301543920-e3e78bf347",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790301543920-e3e78bf347",
+    "requested": {
+      "suite": "all",
+      "mode": "enforce",
+      "cases": [
+        "R8-PRE-RECEIPT-UPGRADE",
+        "R8-OWNER-GRAPH",
+        "R8-EXACT-MEMBER-HYDRATION",
+        "R8-UI-LIFECYCLE",
+        "R7-R8-RUNTIME-OWNERSHIP",
+        "R8-MIRROR-RECOVERY",
+        "R8-SESSION-LIFECYCLE",
+        "F1-PUBLIC-ROUTE",
+        "FAULT-SERVER-ADMISSION",
+        "FAULT-TRANSPORT-ACK",
+        "FAULT-SAVE-ACK",
+        "R1-F2-F3-COMPOSER",
+        "R1-COMPOSER-CORRECTNESS",
+        "R7-HISTORY-LIVE",
+        "R2-NO-ENQUEUE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R4-DUPLICATE-MISMATCH",
+        "R5-R6-PUBLIC-ACTIONS",
+        "R5-CURRENT-ACTIONS",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-CURRENT-OWNER",
+        "R6-LIFETIME-BOUNDARIES",
+        "R9-INDICATOR-DISTINCTION"
+      ],
+      "enforcementGroup": [
+        "R1-STARTUP-F2-F3",
+        "R1-WARM-F2-F3",
+        "R1-SETTLED45-F2-F3",
+        "R1-DENSE-F2",
+        "R1-COMPOSER-INPUT",
+        "R1-COMPOSER-LOCALITY",
+        "R2-DISCONNECT-BEFORE-CLICK",
+        "R2-ENQUEUE-THROW-RACE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-DUPLICATE-MISMATCH",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R5-FILE-ACTION",
+        "R5-WIKI-ACTION",
+        "R5-OFFICE-ACTION",
+        "R5-SYSTEM-PROMPT-NEW",
+        "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+        "R5-SOURCE-SWITCH",
+        "R5-TEXT-INSERT",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-NO-TARGET-CONSUMER",
+        "R6-PROMPT-UNMOUNT",
+        "R6-CREATE-RECONNECT",
+        "R6-UNRELATED-OPEN-LISTENERS",
+        "R6-PROMPT-CREATE-COMPLETION",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R7-STREAM-STOP-SAVE",
+        "R7-HISTORY-LIVE-OBSERVATION",
+        "R8-GROUP-BACKEND-MATRIX",
+        "R8-UI-LIFECYCLE",
+        "R8-EXACT-MEMBER-HYDRATION",
+        "R7-R8-RUNTIME-OWNERSHIP",
+        "R8-MIRROR-RECOVERY",
+        "R8-SESSION-LIFECYCLE",
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "durationMs": null
+    },
+    "result": {
+      "runId": "chat-arch-1790301543920-e3e78bf347",
+      "status": "failed",
+      "results": [
+        {
+          "id": "R8-PRE-RECEIPT-UPGRADE",
+          "code": 0,
+          "signal": null,
+          "pid": 48763,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 11059
+        },
+        {
+          "id": "R8-OWNER-GRAPH",
+          "code": 0,
+          "signal": null,
+          "pid": 50398,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 129
+        },
+        {
+          "id": "R8-EXACT-MEMBER-HYDRATION",
+          "code": 0,
+          "signal": null,
+          "pid": 50422,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 1388
+        },
+        {
+          "id": "R8-UI-LIFECYCLE",
+          "code": 0,
+          "signal": null,
+          "pid": 50597,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 9137
+        },
+        {
+          "id": "R7-R8-RUNTIME-OWNERSHIP",
+          "code": 0,
+          "signal": null,
+          "pid": 51773,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 12787
+        },
+        {
+          "id": "R8-MIRROR-RECOVERY",
+          "code": 0,
+          "signal": null,
+          "pid": 53622,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 12422
+        },
+        {
+          "id": "R8-SESSION-LIFECYCLE",
+          "code": 0,
+          "signal": null,
+          "pid": 55443,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 9891
+        },
+        {
+          "id": "F1-PUBLIC-ROUTE",
+          "code": 0,
+          "signal": null,
+          "pid": 56996,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 6610
+        },
+        {
+          "id": "FAULT-SERVER-ADMISSION",
+          "code": 0,
+          "signal": null,
+          "pid": 57933,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 6330
+        },
+        {
+          "id": "FAULT-TRANSPORT-ACK",
+          "code": 0,
+          "signal": null,
+          "pid": 58774,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 6163
+        },
+        {
+          "id": "FAULT-SAVE-ACK",
+          "code": 0,
+          "signal": null,
+          "pid": 59603,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 6093
+        },
+        {
+          "id": "R1-F2-F3-COMPOSER",
+          "code": 1,
+          "signal": null,
+          "pid": 60424,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 14132
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": {
+        "name": "Error",
+        "message": "R1-F2-F3-COMPOSER exited 1",
+        "stack": "Error: R1-F2-F3-COMPOSER exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:449:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  },
+  {
+    "log": "v-all-03.log",
+    "runId": "chat-arch-1790302916854-5e1db6da8f",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790302916854-5e1db6da8f",
+    "requested": {
+      "suite": "all",
+      "mode": "enforce",
+      "cases": [
+        "R8-PRE-RECEIPT-UPGRADE",
+        "R8-OWNER-GRAPH",
+        "R8-EXACT-MEMBER-HYDRATION",
+        "R8-UI-LIFECYCLE",
+        "R7-R8-RUNTIME-OWNERSHIP",
+        "R8-MIRROR-RECOVERY",
+        "R8-SESSION-LIFECYCLE",
+        "F1-PUBLIC-ROUTE",
+        "FAULT-SERVER-ADMISSION",
+        "FAULT-TRANSPORT-ACK",
+        "FAULT-SAVE-ACK",
+        "R1-F2-F3-COMPOSER",
+        "R1-COMPOSER-CORRECTNESS",
+        "R7-HISTORY-LIVE",
+        "R2-NO-ENQUEUE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R4-DUPLICATE-MISMATCH",
+        "R5-R6-PUBLIC-ACTIONS",
+        "R5-CURRENT-ACTIONS",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-CURRENT-OWNER",
+        "R6-LIFETIME-BOUNDARIES",
+        "R9-INDICATOR-DISTINCTION"
+      ],
+      "enforcementGroup": [
+        "R1-STARTUP-F2-F3",
+        "R1-WARM-F2-F3",
+        "R1-SETTLED45-F2-F3",
+        "R1-DENSE-F2",
+        "R1-COMPOSER-INPUT",
+        "R1-COMPOSER-LOCALITY",
+        "R2-DISCONNECT-BEFORE-CLICK",
+        "R2-ENQUEUE-THROW-RACE",
+        "R3-LOST-ACK-STATUS",
+        "R3-RECONNECT-UI",
+        "R4-DISTINCT-ATTEMPTS",
+        "R4-DISTINCT-RECEIPTS",
+        "R4-DUPLICATE-MISMATCH",
+        "R4-LATE-DRAFT-RECOVERY",
+        "R5-FILE-ACTION",
+        "R5-WIKI-ACTION",
+        "R5-OFFICE-ACTION",
+        "R5-SYSTEM-PROMPT-NEW",
+        "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+        "R5-SOURCE-SWITCH",
+        "R5-TEXT-INSERT",
+        "R5-DIAGNOSTIC-APPEND",
+        "R5-NO-TARGET-CONSUMER",
+        "R6-PROMPT-UNMOUNT",
+        "R6-CREATE-RECONNECT",
+        "R6-UNRELATED-OPEN-LISTENERS",
+        "R6-PROMPT-CREATE-COMPLETION",
+        "R6-PRODUCTION-ACTION-OWNER",
+        "R7-STREAM-STOP-SAVE",
+        "R7-HISTORY-LIVE-OBSERVATION",
+        "R8-GROUP-BACKEND-MATRIX",
+        "R8-UI-LIFECYCLE",
+        "R8-EXACT-MEMBER-HYDRATION",
+        "R7-R8-RUNTIME-OWNERSHIP",
+        "R8-MIRROR-RECOVERY",
+        "R8-SESSION-LIFECYCLE",
+        "R8-PRE-RECEIPT-UPGRADE"
+      ],
+      "durationMs": null
+    },
+    "result": {
+      "runId": "chat-arch-1790302916854-5e1db6da8f",
+      "status": "passed",
+      "results": [
+        {
+          "id": "R8-PRE-RECEIPT-UPGRADE",
+          "code": 0,
+          "signal": null,
+          "pid": 61010,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 13528
+        },
+        {
+          "id": "R8-OWNER-GRAPH",
+          "code": 0,
+          "signal": null,
+          "pid": 62926,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 132
+        },
+        {
+          "id": "R8-EXACT-MEMBER-HYDRATION",
+          "code": 0,
+          "signal": null,
+          "pid": 62950,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 1445
+        },
+        {
+          "id": "R8-UI-LIFECYCLE",
+          "code": 0,
+          "signal": null,
+          "pid": 63131,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 10104
+        },
+        {
+          "id": "R7-R8-RUNTIME-OWNERSHIP",
+          "code": 0,
+          "signal": null,
+          "pid": 64417,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 13415
+        },
+        {
+          "id": "R8-MIRROR-RECOVERY",
+          "code": 0,
+          "signal": null,
+          "pid": 66364,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 13680
+        },
+        {
+          "id": "R8-SESSION-LIFECYCLE",
+          "code": 0,
+          "signal": null,
+          "pid": 68423,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 10102
+        },
+        {
+          "id": "F1-PUBLIC-ROUTE",
+          "code": 0,
+          "signal": null,
+          "pid": 70002,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 4755
+        },
+        {
+          "id": "FAULT-SERVER-ADMISSION",
+          "code": 0,
+          "signal": null,
+          "pid": 70747,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 4364
+        },
+        {
+          "id": "FAULT-TRANSPORT-ACK",
+          "code": 0,
+          "signal": null,
+          "pid": 71369,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 4402
+        },
+        {
+          "id": "FAULT-SAVE-ACK",
+          "code": 0,
+          "signal": null,
+          "pid": 72012,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 4685
+        },
+        {
+          "id": "R1-F2-F3-COMPOSER",
+          "code": 0,
+          "signal": null,
+          "pid": 72704,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 180122
+        },
+        {
+          "id": "R1-COMPOSER-CORRECTNESS",
+          "code": 0,
+          "signal": null,
+          "pid": 92827,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 3445
+        },
+        {
+          "id": "R7-HISTORY-LIVE",
+          "code": 0,
+          "signal": null,
+          "pid": 93260,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 4050
+        },
+        {
+          "id": "R2-NO-ENQUEUE",
+          "code": 0,
+          "signal": null,
+          "pid": 93745,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 9836
+        },
+        {
+          "id": "R3-LOST-ACK-STATUS",
+          "code": 0,
+          "signal": null,
+          "pid": 95170,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 7753
+        },
+        {
+          "id": "R3-RECONNECT-UI",
+          "code": 0,
+          "signal": null,
+          "pid": 96219,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 10590
+        },
+        {
+          "id": "R4-DISTINCT-ATTEMPTS",
+          "code": 0,
+          "signal": null,
+          "pid": 97547,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 11240
+        },
+        {
+          "id": "R4-DISTINCT-RECEIPTS",
+          "code": 0,
+          "signal": null,
+          "pid": 98935,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 11305
+        },
+        {
+          "id": "R4-LATE-DRAFT-RECOVERY",
+          "code": 0,
+          "signal": null,
+          "pid": 492,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 25373
+        },
+        {
+          "id": "R4-DUPLICATE-MISMATCH",
+          "code": 0,
+          "signal": null,
+          "pid": 3716,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 7488
+        },
+        {
+          "id": "R5-R6-PUBLIC-ACTIONS",
+          "code": 0,
+          "signal": null,
+          "pid": 4696,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 44429
+        },
+        {
+          "id": "R5-CURRENT-ACTIONS",
+          "code": 0,
+          "signal": null,
+          "pid": 10028,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 14695
+        },
+        {
+          "id": "R6-PRODUCTION-ACTION-OWNER",
+          "code": 0,
+          "signal": null,
+          "pid": 11975,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 44435
+        },
+        {
+          "id": "R5-DIAGNOSTIC-APPEND",
+          "code": 0,
+          "signal": null,
+          "pid": 17323,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 3240
+        },
+        {
+          "id": "R5-CURRENT-OWNER",
+          "code": 0,
+          "signal": null,
+          "pid": 17721,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 2698
+        },
+        {
+          "id": "R6-LIFETIME-BOUNDARIES",
+          "code": 0,
+          "signal": null,
+          "pid": 18058,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 44318
+        },
+        {
+          "id": "R9-INDICATOR-DISTINCTION",
+          "code": 0,
+          "signal": null,
+          "pid": 23380,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 14092
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": null
+    }
+  }
+]

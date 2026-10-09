@@ -1,0 +1,163 @@
+{
+  "at": "2026-10-07T23:32:02.978678+00:00",
+  "scope": "Root raw integrated bindings, all successful required final checks after M3 accepted; facts only, final review pending",
+  "product_count": 65,
+  "source_seal": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/SOURCE-SEAL.json",
+  "source_seal_sha256": "35cda972a106468eaa279c60da9ef51fc04ec23333f03de4226269b84e14ad07",
+  "receipts": [
+    {
+      "label": "build-01",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/build-01.json",
+      "sha256": "ba001dd24a2b4b4b7fa47f6b3077216e5a8590b6afe1c705d59c7f7eb8cbeba1",
+      "started": "2026-10-07T23:15:01.843444+00:00",
+      "ended": "2026-10-07T23:15:09.293605+00:00",
+      "exit_code": 0,
+      "product65_before_after": true,
+      "dependency_binding_count": 19,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/build-01.log",
+      "log_sha256": "7c3986c1d7581e8367ccdc6852578afda9453fe31e5a459c8c3df4bb0daa5788"
+    },
+    {
+      "label": "server-full-01",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/server-full-01.json",
+      "sha256": "c9dfbedc3377809ead671f4a31774f0482ddcecdeef70ede475307b71286dabb",
+      "started": "2026-10-07T23:16:02.888730+00:00",
+      "ended": "2026-10-07T23:17:53.367140+00:00",
+      "exit_code": 0,
+      "product65_before_after": true,
+      "dependency_binding_count": 19,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/server-full-01.log",
+      "log_sha256": "762f2f8cfd503db39122b007ac2436230de6391337cc61fc8c79fa9db887c264"
+    },
+    {
+      "label": "server-focused-01",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/server-focused-01.json",
+      "sha256": "4f6f8451b6e191bef700329ed6b35a4b0ce9efd678b71b280f3c550ed41879c2",
+      "started": "2026-10-07T23:18:30.880986+00:00",
+      "ended": "2026-10-07T23:18:31.871179+00:00",
+      "exit_code": 0,
+      "product65_before_after": true,
+      "dependency_binding_count": 19,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/server-focused-01.log",
+      "log_sha256": "7a34585207d3fee773194fdd53b1e9af8a0f9673f49ec4b0fd13bf33133802ed"
+    },
+    {
+      "label": "renderer-02",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-02.json",
+      "sha256": "ae151f3a27d2cd372b392981618b1f2da9b44956387c5acecfb5477e5f91d165",
+      "started": "2026-10-07T23:26:24.823322+00:00",
+      "ended": "2026-10-07T23:28:36.693423+00:00",
+      "exit_code": 0,
+      "product65_before_after": true,
+      "dependency_binding_count": 19,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-02.log",
+      "log_sha256": "1487d41fc6151ab3346645d0cc2823964ee98eb872aa9c8bb7d8b6f6cdbe8834"
+    },
+    {
+      "label": "wiki-01",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/wiki-01.json",
+      "sha256": "53e941cac7caab9bd08943c099e66ff9c485c4beb4ea2d7965648fb4112665b3",
+      "started": "2026-10-07T23:20:01.135926+00:00",
+      "ended": "2026-10-07T23:20:07.784943+00:00",
+      "exit_code": 0,
+      "product65_before_after": true,
+      "dependency_binding_count": 19,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/wiki-01.log",
+      "log_sha256": "bf44385bf2c466bd77b9faba9ab2dc234fe82420ae13e0e3901416fde7d222da"
+    },
+    {
+      "label": "native-01",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/native-01.json",
+      "sha256": "d0005a37e366321f0b7a986f4d64e7c4c1e7ac87c9a7ab25b832a806331294cf",
+      "started": "2026-10-07T23:20:01.135930+00:00",
+      "ended": "2026-10-07T23:20:16.637991+00:00",
+      "exit_code": 0,
+      "product65_before_after": true,
+      "dependency_binding_count": 19,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/native-01.log",
+      "log_sha256": "2e43b0cbbd5ccf5bfa812ec402b13c8f47900ed43f8094d4b7c2f8c874472500"
+    },
+    {
+      "label": "transport-focused-01",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/transport-focused-01.json",
+      "sha256": "39bb565b7c9b9881911e8521e2669141823bae4b9dc48f6e74aa29b9ac22f15c",
+      "started": "2026-10-07T23:24:59.679046+00:00",
+      "ended": "2026-10-07T23:25:05.781676+00:00",
+      "exit_code": 0,
+      "product65_before_after": true,
+      "dependency_binding_count": 19,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/transport-focused-01.log",
+      "log_sha256": "bbf432236ac99e455776dc5861fae0f1214452f95242967a5775ed62f75a5f2e"
+    }
+  ],
+  "dist_count": 191,
+  "native_electron_count": 65,
+  "native_server_count": 482,
+  "native_receipt": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/native-01/native-receipt.json",
+    "sha256": "9b08dcfd90fde619f654850abe0c4001d01822dc5637bfab406c5e670e475e21",
+    "status": "PASS",
+    "captures": 8,
+    "galleries": 4,
+    "resources": 2,
+    "sends_ACK_DB": 4,
+    "cleanup": {
+      "dbQuickCheck": "ok",
+      "portFileRemoved": true,
+      "fixtureRootsRemoved": true
+    }
+  },
+  "wiki_readback": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/wiki-01-output/chat-material-wiki-changed-5ede7-iewer-and-link-source-paths-fixture-only-chromium/wiki-readback.json",
+    "sha256": "19cc99eedbb3b72879757b74935ec33e3f1714e947996c33bcc7d8ad5687105b",
+    "articles": 7
+  },
+  "ports": [
+    {
+      "port": 51988,
+      "unreachable": true
+    },
+    {
+      "port": 52025,
+      "unreachable": true
+    },
+    {
+      "port": 52035,
+      "unreachable": true
+    },
+    {
+      "port": 52094,
+      "unreachable": true
+    },
+    {
+      "port": 52115,
+      "unreachable": true
+    }
+  ],
+  "issues": [
+    {
+      "scope": "native server",
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/fusion-studio-server/lib/harness/opencode/fixture-fault-runtime.cjs",
+      "expected": "68d37a5933559337c2bdd581c1729e25913c345e606eaea6a2e87bfa3e537ab1",
+      "actual": "absent"
+    },
+    {
+      "scope": "native server",
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/fusion-studio-server/lib/harness/opencode/index.js",
+      "expected": "7ba87f35596301bcfbbff7ec0280dace34efc16665c568dc586d120a1c660fe8",
+      "actual": "5dbe53e8f262661164dca0a87ab3f217ead35150629fd43ca42020685f9973e0"
+    },
+    {
+      "scope": "native server",
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/fusion-studio-server/lib/thread/runtime-prompt-admission.js",
+      "expected": "10f92c55bd42df7dc801fa9535616e3e15efc1f601625d6e2fca4c9cd3cc2c30",
+      "actual": "efecc424f1b1dc52bb4b138769b2138b6b8a0de602b20186beb1f1067c279c17"
+    },
+    {
+      "scope": "native server",
+      "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/fusion-studio-server/lib/wire/wire-broadcaster.js",
+      "expected": "3bf31585795c56129ec5a1026480717073083f037fb8d92ba477a084c4591e8d",
+      "actual": "387b66a9de20991fe47a1d5df330d739d954e94334aca1655e61b88ffdc168f1"
+    }
+  ]
+}

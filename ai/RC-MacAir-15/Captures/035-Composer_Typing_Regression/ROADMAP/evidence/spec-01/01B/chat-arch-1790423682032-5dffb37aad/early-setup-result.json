@@ -1,0 +1,34 @@
+{
+  "status": "failed-inconclusive",
+  "measurementStarted": false,
+  "scope": "early-lifecycle-only; no acceptance credit",
+  "failure": {
+    "name": "TimeoutError",
+    "message": "electron.launch: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - <launching> /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron -r /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/playwright-core/lib/server/electron/loader.js --inspect=0 --remote-debugging-port=0 -r /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/early-lifecycle-preload.cjs /var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790423682032-5dffb37aad-LxWgW6/r1-sustained-stage/fusion-studio-client/electron/main.cjs --chat-architecture-token=chat-architecture-owner-chat-arch-1790423682032-5dffb37aad\u001b[22m\n\u001b[2m  - <launched> pid=98497\u001b[22m\n\u001b[2m  - [pid=98497][err] Debugger listening on ws://127.0.0.1:58756/710183fa-da04-4a92-aafd-8780bcdcf1f2\u001b[22m\n\u001b[2m  - [pid=98497][err] For help, see: https://nodejs.org/en/docs/inspector\u001b[22m\n\u001b[2m  - <ws connecting> ws://127.0.0.1:58756/710183fa-da04-4a92-aafd-8780bcdcf1f2\u001b[22m\n\u001b[2m  - [pid=98497][err] Debugger attached.\u001b[22m\n\u001b[2m  - <ws connected> ws://127.0.0.1:58756/710183fa-da04-4a92-aafd-8780bcdcf1f2\u001b[22m\n",
+    "code": null,
+    "observation": null
+  },
+  "earlyLifecycle": {
+    "scope": "second-launch early lifecycle only; no acceptance credit",
+    "main": null,
+    "summaryStatus": "unavailable",
+    "driverWriteErrors": 0,
+    "driverOverflow": 0,
+    "failedLaunchCloseUnavailable": false,
+    "cleanup": {
+      "dbQuickCheck": "ok",
+      "portFileRemoved": true,
+      "fixtureRootsRemoved": true
+    },
+    "lingeringOwnedPids": [],
+    "complete": false
+  },
+  "diagnosticTrace": null,
+  "ownedFocus": null,
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "lingeringOwnedPids": []
+}

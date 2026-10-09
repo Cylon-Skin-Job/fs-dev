@@ -1,0 +1,125 @@
+{
+  "at": "2026-10-06T22:21:28.813808+00:00",
+  "commands": [
+    {
+      "command": [
+        "node",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/check-wiki.cjs"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit_status": 0,
+      "expected_exit": 0,
+      "result": "PASS",
+      "raw_log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/mechanical-checks.log",
+      "raw_log_sha256": "f390097dc4cc49356d3af2ea17b2de9e969ee60ca8a1e620d315f4f6d333025f"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md"
+      ],
+      "cwd": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "exit_status": 0,
+      "expected_exit": 0,
+      "result": "PASS",
+      "raw_log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/diff-check.log",
+      "raw_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "rg",
+        "-n",
+        "chokidar|watch/core|watch/workspace-watcher|hotkey-screenshot-watcher|watch/calendar-watcher|abandonAll|screenshot:refresh-source",
+        "fusion-studio-server/lib",
+        "fusion-studio-server/package.json",
+        "fusion-studio-client/src/lib/ws-client.ts",
+        "fusion-studio-client/src/lib/ws"
+      ],
+      "cwd": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "exit_status": 1,
+      "expected_exit": 1,
+      "result": "PASS",
+      "raw_log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/retirement-sweep.log",
+      "raw_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "node",
+        "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/fusion-studio-server/scripts/wiki.js",
+        "audit",
+        "/private/tmp/chat-ar-integration-r6pe5gmi/wiki-navigation/Wiki"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit_status": 0,
+      "result": "PASS",
+      "raw_log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/navigation-run-1.log",
+      "raw_log_sha256": "5af5469481ce6d8c93d94f91b5a928d56809bdab1c75a6aef85aca838ad1cfb9",
+      "run": 1,
+      "changed_pages": [
+        "000-Wiki_Guidance/PAGE.md"
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/fusion-studio-server/scripts/wiki.js",
+        "audit",
+        "/private/tmp/chat-ar-integration-r6pe5gmi/wiki-navigation/Wiki"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit_status": 0,
+      "result": "PASS",
+      "raw_log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/navigation-run-2.log",
+      "raw_log_sha256": "46d2ada36ca25a904486865957973fd21cf118df8abbe880fcbbb4f7f6dbcef2",
+      "run": 2,
+      "changed_pages": []
+    }
+  ],
+  "mechanical_counts": {
+    "pageCount": 19,
+    "changedPageCount": 5,
+    "uniqueSourceFilesChecked": 199,
+    "declaredSourceReferencesChecked": 304,
+    "localLinksChecked": 115,
+    "retiredSourceAbsences": 6,
+    "completeVersionCount": 7,
+    "candidateIndexPreserved": true,
+    "failures": []
+  },
+  "accepted_code_checks": {
+    "at": "2026-10-06T22:12:00.167395+00:00",
+    "state": "HANDOFF_VALIDATED",
+    "reviewer": "/root/screenshot_handoff_review_02",
+    "worker": "/root/screenshot_repair",
+    "raw_review_sha256": "edf0de56770b2c2fa85ef69406dc03bfdb4c9c3ad1b23311fcf7ed94b60e7e3e",
+    "current_code_packet_sha256": "d2a8d88c0a48c69218644641657c7feb71c2dd0c719e4dc688c8c473e3eee0b3",
+    "checks_sha256": "64c2fd4cbce7eb44680bf777559fd82a3dc8620776713e662d9fdb522feefac7",
+    "checks": {
+      "build": 0,
+      "focused": 34,
+      "cumulative": 106
+    },
+    "finding": "IR-CHAT-001 handoff-validated; final current-byte confirmation still required",
+    "lifecycle": "worker/reviewer terminal, close_agent unavailable",
+    "limits": "Native capture/runtime and settledWiki/wholecandidate gate remain separate"
+  },
+  "skips": [
+    "No leaf product test/build rerun: code/tests are frozen with separate fresh accepted handoff, and this leaf changes Wiki bytes only.",
+    "Native app capture, normal provider completion, installed Alpha and final whole-candidate/runtime gates belong to root; no runtime/profile/provider/DB actions taken."
+  ],
+  "omissions": [
+    "No empty legacy 006-System_Manager/PAGE.md adoption or its generated Guidance link.",
+    "No audit-state import, extra parent/Guide refresh, new articles, operational MC/Capture035 or restored operational Launchpad changes."
+  ],
+  "deviations": [
+    "Self-check clarification preserved two additional exact intermediate versions before correction; all seven actual-timestamp leaves are mechanical recovery extensions authorized by root release."
+  ],
+  "result": "PASS"
+}

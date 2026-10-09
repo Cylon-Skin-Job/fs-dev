@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-04T20:10:29.827904+00:00",
+  "actor": "/root",
+  "kind": "PREPARED_NOT_EXECUTED_ROOT_FINAL_CHECK_DERIVATIVE",
+  "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/python_suite_bindings_v2.py",
+  "source_sha256": "aa2899f975b58daa844cfa1dade93575deed66477c9cabca647508d8aec952b2",
+  "derivative": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-python-bindings.py",
+  "derivative_sha256": "c68ad9c0e21aa0ffcb37ba5a40629f0b8ea09ac67c0854de23a095f1f84fd565",
+  "exact_replacements": [
+    [
+      "(J/'evidence/fix-xy-python-js-closure-3-command.json')",
+      "(E/'SPEC-final-suite/closure-command.json')"
+    ],
+    [
+      "'actor':'/root/s6_supervisor_fix_xy_1'",
+      "'actor':'/root'"
+    ],
+    [
+      "out=J/('evidence/'+label+'.json')",
+      "out=E/('SPEC-final-suite/'+label+'.json')"
+    ],
+    [
+      "paths.update([str(Path(__file__).resolve()),str(J/'python_suite_js_dependencies_v3.mjs')])",
+      "paths.update([str(Path(__file__).resolve()),str(J/'python_suite_js_dependencies_v3.mjs'),str(J/'python_suite_bindings_v2.py')])"
+    ]
+  ],
+  "additional_E_binding": "E=C/planning/commit-supervisor/execution",
+  "scope": "Distinct root final current closure input/output namespace, actual root actor and original collection helper dependency; unchanged collection semantics. No final run or readiness claim."
+}

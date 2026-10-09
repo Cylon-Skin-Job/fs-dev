@@ -1,0 +1,142 @@
+{
+  "schema": 1,
+  "at": "2026-10-04T20:50:07.620660+00:00",
+  "kind": "REQUIREMENT_DEFINITIONS_ONLY_NO_VERDICTS",
+  "original_authority": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/SPEC.md",
+  "original_authority_sha256": "6d7b351db87e535b0950f94c42c61d503a3ac3fef6587299dfc024c7887df664",
+  "criterion_definitions": [
+    {
+      "id": "S6-A01",
+      "criterion": "Independent existing-ref candidate/profile/machine/workspace and exact mixed-state checkpoint"
+    },
+    {
+      "id": "S6-A02",
+      "criterion": "Actual Supervisor explicit role/CWD/permission/settings acknowledgment"
+    },
+    {
+      "id": "S6-A03",
+      "criterion": "Actual terminal provider hold then labeled release/replacement with landed/adoption distinction"
+    },
+    {
+      "id": "S6-A04",
+      "criterion": "Actual terminal intent hold then labeled resolution/replacement without feature dispatch"
+    },
+    {
+      "id": "S6-A05",
+      "criterion": "Actual fresh initial review manager/reviewer identifies material behavior and Wiki obligation"
+    },
+    {
+      "id": "S6-A06",
+      "criterion": "Bounded installed leaf repair and separate fresh original-assignment handoff gate"
+    },
+    {
+      "id": "S6-A07",
+      "criterion": "Settled-code bounded Wiki leaf with full preimage/actual UTC/collision-safe exact versions/unchanged Navigation"
+    },
+    {
+      "id": "S6-A08",
+      "criterion": "Separate fresh Wiki original-coverage gate"
+    },
+    {
+      "id": "S6-A09",
+      "criterion": "Fresh final review manager/reviewer all5lenses/current bytes/required checks"
+    },
+    {
+      "id": "S6-A10",
+      "criterion": "Real canonical rebuild/candidate executable/server/profile/machine/sustained initialized connection"
+    },
+    {
+      "id": "S6-A11",
+      "criterion": "Real fixed UI/Wiki/navigation/reload and preinitializer full-restart reset readback"
+    },
+    {
+      "id": "S6-A12",
+      "criterion": "Actual ordinary persisted watcher; disconnected/wrong-profile failures withhold readiness"
+    },
+    {
+      "id": "S6-A13",
+      "criterion": "Actual first COMMIT_READY_WAITING_OWNER packet and intentional terminal turn"
+    },
+    {
+      "id": "S6-A14",
+      "criterion": "Labeled fix-X/Y successor preserves valid unaffected evidence; fresh affected gates/rebuild/runtime/new terminal wait"
+    },
+    {
+      "id": "S6-A15",
+      "criterion": "Actual source/target/candidate/operation drift and mismatched authority refusals with zero operations"
+    },
+    {
+      "id": "S6-A16",
+      "criterion": "Actual interrupted mixed-state restore/collision nonmutation/supplement reverse restore/original verification"
+    },
+    {
+      "id": "S6-A17",
+      "criterion": "Owned stopped preview/protected source/shared index/refs/unrelated/process/profile/cache preservation"
+    },
+    {
+      "id": "S6-A18",
+      "criterion": "Factual current MC-T09/deployment/canonical restart Wiki closeout after actual proof with affected gates"
+    },
+    {
+      "id": "S6-A19",
+      "criterion": "Fresh root full-S6 acceptance and fresh whole-SPEC integration"
+    }
+  ],
+  "ledger_mapping": {
+    "S6-A1": [
+      "S6-A01",
+      "S6-A02"
+    ],
+    "S6-A2": [
+      "S6-A01",
+      "S6-A16"
+    ],
+    "S6-A3": [
+      "S6-A03"
+    ],
+    "S6-A4": [
+      "S6-A04"
+    ],
+    "S6-A5": [
+      "S6-A05"
+    ],
+    "S6-A6": [
+      "S6-A06"
+    ],
+    "S6-A7": [
+      "S6-A07",
+      "S6-A08"
+    ],
+    "S6-A8": [
+      "S6-A09"
+    ],
+    "S6-A9": [
+      "S6-A10",
+      "S6-A11",
+      "S6-A12"
+    ],
+    "S6-A10": [
+      "S6-A12",
+      "S6-A17"
+    ],
+    "S6-A11": [
+      "S6-A13"
+    ],
+    "S6-A12": [
+      "S6-A14"
+    ],
+    "S6-A13": [
+      "S6-A15"
+    ],
+    "S6-A14": [
+      "S6-A16",
+      "S6-A17"
+    ],
+    "S6-A15": [
+      "S6-A18",
+      "S6-A19"
+    ]
+  },
+  "derivation": "Exact id/criterion and ID mapping fields only; omit all completion states, evidence-selection assessments and root judgments. Reviewers must derive requirements from full original SPEC/current authority first.",
+  "purpose": "Upcoming fresh builder-owned/full-S6/whole-SPEC raw packet; does not claim any gate or rehearsal complete"
+}

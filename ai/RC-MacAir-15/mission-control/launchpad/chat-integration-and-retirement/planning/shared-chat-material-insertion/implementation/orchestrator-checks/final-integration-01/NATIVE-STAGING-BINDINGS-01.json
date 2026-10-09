@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-07T23:32:29.286Z",
+  "scope": "Read-only in-memory reconstruction of exactly four inherited staged-only server seams. No product writes, launch or database.",
+  "rows": [
+    {
+      "path": "thread/runtime-prompt-admission.js",
+      "expected": "10f92c55bd42df7dc801fa9535616e3e15efc1f601625d6e2fca4c9cd3cc2c30",
+      "reconstructed": "10f92c55bd42df7dc801fa9535616e3e15efc1f601625d6e2fca4c9cd3cc2c30"
+    },
+    {
+      "path": "wire/wire-broadcaster.js",
+      "expected": "3bf31585795c56129ec5a1026480717073083f037fb8d92ba477a084c4591e8d",
+      "reconstructed": "3bf31585795c56129ec5a1026480717073083f037fb8d92ba477a084c4591e8d"
+    },
+    {
+      "path": "harness/opencode/index.js",
+      "expected": "7ba87f35596301bcfbbff7ec0280dace34efc16665c568dc586d120a1c660fe8",
+      "reconstructed": "7ba87f35596301bcfbbff7ec0280dace34efc16665c568dc586d120a1c660fe8"
+    },
+    {
+      "path": "harness/opencode/fixture-fault-runtime.cjs",
+      "expected": "68d37a5933559337c2bdd581c1729e25913c345e606eaea6a2e87bfa3e537ab1",
+      "reconstructed": "68d37a5933559337c2bdd581c1729e25913c345e606eaea6a2e87bfa3e537ab1"
+    }
+  ],
+  "helper_sha256": "8efe08f2486f1f67edc09e57e4afacf4db6f8e880e3bc98ff9f45807cf3f48a9",
+  "native_receipt_sha256": "9b08dcfd90fde619f654850abe0c4001d01822dc5637bfab406c5e670e475e21",
+  "claim": "478 native server library files exactly current; 4 exact known staged seams reconstructed; actual screenshot/persistence implementations preserved; controlled provider/ACK only."
+}

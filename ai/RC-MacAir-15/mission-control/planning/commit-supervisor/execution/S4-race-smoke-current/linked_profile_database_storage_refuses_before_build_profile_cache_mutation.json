@@ -1,0 +1,15 @@
+{
+  "test": "linked profile database storage refuses before build/profile/cache mutation",
+  "fixture": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-l1HbM1",
+  "injected": true,
+  "files": [
+    {
+      "path": "selected profile/server-data",
+      "link": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-l1HbM1/unrelated-data"
+    },
+    {
+      "path": "unrelated-data/fusion.db",
+      "bytes": "unrelated DB"
+    }
+  ]
+}

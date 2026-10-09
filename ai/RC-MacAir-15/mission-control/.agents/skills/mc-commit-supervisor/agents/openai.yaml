@@ -1,0 +1,6 @@
+interface:
+  display_name: "Commit Supervisor"
+  short_description: "Prepare a reviewed candidate and await owner approval"
+  default_prompt: "Use $mc-commit-supervisor for this accepted integration assignment; prepare the reviewed running candidate and exact owner packet, then wait for my operation-specific approval."
+policy:
+  allow_implicit_invocation: false

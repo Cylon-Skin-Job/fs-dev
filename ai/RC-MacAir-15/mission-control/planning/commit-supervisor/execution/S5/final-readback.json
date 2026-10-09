@@ -1,0 +1,469 @@
+{
+  "at": "2026-10-04T11:19:41.241283+00:00",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "memory_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "implementation_root": "/Users/rccurtrightjr./projects/fs-dev",
+  "branch": "agent/exact-workspace-paths",
+  "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "index_sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+  "owned_paths": 26,
+  "owned_bytes_modes_and_deletions_match": true,
+  "complete_preimages_match": true,
+  "accepted_s1_s4_current_dependencies_match": true,
+  "accepted_workflow_template_prefixes_match": true,
+  "preserved_unowned_baseline": {
+    "file": 15875,
+    "symlink": 0,
+    "absent": 68
+  },
+  "unowned_drift": [],
+  "frozen_copies_match": 83,
+  "unchanged_frozen_live_sources": 82,
+  "report_only_completion": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-builder.md",
+      "reviewed_sha256": "9b0370440b5d555df1f0605bd85ca76c3cf0dc5f530922c8d853de5376d25ffd",
+      "final_sha256": "ec26b34b85cec6d7155ed9e1eb2a8fdfe0a097b54e4ee446742b1a73dde0a36c",
+      "reason": "report-only completion after clean reviewer; candidate implementation unchanged"
+    }
+  ],
+  "frozen_copy_modes": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/00-AGENTS.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/01-session-contract.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/02-record-templates.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/03-mission-control.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/04-deployment.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/05-skills-and-agents.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/06-handoff.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/07-todo.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/08-registry.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/09-index.json",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/10-config.toml",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/11-SKILL.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/12-SKILL.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/13-report-format.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/14-SKILL.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/15-workflow.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/16-job-template.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/17-SKILL.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/18-openai.yaml",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/19-mc-commit-supervisor.toml",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/20-owner-publication.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/21-review-and-merge-design.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/22-review-and-merge-handoff.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/23-AGENTS.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/24-decisions.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/25-changelog.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/26-SPEC.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/27-approval-receipt.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/28-SKILL.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/29-SKILL.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/30-wiki-handoff.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/31-runtime-handoff.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/32-SKILL.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/33-SKILL.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/34-mc-code-review-orchestrator.toml",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/35-mc-commit-repair-worker.toml",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/36-PAGE.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/37-PAGE.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/38-PAGE.md",
+      "mode": 420,
+      "original_source_mode": 384
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/39-PAGE.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/40-PAGE.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/41-SKILL.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/42-SKILL.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/43-clean-room-reviewer.toml",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/44-mc-roadmap-author.toml",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/45-mc-planning-stage-orchestrator.toml",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/46-mc-first-draft.toml",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/47-mc-roadmap-supervisor.toml",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/48-mc-planning-validator.toml",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/49-mc-spec-orchestrator.toml",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/50-mc-spec-slice-builder.toml",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/51-mc-roadmap-creation-supervisor.toml",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/52-mc-draft-supervisor.toml",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/53-job_snapshot.py",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/54-snapshot_state.py",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/55-snapshot_restore.py",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/56-review_packet.py",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/57-fusion-restart-target.mjs",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/58-fusion-restart.mjs",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/59-fusion-restart-processes.mjs",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/60-fusion-restart-probe.mjs",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/61-restart-fusion.sh",
+      "mode": 420,
+      "original_source_mode": 493
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/62-checks.json",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/63-current-manifest.json",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/64-links.json",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/65-legacy-sweep.log",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/66-legacy-classification.json",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/67-cutover-inventory.json",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/68-all-active-caller-sweep.log",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/69-post-check-readback.json",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/70-baseline.json",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/71-preimages.json",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/72-S5-builder.md",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/73-cumulative-node.log",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/74-skill-mc-commit-supervisor.log",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/75-skill-status.log",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/76-skill-monitor.log",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/77-skill-mc-code-review-orchestrator.log",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/78-cumulative-python.log",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/79-skill-mission-control.log",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/80-skill-mc-roadmap-implementation-supervisor.log",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/81-index.log",
+      "mode": 420,
+      "original_source_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/82-skill-mc-commit-repair-worker.log",
+      "mode": 420,
+      "original_source_mode": 420
+    }
+  ],
+  "finalization_attempts": [
+    {
+      "attempt": 1,
+      "result": "readback adapter assertion corrected",
+      "evidence": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/finalization-attempt-1.log",
+      "reason": "frozen manifest mode describes original source; byte copies have evidence-file mode. Original source modes and frozen bytes match; no source or frozen mutation"
+    },
+    {
+      "attempt": 2,
+      "result": "passed"
+    }
+  ],
+  "raw_command_logs_match": true,
+  "raw_reviewer_report_sha256": "d446413631a4b8b29bb13304c49114c5d1c397e3fa9c2d2b821ef052e98a80a9",
+  "closure_tool": "unavailable",
+  "candidate_mutation_after_review": false,
+  "command": [
+    "/opt/homebrew/bin/python3.12",
+    "-B",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/finalize.py"
+  ],
+  "command_script_sha256": "3bd0a75d0349b844d980fdc373f1489bb98843f8e504f9effc7299636034ede0"
+}

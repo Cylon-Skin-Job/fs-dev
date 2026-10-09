@@ -1,0 +1,6 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Checklist</title>
+<link rel="stylesheet" href="checklist.css"></head>
+<body><main class="rv-checklist"><h1>Checklist</h1>
+<p id="summary" aria-live="polite"></p><div id="tasks"></div></main>
+<script type="module" src="checklist-controller.js"></script></body></html>

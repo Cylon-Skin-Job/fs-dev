@@ -1,0 +1,485 @@
+{
+  "at": "2026-10-04T21:23:23.579009+00:00",
+  "raw_commands": [
+    {
+      "started": "2026-10-04T21:23:21.746832+00:00",
+      "finished": "2026-10-04T21:23:21.792327+00:00",
+      "command": [
+        "python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-memory-maintenance/scripts/validate_index.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit_code": 0,
+      "environment_overrides": {
+        "GIT_OPTIONAL_LOCKS": "0",
+        "GIT_LITERAL_PATHSPECS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "git_environment": "All inherited GIT_* stripped",
+      "stdout": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/index.stdout",
+        "sha256": "8354e26bfa33b2476d540259dcf96de50a1f6a92cd652c7d5b6de249e2dc033d",
+        "size": 120
+      },
+      "stderr": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/index.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "started": "2026-10-04T21:23:21.792583+00:00",
+      "finished": "2026-10-04T21:23:21.798587+00:00",
+      "command": [
+        "bash",
+        "-n",
+        "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit_code": 0,
+      "environment_overrides": {
+        "GIT_OPTIONAL_LOCKS": "0",
+        "GIT_LITERAL_PATHSPECS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "git_environment": "All inherited GIT_* stripped",
+      "stdout": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/bash-syntax.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      },
+      "stderr": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/bash-syntax.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "started": "2026-10-04T21:23:21.798717+00:00",
+      "finished": "2026-10-04T21:23:21.849884+00:00",
+      "command": [
+        "node",
+        "--check",
+        "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit_code": 0,
+      "environment_overrides": {
+        "GIT_OPTIONAL_LOCKS": "0",
+        "GIT_LITERAL_PATHSPECS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "git_environment": "All inherited GIT_* stripped",
+      "stdout": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/fusion-restart.mjs-syntax.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      },
+      "stderr": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/fusion-restart.mjs-syntax.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "started": "2026-10-04T21:23:21.850066+00:00",
+      "finished": "2026-10-04T21:23:21.891611+00:00",
+      "command": [
+        "node",
+        "--check",
+        "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit_code": 0,
+      "environment_overrides": {
+        "GIT_OPTIONAL_LOCKS": "0",
+        "GIT_LITERAL_PATHSPECS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "git_environment": "All inherited GIT_* stripped",
+      "stdout": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/fusion-restart-target.mjs-syntax.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      },
+      "stderr": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/fusion-restart-target.mjs-syntax.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "started": "2026-10-04T21:23:21.891774+00:00",
+      "finished": "2026-10-04T21:23:21.930152+00:00",
+      "command": [
+        "node",
+        "--check",
+        "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit_code": 0,
+      "environment_overrides": {
+        "GIT_OPTIONAL_LOCKS": "0",
+        "GIT_LITERAL_PATHSPECS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "git_environment": "All inherited GIT_* stripped",
+      "stdout": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/fusion-restart-processes.mjs-syntax.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      },
+      "stderr": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/fusion-restart-processes.mjs-syntax.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "started": "2026-10-04T21:23:21.930307+00:00",
+      "finished": "2026-10-04T21:23:21.966114+00:00",
+      "command": [
+        "node",
+        "--check",
+        "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit_code": 0,
+      "environment_overrides": {
+        "GIT_OPTIONAL_LOCKS": "0",
+        "GIT_LITERAL_PATHSPECS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "git_environment": "All inherited GIT_* stripped",
+      "stdout": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/fusion-restart-probe.mjs-syntax.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      },
+      "stderr": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/fusion-restart-probe.mjs-syntax.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "started": "2026-10-04T21:23:21.966453+00:00",
+      "finished": "2026-10-04T21:23:22.027198+00:00",
+      "command": [
+        "node",
+        "-e",
+        "const {createRequire}=require('node:module');const fs=require('node:fs');const req=createRequire(process.argv[1]);const matter=req('gray-matter');const p=process.argv[2];const x=matter(fs.readFileSync(p,'utf8'));process.stdout.write(JSON.stringify(x.data));",
+        "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/package.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit_code": 0,
+      "environment_overrides": {
+        "GIT_OPTIONAL_LOCKS": "0",
+        "GIT_LITERAL_PATHSPECS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "git_environment": "All inherited GIT_* stripped",
+      "stdout": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/wiki-metadata.stdout",
+        "sha256": "0b44da9c0cba06ef1a07b067d96eaa34a07605a22c9f0d02fb684bc4f3d9faf4",
+        "size": 340
+      },
+      "stderr": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/wiki-metadata.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "started": "2026-10-04T21:23:22.719021+00:00",
+      "finished": "2026-10-04T21:23:23.578809+00:00",
+      "command": [
+        "python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit_code": 0,
+      "environment_overrides": {
+        "GIT_OPTIONAL_LOCKS": "0",
+        "GIT_LITERAL_PATHSPECS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "git_environment": "All inherited GIT_* stripped",
+      "stdout": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/original-public-verify.stdout",
+        "sha256": "e4338093b3aac22cc4d975247ad83da27de14c4b09e8a75f31a1539b662adc96",
+        "size": 270
+      },
+      "stderr": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/original-public-verify.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    }
+  ],
+  "gray_matter_data": {
+    "name": "Fusion Restart",
+    "description": "Fusion restart script behavior and when to use it for chat validation.",
+    "metadata": {
+      "source-files": [
+        "restart-fusion.sh",
+        "scripts/fusion-restart.mjs",
+        "scripts/fusion-restart-target.mjs",
+        "scripts/fusion-restart-processes.mjs",
+        "scripts/fusion-restart-probe.mjs"
+      ],
+      "last-modified": "2026-10-04T21:16:40Z"
+    }
+  },
+  "unchanged_indexed_H2": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md",
+      "unchanged_H2": [
+        "Role and scope",
+        "Re-entry",
+        "Records and concurrency",
+        "Access and execution",
+        "Skills and schema"
+      ]
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+      "unchanged_H2": [
+        "Current home and migration",
+        "How to use this list",
+        "Ordered TODO list",
+        "First chat to open"
+      ]
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+      "unchanged_H2": [
+        "Authority and editing",
+        "Workspace and session bindings",
+        "Mission Control setup tasks",
+        "Roadmap slots",
+        "Active assignments and integration",
+        "State and evidence conventions"
+      ]
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+      "unchanged_H2": [
+        "Current state",
+        "Next safe action",
+        "Entry packet and open work"
+      ]
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+      "unchanged_H2": [
+        "Installed definitions",
+        "Local scope and global compatibility",
+        "Second Brain replacement and helpers",
+        "Validation and remaining runtime checks",
+        "Maintain or roll back"
+      ]
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+      "unchanged_H2": [
+        "Current installation",
+        "Scope and status",
+        "Skills and proposed homes",
+        "Actual agent profiles and standing roles",
+        "Second Brain responsibility replacement",
+        "Dependency edges to preserve",
+        "Discovery and deployment boundary",
+        "Migration sequence and unresolved choices",
+        "Source fingerprints"
+      ]
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md",
+      "unchanged_H2": []
+    }
+  ],
+  "complete_version_preimage_equal": true,
+  "older_versions_and_adjacent_exact": true,
+  "new_local_links": [
+    {
+      "page": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md",
+      "target": "jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/report.md",
+      "exists": true
+    },
+    {
+      "page": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+      "target": "jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/report.md",
+      "exists": true
+    },
+    {
+      "page": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+      "target": "planning/commit-supervisor/execution/S6-closeout-manifest.json",
+      "exists": true
+    },
+    {
+      "page": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+      "target": "jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/report.md",
+      "exists": true
+    },
+    {
+      "page": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+      "target": "planning/commit-supervisor/execution/S6-closeout-manifest.json",
+      "exists": true
+    },
+    {
+      "page": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+      "target": "jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/report.md",
+      "exists": true
+    },
+    {
+      "page": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+      "target": "planning/commit-supervisor/execution/S6-closeout-manifest.json",
+      "exists": true
+    },
+    {
+      "page": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+      "target": "jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/report.md",
+      "exists": true
+    },
+    {
+      "page": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+      "target": "planning/commit-supervisor/execution/S6-closeout-manifest.json",
+      "exists": true
+    },
+    {
+      "page": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+      "target": "../Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md",
+      "exists": true
+    },
+    {
+      "page": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+      "target": "jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/report.md",
+      "exists": true
+    },
+    {
+      "page": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+      "target": "planning/commit-supervisor/execution/S6-closeout-manifest.json",
+      "exists": true
+    },
+    {
+      "page": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md",
+      "target": "../PAGE.md",
+      "exists": true
+    },
+    {
+      "page": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md",
+      "target": "../003-Playwright_Electron/PAGE.md",
+      "exists": true
+    }
+  ],
+  "preexisting_broken_links_retained": [],
+  "historical_S5_dated_lines_retained": true,
+  "diffs": [
+    {
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 259042708,
+      "size": 2000,
+      "mtime_ns": 1791149002053869773,
+      "sha256": "7114e97f4cb19f195d39a65c0ee218c13dc5586a7bf78dd3e3193ee28a2c51ad",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/AGENTS.md.diff"
+    },
+    {
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 259042709,
+      "size": 4424,
+      "mtime_ns": 1791149002055163016,
+      "sha256": "274b22cd32feb8bdab4d86917b9cc6e27cd8473699c3da11a9bb668c29f282f1",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/todo.md.diff"
+    },
+    {
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 259042710,
+      "size": 4891,
+      "mtime_ns": 1791149002055981304,
+      "sha256": "5154fae6e10b9e07fbbb2a325de5318d231305f75b5e198b8bc19eb70726e9c1",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/registry.md.diff"
+    },
+    {
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 259042711,
+      "size": 6238,
+      "mtime_ns": 1791149002057510004,
+      "sha256": "a9018f478aa548edb4d51d18a4a8a3b00f1a68783151ab689176f5d290a34de8",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/handoff.md.diff"
+    },
+    {
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 259042712,
+      "size": 5716,
+      "mtime_ns": 1791149002059091580,
+      "sha256": "3c49884b7d7e4ff1b5d56fd4818712b5f1ed3402a4cda55348d2763a814bb769",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/deployment.md.diff"
+    },
+    {
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 259042713,
+      "size": 2964,
+      "mtime_ns": 1791149002062978144,
+      "sha256": "0d4ccf2417acd199eed1211e7ec281e5f30680f54878d036c575f017cbf6bb54",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/skills-and-agents.md.diff"
+    },
+    {
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 259042714,
+      "size": 4492,
+      "mtime_ns": 1791149002063290558,
+      "sha256": "8c340e1ebd9380094856d84c6cd00aa54f5315dd1b7c58a9758fc632280b2fc3",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/restart-PAGE.diff"
+    }
+  ],
+  "Python55_reuse": {
+    "raw": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-python-current-2-bindings.json",
+    "historical_complete3808_prepost_equal": true,
+    "current_exceptions": [],
+    "bound_executed_JS": 82,
+    "qualification": "Six assigned central records/article may now differ. Exact current exceptions are documented; implementation dependencies remain current. Historical binary and current source checks are not current runtime readiness."
+  },
+  "Node17_reuse": {
+    "raw": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-node17-current-bindings.json",
+    "unique_current_source_dependencies": 11,
+    "historical_executable_limit": "Current executable selection/binary fingerprints are supplied by current Python pre/post records; historical Node executable binary bytes were not independently bound and are not reconstructed. Retained17 source mechanics/disposable-race observations only; actual app runtime is mandatory later."
+  },
+  "actual_private_original_verify": {
+    "result": "VERIFIED",
+    "payloads_valid": true,
+    "matches_checkpoint": true,
+    "status_equal": true,
+    "current_sha256": "ee63a5c309a1a72dd36db462f520931e777a701acd237c9350d2d5eee4cf6d73",
+    "manifest_sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb"
+  },
+  "not_run": "No suite rerun, build/restart/UI/watcher/runtime/Git mutation; unchanged implementation and historical actual evidence retained."
+}

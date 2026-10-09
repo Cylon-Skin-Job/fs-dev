@@ -1,0 +1,18 @@
+{
+  "runId": "chat-arch-1790315189951-d14a893a4f",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R9-LIFECYCLE-RESOURCES",
+      "code": 0,
+      "signal": null,
+      "pid": 92851,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 357190
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

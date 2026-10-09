@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-09T01:17:53.556553+00:00",
+  "result": "PASS",
+  "all_five_current_owned_hashes_match": true,
+  "raw_evidence_hashes_match": true,
+  "candidate_head_unchanged": true,
+  "handoff_sha256": "956bd7f6af488baefda2ddb492c2f19babe30cb2c1e44ebc8c937af43cc45d7e",
+  "report_sha256": "844950527961451652beab790173bad0ff3f6861dc6e0bf07e805e6168dcddce",
+  "repair_patch_sha256": "19a661777e3d9d81ac83f70071acafcf84c7f30add77593cf9494211f8a0493e",
+  "candidate_mutations_terminal": true
+}

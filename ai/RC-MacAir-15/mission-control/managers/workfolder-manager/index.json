@@ -1,0 +1,56 @@
+{
+  "schema_version": 2,
+  "name": "Mission Control \u2014 WorkFolder Manager",
+  "description": "Local role guidance and resumable setup checkpoint for this manager.",
+  "repository_root": "../../../../..",
+  "wiki_root": "../../../Wiki",
+  "documents": [
+    {
+      "path": "handoff.md",
+      "kind": "handoff",
+      "authority": "setup evidence and explicit pending work",
+      "description": "Current local checkpoint and next setup action.",
+      "lifecycle": "Maintained within the assigned manager/setup scope; preserve source attribution and distinguish proposed design from deployment.",
+      "read_before": [],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Current state",
+          "description": "Current state"
+        },
+        {
+          "key": "s2",
+          "heading": "Next setup work",
+          "description": "Next setup work"
+        }
+      ]
+    }
+  ],
+  "support_files": [
+    {
+      "path": "AGENTS.md",
+      "description": "Local scope, entry and record maintenance instructions.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Job",
+          "description": "Job"
+        },
+        {
+          "key": "s2",
+          "heading": "Reading and records",
+          "description": "Reading and records"
+        },
+        {
+          "key": "s3",
+          "heading": "Action boundary",
+          "description": "Action boundary"
+        }
+      ]
+    },
+    {
+      "path": "index.json",
+      "description": "Static routing metadata; no live session identities or progress state."
+    }
+  ]
+}

@@ -1,0 +1,250 @@
+{
+  "at": "2026-10-04T21:25:28.673616+00:00",
+  "failed_assertion": "All source differences are seven docs+exact version only",
+  "actual_observation": "Three additional unique manager-owned E coordination files appeared between own baseline/readback",
+  "effects": "Read-only failed assertion after snapshots; no candidate or source mutation from comparator; snapshots retained, no effectful replay",
+  "raw_snapshots": [
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/before.json",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/after.json"
+  ],
+  "exact_differences": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/.versions/2026-10-04-141458.md",
+      "before": null,
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 259038572,
+        "size": 819,
+        "mtime_ns": 1791148600080939003,
+        "sha256": "fa7ecb9041a4d4c9f2f24cba9386b3e844a6dbe98c9af52063b05fe90345a9f0"
+      },
+      "provenance": "S6 builder assigned docs/version"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md",
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 65627116,
+        "size": 819,
+        "mtime_ns": 1784547060854987021,
+        "sha256": "fa7ecb9041a4d4c9f2f24cba9386b3e844a6dbe98c9af52063b05fe90345a9f0"
+      },
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 65627116,
+        "size": 3428,
+        "mtime_ns": 1791148600081893915,
+        "sha256": "ccf7a76b4201ce3f5a95b29816f72f85cf1506b6f94172a581c100170dd4b94e"
+      },
+      "provenance": "S6 builder assigned docs/version"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/AGENTS.md",
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 253884811,
+        "size": 11356,
+        "mtime_ns": 1791111485868378901,
+        "sha256": "54cb3ff16f0fae8847341ba38f53af6afd6aa6d84ac4ddb7df9e20faf13888dc"
+      },
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 253884811,
+        "size": 11823,
+        "mtime_ns": 1791148867694850265,
+        "sha256": "d4dce1ca561b013641ca999d4183a73be739b408cfa5e518c750af783420de6d"
+      },
+      "provenance": "S6 builder assigned docs/version"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/deployment.md",
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 254286643,
+        "size": 21875,
+        "mtime_ns": 1791111485872135883,
+        "sha256": "7c5c447fc48805dcbea283e1bd7c5e4290b3443496abdb2876c6ccf460fe41b1"
+      },
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 254286643,
+        "size": 24436,
+        "mtime_ns": 1791148867701588230,
+        "sha256": "e8a4da6a21b73a293f57626f315da78e3bc8ff77eb841000a8c5dde441e9bafd"
+      },
+      "provenance": "S6 builder assigned docs/version"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/handoff.md",
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 253884817,
+        "size": 35271,
+        "mtime_ns": 1791111485873158753,
+        "sha256": "52ed4a92ffef4a3f6ecd2f128f5e5886a2d1ed496d841e9f83a38481360da937"
+      },
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 253884817,
+        "size": 37337,
+        "mtime_ns": 1791148867698308997,
+        "sha256": "1804c147efba7fd8b5fa892c41ee9be6f906c69a7209ce45c9d419ec81c9869e"
+      },
+      "provenance": "S6 builder assigned docs/version"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance-packet-draft.md",
+      "before": null,
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 259038603,
+        "size": 5366,
+        "mtime_ns": 1791148619417343507,
+        "sha256": "e3fafbda8918482def2abac2514582a7410c17125c4a43a038cb2e6c62126dcc"
+      },
+      "provenance": "Root manager-owned coordination"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-preservation-check.py",
+      "before": null,
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 259038476,
+        "size": 6404,
+        "mtime_ns": 1791148535257504619,
+        "sha256": "dfae87f13355d8e1c1371a48c4418e7719c70d06f3006af49d37a3b853315aa6"
+      },
+      "provenance": "Root manager-owned coordination"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-static-checks.py",
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 259038233,
+        "size": 7880,
+        "mtime_ns": 1791148331493940741,
+        "sha256": "47e85e1badbf7ad6be433697b071d013617346ee91e89100a846ad3c794932b1"
+      },
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 259038233,
+        "size": 7919,
+        "mtime_ns": 1791148524586612183,
+        "sha256": "a632fb92f2a425c785c13ba115d5e343ecd74139bf2f439d6c2e62f9b226fb05"
+      },
+      "provenance": "Root manager-owned coordination"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/registry.md",
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 253884814,
+        "size": 13674,
+        "mtime_ns": 1791111485877090734,
+        "sha256": "e3ffc6d20ff9d31dfe1b0a7f5bbbeabe3351cee9a3c4ec9bc8f990c080dd08ea"
+      },
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 253884814,
+        "size": 14365,
+        "mtime_ns": 1791148867695296012,
+        "sha256": "ca478d6baa5dc05bff44daca96295736d69a7226037b8ce8223fc51251230bc0"
+      },
+      "provenance": "S6 builder assigned docs/version"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 254233150,
+        "size": 17686,
+        "mtime_ns": 1791111485872708797,
+        "sha256": "41fe2c81f6da2ed87e4fd625e60044988fd10c5725da33446ebc360f6ab8cba9"
+      },
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 254233150,
+        "size": 19311,
+        "mtime_ns": 1791148867702040311,
+        "sha256": "592dd2042cc12042186941128e44b34957e8d9db52773b61ffec3a6ae84d31d9"
+      },
+      "provenance": "S6 builder assigned docs/version"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/todo.md",
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 253884813,
+        "size": 22422,
+        "mtime_ns": 1791111485873466127,
+        "sha256": "aca67f27b5c1cd4c75e5e8ebfc388c446ff505a9581719e239d6ed40087a49b1"
+      },
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 253884813,
+        "size": 24178,
+        "mtime_ns": 1791148867701029608,
+        "sha256": "432b77f8d83297935d3017063e74fc4172d7376d544139abd0d509cbebc81d16"
+      },
+      "provenance": "S6 builder assigned docs/version"
+    }
+  ],
+  "correction": "Classify these exact root-owned paths explicitly, preserve their provenance; no broad E unchanged/exclusion claim"
+}

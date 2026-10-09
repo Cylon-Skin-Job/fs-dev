@@ -1,0 +1,66 @@
+{
+  "result": "PASS",
+  "records": [
+    {
+      "name": "unknown-mode",
+      "argv": [
+        "node",
+        ".agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs",
+        "planning/commit-supervisor/execution/S6-prep/current-private-paths.json",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-3RgF92/verified.json",
+        "unsupported",
+        "planning/commit-supervisor/execution/S6-prep/unused.json"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: unsupported UI mode\n    at file:///Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs:11:1\n    at ModuleJob.run (node:internal/modules/esm/module_job:430:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:655:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v25.6.1\n",
+      "expected_refusal": true
+    },
+    {
+      "name": "missing-format",
+      "argv": [
+        "node",
+        ".agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs",
+        "planning/commit-supervisor/execution/S6-prep/current-private-paths.json",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-3RgF92/verified.json",
+        "acceptance",
+        "planning/commit-supervisor/execution/S6-prep/unused.json"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: acceptance requires a resolved supported summaryFormat\n    at file:///Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs:14:25\n    at ModuleJob.run (node:internal/modules/esm/module_job:430:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:655:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v25.6.1\n",
+      "expected_refusal": true
+    },
+    {
+      "name": "unsupported-fix-format",
+      "argv": [
+        "node",
+        ".agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs",
+        "planning/commit-supervisor/execution/S6-prep/unsupported-format-config.json",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-3RgF92/verified.json",
+        "fix-xy",
+        "planning/commit-supervisor/execution/S6-prep/unused.json"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: unsupported summaryFormat\n    at file:///Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs:12:41\n    at ModuleJob.run (node:internal/modules/esm/module_job:430:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:655:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v25.6.1\n",
+      "expected_refusal": true
+    },
+    {
+      "name": "unsupported-observe-format",
+      "argv": [
+        "node",
+        ".agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs",
+        "planning/commit-supervisor/execution/S6-prep/unsupported-format-config.json",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-3RgF92/verified.json",
+        "observe",
+        "planning/commit-supervisor/execution/S6-prep/unused.json"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: unsupported summaryFormat\n    at file:///Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs:12:41\n    at ModuleJob.run (node:internal/modules/esm/module_job:430:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:655:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v25.6.1\n",
+      "expected_refusal": true
+    }
+  ],
+  "successful_live_ui": "previous current raw evidence unaffected; new supplied-format precondition only"
+}

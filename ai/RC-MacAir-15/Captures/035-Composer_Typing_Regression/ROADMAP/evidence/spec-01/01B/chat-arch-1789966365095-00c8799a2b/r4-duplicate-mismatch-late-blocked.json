@@ -1,0 +1,14 @@
+{
+  "caseId": "R4-DUPLICATE-MISMATCH-LATE",
+  "status": "blocked",
+  "fixture": "F4",
+  "owner": "SPEC-02/02B",
+  "missingContract": "receipt-status-contract",
+  "assertions": [
+    "deduplicate an identical requestId plus fingerprint",
+    "reject a requestId reused with a different fingerprint",
+    "ignore late acceptance after remount or restart unless identity matches"
+  ],
+  "statusEndpointFabricated": false,
+  "activation": "run --suite submit --mode enforce --cases R4-DUPLICATE-MISMATCH-LATE"
+}

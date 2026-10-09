@@ -1,0 +1,146 @@
+{
+  "actor": "/root/s6_builder",
+  "version_declared": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/.versions/2026-10-04-141458.md",
+  "version_copy_completed_utc": "2026-10-04T21:16:40.080983+00:00",
+  "version_complete_preimage_sha256": "fa7ecb9041a4d4c9f2f24cba9386b3e844a6dbe98c9af52063b05fe90345a9f0",
+  "version_actual": {
+    "exists": true,
+    "kind": "file",
+    "mode": 33188,
+    "dev": 16777230,
+    "ino": 259038572,
+    "size": 819,
+    "mtime_ns": 1791148600080939003,
+    "sha256": "fa7ecb9041a4d4c9f2f24cba9386b3e844a6dbe98c9af52063b05fe90345a9f0"
+  },
+  "wiki_metadata_last_modified": "2026-10-04T21:16:40Z",
+  "wiki_write_completed_utc": "2026-10-04T21:16:40.081912+00:00",
+  "central_fact_timestamp": "2026-10-04T21:16:40.081914+00:00",
+  "finished": "2026-10-04T21:16:40.084328+00:00",
+  "current_docs": {
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md": {
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 253884811,
+      "size": 11579,
+      "mtime_ns": 1791148600082943118,
+      "sha256": "47281d8c8a8fd5749756d7922eef7b68a85b44ae1e15e20a3ebe00d9397c77b1"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md": {
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 253884813,
+      "size": 23978,
+      "mtime_ns": 1791148600083506574,
+      "sha256": "5f2a3d9bf2c096aec26cf642da340668162b8a12e306e4fdcb4b89460c1518c7"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md": {
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 253884814,
+      "size": 13887,
+      "mtime_ns": 1791148600083246033,
+      "sha256": "43f16c75c7ad1420d711a05951feae57629596533c5814ec26c7b4011a1d27eb"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md": {
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 253884817,
+      "size": 37098,
+      "mtime_ns": 1791148600083719239,
+      "sha256": "70335328515a4f8fe855c88b9aeae17961aeacd68ee484bf92fae258ea62b75e"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md": {
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 254286643,
+      "size": 24236,
+      "mtime_ns": 1791148600084076862,
+      "sha256": "b71d0df42920ed7c51fe4d14298deea51bc06c243c652fc19e511641de116760"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md": {
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 254233150,
+      "size": 19111,
+      "mtime_ns": 1791148600084283736,
+      "sha256": "40019e59bd5d7f479f15ebba6953129555d729a9c60b731e3dbe86e2fbb0446e"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md": {
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 65627116,
+      "size": 3428,
+      "mtime_ns": 1791148600081893915,
+      "sha256": "ccf7a76b4201ce3f5a95b29816f72f85cf1506b6f94172a581c100170dd4b94e"
+    }
+  },
+  "source_files": {
+    "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh": {
+      "exists": true,
+      "kind": "file",
+      "mode": 33261,
+      "dev": 16777230,
+      "ino": 228373379,
+      "size": 246,
+      "mtime_ns": 1791108823210008365,
+      "sha256": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs": {
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 258765483,
+      "size": 6372,
+      "mtime_ns": 1791109521546926134,
+      "sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs": {
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 258765388,
+      "size": 5520,
+      "mtime_ns": 1791109521545854301,
+      "sha256": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs": {
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 258765389,
+      "size": 10697,
+      "mtime_ns": 1791115187578571044,
+      "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs": {
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 258765482,
+      "size": 2953,
+      "mtime_ns": 1791108919969912741,
+      "sha256": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e"
+    }
+  },
+  "ownership": "Only six central docs/current-state surfaces + exact restart article/version; unique closeout evidence",
+  "timestamp_limit": "PAGE had no trustworthy previous timestamp/created field; complete unchanged preimage retains that absence"
+}

@@ -1,0 +1,463 @@
+{
+  "at": "2026-10-05T03:27:12.954773+00:00",
+  "result": "FINAL_PROCESS_STORAGE_RECOVERY_PRESERVATION_PASSED",
+  "protected_roots": 4,
+  "protected_tree_total": 14,
+  "historical_tree_total": 13,
+  "unchanged_historical_identities": 10,
+  "departed_historical_renderer_pids": [
+    60871,
+    60874,
+    60879
+  ],
+  "current_new_renderer_pids": [
+    57135,
+    57136,
+    57137,
+    57145
+  ],
+  "process_qualification": "All four protected main/server roots and ten surviving historical identities remain exact. Three historical renderers departed and four current renderers started 22:01:09/10Z before final tests. Current fourteen raw identities/profile/exe/ancestry/machine checked; no causal claim about this later renderer lifecycle or frozen count is made.",
+  "protected_identities": [
+    {
+      "pid": 48636,
+      "ppid": 1,
+      "uid": 501,
+      "start": "Thu Oct  1 12:36:56 2026",
+      "command": "/Applications/Fusion Studio Alpha.app/Contents/MacOS/Fusion Studio",
+      "cwd": "/",
+      "executable": "/Applications/Fusion Studio Alpha.app/Contents/MacOS/Fusion Studio",
+      "machine": "RC-Alpha",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-Alpha",
+        "FUSION_APP_USER_DATA": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha"
+      }
+    },
+    {
+      "pid": 48649,
+      "ppid": 48636,
+      "uid": 501,
+      "start": "Thu Oct  1 12:36:59 2026",
+      "command": "/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Helper.app/Contents/MacOS/Fusion Studio Helper --type=gpu-process --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --gpu-preferences=SAAAAAAAAAAgAQAEAAAAAAAAAAAAAGAAAwAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=1718379636,r,16795560770623469277,17716749696725710851,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,2692029682709582238,14835678179294685137,4 --trace-process-track-uuid=3190708988185955192 --seatbelt-client=33",
+      "cwd": "/",
+      "executable": "/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Helper.app/Contents/MacOS/Fusion Studio Helper",
+      "machine": "RC-Alpha",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-Alpha",
+        "FUSION_APP_USER_DATA": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha"
+      }
+    },
+    {
+      "pid": 48650,
+      "ppid": 48636,
+      "uid": 501,
+      "start": "Thu Oct  1 12:36:59 2026",
+      "command": "/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Helper.app/Contents/MacOS/Fusion Studio Helper --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --shared-files --field-trial-handle=1718379636,r,16795560770623469277,17716749696725710851,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,2692029682709582238,14835678179294685137,4 --trace-process-track-uuid=3190708989122997041 --seatbelt-client=33",
+      "cwd": "/",
+      "executable": "/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Helper.app/Contents/MacOS/Fusion Studio Helper",
+      "machine": "RC-Alpha",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-Alpha",
+        "FUSION_APP_USER_DATA": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha"
+      }
+    },
+    {
+      "pid": 48653,
+      "ppid": 48636,
+      "uid": 501,
+      "start": "Thu Oct  1 12:36:59 2026",
+      "command": "/opt/homebrew/bin/node /Applications/Fusion Studio Alpha.app/Contents/Resources/fusion-studio-server/server.js",
+      "cwd": "/",
+      "executable": "/opt/homebrew/Cellar/node/25.6.1/bin/node",
+      "machine": "RC-Alpha",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-Alpha",
+        "FUSION_APP_USER_DATA": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha"
+      }
+    },
+    {
+      "pid": 48666,
+      "ppid": 48636,
+      "uid": 501,
+      "start": "Thu Oct  1 12:37:00 2026",
+      "command": "/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Helper (Renderer).app/Contents/MacOS/Fusion Studio Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Applications/Fusion Studio Alpha.app/Contents/Resources/app.asar --enable-sandbox --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=4 --time-ticks-at-unix-epoch=-1787580445788457 --launch-time-ticks=3302974863234 --shared-files --field-trial-handle=1718379636,r,16795560770623469277,17716749696725710851,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,2692029682709582238,14835678179294685137,4 --trace-process-track-uuid=3190708990060038890 --seatbelt-client=59",
+      "cwd": "/",
+      "executable": "/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Helper (Renderer).app/Contents/MacOS/Fusion Studio Helper (Renderer)",
+      "machine": "RC-Alpha",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-Alpha",
+        "FUSION_APP_USER_DATA": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha"
+      }
+    },
+    {
+      "pid": 57135,
+      "ppid": 77002,
+      "uid": 501,
+      "start": "Sun Oct  4 15:01:09 2026",
+      "command": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron --enable-sandbox --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=18 --time-ticks-at-unix-epoch=-1787580447143061 --launch-time-ticks=3565411915879 --shared-files --field-trial-handle=1718379636,r,271901856987793068,7423984494206817947,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,14208098713619163654,15480727340458708817,4 --trace-process-track-uuid=3190709003178624776 --seatbelt-client=65",
+      "cwd": "/",
+      "executable": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer)",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-MacAir-15"
+      }
+    },
+    {
+      "pid": 57136,
+      "ppid": 77002,
+      "uid": 501,
+      "start": "Sun Oct  4 15:01:09 2026",
+      "command": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron --enable-sandbox --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=19 --time-ticks-at-unix-epoch=-1787580447143061 --launch-time-ticks=3565411928077 --shared-files --field-trial-handle=1718379636,r,271901856987793068,7423984494206817947,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,14208098713619163654,15480727340458708817,4 --trace-process-track-uuid=3190709004115666625 --seatbelt-client=65",
+      "cwd": "/",
+      "executable": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer)",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-MacAir-15"
+      }
+    },
+    {
+      "pid": 57137,
+      "ppid": 77002,
+      "uid": 501,
+      "start": "Sun Oct  4 15:01:09 2026",
+      "command": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron --enable-sandbox --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=20 --time-ticks-at-unix-epoch=-1787580447143061 --launch-time-ticks=3565411929353 --shared-files --field-trial-handle=1718379636,r,271901856987793068,7423984494206817947,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,14208098713619163654,15480727340458708817,4 --trace-process-track-uuid=3190709005052708474 --seatbelt-client=65",
+      "cwd": "/",
+      "executable": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer)",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-MacAir-15"
+      }
+    },
+    {
+      "pid": 57145,
+      "ppid": 48636,
+      "uid": 501,
+      "start": "Sun Oct  4 15:01:10 2026",
+      "command": "/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Helper (Renderer).app/Contents/MacOS/Fusion Studio Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Applications/Fusion Studio Alpha.app/Contents/Resources/app.asar --enable-sandbox --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=14 --time-ticks-at-unix-epoch=-1787580445788457 --launch-time-ticks=3565413120660 --shared-files --field-trial-handle=1718379636,r,16795560770623469277,17716749696725710851,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,2692029682709582238,14835678179294685137,4 --trace-process-track-uuid=3190708999430457380 --seatbelt-client=65",
+      "cwd": "/",
+      "executable": "/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Helper (Renderer).app/Contents/MacOS/Fusion Studio Helper (Renderer)",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-Alpha",
+        "FUSION_APP_USER_DATA": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha"
+      }
+    },
+    {
+      "pid": 77002,
+      "ppid": 1,
+      "uid": 501,
+      "start": "Mon Sep 28 01:40:07 2026",
+      "command": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs",
+      "cwd": "/",
+      "executable": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+      "machine": "RC-MacAir-15",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-MacAir-15"
+      }
+    },
+    {
+      "pid": 77005,
+      "ppid": 77002,
+      "uid": 501,
+      "start": "Mon Sep 28 01:40:07 2026",
+      "command": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=gpu-process --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --gpu-preferences=SAAAAAAAAAAgAQAEAAAAAAAAAAAAAGAAAwAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=1718379636,r,271901856987793068,7423984494206817947,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,14208098713619163654,15480727340458708817,4 --trace-process-track-uuid=3190708988185955192 --seatbelt-client=33",
+      "cwd": "/",
+      "executable": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper",
+      "machine": "RC-MacAir-15",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-MacAir-15"
+      }
+    },
+    {
+      "pid": 77006,
+      "ppid": 77002,
+      "uid": 501,
+      "start": "Mon Sep 28 01:40:07 2026",
+      "command": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --shared-files --field-trial-handle=1718379636,r,271901856987793068,7423984494206817947,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,14208098713619163654,15480727340458708817,4 --trace-process-track-uuid=3190708989122997041 --seatbelt-client=33",
+      "cwd": "/",
+      "executable": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper",
+      "machine": "RC-MacAir-15",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-MacAir-15"
+      }
+    },
+    {
+      "pid": 77007,
+      "ppid": 77002,
+      "uid": 501,
+      "start": "Mon Sep 28 01:40:07 2026",
+      "command": "/opt/homebrew/bin/node /Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+      "cwd": "/",
+      "executable": "/opt/homebrew/Cellar/node/25.6.1/bin/node",
+      "machine": "RC-MacAir-15",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-MacAir-15"
+      }
+    },
+    {
+      "pid": 77021,
+      "ppid": 77002,
+      "uid": 501,
+      "start": "Mon Sep 28 01:40:08 2026",
+      "command": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron --enable-sandbox --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=4 --time-ticks-at-unix-epoch=-1787580447143061 --launch-time-ticks=3004361317231 --shared-files --field-trial-handle=1718379636,r,271901856987793068,7423984494206817947,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,14208098713619163654,15480727340458708817,4 --trace-process-track-uuid=3190708990060038890 --seatbelt-client=58",
+      "cwd": "/",
+      "executable": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer)",
+      "machine": "RC-MacAir-15",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-MacAir-15"
+      }
+    }
+  ],
+  "storage11": {
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/Preferences": {
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 255293576,
+        "size": 1362,
+        "mtime_ns": 1790584818388349313,
+        "sha256": "f0e43cb69a6791e69476c4780858a97f50255a1d253bead0bf03626ff341e7c3"
+      },
+      "current": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 255293576,
+        "size": 1362,
+        "mtime_ns": 1790584818388349313,
+        "sha256": "f0e43cb69a6791e69476c4780858a97f50255a1d253bead0bf03626ff341e7c3"
+      },
+      "identity_equal": true,
+      "volatile_content_qualification": "Current active profile/DB bytes/size/mtime may change; no copying/restoring or content stability claim"
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/Local State": {
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 53858069,
+        "size": 57,
+        "mtime_ns": 1781090326888485141,
+        "sha256": "ed99ee7c5881bef2b9895b6df1058728653c22d630d22c6360c10253f21b647f"
+      },
+      "current": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 53858069,
+        "size": 57,
+        "mtime_ns": 1781090326888485141,
+        "sha256": "ed99ee7c5881bef2b9895b6df1058728653c22d630d22c6360c10253f21b647f"
+      },
+      "identity_equal": true,
+      "volatile_content_qualification": "Current active profile/DB bytes/size/mtime may change; no copying/restoring or content stability claim"
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server-data/fusion.db": {
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 194521586,
+        "size": 348160,
+        "mtime_ns": 1786940930627760433,
+        "sha256": "29bbcf1eedf39bfc4ec1cab593252166805872c3c1ca424aa43e93f47e725e20"
+      },
+      "current": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 194521586,
+        "size": 348160,
+        "mtime_ns": 1786940930627760433,
+        "sha256": "29bbcf1eedf39bfc4ec1cab593252166805872c3c1ca424aa43e93f47e725e20"
+      },
+      "identity_equal": true,
+      "volatile_content_qualification": "Current active profile/DB bytes/size/mtime may change; no copying/restoring or content stability claim"
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server-data/fusion.db-wal": {
+      "before": {
+        "exists": false
+      },
+      "current": {
+        "exists": false
+      },
+      "identity_equal": true,
+      "volatile_content_qualification": "Current active profile/DB bytes/size/mtime may change; no copying/restoring or content stability claim"
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server.port": {
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 255293315,
+        "size": 5,
+        "mtime_ns": 1790584808384545248,
+        "sha256": "ea7812cfeb7b019a1eb4fa2410ab3f50a49712eb8a1e93f4802b327059bad754"
+      },
+      "current": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 255293315,
+        "size": 5,
+        "mtime_ns": 1790584808384545248,
+        "sha256": "ea7812cfeb7b019a1eb4fa2410ab3f50a49712eb8a1e93f4802b327059bad754"
+      },
+      "identity_equal": true,
+      "volatile_content_qualification": "Current active profile/DB bytes/size/mtime may change; no copying/restoring or content stability claim"
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/Preferences": {
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 195245270,
+        "size": 116,
+        "mtime_ns": 1786930161831554328,
+        "sha256": "ab913052ab22c0be5eb150029ab5af7f0060ff00bbf7c39688d70b0189618514"
+      },
+      "current": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 195245270,
+        "size": 116,
+        "mtime_ns": 1786930161831554328,
+        "sha256": "ab913052ab22c0be5eb150029ab5af7f0060ff00bbf7c39688d70b0189618514"
+      },
+      "identity_equal": true,
+      "volatile_content_qualification": "Current active profile/DB bytes/size/mtime may change; no copying/restoring or content stability claim"
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/Local State": {
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 194683377,
+        "size": 57,
+        "mtime_ns": 1786765836862030392,
+        "sha256": "60f0a642e3b8a1fedad849d4c83cabbd4021f195c778ef5095d607c915a3edf8"
+      },
+      "current": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 194683377,
+        "size": 57,
+        "mtime_ns": 1786765836862030392,
+        "sha256": "60f0a642e3b8a1fedad849d4c83cabbd4021f195c778ef5095d607c915a3edf8"
+      },
+      "identity_equal": true,
+      "volatile_content_qualification": "Current active profile/DB bytes/size/mtime may change; no copying/restoring or content stability claim"
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server-data/fusion.db": {
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 194683133,
+        "size": 41701376,
+        "mtime_ns": 1791146068956198945,
+        "sha256": "6e62246c51d7e6b708bca5c343573478c70ecca3a1bdaef22c5e3f648a30d084"
+      },
+      "current": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 194683133,
+        "size": 44994560,
+        "mtime_ns": 1791170819714236629,
+        "sha256": "a85f4f850f6fadaeb957fa40ad0bd5a18aa6a2231e77704be621900970a19dbf"
+      },
+      "identity_equal": true,
+      "volatile_content_qualification": "Current active profile/DB bytes/size/mtime may change; no copying/restoring or content stability claim"
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server-data/fusion.db-wal": {
+      "before": {
+        "exists": false
+      },
+      "current": {
+        "exists": false
+      },
+      "identity_equal": true,
+      "volatile_content_qualification": "Current active profile/DB bytes/size/mtime may change; no copying/restoring or content stability claim"
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server.port": {
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 257489625,
+        "size": 5,
+        "mtime_ns": 1790883420521552331,
+        "sha256": "5939ac9daf7975b25a1e4a8b48d6f596fb8dd0ac93820c3f1f0d0a8e98f59d44"
+      },
+      "current": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 257489625,
+        "size": 5,
+        "mtime_ns": 1790883420521552331,
+        "sha256": "5939ac9daf7975b25a1e4a8b48d6f596fb8dd0ac93820c3f1f0d0a8e98f59d44"
+      },
+      "identity_equal": true,
+      "volatile_content_qualification": "Current active profile/DB bytes/size/mtime may change; no copying/restoring or content stability claim"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/data/fusion.db": {
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 39348215,
+        "size": 390201344,
+        "mtime_ns": 1791146069050018117,
+        "sha256": "dd3c4a088c4bde205db16facd535233eb82d54cc5c2bd88a8a752663f4764088"
+      },
+      "current": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 39348215,
+        "size": 393502720,
+        "mtime_ns": 1791170819712353216,
+        "sha256": "62b137c4102e966f9090d9d68bb83b45cac711b2584c9c8abc07893a45e016ae"
+      },
+      "identity_equal": true,
+      "volatile_content_qualification": "Current active profile/DB bytes/size/mtime may change; no copying/restoring or content stability claim"
+    }
+  },
+  "private_profile_leaf_count": 460,
+  "private_profile_exact": true,
+  "original_archives": 6,
+  "earlier_job_leaves_exact": 1844,
+  "original_guard_retained": true,
+  "current_original_owned": 128,
+  "current_full_inventory": 4353,
+  "unrelated": 4225,
+  "full_current_public_verification": {
+    "result": "VERIFIED",
+    "payloads_valid": true,
+    "matches_checkpoint": true,
+    "status_equal": true,
+    "current_sha256": "ee63a5c309a1a72dd36db462f520931e777a701acd237c9350d2d5eee4cf6d73",
+    "manifest_sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb"
+  },
+  "actual_publication": [],
+  "private_preview_stopped": true,
+  "limits": "No current production readiness is implied; seeded original defects restored, successful live fixed packets are historical. Protected live DB content is volatile."
+}

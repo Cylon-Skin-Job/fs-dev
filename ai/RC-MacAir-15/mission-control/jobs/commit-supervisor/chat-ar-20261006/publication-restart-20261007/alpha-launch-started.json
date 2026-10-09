@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-07T08:24:49.428690+00:00",
+  "argv": [
+    "/usr/bin/open",
+    "-n",
+    "/Applications/Fusion Studio Alpha.app",
+    "--args",
+    "--remote-debugging-address=127.0.0.1",
+    "--remote-debugging-port=61056"
+  ],
+  "environment": {
+    "FUSION_APP_USER_DATA": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha",
+    "FUSION_LOCAL_MACHINE": "RC-Alpha",
+    "TMPDIR": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/publication-restart-20261007/alpha-runtime-tmp/"
+  },
+  "debug_port": 61056,
+  "profile": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha",
+  "machine": "RC-Alpha",
+  "installed": "/Applications/Fusion Studio Alpha.app",
+  "temp": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/publication-restart-20261007/alpha-runtime-tmp"
+}

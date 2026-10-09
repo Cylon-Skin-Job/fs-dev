@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-04T13:53:42.031441+00:00",
+  "actor": "/root/s6_supervisor_intent_1",
+  "state": "needs-owner",
+  "checkpoint_id": "S6-ACTUAL-INTENT-HOLD-01",
+  "checkpoint_sha256": "6ac259fc62c17bfcd5ee9ac5dd43078b7310b0d42b6aa231a5fb6644fca96dbb",
+  "report_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/intent-hold-report.md",
+  "report_sha256": "5b866893fd9d4203188ec2be7be8f295a0764257948bc42f66f69fa291c535d3",
+  "intent_hold_sha256": "b35a621d5bda1b150a9d3fd97a224116e7313fb01aa5d4e74e3273d34ea55955",
+  "lifecycle_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/lifecycle-intent.json",
+  "lifecycle_sha256": "f2c5c0379d41f5115c5b32644c432ced15b5a809cd26bc6b2b9d06a4db834d2c",
+  "immutable_original_manifest_sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb",
+  "current_verify": {
+    "result": "VERIFIED",
+    "payloads_valid": true,
+    "matches_checkpoint": true,
+    "status_equal": true,
+    "current_sha256": "ee63a5c309a1a72dd36db462f520931e777a701acd237c9350d2d5eee4cf6d73",
+    "manifest_sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb"
+  },
+  "historical_provider_hold_exact": true,
+  "historical_record_preimages_exact": true,
+  "no_summary_format_guessed": true,
+  "pending_actual_host_completed": "Parent observes only after final",
+  "close_agent": "unavailable"
+}

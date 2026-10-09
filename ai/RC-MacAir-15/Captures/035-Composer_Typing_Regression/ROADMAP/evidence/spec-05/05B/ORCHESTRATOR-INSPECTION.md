@@ -1,0 +1,15 @@
+# 05B orchestrator inspection
+
+Candidate CHAT-AR-4641ca5897f0; current 24-file SOURCE-SHA256 manifest checked with no mismatch. Manifest digest f057e0ad94b78fd805824ab925f8a05567d7d7ea0fd1f2516bc2da8ae2197f20. Inspection compares preedit snapshots, not unrelated dirty Git changes.
+
+Inspected mirror projection/serialization/recovery, journal invalidation and conditional acknowledgement, HistoryFile transaction, SessionLifecycle narrow staging, manager deletion transaction/fences, direct and group-service lease entry points, runtime multi-epoch busy lookup, session admission and interactive/automation/eager provider callers, Move/placement/worksurface consumers, and added failure/interleaving tests. No known material finding remains before independent acceptance review.
+
+Canonical exchanges stay in HistoryFile; exchange commit invalidates its journal in the same transaction. Projection acknowledgement cannot erase newer intent. Postcommit file/ACK failures retain retryable state. Deletion now propagates retirement and journal failures and validates exact members before SQL commit. The shared group lease orders provider admission with Delete without holding it through a streaming turn. Automation reserves IN_FLIGHT before releasing the lease and creates no submission receipt. Move keeps the source session and same group identity; view state remains file-backed. Accepted receipt/activity and session-lifetime cascade remain intact.
+
+Independent command: `node fusion-studio-client/e2e/chat-architecture/run.mjs --suite backend --mode enforce --cases R8-MIRROR-RECOVERY`. Run chat-arch-1790241032918-6fd021d950 passes 21 suites/350 tests, native pretest, zero leaked owned PIDs, owned root removed. All 43 recorded dependency hashes match current source. See ORCHESTRATOR-RUNS.json and orchestrator-backend-final.log. Initial malformed CLI attempt rejected before work and is retained in orchestrator-backend.log.
+
+Reused current final V-SUBMIT raw run chat-arch-1790240874102-b6aa6b4854: all seven executable cases passed, no leaks, removed root. Earlier submission/backend runs preceding admission repair remain historical only.
+
+Deviation classifications: B1 accepted (durable exchange projection intent/conditional ACK); B2 accepted (strict retirement/journal rollback and lease); B3 downstream_impact, approved necessary integration (05C preserves shared admission and no nested reacquisition); B4 accepted (async placement ACK containment); B5 accepted (executable R8 plus explicit synthetic fixture adapters); B6 downstream_impact (intermediate structure, no line-limit waiver; 05C/D close runtime/facade and Wiki). No owner ruling needed. No migration.
+
+Residual scope: this inspection is 05B only. 05C owns activation/drain decomposition and broader exact-generation cleanup; 05D owns final manager/repository structure, full isolated suite, complete UI gates, architecture enforcement and Wiki. Fresh builder and orchestrator reviewer gates remain necessary before slice acceptance.

@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-04T16:34:14.312604+00:00",
+  "producer": "/root/s6_supervisor_fix_xy_1",
+  "index": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-owner-evidence-index-final.json",
+  "index_sha256": "433720a4b5adb0afc655f8005cb3e72dc849835879fd062614ed98c227d518ef",
+  "entries_checked": 34,
+  "mismatches": [],
+  "result": "All indexed first-wait artifacts preserved byte-for-byte; historical evidence remains immutable"
+}

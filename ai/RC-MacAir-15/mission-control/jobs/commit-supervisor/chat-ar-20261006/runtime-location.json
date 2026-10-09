@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-07T00:17:44.434042+00:00",
+  "root": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc",
+  "ownership_nonce": "a5f391c0-09a4-4258-a296-436e91834548",
+  "nonce_is_not_session_identity": true,
+  "profile": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/candidate-profile",
+  "workspace": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/candidate-scratch",
+  "machine": "RC-MacAir-15",
+  "candidate": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+  "tree": "1c80f83c6c4b2b61e42c4dbb988c1f942b672ade",
+  "runtime_recovery": "Only owned private tree may be stopped. Retain evidence; no source/normal/Alpha DB copy or restore.",
+  "rerun_reason": "Original before snapshot was incoherent for dev DB and preceded a 48-minute interrupted gap; foreign renderer replacements predated candidate launch. Original physical equality is unproved; isolate all collection logs outside watched source during repeat.",
+  "prior_root": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-6xvxap6k"
+}

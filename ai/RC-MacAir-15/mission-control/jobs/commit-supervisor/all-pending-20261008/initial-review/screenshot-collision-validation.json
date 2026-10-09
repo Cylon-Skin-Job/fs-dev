@@ -1,0 +1,36 @@
+{
+  "at": "2026-10-09T01:06:49.385Z",
+  "producer": "/root/all_pending_initial_review",
+  "candidate": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate",
+  "source": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/fusion-studio-server/lib/screenshot/ws-handlers.js",
+  "source_sha256": "8d11853e29ee8f0264090145aaf1d461384caeac6b58797a63cb687869756254",
+  "method": "Exact current handler executed in VM with unmodified Date and Buffer, mocked workspace/protection and in-memory fs write sink; concurrent public screenshot:file-capture handlers. No candidate write/native operation.",
+  "collision": {
+    "pair": 1,
+    "responses": [
+      {
+        "type": "screenshot:file-captured",
+        "requestId": "pair-1-0",
+        "workspaceId": "owned-workspace",
+        "savedPath": "/owned-repo/ai/Owned/Data/Screenshots/fusion-capture-2026-10-09T01-06-49-385Z.png",
+        "capturedAt": 1791508009385
+      },
+      {
+        "type": "screenshot:file-captured",
+        "requestId": "pair-1-1",
+        "workspaceId": "owned-workspace",
+        "savedPath": "/owned-repo/ai/Owned/Data/Screenshots/fusion-capture-2026-10-09T01-06-49-385Z.png",
+        "capturedAt": 1791508009385
+      }
+    ],
+    "finalBytes": "distinct-image-1-1",
+    "requestPayloads": [
+      "distinct-image-1-0",
+      "distinct-image-1-1"
+    ]
+  },
+  "confidence": "high for filename alias/overwrite mechanics; real UI frequency unmeasured",
+  "limits": [
+    "Synthetic payloads; not PNG validation. Source owner filesystem calls execute against an in-memory path sink. Native caller overlap frequency not measured."
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "files": [
+    {
+      "source": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-DlzcE3/target.json",
+      "copy": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-runtime-raw-files/target.json",
+      "sha256": "8a34dbed36c02d46454bfd3afb5d9180d0985c0f48d3cfcaba6181bed654f664",
+      "size": 1103,
+      "source_dev": 16777230,
+      "source_inode": 259002277,
+      "source_mtime_ns": 1791141904214624624,
+      "read_at": "2026-10-04T19:27:59.139217+00:00"
+    },
+    {
+      "source": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-DlzcE3/verified.json",
+      "copy": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-runtime-raw-files/verified.json",
+      "sha256": "7070efa014d8a0b89946d3c7eb4196427a003288dec19adfa7ba1198e9c638d6",
+      "size": 3016,
+      "source_dev": 16777230,
+      "source_inode": 259002649,
+      "source_mtime_ns": 1791141919164067117,
+      "read_at": "2026-10-04T19:27:59.139539+00:00"
+    },
+    {
+      "source": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-DlzcE3/launch.log",
+      "copy": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-runtime-raw-files/launch.log",
+      "sha256": "718145ae30a1c3929ab04fc3d98fd7e92406f02e033b9eac3be52821302a8b7f",
+      "size": 21953,
+      "source_dev": 16777230,
+      "source_inode": 259002487,
+      "source_mtime_ns": 1791142012680580831,
+      "read_at": "2026-10-04T19:27:59.139787+00:00"
+    },
+    {
+      "source": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-DlzcE3/tmp/fusion-electron.log",
+      "copy": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-runtime-raw-files/fusion-electron.log",
+      "sha256": "25f21b90e34c48b180bf05499c97b56139e5024958725cf7f354f161e59cd7bb",
+      "size": 876,
+      "source_dev": 16777230,
+      "source_inode": 259002588,
+      "source_mtime_ns": 1791141974000591976,
+      "read_at": "2026-10-04T19:27:59.140011+00:00"
+    },
+    {
+      "source": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-DlzcE3/tmp/electron-renderer.log",
+      "copy": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-runtime-raw-files/electron-renderer.log",
+      "sha256": "ca2d549cc6e2a71bc6a8c10aefe48522a7326209fa5a035f27802e255f666e69",
+      "size": 13144,
+      "source_dev": 16777230,
+      "source_inode": 259002488,
+      "source_mtime_ns": 1791142012368917583,
+      "read_at": "2026-10-04T19:27:59.140217+00:00"
+    },
+    {
+      "source": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/server-live.log",
+      "copy": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-runtime-raw-files/server-live.log",
+      "sha256": "84fe3a83711656196cd958554d9b3de1806fdf478e605a2b98e43d88a8e6c736",
+      "size": 164118,
+      "source_dev": 16777230,
+      "source_inode": 258882193,
+      "source_mtime_ns": 1791142012680551372,
+      "read_at": "2026-10-04T19:27:59.142320+00:00"
+    }
+  ],
+  "limit": "Exact current private raw bytes captured read-only; active runtime logs may append after this snapshot, copies immutable. No normal/Alpha logs/data copied."
+}

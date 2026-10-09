@@ -92,16 +92,16 @@
   --content-link: #9ef5ff;
   --content-border: #171717;
   --content-highlight: color-mix(in srgb, var(--content-emphasized) 16%, transparent);
-  --workspace-border-color: #1a2f42;
-  --neutral-chrome-border: #1a2f42;
-  --border-color: #1a2f42;
-  --file-viewer-chrome-border: #1a2f42;
-  --component-border: #1a2f42;
-  --content-border: #1a2f42;
-  --theme-border: #1a2f42;
-  --theme-border-glow: #1a2f42;
-  --ws-panel-border: #1a2f42;
-  --thread-container-border-radius: 0px;
-  --chat-container-border-radius: 0px;
-  --content-container-border-radius: 0px;
+  --workspace-border-color: transparent;
+  --neutral-chrome-border: transparent;
+  --border-color: transparent;
+  --file-viewer-chrome-border: transparent;
+  --component-border: transparent;
+  --content-border: transparent;
+  --theme-border: transparent;
+  --theme-border-glow: transparent;
+  --ws-panel-border: transparent;
+  --thread-container-border-radius: 5px;
+  --chat-container-border-radius: 5px;
+  --content-container-border-radius: 5px;
 }

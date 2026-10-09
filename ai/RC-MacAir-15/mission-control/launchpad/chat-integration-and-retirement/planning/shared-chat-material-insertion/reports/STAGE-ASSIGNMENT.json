@@ -1,0 +1,125 @@
+{
+  "planning_id": "CHAT-MATERIAL-PLAN-01",
+  "revision": 1,
+  "stage": "candidate",
+  "manager": "/root/chat_material_candidate_stage",
+  "supervisor": "/root",
+  "identity_kind": "runtime child canonical task name; not persistent task UUID",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "actual_memory_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement",
+  "output_root": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion",
+  "source_checkout": "/Users/rccurtrightjr./projects/fs-dev",
+  "branch": "main",
+  "head": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "source_operations": "read only; no npm/app/runtime/Git mutation",
+  "authority": {
+    "PLANNING.md": "7ebc48f590810c89146be83aa4df5dbc869f8c9faa365c78125fe8f0d628ea33",
+    "OWNER-REQUEST.md": "71dd8441f4ee79f9c0688ec335de0a553d9dfd6f4a6b2b60a93d8f222a529c1d"
+  },
+  "writers": {
+    "author": [
+      "TICKET.md",
+      "SPEC.md",
+      "CANDIDATE.json",
+      "reports/author-source-evidence.json"
+    ],
+    "stage_manager": [
+      "reports/STAGE-REPORT.md",
+      "reports/STAGE-STATE.json",
+      "reports/STAGE-ASSIGNMENT.json",
+      "reports/STAGE-SOURCE-BASELINE.json",
+      "reports/assignments/"
+    ],
+    "investigators": [
+      "reports/STANDARDS-WIKI-INVESTIGATION.md",
+      "reports/VERIFICATION-INVESTIGATION.md"
+    ],
+    "validators": "only their distinct explicitly assigned reports"
+  },
+  "runtime": {
+    "permissions": "developer-effective danger-full-access, approval never; assignment limits writes",
+    "collaboration": "12 total slots; actual list observed supervisor and stage manager only before dispatch",
+    "profiles_available": [
+      "mc-roadmap-author",
+      "mc-planning-validator"
+    ],
+    "reviewer_independence": "fresh fork_turns none; no overrides; leaf",
+    "timers_persistent_tasks": "outside scope"
+  },
+  "exclusions": [
+    "product code",
+    "existing tests",
+    "canonical Wiki",
+    "runtime",
+    "central records",
+    "CHECKPOINT.json",
+    "Git index/refs",
+    "Alpha",
+    "implementation dispatch"
+  ],
+  "timestamp": "2026-10-07T09:31:14.411227+00:00",
+  "author_assignment": {
+    "id": "/root/chat_material_candidate_stage/candidate_author",
+    "profile": "mc-roadmap-author",
+    "skill": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-author/SKILL.md",
+    "outcome": "One cohesive TICKET.md and executable SPEC.md; full insertion entrypoint/store/source-bound test inventory; acceptance, migration, invalidation, Wiki, independent implementation gates; CANDIDATE.json on complete normative set",
+    "prerequisite": "Accepted standards/Wiki and verification/evidence synthesis before final return",
+    "original_authority": "OWNER-REQUEST.md plus parent DECISIONS D-009; PLANNING only lifecycle/ownership routing",
+    "required_reads": [
+      "applicable AGENTS.md",
+      "session-contract.md",
+      "shared planning contract",
+      "complete current User Preferences",
+      "complete Code Standards hub and all relevant routed pages",
+      "Chat Overview/Identity/Composer/screenshot articles",
+      "completed-build handoff"
+    ],
+    "source_evidence": "report source checkout root/branch/HEAD, actual dirty scope, raw files and SHA256, source-bound tests/consumers and source authority classification",
+    "return": "CANDIDATE_AUTHORED provisional for fresh worker-handoff and separate stage gates; never approval or implementation"
+  },
+  "investigation_assignments": [
+    {
+      "id": "/root/chat_material_candidate_stage/standards_wiki_investigator",
+      "kind": "Standards and Wiki",
+      "write": "reports/STANDARDS-WIKI-INVESTIGATION.md",
+      "question": "Which exact current User Preferences, routed Code Standards and Chat/screenshot Wiki claims constrain the reusable renderer material insertion owner, and which exact Wiki pages/claims need later implementation updates?",
+      "decision_affected": "layering/governance prerequisites and Wiki slice scope",
+      "required_reads": [
+        "session-contract.md",
+        "investigation-contract.md",
+        "shared planning contract",
+        "applicable AGENTS.md",
+        "PLANNING.md",
+        "OWNER-REQUEST.md",
+        "complete current User Preferences",
+        "complete Code Standards hub and all relevant routed pages",
+        "Chat Overview/Identity/Composer/screenshot articles",
+        "completed-build handoff"
+      ],
+      "boundary": "bounded source check of existing chat-action/local draft/attachment consolidation; no duplicate exhaustive inventory, product execution or mutations",
+      "return_criteria": "exact standards application, governing authority classification, source-backed facts/inferences/options, exact Wiki claims/pages, source hashes/dirty scope/limits; provisional pending handoff gate"
+    },
+    {
+      "id": "/root/chat_material_candidate_stage/verification_investigator",
+      "kind": "Verification and evidence renewal",
+      "write": "reports/VERIFICATION-INVESTIGATION.md",
+      "question": "What exact current test owners/planned checks can observe all required destination, delayed-preparation, composer-lifetime and view-isolation behavior, and which completed-build evidence is invalidated versus retainable by this scope?",
+      "decision_affected": "acceptance matrix and dependency-bound evidence renewal",
+      "required_reads": [
+        "session-contract.md",
+        "investigation-contract.md",
+        "shared planning contract",
+        "applicable AGENTS.md",
+        "PLANNING.md",
+        "OWNER-REQUEST.md",
+        "completed-build handoff and cited screenshot review/native runtime/final review records",
+        "test owners near chat-action/screenshots/SendToChat/composer/draft/attachment stores",
+        "package scripts",
+        "complete current User Preferences/Code Standards hub and relevant Testing/State/Frontend pages",
+        "Chat Overview"
+      ],
+      "boundary": "representative high-risk current tests/source dependencies; comprehensive code entrypoints remain author task; no execution",
+      "return_criteria": "exact test names/commands, necessary missing scenarios, meaningful route/native pass criteria, source-bound invalidation/retention, facts vs inference, hashes and limits; provisional pending handoff gate"
+    }
+  ]
+}

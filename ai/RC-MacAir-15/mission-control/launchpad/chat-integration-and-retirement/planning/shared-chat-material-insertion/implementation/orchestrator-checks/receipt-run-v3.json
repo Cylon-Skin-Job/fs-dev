@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-07T23:01:40.050782+00:00",
+  "scope": "Root execution adapter only; no product/fixture/oracle change",
+  "id": "ROOT-EXEC-03",
+  "classification": "accepted",
+  "original_instruction": "Record exact current code, raw commands/results, dependencies/artifacts; snapshots must identify actual scoped inputs honestly.",
+  "finding": "Schema2 git ls-files --full-name fixes output prefixes but still scopes untracked discovery to command CWD. Native/client commands include newclient files but omit seven external untracked Wiki preimages; server commands do not consume newclientfiles. Existing receipt scopes remain valid but do not claim every65 integrated path.",
+  "change": "New v3 helper queries untracked files from resolved repository root and records native evidence output environment; original helper and all raw receipts retained.",
+  "old_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/receipt-run.py",
+  "old_sha256": "1fa6b51912721ddbe48c89d1cb4d08360423723ac91431b8fea2b5aa59e51961",
+  "new_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/receipt-run-v3.py",
+  "new_sha256": "0ff584ce79a3e528c3cd8e75e8c4617975aaedbdc522e3f05f7034578cc97c87",
+  "invalidated_claim": "Root attempted blanket65 before/after check caught missing7 preimages before any acceptance packet write; no such packet dispatched. Native03 real runtime PASS remains rawvalid consumed57source+191compiledartifacts; current65 independently checked and7Wiki preimages bind EDITS.json.",
+  "verification": "Renew root current actual native with schema3 snapshot on unchangedsource; usev3 for mandatory post-accepted fresh fullsuite.",
+  "risk": "Execution receipt correction only; no source/mock/native capture/persistence weakening.",
+  "downstream_impact": "none; approval/publication/lowerproduct gates unchanged."
+}

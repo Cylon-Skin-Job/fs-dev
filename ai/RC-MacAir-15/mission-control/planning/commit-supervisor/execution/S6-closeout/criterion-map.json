@@ -1,0 +1,1493 @@
+{
+  "kind": "RAW_REQUIREMENT_TO_ARTIFACT_MAP_NO_VERDICT",
+  "original": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/SPEC.md",
+  "original_sha256": "6d7b351db87e535b0950f94c42c61d503a3ac3fef6587299dfc024c7887df664",
+  "criteria": [
+    {
+      "id": "S6-A01",
+      "criterion": "Independent existing-ref candidate/profile/machine/workspace and exact mixed-state checkpoint",
+      "raw_navigation": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/private-paths.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258812551,
+          "size": 1597,
+          "mtime_ns": 1791114222877163735,
+          "sha256": "f33bc9efad68dd3a6b2fe10847851dea3f0e1576da3a6d3bc540abb27e00c182"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/prep-freeze.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258915247,
+          "size": 448170,
+          "mtime_ns": 1791118605420509621,
+          "sha256": "ecaa405bd30b1fb5bbe1ef44a0f271971c7fe72d55a833f7abb6bae8cdc8a7b5"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery/manifest.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258929618,
+          "size": 1295485,
+          "mtime_ns": 1791120944348509214,
+          "sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/authority-readset.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258929457,
+          "size": 10810,
+          "mtime_ns": 1791120901469510708,
+          "sha256": "940b3907fe1a8a8cc2eb10ca7f47bf302d4b8a734d627b9dc3e88a9d140d5b2a"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/intent-entry-verify.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258930253,
+          "size": 844,
+          "mtime_ns": 1791121745410169907,
+          "sha256": "71bb69147a013b00e9d6d7c45233546fab5833a6937ef10bfc000e6a6eb5243f"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/prep-freeze.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258915247,
+          "size": 448170,
+          "mtime_ns": 1791118605420509621,
+          "sha256": "ecaa405bd30b1fb5bbe1ef44a0f271971c7fe72d55a833f7abb6bae8cdc8a7b5"
+        }
+      ],
+      "qualification": "Derive requirements first; these raw paths are test artifacts, not outer acceptance"
+    },
+    {
+      "id": "S6-A02",
+      "criterion": "Actual Supervisor explicit role/CWD/permission/settings acknowledgment",
+      "raw_navigation": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/activation.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258929458,
+          "size": 2672,
+          "mtime_ns": 1791120901470026875,
+          "sha256": "65977cec5e56550867c067b8f94f39b0c7b5f2c5f1a9f3723bf0326dbbd90164"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/activation-intent.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258930365,
+          "size": 3176,
+          "mtime_ns": 1791121938751169321,
+          "sha256": "bc7749098fe3c3b385c6b7ab279332d24e805e0d9f7ea4584a4a220b13ca6bed"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/activation-first-candidate.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258930795,
+          "size": 3287,
+          "mtime_ns": 1791122490274390730,
+          "sha256": "9113cc38910e553679198e1af2e862f5ae76955364aa7ce50091f0d8146724ee"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/activation-fix-xy.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258968223,
+          "size": 2988,
+          "mtime_ns": 1791131252304618075,
+          "sha256": "11c7ba50d709c8c669d4899702a5c97332445a609e37746d19659d4229623c79"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/activation.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259011045,
+          "size": 4616,
+          "mtime_ns": 1791143824385685493,
+          "sha256": "8581e15a9fcf18ecf4f1a96bd77e77aacca901d9b3679e502c99b74a5c20ff50"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/activation.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 259017264,
+          "size": 9396,
+          "mtime_ns": 1791144734550628426,
+          "sha256": "bc790f160fe692c8d57b2516a959db56da1dca4fcdcbda57bca3ccfe5abccbc7"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/activation.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259030752,
+          "size": 8854,
+          "mtime_ns": 1791146258524465102,
+          "sha256": "a82f500a8114e3e07268c5996e3c5bf512c8dda5723adbf16c0ef9a08130fb7d"
+        }
+      ],
+      "qualification": "Derive requirements first; these raw paths are test artifacts, not outer acceptance"
+    },
+    {
+      "id": "S6-A03",
+      "criterion": "Actual terminal provider hold then labeled release/replacement with landed/adoption distinction",
+      "raw_navigation": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/provider-hold.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258929969,
+          "size": 6220,
+          "mtime_ns": 1791121203097879363,
+          "sha256": "e0cb89103c22d7ab039d1a9d4535ceb5bcc99ba2a6b5d889864127f31e8c99f9"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/provider-hold-report.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258929977,
+          "size": 3958,
+          "mtime_ns": 1791121203100334400,
+          "sha256": "e4bab70c3ac55ca7b98f19c5b7129c35f4632771d1a660f520d5574ab61b4f15"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/intent-release-validation.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258930263,
+          "size": 4767,
+          "mtime_ns": 1791121748784517826,
+          "sha256": "088a6ea34923fe7b21eb14b36778e80b6ff5c506aab154a740cd316aa5254da1"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-provider-release.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258930044,
+          "size": 2285,
+          "mtime_ns": 1791121359216292525,
+          "sha256": "640826099fcb1fc2e283b81384a1faba514d98fa2072d7550ce97ee6a6c714df"
+        }
+      ],
+      "qualification": "Derive requirements first; these raw paths are test artifacts, not outer acceptance"
+    },
+    {
+      "id": "S6-A04",
+      "criterion": "Actual terminal intent hold then labeled resolution/replacement without feature dispatch",
+      "raw_navigation": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/intent-hold.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258930364,
+          "size": 22916,
+          "mtime_ns": 1791121938750861821,
+          "sha256": "b35a621d5bda1b150a9d3fd97a224116e7313fb01aa5d4e74e3273d34ea55955"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/intent-hold-report.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258930366,
+          "size": 6831,
+          "mtime_ns": 1791122021173851920,
+          "sha256": "5b866893fd9d4203188ec2be7be8f295a0764257948bc42f66f69fa291c535d3"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-release-reconciliation.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258930815,
+          "size": 3991,
+          "mtime_ns": 1791122491127537667,
+          "sha256": "a63944a0b377c128f29b9467e985c8301edc393892cb5faa0bced7dff7947011"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-intent-resolution.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258930549,
+          "size": 937,
+          "mtime_ns": 1791122201351263640,
+          "sha256": "1596480546b90d78a1f4e048d1163b1fb2f32302ae45fd36ebd5c5ef5c0cab8d"
+        }
+      ],
+      "qualification": "Derive requirements first; these raw paths are test artifacts, not outer acceptance"
+    },
+    {
+      "id": "S6-A05",
+      "criterion": "Actual fresh initial review manager/reviewer identifies material behavior and Wiki obligation",
+      "raw_navigation": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/initial-reviewer-1.raw.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258941809,
+          "size": 20348,
+          "mtime_ns": 1791123748546254820,
+          "sha256": "b6268c64c098c48f1de81a55a2c41c8480f63264d50cf8f51cb9665b19eccd6c"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/initial-manager-1.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258941926,
+          "size": 13227,
+          "mtime_ns": 1791124018037395199,
+          "sha256": "e4832545ccce59aea7512cdcd258b82eed74869f36291baaec42df9c07e8d8d0"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/initial-manager-1-lifecycle.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258933709,
+          "size": 4368,
+          "mtime_ns": 1791123969112755012,
+          "sha256": "fd322a75d4e0657ba6ab9746fd7a8976c1c67a762e1d853056229f55da860d36"
+        }
+      ],
+      "qualification": "Derive requirements first; these raw paths are test artifacts, not outer acceptance"
+    },
+    {
+      "id": "S6-A06",
+      "criterion": "Bounded installed leaf repair and separate fresh original-assignment handoff gate",
+      "raw_navigation": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/code-repair-1.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258942524,
+          "size": 19330,
+          "mtime_ns": 1791125055972757151,
+          "sha256": "0c572b166732ec81824976d0558390792ddc03ffc1e9281f1cb0d49513f5e94a"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-code-command-only.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258945062,
+          "size": 43151,
+          "mtime_ns": 1791125680404872633,
+          "sha256": "413f037a8c923fd6e9f61ab101714e9511da4b7d7342754299cf0c62c6d30add"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/code-handoff-1-error.raw.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258942675,
+          "size": 433,
+          "mtime_ns": 1791125225894140331,
+          "sha256": "4cd09a80e57b53edf0f12297f28c5540496d082bd963e02b5846ac40d349cb7c"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/code-handoff-2.raw.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258945308,
+          "size": 6409,
+          "mtime_ns": 1791125938587961073,
+          "sha256": "7672fd36e20c15011f4cad21fc7085c0c3b487611d3618aa85923f1f9681b0b4"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/code-handoff-3.raw.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258947812,
+          "size": 5553,
+          "mtime_ns": 1791126512752860740,
+          "sha256": "bbff107ed13103f59820c349cb5a8eda646c30ac728d8a491d0914653fb96baf"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-code-handoff-acceptance.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258947857,
+          "size": 1471,
+          "mtime_ns": 1791126576581087331,
+          "sha256": "c6ac15d52034a9d1cd035b51006462fd02bfc23b9bd490090c093c3a7ea414d5"
+        }
+      ],
+      "qualification": "Derive requirements first; these raw paths are test artifacts, not outer acceptance"
+    },
+    {
+      "id": "S6-A07",
+      "criterion": "Settled-code bounded Wiki leaf with full preimage/actual UTC/collision-safe exact versions/unchanged Navigation",
+      "raw_navigation": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/wiki-repair-1.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258952946,
+          "size": 9918,
+          "mtime_ns": 1791127353720364890,
+          "sha256": "22148e2c83afbae60ed7806bfff9900e7f6cdf65fe87d345d414b471e021ddcd"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/wiki-repair-1-commands.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258948998,
+          "size": 17355,
+          "mtime_ns": 1791127394875675102,
+          "sha256": "131f564f1517d251093f1cafddeb75c52a9703d24b84198da8bb37159f11059b"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-wiki-version-selection.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258947861,
+          "size": 806,
+          "mtime_ns": 1791126576583097570,
+          "sha256": "ee1db3dd9e8f2f52d775061b27e275103a9b60fe59bcde29d911488cca5748a6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-wiki-union-capture-command.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258948247,
+          "size": 908,
+          "mtime_ns": 1791126588431062171,
+          "sha256": "3ff73ae1eabf7bfee408465c59eb137d06e9eea941f63d620c70383070f9df07"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/first-wiki-1/recovery/manifest.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258948245,
+          "size": 1303248,
+          "mtime_ns": 1791126588414223552,
+          "sha256": "36c99f10ccdc4eed268e2859d2f737eac282181784ea0385572e64d3221c7e75"
+        }
+      ],
+      "qualification": "Derive requirements first; these raw paths are test artifacts, not outer acceptance"
+    },
+    {
+      "id": "S6-A08",
+      "criterion": "Separate fresh Wiki original-coverage gate",
+      "raw_navigation": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/wiki-handoff-1.raw.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258955574,
+          "size": 7101,
+          "mtime_ns": 1791128298913776122,
+          "sha256": "3008c8e63af59a1bca32c9732fcbe6e4132a4ec902b32388e980a4803e948ff1"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-wiki-handoff-acceptance.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258955576,
+          "size": 1468,
+          "mtime_ns": 1791128299132765430,
+          "sha256": "5771296a4f2b32caea31897d82f298fb07ca8abe46c581b49316e85918bb146a"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-wiki-command-only.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258953056,
+          "size": 14359,
+          "mtime_ns": 1791127516399933442,
+          "sha256": "ac4fd0fb68d666432214851b959a525594a6b705e1079f10c78062c1b13c1c2c"
+        }
+      ],
+      "qualification": "Derive requirements first; these raw paths are test artifacts, not outer acceptance"
+    },
+    {
+      "id": "S6-A09",
+      "criterion": "Fresh final review manager/reviewer all5lenses/current bytes/required checks",
+      "raw_navigation": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-final-identity.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258955577,
+          "size": 1074809,
+          "mtime_ns": 1791128299220292296,
+          "sha256": "550c9e2547744aba942995dd1a471ed06012d1bd1e05000dd9d337047ae4ec86"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/final-reviewer-1.raw.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258956115,
+          "size": 6949,
+          "mtime_ns": 1791129118202205246,
+          "sha256": "e0777f6ef80b42c58557d8b22a9b35223dbfa47dbe424d539486d03e28d71863"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/final-manager-1.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258956222,
+          "size": 7215,
+          "mtime_ns": 1791129318764596261,
+          "sha256": "730900e0ea99c160852df883d0f893478ff47d3c12a9aeb7d3d575269de3c4d1"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/final-manager-1-lifecycle.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258956221,
+          "size": 19575,
+          "mtime_ns": 1791129318764428928,
+          "sha256": "436b443e5487b08273e2a318b6a001a27e81745bdb074c621f05859ad4bc1429"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-python-current-2-bindings.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258990074,
+          "size": 25481,
+          "mtime_ns": 1791137583482373938,
+          "sha256": "832947df752412f7eb7974fb0ff0abd354f7319272f2f5963248236a282602db"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-node17-current-bindings.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258990105,
+          "size": 5680,
+          "mtime_ns": 1791137653975910145,
+          "sha256": "b03274bec394555e2bca6b8f19887646708404f585c24483ba40590cd12cf417"
+        }
+      ],
+      "qualification": "Derive requirements first; these raw paths are test artifacts, not outer acceptance"
+    },
+    {
+      "id": "S6-A10",
+      "criterion": "Real canonical rebuild/candidate executable/server/profile/machine/sustained initialized connection",
+      "raw_navigation": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-canonical-runtime-command.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258962631,
+          "size": 21347,
+          "mtime_ns": 1791129800123844091,
+          "sha256": "711a50b83e7c2e9ae559432ffa87b51106cbe38eb4e98a97ab559925b33a08ef"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-runtime-raw-files.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258963798,
+          "size": 3310,
+          "mtime_ns": 1791130182600004080,
+          "sha256": "7f2a278a08172ddf7ffc233032168ffbe86341d5836a8ed2424647ec33454f3e"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-current-runtime-identity.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258962890,
+          "size": 24196,
+          "mtime_ns": 1791130071475770380,
+          "sha256": "4e7a180b9b36b8776dd694d93bb90c177e91d96ed646792caddc2bfd515a52d3"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-canonical-runtime-command.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259002650,
+          "size": 21132,
+          "mtime_ns": 1791141919176928766,
+          "sha256": "dc6f916c0f0a24b76d1575f512759e3429d57236c4e9696aa94cf9d2dc5f0668"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-current-runtime-identity.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259002776,
+          "size": 24214,
+          "mtime_ns": 1791142013770487432,
+          "sha256": "cf9974445ac36f0587b71c89d93b60f82300afed9636d6423f68cd491795d099"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-runtime-raw-files.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 259002835,
+          "size": 3623,
+          "mtime_ns": 1791142079142417388,
+          "sha256": "a2f9d94a918fffc6a9b467312313dba51cc7993931b38f4679e05aed38d6d598"
+        }
+      ],
+      "qualification": "Derive requirements first; these raw paths are test artifacts, not outer acceptance"
+    },
+    {
+      "id": "S6-A11",
+      "criterion": "Real fixed UI/Wiki/navigation/reload and preinitializer full-restart reset readback",
+      "raw_navigation": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-restart-checked-precondition.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258933607,
+          "size": 940,
+          "mtime_ns": 1791122734504805268,
+          "sha256": "418c125730a2cb63da54daea2087b53076b143d2d7c5138ee3c47055e938ed09"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-preinitializer-reset.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258962648,
+          "size": 752,
+          "mtime_ns": 1791129811407326900,
+          "sha256": "3d20e937d82e9450429b456b8cd6a623bebea85224e8f994cf56f43c6d860ad5"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-preinitializer-reset.json.png",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258962647,
+          "size": 83487,
+          "mtime_ns": 1791129811407133567,
+          "sha256": "0783015b10fc6961322738856f5c78d1a44fcba35e3334c6e9b45d5f3fe09b7b"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-ui-acceptance.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258962701,
+          "size": 4092,
+          "mtime_ns": 1791129840876300559,
+          "sha256": "f2f77b67fc7817086ece5c3cbba326a9333edf6d61c0d7c955a929a43b309c8e"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-ui-acceptance.json.png",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258962696,
+          "size": 215540,
+          "mtime_ns": 1791129838621088629,
+          "sha256": "be276bd9f5166370ad29d29b56394a8f05e302438a1a80462fcea511f358ab0d"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-pre-restart-checked.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258996352,
+          "size": 837,
+          "mtime_ns": 1791141611780770687,
+          "sha256": "f63643604a8540e4078408a1519030ff2f9f8ee6394a3a9c722626848907fbce"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-preinitializer-reset.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259002681,
+          "size": 753,
+          "mtime_ns": 1791141956090296946,
+          "sha256": "14168e09b2b9c27f01079a03c27335587bdb78b8cc88a6dd10392d59ae4605cf"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-ui-acceptance.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259002736,
+          "size": 5508,
+          "mtime_ns": 1791141976453306150,
+          "sha256": "aabbff3ddae3021cd1ae8b283b427a6c4ce51cbf30583b7287f8f4abb2cd4250"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-ui-acceptance.json.png",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259002730,
+          "size": 212900,
+          "mtime_ns": 1791141974196064099,
+          "sha256": "994465447b7a5a1f36b679468e20c7abf670bb0d803c1bad9daed597a060b247"
+        }
+      ],
+      "qualification": "Derive requirements first; these raw paths are test artifacts, not outer acceptance"
+    },
+    {
+      "id": "S6-A12",
+      "criterion": "Actual ordinary persisted watcher; disconnected/wrong-profile failures withhold readiness",
+      "raw_navigation": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-watcher.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258962776,
+          "size": 1321,
+          "mtime_ns": 1791129889912174239,
+          "sha256": "0ff50628e0b0499a3e12c3837d08d64306e88bba638421192b45580551314953"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-watcher-command.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258962777,
+          "size": 610,
+          "mtime_ns": 1791129889920274021,
+          "sha256": "ee1a3522b3c9a0b11112cd764fd4bca552ab304c9d53b3e00eb40e2398414d90"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-watcher.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259002752,
+          "size": 1321,
+          "mtime_ns": 1791141999070553927,
+          "sha256": "3159a4401269379762a70bc8ac928e07b058a3b4d191fe5b87fc726342685014"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-watcher-command.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259002753,
+          "size": 545,
+          "mtime_ns": 1791141999080611806,
+          "sha256": "9dc246ffd7d9b15d02d8f6f10c9aae51a4c7ff599e814de48f5175ab81d3ccf9"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-node-suite-command.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258935349,
+          "size": 3280,
+          "mtime_ns": 1791123209376396166,
+          "sha256": "6de2700a795aeb0632dff31348552fd0749a5b0e833765e37a56d0d575de2040"
+        }
+      ],
+      "qualification": "Derive requirements first; these raw paths are test artifacts, not outer acceptance"
+    },
+    {
+      "id": "S6-A13",
+      "criterion": "Actual first COMMIT_READY_WAITING_OWNER packet and intentional terminal turn",
+      "raw_navigation": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/owner-packet-first.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258963943,
+          "size": 14938,
+          "mtime_ns": 1791130505478023629,
+          "sha256": "be1b988ced2b88b6e309e03f2831e2c8938034a1c79aeb3c8d0a75f50eb5fde9"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/first-candidate-report.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258964049,
+          "size": 2711,
+          "mtime_ns": 1791130735932592856,
+          "sha256": "6ce02c98ecc3b76cc034cf06eb1a511a472d270419f7adaf0ea6d868bd887aec"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-owner-evidence-index-final.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258964113,
+          "size": 8148,
+          "mtime_ns": 1791130735932985482,
+          "sha256": "433720a4b5adb0afc655f8005cb3e72dc849835879fd062614ed98c227d518ef"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/lifecycle-first-candidate.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258933475,
+          "size": 6350,
+          "mtime_ns": 1791130675111072622,
+          "sha256": "2dc2e20ff44e76bafc6027b8be1e3c95a46b6397972318f40d6bafa7b9996d44"
+        }
+      ],
+      "qualification": "Derive requirements first; these raw paths are test artifacts, not outer acceptance"
+    },
+    {
+      "id": "S6-A14",
+      "criterion": "Labeled fix-X/Y successor preserves valid unaffected evidence; fresh affected gates/rebuild/runtime/new terminal wait",
+      "raw_navigation": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-original-authority.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258968257,
+          "size": 4939,
+          "mtime_ns": 1791131329983872081,
+          "sha256": "08ad946d809fbf32270c03fcf91f98d69e1ee40d57bd70a91fcba43c27427c38"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258968988,
+          "size": 11077,
+          "mtime_ns": 1791132103322578310,
+          "sha256": "999ac8d3cbd95a4c210d7ca37a29e12c83ddbffe1997df22235ec0df33ac583c"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-code-command-only.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258968842,
+          "size": 47001,
+          "mtime_ns": 1791131852436994345,
+          "sha256": "d91d3ff8c0058134b4622013923a30b902ee6207f6caab35c3a46ee83ce91179"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-code-handoff-1.raw.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258969642,
+          "size": 5154,
+          "mtime_ns": 1791132941609245062,
+          "sha256": "9d641d2b0be7ba3c78a2130980b1bef622d551631733773fb1c4b71c433e6044"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-wiki-1.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258971332,
+          "size": 22745,
+          "mtime_ns": 1791133836618573672,
+          "sha256": "95c5ff57002a816f84f51dc28f1f19773eff1eeab970879c62d95aef4d165968"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-wiki-command-only.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258971353,
+          "size": 8787,
+          "mtime_ns": 1791133891985115064,
+          "sha256": "3b3975a2d8b090c70abd0b23eb94d2fe21198b78a08d72a28ab9fc4c00b27573"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-wiki-handoff-1.raw.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258975556,
+          "size": 6946,
+          "mtime_ns": 1791134656445813925,
+          "sha256": "28fafe4ccbb870003e26a551b25d12e1b5f5ed6677f27a56745dced8f2d09d34"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-manager-1.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258979810,
+          "size": 61088,
+          "mtime_ns": 1791136791698773888,
+          "sha256": "1f6e0b388849baa43851f3a0531df49492d4374fd0bffd5be3949ed3f8d8200a"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-manager-2.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258994907,
+          "size": 41324,
+          "mtime_ns": 1791139385323490568,
+          "sha256": "773fa1f00ace4de9cdb0035166785b6225f0b12a4c004266b0eaa544fbed4e4d"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-manager-3.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258996257,
+          "size": 44835,
+          "mtime_ns": 1791141480376152667,
+          "sha256": "051d948ed72f3fd5aa3c558cc3dab44c6cdbbb5a83577f16648e08115f442d0c"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-reviewer-3.raw.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258996031,
+          "size": 11377,
+          "mtime_ns": 1791140905054114385,
+          "sha256": "8d5b30ee5336864717ade91eba5b50170161fe0b7dc9a7b7ed2a59a51cdec92e"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-manager-3-lifecycle.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258996258,
+          "size": 8980,
+          "mtime_ns": 1791141480376460253,
+          "sha256": "0194ed9ffb44e36124f02d4947479b2b6d0fc6e51f5eae9c6082509d8627af13"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-python-current-2-bindings.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258990074,
+          "size": 25481,
+          "mtime_ns": 1791137583482373938,
+          "sha256": "832947df752412f7eb7974fb0ff0abd354f7319272f2f5963248236a282602db"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-node17-current-bindings.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 258990105,
+          "size": 5680,
+          "mtime_ns": 1791137653975910145,
+          "sha256": "b03274bec394555e2bca6b8f19887646708404f585c24483ba40590cd12cf417"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-runtime-acceptance.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 259002897,
+          "size": 10995,
+          "mtime_ns": 1791142178563371934,
+          "sha256": "206a7a9258d91b865d297f6df5889e9f2346be4001bdc175ee98b60b744bd795"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/owner-packet-fix-xy.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 259009727,
+          "size": 26559,
+          "mtime_ns": 1791142757350760614,
+          "sha256": "4262b884dccc10a10b53a43e1a96e00167a5557b85f88802c324414410c29870"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/supervisor-fix-xy-report.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 259009728,
+          "size": 3834,
+          "mtime_ns": 1791142757351158111,
+          "sha256": "4d43f904f54c4d7d255d832a6c977572b2eb9abd870095d7428cec1491496355"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/lifecycle-fix-xy.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259009730,
+          "size": 10167,
+          "mtime_ns": 1791142757352000729,
+          "sha256": "b7de4f8bc500f3f2d0f10048226efae521771c083c685d4f7671a50a22fbdf85"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-fix-xy-event.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 258968056,
+          "size": 2591,
+          "mtime_ns": 1791130992485532931,
+          "sha256": "a45a33baf89912cac89b46f05b4f18f5e30486932368f56d61d850e4fb156ec3"
+        }
+      ],
+      "qualification": "Derive requirements first; these raw paths are test artifacts, not outer acceptance"
+    },
+    {
+      "id": "S6-A15",
+      "criterion": "Actual source/target/candidate/operation drift and mismatched authority refusals with zero operations",
+      "raw_navigation": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/report.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259011051,
+          "size": 5976,
+          "mtime_ns": 1791143824387425160,
+          "sha256": "44cf39fabae4d4df532e287e1391c126638d0f716715bc47b343607b130f5912"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/inspection.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259010564,
+          "size": 35160,
+          "mtime_ns": 1791143524845424440,
+          "sha256": "23e7ef792cd6ab82877104eff7c1be163ab0648d3ecd5ae762673862b8570e5e"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/zero-observer-mutation-proof.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259011043,
+          "size": 3375,
+          "mtime_ns": 1791143824380187162,
+          "sha256": "3a9a38d101db1067992ca62238745cd5350c1abf0c51a80be220c5837a7b0b7b"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/protection-comparison.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259010914,
+          "size": 4933,
+          "mtime_ns": 1791143588839317707,
+          "sha256": "0f48c5489fb7ab2120dd971bf296cdae6c9281fd02dec403d651243f73f856f9"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-negative-controls/restored.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259016978,
+          "size": 1937336,
+          "mtime_ns": 1791144021956662350,
+          "sha256": "d166de7d1157bbe10d527ccb555aceffe5272b34a48967a2bcbbe3d36bbe7149"
+        }
+      ],
+      "qualification": "Derive requirements first; these raw paths are test artifacts, not outer acceptance"
+    },
+    {
+      "id": "S6-A16",
+      "criterion": "Actual interrupted mixed-state restore/collision nonmutation/supplement reverse restore/original verification",
+      "raw_navigation": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/checkpoint.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 259023767,
+          "size": 81987,
+          "mtime_ns": 1791145378735301966,
+          "sha256": "144bb5ef8f195a403cd596bc593f543c7b11a0f7b7c0a216305d49936e972008"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/report.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 259023769,
+          "size": 5916,
+          "mtime_ns": 1791145378736559218,
+          "sha256": "8aea6333b93c6eaeb670b79836807a14a7e766dbd67db8c85406f47dc36678e5"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/fixed-checkpoint/recovery/manifest.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 259018772,
+          "size": 1332748,
+          "mtime_ns": 1791144999608994823,
+          "sha256": "a885cde0f24e25d9cea6437edad6b9258f365d3a2db08bcb426d690195e4291a"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/checkpoint.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259034974,
+          "size": 24544,
+          "mtime_ns": 1791147076068291726,
+          "sha256": "dcd7f1f5366508369ea10ef72008302034bf5f232c85483fd627a87d19d72a95"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/report.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259034975,
+          "size": 8553,
+          "mtime_ns": 1791147076068382475,
+          "sha256": "c2edb588786d7bc6ab9e567b6bec35751bc7f6b42696c7fe34e45dac6837b045"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/criterion-map.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259034973,
+          "size": 9375,
+          "mtime_ns": 1791147076067914892,
+          "sha256": "d55304ee8a99be68df5b81313525075aa7a5bd5fc5f793ca2c6fcd46f3199500"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/all-raw-command-receipts.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259034969,
+          "size": 223813,
+          "mtime_ns": 1791147076062978303,
+          "sha256": "c63ec0cce0eb5ea387a7d8bcee6402ec3969caac4c65822b59d79b06834c625c"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/actual-restore-order.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259034178,
+          "size": 7345,
+          "mtime_ns": 1791146547143914554,
+          "sha256": "be79073d2b2f077c5a920f658a1f732f3efe7c6bac60a61ae7c82ba3adc9f2b0"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/original-full-exact-readback.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259033911,
+          "size": 2015103,
+          "mtime_ns": 1791146543443725026,
+          "sha256": "bc86805675fd1f5494ce1ffee1266e489726594ae0438c2a84f1afedfd383b57"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/final-preservation-proof.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259034729,
+          "size": 117689,
+          "mtime_ns": 1791146693382320595,
+          "sha256": "6e1ee94dd4d3ca53f783aa1791ccd6ee814b5ce858c1f3ccc370c52269f3cd30"
+        }
+      ],
+      "qualification": "Derive requirements first; these raw paths are test artifacts, not outer acceptance"
+    },
+    {
+      "id": "S6-A17",
+      "criterion": "Owned stopped preview/protected source/shared index/refs/unrelated/process/profile/cache preservation",
+      "raw_navigation": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/final-preservation-proof.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33060,
+          "dev": 16777230,
+          "ino": 259019856,
+          "size": 25768,
+          "mtime_ns": 1791145237027757139,
+          "sha256": "1950b6731a0ae137ad9d084b7082349031c7a55b7c807ead5e77d2d98ba8f39f"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/final-preservation-proof.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259034729,
+          "size": 117689,
+          "mtime_ns": 1791146693382320595,
+          "sha256": "6e1ee94dd4d3ca53f783aa1791ccd6ee814b5ce858c1f3ccc370c52269f3cd30"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/after-original.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259034107,
+          "size": 8061134,
+          "mtime_ns": 1791146545972611885,
+          "sha256": "257bc95213bf99c18455e4cb3123400014fe23f0437dd9e345e79537194818ba"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/lifecycle.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259034970,
+          "size": 2626,
+          "mtime_ns": 1791147076065209431,
+          "sha256": "daded22d262ab11f2722288946a9ed29be4c24b10c7af02a598d8915c2f6fef0"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/before.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259038355,
+          "size": 10622590,
+          "mtime_ns": 1791148478270238157,
+          "sha256": "5ad1507af4dc146559c21aacf7e8b56ba9e7ce1dac1a753aaa39addddffc3e63"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/ownership-and-preimages.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259038491,
+          "size": 6309,
+          "mtime_ns": 1791148498172186471,
+          "sha256": "aa9481ed9349f9a55e27387632afc8b2257c587b67dd5302d0320259d854f715"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/write-receipt.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259038573,
+          "size": 5395,
+          "mtime_ns": 1791148600085330231,
+          "sha256": "215435ca5ea60819cd89399d41abf0819a5acbc3cdf2762bc54aaa42c8a85b51"
+        }
+      ],
+      "qualification": "Derive requirements first; these raw paths are test artifacts, not outer acceptance"
+    },
+    {
+      "id": "S6-A18",
+      "criterion": "Factual current MC-T09/deployment/canonical restart Wiki closeout after actual proof with affected gates",
+      "raw_navigation": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/ownership-and-preimages.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259038491,
+          "size": 6309,
+          "mtime_ns": 1791148498172186471,
+          "sha256": "aa9481ed9349f9a55e27387632afc8b2257c587b67dd5302d0320259d854f715"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/write-receipt.json",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 259038573,
+          "size": 5395,
+          "mtime_ns": 1791148600085330231,
+          "sha256": "215435ca5ea60819cd89399d41abf0819a5acbc3cdf2762bc54aaa42c8a85b51"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 253884811,
+          "size": 11579,
+          "mtime_ns": 1791148600082943118,
+          "sha256": "47281d8c8a8fd5749756d7922eef7b68a85b44ae1e15e20a3ebe00d9397c77b1"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 253884813,
+          "size": 23978,
+          "mtime_ns": 1791148600083506574,
+          "sha256": "5f2a3d9bf2c096aec26cf642da340668162b8a12e306e4fdcb4b89460c1518c7"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 253884814,
+          "size": 13887,
+          "mtime_ns": 1791148600083246033,
+          "sha256": "43f16c75c7ad1420d711a05951feae57629596533c5814ec26c7b4011a1d27eb"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 253884817,
+          "size": 37098,
+          "mtime_ns": 1791148600083719239,
+          "sha256": "70335328515a4f8fe855c88b9aeae17961aeacd68ee484bf92fae258ea62b75e"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 254286643,
+          "size": 24236,
+          "mtime_ns": 1791148600084076862,
+          "sha256": "b71d0df42920ed7c51fe4d14298deea51bc06c243c652fc19e511641de116760"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 254233150,
+          "size": 19111,
+          "mtime_ns": 1791148600084283736,
+          "sha256": "40019e59bd5d7f479f15ebba6953129555d729a9c60b731e3dbe86e2fbb0446e"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md",
+          "exists": true,
+          "kind": "file",
+          "mode": 33188,
+          "dev": 16777230,
+          "ino": 65627116,
+          "size": 3428,
+          "mtime_ns": 1791148600081893915,
+          "sha256": "ccf7a76b4201ce3f5a95b29816f72f85cf1506b6f94172a581c100170dd4b94e"
+        }
+      ],
+      "qualification": "Derive requirements first; these raw paths are test artifacts, not outer acceptance"
+    },
+    {
+      "id": "S6-A19",
+      "criterion": "Fresh root full-S6 acceptance and fresh whole-SPEC integration",
+      "raw_navigation": [],
+      "qualification": "Separate root full-S6 and whole-SPEC gates pending; outside this builder-owned gate"
+    }
+  ],
+  "original15_mapping": {
+    "S6-A1": [
+      "S6-A01",
+      "S6-A02"
+    ],
+    "S6-A2": [
+      "S6-A01",
+      "S6-A16"
+    ],
+    "S6-A3": [
+      "S6-A03"
+    ],
+    "S6-A4": [
+      "S6-A04"
+    ],
+    "S6-A5": [
+      "S6-A05"
+    ],
+    "S6-A6": [
+      "S6-A06"
+    ],
+    "S6-A7": [
+      "S6-A07",
+      "S6-A08"
+    ],
+    "S6-A8": [
+      "S6-A09"
+    ],
+    "S6-A9": [
+      "S6-A10",
+      "S6-A11",
+      "S6-A12"
+    ],
+    "S6-A10": [
+      "S6-A12",
+      "S6-A17"
+    ],
+    "S6-A11": [
+      "S6-A13"
+    ],
+    "S6-A12": [
+      "S6-A14"
+    ],
+    "S6-A13": [
+      "S6-A15"
+    ],
+    "S6-A14": [
+      "S6-A16",
+      "S6-A17"
+    ],
+    "S6-A15": [
+      "S6-A18",
+      "S6-A19"
+    ]
+  },
+  "current_state_qualification": "Historical fixed app/gates/two owner waits remain historical. Current private preview stopped, original seeded code restored. Original authority-preservation claims predate explicitly owned six central/article edits."
+}

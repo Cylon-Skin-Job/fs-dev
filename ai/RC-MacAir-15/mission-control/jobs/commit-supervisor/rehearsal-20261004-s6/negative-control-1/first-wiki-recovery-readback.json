@@ -1,0 +1,25 @@
+{
+  "at": "2026-10-04T19:52:35.129258+00:00",
+  "job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/first-wiki-1",
+  "manifest_sha256": "36c99f10ccdc4eed268e2859d2f737eac282181784ea0385572e64d3221c7e75",
+  "payloads_valid": true,
+  "owned_count": 129,
+  "payload_count": 117,
+  "both_current_versions": {
+    "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-080936.md": {
+      "sha256": "e2877b2a21a23cce18a7b079d1532a8c7a5a8f30467e369248d75e9750ce527c",
+      "mode": "0o100644",
+      "size": 596
+    },
+    "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-095624.md": {
+      "sha256": "a3d372eba6208c2fbee71cd046f305a91fc7c44185c5dae42b5da50e5cbcfdce",
+      "mode": "0o100644",
+      "size": 1620
+    }
+  },
+  "prior_wrong_guesses": [
+    "recovery-supplements/wiki-1",
+    "recovery-supplements/wiki-union-1"
+  ],
+  "effect": "Read-only lookup correction; immutable originals preserved."
+}

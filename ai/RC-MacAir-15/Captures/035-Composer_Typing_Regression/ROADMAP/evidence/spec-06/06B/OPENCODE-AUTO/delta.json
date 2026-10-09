@@ -1,0 +1,12 @@
+[
+  {
+    "after": "344c6a8ed07e05124bfdaf3d4e7974456147e883a0602b09b2c081733d0eda70",
+    "before": "03c75fe26bb0a9c7682e917563758ddcf12cc781690fd8bcf5e2bbc399a6ffcb",
+    "path": "fusion-studio-server/lib/harness/opencode/index.js"
+  },
+  {
+    "after": "eecdbb378d3e1b380e4240d811f04a99239a0d4d8ab47c215c915eac9da7aa06",
+    "before": "09c961e189311c92fbfc3c4d8dbbd7c7ca1398b98524ab813f3dda5ccdb8bf26",
+    "path": "fusion-studio-server/test/harness/opencode/harness-send-message.test.js"
+  }
+]

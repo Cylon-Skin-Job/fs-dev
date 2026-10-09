@@ -1,0 +1,50 @@
+{
+  "fusion-studio-client/e2e/support/working-activity-working-cases.ts": {
+    "before": "65a466df07650b6150c28602119648ad35046313bd7ab9548194203b786c2861",
+    "after": "4fe2709f8eab2c2d5dbf7206f09c20a1f09173afa95db13bef02da347aa36922"
+  },
+  "fusion-studio-client/e2e/visible-wait.spec.ts": {
+    "before": null,
+    "after": "9675c7929ca3fa165ee80373715113410259acedc73d375aa7091110a0dc0e5f"
+  },
+  "fusion-studio-client/src/components/LiveSegmentRenderer.tsx": {
+    "before": "f237473f6e6e0d3fb12fdc05bd70a2d9ff968a8d779276a0424b6f11ce9b22a4",
+    "after": "5a07f999a2c2060740cf16a6cc36ecc9c2f7e414e5a7db64b9d3f05f7e285de2"
+  },
+  "fusion-studio-client/src/components/MessageList.tsx": {
+    "before": "49a448781a8aed83328b5b22c65f69dbb7b6fa53f4993dd5b8a3afa713ade528",
+    "after": "0d213e420c0b3fa7cf89d455e9df03914e5258928c6fcb6869c23eaf84865b3c"
+  },
+  "fusion-studio-client/src/components/chat/ConnectedChatHistory.tsx": {
+    "before": "cf4f9868bacb57c83e31191c0633ad6c23a605f588b415c078e85ba6655c2f81",
+    "after": "23c35fc2a645ec4cebb6f9ba03cd6b8536e669ff9d1d82e90b0bd11f973e3208"
+  },
+  "fusion-studio-client/src/components/chat/VisibleWaitActivity.tsx": {
+    "before": null,
+    "after": "591104ce59a89d9aa0f641d4c64732a2daa79d04beb4f534f43f87992a192036"
+  },
+  "fusion-studio-client/src/components/chat/WorkingActivity.tsx": {
+    "before": "f44f1ae1264d1dccd8ce2247c33d3f99f2730d5a739657d722df577103132c76",
+    "after": "6e840a1d88d4be1e3af3ab02f71dcbdea40ea35878da877f6d565774f18034f0"
+  },
+  "fusion-studio-client/src/lib/reveal/orchestrator.ts": {
+    "before": "3fab885820b7494348871ec07b274b69c934b46e1e0c9de0cae6b9d169cc06b2",
+    "after": "b40f3eb85984d2f769b1612b51ee73574a4bf9ea63b83d669f8d4ce12f658c09"
+  },
+  "fusion-studio-client/src/lib/reveal/progress.ts": {
+    "before": null,
+    "after": "84d272a3b7a36da8e77936e3f22947ab7fad98672678f8646e471d5b619f6e96"
+  },
+  "fusion-studio-client/src/lib/reveal/types.ts": {
+    "before": "c262ac7f0579ad0f133ad97672a9d8ac0e0ed96460802796f50daeabefeb1cd3",
+    "after": "968bcb140d4dda3b760ec34796d6d777fef5c9f2e6c23df08da5335745ae06e3"
+  },
+  "fusion-studio-client/src/lib/text/text-animate.ts": {
+    "before": "776fb4bb9bc9ad23e01983574105c0e841e7af8ce7e7150a8f0b37b62977490e",
+    "after": "1ea2708e59e0b852069137877632531e71d58c7b836843ff9b904a8de478253f"
+  },
+  "fusion-studio-client/src/lib/tool-animate.ts": {
+    "before": "3274b182efb5fa5dcb71073b902c6ce7115cb69b13a77a595be79ff2bed02ffa",
+    "after": "8351e3282958e47f25875867141dccde57ae5e210bb00fb39f55a56b58a8692b"
+  }
+}

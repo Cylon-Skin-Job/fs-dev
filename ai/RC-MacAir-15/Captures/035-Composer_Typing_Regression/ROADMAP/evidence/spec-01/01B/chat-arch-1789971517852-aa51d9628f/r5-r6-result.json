@@ -1,0 +1,253 @@
+{
+  "status": "passed",
+  "characterization": true,
+  "startupPanelRetry": 1,
+  "authenticatedShell": true,
+  "publicRouteResults": [
+    {
+      "id": "R5-NO-TARGET-CONSUMER",
+      "toast": "Link attached to chat",
+      "successToastClaimed": true,
+      "attachmentPills": 0,
+      "draftLength": 0,
+      "outgoingDelta": {
+        "shell-auth:proof": 0,
+        "office:palette_get": 0,
+        "state:get": 0,
+        "thread:list": 0,
+        "screenshot:list": 0,
+        "file_content_request": 0,
+        "set_panel": 0,
+        "screenshot:request": 0,
+        "file_tree_request": 0,
+        "state:set": 0,
+        "workspace:state_push": 0,
+        "screenshot:capture": 0
+      }
+    },
+    {
+      "id": "R5-FILE-ACTION",
+      "toast": "Link attached to chat",
+      "successToastClaimed": true,
+      "attachmentPills": 0,
+      "draftLength": 0,
+      "outgoingDelta": {
+        "shell-auth:proof": 0,
+        "office:palette_get": 0,
+        "state:get": 0,
+        "thread:list": 0,
+        "screenshot:list": 0,
+        "file_content_request": 0,
+        "set_panel": 0,
+        "screenshot:request": 0,
+        "file_tree_request": 0,
+        "state:set": 0,
+        "workspace:state_push": 0,
+        "screenshot:capture": 0,
+        "thread:open-assistant": 0,
+        "thread:open": 0,
+        "state:worksurface_get": 0
+      }
+    },
+    {
+      "id": "R5-TEXT-INSERT",
+      "exactDraftMutation": false,
+      "elapsedMs": 315,
+      "expectedDraftLength": 40,
+      "observedDraftLength": 0,
+      "expectedDraftSha256": "c8a5dbcb807bbcf7a439f27c9c0fab097604e29906cf855e9b7f62dca6d29c4d",
+      "observedDraftSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "visibleFailure": false,
+      "contentRecorded": false
+    },
+    {
+      "id": "R5-WIKI-ACTION",
+      "toast": "Link attached to chat",
+      "successToastClaimed": true,
+      "attachmentPills": 0,
+      "draftLength": 0,
+      "outgoingDelta": {
+        "shell-auth:proof": 0,
+        "office:palette_get": 0,
+        "state:get": 0,
+        "thread:list": 0,
+        "screenshot:list": 0,
+        "file_content_request": 0,
+        "set_panel": 0,
+        "screenshot:request": 0,
+        "file_tree_request": 0,
+        "state:set": 0,
+        "workspace:state_push": 0,
+        "screenshot:capture": 0,
+        "thread:open-assistant": 0,
+        "thread:open": 0,
+        "state:worksurface_get": 0,
+        "thread:warm": 0,
+        "state:worksurface_put": 0
+      }
+    },
+    {
+      "id": "R5-OFFICE-ACTION",
+      "toast": "Link attached to chat",
+      "successToastClaimed": true,
+      "attachmentPills": 0,
+      "draftLength": 0,
+      "outgoingDelta": {
+        "shell-auth:proof": 0,
+        "office:palette_get": 0,
+        "state:get": 0,
+        "thread:list": 0,
+        "screenshot:list": 0,
+        "file_content_request": 0,
+        "set_panel": 0,
+        "screenshot:request": 0,
+        "file_tree_request": 0,
+        "state:set": 0,
+        "workspace:state_push": 0,
+        "screenshot:capture": 0,
+        "thread:open-assistant": 0,
+        "thread:open": 0,
+        "state:worksurface_get": 0,
+        "thread:warm": 0,
+        "state:worksurface_put": 0
+      }
+    },
+    {
+      "id": "R5-SOURCE-SWITCH",
+      "toast": "",
+      "successToastClaimed": false,
+      "attachmentPills": 0,
+      "draftLength": 0,
+      "outgoingDelta": {
+        "shell-auth:proof": 0,
+        "office:palette_get": 0,
+        "state:get": 0,
+        "thread:list": 0,
+        "screenshot:list": 0,
+        "file_content_request": 0,
+        "set_panel": 2,
+        "screenshot:request": 0,
+        "file_tree_request": 0,
+        "state:set": 0,
+        "workspace:state_push": 2,
+        "screenshot:capture": 0,
+        "thread:open-assistant": 0,
+        "thread:open": 0,
+        "state:worksurface_get": 0,
+        "thread:warm": 0,
+        "state:worksurface_put": 2
+      }
+    },
+    {
+      "id": "R5-SYSTEM-PROMPT-NEW",
+      "entryPointAvailable": true,
+      "wrongWorkspaceTarget": true,
+      "visibleFailure": false,
+      "overlayStillOpen": true,
+      "outgoingDelta": {
+        "shell-auth:proof": 0,
+        "office:palette_get": 0,
+        "state:get": 0,
+        "thread:list": 0,
+        "screenshot:list": 0,
+        "file_content_request": 0,
+        "set_panel": 0,
+        "screenshot:request": 0,
+        "file_tree_request": 0,
+        "state:set": 0,
+        "workspace:state_push": 0,
+        "screenshot:capture": 0,
+        "thread:open-assistant": 0,
+        "thread:open": 0,
+        "state:worksurface_get": 0,
+        "thread:warm": 0,
+        "state:worksurface_put": 3,
+        "workspace:switch_requested": 1
+      }
+    }
+  ],
+  "fixtures": {
+    "f3": {
+      "id": "F3-DETERMINISTIC-WORKSPACE-V1",
+      "counts": {
+        "smallFiles": 1000,
+        "captureFolders": 100,
+        "wikiPages": 100,
+        "officeDocuments": 20
+      },
+      "totalContentBytes": 11059200,
+      "manifestHash": "421c0ef8f5e255bb333a82a9f26d28c74eb2c8d55e95fc262ad241ed45740079"
+    }
+  },
+  "r5Classification": "confirmed-current-product-violation",
+  "reproducedDefects": [
+    "R5-NO-TARGET-CONSUMER: success toast without target attachment/result",
+    "R5-FILE-ACTION: success toast without target attachment/result",
+    "R5-WIKI-ACTION: success toast without target attachment/result",
+    "R5-OFFICE-ACTION: success toast without target attachment/result",
+    "R5-TEXT-INSERT: production fusion:chat-insert has no active consumer/draft mutation",
+    "R5-TEXT-INSERT: missing consumer has no visible failure",
+    "R5-SYSTEM-PROMPT-NEW: unavailable system target has no visible failure"
+  ],
+  "r6ProductionBoundary": {
+    "id": "R6-PRODUCTION-LISTENER-OWNERSHIP",
+    "listeners": {
+      "sentTypes": {
+        "shell-auth:proof": 1,
+        "office:palette_get": 1,
+        "state:get": 2,
+        "thread:list": 12,
+        "screenshot:list": 1,
+        "file_content_request": 185,
+        "set_panel": 7,
+        "screenshot:request": 2,
+        "file_tree_request": 270,
+        "state:set": 7,
+        "workspace:state_push": 6,
+        "screenshot:capture": 1,
+        "thread:open-assistant": 3,
+        "thread:open": 3,
+        "state:worksurface_get": 3,
+        "thread:warm": 1,
+        "state:worksurface_put": 9,
+        "workspace:switch_requested": 1
+      },
+      "receivedTypes": {
+        "shell-auth:challenge": 1,
+        "connected": 1,
+        "workspace:init": 1,
+        "panel_config": 1,
+        "shell-auth:authenticated": 1,
+        "office:palette_state": 1,
+        "thread:list": 21,
+        "screenshot:list": 1,
+        "panel_changed": 7,
+        "file_content_response": 185,
+        "file_tree_response": 270,
+        "screenshot:data": 2,
+        "state:result": 9,
+        "error": 1,
+        "screenshot:updated": 1,
+        "thread:created": 3,
+        "thread:opened": 6,
+        "wire_ready": 3,
+        "state:worksurface_result": 12,
+        "wire_disconnected": 2
+      },
+      "fusionActionAdds": 0,
+      "fusionActionRemoves": 0,
+      "socketMessageAdds": 67,
+      "socketMessageRemoves": 63,
+      "listenerBalance": 4
+    },
+    "classification": "production-view-bound-host-has-no-action-consumer; async lifetime branch unreachable",
+    "laterOwner": "SPEC-03/03B"
+  },
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": null
+}

@@ -1,0 +1,8 @@
+      "IOConsoleLocked" = Yes
+Recorded UTC 2026-09-25T02:06:47.240750+00:00
+Command: ioreg -n Root -d 1 | rg IOConsoleLocked
+No unlock or owner-window action attempted.
+
+Recheck UTC 2026-09-25T02:19:04.655666+00:00
+      "IOConsoleLocked" = No
+No agent unlock action. Full strict V-ALL will be retried after current run ends.

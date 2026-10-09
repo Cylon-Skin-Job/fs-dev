@@ -1,0 +1,564 @@
+{
+  "at": "2026-10-04T14:48:00.097430+00:00",
+  "kind": "ROOT_RAW_PRESERVATION_CHECK",
+  "source_unowned_baseline_entries_checked": 15943,
+  "source_absences_checked": 0,
+  "owned_baseline_exclusions": 22,
+  "excluded_namespaces": [
+    "ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/",
+    "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/",
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/"
+  ],
+  "drift": {
+    "ai/RC-MacAir-15/Wiki/001-Project/.versions/2026-08-28-014539.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/000-Project/.versions/2026-08-28-014539.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/000-Project/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/001-Home/.versions/2026-08-28-014539.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/001-Home/LOG.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/004-Path_Resolution/.versions/2026-08-28-014539.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/004-Path_Resolution/LOG.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/004-Path_Resolution/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/013-Background_Agents/.versions/2026-08-28-014539.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/013-Background_Agents/LOG.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/013-Background_Agents/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/014-Background_Services_Audit/.versions/2026-08-28-014539.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/014-Background_Services_Audit/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/017-GitLab/.versions/2026-08-28-014539.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/017-GitLab/LOG.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/017-GitLab/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/018-Hooks/.versions/2026-08-28-014539.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/018-Hooks/LOG.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/018-Hooks/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/019-Run_Auditing/.versions/2026-08-28-014539.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/019-Run_Auditing/LOG.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/019-Run_Auditing/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/020-Screenshot_Capture/.versions/2026-08-28-014539.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/020-Screenshot_Capture/LOG.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/020-Screenshot_Capture/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/021-Setup_Wizard/.versions/2026-08-28-014539.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/021-Setup_Wizard/LOG.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/021-Setup_Wizard/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/022-Ticket_Routing/.versions/2026-08-28-014539.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/022-Ticket_Routing/LOG.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/022-Ticket_Routing/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/023-Warmth_Settings/.versions/2026-08-28-014539.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/023-Warmth_Settings/LOG.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/023-Warmth_Settings/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/024-Issue_Viewer_Ticket_Authoring/.versions/2026-08-28-014539.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/024-Issue_Viewer_Ticket_Authoring/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Project/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/010-Voice_Input/001-Architecture/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/010-Voice_Input/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/002-System_Tools/.versions/2026-08-28-014539.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/002-System_Tools/000-System_Tools/.versions/2026-08-28-014539.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/002-System_Tools/000-System_Tools/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/002-System_Tools/001-Custom_Theme_CSS/.versions/2026-08-28-014539.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/002-System_Tools/001-Custom_Theme_CSS/LOG.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/002-System_Tools/001-Custom_Theme_CSS/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/002-System_Tools/002-Secrets_Manager/.versions/2026-08-28-014539.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/002-System_Tools/002-Secrets_Manager/LOG.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/002-System_Tools/002-Secrets_Manager/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/002-System_Tools/003-Clipboard_History/.versions/2026-08-28-014539.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/002-System_Tools/003-Clipboard_History/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/002-System_Tools/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/005-Enforcement/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/006-System_Manager/.versions/2026-08-28-014539.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/006-System_Manager/001-Workspaces_&_Views/.versions/2026-08-28-014539.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/006-System_Manager/001-Workspaces_&_Views/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "ai/RC-MacAir-15/Wiki/006-System_Manager/PAGE.md": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "fusion-studio-server/lib/screenshot/hotkey-screenshot-watcher.js": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "fusion-studio-server/lib/screenshot/source-folder-service.js": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "fusion-studio-server/lib/watch/calendar-watcher.js": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "fusion-studio-server/lib/watch/core.js": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "fusion-studio-server/lib/watch/workspace-watcher.js": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "fusion-studio-server/lib/watcher/filters/theme-json-regenerator.js": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    },
+    "fusion-studio-server/test/watch/workspace-watcher.test.js": {
+      "before": {
+        "kind": "absent"
+      },
+      "current": {
+        "exists": false
+      }
+    }
+  },
+  "source_cache_entries": 193,
+  "source_cache_drift": {},
+  "source_head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "source_physical_index_sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+  "index_matches_original": true,
+  "scope_limit": "Installed slice-owned source paths separately bound by accepted revisions; no live profile hash-stability assertion. This read does not mutate source."
+}

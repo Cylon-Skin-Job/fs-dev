@@ -1,0 +1,47 @@
+{
+  "at": "2026-10-07T08:28:25.456109+00:00",
+  "status": "REGISTRY_AND_ACTIVE_WORKSPACE_PRESERVED",
+  "workspace_rows": [
+    {
+      "id": "fs-dev",
+      "label": "Fs Dev",
+      "repo_path": "/Users/rccurtrightjr./projects/fs-dev",
+      "ribbon_visible": 1
+    },
+    {
+      "id": "fusion-home",
+      "label": "Fusion Home",
+      "repo_path": "/Users/rccurtrightjr./projects/Fusion-Home",
+      "ribbon_visible": 1
+    },
+    {
+      "id": "solobooks",
+      "label": "Solobooks",
+      "repo_path": "/Users/rccurtrightjr./projects/solobooks",
+      "ribbon_visible": 1
+    },
+    {
+      "id": "media-editor",
+      "label": "Media Editor",
+      "repo_path": "/Users/rccurtrightjr./projects/media-editor",
+      "ribbon_visible": 1
+    },
+    {
+      "id": "system-manager",
+      "label": "System Manager",
+      "repo_path": "/Users/rccurtrightjr./projects/fs-dev/System_Manager",
+      "ribbon_visible": 1
+    },
+    {
+      "id": "karens-lab",
+      "label": "Karens Lab",
+      "repo_path": "/Users/rccurtrightjr./projects/karens-lab",
+      "ribbon_visible": 1
+    }
+  ],
+  "active_workspace": "fs-dev",
+  "quick_check": "ok",
+  "read_only": true,
+  "copy_restore": false,
+  "scope": "Registered workspace fields and active selection remain identical; no claim that operational DB bytes stay unchanged across real application startup."
+}

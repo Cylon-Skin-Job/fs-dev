@@ -1,0 +1,14 @@
+{
+  "at": "2026-09-27T03:10:04.754642+00:00",
+  "counts": {
+    "source": 1955,
+    "build": 200
+  },
+  "mismatches": [],
+  "locked": false,
+  "ownedWorkloads": [],
+  "persistent55084Alive": true,
+  "manualEnv": null,
+  "postSoakManualEnv": null,
+  "command": "/usr/bin/caffeinate -d node fusion-studio-client/e2e/chat-architecture/run.mjs --suite native --mode enforce --cases R9-NATIVE-COMPOSITION-CONTROL"
+}

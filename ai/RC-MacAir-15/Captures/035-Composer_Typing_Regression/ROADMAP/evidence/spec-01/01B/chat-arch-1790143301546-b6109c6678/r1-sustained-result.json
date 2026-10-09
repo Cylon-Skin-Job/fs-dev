@@ -1,0 +1,86 @@
+{
+  "status": "focus-unavailable",
+  "measurementStarted": false,
+  "configuredDurationMs": 300000,
+  "configuredCharacters": 9520,
+  "configuredDelayMs": 32,
+  "fixture": {
+    "f2": {
+      "id": "F2-DETERMINISTIC-HISTORY-V1",
+      "exchanges": 30,
+      "renderedMessages": 60,
+      "includes": [
+        "text",
+        "code",
+        "lists",
+        "tables",
+        "collapsed-tool-results",
+        "reply-metadata"
+      ],
+      "dense": {
+        "exchanges": 2,
+        "assistantPayloadBytes": 534528,
+        "sha256": "9b06d21b677d93e4479544db39cf56f86eb4d3cd25fb603740407f263e7420dc"
+      }
+    },
+    "f3": {
+      "id": "F3-DETERMINISTIC-WORKSPACE-V1",
+      "algorithm": "label-repeated-to-fixed-byte-count",
+      "counts": {
+        "smallFiles": 1000,
+        "captureFolders": 100,
+        "wikiPages": 100,
+        "officeDocuments": 20
+      },
+      "totalFiles": 1220,
+      "totalContentBytes": 11059200,
+      "root": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790143301546-b6109c6678-tRoEuW/r1-sustained-project",
+      "everyPathFixtureContained": true,
+      "manifestHash": "421c0ef8f5e255bb333a82a9f26d28c74eb2c8d55e95fc262ad241ed45740079"
+    }
+  },
+  "identity": {
+    "threadId": "2026-09-22T23-01-44-488",
+    "threadGroupId": "tg-0ee79b78-1e92-492a-95f2-8c02eba99664"
+  },
+  "coverageCalibration": {
+    "discovered": [
+      "ChatAreaFooter",
+      "ChatAreaHeader",
+      "ContentArea",
+      "InstantSegmentRenderer",
+      "MessageList",
+      "ThreadRail",
+      "renderTextInstant"
+    ],
+    "invocationCounts": {
+      "renderTextInstant": 150,
+      "MessageList": 2,
+      "InstantSegmentRenderer": 30,
+      "ChatAreaHeader": 17,
+      "ThreadRail": 24,
+      "ContentArea": 9,
+      "ChatAreaFooter": 15
+    }
+  },
+  "failure": {
+    "name": "Error",
+    "message": "R1 staged Electron focus unavailable after 48 attempts: {\"available\":true,\"focused\":false,\"visible\":true,\"minimized\":false,\"windowId\":1,\"title\":\"Fusion Studio\",\"url\":\"fusion-shell://app/\"}",
+    "code": "R1_FOCUS_UNAVAILABLE",
+    "observation": {
+      "available": true,
+      "focused": false,
+      "visible": true,
+      "minimized": false,
+      "windowId": 1,
+      "title": "Fusion Studio",
+      "url": "fusion-shell://app/"
+    }
+  },
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "lingeringOwnedPids": []
+}

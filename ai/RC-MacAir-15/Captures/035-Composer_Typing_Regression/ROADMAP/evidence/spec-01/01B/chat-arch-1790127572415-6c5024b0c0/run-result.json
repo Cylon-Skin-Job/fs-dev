@@ -1,0 +1,22 @@
+{
+  "runId": "chat-arch-1790127572415-6c5024b0c0",
+  "status": "failed",
+  "results": [
+    {
+      "id": "R1-F2-F3-COMPOSER",
+      "code": 1,
+      "signal": null,
+      "pid": 98558,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 205381
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "R1-F2-F3-COMPOSER exited 1",
+    "stack": "Error: R1-F2-F3-COMPOSER exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:384:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

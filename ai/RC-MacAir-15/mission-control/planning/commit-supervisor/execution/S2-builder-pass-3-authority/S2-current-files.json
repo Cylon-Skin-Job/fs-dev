@@ -1,0 +1,52 @@
+[
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-code-review-orchestrator/SKILL.md",
+    "sha256": "61a2e611803aa918b22b9356e19f1d863a3e7a6ac05cf9cc491f41e175d16129",
+    "lines": 51
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-code-review-orchestrator/agents/openai.yaml",
+    "sha256": "24a3b0515c3c858cf7af6a3a3887a2b943b4a6bf4ea799b33faef87cc38517a8",
+    "lines": 4
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-code-review-orchestrator.toml",
+    "sha256": "1e06b777794a371a2620a7df3d97caaeb95cb67652b18461e1db6f9744b653e0",
+    "lines": 3
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-repair-worker/SKILL.md",
+    "sha256": "f6aa836695ab3cfb22b256e0bc6c5df5cd64b1a65e2ca75654da59be3972daa9",
+    "lines": 50
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-repair-worker/agents/openai.yaml",
+    "sha256": "71f4602466de516b59a8fabbb225a61a51dcfe7922deb2a46e08b95ba39cd47b",
+    "lines": 4
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-repair-worker.toml",
+    "sha256": "90d9830f49a41ca63712aca1096a31f9224b9bb06d6adea60a9d715b1364fc81",
+    "lines": 3
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-review-gate/SKILL.md",
+    "sha256": "cc738b3ecebca875b1f6d4460d26c3185dd3b3dd2a93550086742995a0c6c56a",
+    "lines": 109
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+    "sha256": "17190cef8f3e762fc18c2e4e197a49e5eef71ef5ea1a514b5aaec29a076e689a",
+    "lines": 300
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+    "sha256": "af68a401b8ad6bcfb645f18598ffa8477350823c9102a7acbc3a93b79af38d2c",
+    "lines": 242
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_review_packet.py",
+    "sha256": "5344d6c1e1b8a54a981a3eadc9e62ab1d1b2fefe7eacbeacb1f533a34fc5b861",
+    "lines": 340
+  }
+]

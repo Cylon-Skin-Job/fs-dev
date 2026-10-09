@@ -1,0 +1,69 @@
+{
+  "at": "2026-10-04T19:39:17.349595+00:00",
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "source": "Actual root message identified one historical checkpoint-hash typo and authorized correcting only current mention with retained already captured preimage/history and updated current bindings.",
+  "historical_checkpoint": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/history/S6-FIRST-COMMIT-READY-WAIT-01/checkpoint.json",
+    "sha256": "214621bcc2c6e6a70c415e4f8c2610a4c49454f2538e4f6671eaf382b1fe54aa"
+  },
+  "wrong_copied_mention": "214621bcc2c6e6a70c415e4f8c2610a4c49454f2538a4f6671eaf382b1fe54aa",
+  "correct_actual_mention": "214621bcc2c6e6a70c415e4f8c2610a4c49454f2538e4f6671eaf382b1fe54aa",
+  "changed_packet_occurrences": 1,
+  "prior_current_records": {
+    "owner-packet-fix-xy.md": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/owner-packet-fix-xy.md",
+      "sha256": "430ff5c38b0d002ddbd54ab9274e36cdb77c82cdc39fa2b06e6e65479f5a5d9e"
+    },
+    "supervisor-fix-xy-report.md": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/supervisor-fix-xy-report.md",
+      "sha256": "4433d5f1944e25515393d51aa137f89389364537cb36564da5490db54218d928"
+    },
+    "checkpoint-fix-xy.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/checkpoint-fix-xy.json",
+      "sha256": "1fc32c9485ea9c82912cb6d58f8935db6536a2d8dfbaa96fa98cbd953779d5c8"
+    },
+    "lifecycle-fix-xy.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/lifecycle-fix-xy.json",
+      "sha256": "2132a8687500ac298d4b59b5d4bc91c5b9aec15343d476cb69319fa0bd6e28ee"
+    }
+  },
+  "corrected_current_records": {
+    "owner-packet-fix-xy.md": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/owner-packet-fix-xy.md",
+      "sha256": "4262b884dccc10a10b53a43e1a96e00167a5557b85f88802c324414410c29870"
+    },
+    "supervisor-fix-xy-report.md": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/supervisor-fix-xy-report.md",
+      "sha256": "4d43f904f54c4d7d255d832a6c977572b2eb9abd870095d7428cec1491496355"
+    },
+    "checkpoint-fix-xy.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/checkpoint-fix-xy.json",
+      "sha256": "3c8b1928e3eed370df4e9a8cab22fe812eabf24ed59b1ac0323c9d2a4822ec1a"
+    },
+    "lifecycle-fix-xy.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/lifecycle-fix-xy.json",
+      "sha256": "b7de4f8bc500f3f2d0f10048226efae521771c083c685d4f7671a50a22fbdf85"
+    }
+  },
+  "retained_preimages": {
+    "owner-packet-fix-xy.md": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/history/S6-FIX-XY-COMMIT-READY-WAIT-02/owner-packet.md",
+      "sha256": "430ff5c38b0d002ddbd54ab9274e36cdb77c82cdc39fa2b06e6e65479f5a5d9e"
+    },
+    "supervisor-fix-xy-report.md": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/history/S6-FIX-XY-COMMIT-READY-WAIT-02/supervisor-report.md",
+      "sha256": "4433d5f1944e25515393d51aa137f89389364537cb36564da5490db54218d928"
+    },
+    "checkpoint-fix-xy.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/history/S6-FIX-XY-COMMIT-READY-WAIT-02/checkpoint.json",
+      "sha256": "1fc32c9485ea9c82912cb6d58f8935db6536a2d8dfbaa96fa98cbd953779d5c8"
+    },
+    "lifecycle-fix-xy.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/history/S6-FIX-XY-COMMIT-READY-WAIT-02/lifecycle.json",
+      "sha256": "2132a8687500ac298d4b59b5d4bc91c5b9aec15343d476cb69319fa0bd6e28ee"
+    }
+  },
+  "scope": "Current packet factual mention and corresponding current hash bindings only; no product/source/Wiki/oracle/test/runtime/control/operation mutation or repeated verification.",
+  "source_check_runtime_affected": false,
+  "actual_operations": []
+}

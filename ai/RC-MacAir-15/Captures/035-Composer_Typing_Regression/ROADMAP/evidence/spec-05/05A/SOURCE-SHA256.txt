@@ -1,0 +1,15 @@
+b30de8a56fa598b30bc3f495832ed923544f7b657369f8028a3e7ca0e297d410  fusion-studio-client/e2e/chat-architecture/run.mjs
+83efd1cbeaa3bdf76f1384fa62542fdbc174af3d3fd7aa352345092a6a448499  fusion-studio-client/e2e/chat-architecture/server-focused-regressions.mjs
+e090db58e5da2a202a65c14e77d319788e6599190446c121274537787ffede86  fusion-studio-server/lib/thread-groups/delete-service.js
+55a8c701d987678b121f472ec7903d7ae10d9824c5954db07564121e65c4abb8  fusion-studio-server/lib/thread-groups/link-service.js
+378e962b78eddaade799dadfde27dbdcfdf99af023bfb699dcb9134a81a19b3d  fusion-studio-server/lib/thread-groups/member-service.js
+a554d5158d9620b2e863d783b19d2126969035972a7fd1fd78ffb5e76ce4f7ff  fusion-studio-server/lib/thread-groups/move-service.js
+76a32be7730a47e8a0e331c8530682316e39bd54354f6e0464f091211baeb349  fusion-studio-server/lib/thread-groups/selection-service.js
+b75f8be840c23beb5c235cabc1890dce7a3e7830c74d5582b9a91bedef53780e  fusion-studio-server/lib/thread-groups/service.js
+56396c80862c2c5a4234d7de0ceada2976871ec264f46025aaf85a4fa40229d8  fusion-studio-server/lib/thread-groups/session-transactions.js
+601b7093f7f4a4e8e3d338ef35131615677828963aee0059cd4faced4735e19f  fusion-studio-server/lib/thread/ThreadManager.js
+f74d7a241df897e082fed16b8c6bbaf12c65e30aebd8453b33359e4dc943bd4d  fusion-studio-server/lib/thread/session-lifecycle.js
+79a602f856c30a0bd125359bcecf63a904450135d507e71a3e99f0bd361ec9ad  fusion-studio-server/lib/thread/session-repository.js
+b8fdfc5f359ea1ca6812aab44d8b07094aebfae297230ea0563397d9661ea1dc  fusion-studio-server/test/thread/session-manager.test.js
+c9812907a5e1d56409d19204dda3afc6231728eb3610bba0fdd6bc3312d6616b  fusion-studio-server/test/thread/thread-group-lifecycle.test.js
+1399b7473f096e21eab1b54c690c53d58e9e759e9af4b9e902e299b3412853bd  fusion-studio-server/test/ws/prompt-submission-recovery.integration.test.js

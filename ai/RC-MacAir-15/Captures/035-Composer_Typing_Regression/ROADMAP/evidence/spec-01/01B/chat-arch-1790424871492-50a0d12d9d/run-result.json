@@ -1,0 +1,32 @@
+{
+  "runId": "chat-arch-1790424871492-50a0d12d9d",
+  "status": "failed",
+  "results": [
+    {
+      "id": "F1-PUBLIC-ROUTE",
+      "code": 0,
+      "signal": null,
+      "pid": 24322,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 6285
+    },
+    {
+      "id": "R1-F2-F3-COMPOSER",
+      "code": 1,
+      "signal": null,
+      "pid": 25252,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 64104
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "R1-F2-F3-COMPOSER exited 1",
+    "stack": "Error: R1-F2-F3-COMPOSER exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:492:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

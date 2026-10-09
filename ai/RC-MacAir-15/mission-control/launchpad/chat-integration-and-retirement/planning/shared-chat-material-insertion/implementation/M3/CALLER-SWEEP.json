@@ -1,0 +1,414 @@
+{
+  "at": "2026-10-07T20:41:21.496719+00:00",
+  "counts": {
+    "dispatchChatAction": 6,
+    "fusion:chat-insert": 0,
+    "captureAndAttachScreenshot": 6,
+    "addPendingAttachment": 3,
+    "setDraft": 5,
+    "onInsert": 3,
+    "sourceViewId": 3,
+    "currentPrimaryOwner": 0,
+    "ScreenshotAttachmentOwner": 0,
+    "currentThreadId": 30
+  },
+  "all_hits": [
+    {
+      "path": "fusion-studio-client/src/components/App.tsx",
+      "line": 35,
+      "symbol": "captureAndAttachScreenshot",
+      "text": "captureAndAttachScreenshot,",
+      "disposition": "public camera wrapper/export/caller; shared begin before capture and sole shared commit"
+    },
+    {
+      "path": "fusion-studio-client/src/components/App.tsx",
+      "line": 76,
+      "symbol": "captureAndAttachScreenshot",
+      "text": "void captureAndAttachScreenshot();",
+      "disposition": "public camera wrapper/export/caller; shared begin before capture and sole shared commit"
+    },
+    {
+      "path": "fusion-studio-client/src/components/SystemViewer.tsx",
+      "line": 6,
+      "symbol": "dispatchChatAction",
+      "text": "import { dispatchChatAction } from '../lib/chat-action';",
+      "disposition": "distinct explicit System Create source/address API; not material destination"
+    },
+    {
+      "path": "fusion-studio-client/src/components/SystemViewer.tsx",
+      "line": 83,
+      "symbol": "dispatchChatAction",
+      "text": "const result = await dispatchChatAction({",
+      "disposition": "distinct explicit System Create source/address API; not material destination"
+    },
+    {
+      "path": "fusion-studio-client/src/components/SystemViewer.tsx",
+      "line": 92,
+      "symbol": "sourceViewId",
+      "text": "sourceViewId: 'system-viewer',",
+      "disposition": "distinct explicit System Create source/address API; not material destination"
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx",
+      "line": 22,
+      "symbol": "captureAndAttachScreenshot",
+      "text": "import { captureAndAttachScreenshot } from '../../screenshots/chatScreenshotCapture';",
+      "disposition": "public camera wrapper/export/caller; shared begin before capture and sole shared commit"
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx",
+      "line": 71,
+      "symbol": "captureAndAttachScreenshot",
+      "text": "void captureAndAttachScreenshot(materialLease.current);",
+      "disposition": "public camera wrapper/export/caller; shared begin before capture and sole shared commit"
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx",
+      "line": 114,
+      "symbol": "setDraft",
+      "text": "useChatComposerDraftStore.getState().setDraft(workspaceId, threadId, text);",
+      "disposition": "ordinary own-session editor typing"
+    },
+    {
+      "path": "fusion-studio-client/src/emojis/EmojiTrigger.tsx",
+      "line": 10,
+      "symbol": "onInsert",
+      "text": "onInsert?: (text: string) => void;",
+      "disposition": "unused EmojiTrigger native picker prop; no insertion writes"
+    },
+    {
+      "path": "fusion-studio-client/src/emojis/EmojiTrigger.tsx",
+      "line": 18,
+      "symbol": "onInsert",
+      "text": "onInsert,",
+      "disposition": "unused EmojiTrigger native picker prop; no insertion writes"
+    },
+    {
+      "path": "fusion-studio-client/src/emojis/EmojiTrigger.tsx",
+      "line": 24,
+      "symbol": "onInsert",
+      "text": "void onInsert;",
+      "disposition": "unused EmojiTrigger native picker prop; no insertion writes"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-action-creation.ts",
+      "line": 1,
+      "symbol": "dispatchChatAction",
+      "text": "import { dispatchChatAction, type ChatActionAddress, type ChatActionRequest, type ChatActionResult } from './chat-action';",
+      "disposition": "explicit creation prefill or ordinary Send continuation; current insertion denied"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-action-creation.ts",
+      "line": 96,
+      "symbol": "dispatchChatAction",
+      "text": "void dispatchChatAction({ content: resolved, target: 'current', delivery: 'send',",
+      "disposition": "explicit creation prefill or ordinary Send continuation; current insertion denied"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-action-creation.ts",
+      "line": 109,
+      "symbol": "setDraft",
+      "text": "drafts.setDraft(created.workspaceId, created.threadId!, next);",
+      "disposition": "explicit creation prefill or ordinary Send continuation; current insertion denied"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-action-creation.ts",
+      "line": 158,
+      "symbol": "dispatchChatAction",
+      "text": "else void dispatchChatAction({ content: resolved, target: 'current',",
+      "disposition": "explicit creation prefill or ordinary Send continuation; current insertion denied"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-action.ts",
+      "line": 25,
+      "symbol": "sourceViewId",
+      "text": "sourceViewId?: string;",
+      "disposition": "distinct explicit System Create source/address API; not material destination"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-action.ts",
+      "line": 70,
+      "symbol": "dispatchChatAction",
+      "text": "export function dispatchChatAction(action: ChatActionPayload): Promise<ChatActionResult> {",
+      "disposition": "separate explicit Send/Create API definition"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-action.ts",
+      "line": 74,
+      "symbol": "sourceViewId",
+      "text": "const capturedAddress = action.address ?? captureChatActionAddress(action.sourceViewId);",
+      "disposition": "distinct explicit System Create source/address API; not material destination"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-material-commit.ts",
+      "line": 42,
+      "symbol": "addPendingAttachment",
+      "text": "store.addPendingAttachment(workspaceId, threadId, attachment);",
+      "disposition": "sole local prepared-material store writer"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-material-commit.ts",
+      "line": 61,
+      "symbol": "setDraft",
+      "text": "store.setDraft(workspaceId, threadId, next);",
+      "disposition": "sole local prepared-material store writer"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/stream-handlers.ts",
+      "line": 360,
+      "symbol": "currentThreadId",
+      "text": "if (usePanelStore.getState().currentThreadId === threadId) {",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/thread-handlers.ts",
+      "line": 355,
+      "symbol": "currentThreadId",
+      "text": "const isOwnedThread = store.currentThreadId === msg.threadId",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/thread-history.ts",
+      "line": 49,
+      "symbol": "currentThreadId",
+      "text": ": store.currentThreadId === msg.threadId || matchesPendingOpen || !store.currentThreadId;",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/thread-history.ts",
+      "line": 205,
+      "symbol": "currentThreadId",
+      "text": "if (store.currentThreadId === threadId) {",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/turn-lifecycle.ts",
+      "line": 83,
+      "symbol": "currentThreadId",
+      "text": "* currentThreadId fallback on this path (parent \u00a74.6/\u00a74.12).",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/view-state-handlers.ts",
+      "line": 97,
+      "symbol": "currentThreadId",
+      "text": "// STATE_OVERRIDE_SPEC \u00a79.3: hydrate persisted currentThreadId into the",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/view-state-handlers.ts",
+      "line": 102,
+      "symbol": "currentThreadId",
+      "text": "incoming?.currentThreadId &&",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/view-state-handlers.ts",
+      "line": 103,
+      "symbol": "currentThreadId",
+      "text": "incoming.currentThreadId !== store.currentThreadId",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/view-state-handlers.ts",
+      "line": 105,
+      "symbol": "currentThreadId",
+      "text": "store.setCurrentThreadId(incoming.currentThreadId);",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/screenshots/chatScreenshotCapture.ts",
+      "line": 87,
+      "symbol": "captureAndAttachScreenshot",
+      "text": "export async function captureAndAttachScreenshot(",
+      "disposition": "public camera wrapper/export/caller; shared begin before capture and sole shared commit"
+    },
+    {
+      "path": "fusion-studio-client/src/screenshots/index.ts",
+      "line": 10,
+      "symbol": "captureAndAttachScreenshot",
+      "text": "export { captureAndAttachScreenshot, SCREENSHOT_FLASH_EVENT } from './chatScreenshotCapture';",
+      "disposition": "public camera wrapper/export/caller; shared begin before capture and sole shared commit"
+    },
+    {
+      "path": "fusion-studio-client/src/state/chatComposerDraftStore.ts",
+      "line": 6,
+      "symbol": "setDraft",
+      "text": "setDraft: (workspaceId: string, threadId: string, text: string) => void;",
+      "disposition": "existing authoritative store implementation/type"
+    },
+    {
+      "path": "fusion-studio-client/src/state/chatComposerDraftStore.ts",
+      "line": 20,
+      "symbol": "setDraft",
+      "text": "setDraft: (workspaceId, threadId, text) => set((state) => ({",
+      "disposition": "existing authoritative store implementation/type"
+    },
+    {
+      "path": "fusion-studio-client/src/state/chatFileLinkStore.ts",
+      "line": 14,
+      "symbol": "addPendingAttachment",
+      "text": "addPendingAttachment: (",
+      "disposition": "existing authoritative store implementation/type"
+    },
+    {
+      "path": "fusion-studio-client/src/state/chatFileLinkStore.ts",
+      "line": 94,
+      "symbol": "addPendingAttachment",
+      "text": "addPendingAttachment: (workspaceId, threadId, attachment) => set((state) => {",
+      "disposition": "existing authoritative store implementation/type"
+    },
+    {
+      "path": "fusion-studio-client/src/state/panelStore.ts",
+      "line": 36,
+      "symbol": "currentThreadId",
+      "text": "currentThreadId: null,",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/state/panelStore.ts",
+      "line": 83,
+      "symbol": "currentThreadId",
+      "text": "currentThreadId: null,",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/state/panelStore.ts",
+      "line": 132,
+      "symbol": "currentThreadId",
+      "text": "currentThreadId: null,",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/state/panelStore.ts",
+      "line": 197,
+      "symbol": "currentThreadId",
+      "text": "currentThreadId: emptyState.currentThreadId,",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/state/panelStore.ts",
+      "line": 328,
+      "symbol": "currentThreadId",
+      "text": "currentThreadId: null,",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/state/panelStore.ts",
+      "line": 337,
+      "symbol": "currentThreadId",
+      "text": "if (state.currentThreadId !== threadId) {",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/state/panelStore.ts",
+      "line": 338,
+      "symbol": "currentThreadId",
+      "text": "get()._persistViewPatch(state.currentPanel, { currentThreadId: threadId });",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/state/panelStore.ts",
+      "line": 341,
+      "symbol": "currentThreadId",
+      "text": "const base: Partial<AppState> = { currentThreadId: threadId };",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/state/panelStore.ts",
+      "line": 342,
+      "symbol": "currentThreadId",
+      "text": "// SPEC-02 \u00a76.1: `currentThreadId` remains the Legacy population's backing",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/state/panelStore.ts",
+      "line": 410,
+      "symbol": "currentThreadId",
+      "text": "currentThreadId: state.currentThreadId === threadId ? null : state.currentThreadId,",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/state/panelStore.ts",
+      "line": 532,
+      "symbol": "currentThreadId",
+      "text": "&& current.currentThreadId === s.currentThreadId) {",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/state/panelStore.ts",
+      "line": 533,
+      "symbol": "currentThreadId",
+      "text": "set({ connectingHarnessId: harnessId, wireReady: false, currentThreadId: null });",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/state/panelStore.ts",
+      "line": 544,
+      "symbol": "currentThreadId",
+      "text": "&& current.currentThreadId === s.currentThreadId) {",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/state/panelStore.ts",
+      "line": 545,
+      "symbol": "currentThreadId",
+      "text": "set({ connectingHarnessId: null, wireReady: false, currentThreadId: null });",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/state/panelStoreTypes.ts",
+      "line": 88,
+      "symbol": "currentThreadId",
+      "text": "currentThreadId: string | null;",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/state/panelStoreTypes.ts",
+      "line": 268,
+      "symbol": "currentThreadId",
+      "text": "currentThreadId: string | null;",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/state/slices/chatSlice.ts",
+      "line": 56,
+      "symbol": "currentThreadId",
+      "text": "const tid = threadId ?? state.currentThreadId;",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/state/slices/chatSlice.ts",
+      "line": 71,
+      "symbol": "currentThreadId",
+      "text": "const tid = threadId ?? state.currentThreadId;",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/state/slices/chatSlice.ts",
+      "line": 81,
+      "symbol": "currentThreadId",
+      "text": "return threadId ?? state.currentThreadId;",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/state/slices/viewSlice.ts",
+      "line": 28,
+      "symbol": "currentThreadId",
+      "text": "currentThreadId: null,",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    },
+    {
+      "path": "fusion-studio-client/src/types/view-state.ts",
+      "line": 156,
+      "symbol": "currentThreadId",
+      "text": "currentThreadId: string | null;",
+      "disposition": "existing session/Legacy selection or unrelated editor/harness state; material destination modules have no occurrence"
+    }
+  ],
+  "material_module_currentThreadId_hits": 0,
+  "direct_store_writer_files": [
+    "fusion-studio-client/src/lib/chat-material-commit.ts"
+  ],
+  "remaining_external_material_bypass": false
+}

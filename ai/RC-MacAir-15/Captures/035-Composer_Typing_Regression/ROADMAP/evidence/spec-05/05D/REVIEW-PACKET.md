@@ -1,0 +1,23 @@
+# Fresh builder-owned review packet — SPEC05/05D
+
+Review current bytes in `/Users/rccurtrightjr./projects/fs-dev` against approved CHAT-AR-4641ca5897f0 SPEC05/05D and immediate affected integration. Read-only clean-room review; no product edits, workload launches, descendants or external reviewer. Return first-principles CLEAN or evidenced material findings with violated criterion, exact source/path, realistic impact and minimal repair direction. Advisory suggestions do not block CLEAN. This is builder-owned review, not orchestrator acceptance or owner approval.
+
+Read full `/Users/rccurtrightjr./.codex/skills/spec-review-gate/SKILL.md`, root and server AGENTS. ROADMAP root `ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP`: read full SPEC-05, ROADMAP, BUNDLE-INDEX, AUTHORITY-AND-DECISIONS, ARCHITECTURE, GUIDANCE, VALIDATION, ISSUES, RELEASE-MANIFEST and parent `evidence/spec-05/05D-BUILDER-PACKET.md`. Stale DRAFT header is superseded by approved manifest/owner Begin SPEC5;05A/B/C are prerequisite baseline. Do not use prior reviewer conclusions as evidence; independently inspect current contract and source.
+
+Read Chat wiki overview and routed affected docs; standards hub plus001 Architecture Routing,002 Frontend UI,003 State Management,004 WebSocket Protocol,005 Universal Event Bus,006 Harness Adapters,007 Persistence And Metadata,008 Testing And Smoke Slices under `ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/`. Current source owns truth where source and historical Wiki differ; report material hard-rule conflicts, not preferences.
+
+This folder supplies `BUILDER-REPORT.md`, `DEVIATIONS.md` (D01–D14 proposed classifications), `ACCEPTANCE-MAP.md`, `OWNER-GRAPH.json`, `changed-files.json`, `SOURCE-SHA256.txt`, `SLICE.diff`, exact `preedit/` and `PREEDIT-SHA256.txt`, `RUNS.json`. Manifest digest `d5e5da40c915723ddfaded1581d47a9a9501f6639fbacb027267528d4b8fd955`.69changed files; intentional shared dirty work preserved. No prior05D reviewer or conclusions exist.
+
+Inspect facade/changed-owner cohesion and <=400line limits; explicit capability dependencies (no whole parent helper injection); passed transaction/fault injection identity; group lease, single runtime authority, receipt/exchange writers, disposable mirror/journal/outbox semantics. Inspect necessary integration beyond advisory paths: exact Stop effect barrier and exit reconciliation across failed completion, queued/deferred replacement ownership; exact source member historyOnly hydration with no Main selection/pending-open consumption/provider activation; new TypeScript owner extraction. Review immediate callers, not just static detector.
+
+All required verification passed sequentially before review. Raw evidence under sibling `evidence/spec-01`:
+- Full server `01C/server-full-1790247257988-f913eb92`:211suites,3150pass/1existingskip; npm test -- --runInBand, actual native pretest; real provider source,1603dependency hashes. Only later production change removed one blank EOF line in client thread-handlers; no semantic invalidation.
+- Full backend `01B/chat-arch-1790247358232-7e15aa5250`:6executablecases; graph2,member-history4,actual six UI flows, runtime23/521,mirror21/384,session12/253. Exact final client bytes.
+- Full submission `01B/chat-arch-1790246715221-5831d058d2`:7/7. Subsequent client request ID helper reuse affects restored component mount, covered by full backend/actions; submission owners unchanged.
+- Full actions `01B/chat-arch-1790247088404-eae1bfed3d`:6/6.
+- `build-5.log`: buildpass. `architecture-lifecycle-final.log`:17/17,0skip.
+- Current moved/restored screenshots, `r8-ui-result.json`, server logs and run cleanup retained. Review screenshots if needed.
+
+Failure artifacts remain here and in linked raw runs. D07 no-reload fresh-workspace New Chat reproduced against captured accepted05C; established reload is explicit UI gate precondition. D12 single readback lock recurrence has unknown exact holder, not claimed fixed; subsequent cumulative runs pass, future lock captures holder diagnostics. Consider accurate residual handling against scope; do not infer product causality without evidence. Existing Kimi harness skip untouched. GUIdeterministic adapter separate from full real-server lane. All owned roots/PIDs cleaned; no live profile/DB/port3001/Alpha touched.
+
+No test workload should be started during this read-only pass: orchestrator may independently run isolated checks while you inspect. Ask builder if reproduction is indispensable. Report terminal identity, gate result, materials/advisories, independently inspected evidence and any residual impact. Builder records terminal state and close_agent availability afterward.

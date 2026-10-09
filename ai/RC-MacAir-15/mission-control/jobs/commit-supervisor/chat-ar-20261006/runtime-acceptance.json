@@ -1,0 +1,245 @@
+{
+  "state": "RUNTIME_VALIDATED",
+  "at": "2026-10-07T00:22:19.400312+00:00",
+  "tree": "1c80f83c6c4b2b61e42c4dbb988c1f942b672ade",
+  "candidate": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+  "root": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc",
+  "profile": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/candidate-profile",
+  "machine": "RC-MacAir-15",
+  "mainPid": 30807,
+  "serverPid": 30811,
+  "rendererPids": [
+    30875
+  ],
+  "serverUrl": "http://localhost:59315",
+  "canonical_samples": 11,
+  "canonical_connected_after_workspace_init": true,
+  "native_chats": 2,
+  "native_captures": 3,
+  "actual_wiki_articles": 6,
+  "runtime_stopped": true,
+  "deviations": "Two retained public Wiki locator failures corrected without weakening six-article assertions; no product change. FIN-D02 original interruption/incoherent protection comparison unproved; source-quiet repeat passed. One foreign runtime state changed before candidate launch, preserved under separate fresh snapshot.",
+  "files": [
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/prepare-runtime.cjs",
+      "sha256": "95d0752be4499a4ddfe0d6220cc1f11569afd7a107f093d66f8ae422f41a0dde",
+      "bytes": 7094
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/wiki-smoke.log",
+      "sha256": "de4dd8ab5f673cc490224616b733385c850a6974509a7ffecba7bfc84e382299",
+      "bytes": 153
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/runtime-stop-receipt.json",
+      "sha256": "7a8095761e4b17e458f46b50e339eafaa75c50c2cfb36b0a429b1227f9dd01e1",
+      "bytes": 661
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/launch.log",
+      "sha256": "42a528667cd044da022afe12f8387cecd0ba409d9cc441d8ad0349e44055a213",
+      "bytes": 19917
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/capture-protection.mjs",
+      "sha256": "b18b490bac6768a50d2e2701c734aa7e1d112f3be8a9c4b836f25366525919e1",
+      "bytes": 1733
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/preservation-comparison.json",
+      "sha256": "193f40bf019e5fb8a6e6b433f32db2bd10516deb5fcbbfe20067152afef7ac18",
+      "bytes": 145
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/real-chat-ui.png",
+      "sha256": "9c303c0b5fecc545c73430a11034233667f9a7b0cee160da45e1e085a1211438",
+      "bytes": 132287
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/runtime-location.json",
+      "sha256": "cde4b515c024434e63a0d0f2544e6311ad48f12f1e14cd7f9bb642ace3ec5246",
+      "bytes": 1146
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/stop-runtime.mjs",
+      "sha256": "a5c91075c30ed15f507ed4f148ed117d4196a30aecae94523435ebf470c24421",
+      "bytes": 2510
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/runtime-stop-preimage.json",
+      "sha256": "7b1a11c264389d3e367932fdcde2a28b707bd2965d759d30f07d26671515f2b2",
+      "bytes": 18964
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/chat-smoke.log",
+      "sha256": "2266fee555ba7501db7b638f3dfa862ddda2e9dd0e37b09f34cdbecff8ad4b39",
+      "bytes": 163
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/runtime-preparation.json",
+      "sha256": "6dd3db1f37882cde545426307f03f7555be33cb2654eb580ea266a7998a6e1d3",
+      "bytes": 1980
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/runtime-wiki-smoke.json",
+      "sha256": "ff94d4c7e5bbbf48166dd1f4db18720255686696567fb0f89874b3fa9952c989",
+      "bytes": 10780
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/after-runtime-protection.json",
+      "sha256": "d1a66d9e2df081401ab174994ea8ec445eb8e3acfa9004df7424f7593c8f569a",
+      "bytes": 82099
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/before-runtime-protection.json",
+      "sha256": "f0d4a7186044ed3948b2f6261836034dd7ee9abd9b08cf69bc8fec76400d621d",
+      "bytes": 82100
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/.chat-ar-integration-owned",
+      "sha256": "4fd16e18cf4a6fa05dd73aa262f7294b2420f4ff09483e392d68571cc07fa19b",
+      "bytes": 37
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/runtime-wiki-smoke.cjs",
+      "sha256": "80d87b2316a86ff3d95177ab68c0be7d9873dbc91ac435a952b6b8544c8a809f",
+      "bytes": 4853
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/prepare.log",
+      "sha256": "1638e7c3b747cd537ef42372d96e40688a317cc4c6686bd27e4c17e111e59bc5",
+      "bytes": 737
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/wiki-4.png",
+      "sha256": "0afee639ae92cdc548462d7d3fc1a9ede13b268ae162c871f12a6000e7a4b84c",
+      "bytes": 425716
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/before-protection.log",
+      "sha256": "3b838346f731675743c2559aa70fa9214a360e4d8ea7a8ec03f14d1158ab098a",
+      "bytes": 165
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/wiki-5.png",
+      "sha256": "65a4d42a5ab05ebd92706a426ff265f402d94907c41ea88000b51e2afcc9245a",
+      "bytes": 241019
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/stop.log",
+      "sha256": "b5278694468f19fe3b2b5caad334d92a8f2378caaeb31a0063a06430fab90087",
+      "bytes": 596
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/runtime-chat-smoke.json",
+      "sha256": "289caabf4982779080ffc31ada4479dd9ccf0a487afe715dc1177fc7ebfa5686",
+      "bytes": 8516
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/after-protection.log",
+      "sha256": "617703cf59815f8f48b03003007608de16833ce486e10e2064269bc3463dd78f",
+      "bytes": 164
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/runtime-chat-smoke.cjs",
+      "sha256": "5bd39cb11ddaf1d96d6cf7ebfdfca882a8f2e74487be92893d197b1dff9417fd",
+      "bytes": 7712
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/wiki-2.png",
+      "sha256": "25359624c0131304e4d335d444e7e7ffbd2b8347d4370a649f15dc47d2a15a87",
+      "bytes": 317210
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/wiki-3.png",
+      "sha256": "94487ff01c93cf180d9cd4e41e0bf745f62f405476a9b2dfc32d68c43a84f7be",
+      "bytes": 402927
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/wiki-1.png",
+      "sha256": "4aa945298073be857828de87addbbdffc66055d8994501a1b7403733761185e7",
+      "bytes": 390950
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/wiki-0.png",
+      "sha256": "357ee2cf60278c3aadf40948778b05f9c5e8901e1dfdbb7fc81f68ba66f85e94",
+      "bytes": 391678
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/candidate-scratch/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T00-18-07-067Z.png",
+      "sha256": "f4137acf26007f3a101a0456d2b48752f383851ee59aad88f436450b14ec4754",
+      "bytes": 109855
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/candidate-scratch/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T00-18-07-162Z.png",
+      "sha256": "aa9df024d50aab57a6abb0aeaf58e25e512320ad18c510113fef328a129c2d68",
+      "bytes": 126247
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/candidate-scratch/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T00-18-07-605Z.png",
+      "sha256": "068abf6906b087e63777629bd18058d539616feb87765098926e807eb53baa5b",
+      "bytes": 201540
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/candidate-profile/fusion-restart/run-RfJNfg/target.json",
+      "sha256": "c1d829e6b4a86c54582ad7862706e74b7d7bec31a5973618561545043af448b2",
+      "bytes": 1345
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/candidate-profile/fusion-restart/run-RfJNfg/verified.json",
+      "sha256": "70876941d1048b9032ed17d638bfd1f957d7f9df46168b1ab5c751c7b1239299",
+      "bytes": 3261
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/candidate-profile/fusion-restart/run-RfJNfg/launch.log",
+      "sha256": "0fe3df4dc735b682089fa659e001510d7b3adac6fc68fdd65ccaf3a02c8d39dd",
+      "bytes": 18376
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/candidate-profile/fusion-restart/run-RfJNfg/tmp/fusion-electron.log",
+      "sha256": "dfcc5c589a116e9e380d8bc3bfa451a30b337d3bf7516c74d007ce097bf71c89",
+      "bytes": 373
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/candidate-profile/fusion-restart/run-RfJNfg/tmp/electron-renderer.log",
+      "sha256": "c0901d1f6225f094e78f8b7b7e215103acf796683650c2a728fd523d6ab6c75a",
+      "bytes": 11010
+    },
+    {
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-guarded-to8917fc/candidate-profile/server-live.log",
+      "sha256": "c0abab53c634bdfca34782b0c7681f49a90f472872ef6de99a9b2dea12030a9e",
+      "bytes": 28837
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/runtime-preservation-receipt.json",
+      "sha256": "e9d4f6a7d3f5ed78225af4dde623f8f48684fbb84ada5529dc1da9e5379f3160",
+      "bytes": 1987
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/runtime-recipe.json",
+      "sha256": "356cb774a8677a8835ba880329cb57b72831a7bc4ce5c32b9f4569f0911f3fbf",
+      "bytes": 2729
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/runtime-location-attempt-01.json",
+      "sha256": "5513b1bf7da9612ac525bb8032f2e5773f901c81a0bb71aa86fffedda4db1f50",
+      "bytes": 747
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/before-runtime-protection.json",
+      "sha256": "c9a38af8e717bdec7394d804aebd5e7ba4ca2cdc03fbd63fa7566387bec1dc33",
+      "bytes": 82187
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/after-runtime-protection.json",
+      "sha256": "5ec0fbb4ce21f9824da9b0070b0244dcfc400f25f782877bb1ddeb5187f9314b",
+      "bytes": 82099
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/foreign-view-state-reconciliation.json",
+      "sha256": "94c8a2d1ff1eb8c1ac6b17ecd0a66afc27e2b09ed41a9364e8ac43555cc540a4",
+      "bytes": 1170
+    }
+  ],
+  "provider_limit": "No new provider prompt; original accepted provider proof retained on unchanged dependencies. Minimal scratch styling; no whole-app visual redesign certification."
+}

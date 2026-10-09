@@ -1,0 +1,393 @@
+/**
+ * @module AgentTiles
+ * @role Full-width tile grid for the agents panel
+ * @reads agentStore: agents, loaded, expandedAgent
+ *
+ * Displays agent cards in a responsive grid. Clicking a card opens
+ * an overlay with chat on the left and agent details on the right.
+ */
+
+import { useCallback, useEffect, useState } from 'react';
+import { usePanelData } from '../../hooks/usePanelData';
+import { useViewLayoutStyles } from '../../hooks/useSharedWorkspaceStyles';
+import { usePanelStore } from '../../state/panelStore';
+import { useAgentStore, AGENT_CONFIG_FILES, type Agent } from '../../state/agentStore';
+import { PromptCardView } from './PromptCardView';
+import { FloatingPathActions } from '../FloatingPathActions';
+
+
+/** Strip YAML frontmatter, return just the markdown body */
+function stripFrontmatter(content: string): string {
+  const match = content.match(/^---\n[\s\S]*?\n---\n?([\s\S]*)$/);
+  return match ? match[1].trim() : content.trim();
+}
+
+function formatId(id: string): string {
+  return id.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
+
+function AgentCard({ agent }: { agent: Agent }) {
+  const setExpanded = useAgentStore((s) => s.setExpandedAgent);
+
+  return (
+    <div
+      className="rv-agent-tile"
+      onClick={() => setExpanded(agent.id)}
+    >
+      <div className="rv-agent-tile-top">
+        <div className="rv-agent-tile-icon">
+          <span className="material-symbols-outlined">{agent.icon}</span>
+        </div>
+        <div className="rv-agent-tile-info">
+          <div className="rv-agent-tile-name">{formatId(agent.id)}</div>
+          <div className="rv-agent-tile-desc">{agent.description}</div>
+        </div>
+      </div>
+      <div className="rv-agent-tile-footer">
+        <div className="rv-agent-tile-meta">
+          <span className="rv-agent-tile-bot">{agent.bot_name}</span>
+          {agent.schedule && (
+            <span title={agent.schedule}>
+              <span className="material-symbols-outlined rv-icon-xs">schedule</span>
+              {agent.schedule_label || agent.schedule}
+            </span>
+          )}
+          {agent.pending_tickets > 0 && (
+            <span>{agent.pending_tickets} pending</span>
+          )}
+        </div>
+        <span className={`rv-agent-tile-status ${agent.status}`}>
+          {agent.status}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/** Icon map for sidebar card files */
+const FILE_ICONS: Record<string, string> = {
+  'PROMPT.md': 'badge',
+  'MEMORY.md': 'psychology',
+  'LESSONS.md': 'school',
+  'SESSION.md': 'settings',
+  'TRIGGERS.md': 'bolt',
+};
+
+interface FileTreeNode {
+  name: string;
+  type: string;
+}
+
+interface AgentFileTreeMessage {
+  type: 'file_tree_response';
+  panel: string;
+  path: string;
+  nodes?: FileTreeNode[];
+}
+
+interface AgentFileContentMessage {
+  type: 'file_content_response';
+  panel: string;
+  path: string;
+  success?: boolean;
+  content: string;
+}
+
+type AgentViewerMessage = AgentFileTreeMessage | AgentFileContentMessage;
+
+interface AgentIndexFolder {
+  rank?: number;
+  agents?: Record<string, Omit<Agent, 'id' | 'folder'>>;
+}
+
+interface AgentIndex {
+  folders?: Record<string, AgentIndexFolder>;
+}
+
+function isObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
+function parseAgentViewerMessage(data: string): AgentViewerMessage | null {
+  const parsed: unknown = JSON.parse(data);
+  if (!isObject(parsed) || typeof parsed.type !== 'string' || typeof parsed.panel !== 'string' || typeof parsed.path !== 'string') {
+    return null;
+  }
+  return parsed as unknown as AgentViewerMessage;
+}
+
+function AgentDetail({ agent, request }: { agent: Agent; request: (path: string) => void }) {
+  const setExpanded = useAgentStore((s) => s.setExpandedAgent);
+  const configFiles = useAgentStore((s) => s.configFiles);
+  const workflows = useAgentStore((s) => s.workflows);
+  const ws = usePanelStore((s) => s.ws);
+
+  const [activeTab, setActiveTab] = useState<'workflows' | 'runs' | 'settings'>('workflows');
+  const [activeFile, setActiveFile] = useState<string | null>(null);
+  const [fileCache, setFileCache] = useState<Record<string, string>>({});
+
+  // Discover config files + workflows on mount
+  useEffect(() => {
+    if (!ws || ws.readyState !== WebSocket.OPEN) return;
+    let active = true;
+
+    const handleMessage = (event: MessageEvent) => {
+      if (!active) return;
+      try {
+        const msg = parseAgentViewerMessage(event.data);
+        if (!msg) return;
+        if (msg.type === 'file_tree_response' && msg.panel === 'agents-viewer' && msg.path === `${agent.folder}/${agent.id}`) {
+          const files = (msg.nodes || [])
+            .filter((n) => n.type === 'file' && AGENT_CONFIG_FILES.includes(n.name))
+            .map((n) => n.name)
+            .sort((a: string, b: string) => AGENT_CONFIG_FILES.indexOf(a) - AGENT_CONFIG_FILES.indexOf(b));
+          useAgentStore.getState().setConfigFiles(files);
+        }
+        if (msg.type === 'file_tree_response' && msg.panel === 'agents-viewer' && msg.path === `${agent.folder}/${agent.id}/workflows`) {
+          const folders = (msg.nodes || [])
+            .filter((n) => n.type === 'folder')
+            .map((n) => n.name)
+            .sort();
+          useAgentStore.getState().setWorkflows(folders);
+        }
+        if (msg.type === 'file_content_response' && msg.panel === 'agents-viewer' && msg.success) {
+          // Key by workflow folder name if it's a WORKFLOW.md, otherwise by filename
+          const parts = msg.path.split('/');
+          const fileName = parts[parts.length - 1];
+          if (fileName === 'WORKFLOW.md' && parts.length >= 2) {
+            // Key by workflow folder name
+            const folderName = parts[parts.length - 2];
+            setFileCache(prev => ({ ...prev, [folderName]: stripFrontmatter(msg.content) }));
+          } else {
+            setFileCache(prev => ({ ...prev, [fileName]: stripFrontmatter(msg.content) }));
+          }
+        }
+      } catch {
+        return;
+      }
+    };
+
+    ws.addEventListener('message', handleMessage);
+    ws.send(JSON.stringify({ type: 'file_tree_request', panel: 'agents-viewer', path: `${agent.folder}/${agent.id}` }));
+    ws.send(JSON.stringify({ type: 'file_tree_request', panel: 'agents-viewer', path: `${agent.folder}/${agent.id}/workflows` }));
+
+    return () => { active = false; ws.removeEventListener('message', handleMessage); };
+  }, [agent.id, agent.folder, ws]);
+
+  // Load all files once discovered
+  useEffect(() => {
+    if (!ws || ws.readyState !== WebSocket.OPEN) return;
+    for (const f of configFiles) {
+      if (!fileCache[f]) request(`${agent.folder}/${agent.id}/${f}`);
+    }
+  }, [configFiles, fileCache, request, ws, agent.id, agent.folder]);
+
+  useEffect(() => {
+    if (!ws || ws.readyState !== WebSocket.OPEN) return;
+    for (const wf of workflows) {
+      if (!fileCache[wf]) request(`${agent.folder}/${agent.id}/workflows/${wf}/WORKFLOW.md`);
+    }
+  }, [workflows, fileCache, request, ws, agent.id, agent.folder]);
+
+  // Sidebar cards based on active tab
+  let sidebarItems: { name: string; displayName: string; icon: string }[] = [];
+  if (activeTab === 'workflows') {
+    sidebarItems = workflows.map(f => ({ name: f, displayName: f, icon: 'account_tree' }));
+  } else if (activeTab === 'settings') {
+    sidebarItems = configFiles.map(f => ({ name: f, displayName: f.replace('.md', ''), icon: FILE_ICONS[f] || 'description' }));
+  }
+
+  // Content for the selected file
+  const effectiveActiveFile = sidebarItems.some((item) => item.name === activeFile)
+    ? activeFile
+    : sidebarItems[0]?.name ?? null;
+  const selectedContent = effectiveActiveFile ? fileCache[effectiveActiveFile] || null : null;
+  const isWorkflow = effectiveActiveFile ? workflows.includes(effectiveActiveFile) : false;
+
+  return (
+    <div className="rv-agent-detail-fullscreen">
+      {/* Header: bot name + exit */}
+      <div className="rv-agent-detail-header">
+        <span className="material-symbols-outlined rv-agent-detail-header-icon">{agent.icon}</span>
+        <span className="rv-agent-detail-header-name">{formatId(agent.id)}</span>
+        <span className={`rv-agent-tile-status ${agent.status}`}>{agent.status}</span>
+        <button className="rv-agent-detail-exit" onClick={() => setExpanded(null)}>
+          <span className="material-symbols-outlined rv-icon-xl">close</span>
+        </button>
+      </div>
+      <FloatingPathActions
+        panel="agents-viewer"
+        relativePath={`${agent.folder}/${agent.id}/`}
+        copyTitle="Copy agent path"
+        sendTitle="Send agent path to chat"
+        ariaLabel="Agent actions"
+      />
+
+      {/* Pill tabs */}
+      <div className="rv-agent-detail-pill-bar">
+        {(['workflows', 'runs', 'settings'] as const).map(tab => (
+          <button
+            key={tab}
+            className={`rv-agent-detail-pill${activeTab === tab ? ' active' : ''}`}
+            onClick={() => setActiveTab(tab)}
+          >
+            {tab.charAt(0).toUpperCase() + tab.slice(1)}
+          </button>
+        ))}
+      </div>
+
+      {/* Card container: sidebar + content + chat */}
+      <div className="rv-agent-detail-card">
+        <div className="rv-agent-detail-content">
+
+        {/* Left: Sidebar + Content */}
+        <div className="rv-agent-detail-main">
+
+          {/* Sidebar + Content split */}
+          <div className="rv-agent-detail-split">
+            {/* Sidebar: cards with name + description */}
+            <div className="rv-agent-detail-card-sidebar">
+              {sidebarItems.map((item) => {
+                const content = fileCache[item.name];
+                const desc = content ? content.split('\n').filter(l => l.trim() && !l.startsWith('#')).slice(0, 3).join(' ').slice(0, 200) : '';
+                return (
+                  <div
+                    key={item.name}
+                    className={`rv-agent-detail-card-item${item.name === effectiveActiveFile ? ' active' : ''}`}
+                    onClick={() => setActiveFile(item.name)}
+                  >
+                    <div className="rv-agent-card-item-icon">
+                      <span className="material-symbols-outlined rv-icon-md">{item.icon}</span>
+                    </div>
+                    <div className="rv-agent-card-item-text">
+                      <div className="rv-agent-card-item-name">{item.displayName}</div>
+                      {desc && <div className="rv-agent-card-item-desc">{desc}{desc.length >= 100 ? '...' : ''}</div>}
+                    </div>
+                  </div>
+                );
+              })}
+              {activeTab === 'runs' && (
+                <div className="rv-agent-detail-runs-empty">No runs yet</div>
+              )}
+              {activeTab === 'settings' && (
+                <div className="rv-agent-detail-runs-empty">Settings coming soon</div>
+              )}
+            </div>
+
+            {/* Content area */}
+            <div className="rv-agent-detail-viewer">
+              {selectedContent ? (
+                <PromptCardView
+                  content={selectedContent}
+                  fileName={isWorkflow ? (effectiveActiveFile || '') : ''}
+                  agentColor={agent.color}
+                />
+              ) : (
+                <div className="rv-agent-tiles-placeholder">
+                  {activeTab === 'runs' ? 'Select a run to view' :
+                   activeTab === 'settings' ? '' :
+                   'Select an item to view'}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+          {/* Right: Chat */}
+          <div className="rv-agent-detail-chat">
+            <div className="rv-agent-detail-chat-inner">
+              <div className="rv-agent-detail-chat-messages">
+                <div className="rv-agent-detail-chat-empty">
+                  Send a message to interact with this bot
+                </div>
+              </div>
+              <div className="rv-agent-detail-chat-input">
+                <textarea
+                  rows={2}
+                  placeholder={`Message ${formatId(agent.id)}...`}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault();
+                    }
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+
+      </div>
+      </div>
+    </div>
+  );
+}
+
+export function AgentTiles() {
+  useViewLayoutStyles('agents-viewer');
+
+  const onIndex = useCallback((content: string) => {
+    try {
+      const index = JSON.parse(content) as AgentIndex;
+      const folderEntries = Object.entries(index.folders || {});
+      const sortedFolders = folderEntries.sort((a, b) => (a[1].rank ?? 999) - (b[1].rank ?? 999));
+
+      const agents: Agent[] = [];
+      for (const [folderName, folderData] of sortedFolders) {
+        const agentEntries = Object.entries(folderData.agents || {});
+        for (const [agentId, agentData] of agentEntries) {
+          agents.push({ id: agentId, folder: folderName, ...agentData });
+        }
+      }
+
+      useAgentStore.getState().setAgents(agents);
+    } catch {
+      useAgentStore.getState().setError('Failed to parse agents.json');
+    }
+  }, []);
+
+  const onFileContent = useCallback((path: string, content: string) => {
+    // Any .md file from an agent folder
+    if (path.endsWith('.md')) {
+      useAgentStore.getState().setFileContent(stripFrontmatter(content));
+    }
+  }, []);
+
+  const onError = useCallback((error: string) => {
+    useAgentStore.getState().setError(error);
+  }, []);
+
+  const { request } = usePanelData({
+    panel: 'agents-viewer',
+    indexPath: 'settings/agents.json',
+    onIndex,
+    onFileContent,
+    onError,
+  });
+
+  // File loading is now handled inside AgentDetail
+
+  const agents = useAgentStore((s) => s.agents);
+  const loaded = useAgentStore((s) => s.loaded);
+  const expandedId = useAgentStore((s) => s.expandedAgent);
+
+  if (!loaded) {
+    return (
+      <div className="rv-agent-tiles-loading">
+        <span>Loading agents...</span>
+      </div>
+    );
+  }
+
+  const expandedAgent = expandedId ? agents.find((a) => a.id === expandedId) || null : null;
+
+  if (expandedAgent) {
+    return <AgentDetail agent={expandedAgent} request={request} />;
+  }
+
+  return (
+    <div className="rv-agent-tiles">
+      {agents.map((agent) => (
+        <AgentCard key={agent.id} agent={agent} />
+      ))}
+    </div>
+  );
+}

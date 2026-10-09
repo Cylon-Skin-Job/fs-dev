@@ -1,0 +1,31 @@
+{
+  "at": "2026-10-04T16:38:32.591097+00:00",
+  "scope": "ROOT_PROVISIONAL_INSPECTION_EXCLUDED_FROM_FRESH_GATES",
+  "writer_currently_active": false,
+  "full_files_read": {
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js": "48ae78dfda264edb62fadf5bdd72e1f07c2f5b54b127ddb7296c41188f2d70bf",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js": "55bb735409a940717d683a9256a7d55f467a92576923e26fe829518d3effa87e",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html": "968e599ca4814c3a8e246d9d12ee985e0cf8a9ef8e3cd6d55e6b4a9a9b62f480",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css": "f0e280d99afff67dda2c753192697d63dd74d20140794537f6cb2ae774ae8f0d",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-scenarios.mjs": "4456b4ef65bd6cb9cd91e0ef46bc2c739455a712ec13eb06a13f4af90fe29ce0",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-postflight.py": "6cbd74801b66d24cd8ffa333647678d6a0b13f645587728d40bb1785d05750ce",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix_xy_live_readback.mjs": "f32095267ccf77bbabc5b5c4985c2e9157db976006b41e21c02b123921c51a2c",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix_xy_live_smoke.mjs": "9d53162f8ae15a328ac4ae564d66ef5ff2f454b51891c4c8af4df4e70dfa92c0"
+  },
+  "source_observations": "Stable draft ID now Review report. Controller centralizes existing persistence, reset clears completion of all3 then persists once and refreshes. View binds Reset callback to actual HTMLbutton, retains original row/checkbox event mechanics/count wording. CSS addition uses existing variable/fallback style. Current source VM covers original numeric/reversal/reload/allcases plus every8completion-mask Reset/reload and immediatepersist; actual new public oracle includes original reload retention and Reset persistence/currentGuide text. No known material source issue; actual writer terminal and fresh affected gates/live runtime remain required.",
+  "does_not_certify": "No source-only script or provisional active-writer inspection supplies live success, handoff acceptance, owner readiness or S6completion.",
+  "updated_at": "2026-10-04T16:53:39.788809+00:00",
+  "actual_leaf_terminal_observed": "Own exact-prefix native list_agents completed READY_FOR_HANDOFF_REVIEW; no lifecycle closure API available.",
+  "full_author_report_read": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1.md",
+  "author_report_sha256": "999ac8d3cbd95a4c210d7ca37a29e12c83ddbffe1997df22235ec0df33ac583c",
+  "all8_full_read_source_helper_hashes_current": true,
+  "root_current_checks": [
+    "S6-root-fix-code-scenarios.json:39source-only exit0",
+    "S6-root-fix-code-postflight.json:4354exact4deltas/refs/index/modes/52authority/35deps exit0"
+  ],
+  "additional_full_routed_standards": {
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/002-Frontend_UI/PAGE.md": "18a093c333a610ec8d2c77661b29744f1fae6e9ca8f4e113148fee10a0d9fc18",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/PAGE.md": "2b4e55ed7580659b35a91d13f5a7b781960c659868027dd8b6ea6f79e609b105"
+  },
+  "current_scope": "Source inspection/checks complete with no known material issue; fresh actual code handoff and all revised Wiki/final/live/secondwait remain pending. No outerS6 acceptance."
+}

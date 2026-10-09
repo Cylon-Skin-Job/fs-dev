@@ -1,0 +1,8 @@
+(node:98348) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Test Suites: 3 passed, 3 total
+Tests:       12 passed, 12 total
+Snapshots:   0 total
+Time:        0.459 s, estimated 1 s
+Ran all test suites within paths "test/screenshot-file-capture-request-id.test.js", "test/screenshot-protected-view-path.test.js", "test/ws/prompt-submission-recovery.integration.test.js".

@@ -1,0 +1,82 @@
+{
+  "command": "node fusion-studio-client/e2e/chat-architecture/run.mjs --suite backend --mode enforce --cases R8-UI-LIFECYCLE,R7-R8-RUNTIME-OWNERSHIP",
+  "runId": "chat-arch-1790252475283-525765dfb8",
+  "exit": 0,
+  "result": {
+    "runId": "chat-arch-1790252475283-525765dfb8",
+    "status": "passed",
+    "results": [
+      {
+        "id": "R8-UI-LIFECYCLE",
+        "code": 0,
+        "signal": null,
+        "pid": 37112,
+        "timedOut": false,
+        "interrupted": false,
+        "leakedOwnedPids": [],
+        "elapsedMs": 9607
+      },
+      {
+        "id": "R7-R8-RUNTIME-OWNERSHIP",
+        "code": 0,
+        "signal": null,
+        "pid": 38338,
+        "timedOut": false,
+        "interrupted": false,
+        "leakedOwnedPids": [],
+        "elapsedMs": 12896
+      }
+    ],
+    "ownedRunRootRemoved": true,
+    "failure": null
+  },
+  "uiFlows": {
+    "create": {
+      "groupId": "tg-bb9b98a2-3634-41eb-a87c-40974ae8cfdc",
+      "threadId": "2026-09-24T05-21-18-234",
+      "mirror": true
+    },
+    "send": {
+      "accepted": true,
+      "receipt": true,
+      "exchangeId": 1
+    },
+    "stop": {
+      "partial": true,
+      "reason": "interrupted",
+      "threadId": "2026-09-24T05-21-18-234"
+    },
+    "move": {
+      "original": "2026-09-24T05-21-18-234",
+      "newMain": "th-8fd6f4f0-f1aa-434f-89fa-5131e588df4f",
+      "memberCount": 2,
+      "sourceHistoryRetained": true,
+      "fileReadback": true
+    },
+    "reconnect": {
+      "authenticatedHydration": true,
+      "sourcePromptVisible": true,
+      "oneExchange": true
+    },
+    "delete": {
+      "groupAndBothPeersRemoved": true,
+      "receiptsRemoved": true,
+      "mirrorsRemoved": true,
+      "worksurfaceRemoved": true
+    }
+  },
+  "uiCleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "sourceCount": 1606,
+  "sourceMismatches": [],
+  "rawRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790252475283-525765dfb8",
+  "F1Recovery": {
+    "command": "node evidence/spec-05/05D/ORCHESTRATOR-F1-RECOVERY-CHECK.cjs (from repo root using full path)",
+    "exit": 0,
+    "log": "05D/orchestrator-f1-recovery.log",
+    "observed": "one suspension; exact session and drain released; runtime cold; no repeated provider signal; no idle timer"
+  }
+}

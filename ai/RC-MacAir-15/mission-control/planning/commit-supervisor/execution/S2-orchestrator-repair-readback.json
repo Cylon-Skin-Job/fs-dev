@@ -1,0 +1,340 @@
+[
+  {
+    "finding": "S2-F1",
+    "argv": [
+      "/opt/homebrew/bin/python3.12",
+      "-B",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+      "--packet",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-F1-orchestrator-input.json"
+    ],
+    "exit": 0,
+    "script_sha256": "c4768a4f473996b73518ee184fbbe7f1a3e68f37fa15c3c15aed069ac554c8d8",
+    "output": {
+      "agent_gate_proof": false,
+      "candidate": {
+        "authority": {
+          "SPEC": "approved"
+        },
+        "configuration": {
+          "profile": "disposable"
+        },
+        "fixtures": {
+          "oracle": "correct"
+        },
+        "owned": {
+          "code.py": {
+            "index": "base",
+            "mode": "100644",
+            "worktree": "fixed"
+          }
+        },
+        "preparation": "replay-owned-bytes",
+        "sources": [
+          "source-1"
+        ],
+        "target": "target-1"
+      },
+      "dispatch_actions": [],
+      "dispositions": {
+        "F1": [
+          {
+            "actor": "fixture-manager",
+            "evidence": "fixture/repro.log",
+            "status": "open"
+          },
+          {
+            "actor": "fixture-writer",
+            "status": "repair-reported"
+          },
+          {
+            "actor": "fixture-manager",
+            "candidate": {
+              "authority": {
+                "SPEC": "approved"
+              },
+              "configuration": {
+                "profile": "disposable"
+              },
+              "fixtures": {
+                "oracle": "correct"
+              },
+              "owned": {
+                "code.py": {
+                  "index": "base",
+                  "mode": "100644",
+                  "worktree": "fixed"
+                }
+              },
+              "preparation": "replay-owned-bytes",
+              "sources": [
+                "source-1"
+              ],
+              "target": "target-1"
+            },
+            "handoff_id": "F1-handoff",
+            "reviewers": [
+              "fixture-handoff-reviewer"
+            ],
+            "status": "handoff-validated"
+          }
+        ]
+      },
+      "findings": [
+        {
+          "authority": "approved behavior criterion",
+          "confidence": "medium",
+          "evidence": "fixture/repro.log",
+          "id": "F1",
+          "impact": "accepted input returns incorrect result",
+          "path": "code.py",
+          "severity": "high",
+          "validated": true
+        }
+      ],
+      "gaps": [
+        "missing current independent handoff: F1"
+      ],
+      "hold_packet": null,
+      "invalidated": [],
+      "raw_reports": [
+        {
+          "clean_room": true,
+          "dependencies": {
+            "authority": {
+              "SPEC": "approved"
+            },
+            "configuration": {
+              "profile": "disposable"
+            },
+            "fixtures": {
+              "oracle": "correct"
+            },
+            "owned": {
+              "code.py": {
+                "index": "base",
+                "mode": "100644",
+                "worktree": "fixed"
+              }
+            },
+            "preparation": "replay-owned-bytes",
+            "sources": [
+              "source-1"
+            ],
+            "target": "target-1"
+          },
+          "findings": [],
+          "identity": "fixture-final-reviewer",
+          "lenses": [
+            "Behavior & Verification",
+            "Standards Compliance",
+            "Integrations & Dependencies",
+            "Forward Compatibility",
+            "Wiki Impact"
+          ],
+          "raw_path": "fixture/review-1.md",
+          "read_only": true,
+          "result": "clean",
+          "root_inherited": true,
+          "terminal": true
+        }
+      ],
+      "repair_packet": null,
+      "result": "insufficient-evidence",
+      "return": "REVIEW_COMPLETE",
+      "state": "unmet-gate",
+      "unaffected": [
+        "behavior",
+        "F1-handoff"
+      ]
+    }
+  },
+  {
+    "finding": "S2-F2",
+    "argv": [
+      "/opt/homebrew/bin/python3.12",
+      "-B",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+      "--packet",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-F2-orchestrator-input.json"
+    ],
+    "exit": 0,
+    "script_sha256": "c4768a4f473996b73518ee184fbbe7f1a3e68f37fa15c3c15aed069ac554c8d8",
+    "output": {
+      "agent_gate_proof": false,
+      "candidate": {
+        "authority": {
+          "SPEC": "approved"
+        },
+        "configuration": {
+          "profile": "disposable"
+        },
+        "fixtures": {
+          "oracle": "correct"
+        },
+        "owned": {
+          "code.py": {
+            "index": "base",
+            "mode": "100644",
+            "worktree": "bad"
+          }
+        },
+        "preparation": "replay-owned-bytes",
+        "sources": [
+          "source-1"
+        ],
+        "target": "target-1"
+      },
+      "dispatch_actions": [],
+      "dispositions": {
+        "F1": [
+          {
+            "actor": "fixture-manager",
+            "evidence": "fixture/repro.log",
+            "status": "open"
+          }
+        ]
+      },
+      "findings": [
+        {
+          "authority": "approved behavior criterion",
+          "confidence": "medium",
+          "evidence": "fixture/repro.log",
+          "id": "F1",
+          "impact": "accepted input returns incorrect result",
+          "path": "code.py",
+          "severity": "high",
+          "validated": true
+        }
+      ],
+      "gaps": [],
+      "hold_packet": {
+        "affected_behavior": "consumer lacks required value",
+        "checked_sources": [
+          "fixture/decisions.md",
+          "fixture/proposals.md",
+          "history unavailable"
+        ],
+        "consumer": "consumer-1",
+        "evidence": [
+          "fixture/repro.log"
+        ],
+        "kind": "intent",
+        "next_safe_action": "continue independent checks",
+        "preserved_progress": [
+          "unrelated checked seam"
+        ],
+        "provider": "provider-1",
+        "question": "Which accepted provider owns this missing result?",
+        "release_condition": "accepted provider revision and consumer readback pass",
+        "resolver": "owner/provider maintainer",
+        "route": "bounded requirement investigation",
+        "unknowns": [
+          "provider release"
+        ]
+      },
+      "invalidated": [],
+      "raw_reports": [
+        {
+          "clean_room": true,
+          "dependencies": {
+            "authority": {
+              "SPEC": "approved"
+            },
+            "configuration": {
+              "profile": "disposable"
+            },
+            "fixtures": {
+              "oracle": "correct"
+            },
+            "owned": {
+              "code.py": {
+                "index": "base",
+                "mode": "100644",
+                "worktree": "bad"
+              }
+            },
+            "preparation": "replay-owned-bytes",
+            "sources": [
+              "source-1"
+            ],
+            "target": "target-1"
+          },
+          "findings": [
+            {
+              "authority": "approved behavior criterion",
+              "confidence": "medium",
+              "evidence": "fixture/repro.log",
+              "id": "F1",
+              "impact": "accepted input returns incorrect result",
+              "path": "code.py",
+              "severity": "high",
+              "validated": true
+            }
+          ],
+          "identity": "fixture-reviewer-1",
+          "lenses": [
+            "Behavior & Verification",
+            "Standards Compliance",
+            "Integrations & Dependencies",
+            "Forward Compatibility",
+            "Wiki Impact"
+          ],
+          "raw_path": "fixture/review-1.md",
+          "read_only": true,
+          "result": "findings",
+          "root_inherited": true,
+          "terminal": true
+        }
+      ],
+      "repair_packet": {
+        "candidate": {
+          "authority": {
+            "SPEC": "approved"
+          },
+          "configuration": {
+            "profile": "disposable"
+          },
+          "fixtures": {
+            "oracle": "correct"
+          },
+          "owned": {
+            "code.py": {
+              "index": "base",
+              "mode": "100644",
+              "worktree": "bad"
+            }
+          },
+          "preparation": "replay-owned-bytes",
+          "sources": [
+            "source-1"
+          ],
+          "target": "target-1"
+        },
+        "finding_ids": [
+          "F1"
+        ],
+        "findings": [
+          {
+            "authority": "approved behavior criterion",
+            "confidence": "medium",
+            "evidence": "fixture/repro.log",
+            "id": "F1",
+            "impact": "accepted input returns incorrect result",
+            "path": "code.py",
+            "severity": "high",
+            "validated": true
+          }
+        ],
+        "manager": "fixture-manager",
+        "return": "READY_FOR_HANDOFF_REVIEW"
+      },
+      "result": "insufficient-evidence",
+      "return": "REVIEW_COMPLETE",
+      "state": "needs-owner",
+      "unaffected": [
+        "behavior"
+      ]
+    }
+  }
+]

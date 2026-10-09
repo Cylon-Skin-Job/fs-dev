@@ -1,0 +1,45 @@
+{
+  "at": "2026-10-04T13:52:18.747673+00:00",
+  "actor": "/root/s6_supervisor_intent_1",
+  "role": "mc-commit-supervisor",
+  "host": "local",
+  "identity_kind": "actual runtime child canonical task path; no fabricated persistent UUID",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "actual_memory_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "source_root": "/Users/rccurtrightjr./projects/fs-dev",
+  "candidate": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "manager": "/root",
+  "report_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/intent-hold-report.md",
+  "skill_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md",
+  "skill_sha256": "b4ec0266a8d72f573dd4f3670c671a856ee5cc98b6942aad48683fa22fb14d68",
+  "profile_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-supervisor.toml",
+  "profile_sha256": "01887fdc12c962be5a7438b513836e6269cff1f9683b7a17c2edfbf2aa961044",
+  "assignment_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-supervisor-intent-assignment.md",
+  "assignment_sha256": "8c05dd82455f1c695d7ed04d2caaf5414776b63ab0c53a586e6f31812f5132d3",
+  "fallback": "supported default agent explicitly loaded exact installed skill/profile developer instructions; no host TOML profile loader claim",
+  "effective_permissions": {
+    "sandbox_mode": "danger-full-access",
+    "approval_policy": "never",
+    "evidence": "Current host developer permissions, not config inference"
+  },
+  "model_effort": {
+    "root_inherited": true,
+    "overrides": false,
+    "concrete_settings_api": "unavailable; no guessed model/effort value"
+  },
+  "ownership": "Existing substantive J records release reconciliation, unique intent hold and read-only current checks only; no candidate/profile/source mutation. Root owns disjoint E coordination. Preserve others.",
+  "predecessor": {
+    "identity": "/root/s6_supervisor_provider_1",
+    "terminal": "completed",
+    "return": "waiting-dependency",
+    "observed_via": "Actual collaboration.list_agents on this turn plus parent E terminal/ledger receipt; only lifecycle used from other earlier agents text.",
+    "release_issued_after_observed_terminal": true,
+    "close_agent": "unavailable"
+  },
+  "matching_automation_records": [],
+  "scheduler_observation": "Read actual current CODEX_HOME automation TOMLs: no matches for rehearsal job, S6 supervisor, Commit Supervisor or mission-control; no schedule created.",
+  "mc": "inactive; owner-assigned rehearsal; no stopped active cycle invented",
+  "children": [],
+  "git_operation_authority": "NONE",
+  "history_limit": "Original persistent owner history UUID/turn locators unavailable. Bounded approved SPEC/approval, fixture authority/receipt, current explicit root assignment and raw controls govern. No history identity invented; no broad history audit needed for explicitly held artificial control."
+}

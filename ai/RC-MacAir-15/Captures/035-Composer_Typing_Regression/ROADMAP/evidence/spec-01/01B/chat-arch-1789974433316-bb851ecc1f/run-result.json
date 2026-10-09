@@ -1,0 +1,22 @@
+{
+  "runId": "chat-arch-1789974433316-bb851ecc1f",
+  "status": "failed",
+  "results": [
+    {
+      "id": "R4-DISTINCT-ATTEMPTS",
+      "code": 1,
+      "signal": null,
+      "pid": 20885,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 11405
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "R4-DISTINCT-ATTEMPTS exited 1",
+    "stack": "Error: R4-DISTINCT-ATTEMPTS exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:355:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

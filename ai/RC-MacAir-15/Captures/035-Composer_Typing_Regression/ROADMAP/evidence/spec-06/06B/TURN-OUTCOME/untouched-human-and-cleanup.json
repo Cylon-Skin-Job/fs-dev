@@ -1,0 +1,7 @@
+{
+  "at": "2026-09-27T08:39:10.924003+00:00",
+  "humanSession": "human-1790494814495-ca038557",
+  "readOnlyProcessObservation": "68194 /opt/homebrew/Cellar/node/25.6.1/bin/node /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/human-session.mjs\n68197 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron -r /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/playwright-core/lib/server/electron/loader.js --inspect=0 --remote-debugging-port=0 /var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790494814495-ca038557-SYwgRn/stage/fusion-studio-client/electron/main.cjs --chat-architecture-token=chat-architecture-owner-chat-arch-human-1790494814495-ca038557\n",
+  "priorLeakedFixturePid80395Absent": true,
+  "humanActions": []
+}

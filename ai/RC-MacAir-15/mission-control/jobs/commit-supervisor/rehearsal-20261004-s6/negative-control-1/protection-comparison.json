@@ -1,0 +1,161 @@
+{
+  "actor": "/root/s6_supervisor_refusal_1",
+  "before": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/before.json",
+    "sha256": "83b645afa504deadce719660a2c7946ac67d989619e460e050647c0deced5e54"
+  },
+  "after": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/after.json",
+    "sha256": "3a81a8e3d8a8ecd8afa77343db63c5136d2b2c81ee73eaf56c2fd80613299d8c"
+  },
+  "comparisons": {
+    "candidate": {
+      "equal": true,
+      "differences": {}
+    },
+    "source_paths": {
+      "equal": true,
+      "differences": {}
+    },
+    "source_build_caches": {
+      "equal": true,
+      "differences": {}
+    },
+    "protected_profile_storage": {
+      "equal": false,
+      "differences": {
+        "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/data/fusion.db": {
+          "before": {
+            "exists": true,
+            "mode": "0o100644",
+            "kind": "file",
+            "sha256": "2c17f62d2f1531360ef585b4dd7cebe207dbdef1645972abbdf732f8aa4deff5",
+            "dev": 16777230,
+            "ino": 39348215,
+            "size": 386600960,
+            "mtime_ns": 1791143415667240523
+          },
+          "after": {
+            "exists": true,
+            "mode": "0o100644",
+            "kind": "file",
+            "sha256": "1c3410bc30aca64d435b90b4d3dc343a621b86aff4ae84a0fd0add26b774817d",
+            "dev": 16777230,
+            "ino": 39348215,
+            "size": 386973696,
+            "mtime_ns": 1791143555517978376
+          }
+        },
+        "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server-data/fusion.db": {
+          "before": {
+            "exists": true,
+            "mode": "0o100644",
+            "kind": "file",
+            "sha256": "d7de502fcd72f53b03a9ddfe7dd83e5cd3cdb608d59c44fddc43c0470ee95f89",
+            "dev": 16777230,
+            "ino": 194683133,
+            "size": 38154240,
+            "mtime_ns": 1791143416581019587
+          },
+          "after": {
+            "exists": true,
+            "mode": "0o100644",
+            "kind": "file",
+            "sha256": "03180f2ea2ec692768a05834c434a00aa09719864535d898a90eaa11e58f149b",
+            "dev": 16777230,
+            "ino": 194683133,
+            "size": 38518784,
+            "mtime_ns": 1791143555520957166
+          }
+        }
+      }
+    },
+    "private_profile_storage": {
+      "equal": true,
+      "differences": {}
+    },
+    "historical_job": {
+      "equal": true,
+      "differences": {}
+    },
+    "schedules": {
+      "equal": true
+    },
+    "processes": {
+      "equal": true,
+      "items": [
+        {
+          "pid": 48636,
+          "identity_equal": true,
+          "cwd_executable_equal": true
+        },
+        {
+          "pid": 48653,
+          "identity_equal": true,
+          "cwd_executable_equal": true
+        },
+        {
+          "pid": 77002,
+          "identity_equal": true,
+          "cwd_executable_equal": true
+        },
+        {
+          "pid": 77007,
+          "identity_equal": true,
+          "cwd_executable_equal": true
+        },
+        {
+          "pid": 31000,
+          "identity_equal": true,
+          "cwd_executable_equal": true
+        },
+        {
+          "pid": 31008,
+          "identity_equal": true,
+          "cwd_executable_equal": true
+        },
+        {
+          "pid": 31036,
+          "identity_equal": true,
+          "cwd_executable_equal": true
+        },
+        {
+          "pid": 31138,
+          "identity_equal": true,
+          "cwd_executable_equal": true
+        }
+      ]
+    },
+    "raw_git": {
+      "source": {
+        "status": false,
+        "index-stage": true,
+        "index-flags": true,
+        "refs": true,
+        "configuration": true,
+        "remotes": true,
+        "branch": true,
+        "head": true,
+        "physical-index": true
+      },
+      "candidate": {
+        "status": true,
+        "index-stage": true,
+        "index-flags": true,
+        "refs": true,
+        "configuration": true,
+        "remotes": true,
+        "branch": true,
+        "head": true,
+        "physical-index": true
+      }
+    }
+  },
+  "observer_candidate_ref_index_runtime_operations": [],
+  "observer_writes": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1",
+  "source_exclusions": [
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/",
+    "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/"
+  ],
+  "limit": "Source E/J are authorized record namespaces; historical J is separately compared excluding only this observer folder. Runtime/profile raw hashes compared and no observed live changes silently excluded. Access-time changes excluded."
+}

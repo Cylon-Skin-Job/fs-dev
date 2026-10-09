@@ -1,0 +1,30 @@
+{
+  "command": [
+    "ps",
+    "-p",
+    "48636",
+    "-o",
+    "pid=,ppid=,lstart=,command="
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "GIT_LITERAL_PATHSPECS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "started": "2026-10-04T19:52:38.745967+00:00",
+  "finished": "2026-10-04T19:52:38.751535+00:00",
+  "exit_code": 0,
+  "stdout": "48636     1 Thu Oct  1 12:36:56 2026     /Applications/Fusion Studio Alpha.app/Contents/MacOS/Fusion Studio\n",
+  "stderr": "",
+  "stdout_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/after-process-48636.stdout",
+    "sha256": "ea7975712d6a5c36ea731919a2e2abf3ff8786ceb6244b68858550fb37530f2b",
+    "size": 108
+  },
+  "stderr_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/after-process-48636.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  }
+}

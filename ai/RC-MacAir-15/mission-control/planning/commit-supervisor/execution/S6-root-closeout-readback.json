@@ -1,0 +1,72 @@
+{
+  "at": "2026-10-04T21:34:47.441559+00:00",
+  "actor": "/root",
+  "scope": "Independent frozen S6 documentation/full raw manifest inspection; own gate and root acceptance still separate",
+  "manifest_sha256": "5a3cd688a30036095af7da276907543961331fe3a11bd7fa2db89486d98357aa",
+  "freeze_sha256": "80647ab62331481e469d48b3369f1115b02dab85e6d627b03a83b87d0b2ce3a0",
+  "authority_records": 74,
+  "current_changed_doc_version_leaves": 8,
+  "domain_raw_fingerprints_checked": 3309,
+  "complete_preimages": 7,
+  "exclusive_version": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/.versions/2026-10-04-141458.md",
+  "prior_versions_unchanged": 1,
+  "source_snapshot_changes": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/.versions/2026-10-04-141458.md",
+      "kind": "added"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md",
+      "kind": "modified"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/AGENTS.md",
+      "kind": "modified"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/deployment.md",
+      "kind": "modified"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/handoff.md",
+      "kind": "modified"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance-packet-draft.md",
+      "kind": "added"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-preservation-check.py",
+      "kind": "added"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-static-checks.py",
+      "kind": "modified"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/registry.md",
+      "kind": "modified"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+      "kind": "modified"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/todo.md",
+      "kind": "modified"
+    }
+  ],
+  "all_other_snapshot_leaves_exact": true,
+  "source_cache193_current_exact": true,
+  "candidate4353_before_after_exact": true,
+  "private_profile460_before_after_exact": true,
+  "narrow_raw_commands": 8,
+  "original_criteria": 15,
+  "detailed_criteria": 19,
+  "neutral_contextual_entries": 85,
+  "process_proof_raw_pins_checked": true,
+  "protected_storage11_current_identity_exact": true,
+  "current_source_index": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+  "read_coverage": "Full current article, all six doc diffs+clarifications, full own reviewer assignment, readbacks/edit helpers, ownership/write/preimages/current source mechanics; raw manifest/snapshots/commands full hashes/structures locally inspected",
+  "pending": "Own reviewer native END/full report and separate root full-S6 gate, final suites and whole-SPEC gate"
+}

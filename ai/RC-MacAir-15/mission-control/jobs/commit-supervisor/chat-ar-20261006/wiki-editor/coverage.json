@@ -1,0 +1,3335 @@
+{
+  "at": "2026-10-06T22:21:28.813808+00:00",
+  "original_subject_count": 17,
+  "total_page_count": 19,
+  "changed": 5,
+  "retained": 14,
+  "claims": [
+    {
+      "page": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/006-Background_Services/PAGE.md",
+      "original_retirement_startup_subject": true,
+      "disposition": "retained",
+      "claim": "Verified lease-gated post-listen automation, no automatic broad observation, independent Google polling and boot CSS remain; existing failure and worker/runtime limits remain accurate.",
+      "preimage_sha256": "72168c89bf6f464a480efb27798e231664d27c49f51f7050a28132e6e400972b",
+      "page_sha256": "72168c89bf6f464a480efb27798e231664d27c49f51f7050a28132e6e400972b",
+      "body_sha256": "23d99dfb3813084236022e607671e06874a0dd9049a971b4379d07b7a6770169",
+      "changed_by_leaf": false,
+      "last_modified": "2026-10-06T01:16:27Z",
+      "evidence_ids": [
+        "startup-lease",
+        "retired-observation",
+        "calendar",
+        "legacy-trigger",
+        "startup-test-assertions"
+      ],
+      "sources": [
+        {
+          "path": "fusion-studio-server/lib/views/readiness-startup.js",
+          "sha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+          "bytes": 1280,
+          "lines": [
+            1,
+            37
+          ],
+          "excerpt_sha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3"
+        },
+        {
+          "path": "fusion-studio-server/lib/startup.js",
+          "sha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+          "bytes": 38793,
+          "lines": [
+            630,
+            865
+          ],
+          "excerpt_sha256": "41d0cb824098f03b0edc870716503971cf22c7064a95e8758e11394bc5475893"
+        },
+        {
+          "path": "fusion-studio-server/lib/views/readiness-coordinator.js",
+          "sha256": "5dfc41f78021b16e80da8db0735cdbd56021b47c8dbd83da820e58756ef34011",
+          "bytes": 10665,
+          "lines": [
+            1,
+            260
+          ],
+          "excerpt_sha256": "9af5d01cd435cbfcfff0c1630581d9fbe2f1e2238497aba476a2fca250d02283"
+        },
+        {
+          "path": "fusion-studio-server/lib/views/readiness-runtime.js",
+          "sha256": "437da5103af964c86a0f5a008593174e699cc52099efa8bdef8b3813bb95719b",
+          "bytes": 4200,
+          "lines": [
+            1,
+            133
+          ],
+          "excerpt_sha256": "437da5103af964c86a0f5a008593174e699cc52099efa8bdef8b3813bb95719b"
+        },
+        {
+          "path": "fusion-studio-server/lib/startup.js",
+          "sha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+          "bytes": 38793,
+          "lines": [
+            630,
+            865
+          ],
+          "excerpt_sha256": "41d0cb824098f03b0edc870716503971cf22c7064a95e8758e11394bc5475893"
+        },
+        {
+          "path": "fusion-studio-server/lib/triggers/trigger-loader.js",
+          "sha256": "be96186df7eb0bc2ebc55d6be96798e679d9e55b4b7f35d3a1c72ebaacfc9b54",
+          "bytes": 7502,
+          "lines": [
+            165,
+            210
+          ],
+          "excerpt_sha256": "804bba7142de9aca03c02572f946254e93cea262344e1f215fe835b7af009155"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger.js",
+          "sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9",
+          "bytes": 5125,
+          "lines": [
+            1,
+            183
+          ],
+          "excerpt_sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9"
+        },
+        {
+          "path": "fusion-studio-server/lib/calendar/index.js",
+          "sha256": "ecfab563937ba6f24595f22a8f51484145c01bd8f1ba0a0ef9955372b05a99fb",
+          "bytes": 310,
+          "lines": [
+            1,
+            12
+          ],
+          "excerpt_sha256": "ecfab563937ba6f24595f22a8f51484145c01bd8f1ba0a0ef9955372b05a99fb"
+        },
+        {
+          "path": "fusion-studio-server/lib/calendar/google/poller.js",
+          "sha256": "eee8e2cd76476f899e3e69bce3f5cdee34e7643a68710e3dcbbb100f41e6ffe3",
+          "bytes": 620,
+          "lines": [
+            1,
+            24
+          ],
+          "excerpt_sha256": "eee8e2cd76476f899e3e69bce3f5cdee34e7643a68710e3dcbbb100f41e6ffe3"
+        },
+        {
+          "path": "fusion-studio-client/src/components/calendar/CalendarViewer.tsx",
+          "sha256": "1c3979328a4dc20b0c628a182047b6fdfc1ea601b430fb95ca00960ec5b3a716",
+          "bytes": 4835,
+          "lines": [
+            1,
+            120
+          ],
+          "excerpt_sha256": "b06a3941c60dfd33c49671363085fe014dee9a9a654a1ba69317a7bb29c30f22"
+        },
+        {
+          "path": "fusion-studio-client/src/state/calendarStore.ts",
+          "sha256": "271b72f695597f64228ec1634c2ceaf173273739e1b8d22d9e47045a858a4b70",
+          "bytes": 6999,
+          "lines": [
+            1,
+            210
+          ],
+          "excerpt_sha256": "4e3d4ff3bc2f83d80571588760eca126c65abb0674296e74b98edfeb13245747"
+        },
+        {
+          "path": "fusion-studio-server/lib/triggers/trigger-loader.js",
+          "sha256": "be96186df7eb0bc2ebc55d6be96798e679d9e55b4b7f35d3a1c72ebaacfc9b54",
+          "bytes": 7502,
+          "lines": [
+            1,
+            210
+          ],
+          "excerpt_sha256": "be96186df7eb0bc2ebc55d6be96798e679d9e55b4b7f35d3a1c72ebaacfc9b54"
+        },
+        {
+          "path": "fusion-studio-server/lib/triggers/cron-scheduler.js",
+          "sha256": "fcec3ca69760e86cd1d7063deea4a59b3eb9668890203086e33237322d2f7b21",
+          "bytes": 6677,
+          "lines": [
+            1,
+            223
+          ],
+          "excerpt_sha256": "fcec3ca69760e86cd1d7063deea4a59b3eb9668890203086e33237322d2f7b21"
+        },
+        {
+          "path": "fusion-studio-server/lib/watcher/actions.js",
+          "sha256": "dd73712ce0879d9452097a77f8f3330ac277eb2fa1becbc7e3284b653ef3ada7",
+          "bytes": 7253,
+          "lines": [
+            1,
+            210
+          ],
+          "excerpt_sha256": "dd73712ce0879d9452097a77f8f3330ac277eb2fa1becbc7e3284b653ef3ada7"
+        },
+        {
+          "path": "fusion-studio-server/lib/runner/index.js",
+          "sha256": "c1811044116fbade2bc70ec4adef164a3c9cc4f8efa398aa47726688a4dda006",
+          "bytes": 8750,
+          "lines": [
+            1,
+            200
+          ],
+          "excerpt_sha256": "fc5f24450396eb9a8ae925ff7899b9ddfc07a70f2ea4dd727d882358229fdd00"
+        },
+        {
+          "path": "fusion-studio-server/lib/runner/heartbeat.js",
+          "sha256": "6cfbe02376ad3e2b1e625966773948710ded9953326c582fb127d0c428ef5224",
+          "bytes": 3296,
+          "lines": [
+            1,
+            110
+          ],
+          "excerpt_sha256": "6cfbe02376ad3e2b1e625966773948710ded9953326c582fb127d0c428ef5224"
+        },
+        {
+          "path": "fusion-studio-server/test/runtime/workspace-startup-integrity.test.js",
+          "sha256": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77",
+          "bytes": 12638,
+          "lines": [
+            1,
+            227
+          ],
+          "excerpt_sha256": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77"
+        },
+        {
+          "path": "fusion-studio-server/test/views/readiness-startup.test.js",
+          "sha256": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e",
+          "bytes": 2084,
+          "lines": [
+            1,
+            47
+          ],
+          "excerpt_sha256": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e"
+        },
+        {
+          "path": "fusion-studio-server/test/calendar/apple-listener-retirement.test.js",
+          "sha256": "7b337c2c5b6e4eae1d8abc11e9308bc66620236ad83e8971d40c0591340ab896",
+          "bytes": 885,
+          "lines": [
+            1,
+            21
+          ],
+          "excerpt_sha256": "7b337c2c5b6e4eae1d8abc11e9308bc66620236ad83e8971d40c0591340ab896"
+        },
+        {
+          "path": "fusion-studio-server/test/triggers/trigger-loader.test.js",
+          "sha256": "1ff8f21b44617306373a64e1fd9c04a5131f335ed8fa3e99ddd67ba4753c006f",
+          "bytes": 4740,
+          "lines": [
+            1,
+            154
+          ],
+          "excerpt_sha256": "1ff8f21b44617306373a64e1fd9c04a5131f335ed8fa3e99ddd67ba4753c006f"
+        }
+      ],
+      "limits": "Read current actual code/test sources; test assertions and accepted historical results do not certify native capture, ordinary provider operation or installed Alpha."
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/005-Background_Agents/PAGE.md",
+      "original_retirement_startup_subject": true,
+      "disposition": "retained",
+      "claim": "Legacy event and cron trigger registration survives admitted startup. File-change definitions have no watcher input. Trigger/action files do not prove autonomous worker launch or governed permission.",
+      "preimage_sha256": "ef6b105adb9073e20993ecbcbe4b7bbaab341a1bda1838687dc7de207910ab53",
+      "page_sha256": "ef6b105adb9073e20993ecbcbe4b7bbaab341a1bda1838687dc7de207910ab53",
+      "body_sha256": "df093e3e598f2c5b9e7a971fbae8bc1428e5f43e717e0026a500a48713ca8ecb",
+      "changed_by_leaf": false,
+      "last_modified": "2026-10-06T01:16:27Z",
+      "evidence_ids": [
+        "startup-lease",
+        "legacy-trigger",
+        "retired-observation",
+        "startup-test-assertions"
+      ],
+      "sources": [
+        {
+          "path": "fusion-studio-server/lib/views/readiness-startup.js",
+          "sha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+          "bytes": 1280,
+          "lines": [
+            1,
+            37
+          ],
+          "excerpt_sha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3"
+        },
+        {
+          "path": "fusion-studio-server/lib/startup.js",
+          "sha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+          "bytes": 38793,
+          "lines": [
+            630,
+            865
+          ],
+          "excerpt_sha256": "41d0cb824098f03b0edc870716503971cf22c7064a95e8758e11394bc5475893"
+        },
+        {
+          "path": "fusion-studio-server/lib/views/readiness-coordinator.js",
+          "sha256": "5dfc41f78021b16e80da8db0735cdbd56021b47c8dbd83da820e58756ef34011",
+          "bytes": 10665,
+          "lines": [
+            1,
+            260
+          ],
+          "excerpt_sha256": "9af5d01cd435cbfcfff0c1630581d9fbe2f1e2238497aba476a2fca250d02283"
+        },
+        {
+          "path": "fusion-studio-server/lib/views/readiness-runtime.js",
+          "sha256": "437da5103af964c86a0f5a008593174e699cc52099efa8bdef8b3813bb95719b",
+          "bytes": 4200,
+          "lines": [
+            1,
+            133
+          ],
+          "excerpt_sha256": "437da5103af964c86a0f5a008593174e699cc52099efa8bdef8b3813bb95719b"
+        },
+        {
+          "path": "fusion-studio-server/lib/triggers/trigger-loader.js",
+          "sha256": "be96186df7eb0bc2ebc55d6be96798e679d9e55b4b7f35d3a1c72ebaacfc9b54",
+          "bytes": 7502,
+          "lines": [
+            1,
+            210
+          ],
+          "excerpt_sha256": "be96186df7eb0bc2ebc55d6be96798e679d9e55b4b7f35d3a1c72ebaacfc9b54"
+        },
+        {
+          "path": "fusion-studio-server/lib/triggers/cron-scheduler.js",
+          "sha256": "fcec3ca69760e86cd1d7063deea4a59b3eb9668890203086e33237322d2f7b21",
+          "bytes": 6677,
+          "lines": [
+            1,
+            223
+          ],
+          "excerpt_sha256": "fcec3ca69760e86cd1d7063deea4a59b3eb9668890203086e33237322d2f7b21"
+        },
+        {
+          "path": "fusion-studio-server/lib/watcher/actions.js",
+          "sha256": "dd73712ce0879d9452097a77f8f3330ac277eb2fa1becbc7e3284b653ef3ada7",
+          "bytes": 7253,
+          "lines": [
+            1,
+            210
+          ],
+          "excerpt_sha256": "dd73712ce0879d9452097a77f8f3330ac277eb2fa1becbc7e3284b653ef3ada7"
+        },
+        {
+          "path": "fusion-studio-server/lib/runner/index.js",
+          "sha256": "c1811044116fbade2bc70ec4adef164a3c9cc4f8efa398aa47726688a4dda006",
+          "bytes": 8750,
+          "lines": [
+            1,
+            200
+          ],
+          "excerpt_sha256": "fc5f24450396eb9a8ae925ff7899b9ddfc07a70f2ea4dd727d882358229fdd00"
+        },
+        {
+          "path": "fusion-studio-server/lib/runner/heartbeat.js",
+          "sha256": "6cfbe02376ad3e2b1e625966773948710ded9953326c582fb127d0c428ef5224",
+          "bytes": 3296,
+          "lines": [
+            1,
+            110
+          ],
+          "excerpt_sha256": "6cfbe02376ad3e2b1e625966773948710ded9953326c582fb127d0c428ef5224"
+        },
+        {
+          "path": "fusion-studio-server/lib/startup.js",
+          "sha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+          "bytes": 38793,
+          "lines": [
+            630,
+            865
+          ],
+          "excerpt_sha256": "41d0cb824098f03b0edc870716503971cf22c7064a95e8758e11394bc5475893"
+        },
+        {
+          "path": "fusion-studio-server/lib/triggers/trigger-loader.js",
+          "sha256": "be96186df7eb0bc2ebc55d6be96798e679d9e55b4b7f35d3a1c72ebaacfc9b54",
+          "bytes": 7502,
+          "lines": [
+            165,
+            210
+          ],
+          "excerpt_sha256": "804bba7142de9aca03c02572f946254e93cea262344e1f215fe835b7af009155"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger.js",
+          "sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9",
+          "bytes": 5125,
+          "lines": [
+            1,
+            183
+          ],
+          "excerpt_sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9"
+        },
+        {
+          "path": "fusion-studio-server/test/runtime/workspace-startup-integrity.test.js",
+          "sha256": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77",
+          "bytes": 12638,
+          "lines": [
+            1,
+            227
+          ],
+          "excerpt_sha256": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77"
+        },
+        {
+          "path": "fusion-studio-server/test/views/readiness-startup.test.js",
+          "sha256": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e",
+          "bytes": 2084,
+          "lines": [
+            1,
+            47
+          ],
+          "excerpt_sha256": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e"
+        },
+        {
+          "path": "fusion-studio-server/test/calendar/apple-listener-retirement.test.js",
+          "sha256": "7b337c2c5b6e4eae1d8abc11e9308bc66620236ad83e8971d40c0591340ab896",
+          "bytes": 885,
+          "lines": [
+            1,
+            21
+          ],
+          "excerpt_sha256": "7b337c2c5b6e4eae1d8abc11e9308bc66620236ad83e8971d40c0591340ab896"
+        },
+        {
+          "path": "fusion-studio-server/test/triggers/trigger-loader.test.js",
+          "sha256": "1ff8f21b44617306373a64e1fd9c04a5131f335ed8fa3e99ddd67ba4753c006f",
+          "bytes": 4740,
+          "lines": [
+            1,
+            154
+          ],
+          "excerpt_sha256": "1ff8f21b44617306373a64e1fd9c04a5131f335ed8fa3e99ddd67ba4753c006f"
+        }
+      ],
+      "limits": "Read current actual code/test sources; test assertions and accepted historical results do not certify native capture, ordinary provider operation or installed Alpha."
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md",
+      "original_retirement_startup_subject": true,
+      "disposition": "metadata-only",
+      "claim": "Fixed duplicate metadata.last-modified using strict installed gray-matter parse; body and source list preserved. Existing passive/assistant activation, persistence, stop and optional independent mutation association remain scoped.",
+      "preimage_sha256": "ec38f18dc55ffb9d59f46683116aae158f2cf2643ae76a99a6f26df2d9f6d293",
+      "page_sha256": "47e449cc8809a756958cc0947f4de66d5679b0375ad6c85a4a3caa6829b02946",
+      "body_sha256": "3a3e9617cd7927f8dcd80199a24a463576a1542d4b6772f0cfc7e8b9b3498fc0",
+      "changed_by_leaf": true,
+      "last_modified": "2026-10-06T22:14:26Z",
+      "evidence_ids": [
+        "chat-runtime",
+        "mutation-association",
+        "legacy-ledger"
+      ],
+      "sources": [
+        {
+          "path": "fusion-studio-server/lib/thread/thread-open-handler.js",
+          "sha256": "fcf62ab684ad48efb9d71ee651b8143385df1a28991deb3d72c94a0e0cadd4cb",
+          "bytes": 6049,
+          "lines": [
+            1,
+            167
+          ],
+          "excerpt_sha256": "fcf62ab684ad48efb9d71ee651b8143385df1a28991deb3d72c94a0e0cadd4cb"
+        },
+        {
+          "path": "fusion-studio-server/lib/thread/session-lifecycle.js",
+          "sha256": "747b27becdf523f4083f7ccac3ea066bd7b128129d600fccb948fee8a498a62f",
+          "bytes": 11805,
+          "lines": [
+            1,
+            200
+          ],
+          "excerpt_sha256": "6926b21ccf629612ee1bfbbc998621dd7b440321e9160dce5031f3d971d8b285"
+        },
+        {
+          "path": "fusion-studio-server/lib/thread/runtime-stop.js",
+          "sha256": "34e3689cc378b22ffe23a218153cefa379882f949ffe7f5c8ae7be9080f9af4a",
+          "bytes": 13677,
+          "lines": [
+            1,
+            200
+          ],
+          "excerpt_sha256": "38515f647197ddeef3ae56905381f59922c65a38acab425bea9c00be9985c048"
+        },
+        {
+          "path": "fusion-studio-server/lib/thread/thread-runtime-manager.js",
+          "sha256": "253a06ed66420936bd700c055f26b3e5a9a4689bfb4a65b707b3406536608859",
+          "bytes": 13058,
+          "lines": [
+            1,
+            180
+          ],
+          "excerpt_sha256": "74ad239e0c57e67c3fe633e8bb8ffef7e55c4db521ab756b8378c5f0873081d6"
+        },
+        {
+          "path": "fusion-studio-server/lib/chat-metadata/collectors/file-mutations.js",
+          "sha256": "cbd83ed651b03a2eeee368f99210c6e1b52733a5179d765b7909d59d593b06d7",
+          "bytes": 2921,
+          "lines": [
+            1,
+            94
+          ],
+          "excerpt_sha256": "cbd83ed651b03a2eeee368f99210c6e1b52733a5179d765b7909d59d593b06d7"
+        },
+        {
+          "path": "fusion-studio-server/lib/event-bus.js",
+          "sha256": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846",
+          "bytes": 5778,
+          "lines": [
+            1,
+            172
+          ],
+          "excerpt_sha256": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger.js",
+          "sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9",
+          "bytes": 5125,
+          "lines": [
+            1,
+            183
+          ],
+          "excerpt_sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger-subscriber.js",
+          "sha256": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692",
+          "bytes": 2020,
+          "lines": [
+            1,
+            70
+          ],
+          "excerpt_sha256": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692"
+        }
+      ],
+      "limits": "Read current actual code/test sources; test assertions and accepted historical results do not certify native capture, ordinary provider operation or installed Alpha."
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+      "original_retirement_startup_subject": true,
+      "disposition": "rewritten-bounded",
+      "claim": "Direct capture awaits matching save acknowledgment, then adds saved PNG to the exact pending owner. Main view/group selection, explicit component session scope, Side placement, header qualified Main/Legacy fallback and actual hidden-view/unmount/away-return cancellation are documented. Retained gallery, preview, retired macOS source and privacy limits remain.",
+      "preimage_sha256": "b0b3a19ca50b7ef657f5429e8643a9f1aee75a6f72573d60482a2cc3ca915e5d",
+      "page_sha256": "57b85d4acc3034dbc2a64fec9994effa98386419d41bcd6dcc526fbcd6a96d18",
+      "body_sha256": "e7204bdacc75ed682105e783069b442ea55ca09f88f89abf84d31de00cf3ffe2",
+      "changed_by_leaf": true,
+      "last_modified": "2026-10-06T22:15:19Z",
+      "evidence_ids": [
+        "screenshot-owner",
+        "screenshot-persist",
+        "screenshot-gallery-preview",
+        "screenshot-test-assertions"
+      ],
+      "sources": [
+        {
+          "path": "fusion-studio-client/src/screenshots/chatScreenshotCapture.ts",
+          "sha256": "18eb2caf9261a19d30ad35c5ac36a64c51ee22e08567e8cfb2ac48d84e9b12f1",
+          "bytes": 7877,
+          "lines": [
+            1,
+            210
+          ],
+          "excerpt_sha256": "18eb2caf9261a19d30ad35c5ac36a64c51ee22e08567e8cfb2ac48d84e9b12f1"
+        },
+        {
+          "path": "fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx",
+          "sha256": "b3dcd745e057d9e8d350f6623d8a0b697f47b69778af1e29fc95946c0f758463",
+          "bytes": 6691,
+          "lines": [
+            1,
+            145
+          ],
+          "excerpt_sha256": "0b39891e353b90fbd09a91a15493f928075fe657080826a3422d8bc2faa4423b"
+        },
+        {
+          "path": "fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx",
+          "sha256": "9d61acd10d826a53a2fed5d2c3b4a185721d5ef364632713454b679909a15cd1",
+          "bytes": 3422,
+          "lines": [
+            1,
+            96
+          ],
+          "excerpt_sha256": "9d61acd10d826a53a2fed5d2c3b4a185721d5ef364632713454b679909a15cd1"
+        },
+        {
+          "path": "fusion-studio-client/src/components/chat/ChatSurface.tsx",
+          "sha256": "eddbcc616a6b4ccfbf211db031901dcb9fc22ec32d6bbbe0ccd50b8c1ff807f8",
+          "bytes": 3480,
+          "lines": [
+            1,
+            103
+          ],
+          "excerpt_sha256": "eddbcc616a6b4ccfbf211db031901dcb9fc22ec32d6bbbe0ccd50b8c1ff807f8"
+        },
+        {
+          "path": "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+          "sha256": "b9202119baf0caa6ea08022ba2e6a322ec8c15e874d7d82d68ad8a4b20b12127",
+          "bytes": 5965,
+          "lines": [
+            1,
+            146
+          ],
+          "excerpt_sha256": "b9202119baf0caa6ea08022ba2e6a322ec8c15e874d7d82d68ad8a4b20b12127"
+        },
+        {
+          "path": "fusion-studio-client/src/lib/chat/side-chat-placements.ts",
+          "sha256": "109d5f63baf402c39dddf8cc96a93a95d2108e1988fca5dca99a7ad263b417e1",
+          "bytes": 2672,
+          "lines": [
+            1,
+            64
+          ],
+          "excerpt_sha256": "109d5f63baf402c39dddf8cc96a93a95d2108e1988fca5dca99a7ad263b417e1"
+        },
+        {
+          "path": "fusion-studio-client/src/state/slices/chatSurfaceSlice.ts",
+          "sha256": "9d531ceded3b03ac602b70ad8b0298765f07ddd594467b0c3d2bba48c2bb67d9",
+          "bytes": 24515,
+          "lines": [
+            1,
+            250
+          ],
+          "excerpt_sha256": "15c3dc5a9d35265735e24bd22d25c24d7cd0bbb040cbc779ad7480afcf7d1eae"
+        },
+        {
+          "path": "fusion-studio-client/src/components/App.tsx",
+          "sha256": "ae70d077983470b3030d56162c35aa196dd184518e1cbe18bfb92e6f41c21745",
+          "bytes": 13033,
+          "lines": [
+            65,
+            85
+          ],
+          "excerpt_sha256": "d23d660ac87f8b967c15312d488f11ad17435fd901eed27fff1105aa34a39e0d"
+        },
+        {
+          "path": "fusion-studio-client/electron/ipc/capture-handlers.cjs",
+          "sha256": "0495e11ea1e01dbd2b214058a053f9fcb2b067d0eaf901d88525cb6162a1a65f",
+          "bytes": 1364,
+          "lines": [
+            1,
+            46
+          ],
+          "excerpt_sha256": "0495e11ea1e01dbd2b214058a053f9fcb2b067d0eaf901d88525cb6162a1a65f"
+        },
+        {
+          "path": "fusion-studio-server/lib/screenshot/ws-handlers.js",
+          "sha256": "8d11853e29ee8f0264090145aaf1d461384caeac6b58797a63cb687869756254",
+          "bytes": 5474,
+          "lines": [
+            1,
+            152
+          ],
+          "excerpt_sha256": "8d11853e29ee8f0264090145aaf1d461384caeac6b58797a63cb687869756254"
+        },
+        {
+          "path": "fusion-studio-client/src/state/chatFileLinkStore.ts",
+          "sha256": "c32cbb3e85afc696b0a47412d5d26ca41cad9d247dc3e351666e766a768e0374",
+          "bytes": 9585,
+          "lines": [
+            1,
+            180
+          ],
+          "excerpt_sha256": "151be37eecdc7e9fab06b4df3cc257eac5830a45e45e6d1538b45d14f3ec4d78"
+        },
+        {
+          "path": "fusion-studio-client/electron/ipc/screenshot-handlers.cjs",
+          "sha256": "3ad9d6be65a725d5cbad46cd35d6ed7a3ff0ede5109400c996192679ba9f07aa",
+          "bytes": 2715,
+          "lines": [
+            1,
+            82
+          ],
+          "excerpt_sha256": "3ad9d6be65a725d5cbad46cd35d6ed7a3ff0ede5109400c996192679ba9f07aa"
+        },
+        {
+          "path": "fusion-studio-client/src/screenshots/ScreenshotsTrigger.tsx",
+          "sha256": "47c1883432b7c203f4b0ac20992d8e8efc353b4d68e3cb3bd5b5f75415359926",
+          "bytes": 8098,
+          "lines": [
+            1,
+            190
+          ],
+          "excerpt_sha256": "0a97650eb8497fc881bb2fc09291cef29d0f9f761fe67480cf7865982faef3e7"
+        },
+        {
+          "path": "fusion-studio-client/src/hooks/useScreenshotCapture.ts",
+          "sha256": "da0a9f19b1dcbebcbc7ad9af4c1c61007af2830be7fab9534073ab0d2c7ec67f",
+          "bytes": 3027,
+          "lines": [
+            1,
+            91
+          ],
+          "excerpt_sha256": "da0a9f19b1dcbebcbc7ad9af4c1c61007af2830be7fab9534073ab0d2c7ec67f"
+        },
+        {
+          "path": "fusion-studio-server/lib/workspace/screenshot-service.js",
+          "sha256": "b7faa23ad0c976c30d1b84e12cffd0d4d0156225592853e5912958f29dc63287",
+          "bytes": 998,
+          "lines": [
+            1,
+            35
+          ],
+          "excerpt_sha256": "b7faa23ad0c976c30d1b84e12cffd0d4d0156225592853e5912958f29dc63287"
+        },
+        {
+          "path": "fusion-studio-client/e2e/threaded-chat-host.spec.ts",
+          "sha256": "4c2cdef55c38b815cf8d35ed5bcac3c04bf595db5d6126ae6f83f704f17ccb30",
+          "bytes": 66619,
+          "lines": [
+            1120,
+            1379
+          ],
+          "excerpt_sha256": "c5346e9dc11d7a7d559d44211a8a3e32c6dfbeb8f2a88d48826a622d373cced6"
+        },
+        {
+          "path": "fusion-studio-server/test/screenshot-file-capture-request-id.test.js",
+          "sha256": "79f331849cff605f963731744066d94941c80b8d3298d2300e49778880bb78e8",
+          "bytes": 2563,
+          "lines": [
+            1,
+            65
+          ],
+          "excerpt_sha256": "79f331849cff605f963731744066d94941c80b8d3298d2300e49778880bb78e8"
+        }
+      ],
+      "limits": "Read current actual code/test sources; test assertions and accepted historical results do not certify native capture, ordinary provider operation or installed Alpha."
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/016-Calendar_View/PAGE.md",
+      "original_retirement_startup_subject": true,
+      "disposition": "retained",
+      "claim": "Apple automatic sync/refresh remains retired; rows may be stale. Google independent opt-in polling, demo mounted UI and deferred store write-back remain. Future native monitoring and storage alignment remain separate.",
+      "preimage_sha256": "5b6281389fed94824dbcae4b2b44eeb15a1305d9403e7cbf0cf4841f5d92d4b5",
+      "page_sha256": "5b6281389fed94824dbcae4b2b44eeb15a1305d9403e7cbf0cf4841f5d92d4b5",
+      "body_sha256": "8b5e11709d4f44afbf032ab4409dcb1503027eb6e35c1e9552539493f3731643",
+      "changed_by_leaf": false,
+      "last_modified": "2026-09-21T13:37:22Z",
+      "evidence_ids": [
+        "calendar",
+        "retired-observation"
+      ],
+      "sources": [
+        {
+          "path": "fusion-studio-server/lib/calendar/index.js",
+          "sha256": "ecfab563937ba6f24595f22a8f51484145c01bd8f1ba0a0ef9955372b05a99fb",
+          "bytes": 310,
+          "lines": [
+            1,
+            12
+          ],
+          "excerpt_sha256": "ecfab563937ba6f24595f22a8f51484145c01bd8f1ba0a0ef9955372b05a99fb"
+        },
+        {
+          "path": "fusion-studio-server/lib/calendar/google/poller.js",
+          "sha256": "eee8e2cd76476f899e3e69bce3f5cdee34e7643a68710e3dcbbb100f41e6ffe3",
+          "bytes": 620,
+          "lines": [
+            1,
+            24
+          ],
+          "excerpt_sha256": "eee8e2cd76476f899e3e69bce3f5cdee34e7643a68710e3dcbbb100f41e6ffe3"
+        },
+        {
+          "path": "fusion-studio-client/src/components/calendar/CalendarViewer.tsx",
+          "sha256": "1c3979328a4dc20b0c628a182047b6fdfc1ea601b430fb95ca00960ec5b3a716",
+          "bytes": 4835,
+          "lines": [
+            1,
+            120
+          ],
+          "excerpt_sha256": "b06a3941c60dfd33c49671363085fe014dee9a9a654a1ba69317a7bb29c30f22"
+        },
+        {
+          "path": "fusion-studio-client/src/state/calendarStore.ts",
+          "sha256": "271b72f695597f64228ec1634c2ceaf173273739e1b8d22d9e47045a858a4b70",
+          "bytes": 6999,
+          "lines": [
+            1,
+            210
+          ],
+          "excerpt_sha256": "4e3d4ff3bc2f83d80571588760eca126c65abb0674296e74b98edfeb13245747"
+        },
+        {
+          "path": "fusion-studio-server/lib/startup.js",
+          "sha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+          "bytes": 38793,
+          "lines": [
+            630,
+            865
+          ],
+          "excerpt_sha256": "41d0cb824098f03b0edc870716503971cf22c7064a95e8758e11394bc5475893"
+        },
+        {
+          "path": "fusion-studio-server/lib/triggers/trigger-loader.js",
+          "sha256": "be96186df7eb0bc2ebc55d6be96798e679d9e55b4b7f35d3a1c72ebaacfc9b54",
+          "bytes": 7502,
+          "lines": [
+            165,
+            210
+          ],
+          "excerpt_sha256": "804bba7142de9aca03c02572f946254e93cea262344e1f215fe835b7af009155"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger.js",
+          "sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9",
+          "bytes": 5125,
+          "lines": [
+            1,
+            183
+          ],
+          "excerpt_sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9"
+        }
+      ],
+      "limits": "Read current actual code/test sources; test assertions and accepted historical results do not certify native capture, ordinary provider operation or installed Alpha."
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "original_retirement_startup_subject": true,
+      "disposition": "retained",
+      "claim": "Legacy emit/on persists alongside four private governed facts. Broad watcher retirement and the two-event legacy ledger whitelist already match source; bounded save/tool protection and future permission rules remain.",
+      "preimage_sha256": "25689bb9d2540fff061040ed14f5dc9789a4d9ceaa49662a4e0a1e448f5b0ee0",
+      "page_sha256": "25689bb9d2540fff061040ed14f5dc9789a4d9ceaa49662a4e0a1e448f5b0ee0",
+      "body_sha256": "eeecfeb6025b904c9c636f0440aa2a3de2205e0f9cb501f229f43ca9cdb9dcdc",
+      "changed_by_leaf": false,
+      "last_modified": "2026-09-19T11:52:20Z",
+      "evidence_ids": [
+        "legacy-ledger",
+        "governed-bounded",
+        "save-render",
+        "tool-checkpoints"
+      ],
+      "sources": [
+        {
+          "path": "fusion-studio-server/lib/event-bus.js",
+          "sha256": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846",
+          "bytes": 5778,
+          "lines": [
+            1,
+            172
+          ],
+          "excerpt_sha256": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger.js",
+          "sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9",
+          "bytes": 5125,
+          "lines": [
+            1,
+            183
+          ],
+          "excerpt_sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger-subscriber.js",
+          "sha256": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692",
+          "bytes": 2020,
+          "lines": [
+            1,
+            70
+          ],
+          "excerpt_sha256": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/admission.js",
+          "sha256": "dc709809975c64c05a71b6c1c6fa5a87af764b0ffb633ef424489159adf8596d",
+          "bytes": 12520,
+          "lines": [
+            1,
+            280
+          ],
+          "excerpt_sha256": "b6dd67bdd25db6c8505ab10a4397a831f6f7ffcc6c3e092c85b9da73db4180a9"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/controller.js",
+          "sha256": "18de3b625e2c57ced7cfc79e49537e8f1c9a2f282b525590f69fc187c41a4e9e",
+          "bytes": 10670,
+          "lines": [
+            1,
+            260
+          ],
+          "excerpt_sha256": "8a7c159701800fc7e0e35853b8229a5309c78e50c3016f5c0678f886e08024cb"
+        },
+        {
+          "path": "fusion-studio-server/lib/event-registry/seed-catalog.js",
+          "sha256": "308a7bb57599915273b77d1b8f885780e783ebe6c9761449d977baf4468ca4b3",
+          "bytes": 3731,
+          "lines": [
+            1,
+            131
+          ],
+          "excerpt_sha256": "308a7bb57599915273b77d1b8f885780e783ebe6c9761449d977baf4468ca4b3"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/generation-compiler.js",
+          "sha256": "abf2914b2e9e0ee20d8642cef4da627dbb06c8ad156b0ba85248a76f5632a290",
+          "bytes": 11629,
+          "lines": [
+            1,
+            240
+          ],
+          "excerpt_sha256": "9cccf079fe361f0d144a4c6a8659361583fbef1da42466f7b688bc01417fbe33"
+        },
+        {
+          "path": "fusion-studio-server/lib/file-mutations/save-controller.js",
+          "sha256": "9ef47d8de84e6e76274bb1c1928d6238415cfcd7a5a2c3c5d7947a3cc227a60d",
+          "bytes": 24304,
+          "lines": [
+            1,
+            270
+          ],
+          "excerpt_sha256": "7fd039eccbd207cbfb98b59ec303dbc4d01174691082b22d94dcc833ab3e70aa"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/handlers/resource-render-projection.js",
+          "sha256": "79b15ecf77fd2ba4256984ffba915f8b93e4068a828306f6db59dfa51f39e4f9",
+          "bytes": 3862,
+          "lines": [
+            1,
+            118
+          ],
+          "excerpt_sha256": "79b15ecf77fd2ba4256984ffba915f8b93e4068a828306f6db59dfa51f39e4f9"
+        },
+        {
+          "path": "fusion-studio-server/lib/ws/resource-projection-publisher.js",
+          "sha256": "3587ca39b1c7cb0302b1ac8617b710f5481ecb859b26d5bb62ed60e93883e6d2",
+          "bytes": 10576,
+          "lines": [
+            1,
+            160
+          ],
+          "excerpt_sha256": "4498a6e5aec5deb6ee0b7889b13ae25b6a3825b46c540d87e6474c9d4520c25c"
+        },
+        {
+          "path": "fusion-studio-client/src/lib/ws/file-handlers.ts",
+          "sha256": "092c6bdf456423defe360b6a5426c7224ba36663dccd8e1353e1fd51b77f191d",
+          "bytes": 14309,
+          "lines": [
+            1,
+            190
+          ],
+          "excerpt_sha256": "8ee6876917e5074dd90bc6fe1cb625d27089f4d6c5ef51734a1fea59d7ba35a3"
+        },
+        {
+          "path": "fusion-studio-client/src/state/fileDataStore.ts",
+          "sha256": "1072a5c50bcc23de4282dfa1076f3c49ae48b83c1ead8c1c06fa03211c669656",
+          "bytes": 36651,
+          "lines": [
+            1,
+            240
+          ],
+          "excerpt_sha256": "4780f5fd424beceb0e86b81105c06f964201285699b35d86587a0525aabb0a1d"
+        },
+        {
+          "path": "fusion-studio-server/lib/agent-provenance/resource-observer.js",
+          "sha256": "f23cdf9bf487accd8a54a3930b4608a79d4f8d523f2a02b696ae5e9c7a21c7a4",
+          "bytes": 19148,
+          "lines": [
+            1,
+            220
+          ],
+          "excerpt_sha256": "3fc90316ee246481b6fbaeb25583b6aad739206ed3e5a346ddba139b492a48f0"
+        },
+        {
+          "path": "fusion-studio-server/lib/agent-provenance/checkpoint-repository.js",
+          "sha256": "be6d22dc1e34181e6bc6a8730792d894c15752afc231c265486224a1f5db21e2",
+          "bytes": 15225,
+          "lines": [
+            1,
+            200
+          ],
+          "excerpt_sha256": "81aab02cedbccff03df5a3dbcbd37acbfab485f5f6bbea3be9702bf545075443"
+        },
+        {
+          "path": "fusion-studio-server/lib/agent-provenance/agent-ledger-repository.js",
+          "sha256": "912649ad6f57751cc04dc8555cfd4a742cd5b3a9294fd67c93a41ea3987babbb",
+          "bytes": 15949,
+          "lines": [
+            1,
+            220
+          ],
+          "excerpt_sha256": "73c3c1f0fab627b84b62105180f7238ca939ed69c7627adff978136f80da0766"
+        }
+      ],
+      "limits": "Read current actual code/test sources; test assertions and accepted historical results do not certify native capture, ordinary provider operation or installed Alpha."
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md",
+      "original_retirement_startup_subject": true,
+      "disposition": "retained",
+      "claim": "Existing watcher/ledger statements are current. Settled System/history and bounded save/tool/UI-context agreements remain direction distinct from open plugin, wider causality, retention and calendar choices.",
+      "preimage_sha256": "9094f557ac7020fdd5b07215a5c038275a9fa43ccf5b47d048766ccb6bad1931",
+      "page_sha256": "9094f557ac7020fdd5b07215a5c038275a9fa43ccf5b47d048766ccb6bad1931",
+      "body_sha256": "aa05db833ee483dd8e067981500e920e47aed72de76a28fed0aa75538c2a5f48",
+      "changed_by_leaf": false,
+      "last_modified": "2026-09-19T11:52:20Z",
+      "evidence_ids": [
+        "legacy-ledger",
+        "governed-bounded",
+        "save-render",
+        "tool-checkpoints"
+      ],
+      "sources": [
+        {
+          "path": "fusion-studio-server/lib/event-bus.js",
+          "sha256": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846",
+          "bytes": 5778,
+          "lines": [
+            1,
+            172
+          ],
+          "excerpt_sha256": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger.js",
+          "sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9",
+          "bytes": 5125,
+          "lines": [
+            1,
+            183
+          ],
+          "excerpt_sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger-subscriber.js",
+          "sha256": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692",
+          "bytes": 2020,
+          "lines": [
+            1,
+            70
+          ],
+          "excerpt_sha256": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/admission.js",
+          "sha256": "dc709809975c64c05a71b6c1c6fa5a87af764b0ffb633ef424489159adf8596d",
+          "bytes": 12520,
+          "lines": [
+            1,
+            280
+          ],
+          "excerpt_sha256": "b6dd67bdd25db6c8505ab10a4397a831f6f7ffcc6c3e092c85b9da73db4180a9"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/controller.js",
+          "sha256": "18de3b625e2c57ced7cfc79e49537e8f1c9a2f282b525590f69fc187c41a4e9e",
+          "bytes": 10670,
+          "lines": [
+            1,
+            260
+          ],
+          "excerpt_sha256": "8a7c159701800fc7e0e35853b8229a5309c78e50c3016f5c0678f886e08024cb"
+        },
+        {
+          "path": "fusion-studio-server/lib/event-registry/seed-catalog.js",
+          "sha256": "308a7bb57599915273b77d1b8f885780e783ebe6c9761449d977baf4468ca4b3",
+          "bytes": 3731,
+          "lines": [
+            1,
+            131
+          ],
+          "excerpt_sha256": "308a7bb57599915273b77d1b8f885780e783ebe6c9761449d977baf4468ca4b3"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/generation-compiler.js",
+          "sha256": "abf2914b2e9e0ee20d8642cef4da627dbb06c8ad156b0ba85248a76f5632a290",
+          "bytes": 11629,
+          "lines": [
+            1,
+            240
+          ],
+          "excerpt_sha256": "9cccf079fe361f0d144a4c6a8659361583fbef1da42466f7b688bc01417fbe33"
+        },
+        {
+          "path": "fusion-studio-server/lib/file-mutations/save-controller.js",
+          "sha256": "9ef47d8de84e6e76274bb1c1928d6238415cfcd7a5a2c3c5d7947a3cc227a60d",
+          "bytes": 24304,
+          "lines": [
+            1,
+            270
+          ],
+          "excerpt_sha256": "7fd039eccbd207cbfb98b59ec303dbc4d01174691082b22d94dcc833ab3e70aa"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/handlers/resource-render-projection.js",
+          "sha256": "79b15ecf77fd2ba4256984ffba915f8b93e4068a828306f6db59dfa51f39e4f9",
+          "bytes": 3862,
+          "lines": [
+            1,
+            118
+          ],
+          "excerpt_sha256": "79b15ecf77fd2ba4256984ffba915f8b93e4068a828306f6db59dfa51f39e4f9"
+        },
+        {
+          "path": "fusion-studio-server/lib/ws/resource-projection-publisher.js",
+          "sha256": "3587ca39b1c7cb0302b1ac8617b710f5481ecb859b26d5bb62ed60e93883e6d2",
+          "bytes": 10576,
+          "lines": [
+            1,
+            160
+          ],
+          "excerpt_sha256": "4498a6e5aec5deb6ee0b7889b13ae25b6a3825b46c540d87e6474c9d4520c25c"
+        },
+        {
+          "path": "fusion-studio-client/src/lib/ws/file-handlers.ts",
+          "sha256": "092c6bdf456423defe360b6a5426c7224ba36663dccd8e1353e1fd51b77f191d",
+          "bytes": 14309,
+          "lines": [
+            1,
+            190
+          ],
+          "excerpt_sha256": "8ee6876917e5074dd90bc6fe1cb625d27089f4d6c5ef51734a1fea59d7ba35a3"
+        },
+        {
+          "path": "fusion-studio-client/src/state/fileDataStore.ts",
+          "sha256": "1072a5c50bcc23de4282dfa1076f3c49ae48b83c1ead8c1c06fa03211c669656",
+          "bytes": 36651,
+          "lines": [
+            1,
+            240
+          ],
+          "excerpt_sha256": "4780f5fd424beceb0e86b81105c06f964201285699b35d86587a0525aabb0a1d"
+        },
+        {
+          "path": "fusion-studio-server/lib/agent-provenance/resource-observer.js",
+          "sha256": "f23cdf9bf487accd8a54a3930b4608a79d4f8d523f2a02b696ae5e9c7a21c7a4",
+          "bytes": 19148,
+          "lines": [
+            1,
+            220
+          ],
+          "excerpt_sha256": "3fc90316ee246481b6fbaeb25583b6aad739206ed3e5a346ddba139b492a48f0"
+        },
+        {
+          "path": "fusion-studio-server/lib/agent-provenance/checkpoint-repository.js",
+          "sha256": "be6d22dc1e34181e6bc6a8730792d894c15752afc231c265486224a1f5db21e2",
+          "bytes": 15225,
+          "lines": [
+            1,
+            200
+          ],
+          "excerpt_sha256": "81aab02cedbccff03df5a3dbcbd37acbfab485f5f6bbea3be9702bf545075443"
+        },
+        {
+          "path": "fusion-studio-server/lib/agent-provenance/agent-ledger-repository.js",
+          "sha256": "912649ad6f57751cc04dc8555cfd4a742cd5b3a9294fd67c93a41ea3987babbb",
+          "bytes": 15949,
+          "lines": [
+            1,
+            220
+          ],
+          "excerpt_sha256": "73c3c1f0fab627b84b62105180f7238ca939ed69c7627adff978136f80da0766"
+        }
+      ],
+      "limits": "Read current actual code/test sources; test assertions and accepted historical results do not certify native capture, ordinary provider operation or installed Alpha."
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "original_retirement_startup_subject": true,
+      "disposition": "retained",
+      "claim": "Current private admission/delivery remains separate from synchronous legacy API. Broad watcher retirement and file:changed ledger exclusion are already explicit; no wider publisher or plugin activation claimed.",
+      "preimage_sha256": "7b883f0644a2665fe3cab7f2affdf1bb000517b8308004603e63daf759becc90",
+      "page_sha256": "7b883f0644a2665fe3cab7f2affdf1bb000517b8308004603e63daf759becc90",
+      "body_sha256": "5a7ec04d0bad4e20deecdcd6bd7e67a1c87590434816e832c03d586fc24dc779",
+      "changed_by_leaf": false,
+      "last_modified": "2026-09-19T11:52:20Z",
+      "evidence_ids": [
+        "legacy-ledger",
+        "governed-bounded"
+      ],
+      "sources": [
+        {
+          "path": "fusion-studio-server/lib/event-bus.js",
+          "sha256": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846",
+          "bytes": 5778,
+          "lines": [
+            1,
+            172
+          ],
+          "excerpt_sha256": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger.js",
+          "sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9",
+          "bytes": 5125,
+          "lines": [
+            1,
+            183
+          ],
+          "excerpt_sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger-subscriber.js",
+          "sha256": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692",
+          "bytes": 2020,
+          "lines": [
+            1,
+            70
+          ],
+          "excerpt_sha256": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/admission.js",
+          "sha256": "dc709809975c64c05a71b6c1c6fa5a87af764b0ffb633ef424489159adf8596d",
+          "bytes": 12520,
+          "lines": [
+            1,
+            280
+          ],
+          "excerpt_sha256": "b6dd67bdd25db6c8505ab10a4397a831f6f7ffcc6c3e092c85b9da73db4180a9"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/controller.js",
+          "sha256": "18de3b625e2c57ced7cfc79e49537e8f1c9a2f282b525590f69fc187c41a4e9e",
+          "bytes": 10670,
+          "lines": [
+            1,
+            260
+          ],
+          "excerpt_sha256": "8a7c159701800fc7e0e35853b8229a5309c78e50c3016f5c0678f886e08024cb"
+        },
+        {
+          "path": "fusion-studio-server/lib/event-registry/seed-catalog.js",
+          "sha256": "308a7bb57599915273b77d1b8f885780e783ebe6c9761449d977baf4468ca4b3",
+          "bytes": 3731,
+          "lines": [
+            1,
+            131
+          ],
+          "excerpt_sha256": "308a7bb57599915273b77d1b8f885780e783ebe6c9761449d977baf4468ca4b3"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/generation-compiler.js",
+          "sha256": "abf2914b2e9e0ee20d8642cef4da627dbb06c8ad156b0ba85248a76f5632a290",
+          "bytes": 11629,
+          "lines": [
+            1,
+            240
+          ],
+          "excerpt_sha256": "9cccf079fe361f0d144a4c6a8659361583fbef1da42466f7b688bc01417fbe33"
+        }
+      ],
+      "limits": "Read current actual code/test sources; test assertions and accepted historical results do not certify native capture, ordinary provider operation or installed Alpha."
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "original_retirement_startup_subject": true,
+      "disposition": "retained",
+      "claim": "Current governed save/tool fact catalog remains bounded; legacy chat/trigger colon topics and watcher retirement do not become general governed file, automation, version or UI-action facts.",
+      "preimage_sha256": "a89486b49f342c611331ec9874908d4a47aa0c4ace9dde968762b63936f23d14",
+      "page_sha256": "a89486b49f342c611331ec9874908d4a47aa0c4ace9dde968762b63936f23d14",
+      "body_sha256": "4e66a25deb4ab098eb47e511e1e420548b45350d34f30add028a85fe145f5646",
+      "changed_by_leaf": false,
+      "last_modified": "2026-09-19T11:52:20Z",
+      "evidence_ids": [
+        "governed-bounded",
+        "legacy-ledger",
+        "legacy-trigger"
+      ],
+      "sources": [
+        {
+          "path": "fusion-studio-server/lib/subscriptions/admission.js",
+          "sha256": "dc709809975c64c05a71b6c1c6fa5a87af764b0ffb633ef424489159adf8596d",
+          "bytes": 12520,
+          "lines": [
+            1,
+            280
+          ],
+          "excerpt_sha256": "b6dd67bdd25db6c8505ab10a4397a831f6f7ffcc6c3e092c85b9da73db4180a9"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/controller.js",
+          "sha256": "18de3b625e2c57ced7cfc79e49537e8f1c9a2f282b525590f69fc187c41a4e9e",
+          "bytes": 10670,
+          "lines": [
+            1,
+            260
+          ],
+          "excerpt_sha256": "8a7c159701800fc7e0e35853b8229a5309c78e50c3016f5c0678f886e08024cb"
+        },
+        {
+          "path": "fusion-studio-server/lib/event-registry/seed-catalog.js",
+          "sha256": "308a7bb57599915273b77d1b8f885780e783ebe6c9761449d977baf4468ca4b3",
+          "bytes": 3731,
+          "lines": [
+            1,
+            131
+          ],
+          "excerpt_sha256": "308a7bb57599915273b77d1b8f885780e783ebe6c9761449d977baf4468ca4b3"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/generation-compiler.js",
+          "sha256": "abf2914b2e9e0ee20d8642cef4da627dbb06c8ad156b0ba85248a76f5632a290",
+          "bytes": 11629,
+          "lines": [
+            1,
+            240
+          ],
+          "excerpt_sha256": "9cccf079fe361f0d144a4c6a8659361583fbef1da42466f7b688bc01417fbe33"
+        },
+        {
+          "path": "fusion-studio-server/lib/event-bus.js",
+          "sha256": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846",
+          "bytes": 5778,
+          "lines": [
+            1,
+            172
+          ],
+          "excerpt_sha256": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger.js",
+          "sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9",
+          "bytes": 5125,
+          "lines": [
+            1,
+            183
+          ],
+          "excerpt_sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger-subscriber.js",
+          "sha256": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692",
+          "bytes": 2020,
+          "lines": [
+            1,
+            70
+          ],
+          "excerpt_sha256": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692"
+        },
+        {
+          "path": "fusion-studio-server/lib/triggers/trigger-loader.js",
+          "sha256": "be96186df7eb0bc2ebc55d6be96798e679d9e55b4b7f35d3a1c72ebaacfc9b54",
+          "bytes": 7502,
+          "lines": [
+            1,
+            210
+          ],
+          "excerpt_sha256": "be96186df7eb0bc2ebc55d6be96798e679d9e55b4b7f35d3a1c72ebaacfc9b54"
+        },
+        {
+          "path": "fusion-studio-server/lib/triggers/cron-scheduler.js",
+          "sha256": "fcec3ca69760e86cd1d7063deea4a59b3eb9668890203086e33237322d2f7b21",
+          "bytes": 6677,
+          "lines": [
+            1,
+            223
+          ],
+          "excerpt_sha256": "fcec3ca69760e86cd1d7063deea4a59b3eb9668890203086e33237322d2f7b21"
+        },
+        {
+          "path": "fusion-studio-server/lib/watcher/actions.js",
+          "sha256": "dd73712ce0879d9452097a77f8f3330ac277eb2fa1becbc7e3284b653ef3ada7",
+          "bytes": 7253,
+          "lines": [
+            1,
+            210
+          ],
+          "excerpt_sha256": "dd73712ce0879d9452097a77f8f3330ac277eb2fa1becbc7e3284b653ef3ada7"
+        },
+        {
+          "path": "fusion-studio-server/lib/runner/index.js",
+          "sha256": "c1811044116fbade2bc70ec4adef164a3c9cc4f8efa398aa47726688a4dda006",
+          "bytes": 8750,
+          "lines": [
+            1,
+            200
+          ],
+          "excerpt_sha256": "fc5f24450396eb9a8ae925ff7899b9ddfc07a70f2ea4dd727d882358229fdd00"
+        },
+        {
+          "path": "fusion-studio-server/lib/runner/heartbeat.js",
+          "sha256": "6cfbe02376ad3e2b1e625966773948710ded9953326c582fb127d0c428ef5224",
+          "bytes": 3296,
+          "lines": [
+            1,
+            110
+          ],
+          "excerpt_sha256": "6cfbe02376ad3e2b1e625966773948710ded9953326c582fb127d0c428ef5224"
+        }
+      ],
+      "limits": "Read current actual code/test sources; test assertions and accepted historical results do not certify native capture, ordinary provider operation or installed Alpha."
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "original_retirement_startup_subject": true,
+      "disposition": "retained",
+      "claim": "Reported/observed identities retain separate meaning. Independent legacy mutation-to-turn association remains optional after broad watcher retirement; timing does not prove cause or create missing preimages.",
+      "preimage_sha256": "3558d01fb05ea0a0c926b2432bcf538d2c68dfb21306e915b55ad5b037c07861",
+      "page_sha256": "3558d01fb05ea0a0c926b2432bcf538d2c68dfb21306e915b55ad5b037c07861",
+      "body_sha256": "185c9e0fc7ce8cc13c9a3509cb034f103a4a165bc66b973007f16ed3ea766dbf",
+      "changed_by_leaf": false,
+      "last_modified": "2026-09-19T11:52:20Z",
+      "evidence_ids": [
+        "mutation-association",
+        "legacy-ledger",
+        "tool-checkpoints",
+        "save-render"
+      ],
+      "sources": [
+        {
+          "path": "fusion-studio-server/lib/chat-metadata/collectors/file-mutations.js",
+          "sha256": "cbd83ed651b03a2eeee368f99210c6e1b52733a5179d765b7909d59d593b06d7",
+          "bytes": 2921,
+          "lines": [
+            1,
+            94
+          ],
+          "excerpt_sha256": "cbd83ed651b03a2eeee368f99210c6e1b52733a5179d765b7909d59d593b06d7"
+        },
+        {
+          "path": "fusion-studio-server/lib/event-bus.js",
+          "sha256": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846",
+          "bytes": 5778,
+          "lines": [
+            1,
+            172
+          ],
+          "excerpt_sha256": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger.js",
+          "sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9",
+          "bytes": 5125,
+          "lines": [
+            1,
+            183
+          ],
+          "excerpt_sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger-subscriber.js",
+          "sha256": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692",
+          "bytes": 2020,
+          "lines": [
+            1,
+            70
+          ],
+          "excerpt_sha256": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692"
+        },
+        {
+          "path": "fusion-studio-server/lib/agent-provenance/resource-observer.js",
+          "sha256": "f23cdf9bf487accd8a54a3930b4608a79d4f8d523f2a02b696ae5e9c7a21c7a4",
+          "bytes": 19148,
+          "lines": [
+            1,
+            220
+          ],
+          "excerpt_sha256": "3fc90316ee246481b6fbaeb25583b6aad739206ed3e5a346ddba139b492a48f0"
+        },
+        {
+          "path": "fusion-studio-server/lib/agent-provenance/checkpoint-repository.js",
+          "sha256": "be6d22dc1e34181e6bc6a8730792d894c15752afc231c265486224a1f5db21e2",
+          "bytes": 15225,
+          "lines": [
+            1,
+            200
+          ],
+          "excerpt_sha256": "81aab02cedbccff03df5a3dbcbd37acbfab485f5f6bbea3be9702bf545075443"
+        },
+        {
+          "path": "fusion-studio-server/lib/agent-provenance/agent-ledger-repository.js",
+          "sha256": "912649ad6f57751cc04dc8555cfd4a742cd5b3a9294fd67c93a41ea3987babbb",
+          "bytes": 15949,
+          "lines": [
+            1,
+            220
+          ],
+          "excerpt_sha256": "73c3c1f0fab627b84b62105180f7238ca939ed69c7627adff978136f80da0766"
+        },
+        {
+          "path": "fusion-studio-server/lib/file-mutations/save-controller.js",
+          "sha256": "9ef47d8de84e6e76274bb1c1928d6238415cfcd7a5a2c3c5d7947a3cc227a60d",
+          "bytes": 24304,
+          "lines": [
+            1,
+            270
+          ],
+          "excerpt_sha256": "7fd039eccbd207cbfb98b59ec303dbc4d01174691082b22d94dcc833ab3e70aa"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/handlers/resource-render-projection.js",
+          "sha256": "79b15ecf77fd2ba4256984ffba915f8b93e4068a828306f6db59dfa51f39e4f9",
+          "bytes": 3862,
+          "lines": [
+            1,
+            118
+          ],
+          "excerpt_sha256": "79b15ecf77fd2ba4256984ffba915f8b93e4068a828306f6db59dfa51f39e4f9"
+        },
+        {
+          "path": "fusion-studio-server/lib/ws/resource-projection-publisher.js",
+          "sha256": "3587ca39b1c7cb0302b1ac8617b710f5481ecb859b26d5bb62ed60e93883e6d2",
+          "bytes": 10576,
+          "lines": [
+            1,
+            160
+          ],
+          "excerpt_sha256": "4498a6e5aec5deb6ee0b7889b13ae25b6a3825b46c540d87e6474c9d4520c25c"
+        },
+        {
+          "path": "fusion-studio-client/src/lib/ws/file-handlers.ts",
+          "sha256": "092c6bdf456423defe360b6a5426c7224ba36663dccd8e1353e1fd51b77f191d",
+          "bytes": 14309,
+          "lines": [
+            1,
+            190
+          ],
+          "excerpt_sha256": "8ee6876917e5074dd90bc6fe1cb625d27089f4d6c5ef51734a1fea59d7ba35a3"
+        },
+        {
+          "path": "fusion-studio-client/src/state/fileDataStore.ts",
+          "sha256": "1072a5c50bcc23de4282dfa1076f3c49ae48b83c1ead8c1c06fa03211c669656",
+          "bytes": 36651,
+          "lines": [
+            1,
+            240
+          ],
+          "excerpt_sha256": "4780f5fd424beceb0e86b81105c06f964201285699b35d86587a0525aabb0a1d"
+        }
+      ],
+      "limits": "Read current actual code/test sources; test assertions and accepted historical results do not certify native capture, ordinary provider operation or installed Alpha."
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/PAGE.md",
+      "original_retirement_startup_subject": true,
+      "disposition": "retained",
+      "claim": "Mediated-save/agent projections still target bounded File Viewer consumers; separate legacy file_changed compatibility remains. No general watcher, arbitrary external writes or Wiki/style/config freshness is promised.",
+      "preimage_sha256": "e1a06e6a3ca58705930d70d144ce2e7d67a3bddbe88bb2d4e768f6cf1d550bc8",
+      "page_sha256": "e1a06e6a3ca58705930d70d144ce2e7d67a3bddbe88bb2d4e768f6cf1d550bc8",
+      "body_sha256": "433e05e94717b29ba8a0d88fcf56516aa418184604725946878cc5382de01060",
+      "changed_by_leaf": false,
+      "last_modified": "2026-09-19T11:52:20Z",
+      "evidence_ids": [
+        "save-render",
+        "tool-checkpoints",
+        "retired-observation"
+      ],
+      "sources": [
+        {
+          "path": "fusion-studio-server/lib/file-mutations/save-controller.js",
+          "sha256": "9ef47d8de84e6e76274bb1c1928d6238415cfcd7a5a2c3c5d7947a3cc227a60d",
+          "bytes": 24304,
+          "lines": [
+            1,
+            270
+          ],
+          "excerpt_sha256": "7fd039eccbd207cbfb98b59ec303dbc4d01174691082b22d94dcc833ab3e70aa"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/handlers/resource-render-projection.js",
+          "sha256": "79b15ecf77fd2ba4256984ffba915f8b93e4068a828306f6db59dfa51f39e4f9",
+          "bytes": 3862,
+          "lines": [
+            1,
+            118
+          ],
+          "excerpt_sha256": "79b15ecf77fd2ba4256984ffba915f8b93e4068a828306f6db59dfa51f39e4f9"
+        },
+        {
+          "path": "fusion-studio-server/lib/ws/resource-projection-publisher.js",
+          "sha256": "3587ca39b1c7cb0302b1ac8617b710f5481ecb859b26d5bb62ed60e93883e6d2",
+          "bytes": 10576,
+          "lines": [
+            1,
+            160
+          ],
+          "excerpt_sha256": "4498a6e5aec5deb6ee0b7889b13ae25b6a3825b46c540d87e6474c9d4520c25c"
+        },
+        {
+          "path": "fusion-studio-client/src/lib/ws/file-handlers.ts",
+          "sha256": "092c6bdf456423defe360b6a5426c7224ba36663dccd8e1353e1fd51b77f191d",
+          "bytes": 14309,
+          "lines": [
+            1,
+            190
+          ],
+          "excerpt_sha256": "8ee6876917e5074dd90bc6fe1cb625d27089f4d6c5ef51734a1fea59d7ba35a3"
+        },
+        {
+          "path": "fusion-studio-client/src/state/fileDataStore.ts",
+          "sha256": "1072a5c50bcc23de4282dfa1076f3c49ae48b83c1ead8c1c06fa03211c669656",
+          "bytes": 36651,
+          "lines": [
+            1,
+            240
+          ],
+          "excerpt_sha256": "4780f5fd424beceb0e86b81105c06f964201285699b35d86587a0525aabb0a1d"
+        },
+        {
+          "path": "fusion-studio-server/lib/agent-provenance/resource-observer.js",
+          "sha256": "f23cdf9bf487accd8a54a3930b4608a79d4f8d523f2a02b696ae5e9c7a21c7a4",
+          "bytes": 19148,
+          "lines": [
+            1,
+            220
+          ],
+          "excerpt_sha256": "3fc90316ee246481b6fbaeb25583b6aad739206ed3e5a346ddba139b492a48f0"
+        },
+        {
+          "path": "fusion-studio-server/lib/agent-provenance/checkpoint-repository.js",
+          "sha256": "be6d22dc1e34181e6bc6a8730792d894c15752afc231c265486224a1f5db21e2",
+          "bytes": 15225,
+          "lines": [
+            1,
+            200
+          ],
+          "excerpt_sha256": "81aab02cedbccff03df5a3dbcbd37acbfab485f5f6bbea3be9702bf545075443"
+        },
+        {
+          "path": "fusion-studio-server/lib/agent-provenance/agent-ledger-repository.js",
+          "sha256": "912649ad6f57751cc04dc8555cfd4a742cd5b3a9294fd67c93a41ea3987babbb",
+          "bytes": 15949,
+          "lines": [
+            1,
+            220
+          ],
+          "excerpt_sha256": "73c3c1f0fab627b84b62105180f7238ca939ed69c7627adff978136f80da0766"
+        },
+        {
+          "path": "fusion-studio-server/lib/startup.js",
+          "sha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+          "bytes": 38793,
+          "lines": [
+            630,
+            865
+          ],
+          "excerpt_sha256": "41d0cb824098f03b0edc870716503971cf22c7064a95e8758e11394bc5475893"
+        },
+        {
+          "path": "fusion-studio-server/lib/triggers/trigger-loader.js",
+          "sha256": "be96186df7eb0bc2ebc55d6be96798e679d9e55b4b7f35d3a1c72ebaacfc9b54",
+          "bytes": 7502,
+          "lines": [
+            165,
+            210
+          ],
+          "excerpt_sha256": "804bba7142de9aca03c02572f946254e93cea262344e1f215fe835b7af009155"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger.js",
+          "sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9",
+          "bytes": 5125,
+          "lines": [
+            1,
+            183
+          ],
+          "excerpt_sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9"
+        }
+      ],
+      "limits": "Read current actual code/test sources; test assertions and accepted historical results do not certify native capture, ordinary provider operation or installed Alpha."
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/PAGE.md",
+      "original_retirement_startup_subject": true,
+      "disposition": "retained",
+      "claim": "Full epoch/thread/turn identity or one unique active workspace/root turn can associate independently supplied file:changed. Partial/ambiguous tuples reject; the retired watcher supplies no general observations, and the legacy ledger ignores the topic.",
+      "preimage_sha256": "1fb4ad972484b6e7fac4a042488e07d3614cc1bdd6dd22482d46404ddfdf8d64",
+      "page_sha256": "1fb4ad972484b6e7fac4a042488e07d3614cc1bdd6dd22482d46404ddfdf8d64",
+      "body_sha256": "4dace4126192fc631d222e7c6d1a0bd79b5d6632024a1f4e6d87fdf42b2a4ea8",
+      "changed_by_leaf": false,
+      "last_modified": "2026-09-19T11:52:20Z",
+      "evidence_ids": [
+        "mutation-association",
+        "legacy-ledger",
+        "tool-checkpoints"
+      ],
+      "sources": [
+        {
+          "path": "fusion-studio-server/lib/chat-metadata/collectors/file-mutations.js",
+          "sha256": "cbd83ed651b03a2eeee368f99210c6e1b52733a5179d765b7909d59d593b06d7",
+          "bytes": 2921,
+          "lines": [
+            1,
+            94
+          ],
+          "excerpt_sha256": "cbd83ed651b03a2eeee368f99210c6e1b52733a5179d765b7909d59d593b06d7"
+        },
+        {
+          "path": "fusion-studio-server/lib/event-bus.js",
+          "sha256": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846",
+          "bytes": 5778,
+          "lines": [
+            1,
+            172
+          ],
+          "excerpt_sha256": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger.js",
+          "sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9",
+          "bytes": 5125,
+          "lines": [
+            1,
+            183
+          ],
+          "excerpt_sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger-subscriber.js",
+          "sha256": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692",
+          "bytes": 2020,
+          "lines": [
+            1,
+            70
+          ],
+          "excerpt_sha256": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692"
+        },
+        {
+          "path": "fusion-studio-server/lib/agent-provenance/resource-observer.js",
+          "sha256": "f23cdf9bf487accd8a54a3930b4608a79d4f8d523f2a02b696ae5e9c7a21c7a4",
+          "bytes": 19148,
+          "lines": [
+            1,
+            220
+          ],
+          "excerpt_sha256": "3fc90316ee246481b6fbaeb25583b6aad739206ed3e5a346ddba139b492a48f0"
+        },
+        {
+          "path": "fusion-studio-server/lib/agent-provenance/checkpoint-repository.js",
+          "sha256": "be6d22dc1e34181e6bc6a8730792d894c15752afc231c265486224a1f5db21e2",
+          "bytes": 15225,
+          "lines": [
+            1,
+            200
+          ],
+          "excerpt_sha256": "81aab02cedbccff03df5a3dbcbd37acbfab485f5f6bbea3be9702bf545075443"
+        },
+        {
+          "path": "fusion-studio-server/lib/agent-provenance/agent-ledger-repository.js",
+          "sha256": "912649ad6f57751cc04dc8555cfd4a742cd5b3a9294fd67c93a41ea3987babbb",
+          "bytes": 15949,
+          "lines": [
+            1,
+            220
+          ],
+          "excerpt_sha256": "73c3c1f0fab627b84b62105180f7238ca939ed69c7627adff978136f80da0766"
+        }
+      ],
+      "limits": "Read current actual code/test sources; test assertions and accepted historical results do not certify native capture, ordinary provider operation or installed Alpha."
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md",
+      "original_retirement_startup_subject": true,
+      "disposition": "metadata-only",
+      "claim": "Removed one exact duplicate event-bus.js source path, stamped actual quoted UTC, preserved entire body. Broad watcher/rename retirement, surviving synchronous bus guards, bounded checkpoints and future storm/compaction choices remain accurate.",
+      "preimage_sha256": "78a9d4aa551b312053796e83b94b69f218d6cfc4abc55f279d6e11329692cea4",
+      "page_sha256": "7d29228d2e9f5b91bae0fe558f7b0f8c172aaa7a1a4bb4d47091c6545768e4ea",
+      "body_sha256": "7670e50d4c08203bc9c3abfb60d1f336488f1018e2ca4e5a55da834587377b3c",
+      "changed_by_leaf": true,
+      "last_modified": "2026-10-06T22:14:26Z",
+      "evidence_ids": [
+        "legacy-ledger",
+        "retired-observation",
+        "tool-checkpoints",
+        "governed-bounded"
+      ],
+      "sources": [
+        {
+          "path": "fusion-studio-server/lib/event-bus.js",
+          "sha256": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846",
+          "bytes": 5778,
+          "lines": [
+            1,
+            172
+          ],
+          "excerpt_sha256": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger.js",
+          "sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9",
+          "bytes": 5125,
+          "lines": [
+            1,
+            183
+          ],
+          "excerpt_sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger-subscriber.js",
+          "sha256": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692",
+          "bytes": 2020,
+          "lines": [
+            1,
+            70
+          ],
+          "excerpt_sha256": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692"
+        },
+        {
+          "path": "fusion-studio-server/lib/startup.js",
+          "sha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+          "bytes": 38793,
+          "lines": [
+            630,
+            865
+          ],
+          "excerpt_sha256": "41d0cb824098f03b0edc870716503971cf22c7064a95e8758e11394bc5475893"
+        },
+        {
+          "path": "fusion-studio-server/lib/triggers/trigger-loader.js",
+          "sha256": "be96186df7eb0bc2ebc55d6be96798e679d9e55b4b7f35d3a1c72ebaacfc9b54",
+          "bytes": 7502,
+          "lines": [
+            165,
+            210
+          ],
+          "excerpt_sha256": "804bba7142de9aca03c02572f946254e93cea262344e1f215fe835b7af009155"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger.js",
+          "sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9",
+          "bytes": 5125,
+          "lines": [
+            1,
+            183
+          ],
+          "excerpt_sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9"
+        },
+        {
+          "path": "fusion-studio-server/lib/agent-provenance/resource-observer.js",
+          "sha256": "f23cdf9bf487accd8a54a3930b4608a79d4f8d523f2a02b696ae5e9c7a21c7a4",
+          "bytes": 19148,
+          "lines": [
+            1,
+            220
+          ],
+          "excerpt_sha256": "3fc90316ee246481b6fbaeb25583b6aad739206ed3e5a346ddba139b492a48f0"
+        },
+        {
+          "path": "fusion-studio-server/lib/agent-provenance/checkpoint-repository.js",
+          "sha256": "be6d22dc1e34181e6bc6a8730792d894c15752afc231c265486224a1f5db21e2",
+          "bytes": 15225,
+          "lines": [
+            1,
+            200
+          ],
+          "excerpt_sha256": "81aab02cedbccff03df5a3dbcbd37acbfab485f5f6bbea3be9702bf545075443"
+        },
+        {
+          "path": "fusion-studio-server/lib/agent-provenance/agent-ledger-repository.js",
+          "sha256": "912649ad6f57751cc04dc8555cfd4a742cd5b3a9294fd67c93a41ea3987babbb",
+          "bytes": 15949,
+          "lines": [
+            1,
+            220
+          ],
+          "excerpt_sha256": "73c3c1f0fab627b84b62105180f7238ca939ed69c7627adff978136f80da0766"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/admission.js",
+          "sha256": "dc709809975c64c05a71b6c1c6fa5a87af764b0ffb633ef424489159adf8596d",
+          "bytes": 12520,
+          "lines": [
+            1,
+            280
+          ],
+          "excerpt_sha256": "b6dd67bdd25db6c8505ab10a4397a831f6f7ffcc6c3e092c85b9da73db4180a9"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/controller.js",
+          "sha256": "18de3b625e2c57ced7cfc79e49537e8f1c9a2f282b525590f69fc187c41a4e9e",
+          "bytes": 10670,
+          "lines": [
+            1,
+            260
+          ],
+          "excerpt_sha256": "8a7c159701800fc7e0e35853b8229a5309c78e50c3016f5c0678f886e08024cb"
+        },
+        {
+          "path": "fusion-studio-server/lib/event-registry/seed-catalog.js",
+          "sha256": "308a7bb57599915273b77d1b8f885780e783ebe6c9761449d977baf4468ca4b3",
+          "bytes": 3731,
+          "lines": [
+            1,
+            131
+          ],
+          "excerpt_sha256": "308a7bb57599915273b77d1b8f885780e783ebe6c9761449d977baf4468ca4b3"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/generation-compiler.js",
+          "sha256": "abf2914b2e9e0ee20d8642cef4da627dbb06c8ad156b0ba85248a76f5632a290",
+          "bytes": 11629,
+          "lines": [
+            1,
+            240
+          ],
+          "excerpt_sha256": "9cccf079fe361f0d144a4c6a8659361583fbef1da42466f7b688bc01417fbe33"
+        }
+      ],
+      "limits": "Read current actual code/test sources; test assertions and accepted historical results do not certify native capture, ordinary provider operation or installed Alpha."
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "original_retirement_startup_subject": true,
+      "disposition": "retained",
+      "claim": "Source map already excludes removed watcher owners and describes optional independent file:changed collection. Legacy whitelist, four governed facts and bounded producer/projection owners remain; planned wider modules stay future.",
+      "preimage_sha256": "30a1ddb7f45e341606860ba21dd951c894025ee8bd921200ff9549e49f2758df",
+      "page_sha256": "30a1ddb7f45e341606860ba21dd951c894025ee8bd921200ff9549e49f2758df",
+      "body_sha256": "145c0ec961789eddb714e91c830a401ea5fead9a0ff53385425c36eb16de0b7c",
+      "changed_by_leaf": false,
+      "last_modified": "2026-09-19T11:52:20Z",
+      "evidence_ids": [
+        "legacy-ledger",
+        "mutation-association",
+        "governed-bounded",
+        "save-render"
+      ],
+      "sources": [
+        {
+          "path": "fusion-studio-server/lib/event-bus.js",
+          "sha256": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846",
+          "bytes": 5778,
+          "lines": [
+            1,
+            172
+          ],
+          "excerpt_sha256": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger.js",
+          "sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9",
+          "bytes": 5125,
+          "lines": [
+            1,
+            183
+          ],
+          "excerpt_sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger-subscriber.js",
+          "sha256": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692",
+          "bytes": 2020,
+          "lines": [
+            1,
+            70
+          ],
+          "excerpt_sha256": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692"
+        },
+        {
+          "path": "fusion-studio-server/lib/chat-metadata/collectors/file-mutations.js",
+          "sha256": "cbd83ed651b03a2eeee368f99210c6e1b52733a5179d765b7909d59d593b06d7",
+          "bytes": 2921,
+          "lines": [
+            1,
+            94
+          ],
+          "excerpt_sha256": "cbd83ed651b03a2eeee368f99210c6e1b52733a5179d765b7909d59d593b06d7"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/admission.js",
+          "sha256": "dc709809975c64c05a71b6c1c6fa5a87af764b0ffb633ef424489159adf8596d",
+          "bytes": 12520,
+          "lines": [
+            1,
+            280
+          ],
+          "excerpt_sha256": "b6dd67bdd25db6c8505ab10a4397a831f6f7ffcc6c3e092c85b9da73db4180a9"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/controller.js",
+          "sha256": "18de3b625e2c57ced7cfc79e49537e8f1c9a2f282b525590f69fc187c41a4e9e",
+          "bytes": 10670,
+          "lines": [
+            1,
+            260
+          ],
+          "excerpt_sha256": "8a7c159701800fc7e0e35853b8229a5309c78e50c3016f5c0678f886e08024cb"
+        },
+        {
+          "path": "fusion-studio-server/lib/event-registry/seed-catalog.js",
+          "sha256": "308a7bb57599915273b77d1b8f885780e783ebe6c9761449d977baf4468ca4b3",
+          "bytes": 3731,
+          "lines": [
+            1,
+            131
+          ],
+          "excerpt_sha256": "308a7bb57599915273b77d1b8f885780e783ebe6c9761449d977baf4468ca4b3"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/generation-compiler.js",
+          "sha256": "abf2914b2e9e0ee20d8642cef4da627dbb06c8ad156b0ba85248a76f5632a290",
+          "bytes": 11629,
+          "lines": [
+            1,
+            240
+          ],
+          "excerpt_sha256": "9cccf079fe361f0d144a4c6a8659361583fbef1da42466f7b688bc01417fbe33"
+        },
+        {
+          "path": "fusion-studio-server/lib/file-mutations/save-controller.js",
+          "sha256": "9ef47d8de84e6e76274bb1c1928d6238415cfcd7a5a2c3c5d7947a3cc227a60d",
+          "bytes": 24304,
+          "lines": [
+            1,
+            270
+          ],
+          "excerpt_sha256": "7fd039eccbd207cbfb98b59ec303dbc4d01174691082b22d94dcc833ab3e70aa"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/handlers/resource-render-projection.js",
+          "sha256": "79b15ecf77fd2ba4256984ffba915f8b93e4068a828306f6db59dfa51f39e4f9",
+          "bytes": 3862,
+          "lines": [
+            1,
+            118
+          ],
+          "excerpt_sha256": "79b15ecf77fd2ba4256984ffba915f8b93e4068a828306f6db59dfa51f39e4f9"
+        },
+        {
+          "path": "fusion-studio-server/lib/ws/resource-projection-publisher.js",
+          "sha256": "3587ca39b1c7cb0302b1ac8617b710f5481ecb859b26d5bb62ed60e93883e6d2",
+          "bytes": 10576,
+          "lines": [
+            1,
+            160
+          ],
+          "excerpt_sha256": "4498a6e5aec5deb6ee0b7889b13ae25b6a3825b46c540d87e6474c9d4520c25c"
+        },
+        {
+          "path": "fusion-studio-client/src/lib/ws/file-handlers.ts",
+          "sha256": "092c6bdf456423defe360b6a5426c7224ba36663dccd8e1353e1fd51b77f191d",
+          "bytes": 14309,
+          "lines": [
+            1,
+            190
+          ],
+          "excerpt_sha256": "8ee6876917e5074dd90bc6fe1cb625d27089f4d6c5ef51734a1fea59d7ba35a3"
+        },
+        {
+          "path": "fusion-studio-client/src/state/fileDataStore.ts",
+          "sha256": "1072a5c50bcc23de4282dfa1076f3c49ae48b83c1ead8c1c06fa03211c669656",
+          "bytes": 36651,
+          "lines": [
+            1,
+            240
+          ],
+          "excerpt_sha256": "4780f5fd424beceb0e86b81105c06f964201285699b35d86587a0525aabb0a1d"
+        }
+      ],
+      "limits": "Read current actual code/test sources; test assertions and accepted historical results do not certify native capture, ordinary provider operation or installed Alpha."
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md",
+      "original_retirement_startup_subject": true,
+      "disposition": "retained",
+      "claim": "Real post-listen readiness lease reaches current components/actions/triggers/cron/runner; no file watcher input. Legacy run records are separate from future durable governed automation identity and output choices.",
+      "preimage_sha256": "762f031b4cf84130204201e582a2e9cbf27712c2ddd0fce175b12461749607ad",
+      "page_sha256": "762f031b4cf84130204201e582a2e9cbf27712c2ddd0fce175b12461749607ad",
+      "body_sha256": "4195ce2ac11651194cd3cea21c8cf35528f93d651cd7c221c6a04bdba34598ac",
+      "changed_by_leaf": false,
+      "last_modified": "2026-10-06T01:16:27Z",
+      "evidence_ids": [
+        "startup-lease",
+        "legacy-trigger",
+        "retired-observation",
+        "startup-test-assertions"
+      ],
+      "sources": [
+        {
+          "path": "fusion-studio-server/lib/views/readiness-startup.js",
+          "sha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+          "bytes": 1280,
+          "lines": [
+            1,
+            37
+          ],
+          "excerpt_sha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3"
+        },
+        {
+          "path": "fusion-studio-server/lib/startup.js",
+          "sha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+          "bytes": 38793,
+          "lines": [
+            630,
+            865
+          ],
+          "excerpt_sha256": "41d0cb824098f03b0edc870716503971cf22c7064a95e8758e11394bc5475893"
+        },
+        {
+          "path": "fusion-studio-server/lib/views/readiness-coordinator.js",
+          "sha256": "5dfc41f78021b16e80da8db0735cdbd56021b47c8dbd83da820e58756ef34011",
+          "bytes": 10665,
+          "lines": [
+            1,
+            260
+          ],
+          "excerpt_sha256": "9af5d01cd435cbfcfff0c1630581d9fbe2f1e2238497aba476a2fca250d02283"
+        },
+        {
+          "path": "fusion-studio-server/lib/views/readiness-runtime.js",
+          "sha256": "437da5103af964c86a0f5a008593174e699cc52099efa8bdef8b3813bb95719b",
+          "bytes": 4200,
+          "lines": [
+            1,
+            133
+          ],
+          "excerpt_sha256": "437da5103af964c86a0f5a008593174e699cc52099efa8bdef8b3813bb95719b"
+        },
+        {
+          "path": "fusion-studio-server/lib/triggers/trigger-loader.js",
+          "sha256": "be96186df7eb0bc2ebc55d6be96798e679d9e55b4b7f35d3a1c72ebaacfc9b54",
+          "bytes": 7502,
+          "lines": [
+            1,
+            210
+          ],
+          "excerpt_sha256": "be96186df7eb0bc2ebc55d6be96798e679d9e55b4b7f35d3a1c72ebaacfc9b54"
+        },
+        {
+          "path": "fusion-studio-server/lib/triggers/cron-scheduler.js",
+          "sha256": "fcec3ca69760e86cd1d7063deea4a59b3eb9668890203086e33237322d2f7b21",
+          "bytes": 6677,
+          "lines": [
+            1,
+            223
+          ],
+          "excerpt_sha256": "fcec3ca69760e86cd1d7063deea4a59b3eb9668890203086e33237322d2f7b21"
+        },
+        {
+          "path": "fusion-studio-server/lib/watcher/actions.js",
+          "sha256": "dd73712ce0879d9452097a77f8f3330ac277eb2fa1becbc7e3284b653ef3ada7",
+          "bytes": 7253,
+          "lines": [
+            1,
+            210
+          ],
+          "excerpt_sha256": "dd73712ce0879d9452097a77f8f3330ac277eb2fa1becbc7e3284b653ef3ada7"
+        },
+        {
+          "path": "fusion-studio-server/lib/runner/index.js",
+          "sha256": "c1811044116fbade2bc70ec4adef164a3c9cc4f8efa398aa47726688a4dda006",
+          "bytes": 8750,
+          "lines": [
+            1,
+            200
+          ],
+          "excerpt_sha256": "fc5f24450396eb9a8ae925ff7899b9ddfc07a70f2ea4dd727d882358229fdd00"
+        },
+        {
+          "path": "fusion-studio-server/lib/runner/heartbeat.js",
+          "sha256": "6cfbe02376ad3e2b1e625966773948710ded9953326c582fb127d0c428ef5224",
+          "bytes": 3296,
+          "lines": [
+            1,
+            110
+          ],
+          "excerpt_sha256": "6cfbe02376ad3e2b1e625966773948710ded9953326c582fb127d0c428ef5224"
+        },
+        {
+          "path": "fusion-studio-server/lib/startup.js",
+          "sha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+          "bytes": 38793,
+          "lines": [
+            630,
+            865
+          ],
+          "excerpt_sha256": "41d0cb824098f03b0edc870716503971cf22c7064a95e8758e11394bc5475893"
+        },
+        {
+          "path": "fusion-studio-server/lib/triggers/trigger-loader.js",
+          "sha256": "be96186df7eb0bc2ebc55d6be96798e679d9e55b4b7f35d3a1c72ebaacfc9b54",
+          "bytes": 7502,
+          "lines": [
+            165,
+            210
+          ],
+          "excerpt_sha256": "804bba7142de9aca03c02572f946254e93cea262344e1f215fe835b7af009155"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger.js",
+          "sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9",
+          "bytes": 5125,
+          "lines": [
+            1,
+            183
+          ],
+          "excerpt_sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9"
+        },
+        {
+          "path": "fusion-studio-server/test/runtime/workspace-startup-integrity.test.js",
+          "sha256": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77",
+          "bytes": 12638,
+          "lines": [
+            1,
+            227
+          ],
+          "excerpt_sha256": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77"
+        },
+        {
+          "path": "fusion-studio-server/test/views/readiness-startup.test.js",
+          "sha256": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e",
+          "bytes": 2084,
+          "lines": [
+            1,
+            47
+          ],
+          "excerpt_sha256": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e"
+        },
+        {
+          "path": "fusion-studio-server/test/calendar/apple-listener-retirement.test.js",
+          "sha256": "7b337c2c5b6e4eae1d8abc11e9308bc66620236ad83e8971d40c0591340ab896",
+          "bytes": 885,
+          "lines": [
+            1,
+            21
+          ],
+          "excerpt_sha256": "7b337c2c5b6e4eae1d8abc11e9308bc66620236ad83e8971d40c0591340ab896"
+        },
+        {
+          "path": "fusion-studio-server/test/triggers/trigger-loader.test.js",
+          "sha256": "1ff8f21b44617306373a64e1fd9c04a5131f335ed8fa3e99ddd67ba4753c006f",
+          "bytes": 4740,
+          "lines": [
+            1,
+            154
+          ],
+          "excerpt_sha256": "1ff8f21b44617306373a64e1fd9c04a5131f335ed8fa3e99ddd67ba4753c006f"
+        }
+      ],
+      "limits": "Read current actual code/test sources; test assertions and accepted historical results do not certify native capture, ordinary provider operation or installed Alpha."
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md",
+      "original_retirement_startup_subject": true,
+      "disposition": "retained",
+      "claim": "Startup readiness and production-entry canary scope already match accepted repair. Existing System/database, calendar content gap, view path and open preservation limits remain; no installed/public runtime certification.",
+      "preimage_sha256": "5256064670fd33a70df6f032d07df3fbce6312b484c4f204b1764268edab8e54",
+      "page_sha256": "5256064670fd33a70df6f032d07df3fbce6312b484c4f204b1764268edab8e54",
+      "body_sha256": "7d097ac1e8a300c7a2e70ec0a6008dd7a022db3ac3d5c2bb063e7ecaf4acb813",
+      "changed_by_leaf": false,
+      "last_modified": "2026-10-06T01:21:33Z",
+      "evidence_ids": [
+        "startup-lease",
+        "startup-test-assertions",
+        "calendar",
+        "governed-bounded"
+      ],
+      "sources": [
+        {
+          "path": "fusion-studio-server/lib/views/readiness-startup.js",
+          "sha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+          "bytes": 1280,
+          "lines": [
+            1,
+            37
+          ],
+          "excerpt_sha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3"
+        },
+        {
+          "path": "fusion-studio-server/lib/startup.js",
+          "sha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+          "bytes": 38793,
+          "lines": [
+            630,
+            865
+          ],
+          "excerpt_sha256": "41d0cb824098f03b0edc870716503971cf22c7064a95e8758e11394bc5475893"
+        },
+        {
+          "path": "fusion-studio-server/lib/views/readiness-coordinator.js",
+          "sha256": "5dfc41f78021b16e80da8db0735cdbd56021b47c8dbd83da820e58756ef34011",
+          "bytes": 10665,
+          "lines": [
+            1,
+            260
+          ],
+          "excerpt_sha256": "9af5d01cd435cbfcfff0c1630581d9fbe2f1e2238497aba476a2fca250d02283"
+        },
+        {
+          "path": "fusion-studio-server/lib/views/readiness-runtime.js",
+          "sha256": "437da5103af964c86a0f5a008593174e699cc52099efa8bdef8b3813bb95719b",
+          "bytes": 4200,
+          "lines": [
+            1,
+            133
+          ],
+          "excerpt_sha256": "437da5103af964c86a0f5a008593174e699cc52099efa8bdef8b3813bb95719b"
+        },
+        {
+          "path": "fusion-studio-server/test/runtime/workspace-startup-integrity.test.js",
+          "sha256": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77",
+          "bytes": 12638,
+          "lines": [
+            1,
+            227
+          ],
+          "excerpt_sha256": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77"
+        },
+        {
+          "path": "fusion-studio-server/test/views/readiness-startup.test.js",
+          "sha256": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e",
+          "bytes": 2084,
+          "lines": [
+            1,
+            47
+          ],
+          "excerpt_sha256": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e"
+        },
+        {
+          "path": "fusion-studio-server/test/calendar/apple-listener-retirement.test.js",
+          "sha256": "7b337c2c5b6e4eae1d8abc11e9308bc66620236ad83e8971d40c0591340ab896",
+          "bytes": 885,
+          "lines": [
+            1,
+            21
+          ],
+          "excerpt_sha256": "7b337c2c5b6e4eae1d8abc11e9308bc66620236ad83e8971d40c0591340ab896"
+        },
+        {
+          "path": "fusion-studio-server/test/triggers/trigger-loader.test.js",
+          "sha256": "1ff8f21b44617306373a64e1fd9c04a5131f335ed8fa3e99ddd67ba4753c006f",
+          "bytes": 4740,
+          "lines": [
+            1,
+            154
+          ],
+          "excerpt_sha256": "1ff8f21b44617306373a64e1fd9c04a5131f335ed8fa3e99ddd67ba4753c006f"
+        },
+        {
+          "path": "fusion-studio-server/lib/calendar/index.js",
+          "sha256": "ecfab563937ba6f24595f22a8f51484145c01bd8f1ba0a0ef9955372b05a99fb",
+          "bytes": 310,
+          "lines": [
+            1,
+            12
+          ],
+          "excerpt_sha256": "ecfab563937ba6f24595f22a8f51484145c01bd8f1ba0a0ef9955372b05a99fb"
+        },
+        {
+          "path": "fusion-studio-server/lib/calendar/google/poller.js",
+          "sha256": "eee8e2cd76476f899e3e69bce3f5cdee34e7643a68710e3dcbbb100f41e6ffe3",
+          "bytes": 620,
+          "lines": [
+            1,
+            24
+          ],
+          "excerpt_sha256": "eee8e2cd76476f899e3e69bce3f5cdee34e7643a68710e3dcbbb100f41e6ffe3"
+        },
+        {
+          "path": "fusion-studio-client/src/components/calendar/CalendarViewer.tsx",
+          "sha256": "1c3979328a4dc20b0c628a182047b6fdfc1ea601b430fb95ca00960ec5b3a716",
+          "bytes": 4835,
+          "lines": [
+            1,
+            120
+          ],
+          "excerpt_sha256": "b06a3941c60dfd33c49671363085fe014dee9a9a654a1ba69317a7bb29c30f22"
+        },
+        {
+          "path": "fusion-studio-client/src/state/calendarStore.ts",
+          "sha256": "271b72f695597f64228ec1634c2ceaf173273739e1b8d22d9e47045a858a4b70",
+          "bytes": 6999,
+          "lines": [
+            1,
+            210
+          ],
+          "excerpt_sha256": "4e3d4ff3bc2f83d80571588760eca126c65abb0674296e74b98edfeb13245747"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/admission.js",
+          "sha256": "dc709809975c64c05a71b6c1c6fa5a87af764b0ffb633ef424489159adf8596d",
+          "bytes": 12520,
+          "lines": [
+            1,
+            280
+          ],
+          "excerpt_sha256": "b6dd67bdd25db6c8505ab10a4397a831f6f7ffcc6c3e092c85b9da73db4180a9"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/controller.js",
+          "sha256": "18de3b625e2c57ced7cfc79e49537e8f1c9a2f282b525590f69fc187c41a4e9e",
+          "bytes": 10670,
+          "lines": [
+            1,
+            260
+          ],
+          "excerpt_sha256": "8a7c159701800fc7e0e35853b8229a5309c78e50c3016f5c0678f886e08024cb"
+        },
+        {
+          "path": "fusion-studio-server/lib/event-registry/seed-catalog.js",
+          "sha256": "308a7bb57599915273b77d1b8f885780e783ebe6c9761449d977baf4468ca4b3",
+          "bytes": 3731,
+          "lines": [
+            1,
+            131
+          ],
+          "excerpt_sha256": "308a7bb57599915273b77d1b8f885780e783ebe6c9761449d977baf4468ca4b3"
+        },
+        {
+          "path": "fusion-studio-server/lib/subscriptions/generation-compiler.js",
+          "sha256": "abf2914b2e9e0ee20d8642cef4da627dbb06c8ad156b0ba85248a76f5632a290",
+          "bytes": 11629,
+          "lines": [
+            1,
+            240
+          ],
+          "excerpt_sha256": "9cccf079fe361f0d144a4c6a8659361583fbef1da42466f7b688bc01417fbe33"
+        }
+      ],
+      "limits": "Read current actual code/test sources; test assertions and accepted historical results do not certify native capture, ordinary provider operation or installed Alpha."
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md",
+      "original_retirement_startup_subject": true,
+      "disposition": "retained",
+      "claim": "Existing text distinguishes source assertions and scratch production-entry canaries from actual authenticated public provider/runtime evidence. Historical watcher correlation tests do not imply a current generic watcher; no fresh pass is claimed here.",
+      "preimage_sha256": "15799e9a2e44e64a6cc84c2c22eb5c269748296f7889d43295b665f15fe0a8d1",
+      "page_sha256": "15799e9a2e44e64a6cc84c2c22eb5c269748296f7889d43295b665f15fe0a8d1",
+      "body_sha256": "24292871f78cbe3e6883064973947ac1f8570d525c972a1c2e29d5c74dc79270",
+      "changed_by_leaf": false,
+      "last_modified": "2026-10-06T01:21:33Z",
+      "evidence_ids": [
+        "startup-test-assertions",
+        "mutation-association",
+        "chat-runtime"
+      ],
+      "sources": [
+        {
+          "path": "fusion-studio-server/test/runtime/workspace-startup-integrity.test.js",
+          "sha256": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77",
+          "bytes": 12638,
+          "lines": [
+            1,
+            227
+          ],
+          "excerpt_sha256": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77"
+        },
+        {
+          "path": "fusion-studio-server/test/views/readiness-startup.test.js",
+          "sha256": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e",
+          "bytes": 2084,
+          "lines": [
+            1,
+            47
+          ],
+          "excerpt_sha256": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e"
+        },
+        {
+          "path": "fusion-studio-server/test/calendar/apple-listener-retirement.test.js",
+          "sha256": "7b337c2c5b6e4eae1d8abc11e9308bc66620236ad83e8971d40c0591340ab896",
+          "bytes": 885,
+          "lines": [
+            1,
+            21
+          ],
+          "excerpt_sha256": "7b337c2c5b6e4eae1d8abc11e9308bc66620236ad83e8971d40c0591340ab896"
+        },
+        {
+          "path": "fusion-studio-server/test/triggers/trigger-loader.test.js",
+          "sha256": "1ff8f21b44617306373a64e1fd9c04a5131f335ed8fa3e99ddd67ba4753c006f",
+          "bytes": 4740,
+          "lines": [
+            1,
+            154
+          ],
+          "excerpt_sha256": "1ff8f21b44617306373a64e1fd9c04a5131f335ed8fa3e99ddd67ba4753c006f"
+        },
+        {
+          "path": "fusion-studio-server/lib/chat-metadata/collectors/file-mutations.js",
+          "sha256": "cbd83ed651b03a2eeee368f99210c6e1b52733a5179d765b7909d59d593b06d7",
+          "bytes": 2921,
+          "lines": [
+            1,
+            94
+          ],
+          "excerpt_sha256": "cbd83ed651b03a2eeee368f99210c6e1b52733a5179d765b7909d59d593b06d7"
+        },
+        {
+          "path": "fusion-studio-server/lib/thread/thread-open-handler.js",
+          "sha256": "fcf62ab684ad48efb9d71ee651b8143385df1a28991deb3d72c94a0e0cadd4cb",
+          "bytes": 6049,
+          "lines": [
+            1,
+            167
+          ],
+          "excerpt_sha256": "fcf62ab684ad48efb9d71ee651b8143385df1a28991deb3d72c94a0e0cadd4cb"
+        },
+        {
+          "path": "fusion-studio-server/lib/thread/session-lifecycle.js",
+          "sha256": "747b27becdf523f4083f7ccac3ea066bd7b128129d600fccb948fee8a498a62f",
+          "bytes": 11805,
+          "lines": [
+            1,
+            200
+          ],
+          "excerpt_sha256": "6926b21ccf629612ee1bfbbc998621dd7b440321e9160dce5031f3d971d8b285"
+        },
+        {
+          "path": "fusion-studio-server/lib/thread/runtime-stop.js",
+          "sha256": "34e3689cc378b22ffe23a218153cefa379882f949ffe7f5c8ae7be9080f9af4a",
+          "bytes": 13677,
+          "lines": [
+            1,
+            200
+          ],
+          "excerpt_sha256": "38515f647197ddeef3ae56905381f59922c65a38acab425bea9c00be9985c048"
+        },
+        {
+          "path": "fusion-studio-server/lib/thread/thread-runtime-manager.js",
+          "sha256": "253a06ed66420936bd700c055f26b3e5a9a4689bfb4a65b707b3406536608859",
+          "bytes": 13058,
+          "lines": [
+            1,
+            180
+          ],
+          "excerpt_sha256": "74ad239e0c57e67c3fe633e8bb8ffef7e55c4db521ab756b8378c5f0873081d6"
+        }
+      ],
+      "limits": "Read current actual code/test sources; test assertions and accepted historical results do not certify native capture, ordinary provider operation or installed Alpha."
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md",
+      "original_retirement_startup_subject": false,
+      "disposition": "rewritten-bounded",
+      "claim": "Composer capture uses exact workspace/view/group/session and fresh mount lifetime; view-bound Main follows selection, explicit Main and Side are session-bound. Hidden retained views and away-return cancel old capture; closed Side cancels; pending save can retain gallery PNG without attachment. Header behavior links to canonical Screenshot article.",
+      "preimage_sha256": "45001a1860a4f92133b724d2c7e6077ae3e8162cb01006cf0b472a1c97ea4c50",
+      "page_sha256": "6c5c3847270c0bef52f0e858216f54d602472a9400cddcf2c97a39c5d15e437e",
+      "body_sha256": "577a40858ceb2e747121d1de93f18eb5218e31ff013af89ee78d083d52117d29",
+      "changed_by_leaf": true,
+      "last_modified": "2026-10-06T22:15:19Z",
+      "evidence_ids": [
+        "screenshot-owner",
+        "screenshot-persist",
+        "screenshot-test-assertions"
+      ],
+      "sources": [
+        {
+          "path": "fusion-studio-client/src/screenshots/chatScreenshotCapture.ts",
+          "sha256": "18eb2caf9261a19d30ad35c5ac36a64c51ee22e08567e8cfb2ac48d84e9b12f1",
+          "bytes": 7877,
+          "lines": [
+            1,
+            210
+          ],
+          "excerpt_sha256": "18eb2caf9261a19d30ad35c5ac36a64c51ee22e08567e8cfb2ac48d84e9b12f1"
+        },
+        {
+          "path": "fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx",
+          "sha256": "b3dcd745e057d9e8d350f6623d8a0b697f47b69778af1e29fc95946c0f758463",
+          "bytes": 6691,
+          "lines": [
+            1,
+            145
+          ],
+          "excerpt_sha256": "0b39891e353b90fbd09a91a15493f928075fe657080826a3422d8bc2faa4423b"
+        },
+        {
+          "path": "fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx",
+          "sha256": "9d61acd10d826a53a2fed5d2c3b4a185721d5ef364632713454b679909a15cd1",
+          "bytes": 3422,
+          "lines": [
+            1,
+            96
+          ],
+          "excerpt_sha256": "9d61acd10d826a53a2fed5d2c3b4a185721d5ef364632713454b679909a15cd1"
+        },
+        {
+          "path": "fusion-studio-client/src/components/chat/ChatSurface.tsx",
+          "sha256": "eddbcc616a6b4ccfbf211db031901dcb9fc22ec32d6bbbe0ccd50b8c1ff807f8",
+          "bytes": 3480,
+          "lines": [
+            1,
+            103
+          ],
+          "excerpt_sha256": "eddbcc616a6b4ccfbf211db031901dcb9fc22ec32d6bbbe0ccd50b8c1ff807f8"
+        },
+        {
+          "path": "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+          "sha256": "b9202119baf0caa6ea08022ba2e6a322ec8c15e874d7d82d68ad8a4b20b12127",
+          "bytes": 5965,
+          "lines": [
+            1,
+            146
+          ],
+          "excerpt_sha256": "b9202119baf0caa6ea08022ba2e6a322ec8c15e874d7d82d68ad8a4b20b12127"
+        },
+        {
+          "path": "fusion-studio-client/src/lib/chat/side-chat-placements.ts",
+          "sha256": "109d5f63baf402c39dddf8cc96a93a95d2108e1988fca5dca99a7ad263b417e1",
+          "bytes": 2672,
+          "lines": [
+            1,
+            64
+          ],
+          "excerpt_sha256": "109d5f63baf402c39dddf8cc96a93a95d2108e1988fca5dca99a7ad263b417e1"
+        },
+        {
+          "path": "fusion-studio-client/src/state/slices/chatSurfaceSlice.ts",
+          "sha256": "9d531ceded3b03ac602b70ad8b0298765f07ddd594467b0c3d2bba48c2bb67d9",
+          "bytes": 24515,
+          "lines": [
+            1,
+            250
+          ],
+          "excerpt_sha256": "15c3dc5a9d35265735e24bd22d25c24d7cd0bbb040cbc779ad7480afcf7d1eae"
+        },
+        {
+          "path": "fusion-studio-client/src/components/App.tsx",
+          "sha256": "ae70d077983470b3030d56162c35aa196dd184518e1cbe18bfb92e6f41c21745",
+          "bytes": 13033,
+          "lines": [
+            65,
+            85
+          ],
+          "excerpt_sha256": "d23d660ac87f8b967c15312d488f11ad17435fd901eed27fff1105aa34a39e0d"
+        },
+        {
+          "path": "fusion-studio-client/electron/ipc/capture-handlers.cjs",
+          "sha256": "0495e11ea1e01dbd2b214058a053f9fcb2b067d0eaf901d88525cb6162a1a65f",
+          "bytes": 1364,
+          "lines": [
+            1,
+            46
+          ],
+          "excerpt_sha256": "0495e11ea1e01dbd2b214058a053f9fcb2b067d0eaf901d88525cb6162a1a65f"
+        },
+        {
+          "path": "fusion-studio-server/lib/screenshot/ws-handlers.js",
+          "sha256": "8d11853e29ee8f0264090145aaf1d461384caeac6b58797a63cb687869756254",
+          "bytes": 5474,
+          "lines": [
+            1,
+            152
+          ],
+          "excerpt_sha256": "8d11853e29ee8f0264090145aaf1d461384caeac6b58797a63cb687869756254"
+        },
+        {
+          "path": "fusion-studio-client/src/state/chatFileLinkStore.ts",
+          "sha256": "c32cbb3e85afc696b0a47412d5d26ca41cad9d247dc3e351666e766a768e0374",
+          "bytes": 9585,
+          "lines": [
+            1,
+            180
+          ],
+          "excerpt_sha256": "151be37eecdc7e9fab06b4df3cc257eac5830a45e45e6d1538b45d14f3ec4d78"
+        },
+        {
+          "path": "fusion-studio-client/e2e/threaded-chat-host.spec.ts",
+          "sha256": "4c2cdef55c38b815cf8d35ed5bcac3c04bf595db5d6126ae6f83f704f17ccb30",
+          "bytes": 66619,
+          "lines": [
+            1120,
+            1379
+          ],
+          "excerpt_sha256": "c5346e9dc11d7a7d559d44211a8a3e32c6dfbeb8f2a88d48826a622d373cced6"
+        },
+        {
+          "path": "fusion-studio-server/test/screenshot-file-capture-request-id.test.js",
+          "sha256": "79f331849cff605f963731744066d94941c80b8d3298d2300e49778880bb78e8",
+          "bytes": 2563,
+          "lines": [
+            1,
+            65
+          ],
+          "excerpt_sha256": "79f331849cff605f963731744066d94941c80b8d3298d2300e49778880bb78e8"
+        }
+      ],
+      "limits": "Read current actual code/test sources; test assertions and accepted historical results do not certify native capture, ordinary provider operation or installed Alpha."
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md",
+      "original_retirement_startup_subject": false,
+      "disposition": "generated-block-only",
+      "claim": "Imported exactly two generated section-toc description deltas for Change Storm and Structure. Authored body outside that block is byte-preserved; generator output matches after stabilization.",
+      "preimage_sha256": "9c5cfbecaf10e7db72586dd2bdcc83cb6d65db5874313f26c822c125e9dc9047",
+      "page_sha256": "958dd740990d80ea878e58f603f1bb3d5208b6afc9fc723ce771b4f3864ce0be",
+      "body_sha256": "92a4c8ddbfce095847e9e819391e5713281427c9d8a55012e122b5f7e6b0e84e",
+      "changed_by_leaf": true,
+      "last_modified": "2026-10-06T22:14:26Z",
+      "evidence_ids": [
+        "navigation-tool",
+        "legacy-ledger",
+        "mutation-association"
+      ],
+      "sources": [
+        {
+          "path": "fusion-studio-server/scripts/wiki.js",
+          "sha256": "ebc3203f165ebda1cfcc9e5c1b467dde9243c99ebf7a2b199364b280e243812e",
+          "bytes": 4873,
+          "lines": [
+            1,
+            165
+          ],
+          "excerpt_sha256": "ebc3203f165ebda1cfcc9e5c1b467dde9243c99ebf7a2b199364b280e243812e"
+        },
+        {
+          "path": "fusion-studio-server/lib/wiki/audit/toc-sync.js",
+          "sha256": "8fa1b29f766bb7142ab89f54b3cf8606cecab0ede458d04004893e3c0ec40b5f",
+          "bytes": 10633,
+          "lines": [
+            1,
+            230
+          ],
+          "excerpt_sha256": "7f93da0a1f337cd5eca05cd1e3fd954c0e888d28b022fec4a3724552e011bc0e"
+        },
+        {
+          "path": "fusion-studio-server/lib/event-bus.js",
+          "sha256": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846",
+          "bytes": 5778,
+          "lines": [
+            1,
+            172
+          ],
+          "excerpt_sha256": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger.js",
+          "sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9",
+          "bytes": 5125,
+          "lines": [
+            1,
+            183
+          ],
+          "excerpt_sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9"
+        },
+        {
+          "path": "fusion-studio-server/lib/ledger/event-ledger-subscriber.js",
+          "sha256": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692",
+          "bytes": 2020,
+          "lines": [
+            1,
+            70
+          ],
+          "excerpt_sha256": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692"
+        },
+        {
+          "path": "fusion-studio-server/lib/chat-metadata/collectors/file-mutations.js",
+          "sha256": "cbd83ed651b03a2eeee368f99210c6e1b52733a5179d765b7909d59d593b06d7",
+          "bytes": 2921,
+          "lines": [
+            1,
+            94
+          ],
+          "excerpt_sha256": "cbd83ed651b03a2eeee368f99210c6e1b52733a5179d765b7909d59d593b06d7"
+        }
+      ],
+      "limits": "Read current actual code/test sources; test assertions and accepted historical results do not certify native capture, ordinary provider operation or installed Alpha."
+    }
+  ],
+  "evidence": {
+    "startup-lease": [
+      {
+        "path": "fusion-studio-server/lib/views/readiness-startup.js",
+        "sha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+        "bytes": 1280,
+        "lines": [
+          1,
+          37
+        ],
+        "excerpt_sha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3"
+      },
+      {
+        "path": "fusion-studio-server/lib/startup.js",
+        "sha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+        "bytes": 38793,
+        "lines": [
+          630,
+          865
+        ],
+        "excerpt_sha256": "41d0cb824098f03b0edc870716503971cf22c7064a95e8758e11394bc5475893"
+      },
+      {
+        "path": "fusion-studio-server/lib/views/readiness-coordinator.js",
+        "sha256": "5dfc41f78021b16e80da8db0735cdbd56021b47c8dbd83da820e58756ef34011",
+        "bytes": 10665,
+        "lines": [
+          1,
+          260
+        ],
+        "excerpt_sha256": "9af5d01cd435cbfcfff0c1630581d9fbe2f1e2238497aba476a2fca250d02283"
+      },
+      {
+        "path": "fusion-studio-server/lib/views/readiness-runtime.js",
+        "sha256": "437da5103af964c86a0f5a008593174e699cc52099efa8bdef8b3813bb95719b",
+        "bytes": 4200,
+        "lines": [
+          1,
+          133
+        ],
+        "excerpt_sha256": "437da5103af964c86a0f5a008593174e699cc52099efa8bdef8b3813bb95719b"
+      }
+    ],
+    "retired-observation": [
+      {
+        "path": "fusion-studio-server/lib/startup.js",
+        "sha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+        "bytes": 38793,
+        "lines": [
+          630,
+          865
+        ],
+        "excerpt_sha256": "41d0cb824098f03b0edc870716503971cf22c7064a95e8758e11394bc5475893"
+      },
+      {
+        "path": "fusion-studio-server/lib/triggers/trigger-loader.js",
+        "sha256": "be96186df7eb0bc2ebc55d6be96798e679d9e55b4b7f35d3a1c72ebaacfc9b54",
+        "bytes": 7502,
+        "lines": [
+          165,
+          210
+        ],
+        "excerpt_sha256": "804bba7142de9aca03c02572f946254e93cea262344e1f215fe835b7af009155"
+      },
+      {
+        "path": "fusion-studio-server/lib/ledger/event-ledger.js",
+        "sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9",
+        "bytes": 5125,
+        "lines": [
+          1,
+          183
+        ],
+        "excerpt_sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9"
+      }
+    ],
+    "calendar": [
+      {
+        "path": "fusion-studio-server/lib/calendar/index.js",
+        "sha256": "ecfab563937ba6f24595f22a8f51484145c01bd8f1ba0a0ef9955372b05a99fb",
+        "bytes": 310,
+        "lines": [
+          1,
+          12
+        ],
+        "excerpt_sha256": "ecfab563937ba6f24595f22a8f51484145c01bd8f1ba0a0ef9955372b05a99fb"
+      },
+      {
+        "path": "fusion-studio-server/lib/calendar/google/poller.js",
+        "sha256": "eee8e2cd76476f899e3e69bce3f5cdee34e7643a68710e3dcbbb100f41e6ffe3",
+        "bytes": 620,
+        "lines": [
+          1,
+          24
+        ],
+        "excerpt_sha256": "eee8e2cd76476f899e3e69bce3f5cdee34e7643a68710e3dcbbb100f41e6ffe3"
+      },
+      {
+        "path": "fusion-studio-client/src/components/calendar/CalendarViewer.tsx",
+        "sha256": "1c3979328a4dc20b0c628a182047b6fdfc1ea601b430fb95ca00960ec5b3a716",
+        "bytes": 4835,
+        "lines": [
+          1,
+          120
+        ],
+        "excerpt_sha256": "b06a3941c60dfd33c49671363085fe014dee9a9a654a1ba69317a7bb29c30f22"
+      },
+      {
+        "path": "fusion-studio-client/src/state/calendarStore.ts",
+        "sha256": "271b72f695597f64228ec1634c2ceaf173273739e1b8d22d9e47045a858a4b70",
+        "bytes": 6999,
+        "lines": [
+          1,
+          210
+        ],
+        "excerpt_sha256": "4e3d4ff3bc2f83d80571588760eca126c65abb0674296e74b98edfeb13245747"
+      }
+    ],
+    "legacy-trigger": [
+      {
+        "path": "fusion-studio-server/lib/triggers/trigger-loader.js",
+        "sha256": "be96186df7eb0bc2ebc55d6be96798e679d9e55b4b7f35d3a1c72ebaacfc9b54",
+        "bytes": 7502,
+        "lines": [
+          1,
+          210
+        ],
+        "excerpt_sha256": "be96186df7eb0bc2ebc55d6be96798e679d9e55b4b7f35d3a1c72ebaacfc9b54"
+      },
+      {
+        "path": "fusion-studio-server/lib/triggers/cron-scheduler.js",
+        "sha256": "fcec3ca69760e86cd1d7063deea4a59b3eb9668890203086e33237322d2f7b21",
+        "bytes": 6677,
+        "lines": [
+          1,
+          223
+        ],
+        "excerpt_sha256": "fcec3ca69760e86cd1d7063deea4a59b3eb9668890203086e33237322d2f7b21"
+      },
+      {
+        "path": "fusion-studio-server/lib/watcher/actions.js",
+        "sha256": "dd73712ce0879d9452097a77f8f3330ac277eb2fa1becbc7e3284b653ef3ada7",
+        "bytes": 7253,
+        "lines": [
+          1,
+          210
+        ],
+        "excerpt_sha256": "dd73712ce0879d9452097a77f8f3330ac277eb2fa1becbc7e3284b653ef3ada7"
+      },
+      {
+        "path": "fusion-studio-server/lib/runner/index.js",
+        "sha256": "c1811044116fbade2bc70ec4adef164a3c9cc4f8efa398aa47726688a4dda006",
+        "bytes": 8750,
+        "lines": [
+          1,
+          200
+        ],
+        "excerpt_sha256": "fc5f24450396eb9a8ae925ff7899b9ddfc07a70f2ea4dd727d882358229fdd00"
+      },
+      {
+        "path": "fusion-studio-server/lib/runner/heartbeat.js",
+        "sha256": "6cfbe02376ad3e2b1e625966773948710ded9953326c582fb127d0c428ef5224",
+        "bytes": 3296,
+        "lines": [
+          1,
+          110
+        ],
+        "excerpt_sha256": "6cfbe02376ad3e2b1e625966773948710ded9953326c582fb127d0c428ef5224"
+      }
+    ],
+    "legacy-ledger": [
+      {
+        "path": "fusion-studio-server/lib/event-bus.js",
+        "sha256": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846",
+        "bytes": 5778,
+        "lines": [
+          1,
+          172
+        ],
+        "excerpt_sha256": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846"
+      },
+      {
+        "path": "fusion-studio-server/lib/ledger/event-ledger.js",
+        "sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9",
+        "bytes": 5125,
+        "lines": [
+          1,
+          183
+        ],
+        "excerpt_sha256": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9"
+      },
+      {
+        "path": "fusion-studio-server/lib/ledger/event-ledger-subscriber.js",
+        "sha256": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692",
+        "bytes": 2020,
+        "lines": [
+          1,
+          70
+        ],
+        "excerpt_sha256": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692"
+      }
+    ],
+    "mutation-association": [
+      {
+        "path": "fusion-studio-server/lib/chat-metadata/collectors/file-mutations.js",
+        "sha256": "cbd83ed651b03a2eeee368f99210c6e1b52733a5179d765b7909d59d593b06d7",
+        "bytes": 2921,
+        "lines": [
+          1,
+          94
+        ],
+        "excerpt_sha256": "cbd83ed651b03a2eeee368f99210c6e1b52733a5179d765b7909d59d593b06d7"
+      }
+    ],
+    "governed-bounded": [
+      {
+        "path": "fusion-studio-server/lib/subscriptions/admission.js",
+        "sha256": "dc709809975c64c05a71b6c1c6fa5a87af764b0ffb633ef424489159adf8596d",
+        "bytes": 12520,
+        "lines": [
+          1,
+          280
+        ],
+        "excerpt_sha256": "b6dd67bdd25db6c8505ab10a4397a831f6f7ffcc6c3e092c85b9da73db4180a9"
+      },
+      {
+        "path": "fusion-studio-server/lib/subscriptions/controller.js",
+        "sha256": "18de3b625e2c57ced7cfc79e49537e8f1c9a2f282b525590f69fc187c41a4e9e",
+        "bytes": 10670,
+        "lines": [
+          1,
+          260
+        ],
+        "excerpt_sha256": "8a7c159701800fc7e0e35853b8229a5309c78e50c3016f5c0678f886e08024cb"
+      },
+      {
+        "path": "fusion-studio-server/lib/event-registry/seed-catalog.js",
+        "sha256": "308a7bb57599915273b77d1b8f885780e783ebe6c9761449d977baf4468ca4b3",
+        "bytes": 3731,
+        "lines": [
+          1,
+          131
+        ],
+        "excerpt_sha256": "308a7bb57599915273b77d1b8f885780e783ebe6c9761449d977baf4468ca4b3"
+      },
+      {
+        "path": "fusion-studio-server/lib/subscriptions/generation-compiler.js",
+        "sha256": "abf2914b2e9e0ee20d8642cef4da627dbb06c8ad156b0ba85248a76f5632a290",
+        "bytes": 11629,
+        "lines": [
+          1,
+          240
+        ],
+        "excerpt_sha256": "9cccf079fe361f0d144a4c6a8659361583fbef1da42466f7b688bc01417fbe33"
+      }
+    ],
+    "save-render": [
+      {
+        "path": "fusion-studio-server/lib/file-mutations/save-controller.js",
+        "sha256": "9ef47d8de84e6e76274bb1c1928d6238415cfcd7a5a2c3c5d7947a3cc227a60d",
+        "bytes": 24304,
+        "lines": [
+          1,
+          270
+        ],
+        "excerpt_sha256": "7fd039eccbd207cbfb98b59ec303dbc4d01174691082b22d94dcc833ab3e70aa"
+      },
+      {
+        "path": "fusion-studio-server/lib/subscriptions/handlers/resource-render-projection.js",
+        "sha256": "79b15ecf77fd2ba4256984ffba915f8b93e4068a828306f6db59dfa51f39e4f9",
+        "bytes": 3862,
+        "lines": [
+          1,
+          118
+        ],
+        "excerpt_sha256": "79b15ecf77fd2ba4256984ffba915f8b93e4068a828306f6db59dfa51f39e4f9"
+      },
+      {
+        "path": "fusion-studio-server/lib/ws/resource-projection-publisher.js",
+        "sha256": "3587ca39b1c7cb0302b1ac8617b710f5481ecb859b26d5bb62ed60e93883e6d2",
+        "bytes": 10576,
+        "lines": [
+          1,
+          160
+        ],
+        "excerpt_sha256": "4498a6e5aec5deb6ee0b7889b13ae25b6a3825b46c540d87e6474c9d4520c25c"
+      },
+      {
+        "path": "fusion-studio-client/src/lib/ws/file-handlers.ts",
+        "sha256": "092c6bdf456423defe360b6a5426c7224ba36663dccd8e1353e1fd51b77f191d",
+        "bytes": 14309,
+        "lines": [
+          1,
+          190
+        ],
+        "excerpt_sha256": "8ee6876917e5074dd90bc6fe1cb625d27089f4d6c5ef51734a1fea59d7ba35a3"
+      },
+      {
+        "path": "fusion-studio-client/src/state/fileDataStore.ts",
+        "sha256": "1072a5c50bcc23de4282dfa1076f3c49ae48b83c1ead8c1c06fa03211c669656",
+        "bytes": 36651,
+        "lines": [
+          1,
+          240
+        ],
+        "excerpt_sha256": "4780f5fd424beceb0e86b81105c06f964201285699b35d86587a0525aabb0a1d"
+      }
+    ],
+    "tool-checkpoints": [
+      {
+        "path": "fusion-studio-server/lib/agent-provenance/resource-observer.js",
+        "sha256": "f23cdf9bf487accd8a54a3930b4608a79d4f8d523f2a02b696ae5e9c7a21c7a4",
+        "bytes": 19148,
+        "lines": [
+          1,
+          220
+        ],
+        "excerpt_sha256": "3fc90316ee246481b6fbaeb25583b6aad739206ed3e5a346ddba139b492a48f0"
+      },
+      {
+        "path": "fusion-studio-server/lib/agent-provenance/checkpoint-repository.js",
+        "sha256": "be6d22dc1e34181e6bc6a8730792d894c15752afc231c265486224a1f5db21e2",
+        "bytes": 15225,
+        "lines": [
+          1,
+          200
+        ],
+        "excerpt_sha256": "81aab02cedbccff03df5a3dbcbd37acbfab485f5f6bbea3be9702bf545075443"
+      },
+      {
+        "path": "fusion-studio-server/lib/agent-provenance/agent-ledger-repository.js",
+        "sha256": "912649ad6f57751cc04dc8555cfd4a742cd5b3a9294fd67c93a41ea3987babbb",
+        "bytes": 15949,
+        "lines": [
+          1,
+          220
+        ],
+        "excerpt_sha256": "73c3c1f0fab627b84b62105180f7238ca939ed69c7627adff978136f80da0766"
+      }
+    ],
+    "screenshot-owner": [
+      {
+        "path": "fusion-studio-client/src/screenshots/chatScreenshotCapture.ts",
+        "sha256": "18eb2caf9261a19d30ad35c5ac36a64c51ee22e08567e8cfb2ac48d84e9b12f1",
+        "bytes": 7877,
+        "lines": [
+          1,
+          210
+        ],
+        "excerpt_sha256": "18eb2caf9261a19d30ad35c5ac36a64c51ee22e08567e8cfb2ac48d84e9b12f1"
+      },
+      {
+        "path": "fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx",
+        "sha256": "b3dcd745e057d9e8d350f6623d8a0b697f47b69778af1e29fc95946c0f758463",
+        "bytes": 6691,
+        "lines": [
+          1,
+          145
+        ],
+        "excerpt_sha256": "0b39891e353b90fbd09a91a15493f928075fe657080826a3422d8bc2faa4423b"
+      },
+      {
+        "path": "fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx",
+        "sha256": "9d61acd10d826a53a2fed5d2c3b4a185721d5ef364632713454b679909a15cd1",
+        "bytes": 3422,
+        "lines": [
+          1,
+          96
+        ],
+        "excerpt_sha256": "9d61acd10d826a53a2fed5d2c3b4a185721d5ef364632713454b679909a15cd1"
+      },
+      {
+        "path": "fusion-studio-client/src/components/chat/ChatSurface.tsx",
+        "sha256": "eddbcc616a6b4ccfbf211db031901dcb9fc22ec32d6bbbe0ccd50b8c1ff807f8",
+        "bytes": 3480,
+        "lines": [
+          1,
+          103
+        ],
+        "excerpt_sha256": "eddbcc616a6b4ccfbf211db031901dcb9fc22ec32d6bbbe0ccd50b8c1ff807f8"
+      },
+      {
+        "path": "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+        "sha256": "b9202119baf0caa6ea08022ba2e6a322ec8c15e874d7d82d68ad8a4b20b12127",
+        "bytes": 5965,
+        "lines": [
+          1,
+          146
+        ],
+        "excerpt_sha256": "b9202119baf0caa6ea08022ba2e6a322ec8c15e874d7d82d68ad8a4b20b12127"
+      },
+      {
+        "path": "fusion-studio-client/src/lib/chat/side-chat-placements.ts",
+        "sha256": "109d5f63baf402c39dddf8cc96a93a95d2108e1988fca5dca99a7ad263b417e1",
+        "bytes": 2672,
+        "lines": [
+          1,
+          64
+        ],
+        "excerpt_sha256": "109d5f63baf402c39dddf8cc96a93a95d2108e1988fca5dca99a7ad263b417e1"
+      },
+      {
+        "path": "fusion-studio-client/src/state/slices/chatSurfaceSlice.ts",
+        "sha256": "9d531ceded3b03ac602b70ad8b0298765f07ddd594467b0c3d2bba48c2bb67d9",
+        "bytes": 24515,
+        "lines": [
+          1,
+          250
+        ],
+        "excerpt_sha256": "15c3dc5a9d35265735e24bd22d25c24d7cd0bbb040cbc779ad7480afcf7d1eae"
+      },
+      {
+        "path": "fusion-studio-client/src/components/App.tsx",
+        "sha256": "ae70d077983470b3030d56162c35aa196dd184518e1cbe18bfb92e6f41c21745",
+        "bytes": 13033,
+        "lines": [
+          65,
+          85
+        ],
+        "excerpt_sha256": "d23d660ac87f8b967c15312d488f11ad17435fd901eed27fff1105aa34a39e0d"
+      }
+    ],
+    "screenshot-persist": [
+      {
+        "path": "fusion-studio-client/electron/ipc/capture-handlers.cjs",
+        "sha256": "0495e11ea1e01dbd2b214058a053f9fcb2b067d0eaf901d88525cb6162a1a65f",
+        "bytes": 1364,
+        "lines": [
+          1,
+          46
+        ],
+        "excerpt_sha256": "0495e11ea1e01dbd2b214058a053f9fcb2b067d0eaf901d88525cb6162a1a65f"
+      },
+      {
+        "path": "fusion-studio-server/lib/screenshot/ws-handlers.js",
+        "sha256": "8d11853e29ee8f0264090145aaf1d461384caeac6b58797a63cb687869756254",
+        "bytes": 5474,
+        "lines": [
+          1,
+          152
+        ],
+        "excerpt_sha256": "8d11853e29ee8f0264090145aaf1d461384caeac6b58797a63cb687869756254"
+      },
+      {
+        "path": "fusion-studio-client/src/state/chatFileLinkStore.ts",
+        "sha256": "c32cbb3e85afc696b0a47412d5d26ca41cad9d247dc3e351666e766a768e0374",
+        "bytes": 9585,
+        "lines": [
+          1,
+          180
+        ],
+        "excerpt_sha256": "151be37eecdc7e9fab06b4df3cc257eac5830a45e45e6d1538b45d14f3ec4d78"
+      }
+    ],
+    "screenshot-gallery-preview": [
+      {
+        "path": "fusion-studio-client/electron/ipc/screenshot-handlers.cjs",
+        "sha256": "3ad9d6be65a725d5cbad46cd35d6ed7a3ff0ede5109400c996192679ba9f07aa",
+        "bytes": 2715,
+        "lines": [
+          1,
+          82
+        ],
+        "excerpt_sha256": "3ad9d6be65a725d5cbad46cd35d6ed7a3ff0ede5109400c996192679ba9f07aa"
+      },
+      {
+        "path": "fusion-studio-client/src/screenshots/ScreenshotsTrigger.tsx",
+        "sha256": "47c1883432b7c203f4b0ac20992d8e8efc353b4d68e3cb3bd5b5f75415359926",
+        "bytes": 8098,
+        "lines": [
+          1,
+          190
+        ],
+        "excerpt_sha256": "0a97650eb8497fc881bb2fc09291cef29d0f9f761fe67480cf7865982faef3e7"
+      },
+      {
+        "path": "fusion-studio-client/src/hooks/useScreenshotCapture.ts",
+        "sha256": "da0a9f19b1dcbebcbc7ad9af4c1c61007af2830be7fab9534073ab0d2c7ec67f",
+        "bytes": 3027,
+        "lines": [
+          1,
+          91
+        ],
+        "excerpt_sha256": "da0a9f19b1dcbebcbc7ad9af4c1c61007af2830be7fab9534073ab0d2c7ec67f"
+      },
+      {
+        "path": "fusion-studio-server/lib/workspace/screenshot-service.js",
+        "sha256": "b7faa23ad0c976c30d1b84e12cffd0d4d0156225592853e5912958f29dc63287",
+        "bytes": 998,
+        "lines": [
+          1,
+          35
+        ],
+        "excerpt_sha256": "b7faa23ad0c976c30d1b84e12cffd0d4d0156225592853e5912958f29dc63287"
+      }
+    ],
+    "screenshot-test-assertions": [
+      {
+        "path": "fusion-studio-client/e2e/threaded-chat-host.spec.ts",
+        "sha256": "4c2cdef55c38b815cf8d35ed5bcac3c04bf595db5d6126ae6f83f704f17ccb30",
+        "bytes": 66619,
+        "lines": [
+          1120,
+          1379
+        ],
+        "excerpt_sha256": "c5346e9dc11d7a7d559d44211a8a3e32c6dfbeb8f2a88d48826a622d373cced6"
+      },
+      {
+        "path": "fusion-studio-server/test/screenshot-file-capture-request-id.test.js",
+        "sha256": "79f331849cff605f963731744066d94941c80b8d3298d2300e49778880bb78e8",
+        "bytes": 2563,
+        "lines": [
+          1,
+          65
+        ],
+        "excerpt_sha256": "79f331849cff605f963731744066d94941c80b8d3298d2300e49778880bb78e8"
+      }
+    ],
+    "startup-test-assertions": [
+      {
+        "path": "fusion-studio-server/test/runtime/workspace-startup-integrity.test.js",
+        "sha256": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77",
+        "bytes": 12638,
+        "lines": [
+          1,
+          227
+        ],
+        "excerpt_sha256": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77"
+      },
+      {
+        "path": "fusion-studio-server/test/views/readiness-startup.test.js",
+        "sha256": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e",
+        "bytes": 2084,
+        "lines": [
+          1,
+          47
+        ],
+        "excerpt_sha256": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e"
+      },
+      {
+        "path": "fusion-studio-server/test/calendar/apple-listener-retirement.test.js",
+        "sha256": "7b337c2c5b6e4eae1d8abc11e9308bc66620236ad83e8971d40c0591340ab896",
+        "bytes": 885,
+        "lines": [
+          1,
+          21
+        ],
+        "excerpt_sha256": "7b337c2c5b6e4eae1d8abc11e9308bc66620236ad83e8971d40c0591340ab896"
+      },
+      {
+        "path": "fusion-studio-server/test/triggers/trigger-loader.test.js",
+        "sha256": "1ff8f21b44617306373a64e1fd9c04a5131f335ed8fa3e99ddd67ba4753c006f",
+        "bytes": 4740,
+        "lines": [
+          1,
+          154
+        ],
+        "excerpt_sha256": "1ff8f21b44617306373a64e1fd9c04a5131f335ed8fa3e99ddd67ba4753c006f"
+      }
+    ],
+    "chat-runtime": [
+      {
+        "path": "fusion-studio-server/lib/thread/thread-open-handler.js",
+        "sha256": "fcf62ab684ad48efb9d71ee651b8143385df1a28991deb3d72c94a0e0cadd4cb",
+        "bytes": 6049,
+        "lines": [
+          1,
+          167
+        ],
+        "excerpt_sha256": "fcf62ab684ad48efb9d71ee651b8143385df1a28991deb3d72c94a0e0cadd4cb"
+      },
+      {
+        "path": "fusion-studio-server/lib/thread/session-lifecycle.js",
+        "sha256": "747b27becdf523f4083f7ccac3ea066bd7b128129d600fccb948fee8a498a62f",
+        "bytes": 11805,
+        "lines": [
+          1,
+          200
+        ],
+        "excerpt_sha256": "6926b21ccf629612ee1bfbbc998621dd7b440321e9160dce5031f3d971d8b285"
+      },
+      {
+        "path": "fusion-studio-server/lib/thread/runtime-stop.js",
+        "sha256": "34e3689cc378b22ffe23a218153cefa379882f949ffe7f5c8ae7be9080f9af4a",
+        "bytes": 13677,
+        "lines": [
+          1,
+          200
+        ],
+        "excerpt_sha256": "38515f647197ddeef3ae56905381f59922c65a38acab425bea9c00be9985c048"
+      },
+      {
+        "path": "fusion-studio-server/lib/thread/thread-runtime-manager.js",
+        "sha256": "253a06ed66420936bd700c055f26b3e5a9a4689bfb4a65b707b3406536608859",
+        "bytes": 13058,
+        "lines": [
+          1,
+          180
+        ],
+        "excerpt_sha256": "74ad239e0c57e67c3fe633e8bb8ffef7e55c4db521ab756b8378c5f0873081d6"
+      }
+    ],
+    "navigation-tool": [
+      {
+        "path": "fusion-studio-server/scripts/wiki.js",
+        "sha256": "ebc3203f165ebda1cfcc9e5c1b467dde9243c99ebf7a2b199364b280e243812e",
+        "bytes": 4873,
+        "lines": [
+          1,
+          165
+        ],
+        "excerpt_sha256": "ebc3203f165ebda1cfcc9e5c1b467dde9243c99ebf7a2b199364b280e243812e"
+      },
+      {
+        "path": "fusion-studio-server/lib/wiki/audit/toc-sync.js",
+        "sha256": "8fa1b29f766bb7142ab89f54b3cf8606cecab0ede458d04004893e3c0ec40b5f",
+        "bytes": 10633,
+        "lines": [
+          1,
+          230
+        ],
+        "excerpt_sha256": "7f93da0a1f337cd5eca05cd1e3fd954c0e888d28b022fec4a3724552e011bc0e"
+      }
+    ]
+  },
+  "source_evidence_log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/source-evidence.log",
+  "source_evidence_log_sha256": "fca8f53b9f3a9ae29037e2578652e1ba539a57e0ae53680b1e3a4045eaf465f5"
+}

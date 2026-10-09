@@ -1,0 +1,37 @@
+[
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/early-lifecycle-driver.mjs",
+    "before": null,
+    "after": "afa1c778b3f16b060d0996aaa99ffa8827c50b25fbf8d7199de60284b0744257"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/early-lifecycle-preload.cjs",
+    "before": null,
+    "after": "37b3b09c6b9c4db8b16fa749f9030a9b322ccfa6be61acfb33e2ae1856311db6"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/early-lifecycle.test.mjs",
+    "before": null,
+    "after": "5d970ab3973fd9a34d52cf216cc4875465d6ba7328b6193ff745c54980249326"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs",
+    "before": "3b877aaa7abb2540f8a4d4d90b45b9e58ddf886f10ea4eb139b4bd663fd27ca5",
+    "after": "24d5678272f01c41aa92e183acf2bcf1b4d33d17fb06e04700aa2aacff6dc7ad"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/r1-sustained-electron.mjs",
+    "before": "adb079d17476c235b48e26380ada5c9a13cfbeb66cc5936f21b5cd33c08220fb",
+    "after": "33657de4274e128c656ec81871212c04dba6522a80ce2b9085ea2c5914893836"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/run.mjs",
+    "before": "a8fd99b7e2004de5d31c1bf300cff8a34f6f0a8577fdaf5a13cb97c961a06933",
+    "after": "1558a6f6c28e34d912684dd2dca0fe356db02aab1662447ffb8717b53229c020"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/scenario-inventory.mjs",
+    "before": "60b89c4dc956e3f4229c17e4c60d3da4bf18dc29b05fffee604dc297a012666f",
+    "after": "6f8dfdd1c9af29e8445d5c63afbbaf89c36a8d463820d9be15cd1c91767086a5"
+  }
+]

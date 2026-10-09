@@ -1,0 +1,12 @@
+[
+  {
+    "runId": "chat-arch-1790239012360-2c0dcf0d72",
+    "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790239012360-2c0dcf0d72",
+    "disposition": "passed before subsequent activation metadata repair; affected validation to rerun"
+  },
+  {
+    "runId": "chat-arch-1790239037019-6f6bd9d540",
+    "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790239037019-6f6bd9d540",
+    "disposition": "passed before subsequent activation metadata repair; affected validation to rerun"
+  }
+]

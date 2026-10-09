@@ -1,0 +1,22 @@
+{
+  "head": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "product_diff": [],
+  "staged_paths": [],
+  "source_rows": 128,
+  "source_matches": 127,
+  "drift": [
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/PLANNING.md",
+      "was": "d43a9a2844620ccbef7193c14d3196a8c8ba695f5d2910f0d969789c1d946337",
+      "now": "611583534d0f2729a77330d702e250377680b09a54ab16a797775ae1d7bde95d"
+    }
+  ],
+  "checkpoint_content_matches_planning_entry": true,
+  "checkpoint_sha256": "67dd4dc6fbba88712a0b61f95e79d6656f2fd5e34d65425d5f7f7e689f90a897",
+  "checkpoint_note": "Separate readback against verified planning-entry content; not claimed helper historical snapshot coverage or a history checkpoint.",
+  "external_receipts": {
+    "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/HANDOFF-COMPLETED-BUILD-2026-10-07.md": "a4b4895940f72e3352446770625023e7c925a1369fb5f611dd03b478d742ee89",
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/final-review-pass-02/report.md": "383600a1238b1318dac82e12f65f1843589b14d84da43f3c990735020ea7dd5d",
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/publication-restart-20261007/report.md": "a8869d9ed16575dfad0e91eb8602cc1d06c0c62c61206ee01da976938359fe72"
+  }
+}

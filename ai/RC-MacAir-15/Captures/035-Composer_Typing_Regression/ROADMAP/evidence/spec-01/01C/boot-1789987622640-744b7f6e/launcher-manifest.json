@@ -1,0 +1,19 @@
+{
+  "runId": "boot-1789987622640-744b7f6e",
+  "kind": "boot",
+  "mode": "--smoke",
+  "token": "chat-architecture-owner-boot-1789987622640-744b7f6e",
+  "ownerPid": 6767,
+  "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/boot-1789987622640-744b7f6e-Ru8oGp",
+  "supervisedCommand": [
+    "/opt/homebrew/Cellar/node/25.6.1/bin/node",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/owned-case-supervisor.mjs",
+    "chat-architecture-owner-boot-1789987622640-744b7f6e",
+    "6767",
+    "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/boot-1789987622640-744b7f6e-Ru8oGp",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/boot-regressions.mjs",
+    "--smoke"
+  ],
+  "parentLossPolicy": "accepted owned-case-supervisor watches owner PID, kills target descendants and removes marked root",
+  "deadlineMs": 900000
+}

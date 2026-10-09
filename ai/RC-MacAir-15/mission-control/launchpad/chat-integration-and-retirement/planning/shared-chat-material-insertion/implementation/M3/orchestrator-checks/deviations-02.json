@@ -1,0 +1,121 @@
+{
+  "at": "2026-10-07T22:52:40.062134+00:00",
+  "scope": "Current Orchestrator scope classification; no slice/SPEC acceptance, required root native and distinct gates pending",
+  "builder_deviations_sha256": "118971edb3d08647c91c5b6d24ffd7b1cbfc5ccd3d64ef27468fc06bb857cd65",
+  "source_seal_sha256": "35cda972a106468eaa279c60da9ef51fc04ec23333f03de4226269b84e14ad07",
+  "current65_source_mismatches": [],
+  "rows": [
+    {
+      "id": "D-M3-01",
+      "classification": "accepted",
+      "manager_reason": "Required retirement of nonproduced generic current material bypass, including asynchronous prompt continuation; preserved explicit Send/System creation through current renderer regressions.",
+      "observable_effect_and_limit": "Current callable bypass rejects; no production caller lost.",
+      "release_condition": "Fresh builder/acceptance/final review of current retired seam and ordinary/System coverage.",
+      "release_condition_status": "Current nonnative checks PASS and builder native18 PASS; root native and fresh independent gates pending",
+      "source_deviation_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/DEVIATIONS.md",
+      "original_text_change_files_checks_risk": "Complete preserved originating fields in DEVIATIONS.md; current exact33 deltas/preimages65 integrated bindings in SOURCE-SEAL.json",
+      "downstream_impact": "Compatible bounded current-SPEC integration; no subsequent SPEC approved. Required gates retained."
+    },
+    {
+      "id": "D-M3-02",
+      "classification": "accepted",
+      "manager_reason": "Required correlated response/material validity and cleanup completion; malformed save fails safely and foreign workspace response ignored.",
+      "observable_effect_and_limit": "No new wire/path owner.",
+      "release_condition": "Current renderer/save protection checks and fresh gates.",
+      "release_condition_status": "Current nonnative checks PASS and builder native18 PASS; root native and fresh independent gates pending",
+      "source_deviation_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/DEVIATIONS.md",
+      "original_text_change_files_checks_risk": "Complete preserved originating fields in DEVIATIONS.md; current exact33 deltas/preimages65 integrated bindings in SOURCE-SEAL.json",
+      "downstream_impact": "Compatible bounded current-SPEC integration; no subsequent SPEC approved. Required gates retained."
+    },
+    {
+      "id": "D-M3-03",
+      "classification": "accepted",
+      "manager_reason": "Mechanically necessary migration of obsolete fixture admission/owner paths to current material consumer and source-only mocks.",
+      "observable_effect_and_limit": "Fixture delays remain controlled; no native proof implied.",
+      "release_condition": "Complete renderer lane PASS and fresh independent coverage review.",
+      "release_condition_status": "Current nonnative checks PASS and builder native18 PASS; root native and fresh independent gates pending",
+      "source_deviation_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/DEVIATIONS.md",
+      "original_text_change_files_checks_risk": "Complete preserved originating fields in DEVIATIONS.md; current exact33 deltas/preimages65 integrated bindings in SOURCE-SEAL.json",
+      "downstream_impact": "Compatible bounded current-SPEC integration; no subsequent SPEC approved. Required gates retained."
+    },
+    {
+      "id": "D-M3-04",
+      "classification": "accepted",
+      "manager_reason": "Bounded native helper extends unchanged actual stage/lifecycle utilities; public hydration/setup and owned focus needed for real normal runtime.",
+      "observable_effect_and_limit": "Capture/save/store/persistence untouched; current complete native still pending.",
+      "release_condition": "Actual current complete native PASS, lifecycle cleanup and fresh gates.",
+      "release_condition_status": "Current nonnative checks PASS and builder native18 PASS; root native and fresh independent gates pending",
+      "source_deviation_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/DEVIATIONS.md",
+      "original_text_change_files_checks_risk": "Complete preserved originating fields in DEVIATIONS.md; current exact33 deltas/preimages65 integrated bindings in SOURCE-SEAL.json",
+      "downstream_impact": "Compatible bounded current-SPEC integration; no subsequent SPEC approved. Required gates retained."
+    },
+    {
+      "id": "D-M3-05",
+      "classification": "accepted",
+      "manager_reason": "Retained actual production resource DOM handler permits source/destination proof while Side stays mounted in inherited one-presenter shell; expressly authorized narrow fixture limit.",
+      "observable_effect_and_limit": "Hidden DOM dispatch proves handler/store ownership, not simultaneous visible click; visible renderer A04 remains.",
+      "release_condition": "Complete current native real source/owner/pill/non-target/no-send readback and fresh gates.",
+      "release_condition_status": "Current nonnative checks PASS and builder native18 PASS; root native and fresh independent gates pending",
+      "source_deviation_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/DEVIATIONS.md",
+      "original_text_change_files_checks_risk": "Complete preserved originating fields in DEVIATIONS.md; current exact33 deltas/preimages65 integrated bindings in SOURCE-SEAL.json",
+      "downstream_impact": "Compatible bounded current-SPEC integration; no subsequent SPEC approved. Required gates retained."
+    },
+    {
+      "id": "D-M3-06",
+      "classification": "accepted",
+      "manager_reason": "Unchanged ignored worktree-local native observer build needed for actual full Jest import; no shared-module rebuild.",
+      "observable_effect_and_limit": "Direct Jest does not run npm pretest.",
+      "release_condition": "Local source/artifact bindings and actual import/native consumption; coverage review.",
+      "release_condition_status": "Current nonnative checks PASS and builder native18 PASS; root native and fresh independent gates pending",
+      "source_deviation_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/DEVIATIONS.md",
+      "original_text_change_files_checks_risk": "Complete preserved originating fields in DEVIATIONS.md; current exact33 deltas/preimages65 integrated bindings in SOURCE-SEAL.json",
+      "downstream_impact": "Compatible bounded current-SPEC integration; no subsequent SPEC approved. Required gates retained."
+    },
+    {
+      "id": "D-M3-07",
+      "classification": "accepted",
+      "manager_reason": "Exact required canonical Wiki changes/preimages and production viewer fixture bootstrap.",
+      "observable_effect_and_limit": "No structure/nav/import/inactive machine changes.",
+      "release_condition": "Fresh seven-article source/link/preimage/readback and independent coverage review.",
+      "release_condition_status": "Current nonnative checks PASS and builder native18 PASS; root native and fresh independent gates pending",
+      "source_deviation_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/DEVIATIONS.md",
+      "original_text_change_files_checks_risk": "Complete preserved originating fields in DEVIATIONS.md; current exact33 deltas/preimages65 integrated bindings in SOURCE-SEAL.json",
+      "downstream_impact": "Compatible bounded current-SPEC integration; no subsequent SPEC approved. Required gates retained."
+    },
+    {
+      "id": "D-M3-08",
+      "classification": "accepted",
+      "manager_reason": "Authorized generated preload reconciliation only after unchanged source/build/API and exact generated/baseline/diff/dist verification.",
+      "observable_effect_and_limit": "Only derivative path/order bytes reconciled; actual native must bind consumed current preload.",
+      "release_condition": "Current source/dist/dependency fingerprints and later actual native consumed-byte binding.",
+      "release_condition_status": "Current nonnative checks PASS and builder native18 PASS; root native and fresh independent gates pending",
+      "source_deviation_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/DEVIATIONS.md",
+      "original_text_change_files_checks_risk": "Complete preserved originating fields in DEVIATIONS.md; current exact33 deltas/preimages65 integrated bindings in SOURCE-SEAL.json",
+      "downstream_impact": "Compatible bounded current-SPEC integration; no subsequent SPEC approved. Required gates retained."
+    },
+    {
+      "id": "D-M3-09",
+      "classification": "accepted",
+      "manager_reason": "Owner unlock resolves historical desktop capability hold. Builder native18 completes actual native lane; root native attempts preserve their input-interference failures, no waiver.",
+      "observable_effect_and_limit": "Historical locked runs remain failed; required root native and later final complete run still pending.",
+      "release_condition": "Complete actual root native PASS plus fresh builder/slice/final gates.",
+      "release_condition_status": "Current nonnative checks PASS and builder native18 PASS; root native and fresh independent gates pending",
+      "source_deviation_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/DEVIATIONS.md",
+      "original_text_change_files_checks_risk": "Complete preserved originating fields in DEVIATIONS.md; current exact33 deltas/preimages65 integrated bindings in SOURCE-SEAL.json",
+      "downstream_impact": "Compatible bounded current-SPEC integration; no subsequent SPEC approved. Required gates retained."
+    },
+    {
+      "id": "D-M3-10",
+      "classification": "accepted",
+      "manager_reason": "Native-only fixture locator and filesystem-ready corrections are mechanically necessary; passive input diagnostics retain exact non-target oracle and source owners. Only native helper differs from original65 seal;64otherproduct bytes and five root nonnative dependency scopes unchanged.",
+      "source_deviation_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/DEVIATIONS.md",
+      "original_text_change_files_checks_risk": "Original requirement, specific native15/16/17 failures, changes, evidence, limits and seal-preimage recovery are recorded in originating DEVIATIONS.md; current SOURCE-SEAL binds native helper.",
+      "observable_effect_and_limit": "Retained actual Wiki handler dispatch remains explicitly hidden; original native17 trailing-space cause unknown. Builder native18 satisfies unchanged exact assertions; root01/02 include directly observed ordinary trusted typing. No product/consumer/store mutation change or assertion relaxation.",
+      "release_condition": "Root same exact current native preservation/capture/resource/ACK assertions PASS and fresh builder/acceptance/final gates.",
+      "release_condition_status": "Root native rerun awaits practical keyboard-idle capability; independent gates pending.",
+      "downstream_impact": "Compatible bounded validation fixture correction; no new product scope or later SPEC authorized."
+    }
+  ],
+  "prior_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/orchestrator-checks/deviations-01.json",
+  "historical_manager_finding": "ROOT-M3-01 withdrawn against current source; retained correction receipt in original path, no defect outstanding."
+}

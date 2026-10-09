@@ -1,0 +1,14 @@
+{
+  "caseId": "R4-DISTINCT-ATTEMPTS",
+  "status": "blocked",
+  "fixture": "F4",
+  "owner": "SPEC-02/02A",
+  "missingContract": "request-id-contract",
+  "assertions": [
+    "assign distinct requestId values to deliberate separate submissions",
+    "preserve the exact submitted snapshot for each attempt",
+    "never merge distinct accepted attempts"
+  ],
+  "statusEndpointFabricated": false,
+  "activation": "run --suite submit --mode enforce --cases R4-DISTINCT-ATTEMPTS"
+}

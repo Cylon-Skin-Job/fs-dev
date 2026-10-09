@@ -1,0 +1,23 @@
+{
+  "kind": "ACTUAL_ORDINARY_WATCHER_READBACK",
+  "before": 1791117736041,
+  "row": {
+    "event_id": "939f80c5-3b61-406b-bbe5-c3849e77debe",
+    "event_type": "file:changed",
+    "workspace_id": "rehearsal-workspace",
+    "machine_id": null,
+    "machine_name": "MC-S6",
+    "actor_type": "user",
+    "actor_id": null,
+    "occurred_at": 1791117736464,
+    "summary": "file create: ai/MC-S6/watcher-proof-current.md",
+    "payload_json": "{\"type\":\"file:changed\",\"timestamp\":1791117736464,\"workspaceId\":\"rehearsal-workspace\",\"projectRoot\":\"/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace\",\"filePath\":\"ai/MC-S6/watcher-proof-current.md\",\"event\":\"create\",\"context\":{\"parentDir\":\"ai/MC-S6\",\"type\":\"file\",\"ext\":\".md\",\"basename\":\"watcher-proof-current.md\",\"delta\":1,\"parentStats\":{\"files\":2,\"folders\":6},\"fileStats\":{\"lines\":4,\"words\":9,\"tokens\":12,\"size\":58}}}",
+    "source_module": "workspace-watcher",
+    "correlation_id": null,
+    "causation_id": null,
+    "created_at": 1791117736464
+  },
+  "leaf": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/watcher-proof-current.md",
+  "bytes": "# Watcher sample\n\nA private fixture document was created.\n",
+  "isolatedProvenanceMode": false
+}

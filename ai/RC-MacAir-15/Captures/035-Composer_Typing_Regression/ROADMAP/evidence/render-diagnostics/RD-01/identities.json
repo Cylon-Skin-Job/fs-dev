@@ -1,0 +1,14 @@
+{
+  "changed": {
+    "files": 12,
+    "manifestSHA256": "2cd3ccb5d502c81b764c20afb1b4eea388e1201ece16d03e224bee5062b62577"
+  },
+  "source": {
+    "files": 591,
+    "manifestSHA256": "a0c426be8e0079a8d4fe074f594e2f58d6bb143cba6a1f082ac49f97cb782651"
+  },
+  "build": {
+    "files": 191,
+    "manifestSHA256": "9b572206cde1b48f2a362736227439ff37ee9d6a6079ac3caa807e2f63bb792e"
+  }
+}

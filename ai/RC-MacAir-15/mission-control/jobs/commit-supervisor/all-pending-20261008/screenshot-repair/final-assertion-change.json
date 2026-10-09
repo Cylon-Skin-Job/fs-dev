@@ -1,0 +1,9 @@
+{
+  "path": "fusion-studio-server/test/screenshot-protected-view-path.test.js",
+  "observed_last_write_time_utc": "2026-10-09T01:14:43.350323+00:00",
+  "last_write_mtime_ns": 1791508483350322851,
+  "current_sha256": "b96cce21addf67336e3d7584f96e4be754888fc4b0b2ff334010eab0d533d54e",
+  "prior_sha256": "f1501a3a3b9118f6b71f375b516104105da25d0491cd6c92bd04aad66521226c",
+  "prior_evidence": "Exact earlier bytes reconstructed from the single known assertion edit; not an immutable checkpoint/preimage claim",
+  "reason": "After exclusive creation, EEXIST could otherwise satisfy generic screenshot:error. Require Protected view path so the test still proves protected-path policy denied the final symlink."
+}

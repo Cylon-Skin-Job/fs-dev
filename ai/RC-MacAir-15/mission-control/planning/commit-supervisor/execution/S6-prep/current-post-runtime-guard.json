@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    ".agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+    "guard",
+    "--job",
+    "planning/commit-supervisor/execution/S6-prep/current-recovery/preparation-recovery",
+    "--repo",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+    "--ownership-file",
+    "planning/commit-supervisor/execution/S6-prep/current-recovery/ownership.json"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"result\": \"GUARDED\", \"expected_sha256\": \"8d9dae044a5339ea85f87a0c4976c40da50a158a17ad0fd6bc7340e9fa78370a\"}\n",
+  "stderr": ""
+}

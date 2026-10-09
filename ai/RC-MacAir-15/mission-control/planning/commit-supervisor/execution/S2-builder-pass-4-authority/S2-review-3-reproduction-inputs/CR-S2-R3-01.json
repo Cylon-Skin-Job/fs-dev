@@ -1,0 +1,240 @@
+{
+  "phase": "final",
+  "candidate": {
+    "target": "target-1",
+    "sources": [
+      "source-1"
+    ],
+    "owned": {
+      "code.py": {
+        "worktree": "fixed",
+        "index": "base",
+        "mode": "100644"
+      }
+    },
+    "configuration": {
+      "profile": "disposable"
+    },
+    "fixtures": {
+      "oracle": "correct"
+    },
+    "authority": {
+      "SPEC": "approved"
+    },
+    "preparation": "replay-owned-bytes"
+  },
+  "orchestrator_id": "fixture-final-orchestrator",
+  "participants": [
+    "fixture-writer",
+    "fixture-reviewer-1",
+    "fixture-initial-orchestrator",
+    "fixture-manager",
+    "fixture-handoff-reviewer"
+  ],
+  "required_checks": [
+    "behavior"
+  ],
+  "evidence": [
+    {
+      "id": "behavior",
+      "dependencies": {
+        "target": "target-1",
+        "sources": [
+          "source-1"
+        ],
+        "owned": {
+          "code.py": {
+            "worktree": "fixed",
+            "index": "base",
+            "mode": "100644"
+          }
+        },
+        "configuration": {
+          "profile": "disposable"
+        },
+        "fixtures": {
+          "oracle": "correct"
+        },
+        "authority": {
+          "SPEC": "approved"
+        },
+        "preparation": "replay-owned-bytes"
+      },
+      "raw_path": "fixture/behavior.log",
+      "result": "pass"
+    }
+  ],
+  "reviews": [
+    {
+      "identity": "fixture-final-reviewer",
+      "terminal": true,
+      "clean_room": true,
+      "read_only": true,
+      "root_inherited": true,
+      "dependencies": {
+        "target": "target-1",
+        "sources": [
+          "source-1"
+        ],
+        "owned": {
+          "code.py": {
+            "worktree": "fixed",
+            "index": "base",
+            "mode": "100644"
+          }
+        },
+        "configuration": {
+          "profile": "disposable"
+        },
+        "fixtures": {
+          "oracle": "correct"
+        },
+        "authority": {
+          "SPEC": "approved"
+        },
+        "preparation": "replay-owned-bytes"
+      },
+      "raw_path": "fixture/review-1.md",
+      "lenses": [
+        "Behavior & Verification",
+        "Standards Compliance",
+        "Integrations & Dependencies",
+        "Forward Compatibility",
+        "Wiki Impact"
+      ],
+      "result": "findings",
+      "findings": [
+        {
+          "id": "F1",
+          "authority": "approved behavior criterion",
+          "path": "code.py",
+          "impact": "Optional polish; accepted behavior passes",
+          "evidence": "fixture/repro.log",
+          "severity": "advisory",
+          "confidence": "medium",
+          "validated": false,
+          "assigned_paths": [
+            "code.py"
+          ]
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "authority": "approved behavior criterion",
+      "path": "code.py",
+      "impact": "accepted input returns incorrect result",
+      "evidence": "fixture/repro.log",
+      "severity": "high",
+      "confidence": "medium",
+      "validated": true,
+      "assigned_paths": [
+        "code.py"
+      ]
+    }
+  ],
+  "dispositions": {
+    "F1": [
+      {
+        "actor": "fixture-manager",
+        "evidence": "fixture/repro.log",
+        "status": "open"
+      },
+      {
+        "actor": "fixture-writer",
+        "status": "repair-reported"
+      },
+      {
+        "actor": "fixture-manager",
+        "candidate": {
+          "authority": {
+            "SPEC": "approved"
+          },
+          "configuration": {
+            "profile": "disposable"
+          },
+          "fixtures": {
+            "oracle": "correct"
+          },
+          "owned": {
+            "code.py": {
+              "index": "base",
+              "mode": "100644",
+              "worktree": "fixed"
+            }
+          },
+          "preparation": "replay-owned-bytes",
+          "sources": [
+            "source-1"
+          ],
+          "target": "target-1"
+        },
+        "reviewers": [
+          "fixture-handoff-reviewer"
+        ],
+        "status": "handoff-validated",
+        "handoff_id": "F1-handoff"
+      },
+      {
+        "status": "advisory",
+        "actor": "fixture-final-orchestrator",
+        "time": "2026-10-04T00:00:00Z",
+        "candidate": {
+          "target": "target-1",
+          "sources": [
+            "source-1"
+          ],
+          "owned": {
+            "code.py": {
+              "worktree": "fixed",
+              "index": "base",
+              "mode": "100644"
+            }
+          },
+          "configuration": {
+            "profile": "disposable"
+          },
+          "fixtures": {
+            "oracle": "correct"
+          },
+          "authority": {
+            "SPEC": "approved"
+          },
+          "preparation": "replay-owned-bytes"
+        },
+        "dependencies": {
+          "target": "target-1",
+          "sources": [
+            "source-1"
+          ],
+          "owned": {
+            "code.py": {
+              "worktree": "fixed",
+              "index": "base",
+              "mode": "100644"
+            }
+          },
+          "configuration": {
+            "profile": "disposable"
+          },
+          "fixtures": {
+            "oracle": "correct"
+          },
+          "authority": {
+            "SPEC": "approved"
+          },
+          "preparation": "replay-owned-bytes"
+        },
+        "finding_evidence": "fixture/repro.log",
+        "validation_evidence": "fixture/reclassification.md",
+        "reason": "Independent validation establishes optional polish",
+        "next_action": "Retain advisory; no repair required"
+      }
+    ]
+  },
+  "assigned_paths": [
+    "code.py"
+  ]
+}

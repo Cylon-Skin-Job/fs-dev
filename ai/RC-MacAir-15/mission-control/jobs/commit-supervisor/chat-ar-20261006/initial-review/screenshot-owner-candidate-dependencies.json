@@ -1,0 +1,53 @@
+{
+  "stagedTree": "44b2592705cdbc35620207e579113ede27a4a787",
+  "dependencies": [
+    {
+      "path": "fusion-studio-client/src/screenshots/chatScreenshotCapture.ts",
+      "sourceSha256": "bd34c041e9f8fa6cfc7a328633af7c53566045b1e6e6c55ee61617d030a89687",
+      "candidateSha256": "bd34c041e9f8fa6cfc7a328633af7c53566045b1e6e6c55ee61617d030a89687",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx",
+      "sourceSha256": "839baa3ace36b3dec18994e8a233157eb79452a13596f37f95908959e48d1d41",
+      "candidateSha256": "839baa3ace36b3dec18994e8a233157eb79452a13596f37f95908959e48d1d41",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx",
+      "sourceSha256": "9d61acd10d826a53a2fed5d2c3b4a185721d5ef364632713454b679909a15cd1",
+      "candidateSha256": "9d61acd10d826a53a2fed5d2c3b4a185721d5ef364632713454b679909a15cd1",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/thread-handlers.ts",
+      "sourceSha256": "7b45de46522d0cb67666bf63fe286474eb9c4e3fb6e6ee644ae5cf5e7058d81b",
+      "candidateSha256": "7b45de46522d0cb67666bf63fe286474eb9c4e3fb6e6ee644ae5cf5e7058d81b",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/thread-history.ts",
+      "sourceSha256": "31607f2180659c581df682c5a59bdffe008218738b3c69de08c30ca5aa9b90df",
+      "candidateSha256": "31607f2180659c581df682c5a59bdffe008218738b3c69de08c30ca5aa9b90df",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/src/state/slices/chatSurfaceSlice.ts",
+      "sourceSha256": "9d531ceded3b03ac602b70ad8b0298765f07ddd594467b0c3d2bba48c2bb67d9",
+      "candidateSha256": "9d531ceded3b03ac602b70ad8b0298765f07ddd594467b0c3d2bba48c2bb67d9",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/threaded-chat-host.spec.ts",
+      "sourceSha256": "ec6802c336107d25e1b443a3bf3519a002eef7c86cf2ea8dc74d7fc839bafb27",
+      "candidateSha256": "ec6802c336107d25e1b443a3bf3519a002eef7c86cf2ea8dc74d7fc839bafb27",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/prompt-ownership.slice-c.spec.ts",
+      "sourceSha256": "df6a332dd0a44e5084b9c92151e60d2fd0d85c66daca026c582204de2f78b111",
+      "candidateSha256": "df6a332dd0a44e5084b9c92151e60d2fd0d85c66daca026c582204de2f78b111",
+      "matches": true
+    }
+  ]
+}

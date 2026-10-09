@@ -1,0 +1,33 @@
+{
+  "at": "2026-09-27T07:31:41.234397+00:00",
+  "source": {
+    "files": 1964,
+    "sha256": "fce657085b6658dac3de5ea828a3afc6e0829281f32239d2989771f9ad2b3686"
+  },
+  "build": {
+    "files": 200,
+    "sha256": "b070d633863382e48ea2f6d677a92cfe65b9a4dea79caa87975711c109c70b03"
+  },
+  "changedPaths": [
+    {
+      "path": "fusion-studio-server/lib/harness/child-environment.js",
+      "before": "64cf7bef1bea086aec1260a0089e7c310ab6a7d85dfa4985dfae76b6bd3b9cbc",
+      "after": "a60e49cefa91b3d72a5a0cdc1df659f001b0e74038c664445f7c9f1d86701e66"
+    },
+    {
+      "path": "fusion-studio-server/test/harness/child-environment.test.js",
+      "before": "ffc163bf52be0e2c41ec5d85f43dec4a33c158ccea0934d7dce0cca6dd562dbb",
+      "after": "8ebfcb060363a2014a8633b18049921c31a294bd2e0c06ebb9a0cc60c3a391c3"
+    },
+    {
+      "path": "fusion-studio-server/test/harness/opencode/harness-send-message.test.js",
+      "before": "a5973cb158265a7ae382e79088216f7469445688f713161805f2d7c0d1089906",
+      "after": "09c961e189311c92fbfc3c4d8dbbd7c7ca1398b98524ab813f3dda5ccdb8bf26"
+    }
+  ],
+  "installed": {
+    "path": "/opt/homebrew/lib/node_modules/opencode-ai/bin/opencode.exe",
+    "version": "1.18.32",
+    "sha256": "a3c45d4e1d6620b436851f1ef6b25c71befcf06a382e279a1eb1c2196424395e"
+  }
+}

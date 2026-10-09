@@ -1,0 +1,9 @@
+{
+  "kind": "REPORT_ABBREVIATION_ERRATUM",
+  "source_current_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/first-candidate-report.md",
+  "prior_sha256": "aa44e65216b09cd9f4a4cfac595c4ce25f7314000718c7e4e94c03f0f299c9f9",
+  "current_sha256": "6ce02c98ecc3b76cc034cf06eb1a511a472d270419f7adaf0ea6d868bd887aec",
+  "correction": "Original manifest abbreviated suffix corrected from7834fb to2834fb; full exact identity in owner packet, checkpoint, manifests and current evidence remains f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb",
+  "history": "Existing immutable history report preserves original text; this separate erratum qualifies it",
+  "candidate_or_gate_effect": "NONE"
+}

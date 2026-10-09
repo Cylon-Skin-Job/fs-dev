@@ -1,0 +1,65 @@
+{
+  "gate": "M1 Orchestrator acceptance",
+  "timestamp": "2026-10-07T16:11:43.009834+00:00",
+  "role": "SPEC Orchestrator /root",
+  "workId": "CHAT-MATERIAL-SPEC-01",
+  "candidate": "sha256:65b324647b7e52f0426f7b2005849d053f4f239420fab07c848170b21ec1d3f3",
+  "checkout": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev",
+  "HEAD": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "branch": "codex/chat-material-01",
+  "product_files": {
+    "fusion-studio-client/e2e/chat-material-insertion.spec.ts": "7b43c20093a9c9b47af7aa261921da35c5da940b00cf90118154b8c53c464a6a",
+    "fusion-studio-client/e2e/chat-surface-identity.spec.ts": "62677ea808ac57ff4b446e449e5078b5e159f2ddf42706306677606e2e0ebfa2",
+    "fusion-studio-client/e2e/chat-surface-isolation.spec.ts": "068fc92d53e295594b2485db3026a408e41e7ba936940831c18f75501c34c7cf",
+    "fusion-studio-client/e2e/support/chat-material-fixture.tsx": "c1dbf2ecf9ac862f16fd5b99ea58963de3d990371ff1a3504d08b45449ed33e8",
+    "fusion-studio-client/src/components/SendToChatButton.tsx": "26e5008817f8fb841a8b14d9d783a2b3411cb395678cc5e9bf247a6071679302",
+    "fusion-studio-client/src/components/chat/ChatSurface.tsx": "930a7f9d9b9c1eba391ffbf37c44e778e14f464dc20fa0d35205611dc6077520",
+    "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx": "b32b696609b0b42f8e88c9bd08c346bd48903f31f351e41479b10d1d7513ceb3",
+    "fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx": "38de9af221baa8f40b24dd1edc1f198e60c0a85eff23c2b46544293a0485ee12",
+    "fusion-studio-client/src/components/chat/chatSurfaceContract.ts": "9687c16e7321218b46af9e76aba0561b4b547da96de5887ffc5b20bc85c06302",
+    "fusion-studio-client/src/components/chat/useChatSessionActions.ts": "1d03a3276b1ad0248bebe280d1c02a2420efe5c184fd09a6af3a111bf11dfa3b",
+    "fusion-studio-client/src/components/chat/useChatSessionHost.ts": "1586fb2a84b5fc3edc5d4a2e0dd8f7b8fbc78979fa604b75c6217f463be7e6e3",
+    "fusion-studio-client/src/components/chat/useMountedChatBinding.ts": "4281b983986f0d1dfb6fd2cc64011a591e5ce394517f3ad846dbeb1d518ec006",
+    "fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts": "6e7793ad865bb3fbea8ea1b1a179204b330c98477af5c2d5d679d33d9b81a49c",
+    "fusion-studio-client/src/components/chat/useViewChatHost.ts": "9763ce0d749a063236fa94c6a5e7162f5bcc68dc01402141592533bc2436861b",
+    "fusion-studio-client/src/lib/chat-action-controller.ts": "79697686cf6b55661c87d8eab05db21f43253b2f4f4b965b079c1f424cfad39a",
+    "fusion-studio-client/src/lib/chat-action.ts": "f8b15ee9e83cd85f4075f10e66cf7f0f9ea5e162c415a822bf3be0c72cfaa1b2",
+    "fusion-studio-client/src/lib/chat-material-commit.ts": "9ca48a31e7e1acb3a1a98d452ccf4b0480101a2d36d94b076a8107f1a3d67a37",
+    "fusion-studio-client/src/lib/chat-material-target.ts": "79020c5de3b860ba72486eacf434f8ec04341e0a4417e62c045afd1bf62009ad",
+    "fusion-studio-client/src/lib/ws/thread-handlers.ts": "5b63d2f06074b2dad8d43ea7acf8f38769ddf9081868178a407203a95e92a390",
+    "fusion-studio-client/src/state/panelStore.ts": "7b9ecb8386524a89c7b235bcce70ca94613ae611370871d569343f329768b609",
+    "fusion-studio-client/src/state/panelStoreTypes.ts": "762c7fa2b26923fabb0e2d4585d625417d17e333709b9fd9bdb3c9e8ca97b8bb",
+    "fusion-studio-client/src/state/slices/chatSurfaceSlice.ts": "0ee04ae43e3e68b88f29b548bb6ad5fe25b0e1a3c5e091e9d40a2af14971a854",
+    "fusion-studio-client/src/state/slices/mountedChatState.ts": "9302850d0488b37740a4a1ec989da370d8e06073362bdd7e6f549f3bd8767a8a"
+  },
+  "tracked_diff_sha256": "588082b3eaa12ce18137afff587e044d157747e999fd86e5823b73dc34bfe0d9",
+  "authorities": {
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/SPEC.md": "063562058007928d07477913a1ba05e43a2d191d6e42a0e9cb1d6a6e5c71659e",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/TICKET.md": "730b6c92efa396eeb3abdc5ee6c522c692c790db9c288346d141ad57817e0074",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/OWNER-REQUEST.md": "71dd8441f4ee79f9c0688ec335de0a553d9dfd6f4a6b2b60a93d8f222a529c1d",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/OWNER-APPROVAL.md": "459e03d05c8e2144db863cb9e31d46586e80fe2912641ee7157abbfae9a4b942"
+  },
+  "code_standards": [
+    "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md",
+    "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/001-Architecture_Routing/PAGE.md",
+    "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/002-Frontend_UI/PAGE.md",
+    "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/PAGE.md",
+    "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/004-WebSocket_Protocol/PAGE.md",
+    "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+    "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md",
+    "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/008-Testing_And_Smoke_Slices/PAGE.md"
+  ],
+  "raw_checks": [
+    "build-01.json",
+    "build-01.log",
+    "renderer-01.json",
+    "renderer-01.log",
+    "derived-artifact-reconciliation-01.json"
+  ],
+  "classified_deviations": "deviations-01.json",
+  "raw_inventory": [
+    "../caller-sweep.txt",
+    "../resource-consumers.txt"
+  ],
+  "expected_remaining_scope": "M2 own-composer source migration; M3 cameras/native/full-server/Wiki; final whole-SPEC acceptance. No inference that renderer-only evidence certifies those."
+}

@@ -1,0 +1,219 @@
+{
+  "fixture_root": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-smoke-fixture",
+  "agent_gate_proof": false,
+  "runtime_proof": false,
+  "baseline": {
+    "sources": {
+      "src/count.js": "5a2944873144ab03f9bbb943220c6843ffe0b89e7370459c2e4d0a430570fd70",
+      "src/consumer.js": "e23a4a88155869e3c8db19c7ebb7209692f89ccee6e49139fbce31730a0f70d2",
+      "src/owner-old.js": null,
+      "src/owner-new.js": "4e2a883f93721777024b5f05d18336e53779bb5b763bdab6bac05353f0f07650",
+      "src/new.js": "2eb5f05ee85a2081fd78f29bacffb6ac254b3d10784b0e73a30ef0d467c0afe0"
+    },
+    "pages": {
+      "000-Guide/PAGE.md": "bc781ae7b0db32b6587e3511807a3d49e29be6fbd4137e592a15405aa8652b9b",
+      "001-Runtime/000-Runtime/PAGE.md": "86c496337979b8c8f4cf704d084ab6b169b9a98554fe53977b841f809f4eff91",
+      "001-Runtime/001-Count/PAGE.md": "e6736fe4531df663ffc69c8747033e3f15a8f7ab75868e335de62ff21b93e6c3",
+      "001-Runtime/002-Consumer/PAGE.md": "0c77f80e2d5d3ed0626e3ddfb4936973f34000f3033ea44ce3ddc95a9ea73631",
+      "001-Runtime/003-Owner/PAGE.md": "368e913bf981ba0d84875392fe676c1c98055ebaec8305783ac79d5ce38f919b",
+      "001-Runtime/004-New_Capability/PAGE.md": null
+    }
+  },
+  "first_edit": {
+    "changed": true,
+    "page": "001-Runtime/001-Count/PAGE.md",
+    "hash": "239995e146493892c0e40639f4ad574dba60383f490875a5eac33d4b52211ee9",
+    "timestamp": "2026-10-04T09:49:59Z",
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-smoke-fixture/live/Wiki/001-Runtime/001-Count/.versions/2026-10-04-024959.md",
+    "preimage_hash": "e6736fe4531df663ffc69c8747033e3f15a8f7ab75868e335de62ff21b93e6c3"
+  },
+  "same_second_collision": {
+    "changed": true,
+    "page": "001-Runtime/001-Count/PAGE.md",
+    "hash": "ebc84ef54e99a11943eb4bb8c27243cba29b41e3d6688b93b2416de4caecc2ce",
+    "timestamp": "2026-10-04T09:49:59Z",
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-smoke-fixture/live/Wiki/001-Runtime/001-Count/.versions/2026-10-04-024959-01.md",
+    "preimage_hash": "239995e146493892c0e40639f4ad574dba60383f490875a5eac33d4b52211ee9"
+  },
+  "retained_no_op": {
+    "changed": false,
+    "page": "001-Runtime/002-Consumer/PAGE.md",
+    "hash": "0c77f80e2d5d3ed0626e3ddfb4936973f34000f3033ea44ce3ddc95a9ea73631",
+    "preimage": null
+  },
+  "source_drift_refusal": "source drift requires bounded recheck: ['src/count.js']",
+  "source_recheck": {
+    "read_bytes_sha256": "d946497daf7a5ae0e69b88a304f843acc537d1548e25600b908ed76dbfb756ef",
+    "repair": {
+      "changed": true,
+      "page": "001-Runtime/001-Count/PAGE.md",
+      "hash": "61d49b22760f40ee718fdf1e6593a276b966ddeb08ac60416734568475d3d53e",
+      "timestamp": "2026-10-04T09:49:59Z",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-smoke-fixture/live/Wiki/001-Runtime/001-Count/.versions/2026-10-04-024959-02.md",
+      "preimage_hash": "ebc84ef54e99a11943eb4bb8c27243cba29b41e3d6688b93b2416de4caecc2ce"
+    }
+  },
+  "original_coverage_findings": [
+    {
+      "subject": "new-capability",
+      "kind": "missing-article",
+      "page": "001-Runtime/004-New_Capability/PAGE.md"
+    }
+  ],
+  "renamed_source_repair": {
+    "changed": true,
+    "page": "001-Runtime/003-Owner/PAGE.md",
+    "hash": "eff8f88e3ad760dcb4254fe1e1fa7e71bb14b6dbf3968fa32cf7664be82d3e30",
+    "timestamp": "2026-10-04T09:49:59Z",
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-smoke-fixture/live/Wiki/001-Runtime/003-Owner/.versions/2026-10-04-024959.md",
+    "preimage_hash": "368e913bf981ba0d84875392fe676c1c98055ebaec8305783ac79d5ce38f919b"
+  },
+  "new_article": {
+    "changed": true,
+    "page": "001-Runtime/004-New_Capability/PAGE.md",
+    "hash": "60152e98b26ad4ed911a458d2624fe5974a38cf8b3976b7b675ad23bb157737c",
+    "timestamp": "2026-10-04T09:49:59Z",
+    "preimage": null,
+    "preimage_hash": null
+  },
+  "final_coverage_findings": [],
+  "generated_import": {
+    "changed": true,
+    "page": "001-Runtime/000-Runtime/PAGE.md",
+    "hash": "a46e5eb39d31b495ca9eab275f72b2a6337d324ad9b98831c2dd91e595e66c04",
+    "timestamp": "2026-10-04T09:49:59Z",
+    "preimage": null,
+    "preimage_hash": null
+  },
+  "stable_import": {
+    "changed": false,
+    "page": "001-Runtime/000-Runtime/PAGE.md",
+    "hash": "a46e5eb39d31b495ca9eab275f72b2a6337d324ad9b98831c2dd91e595e66c04",
+    "preimage": null
+  },
+  "commands": [
+    {
+      "command": [
+        "node",
+        "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/scripts/wiki.js",
+        "audit",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-smoke-fixture/stage/Wiki"
+      ],
+      "returncode": 0,
+      "stdout": "\n=== commit-supervisor ===\n  updated: 000-Guide/PAGE.md\n  updated: 001-Runtime/000-Runtime/PAGE.md\n  created: 002-Legacy/PAGE.md\n  created: 1  updated: 2  skipped: 0\n\nTotal: 1 created, 2 updated, 0 skipped\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/scripts/wiki.js",
+        "audit",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-smoke-fixture/stage/Wiki"
+      ],
+      "returncode": 0,
+      "stdout": "\n=== commit-supervisor ===\n  updated: 000-Guide/PAGE.md\n  updated: 002-Legacy/PAGE.md\n  created: 0  updated: 2  skipped: 1\n\nTotal: 0 created, 2 updated, 1 skipped\n",
+      "stderr": ""
+    }
+  ],
+  "parsed_pages": {
+    "001-Runtime/001-Count/PAGE.md": {
+      "frontmatter": {
+        "name": "Count",
+        "description": "Fixture article.",
+        "metadata": {
+          "source-files": [
+            "src/count.js"
+          ],
+          "last-modified": "2026-10-04T09:49:59Z"
+        }
+      },
+      "body": "\n# Count\n\nCurrent count returns n + 2.\n\nApproved future: a separate display choice.\n\nOpen choice: display format.\n"
+    },
+    "001-Runtime/002-Consumer/PAGE.md": {
+      "frontmatter": {
+        "name": "Consumer",
+        "description": "Fixture article.",
+        "metadata": {
+          "source-files": [
+            "src/consumer.js"
+          ],
+          "last-modified": "2026-09-01T01:02:03Z"
+        }
+      },
+      "body": "\n# Consumer\n\nThe consumer imports count.\n\n[Count](../001-Count/PAGE.md)\n"
+    },
+    "001-Runtime/003-Owner/PAGE.md": {
+      "frontmatter": {
+        "name": "Owner",
+        "description": "Fixture article.",
+        "metadata": {
+          "source-files": [
+            "src/owner-new.js"
+          ],
+          "last-modified": "2026-10-04T09:49:59Z"
+        }
+      },
+      "body": "\n# Owner\n\nThe owner source is the new path.\n"
+    },
+    "001-Runtime/004-New_Capability/PAGE.md": {
+      "frontmatter": {
+        "name": "New capability",
+        "description": "Fixture article.",
+        "metadata": {
+          "source-files": [
+            "src/new.js"
+          ],
+          "last-modified": "2026-10-04T09:49:59Z"
+        }
+      },
+      "body": "\n# New capability\n\nCurrent source enables the capability.\n"
+    },
+    "001-Runtime/000-Runtime/PAGE.md": {
+      "frontmatter": {
+        "name": "Runtime",
+        "description": "Fixture article.",
+        "metadata": {
+          "source-files": [],
+          "last-modified": "2026-10-04T09:49:59Z"
+        }
+      },
+      "body": "\n# Runtime\n\nHand-written routing survives.\n\n<!-- section-toc:start -->\n## Technical Articles in this Wiki Section\n\n- [Count](../001-Count/PAGE.md) - Fixture article.\n- [Consumer](../002-Consumer/PAGE.md) - Fixture article.\n- [Owner](../003-Owner/PAGE.md) - Fixture article.\n- [New Capability](../004-New_Capability/PAGE.md) - Fixture article.\n<!-- section-toc:end -->\n"
+    }
+  },
+  "final_sources": {
+    "src/count.js": "d946497daf7a5ae0e69b88a304f843acc537d1548e25600b908ed76dbfb756ef",
+    "src/consumer.js": "e23a4a88155869e3c8db19c7ebb7209692f89ccee6e49139fbce31730a0f70d2",
+    "src/owner-old.js": null,
+    "src/owner-new.js": "4e2a883f93721777024b5f05d18336e53779bb5b763bdab6bac05353f0f07650",
+    "src/new.js": "2eb5f05ee85a2081fd78f29bacffb6ac254b3d10784b0e73a30ef0d467c0afe0"
+  },
+  "final_pages": {
+    "000-Guide/PAGE.md": "bc781ae7b0db32b6587e3511807a3d49e29be6fbd4137e592a15405aa8652b9b",
+    "001-Runtime/000-Runtime/PAGE.md": "a46e5eb39d31b495ca9eab275f72b2a6337d324ad9b98831c2dd91e595e66c04",
+    "001-Runtime/001-Count/PAGE.md": "61d49b22760f40ee718fdf1e6593a276b966ddeb08ac60416734568475d3d53e",
+    "001-Runtime/002-Consumer/PAGE.md": "0c77f80e2d5d3ed0626e3ddfb4936973f34000f3033ea44ce3ddc95a9ea73631",
+    "001-Runtime/003-Owner/PAGE.md": "eff8f88e3ad760dcb4254fe1e1fa7e71bb14b6dbf3968fa32cf7664be82d3e30",
+    "001-Runtime/004-New_Capability/PAGE.md": "60152e98b26ad4ed911a458d2624fe5974a38cf8b3976b7b675ad23bb157737c"
+  },
+  "operational_state_not_imported": true,
+  "unselected_guide_retained": true,
+  "unexpected_legacy_page_not_imported": true,
+  "unrelated_stage_prose_not_imported": true,
+  "real_sentinels": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/.git/index",
+      "sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/AGENTS.md",
+      "sha256": "41dc4e9dc4d58e7505cb6fc37b500129502231293894b5f90eda9398315e001d",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/.audit-state.json",
+      "sha256": "6c128a59c08af79099271fde455914eac65216cc7407092cf98a5b52f1e1e62d",
+      "unchanged": true
+    }
+  ]
+}

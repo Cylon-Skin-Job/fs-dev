@@ -1,0 +1,43 @@
+{
+  "at": "2026-09-27T04:03:41.814651+00:00",
+  "runId": "chat-arch-1790481623664-99ce1140a0",
+  "case": {
+    "id": "R9-45-MINUTE-SOAK",
+    "code": 1,
+    "signal": null,
+    "pid": 41209,
+    "timedOut": false,
+    "interrupted": false,
+    "leakedOwnedPids": [],
+    "elapsedMs": 145545
+  },
+  "status": "failed",
+  "failureMessage": "native Delete ACK deadline elapsed",
+  "windows": 0,
+  "cycles": 0,
+  "samples": 0,
+  "workloadStartedAt": null,
+  "ownedRootExists": false,
+  "pidsAlive": {
+    "41197": false,
+    "41209": false,
+    "41953": false
+  },
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "lingeringOwnedPids": [],
+  "protected55084Alive": true,
+  "ackExists": false,
+  "nativeActionCause": "Supervisor reports no native input or ACK. Existing app getAXState initialization timed out31.7s, getState timed out32s with empty native apps and initialization errors (IAB available), known observed bundle getApp timed out32s; native control capability failed before ACK deadline.",
+  "source": {
+    "count": 1957,
+    "mismatches": []
+  },
+  "build": {
+    "count": 200,
+    "mismatches": []
+  }
+}

@@ -1,0 +1,193 @@
+import { useState, useEffect } from 'react';
+import { COLOR_SWATCHES } from './fusion-types';
+import type { SystemTheme, WorkspaceItem } from './fusion-types';
+
+export function ColorPicker({ value, onChange, disabled }: { value: string; onChange: (hex: string) => void; disabled?: boolean }) {
+  const [inputValue, setInputValue] = useState(value);
+
+  useEffect(() => { setInputValue(value); }, [value]);
+
+  function handleHexSubmit() {
+    const cleaned = inputValue.replace('#', '').trim();
+    if (/^[0-9a-fA-F]{6}$/.test(cleaned)) {
+      onChange(`#${cleaned}`);
+    } else {
+      setInputValue(value);
+    }
+  }
+
+  return (
+    <div className={`rv-fusion-color-picker ${disabled ? 'disabled' : ''}`}>
+      <div className="rv-fusion-color-picker-label">Primary Color</div>
+      <div className="rv-fusion-color-swatches">
+        {COLOR_SWATCHES.map(s => (
+          <div
+            key={s.hex}
+            className={`rv-fusion-color-swatch ${value === s.hex ? 'active' : ''}`}
+            style={{ '--swatch-hex': s.hex } as React.CSSProperties}
+            title={s.name}
+            onClick={() => onChange(s.hex)}
+          />
+        ))}
+      </div>
+      <div className="rv-fusion-color-current">
+        <div className="rv-fusion-color-current-dot" style={{ '--current-color': value } as React.CSSProperties} />
+        <input
+          className="rv-fusion-color-hex-input"
+          value={inputValue}
+          onChange={e => setInputValue(e.target.value)}
+          onBlur={handleHexSubmit}
+          onKeyDown={e => { if (e.key === 'Enter') handleHexSubmit(); }}
+        />
+      </div>
+    </div>
+  );
+}
+
+export function SystemThemeDetail({ theme, onUpdate }: {
+  theme: SystemTheme | null;
+  onUpdate: (preset: string, color: string) => void;
+}) {
+  if (!theme) return null;
+
+  return (
+    <>
+      <div className="rv-fusion-detail-header">
+        <div className="rv-fusion-detail-breadcrumb">
+          <span>Customization</span> / System Theme
+        </div>
+        <div className="rv-fusion-detail-title">
+          <span className="material-symbols-outlined">palette</span>
+          System Theme
+        </div>
+        <div className="rv-fusion-detail-subtitle">
+          The baseline look for all workspaces. Workspaces inherit this unless they have custom overrides.
+        </div>
+
+        <div className="rv-fusion-detail-meta">
+          <div className="rv-fusion-detail-meta-item">
+            <span className="rv-fusion-detail-meta-label">Preset</span>
+            <span className="rv-fusion-detail-meta-value highlight">
+              {theme.preset.charAt(0).toUpperCase() + theme.preset.slice(1)}
+            </span>
+          </div>
+          <div className="rv-fusion-detail-meta-item">
+            <span className="rv-fusion-detail-meta-label">Accent</span>
+            <span
+              className="rv-fusion-detail-meta-value rv-fusion-accent-swatch-value"
+              style={{ '--accent-preview': theme.primary_color } as React.CSSProperties}
+            >
+              {theme.primary_color}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div className="rv-fusion-color-picker-label">Theme Preset</div>
+      <div className="rv-fusion-preset-selector">
+        {['dark', 'oled', 'medium', 'light'].map(p => (
+          <button
+            key={p}
+            className={`rv-fusion-preset-btn ${theme.preset === p ? 'active' : ''}`}
+            onClick={() => onUpdate(p, theme.primary_color)}
+          >
+            {p.charAt(0).toUpperCase() + p.slice(1)}
+          </button>
+        ))}
+      </div>
+
+      <ColorPicker
+        value={theme.primary_color}
+        onChange={(hex) => onUpdate(theme.preset, hex)}
+      />
+    </>
+  );
+}
+
+export function WorkspaceThemeDetail({ workspace, onUpdateColor, onInherit, onApply }: {
+  workspace: WorkspaceItem;
+  onUpdateColor: (hex: string) => void;
+  onInherit: () => void;
+  onApply: () => void;
+}) {
+  if (!workspace) return null;
+
+  return (
+    <>
+      <div className="rv-fusion-detail-header">
+        <div className="rv-fusion-detail-breadcrumb">
+          <span>Customization</span> / {workspace.label}
+        </div>
+        <div className="rv-fusion-detail-title">
+          <span className="material-symbols-outlined">{workspace.icon}</span>
+          {workspace.label}
+        </div>
+        <div className="rv-fusion-detail-subtitle">
+          {workspace.themeState === 'inherited'
+            ? 'This workspace uses the system theme.'
+            : workspace.themeState === 'individual'
+            ? 'This workspace has its own accent color.'
+            : 'CSS has been edited directly outside the system panel.'}
+        </div>
+      </div>
+
+      {workspace.themeState === 'override' ? (
+        <div className="rv-fusion-diverged-card">
+          <div className="rv-fusion-diverged-card-text">
+            The CSS file has been edited directly and no longer matches what's saved here.
+            Click Apply to absorb your changes into the system.
+          </div>
+          <button className="rv-fusion-apply-btn" onClick={onApply}>
+            <span className="material-symbols-outlined">sync</span>
+            Apply Changes
+          </button>
+        </div>
+      ) : (
+        <div className="rv-fusion-inherit-row">
+          <div
+            className={`rv-fusion-toggle ${workspace.themeState === 'inherited' ? 'on' : ''}`}
+            onClick={() => {
+              if (workspace.themeState === 'inherited') {
+                onUpdateColor(workspace.primary_color);
+              } else {
+                onInherit();
+              }
+            }}
+          />
+          <span className="rv-fusion-inherit-label">Inherit system theme</span>
+        </div>
+      )}
+
+      <ColorPicker
+        value={workspace.primary_color}
+        onChange={onUpdateColor}
+        disabled={workspace.themeState === 'inherited'}
+      />
+
+      <div className="rv-fusion-detail-body">
+        <h2>Customizing by hand</h2>
+        <p>
+          You can edit the workspace CSS directly at: <code>ai/&lt;machine&gt;/System/styles/themes.css</code>
+        </p>
+        <p>
+          After editing, come back here and click Apply to save your changes to the system.
+          This ensures your edits are preserved and won't be lost if you switch themes later.
+        </p>
+        <h2>Per-view overrides</h2>
+        <p>
+          To give a single view its own accent color, add a <code>themes.css</code> to
+          that view's styles folder:
+        </p>
+        <p>
+          <code>ai/&lt;machine&gt;/System/Views/&#123;view-folder&#125;/styles/themes.css</code>
+        </p>
+        <p>
+          The theme override goes in the view capsule's <code>styles/</code> folder.
+          Only include the variables you want to change — everything else flows down
+          from the workspace, which flows from the system. Remove the file to go back
+          to inherited.
+        </p>
+      </div>
+    </>
+  );
+}

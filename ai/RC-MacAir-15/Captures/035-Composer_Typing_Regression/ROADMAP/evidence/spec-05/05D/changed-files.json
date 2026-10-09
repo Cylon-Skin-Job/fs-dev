@@ -1,0 +1,470 @@
+[
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md",
+    "before": "4631143ff64ce0e4c6754bb3e24bc77c73b2da57c9ab17ae51505477ade6e126",
+    "after": "b0be25a9a244ce38b1427f6dd5b2f63dcac4806a5fe7b9eee47816cd848fb6ed",
+    "lines": 167
+  },
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md",
+    "before": "be775a56a14b49b12ae47423a2c1e0c739091bc28174f28448185c00daab30ab",
+    "after": "9c7366ab05205470e4e76b572a54f5f06cf4a79a60c7557f804d2d8fff5193d8",
+    "lines": 63
+  },
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/001-Thread_Identity/PAGE.md",
+    "before": "3760761e13aa42eb1071c6a270458dce59dc6f8bab57277b49d12eeaad190a68",
+    "after": "fc47978978f624aff5cb348df6a0b3dd3a490993fd8da008435b9583cd715c16",
+    "lines": 56
+  },
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/PAGE.md",
+    "before": "34871e39dec14a6b300d17d87ef79aab600b2b37fc7e6989335f3deefb4cca27",
+    "after": "afdbf7bb3403cdf176a6fad3867536bdb68c1587e1ba36a5997aba362781d977",
+    "lines": 122
+  },
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md",
+    "before": "575fb0fe8ffdeb3950480ba0a2967b7b26f8dbeccfbe29d8b26ce38ecda73d36",
+    "after": "07ccbc445b66544f75448090aefcf7e39830a35cfbc30fa1f3cfc35a9fa7d3e1",
+    "lines": 478
+  },
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/006-Thread_Actions/PAGE.md",
+    "before": "59a2e541f479208f59558257e68810979b7c209e0e493c2900baa6164c7fb5a8",
+    "after": "6dac56789e9f16814c244c7a3f9b51d6338e052ba78d99dacada898739311266",
+    "lines": 242
+  },
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/004-Stop_And_Interrupted_Turns/PAGE.md",
+    "before": "4c8f1af86b2a0e97f47a5312c7336c3958db6ce442c72afe676b62a0f66f2ceb",
+    "after": "a677a24bdcdb92ddce46bd592c449a405daf9acc50ef23265c8886b2f7aee340",
+    "lines": 81
+  },
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/PAGE.md",
+    "before": "1babe204e672097e5b3325bbefd8ee3e4c934800272fd7ebc1880597df44482a",
+    "after": "a6517315ed918f98fa6211b09b2396fc7cee2c16696a5bea64784f9db9d57d07",
+    "lines": 191
+  },
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md",
+    "before": "05dc90a0a0674246199b10bb61383ae5309b32683f2c02ac7a5d7ab9aa692c97",
+    "after": "f56259979108c6b5b188527a5a3eb5f75f718c8bf892c8cfee3872c70d94b7c7",
+    "lines": 90
+  },
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md",
+    "before": "2575fd2b33972397d59225bd222cb6b203e444bc273872fe136ba718b82ffe65",
+    "after": "656e04467c71c769abf2cf06261a3604910a4a413743a9452432134bfc60055a",
+    "lines": 560
+  },
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md",
+    "before": "3ccec3c4c2e2916920048f52724cc0dcf52f81ce8e881e9f7349d18520c5ccfd",
+    "after": "a04c9693a684b7a1a168ba000ee138c8120272e3e3e4bb6f777a0042292fda28",
+    "lines": 322
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/architecture-contract.test.mjs",
+    "before": "38b5f1c733f8543b053c1359f5b49bd66852b2535c9fcfa2b9bf5fad8933fa8e",
+    "after": "caa9ac259832ea7fc623cc287e75ee41607d559c226914b627f96289595ebcd6",
+    "lines": 156
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/backend-owner-contract.mjs",
+    "before": null,
+    "after": "413f3ffb1aca720f40cd376e931c136bb7d601c4d02698956bc96cceb86782c0",
+    "lines": 115
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/backend-owner-contract.test.mjs",
+    "before": null,
+    "after": "90cc20d1dda383557f831c0ec8d63a14d37426d8b13887dc15f8ba7ef5d4e8cd",
+    "lines": 38
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs",
+    "before": "c0821502a0c825fda9bad263c6622612eb2ebf9fa141d91f68fa6705a61b53be",
+    "after": "dd7c2daf170e44280a7b5fb14c1b11a18ad83ea8187ae16d1667027aa6db3c05",
+    "lines": 154
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/future-submit-electron.mjs",
+    "before": "81863a7dc21bcbf498daa2056862db3cd7c5d69ccff0b848584232421c2b97fa",
+    "after": "3161f3b10903faab854741e2e28d1f1931eb82abcab87c26a3abd22fdebb2978",
+    "lines": 426
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/owned-regression-launcher.mjs",
+    "before": "4b4d402cbd1d7a727a3dbf1b602b6c0f33407c0213b52af6e994491cd8c46e20",
+    "after": "46d5ee033be7d72bd96d36ffba59b8ebe62118a187be822c73fef2208b4d035b",
+    "lines": 79
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/r5-diagnostic-playwright.mjs",
+    "before": "28544dbf8403292e2024ad6ba2b35ca4aecab744e08b781ebc1af57e61847c8c",
+    "after": "6ec26aa207d7b7087352935e7ef71db98823f86074bd39905b18779b069d0e63",
+    "lines": 50
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/r8-history-playwright.mjs",
+    "before": null,
+    "after": "3147f21fd5a687187385f7d4675bdd11612225c0003414e795fc2c16dc1528ac",
+    "lines": 22
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/r8-ui-electron.mjs",
+    "before": null,
+    "after": "ad3c63b2e43731295bfa423f00cbcfbdb35702175558e5fecba1e72be5db70ff",
+    "lines": 129
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/run.mjs",
+    "before": "98373935819684e354c58f8864bfa78cd9f720001772ad2e63e04350ae810d8b",
+    "after": "36fba326e4d0c7bdc199fd3e8219c1501148def32f28cce212b08ed38e99a033",
+    "lines": 473
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/server-focused-regressions.mjs",
+    "before": "ac6f6297891aa7abb2bcd8280346c89d82e52bcf9de111412399204278de817a",
+    "after": "9d06bdddfe891bcf037b07bc06c631dd37a2f05625ae16d5709d20a6a20f7a81",
+    "lines": 203
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/stage-fixture.mjs",
+    "before": "2ccfc3f8ecf10fe83b56a4412a786b943fb010ecb31311d262c890977a31078f",
+    "after": "4df67657dd1b6bad195db5e34a04b7d5d3f4e1152df9f153a694c88703b5a0e0",
+    "lines": 155
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-surface-identity.spec.ts",
+    "before": "a1f1110a8371dc8e24659a4833c749230a8afe809242bd4e068eaad5c7f78c24",
+    "after": "86ca15648a911bd9cb7e0f1fe059631d0ca39a34dbb4077079c3b9568d59c01e",
+    "lines": 530
+  },
+  {
+    "path": "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+    "before": "1affc33ecc74f9263582ffa741a3a42e3eaff92c81aa4df482077579edc59d11",
+    "after": "cf729072e8534ea93af8c3fd637298a4cc6ae3b68a0aa982712ad64c1d244fed",
+    "lines": 143
+  },
+  {
+    "path": "fusion-studio-client/src/lib/ws/thread-handlers.ts",
+    "before": "caef2df9b4c60039f6f49e350cdd4f9864b5ec60c5249380b4af942508a081bd",
+    "after": "b8659e661716e36ab2f93d9514019fd6d623d131f2a35d49c50760ae2ecabef9",
+    "lines": 392
+  },
+  {
+    "path": "fusion-studio-client/src/lib/ws/thread-history.ts",
+    "before": null,
+    "after": "31607f2180659c581df682c5a59bdffe008218738b3c69de08c30ca5aa9b90df",
+    "lines": 224
+  },
+  {
+    "path": "fusion-studio-client/src/lib/ws/thread-markdown.ts",
+    "before": null,
+    "after": "3bf7b888f280185ae316a8614463c17638d25f589174fbd4b340b3e6c69028e2",
+    "lines": 23
+  },
+  {
+    "path": "fusion-studio-client/src/types/websocket.ts",
+    "before": "85e43ee1c0f57875dd5090c4edbafb08db2a4287550f5a606b92d4a0b35be110",
+    "after": "062f184e231136949ff286ce3c89f39fa136a0960f455e6d466dc41c23769bcd",
+    "lines": 232
+  },
+  {
+    "path": "fusion-studio-server/lib/event-bus.js",
+    "before": "46c44f4f8b2a1ee471eb1dffa679b554b6fca7adcad3a988acd2dec87d35dc81",
+    "after": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846",
+    "lines": 172
+  },
+  {
+    "path": "fusion-studio-server/lib/thread/ThreadIndex.js",
+    "before": "c8a9129239bae9ca14931591cc9f2a16e38fdefd80882b7b9a4019f26fcfea82",
+    "after": "4f40b01609929e1a168eed1bcaa5ed5f09963ddab56f1d7bb31d946aedae9294",
+    "lines": 191
+  },
+  {
+    "path": "fusion-studio-server/lib/thread/ThreadManager.js",
+    "before": "cdc1ac73e9fae70d2cb45ea3f1ca705c589ee7169379f802289bd41e530435f6",
+    "after": "872d5742e257e340924d1130fd6b9641f8857a7cfa5b6bf2ac7fef27b3e4cf93",
+    "lines": 263
+  },
+  {
+    "path": "fusion-studio-server/lib/thread/automation-runtime-activation.js",
+    "before": "b8e9f7d0ee5f29ce8b8fbeed7c129c9eb23e406413eb7296de615ce98ecc981c",
+    "after": "f4c514c609b26b7515ad94933fe105369735f825fcd12f9f2620c65bdb0aef54",
+    "lines": 84
+  },
+  {
+    "path": "fusion-studio-server/lib/thread/provider-termination.js",
+    "before": null,
+    "after": "f70cacad959ade9afc1a72855f5d4e230f0ab46677bb7548dd109eaf2ab80f1b",
+    "lines": 100
+  },
+  {
+    "path": "fusion-studio-server/lib/thread/runtime-activation.js",
+    "before": "83c310508cc992d5269053d6348e23b7902c58dd23a480868095bb642a79d4f3",
+    "after": "fdca5391240d016ffdce0ef353d421b37b58f2a43764e2f34bee36a54bfb2a08",
+    "lines": 211
+  },
+  {
+    "path": "fusion-studio-server/lib/thread/runtime-dispatch.js",
+    "before": "56cd4c060bb1738dc67a39344cb02e96103e69019b5d419e3e5047c2c057f041",
+    "after": "b2df2d549b30d93d3c571ac4a6ae4d7f5fe12e7b8f2ff2a38c41a523fee5ae20",
+    "lines": 266
+  },
+  {
+    "path": "fusion-studio-server/lib/thread/runtime-session-binding.js",
+    "before": "adef6e74798fba748583edd28d64f7806e2f1ad17e457ce0be444b1c75decb7e",
+    "after": "47510b56bc8fcb6b67aebf1d4eb6ec169a295100f68c6062cd59f3a85cfd51e7",
+    "lines": 67
+  },
+  {
+    "path": "fusion-studio-server/lib/thread/runtime-stop.js",
+    "before": "e4638d2f4615abe732160760c1918ca78b65c39b89b1343067352a73c725375e",
+    "after": "34e3689cc378b22ffe23a218153cefa379882f949ffe7f5c8ae7be9080f9af4a",
+    "lines": 328
+  },
+  {
+    "path": "fusion-studio-server/lib/thread/session-lifecycle.js",
+    "before": "66717904c00960bc6029052c673c984b1622763a455493cb8d16537ec76a5c32",
+    "after": "747b27becdf523f4083f7ccac3ea066bd7b128129d600fccb948fee8a498a62f",
+    "lines": 266
+  },
+  {
+    "path": "fusion-studio-server/lib/thread/session-manager.js",
+    "before": "86308b069dc444fde4c48a3fb96ee5a3d9891e0df6b22bb37f84f527303d5c48",
+    "after": "5deb7a676b4a6f24b879b3f4d1db751b467e60feb383f5e99cd3c0855de3d59b",
+    "lines": 376
+  },
+  {
+    "path": "fusion-studio-server/lib/thread/session-metadata.js",
+    "before": null,
+    "after": "bf7622a938404ff3cb3c731e1aab01c1e888d195dc629e3ab5bb719bfab1f4d8",
+    "lines": 55
+  },
+  {
+    "path": "fusion-studio-server/lib/thread/thread-crud.js",
+    "before": "f58220c33937a3ffab79d7febf54ca1c72644f185acd28905b0786375d717a3f",
+    "after": "cb1019800408e03bb5e0ef6efff7ae75fcb0a6025c70000ac03ef69948a5ec53",
+    "lines": 362
+  },
+  {
+    "path": "fusion-studio-server/lib/thread/thread-open-handler.js",
+    "before": null,
+    "after": "89694c2fc4e13524c6aef226aafd2ace07d9ad93a8a13e68ded1c66f95e7d92b",
+    "lines": 167
+  },
+  {
+    "path": "fusion-studio-server/lib/thread/thread-runtime-automation.js",
+    "before": "53977cb3568a5ec4c8f8bd8c2b4218318e1097eb61d01a719443ad8b43bc7799",
+    "after": "fab0725be76e67efab8679ddc87ca92876a52222fca41ce3abd9c0aace139494",
+    "lines": 261
+  },
+  {
+    "path": "fusion-studio-server/lib/thread-groups/action-result-repository.js",
+    "before": null,
+    "after": "e322bd4b3b9635415d024dbe600cc73d4b02aa7151b4b9204c0e8b4ea6f8c604",
+    "lines": 101
+  },
+  {
+    "path": "fusion-studio-server/lib/thread-groups/delete-transaction.js",
+    "before": null,
+    "after": "8ad68b9099a2a5c17233d1cccffc8c4d5820538baa8cdcf4668f7e969ea538ad",
+    "lines": 126
+  },
+  {
+    "path": "fusion-studio-server/lib/thread-groups/mirror-repository.js",
+    "before": null,
+    "after": "2a4a551e1a062788ddf02ddfebcbb14c49cc0d3a2d6822874e6ba58e264081b7",
+    "lines": 52
+  },
+  {
+    "path": "fusion-studio-server/lib/thread-groups/projection-outbox-repository.js",
+    "before": null,
+    "after": "3d5b6a4332a50d8e3907dc4c6d2accc12ae69e284fbf258ba794eec31dd684f0",
+    "lines": 158
+  },
+  {
+    "path": "fusion-studio-server/lib/thread-groups/repository.js",
+    "before": "b9c410da03f848a48d630ea1b54b6fe73b320a6185df54367babaa3751661815",
+    "after": "386f167acb1e38f263bc3aaa1594c2ac34e76f268de1eb34b0ab897eed206851",
+    "lines": 315
+  },
+  {
+    "path": "fusion-studio-server/lib/thread-groups/startup-reconciliation.js",
+    "before": null,
+    "after": "894fdceaa3dccb3bac18bc1c398c4321f48efd1d690b3914d6962ecdbb4a1046",
+    "lines": 108
+  },
+  {
+    "path": "fusion-studio-server/lib/wire/terminal-saved-delivery.js",
+    "before": null,
+    "after": "12a9092ca7d1e2136d81f2d73227fe073264d271861319ca2848e64f646104c4",
+    "lines": 62
+  },
+  {
+    "path": "fusion-studio-server/lib/wire/wire-broadcaster.js",
+    "before": "70ec260b07453ef22ac8b581cbc5d0c0a127d63b6169400b6d9385f3861a4d2a",
+    "after": "387b66a9de20991fe47a1d5df330d739d954e94334aca1655e61b88ffdc168f1",
+    "lines": 256
+  },
+  {
+    "path": "fusion-studio-server/lib/ws/thread-action-handler.js",
+    "before": null,
+    "after": "b1495452bc2f390601f8848ca6a26889e6363caa24840314590a7b82af7ab539",
+    "lines": 140
+  },
+  {
+    "path": "fusion-studio-server/lib/ws/thread-action-protocol.js",
+    "before": null,
+    "after": "bc6dd7059455a2b439725e77511312aeb77f578d9a14a7f319ef34355104a8b2",
+    "lines": 154
+  },
+  {
+    "path": "fusion-studio-server/lib/ws/thread-provider-binding.js",
+    "before": null,
+    "after": "6e00fb98af7466e4862dc396f54c8910e4b32c0e5e167c822bb23beb25c78c33",
+    "lines": 179
+  },
+  {
+    "path": "fusion-studio-server/lib/ws/thread-ws-handlers.js",
+    "before": "cf5274850b07cdb15b3f85dfe507a17b842cff38714bda0022cbf93daaa55d68",
+    "after": "56ecdfe41d0beddf25205e1c69accae27ef194498e8f7a902ffebadc7fe7968c",
+    "lines": 304
+  },
+  {
+    "path": "fusion-studio-server/test/event-registry/migration.test.js",
+    "before": "b1ba8435f84d38476b2e522e41592a384e2228f452e2de1337eae2559d135521",
+    "after": "b494f634e0b17b7ae0f0e7a9f20de3a271569daa5217e02a6192ba5d2b03d4f7",
+    "lines": 265
+  },
+  {
+    "path": "fusion-studio-server/test/fusion/system-wiki-view-path-migration.test.js",
+    "before": "0e0c13d649d33eb6de5211de0f8ebc6e176ae7038b37eea35d8cdd28474dba11",
+    "after": "78396b013446859560e39455174825187493f91de7561cf7e04f028e88eb6424",
+    "lines": 77
+  },
+  {
+    "path": "fusion-studio-server/test/thread/audit-subscriber-chatlog-finalize.test.js",
+    "before": "a914a141807e3302c2b5945ecb8a1b51c8cb56010401be67173f65619f32a862",
+    "after": "7c49e25f31bf6716f8fee065f48c017b040e500e6b35b6082bea397bc8033146",
+    "lines": 464
+  },
+  {
+    "path": "fusion-studio-server/test/thread/exited-drain-retirement.test.js",
+    "before": null,
+    "after": "1600f902b8a7781d971084369e2d6cf17a6cb7bebdf8f6e2048c85bdf4ef2801",
+    "lines": 164
+  },
+  {
+    "path": "fusion-studio-server/test/thread/provider-termination.test.js",
+    "before": null,
+    "after": "cdf3349159670d28cc05f57c6d3a379992c0e4653dbe2d516de0823d1aa5eac0",
+    "lines": 126
+  },
+  {
+    "path": "fusion-studio-server/test/thread/session-manager.test.js",
+    "before": "b8fdfc5f359ea1ca6812aab44d8b07094aebfae297230ea0563397d9661ea1dc",
+    "after": "e580f569063d747f909b86458f79996ba4b7a60bb264a8ec89eab618a24b5fdf",
+    "lines": 687
+  },
+  {
+    "path": "fusion-studio-server/test/thread/stop-timeout-recovery.test.js",
+    "before": null,
+    "after": "b3a939f872fa975ff15a788953efea16b05f7465aa73cebfd54915561e38dc67",
+    "lines": 201
+  },
+  {
+    "path": "fusion-studio-server/test/thread/thread-activation-lifecycle.test.js",
+    "before": "a3edb62525a73dc6a9fced4fb020086ec17f54b09143ddb17ca6e4463d680734",
+    "after": "7d023a02f082f786a894a83f5dab94484665910e7d90dac9ff0344d6f27b5b36",
+    "lines": 1257
+  },
+  {
+    "path": "fusion-studio-server/test/thread/thread-group-delete-recovery.test.js",
+    "before": "cd2187c9c5337f9a36a5b7bcbd232fbaa3839586b13fa178d8bb5834aca15971",
+    "after": "99aa8632f184b59bac57c89cc005a4b1ec4fc65b5335083e3a2725f772b7b8b7",
+    "lines": 451
+  },
+  {
+    "path": "fusion-studio-server/test/thread/thread-group-lifecycle.test.js",
+    "before": "c9812907a5e1d56409d19204dda3afc6231728eb3610bba0fdd6bc3312d6616b",
+    "after": "981271a6f36a73ea4e9df7d43e98acd9c72f4ecf396d28121568b82af8221281",
+    "lines": 306
+  },
+  {
+    "path": "fusion-studio-server/test/thread/thread-group-migration.test.js",
+    "before": "b610f982bebfea9c874129296a32f10e7b0420e1c3476acc1ece2c0b6eaeaff4",
+    "after": "d87658051683a786625ab157317cdfbd1906e13c6b922267cbc998d83609a9fb",
+    "lines": 218
+  },
+  {
+    "path": "fusion-studio-server/test/thread/thread-group-placement-outbox-migration.test.js",
+    "before": "a2374a31c43082f795541ad5b5d67c3f0c66234bc343578e246d4eabd48fe7b5",
+    "after": "0718ba9a5ae655f0ac3fb712e435872df8e1af65366de24bc5f05d77d2a26acb",
+    "lines": 194
+  },
+  {
+    "path": "fusion-studio-server/test/thread/thread-group-worksurface-cleanup-migration.test.js",
+    "before": "1d39e620f6fed48a5a7fa22c7247d5205d63b5bd493910bdb91e952da9d98b1e",
+    "after": "befada05dc95962a6ef95387f54df42ba789d838ad56052ad023d631cdbb605b",
+    "lines": 207
+  },
+  {
+    "path": "fusion-studio-server/test/thread/thread-manager-chatlog-path.test.js",
+    "before": "b74131f971bfdd101ddcaa5ebd1aa4297406b386ec6ccc51927c853ad4ec6168",
+    "after": "5538e80944e22d125d1e470b4f94eaf85037b71b3be5ad1701d7a97e2027578e",
+    "lines": 63
+  },
+  {
+    "path": "fusion-studio-server/test/thread/thread-manager-chatlog-sync.test.js",
+    "before": "716603b42646958e02d12aae4b69d2d1596c400676f5e87664921216449eb73b",
+    "after": "d57ff3f6b90a0a45279480827f4e69cd3b15420556976b9c7b0d4cc593635c8a",
+    "lines": 264
+  },
+  {
+    "path": "fusion-studio-server/test/thread/thread-runtime-controller.test.js",
+    "before": "66c56899b4334e5711e6db4790be730790cb781504b19dd1ae0cf11d20c97c5c",
+    "after": "2924ce0911ed46d4219592df4ae4dcb0c12e3c3b3219ffe0a1a3952cca39e9ae",
+    "lines": 3306
+  },
+  {
+    "path": "fusion-studio-server/test/views/view-relocation-journal.test.js",
+    "before": "5f45933c99c51f98bb69f1b763f18fe1511999d5691fe27a222fc692242fc88d",
+    "after": "e3473f54024f5a75d47024d14542b9b588cfc16c9dbf8d6d2ce4a46a485da9a8",
+    "lines": 71
+  },
+  {
+    "path": "fusion-studio-server/test/ws/client-message-router.test.js",
+    "before": "5619b5c07b09580524e6775d42de762348be2f9a93b60a2b29f591d1bf890a29",
+    "after": "f65c57a3ff07e54e2c1a5175262ca2ce3a825696a3c2511bd82da1793c9bfb94",
+    "lines": 1379
+  },
+  {
+    "path": "fusion-studio-server/test/ws/privileged-thread-handlers.test.js",
+    "before": "d755be3776db678f0ce2efaaa0a26e37c576ccf311d6242c81741f40380a8a6e",
+    "after": "e80cc92e5786d29398411028f8b002605bd734511c3d7c8995ab3218ce362cbc",
+    "lines": 491
+  },
+  {
+    "path": "fusion-studio-server/test/ws/privileged-thread-persistence.integration.test.js",
+    "before": "aeacac5f77fe8ac026efa20b0a59f72e9300bff69d58836e808add15657a3ceb",
+    "after": "35d7544781ba77e333e35e54982be2af3e5e47bd69a649a45043a736dc9ef4c5",
+    "lines": 442
+  },
+  {
+    "path": "fusion-studio-server/test/ws/privileged-thread-public-route.integration.test.js",
+    "before": "cda652be37457c62ca2a608b0286139633c3812c3310e03fe62658fe8ed2dfe1",
+    "after": "785b8ed3229579a24ef9f069f7214a0e0caa81fda7c38c213da5a513013d7eb3",
+    "lines": 363
+  },
+  {
+    "path": "fusion-studio-server/test/ws/thread-group-move-side-chat.integration.test.js",
+    "before": "46c7d537b6313e2a361a8b636ce74ce7522bfae1c0ca0d3c8dfed731a0716e72",
+    "after": "4bed50fc9cdc5d061dd45858d1f6a32b6715d49ffe116349bd16cedd30e76ce5",
+    "lines": 765
+  }
+]

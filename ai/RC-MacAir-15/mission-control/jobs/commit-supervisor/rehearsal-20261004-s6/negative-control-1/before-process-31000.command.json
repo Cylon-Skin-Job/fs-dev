@@ -1,0 +1,30 @@
+{
+  "command": [
+    "ps",
+    "-p",
+    "31000",
+    "-o",
+    "pid=,ppid=,lstart=,command="
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "GIT_LITERAL_PATHSPECS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "started": "2026-10-04T19:50:19.836312+00:00",
+  "finished": "2026-10-04T19:50:19.839397+00:00",
+  "exit_code": 0,
+  "stdout": "31000     1 Sun Oct  4 12:25:14 2026     /private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron /private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/electron/main.cjs --user-data-dir=/private/tmp/mc-s6-commit-supervisor-20261004/profile --remote-debugging-address=127.0.0.1 --remote-debugging-port=63399\n",
+  "stderr": "",
+  "stdout_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/before-process-31000.stdout",
+    "sha256": "8e6645445291ad5443b6cd4fa9e6708f24578188ad62e2f76e34e0e4b02d5407",
+    "size": 414
+  },
+  "stderr_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/before-process-31000.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  }
+}

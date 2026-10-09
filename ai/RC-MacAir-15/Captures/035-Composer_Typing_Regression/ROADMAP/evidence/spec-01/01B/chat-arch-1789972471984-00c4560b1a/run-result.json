@@ -1,0 +1,28 @@
+{
+  "runId": "chat-arch-1789972471984-00c4560b1a",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R3-RECONNECT-UI",
+      "code": 0,
+      "signal": null,
+      "pid": 31151,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 7298
+    },
+    {
+      "id": "R4-LATE-DRAFT-RECOVERY",
+      "code": 0,
+      "signal": null,
+      "pid": 31679,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 29501
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

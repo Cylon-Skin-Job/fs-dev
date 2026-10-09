@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-07T00:24:43.905246+00:00",
+  "repo": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+  "argv": [
+    "git",
+    "-C",
+    "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+    "commit",
+    "--file",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/commit-message.txt"
+  ]
+}

@@ -1,0 +1,487 @@
+/* Main App Layout */
+.rv-app-container {
+  --theme-picker-drawer-width: min(480px, calc(100vw - 24px));
+  --trailing-action-inset: 8px;
+  --trailing-action-gap: 4px;
+  display: grid;
+  grid-template-rows: var(--header-height) 1fr;
+  grid-template-columns: var(--tools-width) var(--sidebar-width) var(--chat-width) 1fr;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg-solid);
+  color: var(--text-white);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: width 250ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rv-app-container--theme-picker-open {
+  width: calc(100vw - var(--theme-picker-drawer-width));
+}
+
+/* Header */
+.rv-header {
+  --interactive-surface-bg: var(--panel-chrome-bg, #1a1a1a);
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--trailing-action-inset) 0 16px;
+  background: var(--panel-chrome-bg, #1a1a1a);
+  border-bottom: 1px solid var(--workspace-border-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
+}
+
+.rv-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rv-menu-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--workspace-foreground-color, var(--chrome-accent, var(--text-dim)));
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.rv-menu-btn:hover,
+.rv-menu-btn:active {
+  color: var(--interactive-contrast-foreground, #ffffff);
+  background: transparent;
+}
+
+.rv-menu-btn:focus-visible {
+  outline: 2px solid var(--interactive-focus-ring, var(--interactive-contrast-foreground, #ffffff));
+  outline-offset: -3px;
+}
+
+.rv-project-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--workspace-foreground-color, var(--chrome-accent, var(--text-dim)));
+  letter-spacing: 0.5px;
+}
+
+.rv-header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--trailing-action-gap);
+}
+
+.rv-header-right .rv-fusion-icon-btn {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+}
+
+/* Context usage chip: views.css */
+
+.rv-connection-status {
+  font-size: 12px;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rv-connection-status.connected {
+  color: var(--workspace-accent-color, var(--accent-dim, var(--theme-primary)));
+}
+
+.rv-connection-status::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-dim);
+}
+
+.rv-connection-status.connected::before {
+  background: var(--workspace-accent-color, var(--accent-dim, var(--theme-primary)));
+}
+
+.rv-header .rv-fusion-icon-btn,
+.rv-header .rv-theme-swatch-btn {
+  background: transparent;
+  color: var(--workspace-foreground-color, var(--chrome-accent, var(--text-dim)));
+}
+
+.rv-header .rv-fusion-icon-btn:hover:not(:disabled),
+.rv-header .rv-fusion-icon-btn:active:not(:disabled),
+.rv-header .rv-theme-swatch-btn:hover:not(:disabled),
+.rv-header .rv-theme-swatch-btn:active:not(:disabled),
+.rv-header .rv-theme-swatch-btn.open:not(:disabled) {
+  background: transparent;
+  color: var(--interactive-contrast-foreground, #ffffff);
+}
+
+.rv-header .rv-fusion-icon-btn:focus-visible,
+.rv-header .rv-theme-swatch-btn:focus-visible {
+  outline: 2px solid var(--interactive-focus-ring, var(--interactive-contrast-foreground, #ffffff));
+  outline-offset: -3px;
+}
+
+.rv-header .rv-fusion-icon-btn .material-symbols-outlined,
+.rv-header .rv-theme-swatch-btn .material-symbols-outlined {
+  color: inherit;
+  font-size: var(--chrome-icon-size, 18px);
+}
+
+.rv-header .rv-fusion-icon-btn:disabled {
+  cursor: default;
+  opacity: 0.35;
+}
+
+.rv-header .rv-fusion-icon-btn:disabled:hover,
+.rv-header .rv-fusion-icon-btn:disabled:active {
+  background: transparent;
+  color: var(--workspace-foreground-color, var(--chrome-accent, var(--text-dim)));
+}
+
+/* ── Shared utility classes ── */
+.rv-dim-label {
+  color: var(--text-dim);
+}
+
+.rv-agent-tiles-placeholder {
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  font-style: italic;
+  padding: 20px;
+}
+
+.rv-runtime-module-frame {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.rv-doc-tile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rv-view-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: var(--bg-solid);
+}
+
+.rv-thread-rename-input {
+  width: 100%;
+  padding: 2px 4px;
+  font-size: 12px;
+  border: 1px solid var(--theme-border);
+  border-radius: 4px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.rv-wf-step-spacer {
+  height: 8px;
+}
+
+.rv-content-placeholder-heading {
+  color: var(--text-bright);
+  margin-bottom: var(--space-lg, 16px);
+}
+
+.rv-content-placeholder-body {
+  color: var(--text-dim);
+}
+
+/* ── Tool-call block (ToolCallBlock.tsx) ── */
+/* Panel Container */
+.rv-panel-container {
+  grid-column: 2 / -1;
+  grid-row: 2;
+  position: relative;
+  overflow: hidden;
+}
+
+.rv-panel-container--loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dim, #555);
+  font-size: var(--font-md, 13px);
+}
+
+.rv-panel {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: var(--sidebar-width) var(--chat-width) 1fr;
+  /* One row fills the panel so content-area / chat / rv-sidebar get a definite height */
+  grid-template-rows: minmax(0, 1fr);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--transition-normal, 180ms) ease,
+    visibility 0s linear var(--transition-normal, 180ms);
+  min-height: 0; /* children must not blow out the grid */
+}
+
+.rv-panel.active {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity var(--transition-normal, 180ms) ease,
+    visibility 0s linear 0s;
+}
+
+/* Sidebar + chat column: ai/<machine>/System/styles/views.css */
+
+/* Content Area — flex column so the active panel (file explorer, wiki, etc.) can fill height */
+.rv-content-area {
+  background: var(--bg-solid);
+  padding: 24px;
+  border-radius: var(--content-container-border-radius, 0px);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Universal shell-owned controls. Keeping these outside individual viewers
+ * guarantees that every content type uses the same glyphs and coordinates. */
+.rv-view-layout-controls {
+  position: absolute;
+  top: 4px;
+  right: var(--trailing-action-inset);
+  left: 4px;
+  z-index: 60;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.rv-view-layout-controls__leading {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Trailing control cluster (for view-specific controls such as the file tree dock). */
+.rv-view-layout-controls__trailing {
+  display: flex;
+  align-items: center;
+  gap: var(--trailing-action-gap);
+}
+
+.rv-view-layout-control {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--content-foreground-color, var(--text-dim));
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.rv-view-layout-control:hover {
+  background: var(--glass-md, rgba(255, 255, 255, 0.08));
+  color: var(--content-accent-contrast, var(--text-primary));
+}
+
+.rv-view-layout-control:focus-visible {
+  outline: 2px solid var(--content-accent-color, var(--accent));
+  outline-offset: 1px;
+}
+
+.rv-view-layout-control .material-symbols-outlined {
+  font-size: var(--chrome-icon-size, 18px);
+}
+
+/* Non-tabbed content history starts after the universal 40px control reserve,
+ * plus the owner-approved 80px rightward offset established in Wiki. */
+.rv-view-history-controls {
+  position: absolute;
+  top: 6px;
+  left: 120px;
+  z-index: 61;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rv-view-history-control {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--content-foreground-color, var(--text-dim));
+  cursor: pointer;
+}
+
+.rv-view-history-control:hover:not(:disabled) {
+  background: var(--surface-hover, rgba(255, 255, 255, 0.08));
+  color: var(--content-accent-contrast, var(--text-primary));
+}
+
+.rv-view-history-control:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.rv-view-history-control .material-symbols-outlined {
+  font-size: var(--chrome-icon-size, 18px);
+}
+
+/* When the capture-viewer's FilePageView is shown, the content-area's outer
+   24px --bg-solid frame would compete with the FilePageView's surface
+   (set by the capture-viewer styles). Drop the frame here so the whole
+   panel becomes one continuous chrome surface. */
+.rv-content-area:has(> .rv-file-page-view),
+.rv-content-area:has(> .rv-view-tab-panel > .rv-file-page-view) {
+  background: transparent;
+  padding: 0;
+}
+
+/* Browser view: remove the brown content-area frame so the iframe fills
+   the entire panel edge-to-edge. */
+main.rv-content-area:has(> .rv-web-browser),
+main.rv-content-area:has(> .rv-custom-viewer),
+main.rv-content-area:has(> .rv-browser-viewer) {
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+.rv-content-area > * {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+}
+
+/* Content area in full layout gets no padding (explorer/viewer fills it) */
+
+/* SPEC-26c: binary layout. Chat-enabled views render the 5-column dual
+ * chat layout; everything else is a single content column. */
+.rv-layout-full {
+  grid-template-columns: 1fr;
+}
+
+.rv-layout-full .rv-content-area {
+  padding: 0;
+}
+
+/* SPEC-26c-2: 3-column asymmetric layout.
+ * [project rv-sidebar] [handle] [project chat] [handle] [content]
+ * Widths come from per-view state (viewStates), written to inline style
+ * as CSS variables on the .rv-panel container.
+ */
+.rv-layout-dual-chat {
+  grid-template-columns:
+    var(--left-sidebar-w, 220px)
+    /* hide the first handle when rv-sidebar is collapsed (width 0) */
+    max(0px, min(1px, var(--left-sidebar-w, 220px)))
+    var(--left-chat-w,    360px)
+    /* hide the second handle when chat is fully collapsed (width 0) */
+    max(0px, min(1px, var(--left-chat-w, 360px)))
+    1fr;
+}
+
+/* File Viewer focus mode: keep the thread column at its saved width and let
+ * the outer chat shell consume everything through the right edge. The
+ * conversation and composer are centered independently below. */
+.rv-layout-dual-chat.rv-panel--content-collapsed {
+  grid-template-columns:
+    var(--left-sidebar-w, 220px)
+    max(0px, min(1px, var(--left-sidebar-w, 220px)))
+    minmax(360px, 1fr)
+    0
+    0;
+}
+
+.rv-panel--content-collapsed > .rv-content-area {
+  visibility: hidden;
+  pointer-events: none;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* Keep the readable chat surface compact while its outer shell spans the
+ * released File Viewer area. The header remains full-width so its panel
+ * controls stay pinned to the shell edge. */
+.rv-panel--content-collapsed > .rv-chat-area > .rv-chat-messages,
+.rv-panel--content-collapsed > .rv-chat-area > .rv-chat-footer {
+  width: min(100%, 40vw);
+  max-width: 40vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.rv-layout-dual-chat .rv-content-area {
+  padding: 0;
+}
+
+/* SPEC-26c-2: in-grid drag handle. 6px thin strip, col-resize cursor,
+   subtle hover feedback so users can find it.
+   NOTE: do NOT set grid-row on this element. An explicit grid-row with
+   auto grid-column makes CSS Grid's auto-placement treat handles as
+   "partially placed" and pack them into the first tracks, pushing
+   the actual content into the wrong columns. */
+.rv-resize-handle {
+  cursor: col-resize;
+  /* The handle IS the visible workspace-column divider. */
+  background: var(--workspace-border-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
+  transition: background 0.15s ease;
+  min-width: 0;
+  position: relative;
+  z-index: 5;
+}
+
+/* Expand the hit target to 9px (±4px on each side) without taking grid space.
+   The visible column stays 1px; dragging works anywhere in the wider band. */
+.rv-resize-handle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -4px;
+  right: -4px;
+}
+
+.rv-resize-handle:hover,
+.rv-resize-handle:active {
+  background: rgba(var(--theme-primary-rgb, 136, 136, 136), 0.55);
+}
+
+/* Right-column resize handle: lives on the left edge of either the file
+ * tree rv-sidebar (file-viewer → pane="rightCol") or a content-owned
+ * right navigation (pane="contentNavRight"). Both parents use
+ * position: relative so this sits absolutely over the left edge. Visible
+ * strip is 1px to match the in-grid chat handle; hit target comes from the
+ * base ::before (±4px). */
+.rv-resize-handle[data-pane="rightCol"],
+.rv-resize-handle[data-pane="contentNavRight"] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  z-index: 6;
+}

@@ -1,0 +1,25 @@
+{
+  "command": [
+    "npx",
+    "--no-install",
+    "jest",
+    "--runInBand"
+  ],
+  "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/fusion-studio-server",
+  "started": "2026-10-09T01:17:01.647511+00:00",
+  "ended": "2026-10-09T01:18:55.616715+00:00",
+  "exit_code": 0,
+  "log": "/private/tmp/fusion-main-consolidation-95vxg0_h/server-full-02.log",
+  "dependencies_before": {
+    "fusion-studio-server/lib/screenshot/ws-handlers.js": "e1f0c2d5afe85a9f548a24b5f1696f3e23f15502371c71290f53d347cbfc5585",
+    "fusion-studio-server/test/screenshot-file-capture-request-id.test.js": "74729e86f4c9e56827aabd82f79bc15333a65c8c75562a5d678a037ad73a8063",
+    "fusion-studio-server/test/screenshot-protected-view-path.test.js": "b96cce21addf67336e3d7584f96e4be754888fc4b0b2ff334010eab0d533d54e"
+  },
+  "dependencies_after": {
+    "fusion-studio-server/lib/screenshot/ws-handlers.js": "e1f0c2d5afe85a9f548a24b5f1696f3e23f15502371c71290f53d347cbfc5585",
+    "fusion-studio-server/test/screenshot-file-capture-request-id.test.js": "74729e86f4c9e56827aabd82f79bc15333a65c8c75562a5d678a037ad73a8063",
+    "fusion-studio-server/test/screenshot-protected-view-path.test.js": "b96cce21addf67336e3d7584f96e4be754888fc4b0b2ff334010eab0d533d54e"
+  },
+  "reason": "Renew final protected-path assertion after first full-server execution.",
+  "limit": "Direct Jest full suite; does not claim npm native-observer pretest."
+}

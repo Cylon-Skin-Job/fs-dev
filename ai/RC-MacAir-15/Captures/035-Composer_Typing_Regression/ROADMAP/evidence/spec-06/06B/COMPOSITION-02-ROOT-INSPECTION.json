@@ -1,0 +1,77 @@
+{
+  "at": "2026-09-27T03:46:33.308530+00:00",
+  "runId": "chat-arch-1790480161136-42069438e6",
+  "status": "diagnostic-complete",
+  "durationMs": 600068,
+  "observerRemoved": true,
+  "events": 443,
+  "overflow": 0,
+  "truncated": 0,
+  "case": {
+    "id": "R9-NATIVE-COMPOSITION-CONTROL",
+    "code": 0,
+    "signal": null,
+    "pid": 2442,
+    "timedOut": false,
+    "interrupted": false,
+    "leakedOwnedPids": [],
+    "elapsedMs": 608302
+  },
+  "ownedRootExists": false,
+  "pidsAlive": {
+    "2430": false,
+    "2442": false,
+    "3153": false
+  },
+  "protected55084Alive": true,
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "lingering": [],
+  "source": {
+    "count": 1957,
+    "mismatches": []
+  },
+  "build": {
+    "count": 200,
+    "mismatches": []
+  },
+  "nativeInterpretation": {
+    "composingEscapeEvents": [
+      7,
+      85
+    ],
+    "ordinaryEscapeBeforeBlur": [
+      13,
+      91
+    ],
+    "composingEnterUnprevented": [
+      43,
+      126
+    ],
+    "ordinaryEnterPrevented": [
+      49,
+      132
+    ],
+    "commitComposer": {
+      "inputEventId": 171,
+      "value": "é",
+      "trusted": true,
+      "compositionEndTrusted": false
+    },
+    "commitControl": {
+      "inputEventId": 190,
+      "value": "é",
+      "trusted": true,
+      "compositionEndTrusted": false
+    },
+    "backspace": "Both fields retain accent through composing key/untrusted end, then ordinary Backspace produces deleteContentBackward to empty; not proof of native cancellation.",
+    "nativePasteEventId": 311,
+    "nativePasteExact": "native check 2468 — café 🙂",
+    "ordinarySendEventId": 312,
+    "finalThreadId": "2026-09-26T20-43-24-212",
+    "ownerAcceptance": false
+  }
+}

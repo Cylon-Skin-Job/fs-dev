@@ -1,0 +1,16 @@
+{
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "started": "2026-10-04T19:19:14.316155+00:00",
+  "finished": "2026-10-04T19:19:18.573582+00:00",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "command": [
+    "python3.12",
+    "-B",
+    "planning/commit-supervisor/execution/S6-prep/protection_readback.py",
+    "FIX_XY_PRE_RUNTIME",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-protection-pre-runtime.json"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"phase\": \"FIX_XY_PRE_RUNTIME\", \"unowned_leaves\": 13538, \"cache_leaves\": 193, \"protected_processes\": 4, \"head\": \"d15792920731f85e45b743519d4af2b807d95a9c\"}\n",
+  "stderr": ""
+}

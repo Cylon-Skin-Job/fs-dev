@@ -1,0 +1,15 @@
+{
+  "freeze-final.py": "90b424577a587361bfebf6a1ac19c2e0bfcd2f6f0bfc19dc2c509e0bf9c00f5f",
+  "verify-candidate.py": "f34bd2efc1e01fb4136017035b9fdeb69d9cb5cc5e976e7472f4108f7992acef",
+  "runtime-recipe.json": "b86c58673982c89fd3fcadfbadca3ee790c208ffd4afbbd1c5d5c25d7f5e20b5",
+  "final-commit-paths.json": "8383af79f04acbb0e3d32d178e8b675c4f2518cecac543a7efe7e0a38d62cb61",
+  "final-commit-paths.z": "bbe778171efe7e30b6178ccfeaa8597736a2fd3b24da1472db11cb88b77d2f03",
+  "final-stage-preimage.index.z": "7e72caedb82663f2da6a5ceb092c9333605062046dbcf6748a8413c44afce5d1",
+  "final-stage-preimage.worktree.json": "6741bf3ccc50fb70dd4d5f88f99cd9982b1c8f3f864d1452f6a4a73a2f79ec98",
+  "final-stage-inputs.z": "ea7910efd47c6ea6209419fd45a043a4f804e70dff1161ce7ca5b53d8531af1f",
+  "final-candidate-owned-inventory.json": "6741bf3ccc50fb70dd4d5f88f99cd9982b1c8f3f864d1452f6a4a73a2f79ec98",
+  "final-source-owned-inventory.json": "2e63d95ecef115ab98733af8f659e969cb5d059ba63e2e2dbfec0cf1598fc610",
+  "landing-copy-paths.json": "2a5d69aacb53739a0f045879e3821a90c9060fc58164d4a251ab829e27428eb0",
+  "final-candidate-runtime-support.json": "d4ae4338a17046259795b668c636205aa38217299a071ee443af57f427f9892f",
+  "final-candidate-identity.json": "3a30c8501688a6c276486c539678d772b85d65227b29e68de2b354841a1f621f"
+}

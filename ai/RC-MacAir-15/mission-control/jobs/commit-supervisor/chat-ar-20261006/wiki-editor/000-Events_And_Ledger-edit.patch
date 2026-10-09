@@ -1,0 +1,23 @@
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md before
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md after
+@@ -10,7 +10,7 @@
+     - fusion-studio-server/lib/file-mutations/reported-ui-context.js
+     - fusion-studio-server/lib/agent-provenance/resource-observer.js
+     - fusion-studio-server/lib/ledger/event-ledger.js
+-  last-modified: "2026-09-19T11:52:20Z"
++  last-modified: "2026-10-06T22:14:26Z"
+ ---
+ 
+ Status: reconciled on 2026-09-19 across the 24 Events And Ledger articles and the bounded System/provenance subjects in three supporting articles. The inspected development checkout is `/Users/rccurtrightjr./projects/fs-dev`, at HEAD `88637d11c65be53d4f2ad0f049f64a07fa3db1de`, with dirty working files. Claims follow the inspected working bytes rather than HEAD alone; unrelated concurrent changes were preserved. This is source and documentation inspection, not a product test, runtime pass, whole-app storage audit or whole-wiki certification. Installed Alpha is a separate, unverified baseline. Generated navigation below is a topic map, not proof that every described subsystem exists.
+@@ -51,9 +51,9 @@
+ - [Resource Events And Render Sync](../005-Resource_Events_And_Render_Sync/PAGE.md) - Trace mediated text saves through governed projections to the two mounted File Viewer consumers; distinguish reconnect and dirty-buffer limits.
+ - [File Versioning](../006-File_Versioning/PAGE.md) - Distinguish required mediated-save preimages, post-tool observation checkpoints and Git checkpoints from future general versioning and restore.
+ - [Correlation And Causality](../007-Correlation_And_Causality/PAGE.md) - Interpret durable operation links, reported UI context and observed resource history without turning temporal association into causal proof.
+-- [Change Storm Control](../008-Change_Storm_Control/PAGE.md) - Current watcher and checkpoint limits, future change-storm summaries, and unresolved compaction policy.
++- [Change Storm Control](../008-Change_Storm_Control/PAGE.md) - Legacy bus and checkpoint limits, future change-storm summaries, and unresolved compaction policy.
+ - [Assistant Query And Review Loops](../009-Assistant_Query_And_Review_Loops/PAGE.md) - How future workers can inspect conversations, tool calls, file versions, and failures to surface concrete improvements.
+-- [Structure](../010-Structure/PAGE.md) - File and module map for event bus, ledger, watcher, resource sync, metadata collectors, and future versioning work.
++- [Structure](../010-Structure/PAGE.md) - File and module map for event bus, ledger, resource sync, metadata collectors, and future versioning work.
+ - [UI Action Provenance Module](../011-UI_Action_Provenance_Module/PAGE.md) - Implemented save-context carrier and future shared UI-action design, including Wiki and File adapter boundaries.
+ <!-- section-toc:end -->
+ 

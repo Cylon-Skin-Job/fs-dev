@@ -1,0 +1,1333 @@
+{
+  "schemaVersion": 1,
+  "planning_id": "CHAT-MATERIAL-PLAN-01",
+  "revision": 1,
+  "worker": "/root/chat_material_candidate_stage/candidate_author",
+  "role": "mc-roadmap-author",
+  "status": "CANDIDATE_AUTHORED_REPAIRED_PENDING_NEW_FRESH_WORKER_HANDOFF",
+  "signature": "Codex side chat (ephemeral)",
+  "snapshot_at": "2026-10-07T09:37:53.026137+00:00",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "memory_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement",
+  "output_root": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion",
+  "source_checkout": "/Users/rccurtrightjr./projects/fs-dev",
+  "branch": "main",
+  "head": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "tree": "1c80f83c6c4b2b61e42c4dbb988c1f942b672ade",
+  "effective_runtime": {
+    "filesystem": "unrestricted (danger-full-access)",
+    "approval_policy": "never",
+    "shell_tools": "available; read-only source inspection and owned planning writes only",
+    "delegation": "available but prohibited for leaf author",
+    "model_effort": "inherited; no override",
+    "product_execution": "prohibited by owner Dont build"
+  },
+  "write_ownership": [
+    "TICKET.md",
+    "SPEC.md",
+    "CANDIDATE.json",
+    "reports/author-source-evidence.json"
+  ],
+  "dirty_scope_porcelain": [
+    " M ai/RC-MacAir-15/System/Views/001-capture-viewer/state/state.json",
+    " M ai/RC-MacAir-15/System/Views/002-file-viewer/state/state.json",
+    " M ai/RC-MacAir-15/System/Views/004-wiki-viewer/state/state.json",
+    " M ai/RC-MacAir-15/System/config/cli.json",
+    " M ai/RC-MacAir-15/System/config/opencode-models.json",
+    " M ai/RC-MacAir-15/System/state/state.json",
+    " M ai/RC-MacAir-15/System/styles/themes.css",
+    " M ai/RC-MacAir-15/System/styles/themes.json",
+    " M ai/RC-MacAir-15/Wiki/.audit-state.json",
+    " M ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md",
+    " M ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/AGENTS.md",
+    " M ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/BULLETIN.md",
+    " M ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/DECISIONS.md",
+    " M ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/INTENT.md",
+    " M ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/TICKET.md",
+    " M ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/index.json",
+    " M restart-fusion.sh",
+    "?? ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/EXPERIMENTAL-RENDER-BOUNDARIES.patch",
+    "?? ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/",
+    "?? ai/RC-MacAir-15/mission-control/.agents/",
+    "?? ai/RC-MacAir-15/mission-control/.codex/",
+    "?? ai/RC-MacAir-15/mission-control/AGENTS.md",
+    "?? ai/RC-MacAir-15/mission-control/bulletin.md",
+    "?? ai/RC-MacAir-15/mission-control/changelog.md",
+    "?? ai/RC-MacAir-15/mission-control/codex-context.md",
+    "?? ai/RC-MacAir-15/mission-control/conversation-evidence.md",
+    "?? ai/RC-MacAir-15/mission-control/decisions.md",
+    "?? ai/RC-MacAir-15/mission-control/deployment.md",
+    "?? ai/RC-MacAir-15/mission-control/domain-routing.md",
+    "?? ai/RC-MacAir-15/mission-control/handoff.md",
+    "?? ai/RC-MacAir-15/mission-control/index.json",
+    "?? ai/RC-MacAir-15/mission-control/installation-sources.json",
+    "?? ai/RC-MacAir-15/mission-control/investigation-contract.md",
+    "?? ai/RC-MacAir-15/mission-control/jobs/",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/.agents/",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/chat-harness-repair-and-testing/.document-sweeps/reviewed.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/chat-harness-repair-and-testing/.document-sweeps/runs/c26aa20add5449aab6231b190dd9d1a4/input.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/chat-harness-repair-and-testing/.document-sweeps/runs/def6b4b1b9e84cd28f49c12827fec8c2/input.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/chat-harness-repair-and-testing/AGENTS.md",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/chat-harness-repair-and-testing/index.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/.checkpoints/",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/.document-sweeps/reviewed.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/.document-sweeps/runs/33ca42b7670448aca8c9b88d4ea99b79/input.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/.document-sweeps/runs/870ded9069d2445690d117b5a59aba65/input.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/.document-sweeps/runs/b294252fbab94747bf3e577244d305a1/input.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/.document-sweeps/runs/b294252fbab94747bf3e577244d305a1/supplemental-input.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/.document-sweeps/runs/c04f71dab17e482d91cdb79816e7cfbd/input.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/.document-sweeps/runs/ec2b14831f564a5983ef9eb74f291399/input.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/CHECKPOINT.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/HANDOFF-COMPLETED-BUILD-2026-10-07.md",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/implementation/FINAL-ROADMAP/ALPHA-DEPLOYMENT.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/implementation/FINAL-ROADMAP/MERGE-RECEIPT.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/implementation/SPEC-01/C1-B/f1-evidence/",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/reports/integrity-audit-2026-10-05/SOURCE-EVIDENCE.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/reports/integrity-audit-2026-10-05/startup-contract-probe.cjs",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/reports/integrity-audit-2026-10-05/startup-contract-result.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/fusion-health-and-governed-observability/.document-sweeps/reviewed.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/fusion-health-and-governed-observability/.document-sweeps/runs/db7562ca271c42ef9f373bfceef488c2/input.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/fusion-health-and-governed-observability/.document-sweeps/runs/f2b4ac760dff4e7e82561f5aba5226db/input.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/governed-events-and-ledger/AGENTS.md",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/governed-events-and-ledger/index.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/plugin-foundation/.document-sweeps/reviewed.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/plugin-foundation/.document-sweeps/runs/95d3a4a608fa4428918a087ca77e3e07/input.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/plugin-foundation/AGENTS.md",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/plugin-foundation/index.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/plugin-views-and-provisioning/AGENTS.md",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/plugin-views-and-provisioning/index.json",
+    "?? ai/RC-MacAir-15/mission-control/launchpad/template/",
+    "?? ai/RC-MacAir-15/mission-control/managers/",
+    "?? ai/RC-MacAir-15/mission-control/mission-control.md",
+    "?? ai/RC-MacAir-15/mission-control/next-few-weeks.md",
+    "?? ai/RC-MacAir-15/mission-control/planning/",
+    "?? ai/RC-MacAir-15/mission-control/record-templates.md",
+    "?? ai/RC-MacAir-15/mission-control/registry.md",
+    "?? ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "?? ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "?? ai/RC-MacAir-15/mission-control/session-contract.md",
+    "?? ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "?? ai/RC-MacAir-15/mission-control/source-map.md",
+    "?? ai/RC-MacAir-15/mission-control/template-review.md",
+    "?? ai/RC-MacAir-15/mission-control/ticket-workflow.md",
+    "?? ai/RC-MacAir-15/mission-control/todo.md",
+    "?? fusion-studio-server/data/backups/",
+    "?? scripts/"
+  ],
+  "product_scope_dirty_porcelain": [],
+  "staged_paths": [],
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "41dc4e9dc4d58e7505cb6fc37b500129502231293894b5f90eda9398315e001d",
+      "size": 12855,
+      "head_sha256": "41dc4e9dc4d58e7505cb6fc37b500129502231293894b5f90eda9398315e001d",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-server/AGENTS.md",
+      "sha256": "00d56bfd0e50a512bd1d8e76110c6882ce7d9cbdac58782839ee6426c1d54fd2",
+      "size": 3515,
+      "head_sha256": "00d56bfd0e50a512bd1d8e76110c6882ce7d9cbdac58782839ee6426c1d54fd2",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/AGENTS.md",
+      "sha256": "d4dce1ca561b013641ca999d4183a73be739b408cfa5e518c750af783420de6d",
+      "size": 11823,
+      "head_sha256": null,
+      "working_bytes_differ_from_head": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/AGENTS.md",
+      "sha256": "428c8939c8c57ec172624934ad1425ff2d4fdc1a359570ed71a38fcc837292cc",
+      "size": 5972,
+      "head_sha256": "2a88395345613b5a680cc71f987a7a4ae449ebc60863df0899e03f2bf9825527",
+      "working_bytes_differ_from_head": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/AGENTS.md",
+      "sha256": "9d353611f3b5ac94efa92048d1c0f8879d71786bcf1b641f915a0f695f5ef697",
+      "size": 3313,
+      "head_sha256": "9d353611f3b5ac94efa92048d1c0f8879d71786bcf1b641f915a0f695f5ef697",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/session-contract.md",
+      "sha256": "d82d5a815a94f8c27b64d1d90aa0085790e3d98408c011e86d6126dd1bd9b570",
+      "size": 7123,
+      "head_sha256": null,
+      "working_bytes_differ_from_head": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-author/SKILL.md",
+      "sha256": "6bbc04d37cedf7096f2da2de8be7ac29def302fb192870c0869c1e00a0d35581",
+      "size": 11740,
+      "head_sha256": null,
+      "working_bytes_differ_from_head": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-creator/references/planning-contract.md",
+      "sha256": "ce471fe594051c7c375c1f371c0ebe4af18b65639f740ad3d95c918a70b9e5ad",
+      "size": 16409,
+      "head_sha256": null,
+      "working_bytes_differ_from_head": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/PLANNING.md",
+      "sha256": "d43a9a2844620ccbef7193c14d3196a8c8ba695f5d2910f0d969789c1d946337",
+      "size": 4820,
+      "head_sha256": null,
+      "working_bytes_differ_from_head": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/OWNER-REQUEST.md",
+      "sha256": "71dd8441f4ee79f9c0688ec335de0a553d9dfd6f4a6b2b60a93d8f222a529c1d",
+      "size": 3047,
+      "head_sha256": null,
+      "working_bytes_differ_from_head": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/DECISIONS.md",
+      "sha256": "0a6a6240cb6a970ec9a44fdf0530ff3c6c2b99c3d21df481b10341872fd23479",
+      "size": 8712,
+      "head_sha256": "9a345ca61569884d53c69a1124af650a2f053c2c417a4661aa09d4c23ea66629",
+      "working_bytes_differ_from_head": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/HANDOFF-COMPLETED-BUILD-2026-10-07.md",
+      "sha256": "a4b4895940f72e3352446770625023e7c925a1369fb5f611dd03b478d742ee89",
+      "size": 14087,
+      "head_sha256": null,
+      "working_bytes_differ_from_head": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/005-User_Profile_Preferences_and_Design_Philosophy/PAGE.md",
+      "sha256": "45fa9f630563d79935d5a461b308c823c0db3ded5c23817ba6d4c8a06c794ed5",
+      "size": 7765,
+      "head_sha256": "45fa9f630563d79935d5a461b308c823c0db3ded5c23817ba6d4c8a06c794ed5",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md",
+      "sha256": "de3995c68ae84f3b0fa389c6af0327e21dd08f30ac9ffbc7548b76f80ac393d7",
+      "size": 16824,
+      "head_sha256": "de3995c68ae84f3b0fa389c6af0327e21dd08f30ac9ffbc7548b76f80ac393d7",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/001-Architecture_Routing/PAGE.md",
+      "sha256": "4c5fcbf62912c9e8ff6d3d0e1ec07016145e1f1c90c792a162dfcc3ca1b0bfba",
+      "size": 2982,
+      "head_sha256": "4c5fcbf62912c9e8ff6d3d0e1ec07016145e1f1c90c792a162dfcc3ca1b0bfba",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/002-Frontend_UI/PAGE.md",
+      "sha256": "18a093c333a610ec8d2c77661b29744f1fae6e9ca8f4e113148fee10a0d9fc18",
+      "size": 4994,
+      "head_sha256": "18a093c333a610ec8d2c77661b29744f1fae6e9ca8f4e113148fee10a0d9fc18",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/PAGE.md",
+      "sha256": "2b4e55ed7580659b35a91d13f5a7b781960c659868027dd8b6ea6f79e609b105",
+      "size": 4799,
+      "head_sha256": "2b4e55ed7580659b35a91d13f5a7b781960c659868027dd8b6ea6f79e609b105",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/004-WebSocket_Protocol/PAGE.md",
+      "sha256": "5b77528cec69d60c11c0487a349ec1cfb0b9a47eb69c213dedd1fbf1797dbad6",
+      "size": 7053,
+      "head_sha256": "5b77528cec69d60c11c0487a349ec1cfb0b9a47eb69c213dedd1fbf1797dbad6",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "sha256": "25689bb9d2540fff061040ed14f5dc9789a4d9ceaa49662a4e0a1e448f5b0ee0",
+      "size": 9378,
+      "head_sha256": "25689bb9d2540fff061040ed14f5dc9789a4d9ceaa49662a4e0a1e448f5b0ee0",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/006-Harness_Adapters/PAGE.md",
+      "sha256": "5ece90e88dac136f7ec464b0219a3eb242b7837d118dbbdaba57de673b8a5919",
+      "size": 2816,
+      "head_sha256": "5ece90e88dac136f7ec464b0219a3eb242b7837d118dbbdaba57de673b8a5919",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md",
+      "sha256": "bd3e7be468289ac0a6ee6502cd8b9fc340f03fd7568deb59370ed00cc3b2a7a3",
+      "size": 11899,
+      "head_sha256": "bd3e7be468289ac0a6ee6502cd8b9fc340f03fd7568deb59370ed00cc3b2a7a3",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/008-Testing_And_Smoke_Slices/PAGE.md",
+      "sha256": "e7319750bd27b7ccdad8e5e451b9779044e8fc7a713fc6d461113b409b39018d",
+      "size": 2597,
+      "head_sha256": "e7319750bd27b7ccdad8e5e451b9779044e8fc7a713fc6d461113b409b39018d",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md",
+      "sha256": "696afb2d3ec027256e783957c3461eb03300db0b97b34b3e62162977c22ed42f",
+      "size": 11534,
+      "head_sha256": "696afb2d3ec027256e783957c3461eb03300db0b97b34b3e62162977c22ed42f",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/PAGE.md",
+      "sha256": "afdbf7bb3403cdf176a6fad3867536bdb68c1587e1ba36a5997aba362781d977",
+      "size": 10269,
+      "head_sha256": "afdbf7bb3403cdf176a6fad3867536bdb68c1587e1ba36a5997aba362781d977",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md",
+      "sha256": "6c5c3847270c0bef52f0e858216f54d602472a9400cddcf2c97a39c5d15e437e",
+      "size": 5513,
+      "head_sha256": "6c5c3847270c0bef52f0e858216f54d602472a9400cddcf2c97a39c5d15e437e",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+      "sha256": "57b85d4acc3034dbc2a64fec9994effa98386419d41bcd6dcc526fbcd6a96d18",
+      "size": 4846,
+      "head_sha256": "57b85d4acc3034dbc2a64fec9994effa98386419d41bcd6dcc526fbcd6a96d18",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "sha256": "a89486b49f342c611331ec9874908d4a47aa0c4ace9dde968762b63936f23d14",
+      "size": 5885,
+      "head_sha256": "a89486b49f342c611331ec9874908d4a47aa0c4ace9dde968762b63936f23d14",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "sha256": "3558d01fb05ea0a0c926b2432bcf538d2c68dfb21306e915b55ad5b037c07861",
+      "size": 8272,
+      "head_sha256": "3558d01fb05ea0a0c926b2432bcf538d2c68dfb21306e915b55ad5b037c07861",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/PAGE.md",
+      "sha256": "d036f9470ee0e4a2a1fe5bc38fa4d156e9e67f2bf88e05fda522cfc5d95c43da",
+      "size": 6709,
+      "head_sha256": "d036f9470ee0e4a2a1fe5bc38fa4d156e9e67f2bf88e05fda522cfc5d95c43da",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/001-Wiki_Viewer_UI_Context/PAGE.md",
+      "sha256": "6e80d5d97934d1c20ce1275da416737c96753d6cab1b3da2f5a83ab86855ad75",
+      "size": 4209,
+      "head_sha256": "6e80d5d97934d1c20ce1275da416737c96753d6cab1b3da2f5a83ab86855ad75",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/002-File_Viewer_UI_Context/PAGE.md",
+      "sha256": "cc8ecf54353331709f5ecc2dac0b21dd4fe6a2b42c589b3fcfb5459c720d7c8e",
+      "size": 4563,
+      "head_sha256": "cc8ecf54353331709f5ecc2dac0b21dd4fe6a2b42c589b3fcfb5459c720d7c8e",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-action.ts",
+      "sha256": "ee4b84aa06b763dc9e06ac6cc28860e1c7f0b78a62189092eefbbfcecb0b54a9",
+      "size": 3476,
+      "head_sha256": "ee4b84aa06b763dc9e06ac6cc28860e1c7f0b78a62189092eefbbfcecb0b54a9",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-action-controller.ts",
+      "sha256": "7a23aa9ee58c4724bf7db42b4ad5fc521f66c3505610177b7971b6a72cc5ef89",
+      "size": 6223,
+      "head_sha256": "7a23aa9ee58c4724bf7db42b4ad5fc521f66c3505610177b7971b6a72cc5ef89",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-action-creation.ts",
+      "sha256": "3ca8d14fc5599c2966b6cc83de8c6d70909559dd4d2833d941824861a2eb619f",
+      "size": 7214,
+      "head_sha256": "3ca8d14fc5599c2966b6cc83de8c6d70909559dd4d2833d941824861a2eb619f",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/lib/resource-path.ts",
+      "sha256": "588893bf0c90f22d618457227c46762030b735be059e7ef6aa7d64cde5325bf9",
+      "size": 2425,
+      "head_sha256": "588893bf0c90f22d618457227c46762030b735be059e7ef6aa7d64cde5325bf9",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat/side-chat-placements.ts",
+      "sha256": "109d5f63baf402c39dddf8cc96a93a95d2108e1988fca5dca99a7ad263b417e1",
+      "size": 2672,
+      "head_sha256": "109d5f63baf402c39dddf8cc96a93a95d2108e1988fca5dca99a7ad263b417e1",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-file-links/send-to-chat-reference-label.ts",
+      "sha256": "fff6382b3630c5c435991ca7d7ca0845440fb3e1da7bbd9085a7ffa5e188ef3e",
+      "size": 3144,
+      "head_sha256": "fff6382b3630c5c435991ca7d7ca0845440fb3e1da7bbd9085a7ffa5e188ef3e",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-file-links/file-link-types.ts",
+      "sha256": "556b0f1bbf00ac8667ddc6c0ccdfdc93c2adad6ccbf725e1694e5d753f5ba706",
+      "size": 615,
+      "head_sha256": "556b0f1bbf00ac8667ddc6c0ccdfdc93c2adad6ccbf725e1694e5d753f5ba706",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/screenshots/chatScreenshotCapture.ts",
+      "sha256": "18eb2caf9261a19d30ad35c5ac36a64c51ee22e08567e8cfb2ac48d84e9b12f1",
+      "size": 7877,
+      "head_sha256": "18eb2caf9261a19d30ad35c5ac36a64c51ee22e08567e8cfb2ac48d84e9b12f1",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/screenshots/ScreenshotsTrigger.tsx",
+      "sha256": "47c1883432b7c203f4b0ac20992d8e8efc353b4d68e3cb3bd5b5f75415359926",
+      "size": 8098,
+      "head_sha256": "47c1883432b7c203f4b0ac20992d8e8efc353b4d68e3cb3bd5b5f75415359926",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/clipboard/ClipboardTrigger.tsx",
+      "sha256": "1f68e64c75570d3109598ea8be243f4699db4020aa8d05e88b8c58456574e087",
+      "size": 8156,
+      "head_sha256": "1f68e64c75570d3109598ea8be243f4699db4020aa8d05e88b8c58456574e087",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/recent-files/RecentFilesTrigger.tsx",
+      "sha256": "7ffa38a6d129f77ffda6d417c393197d5ccac9d32d8a86d059e49baec9c36496",
+      "size": 8152,
+      "head_sha256": "7ffa38a6d129f77ffda6d417c393197d5ccac9d32d8a86d059e49baec9c36496",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/SendToChatButton.tsx",
+      "sha256": "88cb2886d2530d29bd5084106a31a737a8ced9d04e95ea45bcf56ad011b6b2e3",
+      "size": 1383,
+      "head_sha256": "88cb2886d2530d29bd5084106a31a737a8ced9d04e95ea45bcf56ad011b6b2e3",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/FloatingPathActions.tsx",
+      "sha256": "430ce58b6c4d1187040cb0812e0acf2e74983aff47e1fa0aa152dd1ea8b78108",
+      "size": 1004,
+      "head_sha256": "430ce58b6c4d1187040cb0812e0acf2e74983aff47e1fa0aa152dd1ea8b78108",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/SystemViewer.tsx",
+      "sha256": "1e4b3b5e6c628e399ad4a8f82179220a8172f1fee92f331626afe33825af62c5",
+      "size": 13222,
+      "head_sha256": "1e4b3b5e6c628e399ad4a8f82179220a8172f1fee92f331626afe33825af62c5",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/App.tsx",
+      "sha256": "ae70d077983470b3030d56162c35aa196dd184518e1cbe18bfb92e6f41c21745",
+      "size": 13033,
+      "head_sha256": "ae70d077983470b3030d56162c35aa196dd184518e1cbe18bfb92e6f41c21745",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/ChatInput.tsx",
+      "sha256": "f19c88c23acae8aedfa66f5766ba30bc69c4e9495d66f31f6b9b1e1647c71065",
+      "size": 11666,
+      "head_sha256": "f19c88c23acae8aedfa66f5766ba30bc69c4e9495d66f31f6b9b1e1647c71065",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/ChatArea.tsx",
+      "sha256": "f179c11475e2031a0855414eb4fb56cf075a266cc5457f1fe7ab142b2e5055bc",
+      "size": 2375,
+      "head_sha256": "f179c11475e2031a0855414eb4fb56cf075a266cc5457f1fe7ab142b2e5055bc",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/WorkspacePanel.tsx",
+      "sha256": "4a70a0ee092c2250bb3dae8188b856f1b2d895658d768d35084fdbf30628961a",
+      "size": 3966,
+      "head_sha256": "4a70a0ee092c2250bb3dae8188b856f1b2d895658d768d35084fdbf30628961a",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx",
+      "sha256": "b3dcd745e057d9e8d350f6623d8a0b697f47b69778af1e29fc95946c0f758463",
+      "size": 6691,
+      "head_sha256": "b3dcd745e057d9e8d350f6623d8a0b697f47b69778af1e29fc95946c0f758463",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx",
+      "sha256": "9d61acd10d826a53a2fed5d2c3b4a185721d5ef364632713454b679909a15cd1",
+      "size": 3422,
+      "head_sha256": "9d61acd10d826a53a2fed5d2c3b4a185721d5ef364632713454b679909a15cd1",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatAreaFooter.tsx",
+      "sha256": "ca3ea908b75ed70543bdd96659a65f5253d1cd5260330fb793b403610c5c43e8",
+      "size": 5514,
+      "head_sha256": "ca3ea908b75ed70543bdd96659a65f5253d1cd5260330fb793b403610c5c43e8",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useChatSessionActions.ts",
+      "sha256": "d887b972d197c3a3afe92b9fce2a3686dfea1c8291251c76d400a409a4f3887d",
+      "size": 13224,
+      "head_sha256": "d887b972d197c3a3afe92b9fce2a3686dfea1c8291251c76d400a409a4f3887d",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useChatMountInteractions.ts",
+      "sha256": "331e8eb45262408d58632a81b3ad939ab1ae7f76bd92ae74fd83ceb6803c99ea",
+      "size": 4294,
+      "head_sha256": "331e8eb45262408d58632a81b3ad939ab1ae7f76bd92ae74fd83ceb6803c99ea",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useChatSessionHost.ts",
+      "sha256": "611e9bc29e766ec3baa030c0d74e554757b3b48bd0bb627947f66d5a54751e68",
+      "size": 5997,
+      "head_sha256": "611e9bc29e766ec3baa030c0d74e554757b3b48bd0bb627947f66d5a54751e68",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useViewChatHost.ts",
+      "sha256": "63079a20d7d5639a440050fe9e4284272d634d8dd6bcb126f7b5f5be894be595",
+      "size": 11152,
+      "head_sha256": "63079a20d7d5639a440050fe9e4284272d634d8dd6bcb126f7b5f5be894be595",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts",
+      "sha256": "2a1205bd426604f805eb7fe2b93ce8f3be65f1a18207bba7653d6534c01d317a",
+      "size": 4843,
+      "head_sha256": "2a1205bd426604f805eb7fe2b93ce8f3be65f1a18207bba7653d6534c01d317a",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/sideChatBridge.ts",
+      "sha256": "dba500d3f7e28e3b845bc7b2c05478edd361325fb6c9b86cb7366a0f9834a8af",
+      "size": 9418,
+      "head_sha256": "dba500d3f7e28e3b845bc7b2c05478edd361325fb6c9b86cb7366a0f9834a8af",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatSurface.tsx",
+      "sha256": "eddbcc616a6b4ccfbf211db031901dcb9fc22ec32d6bbbe0ccd50b8c1ff807f8",
+      "size": 3480,
+      "head_sha256": "eddbcc616a6b4ccfbf211db031901dcb9fc22ec32d6bbbe0ccd50b8c1ff807f8",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+      "sha256": "b9202119baf0caa6ea08022ba2e6a322ec8c15e874d7d82d68ad8a4b20b12127",
+      "size": 5965,
+      "head_sha256": "b9202119baf0caa6ea08022ba2e6a322ec8c15e874d7d82d68ad8a4b20b12127",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatDiagnosticDetails.tsx",
+      "sha256": "83ba6c13413f5c7d75d741d351632c4fd5691c47662f6ebe59d45bd57cf212f5",
+      "size": 7088,
+      "head_sha256": "83ba6c13413f5c7d75d741d351632c4fd5691c47662f6ebe59d45bd57cf212f5",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/state/chatComposerDraftStore.ts",
+      "sha256": "0e71377c3ec9fd2473aa895b27f566e80a582b7df82e473f38ae89ce48e280ac",
+      "size": 2965,
+      "head_sha256": "0e71377c3ec9fd2473aa895b27f566e80a582b7df82e473f38ae89ce48e280ac",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/state/chatFileLinkStore.ts",
+      "sha256": "c32cbb3e85afc696b0a47412d5d26ca41cad9d247dc3e351666e766a768e0374",
+      "size": 9585,
+      "head_sha256": "c32cbb3e85afc696b0a47412d5d26ca41cad9d247dc3e351666e766a768e0374",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/state/slices/chatSurfaceSlice.ts",
+      "sha256": "9d531ceded3b03ac602b70ad8b0298765f07ddd594467b0c3d2bba48c2bb67d9",
+      "size": 24515,
+      "head_sha256": "9d531ceded3b03ac602b70ad8b0298765f07ddd594467b0c3d2bba48c2bb67d9",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/state/slices/worksurfaceSlice.ts",
+      "sha256": "e569ffc1fd037bd382ea3f233d586077b7664ef4e4f71f1435ec5cb5ea348b46",
+      "size": 13322,
+      "head_sha256": "e569ffc1fd037bd382ea3f233d586077b7664ef4e4f71f1435ec5cb5ea348b46",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/state/panelStoreTypes.ts",
+      "sha256": "6242bb3149a64ac82c60459f105785a42d23df5509457dfdc8533d52a0c35cf6",
+      "size": 17613,
+      "head_sha256": "6242bb3149a64ac82c60459f105785a42d23df5509457dfdc8533d52a0c35cf6",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/thread-handlers.ts",
+      "sha256": "7b45de46522d0cb67666bf63fe286474eb9c4e3fb6e6ee644ae5cf5e7058d81b",
+      "size": 20669,
+      "head_sha256": "7b45de46522d0cb67666bf63fe286474eb9c4e3fb6e6ee644ae5cf5e7058d81b",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/hooks/useScreenshotCapture.ts",
+      "sha256": "da0a9f19b1dcbebcbc7ad9af4c1c61007af2830be7fab9534073ab0d2c7ec67f",
+      "size": 3027,
+      "head_sha256": "da0a9f19b1dcbebcbc7ad9af4c1c61007af2830be7fab9534073ab0d2c7ec67f",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/mic/MicTrigger.tsx",
+      "sha256": "d510d5d160eb86fbd5c233a84a66b011909682900f0262588aefa8f12ef3cdfd",
+      "size": 10104,
+      "head_sha256": "d510d5d160eb86fbd5c233a84a66b011909682900f0262588aefa8f12ef3cdfd",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/mic/useAudioCapture.ts",
+      "sha256": "35ddac01b398705a3ff4b12788750e5d86680c46248afdd1bbe3e76e095d8499",
+      "size": 11027,
+      "head_sha256": "35ddac01b398705a3ff4b12788750e5d86680c46248afdd1bbe3e76e095d8499",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/emojis/EmojiTrigger.tsx",
+      "sha256": "6ecf633d5a43ae60612f2f54f04d9bd72fc2989cb7796fbc5530b61b035380d3",
+      "size": 1693,
+      "head_sha256": "6ecf633d5a43ae60612f2f54f04d9bd72fc2989cb7796fbc5530b61b035380d3",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/package.json",
+      "sha256": "9b9e9c906358afd17eb5027af187fbe2030c537a9536d6d0d6fbcf64fb70dfb0",
+      "size": 3936,
+      "head_sha256": "9b9e9c906358afd17eb5027af187fbe2030c537a9536d6d0d6fbcf64fb70dfb0",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/playwright.config.ts",
+      "sha256": "27c68c50b15c383a217e2066316f7d641da8eb9b8418bd8d28b026b786f35c82",
+      "size": 588,
+      "head_sha256": "27c68c50b15c383a217e2066316f7d641da8eb9b8418bd8d28b026b786f35c82",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/playwright.chat-architecture.config.ts",
+      "sha256": "cb9e918351eac456daabdf02bd2eb41ead52e7c42824a43a34add4cd0a9c0be6",
+      "size": 1108,
+      "head_sha256": "cb9e918351eac456daabdf02bd2eb41ead52e7c42824a43a34add4cd0a9c0be6",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/playwright.chat-surface.config.ts",
+      "sha256": "eab75f5761a78b50851abe7b0392e697493400d256df2cfd04f8fa6c42326321",
+      "size": 1625,
+      "head_sha256": "eab75f5761a78b50851abe7b0392e697493400d256df2cfd04f8fa6c42326321",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/playwright.source.config.ts",
+      "sha256": "2af13680bfc22aa9c1cb732bee189215169f76c7a1108181055cfa4bd80f1720",
+      "size": 560,
+      "head_sha256": "2af13680bfc22aa9c1cb732bee189215169f76c7a1108181055cfa4bd80f1720",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-architecture/playwright.boot.config.ts",
+      "sha256": "20bad30a2c15fc46288d72d1dc3b6e261ad372315c7808447717fcbe20fd467c",
+      "size": 1210,
+      "head_sha256": "20bad30a2c15fc46288d72d1dc3b6e261ad372315c7808447717fcbe20fd467c",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/e2e/threaded-chat-host.spec.ts",
+      "sha256": "4c2cdef55c38b815cf8d35ed5bcac3c04bf595db5d6126ae6f83f704f17ccb30",
+      "size": 66619,
+      "head_sha256": "4c2cdef55c38b815cf8d35ed5bcac3c04bf595db5d6126ae6f83f704f17ccb30",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-composer-screenshot-menu.spec.ts",
+      "sha256": "93db83a1f751645778b55f4c54b50d5372fbfd4a9acc8e363b8b71bb23a1f03a",
+      "size": 6062,
+      "head_sha256": "93db83a1f751645778b55f4c54b50d5372fbfd4a9acc8e363b8b71bb23a1f03a",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-architecture/observation-boundaries.spec.ts",
+      "sha256": "63bb35d7cc67b0310545e5fcc51a863ec2d64803c453ff988168380c0a6b89ca",
+      "size": 27823,
+      "head_sha256": "63bb35d7cc67b0310545e5fcc51a863ec2d64803c453ff988168380c0a6b89ca",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/e2e/prompt-ownership.slice-c.spec.ts",
+      "sha256": "733f5a7cdc902a68c75c906338a042340209abf34205ab385f89b691e47ad699",
+      "size": 28808,
+      "head_sha256": "733f5a7cdc902a68c75c906338a042340209abf34205ab385f89b691e47ad699",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-diagnostic-actions.slice-c.spec.ts",
+      "sha256": "016ed21d7056cf1688d7d0c9ec76c91019ba1e4fc7cabcfc52cd8b39596d57a4",
+      "size": 18780,
+      "head_sha256": "016ed21d7056cf1688d7d0c9ec76c91019ba1e4fc7cabcfc52cd8b39596d57a4",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-server/lib/screenshot/ws-handlers.js",
+      "sha256": "8d11853e29ee8f0264090145aaf1d461384caeac6b58797a63cb687869756254",
+      "size": 5474,
+      "head_sha256": "8d11853e29ee8f0264090145aaf1d461384caeac6b58797a63cb687869756254",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/runtime-prompt-admission.js",
+      "sha256": "efecc424f1b1dc52bb4b138769b2138b6b8a0de602b20186beb1f1067c279c17",
+      "size": 9592,
+      "head_sha256": "efecc424f1b1dc52bb4b138769b2138b6b8a0de602b20186beb1f1067c279c17",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-server/test/screenshot-file-capture-request-id.test.js",
+      "sha256": "79f331849cff605f963731744066d94941c80b8d3298d2300e49778880bb78e8",
+      "size": 2563,
+      "head_sha256": "79f331849cff605f963731744066d94941c80b8d3298d2300e49778880bb78e8",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-server/test/screenshot-protected-view-path.test.js",
+      "sha256": "1fe319e540ca4376398bbb8b0daa48bdea18a1ed2a7889d2618d74e9e799d8c6",
+      "size": 4709,
+      "head_sha256": "1fe319e540ca4376398bbb8b0daa48bdea18a1ed2a7889d2618d74e9e799d8c6",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/wiki/TopicList.tsx",
+      "sha256": "df0a15dd17211a7ae50b78faff693306b3b14694f2b0741d7778e22bc6aa8eba",
+      "size": 4297,
+      "head_sha256": "df0a15dd17211a7ae50b78faff693306b3b14694f2b0741d7778e22bc6aa8eba",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/file-explorer/FileNode.tsx",
+      "sha256": "2c19497c92d0119f0eb55caae78515f2a7b9777c9afbe5518c4dee8bb5c3c446",
+      "size": 1815,
+      "head_sha256": "2c19497c92d0119f0eb55caae78515f2a7b9777c9afbe5518c4dee8bb5c3c446",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/file-explorer/FolderNode.tsx",
+      "sha256": "5003c42a39c3fce9877258c2f7f5ec68a2f32eb8f058c84d336fc42ce4ca8fd1",
+      "size": 3999,
+      "head_sha256": "5003c42a39c3fce9877258c2f7f5ec68a2f32eb8f058c84d336fc42ce4ca8fd1",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/capture/FilePageView.tsx",
+      "sha256": "30d49f16e1e247d28a791e5f97bc82858fc3f995a6078a23b7a582ba01b3e848",
+      "size": 7777,
+      "head_sha256": "30d49f16e1e247d28a791e5f97bc82858fc3f995a6078a23b7a582ba01b3e848",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/file-explorer/FileViewer.tsx",
+      "sha256": "d9790b5acc8299937ebea21e65a81123f82797be992ebd85036c7af3daefcaea",
+      "size": 4369,
+      "head_sha256": "d9790b5acc8299937ebea21e65a81123f82797be992ebd85036c7af3daefcaea",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/file-explorer/FileDocumentPresenter.tsx",
+      "sha256": "1a2bdf9c09b4a7a27a25131c51a2823d6f175fe0edb1050dd633b36b7da04574",
+      "size": 3324,
+      "head_sha256": "1a2bdf9c09b4a7a27a25131c51a2823d6f175fe0edb1050dd633b36b7da04574",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/wiki/PageViewer.tsx",
+      "sha256": "34da50e392764a18d0de12ac7137a745678d1d14ce4bec1a7de9fb2f1fc0bbbf",
+      "size": 6256,
+      "head_sha256": "34da50e392764a18d0de12ac7137a745678d1d14ce4bec1a7de9fb2f1fc0bbbf",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/wiki/EdgePanel.tsx",
+      "sha256": "18f37c966aa90f98c10b4a6ae569f460d56de7a6faf1cdc3e080fddbd98e248e",
+      "size": 3789,
+      "head_sha256": "18f37c966aa90f98c10b4a6ae569f460d56de7a6faf1cdc3e080fddbd98e248e",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/office/OfficeGrid.tsx",
+      "sha256": "9289fc41f90e5bba48094b45b0048e6ec02c803c077b413d24f030abfb7d8cf5",
+      "size": 33783,
+      "head_sha256": "9289fc41f90e5bba48094b45b0048e6ec02c803c077b413d24f030abfb7d8cf5",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/office/OfficeDocumentTopbar.tsx",
+      "sha256": "9f478eeaf1ad3991b2b59e151d9bb096a807b7d7713980cc64582470b469030a",
+      "size": 2665,
+      "head_sha256": "9f478eeaf1ad3991b2b59e151d9bb096a807b7d7713980cc64582470b469030a",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/email/EmailGrid.tsx",
+      "sha256": "3e6f1c228a033aad4896c60016155c853686b789edc4f41a3727d9327cc25be4",
+      "size": 55008,
+      "head_sha256": "3e6f1c228a033aad4896c60016155c853686b789edc4f41a3727d9327cc25be4",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/email/EmailDocumentTopbar.tsx",
+      "sha256": "09326f49d8fc7c3e3900777c2b4417652de24542d23a41f7ee64d21a62c711fb",
+      "size": 6100,
+      "head_sha256": "09326f49d8fc7c3e3900777c2b4417652de24542d23a41f7ee64d21a62c711fb",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/tickets/TicketBoard.tsx",
+      "sha256": "245643194bfabe4affc3e3757d0c1dbe8e2a267f48aad797feb4efeed1596c4e",
+      "size": 24324,
+      "head_sha256": "245643194bfabe4affc3e3757d0c1dbe8e2a267f48aad797feb4efeed1596c4e",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/agents/AgentTiles.tsx",
+      "sha256": "2c39087fd45511ad1c448da14b4d7f3ccd648b708c8848244addb3711796c959",
+      "size": 14449,
+      "head_sha256": "2c39087fd45511ad1c448da14b4d7f3ccd648b708c8848244addb3711796c959",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/chatSurfaceContract.ts",
+      "sha256": "bf88bee1671800ac2eae5f7486a18d5fb9432128a08cdfa80249dd0fae8dd09c",
+      "size": 6535,
+      "head_sha256": "bf88bee1671800ac2eae5f7486a18d5fb9432128a08cdfa80249dd0fae8dd09c",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useChatSurfaceIdentity.ts",
+      "sha256": "65c2484cff546f497c5b028f9d1a304af9d20e9872838c7b1190956b02bc09f1",
+      "size": 829,
+      "head_sha256": "65c2484cff546f497c5b028f9d1a304af9d20e9872838c7b1190956b02bc09f1",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/state/chatSubmissionStore.ts",
+      "sha256": "b2cafe262e79f0790c90a82774b12dc605e54c9b719f0e0361e690112704a49a",
+      "size": 7052,
+      "head_sha256": "b2cafe262e79f0790c90a82774b12dc605e54c9b719f0e0361e690112704a49a",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/state/slices/chatSlice.ts",
+      "sha256": "ff3bb522443feac1450df2e6e13cf329fe26aa354d64d762e5da16881a9b4fe0",
+      "size": 15843,
+      "head_sha256": "ff3bb522443feac1450df2e6e13cf329fe26aa354d64d762e5da16881a9b4fe0",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/src/mic/VoiceRecorder.tsx",
+      "sha256": "1f2cb750a8b36f88acc829c0fd4321f94f36fb4bd784ccd143076e60efbb7129",
+      "size": 4535,
+      "head_sha256": "1f2cb750a8b36f88acc829c0fd4321f94f36fb4bd784ccd143076e60efbb7129",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-surface-identity.spec.ts",
+      "sha256": "17fb34728856a3557b5cf833b393f291a9b08be9021471135442f6aa58bfafed",
+      "size": 28514,
+      "head_sha256": "17fb34728856a3557b5cf833b393f291a9b08be9021471135442f6aa58bfafed",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-surface-isolation.spec.ts",
+      "sha256": "c21e1f347d0f36f9ddf9d73586d4b99542c96caf293b38ff0e690a9afabb14f4",
+      "size": 63057,
+      "head_sha256": "c21e1f347d0f36f9ddf9d73586d4b99542c96caf293b38ff0e690a9afabb14f4",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-component-registration.spec.ts",
+      "sha256": "6f944b2dc873e518c8cd10cf8503e0527677f0f119fa0927006cdf63aca5ceb1",
+      "size": 20550,
+      "head_sha256": "6f944b2dc873e518c8cd10cf8503e0527677f0f119fa0927006cdf63aca5ceb1",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/e2e/side-chat-isolation.spec.ts",
+      "sha256": "66d0b5cc28ca97e314c4ff5eabd8ccbc083a8b60f1c2efac1876c1946a11fa18",
+      "size": 7667,
+      "head_sha256": "66d0b5cc28ca97e314c4ff5eabd8ccbc083a8b60f1c2efac1876c1946a11fa18",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/e2e/side-chat-adapterless-native.spec.ts",
+      "sha256": "31259f18c0fa5bb89bd45002186029c7bb6557caa328a97ef4515e9e084242cc",
+      "size": 13915,
+      "head_sha256": "31259f18c0fa5bb89bd45002186029c7bb6557caa328a97ef4515e9e084242cc",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/e2e/prompt-submission-recovery.spec.ts",
+      "sha256": "f1dd9874a811300a00e69bacbe2aaa9ff882de017e2721653539669cf4604cff",
+      "size": 20885,
+      "head_sha256": "f1dd9874a811300a00e69bacbe2aaa9ff882de017e2721653539669cf4604cff",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/e2e/system-viewer-action-outcome.spec.ts",
+      "sha256": "eeccf1908c3ae9ddce0bec5799c5e2b406d3f8469d5392d31c33952ba2b6f871",
+      "size": 4756,
+      "head_sha256": "eeccf1908c3ae9ddce0bec5799c5e2b406d3f8469d5392d31c33952ba2b6f871",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-transport-test-server.mjs",
+      "sha256": "aa7750c8b8234c978ce457aebecccea47e149497e5ebbe17f941deee3261e0b5",
+      "size": 3068,
+      "head_sha256": "aa7750c8b8234c978ce457aebecccea47e149497e5ebbe17f941deee3261e0b5",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/e2e/trusted-shell-auth-smoke.mjs",
+      "sha256": "e6c3ec3d948114f248fb497d15ef7b935983053c7dca7dfabdcc43ade665a9d2",
+      "size": 7840,
+      "head_sha256": "e6c3ec3d948114f248fb497d15ef7b935983053c7dca7dfabdcc43ade665a9d2",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-server/test/ws/prompt-submission-recovery.integration.test.js",
+      "sha256": "1399b7473f096e21eab1b54c690c53d58e9e759e9af4b9e902e299b3412853bd",
+      "size": 8884,
+      "head_sha256": "1399b7473f096e21eab1b54c690c53d58e9e759e9af4b9e902e299b3412853bd",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md",
+      "sha256": "b0be25a9a244ce38b1427f6dd5b2f63dcac4806a5fe7b9eee47816cd848fb6ed",
+      "size": 10896,
+      "head_sha256": "b0be25a9a244ce38b1427f6dd5b2f63dcac4806a5fe7b9eee47816cd848fb6ed",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/PAGE.md",
+      "sha256": "06b897d771c58ce2ce25612f2cfaaf71c1aef24f4028eb4ea0eaac8134837891",
+      "size": 12834,
+      "head_sha256": "06b897d771c58ce2ce25612f2cfaaf71c1aef24f4028eb4ea0eaac8134837891",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/001-Identity_And_Persistence/001-Thread_Identity/PAGE.md",
+      "sha256": "fc47978978f624aff5cb348df6a0b3dd3a490993fd8da008435b9583cd715c16",
+      "size": 4535,
+      "head_sha256": "fc47978978f624aff5cb348df6a0b3dd3a490993fd8da008435b9583cd715c16",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/001-Smoke_Tests/PAGE.md",
+      "sha256": "606b767188d6410d2b1cde90ebb6058dad76bc52bccd5d6f66c123c71ea81224",
+      "size": 1187,
+      "head_sha256": "606b767188d6410d2b1cde90ebb6058dad76bc52bccd5d6f66c123c71ea81224",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-send-transport.spec.ts",
+      "sha256": "c6b5b57d57e450e2d7e5927d75adeee686f200dd3da61b0d94b983885a5a0e3b",
+      "size": 28222,
+      "head_sha256": "c6b5b57d57e450e2d7e5927d75adeee686f200dd3da61b0d94b983885a5a0e3b",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/e2e/side-chat-placement-recovery.spec.ts",
+      "sha256": "05e4a325f5724e632848560400f2fa28b9aa7991d7ea4af8188d7f38cce88bac",
+      "size": 9212,
+      "head_sha256": "05e4a325f5724e632848560400f2fa28b9aa7991d7ea4af8188d7f38cce88bac",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/e2e/move-chat-to-side-chat.spec.ts",
+      "sha256": "b36f7f3dbcbb6778dd19daa488582f9ff1d6de495b86f1e90b6fe5ac7e113f0e",
+      "size": 9842,
+      "head_sha256": "b36f7f3dbcbb6778dd19daa488582f9ff1d6de495b86f1e90b6fe5ac7e113f0e",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/e2e/side-chat-electron-smoke.mjs",
+      "sha256": "5665798ac5f8289debf00ab8bbd5173574afacbb6ef5d172b5adc0ac4581fbc6",
+      "size": 19725,
+      "head_sha256": "5665798ac5f8289debf00ab8bbd5173574afacbb6ef5d172b5adc0ac4581fbc6",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-client/electron/ipc/screenshot-handlers.test.cjs",
+      "sha256": "1dc78749eec9327d3605d5ee163fa2fb6c18e9d5f17ef87a926b6ca6382c0ba9",
+      "size": 1869,
+      "head_sha256": "1dc78749eec9327d3605d5ee163fa2fb6c18e9d5f17ef87a926b6ca6382c0ba9",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "fusion-studio-server/package.json",
+      "sha256": "15113c033b6deb5622aa8a5213042bcb1b67e82d87f63df3b006efc9640717db",
+      "size": 1035,
+      "head_sha256": "15113c033b6deb5622aa8a5213042bcb1b67e82d87f63df3b006efc9640717db",
+      "working_bytes_differ_from_head": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/unaffected-evidence-dependencies.json",
+      "sha256": "9ffa19551b86394fd8e9863fae19bff42762ed2381de2f604660e0f7b5febd6a",
+      "size": 343982,
+      "head_sha256": null,
+      "working_bytes_differ_from_head": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/checks.json",
+      "sha256": "64c2fd4cbce7eb44680bf777559fd82a3dc8620776713e662d9fdb522feefac7",
+      "size": 32063,
+      "head_sha256": null,
+      "working_bytes_differ_from_head": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/runtime-acceptance.json",
+      "sha256": "2647fa5fcc0138ceae761fa5e0b1c6d850cd3e5284185ff0afb8d244e2b60b58",
+      "size": 12538,
+      "head_sha256": null,
+      "working_bytes_differ_from_head": true
+    }
+  ],
+  "read_coverage_note": "Current User Preferences, standards hub/routed Architecture/Frontend/State/WebSocket/UEB/Persistence/Testing, mandatory Chat Overview/Identity/Composer, Screenshot, Chat UI/Decisions/Testing hub and UI provenance articles fully read. Harness standards fingerprint is contextual catalog coverage; accepted SWI supplies independently reviewed full route coverage. Code/test inspection includes complete modules and targeted source excerpts. Additional caller/test/native fingerprints identify the inventory and planned verification dependencies, not a claim each entire file was read or executed. Inventories are not runtime checks.",
+  "checks_executed": [],
+  "checks_not_executed": [
+    "npm",
+    "client build",
+    "Playwright",
+    "server tests",
+    "app/native/Alpha runtime"
+  ],
+  "accepted_investigations": [
+    {
+      "id": "SWI-01",
+      "revision": 1,
+      "report": "reports/STANDARDS-WIKI-INVESTIGATION.md",
+      "report_sha256": "2811c3c2c877cde932b14bd0f8f62dbde505f4afbb3cb3752cc6fa76f81338da",
+      "handoff_review": "reports/STANDARDS-HANDOFF-REVIEW-01.md",
+      "review_sha256": "bb6e510f9dad8aac3ef4c41aa09261faea3dc131c9530e7d4daab7ac4a685e7a",
+      "review_result": "WORKER_HANDOFF_VALIDATED",
+      "manager_disposition": "accepted by stage-manager message",
+      "incorporated": "SPEC \u00a7\u00a72/4.3/7/8; local-only governance conditional; exact Composer/Screenshot/Structure/Testing Wiki changes; preserve warm-on-intent"
+    },
+    {
+      "id": "VER-01",
+      "revision": 1,
+      "report": "reports/VERIFICATION-INVESTIGATION.md",
+      "report_sha256": "693a6ab911dbe6c549e997cc898197fc01f22bfc7750ce5c856371fcdf029ab2",
+      "handoff_review": "reports/VERIFICATION-HANDOFF-REVIEW-01.md",
+      "review_sha256": "f4b3a1f0a4f5248739f595b6e6a5a1654f486fada14f7ddc0e55a88d38ddef80",
+      "review_result": "WORKER_HANDOFF_VALIDATED",
+      "manager_disposition": "accepted by stage-manager message and ACCEPTED-SYNTHESIS.md",
+      "incorporated": "SPEC \u00a7\u00a73/4/5/6/7/8; VER-A01 visible System Create boundary, VER-A02 actual delayed connected ref/focus/reuse, VER-A03 full server/build minimum with source-bound reuse and affected native renewal",
+      "CMH-001_clarification": "Research/review receipts preserved; their retention interpretation grants no waiver. Current candidate requires fresh full-server Jest and client build, retaining historical original scopes only."
+    }
+  ],
+  "self_check": {
+    "state": "complete; CMH-001 author repair only, awaiting new fresh independent affected worker review",
+    "at": "2026-10-07T10:10:05.100709+00:00",
+    "normative_files": [
+      "TICKET.md",
+      "SPEC.md"
+    ],
+    "complete_normative_set_rationale": "One ticket/single SPEC hold all proposed product requirements, maps, dependencies, slices, deferrals and gates; manifest and coordination/research/review/source evidence are external identity/evidence only",
+    "perspectives": {
+      "intent_authority_coverage": "Original OWNER-REQUEST and D-009 traced R-01\u2013R-10; direct settled packet; no future modes or reopened accepted SPEC. Proposals/choices classified; no material owner choice inferred.",
+      "architecture_standards_preferences": "Current mandatory/routed guidance applied; one existing action/store owner; transient projection within existing Chat slice; connected identity/cursor; source and server acceptance/provenance boundaries; preserved eligible warm intent; governance inference conditional.",
+      "dependencies_blast_radius_brittleness": "Complete inventoried ordinary material flows classified; visible System Create distinct. M1\u2192M2\u2192M3 sequential shared files, no dependency cycle. Begin before preparation; invalidation distinct from focus; old closure and equal-ID reuse rejected; concrete text/pill semantics.",
+      "verification_evidence_handoff": "A01\u2013A17 actual caller/store/render matrix and isolated/native/Wiki checks retained. CMH-001 repaired: M3/final MUST run fresh full-server Jest and fresh client build on actual implementation inputs, record revision/result/limits; historical equality cannot discharge either. Original evidence/review receipts preserved. Fresh independent affected worker, stage, release and later product/owner gates remain pending."
+    },
+    "advisory_dispositions": {
+      "VER-A01": "propagated TICKET boundary; SPEC \u00a73 and A17 protected explicit workspace Create workflow",
+      "VER-A02": "propagated \u00a7\u00a74/5/6; public connected deferred text/focus, same-instance callback/ref reuse, latest draft/selection and no focus theft",
+      "VER-A03": "CMH-001 correction propagated \u00a77/M3/final/TICKET R-10: mandatory fresh full-server Jest/client build on actual implementation revision/results/limits, no historical-coverage exception; conditional reuse applies only to other unchanged original claims."
+    },
+    "dependency_cycles": [],
+    "unresolved_owner_questions": [],
+    "unresolved_material_evidence_gaps": [],
+    "implementation_choices": "Concrete API/helper/type names remain builder choices inside fixed observable contracts; no product decision gap.",
+    "deferrals": "CM-005 future explicit send/create and CM-006 separately owned broader governance/health/harness only; no R-01\u2013R-10 required behavior deferred.",
+    "independent_review_state": "Prior worker-handoff review returned REVISE on f68de023; bounded CMH-001 repaired by author only. Awaiting manager-assigned new fresh affected worker reviewer, then separate fresh stage and supervisor-owned fresh release validation; prior reviewer not reused.",
+    "implementation_hold": "Owner Dont build remains effective; no operational permission inferred."
+  },
+  "source_refreshes": [
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/AGENTS.md",
+      "prior_sha256": "886fe0f833d9eacc055166f5a6184f7d39c330ef772f860a8b438d0fb1e08825",
+      "current_sha256": "428c8939c8c57ec172624934ad1425ff2d4fdc1a359570ed71a38fcc837292cc",
+      "at": "2026-10-07T09:44:31.951618+00:00",
+      "authority": "Supervisor-owned D-009 planning-only exception paragraph, relayed by stage manager; no product/accepted scope change"
+    }
+  ],
+  "author_self_check_at": "2026-10-07T09:50:54.689884+00:00",
+  "unchanged_source_head_at_self_check": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "source_changes_awaiting_reconciliation": [],
+  "additional_fingerprint_missing_paths": [],
+  "accepted_synthesis": {
+    "path": "reports/ACCEPTED-SYNTHESIS.md",
+    "sha256": "f7186c2c6e353c2f0134d65b6e444715e670dbb526ad5168d7d3bbbeb2e911e4",
+    "scope": "manager accepted source synthesis only; not new product authority or candidate gate"
+  },
+  "historical_dependency_comparison": {
+    "receipt": "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/unaffected-evidence-dependencies.json",
+    "sha256": "9ffa19551b86394fd8e9863fae19bff42762ed2381de2f604660e0f7b5febd6a",
+    "checked_by": "accepted VER-01 and independent VERIFICATION-HANDOFF-REVIEW-01, not this author",
+    "rows": 832,
+    "file_rows": 825,
+    "absence_rows": 7,
+    "matching_rows": 832,
+    "mismatches": 0,
+    "scope": "Original server/Electron scoped evidence at planning baseline; not whole client, not new runtime run; future actual input and crossing assessment mandatory",
+    "mandatory_run_limit": "Historical 832-binding equality cannot discharge the required fresh M3/final full-server Jest or client build."
+  },
+  "proposed_not_yet_existing_files": [
+    "fusion-studio-client/e2e/chat-material-insertion.spec.ts",
+    "fusion-studio-client/e2e/chat-material-native-scenario.mjs"
+  ],
+  "source_test_path_self_check": {
+    "named_existing_specs": 15,
+    "absent_planned_specs": [
+      "e2e/chat-material-insertion.spec.ts"
+    ],
+    "unexpected_missing_specs": []
+  },
+  "final_source_check_at": "2026-10-07T10:10:05.100709+00:00",
+  "final_root": "/Users/rccurtrightjr./projects/fs-dev",
+  "final_branch": "main",
+  "final_head": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "tracked_dirty_fingerprints": [
+    {
+      "path": "ai/RC-MacAir-15/System/Views/001-capture-viewer/state/state.json",
+      "git_status": " M",
+      "sha256": "e7b7587b036096da01b6ea71a2df16f0ecae3b68549ac4e46107ae14929ea375",
+      "scope": "preservation/context only unless separately included in source inventory"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/002-file-viewer/state/state.json",
+      "git_status": " M",
+      "sha256": "11a159d725671df9d700bdb7104f5039ef1834c88d707e97eb5a9f4d252b1471",
+      "scope": "preservation/context only unless separately included in source inventory"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/004-wiki-viewer/state/state.json",
+      "git_status": " M",
+      "sha256": "4ff336960d867ec8393849a3bb28906d92d4ee0d39ba8c3cc21c6524920995c2",
+      "scope": "preservation/context only unless separately included in source inventory"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/config/cli.json",
+      "git_status": " M",
+      "sha256": "8a160b32a5556218ee18a14c0d3553e074286d7d72bdc40ed59b5fd08c8e4c32",
+      "scope": "preservation/context only unless separately included in source inventory"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/config/opencode-models.json",
+      "git_status": " M",
+      "sha256": "0bb94d432cca1d3d011ab14543c9dcaa61ec75fa9aa80cc081775aa96f00007a",
+      "scope": "preservation/context only unless separately included in source inventory"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/state/state.json",
+      "git_status": " M",
+      "sha256": "f8db7df9c952a76360911046a6267c5e00b106eaec4b12778d13ee440bcfbe08",
+      "scope": "preservation/context only unless separately included in source inventory"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/styles/themes.css",
+      "git_status": " M",
+      "sha256": "de6713aa7219ba90562dc9ebe4e3e2304c0a8b30034fe841e9065550e0362996",
+      "scope": "preservation/context only unless separately included in source inventory"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/styles/themes.json",
+      "git_status": " M",
+      "sha256": "6fa7ed9b63ad8fbb64b7a2e299795d8f4bf095361f16483cd6c8b34f37b59b4a",
+      "scope": "preservation/context only unless separately included in source inventory"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/.audit-state.json",
+      "git_status": " M",
+      "sha256": "6c128a59c08af79099271fde455914eac65216cc7407092cf98a5b52f1e1e62d",
+      "scope": "preservation/context only unless separately included in source inventory"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md",
+      "git_status": " M",
+      "sha256": "ccf7a76b4201ce3f5a95b29816f72f85cf1506b6f94172a581c100170dd4b94e",
+      "scope": "preservation/context only unless separately included in source inventory"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/AGENTS.md",
+      "git_status": " M",
+      "sha256": "428c8939c8c57ec172624934ad1425ff2d4fdc1a359570ed71a38fcc837292cc",
+      "scope": "preservation/context only unless separately included in source inventory"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/BULLETIN.md",
+      "git_status": " M",
+      "sha256": "4ec2e40f69f8a5d810755bcb14cc97478becce02f86f43facefe9867ecae8be0",
+      "scope": "preservation/context only unless separately included in source inventory"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/DECISIONS.md",
+      "git_status": " M",
+      "sha256": "0a6a6240cb6a970ec9a44fdf0530ff3c6c2b99c3d21df481b10341872fd23479",
+      "scope": "preservation/context only unless separately included in source inventory"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/INTENT.md",
+      "git_status": " M",
+      "sha256": "e8102a138470fb1e67395f500ed7cb06e923b15ce4a31a4b7df0b39a0be0e9e5",
+      "scope": "preservation/context only unless separately included in source inventory"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/TICKET.md",
+      "git_status": " M",
+      "sha256": "016933d7657062b81aa654b7e6fd4495bc12de8ef934c031afc7c71a085f195d",
+      "scope": "preservation/context only unless separately included in source inventory"
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/index.json",
+      "git_status": " M",
+      "sha256": "9a393ed7328a3ad65a67e609fbbab7fbdabc97e324e25349884bf1383f2aefac",
+      "scope": "preservation/context only unless separately included in source inventory"
+    },
+    {
+      "path": "restart-fusion.sh",
+      "git_status": " M",
+      "sha256": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+      "scope": "preservation/context only unless separately included in source inventory"
+    }
+  ],
+  "author_changed_paths": [
+    "TICKET.md",
+    "SPEC.md",
+    "CANDIDATE.json",
+    "reports/author-source-evidence.json"
+  ],
+  "inspection_checks_executed": [
+    "memory/source/output/runtime capability and write ownership verified separately",
+    "source and source-bound test reads/searches; entry-point/store consumer inventory",
+    "current source hashes and HEAD checked; actual dirty scope preserved",
+    "Markdown local links checked; no missing target",
+    "all 15 named existing SPEC test paths exist; only proposed material suite absent",
+    "official candidate_manifest.py create/check; normative bytes match, no semantic gate claimed",
+    "CMH-001 bounded author self-check: 128 source hashes/current root/main/HEAD, no product dirt, removed exception, mandatory M3/final fresh commands, current links and original review preserved",
+    "CMH-001 repaired normative manifest regenerated and official helper read-only check matched current bytes"
+  ],
+  "limitations": [
+    "No product build/test/npm/native/app/provider/Alpha execution; tests and native runner are proposed until later authorized implementation.",
+    "No running runtime readiness or persistence recertification; accepted 832 dependency comparison belongs to VER-01 and its fresh independent reviewer, not this author.",
+    "Historical baseline/provider/soak/protection/background-cause limits retained; accepted old SPECs unchanged.",
+    "Source inspection includes full guidance and focused code/test excerpts; file fingerprints identify actual bytes and coverage dependencies, not exhaustive semantic reads.",
+    "Literal inherited model/effort values are not exposed; no overrides selected.",
+    "Dirty concurrent runtime/controller/memory/restart support preserved; only assigned four author paths written."
+  ],
+  "candidate_identity": {
+    "candidateId": "sha256:65b324647b7e52f0426f7b2005849d053f4f239420fab07c848170b21ec1d3f3",
+    "manifest": "CANDIDATE.json",
+    "manifest_sha256": "a13356706562cef0be0ce914e21f889f10fad3766873fe27909e976363c30541",
+    "artifacts": [
+      {
+        "path": "SPEC.md",
+        "sha256": "063562058007928d07477913a1ba05e43a2d191d6e42a0e9cb1d6a6e5c71659e"
+      },
+      {
+        "path": "TICKET.md",
+        "sha256": "730b6c92efa396eeb3abdc5ee6c522c692c790db9c288346d141ad57817e0074"
+      }
+    ],
+    "helper_check": {
+      "at": "2026-10-07T10:10:41.771097+00:00",
+      "matches": true,
+      "mismatches": [],
+      "scope": "byte identity only; no independent validation or owner approval"
+    }
+  },
+  "product_checks_executed": [],
+  "candidate_identity_history": [
+    {
+      "candidateId": "sha256:f68de0235fa3bf24e3d11cfd0ece3599c113c0fc0fa06de24fa1bb7e2807ed4d",
+      "manifest": "CANDIDATE.json",
+      "manifest_sha256": "d15b7fbd2f52e679bb0eec5fb6eacb819b22a4f66233b8a5a72f8253c7314d42",
+      "artifacts": [
+        {
+          "path": "SPEC.md",
+          "sha256": "1764a387605f65a0a65dfdd59b55c9a6a9e55a38030f506ff0da1caa393c1db6"
+        },
+        {
+          "path": "TICKET.md",
+          "sha256": "c29e2646b34b6d2e0ee9bf083ef0cce07954f27c887294cbe035ae088dcc0e41"
+        }
+      ],
+      "helper_check": {
+        "at": "2026-10-07T09:59:13.214542+00:00",
+        "matches": true,
+        "mismatches": [],
+        "scope": "byte identity only; no independent validation or owner approval"
+      }
+    }
+  ],
+  "repair_history": [
+    {
+      "id": "CMH-001",
+      "assignment": "CHAT-MATERIAL-PLAN-01 r1 bounded author repair via stage-manager",
+      "old_candidate_id": "sha256:f68de0235fa3bf24e3d11cfd0ece3599c113c0fc0fa06de24fa1bb7e2807ed4d",
+      "new_candidate_id": "sha256:65b324647b7e52f0426f7b2005849d053f4f239420fab07c848170b21ec1d3f3",
+      "at": "2026-10-07T10:10:05.100709+00:00",
+      "source_review": "reports/CANDIDATE-HANDOFF-REVIEW-01.md",
+      "source_review_sha256": "258862f003a1f2b299f12e7d0fc9204724834c080c8c92101f08c4a581cb1c69",
+      "review_verdict": "REVISE",
+      "prior_author_evidence_sha256": "b7c35b3f7d9cb5efca5ac9ccdce031278a7662aa0cccd99b1962e47b7bbf97fd",
+      "manager_preserved_pre_repair_receipt": "reports/CANDIDATE-BEFORE-CMH-001.json",
+      "authority": "Current Testing/Operations PAGE.md:110 and Smoke Tests child:37\u201339; manager assignment imposes fresh full-server and client build without historical reuse exception",
+      "disposition": "author_repaired_pending_new_fresh_worker_handoff",
+      "change": "SPEC \u00a77 removes historical-equality exception; M3/final acceptance and TICKET R-10/issue disposition require fresh full-server npx --no-install jest --runInBand and fresh npm run build on actual implementation revision/results/limits. Historical 832 bindings retain original unchanged scope only.",
+      "bounded_self_check": {
+        "removed_historical_equality_exception": true,
+        "mandatory_fresh_full_server_and_build": true,
+        "M3_release_propagated": true,
+        "final_acceptance_propagated": true,
+        "no_missing_local_links": true
+      },
+      "original_receipts_preserved": "Investigation/review reports not edited; original REVISE remains attributable to old candidate; no independent closure claimed.",
+      "product_execution": "none; Dont build hold preserved",
+      "normative_hashes": {
+        "SPEC.md": "063562058007928d07477913a1ba05e43a2d191d6e42a0e9cb1d6a6e5c71659e",
+        "TICKET.md": "730b6c92efa396eeb3abdc5ee6c522c692c790db9c288346d141ad57817e0074"
+      },
+      "manifest_check": {
+        "matches": true,
+        "mismatches": [],
+        "at": "2026-10-07T10:10:41.771097+00:00",
+        "scope": "byte identity only"
+      }
+    }
+  ]
+}

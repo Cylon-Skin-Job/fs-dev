@@ -1,0 +1,150 @@
+{
+  "status": "failed",
+  "measurementStarted": false,
+  "configuredDurationMs": 300000,
+  "configuredCharacters": 9520,
+  "configuredDelayMs": 32,
+  "configuredWallBudgetMs": 456960,
+  "fixture": {
+    "f2": {
+      "id": "F2-DETERMINISTIC-HISTORY-V1",
+      "exchanges": 30,
+      "renderedMessages": 60,
+      "includes": [
+        "text",
+        "code",
+        "lists",
+        "tables",
+        "collapsed-tool-results",
+        "reply-metadata"
+      ],
+      "dense": {
+        "exchanges": 2,
+        "assistantPayloadBytes": 534528,
+        "sha256": "9b06d21b677d93e4479544db39cf56f86eb4d3cd25fb603740407f263e7420dc"
+      }
+    },
+    "f3": {
+      "id": "F3-DETERMINISTIC-WORKSPACE-V1",
+      "algorithm": "label-repeated-to-fixed-byte-count",
+      "counts": {
+        "smallFiles": 1000,
+        "captureFolders": 100,
+        "wikiPages": 100,
+        "officeDocuments": 20
+      },
+      "totalFiles": 1220,
+      "totalContentBytes": 11059200,
+      "root": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790383735254-956fdfd8aa-Wi67LC/r1-sustained-project",
+      "everyPathFixtureContained": true,
+      "manifestHash": "421c0ef8f5e255bb333a82a9f26d28c74eb2c8d55e95fc262ad241ed45740079"
+    }
+  },
+  "identity": {
+    "threadId": "2026-09-25T17-48-59-726",
+    "threadGroupId": "tg-7c4ed93b-f776-44c7-a934-541ac4473997"
+  },
+  "coverageCalibration": {
+    "discovered": [
+      "ChatAreaFooter",
+      "ChatAreaHeader",
+      "ContentArea",
+      "InstantSegmentRenderer",
+      "MessageList",
+      "ThreadRail",
+      "renderTextInstant"
+    ],
+    "invocationCounts": {
+      "renderTextInstant": 30,
+      "MessageList": 1,
+      "InstantSegmentRenderer": 30,
+      "ChatAreaHeader": 17,
+      "ThreadRail": 18,
+      "ContentArea": 9,
+      "ChatAreaFooter": 15
+    }
+  },
+  "preMeasurementQuiescence": {
+    "requiredLifecycle": [
+      "screenshot:capture",
+      "screenshot:updated",
+      "screenshot:request",
+      "screenshot:data"
+    ],
+    "quietMs": 500,
+    "finalTrafficSequence": 889,
+    "lifecycle": [
+      {
+        "sequence": 886,
+        "atMs": 1654.1,
+        "direction": "outbound",
+        "type": "screenshot:capture"
+      },
+      {
+        "sequence": 887,
+        "atMs": 1660,
+        "direction": "inbound",
+        "type": "screenshot:updated"
+      },
+      {
+        "sequence": 888,
+        "atMs": 1660.2,
+        "direction": "outbound",
+        "type": "screenshot:request"
+      },
+      {
+        "sequence": 889,
+        "atMs": 1663.4,
+        "direction": "inbound",
+        "type": "screenshot:data"
+      }
+    ]
+  },
+  "observerCalibration": [
+    75
+  ],
+  "settleMs": 45000,
+  "failure": {
+    "name": "Error",
+    "message": "R1-FIVE-MINUTE-TYPING: staged Electron lost OS focus immediately before typing: {\"available\":true,\"focused\":false,\"visible\":true,\"minimized\":false,\"windowId\":1,\"title\":\"ISOLATED ACCEPTANCE — chat-arch-1790383735254-956fdfd8aa\",\"url\":\"fusion-shell://app/\"}",
+    "code": "R1_FOCUS_LOST_BEFORE_TYPING",
+    "observation": null
+  },
+  "ownedFocus": {
+    "pid": 15195,
+    "windowId": 1,
+    "events": [
+      {
+        "type": "installed",
+        "at": 1790383742226,
+        "focused": true,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      },
+      {
+        "type": "hide",
+        "at": 1790383752784,
+        "focused": true,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      },
+      {
+        "type": "blur",
+        "at": 1790383753068,
+        "focused": false,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      }
+    ],
+    "overflow": 0
+  },
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "lingeringOwnedPids": []
+}

@@ -1,0 +1,18 @@
+{
+  "runId": "chat-arch-1789966713166-98174b6e80",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R1-F2-F3-COMPOSER",
+      "code": 0,
+      "signal": null,
+      "pid": 35493,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 223272
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

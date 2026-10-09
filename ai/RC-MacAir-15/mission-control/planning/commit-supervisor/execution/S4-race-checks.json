@@ -1,0 +1,184 @@
+[
+  {
+    "label": "focused-current",
+    "argv": [
+      "node",
+      "--test",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "environment_changes": {
+      "FUSION_RESTART_TEST_EVIDENCE": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-smoke-current"
+    },
+    "exit": 0,
+    "duration_seconds": 25.229562915861607,
+    "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-focused-current.log",
+    "at": "2026-10-04T12:04:11.235235+00:00",
+    "superseded_for_current_test_bytes": "Added UID drift and malformed ps assertions; focused-final is the current full run. Production helper unchanged."
+  },
+  {
+    "label": "cumulative-python",
+    "argv": [
+      "/opt/homebrew/bin/python3.12",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "environment_changes": {},
+    "exit": 0,
+    "duration_seconds": 20.543480790685862,
+    "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-cumulative-python.log",
+    "at": "2026-10-04T12:04:31.779058+00:00"
+  },
+  {
+    "label": "bash-syntax",
+    "argv": [
+      "bash",
+      "-n",
+      "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "environment_changes": {},
+    "exit": 0,
+    "duration_seconds": 0.0029564998112618923,
+    "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-bash-syntax.log",
+    "at": "2026-10-04T12:04:31.782362+00:00"
+  },
+  {
+    "label": "fusion-restart-probe.mjs-syntax",
+    "argv": [
+      "node",
+      "--check",
+      "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "environment_changes": {},
+    "exit": 0,
+    "duration_seconds": 0.03760812524706125,
+    "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-fusion-restart-probe.mjs-syntax.log",
+    "at": "2026-10-04T12:04:31.820245+00:00"
+  },
+  {
+    "label": "fusion-restart-processes.mjs-syntax",
+    "argv": [
+      "node",
+      "--check",
+      "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "environment_changes": {},
+    "exit": 0,
+    "duration_seconds": 0.03641499998047948,
+    "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-fusion-restart-processes.mjs-syntax.log",
+    "at": "2026-10-04T12:04:31.856961+00:00"
+  },
+  {
+    "label": "fusion-restart-target.mjs-syntax",
+    "argv": [
+      "node",
+      "--check",
+      "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "environment_changes": {},
+    "exit": 0,
+    "duration_seconds": 0.03730020811781287,
+    "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-fusion-restart-target.mjs-syntax.log",
+    "at": "2026-10-04T12:04:31.894571+00:00"
+  },
+  {
+    "label": "fusion-restart.mjs-syntax",
+    "argv": [
+      "node",
+      "--check",
+      "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "environment_changes": {},
+    "exit": 0,
+    "duration_seconds": 0.03649558359757066,
+    "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-fusion-restart.mjs-syntax.log",
+    "at": "2026-10-04T12:04:31.931350+00:00"
+  },
+  {
+    "label": "canonical-dry-run",
+    "argv": [
+      "bash",
+      "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh",
+      "--repo",
+      "/Users/rccurtrightjr./projects/fs-dev",
+      "--machine",
+      "RC-MacAir-15",
+      "--dry-run"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "environment_changes": {
+      "FUSION_APP_USER_DATA": "",
+      "FUSION_LOCAL_MACHINE": ""
+    },
+    "exit": 0,
+    "duration_seconds": 0.056177500169724226,
+    "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-canonical-dry-run.log",
+    "at": "2026-10-04T12:04:31.987833+00:00"
+  },
+  {
+    "label": "skill-validate",
+    "argv": [
+      "/Users/rccurtrightjr./.local/bin/uv",
+      "run",
+      "--offline",
+      "--python",
+      "/opt/homebrew/bin/python3.12",
+      "--with",
+      "PyYAML",
+      "python",
+      "-B",
+      "/Users/rccurtrightjr./.codex/skills/.system/skill-creator/scripts/quick_validate.py",
+      "/Users/rccurtrightjr./.codex/skills/fusion-electron-restart"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "environment_changes": {},
+    "exit": 0,
+    "duration_seconds": 0.13014037488028407,
+    "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-skill-validate.log",
+    "at": "2026-10-04T12:04:32.118277+00:00"
+  },
+  {
+    "label": "index-validate",
+    "argv": [
+      "/opt/homebrew/bin/python3.12",
+      "-B",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-memory-maintenance/scripts/validate_index.py",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "environment_changes": {},
+    "exit": 0,
+    "duration_seconds": 0.029007333796471357,
+    "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-index-validate.log",
+    "at": "2026-10-04T12:04:32.147539+00:00"
+  },
+  {
+    "label": "focused-final",
+    "argv": [
+      "node",
+      "--test",
+      ".agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "environment_changes": {
+      "FUSION_RESTART_TEST_EVIDENCE": "planning/commit-supervisor/execution/S4-race-smoke-final"
+    },
+    "exit": 0,
+    "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-focused-final.log",
+    "at": "2026-10-04T12:11:37.629490+00:00",
+    "coverage": "17 tests current bytes, including additional UID/malformed-ps negative assertions"
+  }
+]

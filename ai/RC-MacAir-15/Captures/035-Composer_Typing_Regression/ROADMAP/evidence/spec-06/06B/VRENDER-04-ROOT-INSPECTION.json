@@ -1,0 +1,214 @@
+{
+  "at": "2026-09-27T03:52:25.187203+00:00",
+  "runId": "chat-arch-1790480876794-91019e474d",
+  "shortStatus": "passed",
+  "shortWindows": 10,
+  "exactAll": true,
+  "maxInputP95": 0.8000001907348633,
+  "maxRafP95": 16.40000009536743,
+  "maxRaf": 19,
+  "maxWallMs": 1973,
+  "longtasks": 0,
+  "outbound": 0,
+  "unrelatedRenderCount": 0,
+  "focusValidAll": true,
+  "sustainedForeground": {
+    "clickRequired": false,
+    "enabled": true,
+    "status": "acquired",
+    "runId": "chat-arch-1790480876794-91019e474d",
+    "pid": 94609,
+    "windowId": 1,
+    "title": "ISOLATED ACCEPTANCE \u2014 chat-arch-1790480876794-91019e474d",
+    "url": "fusion-shell://app/",
+    "profile": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790480876794-91019e474d-QC68c1/r1-sustained-profile",
+    "workspace": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790480876794-91019e474d-QC68c1/r1-sustained-workspace",
+    "timeoutMs": 120000,
+    "acquisition": {
+      "startedAt": 1790481081083,
+      "endedAt": 1790481083179,
+      "stableMs": 2000,
+      "observations": 21,
+      "last": {
+        "focused": true,
+        "visible": true,
+        "minimized": false,
+        "appHidden": false,
+        "windowId": 1
+      },
+      "lastObservedAt": 1790481083179
+    }
+  },
+  "suiteStatus": "passed",
+  "finishedInspectionAt": "2026-09-27T03:59:10.948859+00:00",
+  "cases": [
+    {
+      "id": "F1-PUBLIC-ROUTE",
+      "code": 0,
+      "signal": null,
+      "pid": 71514,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 6366
+    },
+    {
+      "id": "R1-F2-F3-COMPOSER",
+      "code": 0,
+      "signal": null,
+      "pid": 72446,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 188405
+    },
+    {
+      "id": "R1-COMPOSER-CORRECTNESS",
+      "code": 0,
+      "signal": null,
+      "pid": 93498,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 4079
+    },
+    {
+      "id": "R1-FIVE-MINUTE-TYPING",
+      "code": 0,
+      "signal": null,
+      "pid": 93997,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 405553
+    },
+    {
+      "id": "R7-HISTORY-LIVE",
+      "code": 0,
+      "signal": null,
+      "pid": 38904,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 4837
+    },
+    {
+      "id": "R9-INDICATOR-DISTINCTION",
+      "code": 0,
+      "signal": null,
+      "pid": 39466,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 12016
+    }
+  ],
+  "ownedRootExists": false,
+  "pidsAlive": {
+    "38904": false,
+    "39466": false,
+    "71502": false,
+    "71514": false,
+    "71652": false,
+    "71721": false,
+    "71722": false,
+    "71734": false,
+    "71873": false,
+    "72446": false,
+    "73089": false,
+    "93498": false,
+    "93997": false,
+    "94609": false
+  },
+  "protected55084Alive": true,
+  "IOConsoleLocked": [
+    "No"
+  ],
+  "sustained": {
+    "status": "passed",
+    "configuredCharacters": 9520,
+    "wallMs": 349689,
+    "exactRetention": true,
+    "metrics": {
+      "inputCount": 9520,
+      "inputP95Ms": 1.3000001907348633,
+      "inputMaxMs": 2.4000000953674316,
+      "nextRafCount": 9520,
+      "nextRafP95Ms": 17.199999809265137,
+      "nextRafMaxMs": 23.699999809265137,
+      "longTaskObserverSupported": true,
+      "longTaskCount": 0,
+      "longTaskMaxMs": 0,
+      "reactCommitCount": 28560,
+      "domMutations": 28561,
+      "wsSent": 0,
+      "outboundEvidence": [],
+      "outboundEvidenceOverflow": 0
+    },
+    "renderCounts": {
+      "MessageList": 0,
+      "InstantSegmentRenderer": 0,
+      "ChatAreaHeader": 0,
+      "ThreadRail": 0,
+      "ContentArea": 0,
+      "renderTextInstant": 0
+    },
+    "violations": [],
+    "focusEvidence": {
+      "interval": {
+        "startedAt": 1790481130771,
+        "endedAt": 1790481480460,
+        "available": true,
+        "events": [],
+        "overflow": 0,
+        "valid": true,
+        "interruptions": []
+      },
+      "establishment": {
+        "attempts": 1,
+        "elapsedMs": 5,
+        "observation": {
+          "available": true,
+          "focused": true,
+          "visible": true,
+          "minimized": false,
+          "windowId": 1,
+          "title": "ISOLATED ACCEPTANCE \u2014 chat-arch-1790480876794-91019e474d",
+          "url": "fusion-shell://app/"
+        }
+      },
+      "beforeTyping": {
+        "available": true,
+        "focused": true,
+        "visible": true,
+        "minimized": false,
+        "windowId": 1,
+        "title": "ISOLATED ACCEPTANCE \u2014 chat-arch-1790480876794-91019e474d",
+        "url": "fusion-shell://app/"
+      },
+      "afterTyping": {
+        "available": true,
+        "focused": true,
+        "visible": true,
+        "minimized": false,
+        "windowId": 1,
+        "title": "ISOLATED ACCEPTANCE \u2014 chat-arch-1790480876794-91019e474d",
+        "url": "fusion-shell://app/"
+      }
+    },
+    "cleanup": {
+      "dbQuickCheck": "ok",
+      "portFileRemoved": true,
+      "fixtureRootsRemoved": true
+    },
+    "lingeringOwnedPids": []
+  },
+  "source": {
+    "count": 1957,
+    "mismatches": []
+  },
+  "build": {
+    "count": 200,
+    "mismatches": []
+  }
+}

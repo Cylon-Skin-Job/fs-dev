@@ -1,0 +1,11 @@
+{
+  "predecessorFailure": "EARLY_PRELOAD_CWD_MISMATCH",
+  "currentStatus": "accepted same directory alias",
+  "sameCanonicalDirectory": true,
+  "actualCwdUnchanged": true,
+  "restoredArgv": [
+    "/Electron",
+    "/main",
+    "--chat-architecture-token=owned"
+  ]
+}

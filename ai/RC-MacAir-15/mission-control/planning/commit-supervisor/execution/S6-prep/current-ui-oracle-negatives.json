@@ -1,0 +1,66 @@
+{
+  "kind": "PREPARATION_ORACLE_CHECKS_ONLY",
+  "records": [
+    {
+      "name": "seeded-numerical-negative",
+      "command": [
+        "node",
+        ".agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs",
+        "planning/commit-supervisor/execution/S6-prep/numerical-oracle-config.json",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-3RgF92/verified.json",
+        "acceptance",
+        "planning/commit-supervisor/execution/S6-prep/current-acceptance-negative.json"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: first completed\n\n3 !== 2\n\n    at sample (file:///Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs:39:36)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs:46:3 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: 3,\n  expected: 2,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v25.6.1\n",
+      "expected_refusal": true
+    },
+    {
+      "name": "unknown-mode",
+      "command": [
+        "node",
+        ".agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs",
+        "planning/commit-supervisor/execution/S6-prep/current-private-paths.json",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-3RgF92/verified.json",
+        "unsupported",
+        "planning/commit-supervisor/execution/S6-prep/unused.json"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: unsupported UI mode\n    at file:///Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs:11:1\n    at ModuleJob.run (node:internal/modules/esm/module_job:430:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:655:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v25.6.1\n",
+      "expected_refusal": true
+    },
+    {
+      "name": "missing-format",
+      "command": [
+        "node",
+        ".agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs",
+        "planning/commit-supervisor/execution/S6-prep/current-private-paths.json",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-3RgF92/verified.json",
+        "acceptance",
+        "planning/commit-supervisor/execution/S6-prep/unused.json"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: acceptance requires a resolved supported summaryFormat\n    at file:///Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs:12:25\n    at ModuleJob.run (node:internal/modules/esm/module_job:430:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:655:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v25.6.1\n",
+      "expected_refusal": true
+    },
+    {
+      "name": "unsupported-format",
+      "command": [
+        "node",
+        ".agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs",
+        "planning/commit-supervisor/execution/S6-prep/unsupported-format-config.json",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-3RgF92/verified.json",
+        "fix-xy",
+        "planning/commit-supervisor/execution/S6-prep/unused.json"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: acceptance requires a resolved supported summaryFormat\n    at file:///Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs:12:25\n    at ModuleJob.run (node:internal/modules/esm/module_job:430:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:655:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v25.6.1\n",
+      "expected_refusal": true
+    }
+  ],
+  "intent_release": "still unresolved; no test config authorizes final wording"
+}

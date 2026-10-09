@@ -1,0 +1,165 @@
+{
+  "status": "observation-completed-no-acceptance",
+  "measurementStarted": false,
+  "scope": "native-activation-only; no acceptance credit",
+  "nativeActivation": {
+    "scope": "native-activation/protocol only; no typing, native-input or performance acceptance",
+    "identity": {
+      "pid": 66074,
+      "windowId": 1
+    },
+    "domFocus": "emulated by Playwright1.58.2",
+    "domVisibility": "affected by backgroundThrottling:false",
+    "observation": {
+      "status": "observation-completed-no-acceptance",
+      "startedAt": 1790390156774,
+      "endedAt": 1790390286774,
+      "durationMs": 130000,
+      "queries": 1250,
+      "failures": 0,
+      "lastCompleted": {
+        "observedAt": 1790390286703,
+        "state": {
+          "pid": 66074,
+          "windowId": 1,
+          "focused": false,
+          "visible": true,
+          "minimized": false,
+          "appHidden": false,
+          "appActive": false,
+          "ownedWindowIsKey": false
+        }
+      }
+    },
+    "records": 1254,
+    "overflow": 0,
+    "writeErrors": 0,
+    "protocolRecords": 2779,
+    "protocolWriteErrors": 0,
+    "protocol": {
+      "version": "1.58.2",
+      "overflow": 0,
+      "recordingErrors": 0,
+      "pendingCount": 0,
+      "errorResponses": 0,
+      "restored": true
+    },
+    "complete": true
+  },
+  "diagnosticTrace": {
+    "status": "closed",
+    "gaps": [],
+    "documents": {
+      "bffefd85-497a-4a46-9c4d-7bbea82eec99": {
+        "timeOrigin": 1790390156551.1,
+        "overflow": 0,
+        "emitFailures": 0,
+        "trafficOverflow": 0
+      }
+    },
+    "main": {
+      "overflow": 0,
+      "observationErrors": 0,
+      "coverage": [
+        {
+          "label": "window.show",
+          "status": "wrapped"
+        },
+        {
+          "label": "window.showInactive",
+          "status": "wrapped"
+        },
+        {
+          "label": "window.hide",
+          "status": "wrapped"
+        },
+        {
+          "label": "window.minimize",
+          "status": "wrapped"
+        },
+        {
+          "label": "window.restore",
+          "status": "wrapped"
+        },
+        {
+          "label": "window.focus",
+          "status": "wrapped"
+        },
+        {
+          "label": "window.blur",
+          "status": "wrapped"
+        },
+        {
+          "label": "window.moveTop",
+          "status": "wrapped"
+        },
+        {
+          "label": "app.show",
+          "status": "wrapped"
+        },
+        {
+          "label": "app.hide",
+          "status": "wrapped"
+        },
+        {
+          "label": "app.focus",
+          "status": "wrapped"
+        },
+        {
+          "label": "webContents.focus",
+          "status": "wrapped"
+        }
+      ],
+      "stopped": true
+    },
+    "renderer": {
+      "documentId": "bffefd85-497a-4a46-9c4d-7bbea82eec99",
+      "timeOrigin": 1790390156551.1,
+      "overflow": 0,
+      "emitFailures": 0,
+      "trafficOverflow": 0,
+      "restored": true
+    },
+    "processExitObserved": true,
+    "identity": {
+      "pid": 66074,
+      "windowId": 1
+    },
+    "written": 414,
+    "journalOverflow": 0,
+    "journalWriteErrors": 0,
+    "driver": {
+      "overflow": 0,
+      "observationErrors": 0,
+      "coverage": [
+        {
+          "label": "fixture.page.bringToFront",
+          "status": "wrapped"
+        }
+      ],
+      "stopped": true
+    },
+    "complete": true
+  },
+  "ownedFocus": {
+    "pid": 66074,
+    "windowId": 1,
+    "events": [
+      {
+        "type": "installed",
+        "at": 1790390156765,
+        "focused": false,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      }
+    ],
+    "overflow": 0
+  },
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "lingeringOwnedPids": []
+}

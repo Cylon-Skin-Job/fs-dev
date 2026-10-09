@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-07T00:29:34.166855+00:00",
+  "explicit_owned_selectors": 1668,
+  "actual_stage_pathspecs": 1668,
+  "already_absent_not_indexed": [],
+  "pathspec_sha256": "03271c4aadfca207fe289b4910ed2bffc5a00ee8b3d754e5b76957a5c7231c67",
+  "derivation": "Explicit owned selectors intersect existing source leaves or indexed paths; absent nonindexed selectors are already correct absences."
+}

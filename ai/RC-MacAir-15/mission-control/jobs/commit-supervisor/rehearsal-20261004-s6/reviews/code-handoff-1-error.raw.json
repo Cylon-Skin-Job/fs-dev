@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-04T14:47:05.893582+00:00",
+  "actor": "/root/s6_supervisor_candidate_1/code_handoff_review_1",
+  "host_terminal_error": "Agent errored: Selected model is at capacity. Please try a different model. This agent turn failed.",
+  "inspection": "NONE evidenced",
+  "assessment": "NO_GATE_RESULT",
+  "model_override": "NONE",
+  "next": "Fresh supported reviewer retry with same root settings; no acceptance from error"
+}

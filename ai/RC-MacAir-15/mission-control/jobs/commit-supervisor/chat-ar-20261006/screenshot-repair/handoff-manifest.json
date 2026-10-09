@@ -1,0 +1,56 @@
+{
+  "state": "READY_FOR_HANDOFF_REVIEW",
+  "worker": "/root/screenshot_repair",
+  "manager": "/root",
+  "candidate": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+  "head": "3356e1b73cc5d44028eac5baa02fd542a8bbc385",
+  "codeWritesFrozen": true,
+  "allTestsBuildsTerminal": true,
+  "checksDependencyBindingVerified": true,
+  "files": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/report.md",
+      "sha256": "8dde7384d6a7543e2381ebeab49c45e86ba9a61597c6b88d8268ee7d86b6c2a1"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/current-byte-evidence.json",
+      "sha256": "d2a8d88c0a48c69218644641657c7feb71c2dd0c719e4dc688c8c473e3eee0b3"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/checks.json",
+      "sha256": "64c2fd4cbce7eb44680bf777559fd82a3dc8620776713e662d9fdb522feefac7"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/deviations.json",
+      "sha256": "9b729e9d29698797320f34bd2bc9665b0f9cffb67b8f2dc028958cea3f6f945a"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/repair-worktree.patch",
+      "sha256": "97a4ec7e8edc124940cd4f0db79e6821edd35116288669ebfe71ed8b2037625e"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/eof-trim-readback.json",
+      "sha256": "315568ef7aaf8c0cdea37976c0b5322f03f963acf6f0194629fe9c75f695e1a6"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/pure-reader-pretrim.ts",
+      "sha256": "93878e20774164e6c0e5840caba3ffcb0c135829e08d945500bf8ad72ddad7b9"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/candidate-index-semantic-readback.json",
+      "sha256": "d89ed94e20eddbc85e83fd985f3dafc120cd541abdd7f958cadcd2e6666c18da"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/server-preimage-readback.json",
+      "sha256": "ec70a30d650f15bac1affb05d207f3b17bd933d9cab25b097f27fe4315f9213c"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/unaffected-server-evidence.json",
+      "sha256": "73971f4aa76e1218cfc6030cb52590c391cd46fc6fe2fdb236b50aae76db3a5f"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/cumulative-oracle-dependencies.json",
+      "sha256": "fab9460f83e2ba7e33fe71aa525119f95bd2332b7ce142d14f42dda7e552e125"
+    }
+  ]
+}

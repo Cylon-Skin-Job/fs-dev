@@ -1,0 +1,166 @@
+{
+  "scope": "ROOT_READONLY_PRIVATE_LIVE_OBSERVATION",
+  "started": "2026-10-04T16:17:08.532Z",
+  "profile": "/private/tmp/mc-s6-commit-supervisor-20261004/profile",
+  "machine": "MC-S6",
+  "run": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-bFErPY",
+  "actions": "Read existing page/frame only; no click/uncheck/reload/storage mutation.",
+  "samples": [
+    {
+      "at": "2026-10-04T16:17:08.595Z",
+      "summary": "2 remaining of 3",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "at": "2026-10-04T16:17:08.833Z",
+      "summary": "2 remaining of 3",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "at": "2026-10-04T16:17:09.049Z",
+      "summary": "2 remaining of 3",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "at": "2026-10-04T16:17:09.270Z",
+      "summary": "2 remaining of 3",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "at": "2026-10-04T16:17:09.493Z",
+      "summary": "2 remaining of 3",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "at": "2026-10-04T16:17:09.715Z",
+      "summary": "2 remaining of 3",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "at": "2026-10-04T16:17:09.935Z",
+      "summary": "2 remaining of 3",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "at": "2026-10-04T16:17:10.155Z",
+      "summary": "2 remaining of 3",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "at": "2026-10-04T16:17:10.373Z",
+      "summary": "2 remaining of 3",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "at": "2026-10-04T16:17:10.594Z",
+      "summary": "2 remaining of 3",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "at": "2026-10-04T16:17:10.816Z",
+      "summary": "2 remaining of 3",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        false,
+        false
+      ]
+    }
+  ],
+  "finished": "2026-10-04T16:17:11.196Z",
+  "result": "PASSED"
+}

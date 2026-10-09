@@ -1,0 +1,328 @@
+/**
+ * Universal Hover Icon Modal Styles
+ * 
+ * All hover-triggered icon modals share these variables and base styles.
+ * Modify these variables to change all modals at once.
+ */
+
+:root {
+  /* Modal dimensions */
+  --hover-modal-width: 600px;
+  --hover-modal-max-height: 480px;
+  --hover-modal-min-height: 200px;
+  
+  /* Modal positioning */
+  --hover-modal-offset: 12px;
+  
+  /* Colors - Neutral only, no blues */
+  --hover-modal-bg: var(--sidebar-surface-bg, #161616);
+  --hover-modal-border: var(--neutral-chrome-border, #333);
+  --hover-modal-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  
+  /* Row styling */
+  --hover-modal-row-height: 48px;
+  --hover-modal-row-padding: 8px 16px;
+  --hover-modal-row-hover-bg: var(--neutral-chrome-bg, #222);
+  --hover-modal-row-selected-bg: var(--neutral-chrome-bg, #222);
+  --hover-modal-row-border: var(--neutral-chrome-border, #333);
+  
+  /* Header */
+  --hover-modal-header-padding: 12px 16px;
+  --hover-modal-header-border: var(--neutral-chrome-border, #333);
+  
+  /* Typography */
+  --hover-modal-title-size: 13px;
+  --hover-modal-title-weight: 500;
+  --hover-modal-title-color: var(--text-primary, #fff);
+  --hover-modal-item-size: 13px;
+  --hover-modal-item-color: var(--chrome-accent, var(--text-dim));
+  --hover-modal-meta-size: 12px;
+  --hover-modal-meta-color: var(--text-dim, #888);
+  --hover-modal-hint-size: 12px;
+  --hover-modal-hint-color: var(--text-dim, #888);
+  
+  /* Thumbnail sizing */
+  --hover-modal-thumb-size: 48px;
+  --hover-modal-thumb-radius: 4px;
+  
+  /* Scrollbar - canonical workspace tokens (variables.css). */
+  --hover-modal-scrollbar-width: 8px;
+  --hover-modal-scrollbar-track:       var(--scrollbar-track, transparent);
+  --hover-modal-scrollbar-thumb:       var(--scrollbar-thumb, rgba(255, 255, 255, 0.12));
+  --hover-modal-scrollbar-thumb-hover: var(--scrollbar-thumb-hover, rgba(255, 255, 255, 0.22));
+  
+  /* Preview popover */
+  --hover-modal-preview-width: 400px;
+  --hover-modal-preview-max-height: 300px;
+}
+
+/* Base Modal Container */
+.rv-hover-icon-modal {
+  position: fixed;
+  left: var(--modal-left);
+  bottom: var(--modal-bottom);
+  width: var(--hover-modal-width);
+  max-height: var(--hover-modal-max-height);
+  min-height: var(--hover-modal-min-height);
+  background: var(--hover-modal-bg);
+  border: 1px solid var(--hover-modal-border);
+  border-radius: 8px;
+  box-shadow: var(--hover-modal-shadow);
+  z-index: var(--z-modal, 1003);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.rv-hover-icon-modal.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Header */
+.rv-hover-icon-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--hover-modal-header-padding);
+  border-bottom: 1px solid var(--hover-modal-header-border);
+  flex-shrink: 0;
+}
+
+.rv-hover-icon-modal-title {
+  font-size: var(--hover-modal-title-size);
+  font-weight: var(--hover-modal-title-weight);
+  color: var(--hover-modal-title-color);
+}
+
+.rv-hover-icon-modal-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.rv-hover-icon-modal-action:hover {
+  background: var(--hover-modal-row-hover-bg);
+  color: var(--text-primary);
+}
+
+.rv-hover-icon-modal-action .material-symbols-outlined {
+  font-size: 16px;
+}
+
+/* Content List */
+.rv-hover-icon-modal-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Scrollbar styling */
+.rv-hover-icon-modal-list::-webkit-scrollbar {
+  width: var(--hover-modal-scrollbar-width);
+}
+
+.rv-hover-icon-modal-list::-webkit-scrollbar-track {
+  background: var(--hover-modal-scrollbar-track);
+}
+
+.rv-hover-icon-modal-list::-webkit-scrollbar-thumb {
+  background: var(--hover-modal-scrollbar-thumb);
+  border-radius: 4px;
+}
+
+.rv-hover-icon-modal-list::-webkit-scrollbar-thumb:hover {
+  background: var(--hover-modal-scrollbar-thumb-hover);
+}
+
+/* Row */
+.rv-hover-icon-modal-row {
+  display: flex;
+  align-items: center;
+  padding: var(--hover-modal-row-padding);
+  min-height: var(--hover-modal-row-height);
+  border-bottom: 1px solid var(--hover-modal-row-border);
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color 0.15s;
+  gap: 12px;
+}
+
+.rv-hover-icon-modal-row:last-child {
+  border-bottom: none;
+}
+
+.rv-hover-icon-modal-row:hover,
+.rv-hover-icon-modal-row.selected {
+  background: var(--hover-modal-row-hover-bg);
+}
+
+/* Thumbnail */
+.rv-hover-icon-modal-thumb {
+  width: var(--hover-modal-thumb-size);
+  height: var(--hover-modal-thumb-size);
+  flex-shrink: 0;
+  border-radius: var(--hover-modal-thumb-radius);
+  overflow: hidden;
+  background: var(--panel-bg);
+}
+
+.rv-hover-icon-modal-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Content area */
+.rv-hover-icon-modal-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  gap: 2px;
+}
+
+.rv-hover-icon-modal-content-primary {
+  font-size: var(--hover-modal-item-size);
+  color: var(--hover-modal-item-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rv-hover-icon-modal-content-secondary {
+  font-size: var(--hover-modal-meta-size);
+  color: var(--hover-modal-meta-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Loading/Empty States */
+.rv-hover-icon-modal-loading,
+.rv-hover-icon-modal-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 48px 24px;
+  color: var(--text-dim);
+  font-size: 13px;
+}
+
+.rv-hover-icon-modal-empty .material-symbols-outlined {
+  font-size: 32px;
+  opacity: 0.5;
+}
+
+/* Keyboard Hint */
+.rv-hover-icon-modal-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-top: 1px solid var(--hover-modal-header-border);
+  font-size: var(--hover-modal-hint-size);
+  color: var(--hover-modal-hint-color);
+  flex-shrink: 0;
+}
+
+.rv-hover-icon-modal-hint .material-symbols-outlined {
+  font-size: 14px;
+}
+
+/* Preview Popover */
+.rv-hover-icon-modal-preview {
+  position: fixed;
+  left: var(--modal-left);
+  top: var(--modal-top);
+  width: var(--hover-modal-preview-width);
+  max-height: var(--hover-modal-preview-max-height);
+  background: var(--hover-modal-bg);
+  border: 1px solid var(--hover-modal-border);
+  border-radius: 8px;
+  box-shadow: var(--hover-modal-shadow);
+  z-index: var(--z-tooltip, 1004);
+  overflow: hidden;
+  animation: hover-modal-preview-fade 150ms ease;
+}
+
+@keyframes hover-modal-preview-fade {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.rv-hover-icon-modal-preview img {
+  width: 100%;
+  height: auto;
+  max-height: 260px;
+  object-fit: contain;
+  display: block;
+  background: var(--panel-bg);
+}
+
+.rv-hover-icon-modal-preview-label {
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--text-dim);
+  border-top: 1px solid var(--hover-modal-border);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Trigger button base */
+.rv-hover-icon-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: var(--chrome-accent, var(--text-dim));
+  cursor: pointer;
+  transition: opacity 0.15s, background 0.15s;
+}
+
+.rv-hover-icon-trigger:hover {
+  opacity: 0.8;
+  background: var(--neutral-chrome-bg);
+}
+
+.rv-hover-icon-trigger.open {
+  opacity: 1;
+  background: var(--neutral-chrome-bg);
+}
+
+.rv-hover-icon-trigger .material-symbols-outlined {
+  font-size: 18px;
+}

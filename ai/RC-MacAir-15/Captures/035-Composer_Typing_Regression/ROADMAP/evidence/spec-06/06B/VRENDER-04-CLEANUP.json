@@ -1,0 +1,85 @@
+{
+  "at": "2026-09-27T03:58:43.529240+00:00",
+  "runId": "chat-arch-1790480876794-91019e474d",
+  "exitCode": 0,
+  "caseCount": 6,
+  "caseElapsedSumMs": 621256,
+  "rootAbsent": true,
+  "ownedPidsAlive": {
+    "38904": false,
+    "39466": false,
+    "71502": false,
+    "71514": false,
+    "72446": false,
+    "73089": false,
+    "93498": false,
+    "93997": false,
+    "94609": false
+  },
+  "persistent55084Alive": true,
+  "sourceCount": 1957,
+  "buildCount": 200,
+  "mismatches": [],
+  "results": [
+    {
+      "id": "F1-PUBLIC-ROUTE",
+      "code": 0,
+      "signal": null,
+      "pid": 71514,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 6366
+    },
+    {
+      "id": "R1-F2-F3-COMPOSER",
+      "code": 0,
+      "signal": null,
+      "pid": 72446,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 188405
+    },
+    {
+      "id": "R1-COMPOSER-CORRECTNESS",
+      "code": 0,
+      "signal": null,
+      "pid": 93498,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 4079
+    },
+    {
+      "id": "R1-FIVE-MINUTE-TYPING",
+      "code": 0,
+      "signal": null,
+      "pid": 93997,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 405553
+    },
+    {
+      "id": "R7-HISTORY-LIVE",
+      "code": 0,
+      "signal": null,
+      "pid": 38904,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 4837
+    },
+    {
+      "id": "R9-INDICATOR-DISTINCTION",
+      "code": 0,
+      "signal": null,
+      "pid": 39466,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 12016
+    }
+  ]
+}

@@ -1,0 +1,299 @@
+{
+  "fingerprintManifest": "launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-ARTIFACT-FINGERPRINTS.json",
+  "manifestSha256": "d05eb5ced16f402890a15660df3c58fcd215a46fe4bdbd534ff74d49efa7c40e",
+  "scope": "Original current-reviewed server rows only; no global candidate or renderer/runtime recertification",
+  "rowCount": 29,
+  "allMatch": true,
+  "rows": [
+    {
+      "path": "fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+      "originalSha256": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f",
+      "prefixOnly": false,
+      "bytesHashed": 18340,
+      "sourceSha256": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f",
+      "sourceMatches": true,
+      "candidateSha256": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/test/runtime/isolated-provenance-runtime.test.js",
+      "originalSha256": "7353ff4930b73a7e881951fced904829a22303183bdccce2a2f29e47daade412",
+      "prefixOnly": false,
+      "bytesHashed": 12701,
+      "sourceSha256": "7353ff4930b73a7e881951fced904829a22303183bdccce2a2f29e47daade412",
+      "sourceMatches": true,
+      "candidateSha256": "7353ff4930b73a7e881951fced904829a22303183bdccce2a2f29e47daade412",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/test/watch/watcher-retirement.test.js",
+      "originalSha256": "74c64ec5f1aaa2ebceb0e034b188b741bbc3295b5b70131ca7befe07fec99d6f",
+      "prefixOnly": false,
+      "bytesHashed": 2706,
+      "sourceSha256": "74c64ec5f1aaa2ebceb0e034b188b741bbc3295b5b70131ca7befe07fec99d6f",
+      "sourceMatches": true,
+      "candidateSha256": "74c64ec5f1aaa2ebceb0e034b188b741bbc3295b5b70131ca7befe07fec99d6f",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/test/event-registry/startup-integration.test.js",
+      "originalSha256": "7bb660ec3e982f145559a8f56b2a984ceea21938d79190451918e24a42d2c22a",
+      "prefixOnly": false,
+      "bytesHashed": 15364,
+      "sourceSha256": "7bb660ec3e982f145559a8f56b2a984ceea21938d79190451918e24a42d2c22a",
+      "sourceMatches": true,
+      "candidateSha256": "7bb660ec3e982f145559a8f56b2a984ceea21938d79190451918e24a42d2c22a",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/test/runtime/workspace-startup-integrity.test.js",
+      "originalSha256": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77",
+      "prefixOnly": false,
+      "bytesHashed": 12638,
+      "sourceSha256": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77",
+      "sourceMatches": true,
+      "candidateSha256": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/test/runtime/fixtures/startup-entry-fixture.js",
+      "originalSha256": "1122a2629c259cfdeddc72a414f2a19e6cc5b05524a54c5ca9ff66841b457895",
+      "prefixOnly": false,
+      "bytesHashed": 14330,
+      "sourceSha256": "1122a2629c259cfdeddc72a414f2a19e6cc5b05524a54c5ca9ff66841b457895",
+      "sourceMatches": true,
+      "candidateSha256": "1122a2629c259cfdeddc72a414f2a19e6cc5b05524a54c5ca9ff66841b457895",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/test/runtime/fixtures/startup-workspace.js",
+      "originalSha256": "233bbc1f7e5de6af777322ad5fdd37123db34b1b282c80d9a16eb92b6286ff8e",
+      "prefixOnly": false,
+      "bytesHashed": 2380,
+      "sourceSha256": "233bbc1f7e5de6af777322ad5fdd37123db34b1b282c80d9a16eb92b6286ff8e",
+      "sourceMatches": true,
+      "candidateSha256": "233bbc1f7e5de6af777322ad5fdd37123db34b1b282c80d9a16eb92b6286ff8e",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/test/runtime/fixtures/startup-failure-resources.js",
+      "originalSha256": "56fe2db1baed4c562b5e996095acdb5d94ea29e8d59faf3d85262be20ea976b0",
+      "prefixOnly": false,
+      "bytesHashed": 2366,
+      "sourceSha256": "56fe2db1baed4c562b5e996095acdb5d94ea29e8d59faf3d85262be20ea976b0",
+      "sourceMatches": true,
+      "candidateSha256": "56fe2db1baed4c562b5e996095acdb5d94ea29e8d59faf3d85262be20ea976b0",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/lib/startup.js",
+      "originalSha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+      "prefixOnly": false,
+      "bytesHashed": 38793,
+      "sourceSha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+      "sourceMatches": true,
+      "candidateSha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/lib/views/readiness-startup.js",
+      "originalSha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+      "prefixOnly": false,
+      "bytesHashed": 1280,
+      "sourceSha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+      "sourceMatches": true,
+      "candidateSha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/test/runtime/fixtures/startup-readiness-observer.js",
+      "originalSha256": "9eebf2507b406149615af8f4d4d4712d958b912d3bd5b47b3e3e7a5297e8995c",
+      "prefixOnly": false,
+      "bytesHashed": 7473,
+      "sourceSha256": "9eebf2507b406149615af8f4d4d4712d958b912d3bd5b47b3e3e7a5297e8995c",
+      "sourceMatches": true,
+      "candidateSha256": "9eebf2507b406149615af8f4d4d4712d958b912d3bd5b47b3e3e7a5297e8995c",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/test/views/readiness-startup.test.js",
+      "originalSha256": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e",
+      "prefixOnly": false,
+      "bytesHashed": 2084,
+      "sourceSha256": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e",
+      "sourceMatches": true,
+      "candidateSha256": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/server.js",
+      "originalSha256": "293e3f56f7c61aa855d8e116fe901cb58db86eedf69cce3ac2e4ad865ad62a07",
+      "prefixOnly": false,
+      "bytesHashed": 16217,
+      "sourceSha256": "293e3f56f7c61aa855d8e116fe901cb58db86eedf69cce3ac2e4ad865ad62a07",
+      "sourceMatches": true,
+      "candidateSha256": "293e3f56f7c61aa855d8e116fe901cb58db86eedf69cce3ac2e4ad865ad62a07",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+      "originalSha256": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f",
+      "prefixOnly": false,
+      "bytesHashed": 18340,
+      "sourceSha256": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f",
+      "sourceMatches": true,
+      "candidateSha256": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/lib/startup.js",
+      "originalSha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+      "prefixOnly": false,
+      "bytesHashed": 38793,
+      "sourceSha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+      "sourceMatches": true,
+      "candidateSha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/lib/views/readiness-startup.js",
+      "originalSha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+      "prefixOnly": false,
+      "bytesHashed": 1280,
+      "sourceSha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+      "sourceMatches": true,
+      "candidateSha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/server.js",
+      "originalSha256": "293e3f56f7c61aa855d8e116fe901cb58db86eedf69cce3ac2e4ad865ad62a07",
+      "prefixOnly": false,
+      "bytesHashed": 16217,
+      "sourceSha256": "293e3f56f7c61aa855d8e116fe901cb58db86eedf69cce3ac2e4ad865ad62a07",
+      "sourceMatches": true,
+      "candidateSha256": "293e3f56f7c61aa855d8e116fe901cb58db86eedf69cce3ac2e4ad865ad62a07",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/lib/startup.js",
+      "originalSha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+      "prefixOnly": false,
+      "bytesHashed": 38793,
+      "sourceSha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+      "sourceMatches": true,
+      "candidateSha256": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/lib/testing/isolated-provenance-runtime.js",
+      "originalSha256": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f",
+      "prefixOnly": false,
+      "bytesHashed": 18340,
+      "sourceSha256": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f",
+      "sourceMatches": true,
+      "candidateSha256": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/lib/views/readiness-startup.js",
+      "originalSha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+      "prefixOnly": false,
+      "bytesHashed": 1280,
+      "sourceSha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+      "sourceMatches": true,
+      "candidateSha256": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/test/event-registry/startup-integration.test.js",
+      "originalSha256": "7bb660ec3e982f145559a8f56b2a984ceea21938d79190451918e24a42d2c22a",
+      "prefixOnly": false,
+      "bytesHashed": 15364,
+      "sourceSha256": "7bb660ec3e982f145559a8f56b2a984ceea21938d79190451918e24a42d2c22a",
+      "sourceMatches": true,
+      "candidateSha256": "7bb660ec3e982f145559a8f56b2a984ceea21938d79190451918e24a42d2c22a",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/test/runtime/fixtures/startup-entry-fixture.js",
+      "originalSha256": "1122a2629c259cfdeddc72a414f2a19e6cc5b05524a54c5ca9ff66841b457895",
+      "prefixOnly": false,
+      "bytesHashed": 14330,
+      "sourceSha256": "1122a2629c259cfdeddc72a414f2a19e6cc5b05524a54c5ca9ff66841b457895",
+      "sourceMatches": true,
+      "candidateSha256": "1122a2629c259cfdeddc72a414f2a19e6cc5b05524a54c5ca9ff66841b457895",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/test/runtime/fixtures/startup-failure-resources.js",
+      "originalSha256": "56fe2db1baed4c562b5e996095acdb5d94ea29e8d59faf3d85262be20ea976b0",
+      "prefixOnly": false,
+      "bytesHashed": 2366,
+      "sourceSha256": "56fe2db1baed4c562b5e996095acdb5d94ea29e8d59faf3d85262be20ea976b0",
+      "sourceMatches": true,
+      "candidateSha256": "56fe2db1baed4c562b5e996095acdb5d94ea29e8d59faf3d85262be20ea976b0",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/test/runtime/fixtures/startup-readiness-observer.js",
+      "originalSha256": "9eebf2507b406149615af8f4d4d4712d958b912d3bd5b47b3e3e7a5297e8995c",
+      "prefixOnly": false,
+      "bytesHashed": 7473,
+      "sourceSha256": "9eebf2507b406149615af8f4d4d4712d958b912d3bd5b47b3e3e7a5297e8995c",
+      "sourceMatches": true,
+      "candidateSha256": "9eebf2507b406149615af8f4d4d4712d958b912d3bd5b47b3e3e7a5297e8995c",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/test/runtime/fixtures/startup-workspace.js",
+      "originalSha256": "233bbc1f7e5de6af777322ad5fdd37123db34b1b282c80d9a16eb92b6286ff8e",
+      "prefixOnly": false,
+      "bytesHashed": 2380,
+      "sourceSha256": "233bbc1f7e5de6af777322ad5fdd37123db34b1b282c80d9a16eb92b6286ff8e",
+      "sourceMatches": true,
+      "candidateSha256": "233bbc1f7e5de6af777322ad5fdd37123db34b1b282c80d9a16eb92b6286ff8e",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/test/runtime/isolated-provenance-runtime.test.js",
+      "originalSha256": "7353ff4930b73a7e881951fced904829a22303183bdccce2a2f29e47daade412",
+      "prefixOnly": false,
+      "bytesHashed": 12701,
+      "sourceSha256": "7353ff4930b73a7e881951fced904829a22303183bdccce2a2f29e47daade412",
+      "sourceMatches": true,
+      "candidateSha256": "7353ff4930b73a7e881951fced904829a22303183bdccce2a2f29e47daade412",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/test/runtime/workspace-startup-integrity.test.js",
+      "originalSha256": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77",
+      "prefixOnly": false,
+      "bytesHashed": 12638,
+      "sourceSha256": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77",
+      "sourceMatches": true,
+      "candidateSha256": "7b3d63df4625e9385bb21f6971901c9d6c86e483e3bbf93adcb0560c03884c77",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/test/views/readiness-startup.test.js",
+      "originalSha256": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e",
+      "prefixOnly": false,
+      "bytesHashed": 2084,
+      "sourceSha256": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e",
+      "sourceMatches": true,
+      "candidateSha256": "d638fa912d9152f56b64461a0f8c159c621de9bede6be9b30353d4191133d09e",
+      "candidateMatches": true
+    },
+    {
+      "path": "fusion-studio-server/test/watch/watcher-retirement.test.js",
+      "originalSha256": "74c64ec5f1aaa2ebceb0e034b188b741bbc3295b5b70131ca7befe07fec99d6f",
+      "prefixOnly": false,
+      "bytesHashed": 2706,
+      "sourceSha256": "74c64ec5f1aaa2ebceb0e034b188b741bbc3295b5b70131ca7befe07fec99d6f",
+      "sourceMatches": true,
+      "candidateSha256": "74c64ec5f1aaa2ebceb0e034b188b741bbc3295b5b70131ca7befe07fec99d6f",
+      "candidateMatches": true
+    }
+  ]
+}

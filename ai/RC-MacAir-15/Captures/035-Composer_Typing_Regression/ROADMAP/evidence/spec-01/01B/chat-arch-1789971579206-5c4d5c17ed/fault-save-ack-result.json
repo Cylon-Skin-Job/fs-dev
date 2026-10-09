@@ -1,0 +1,94 @@
+{
+  "status": "passed",
+  "proof": {
+    "mode": "save-ack",
+    "authenticated": true,
+    "saveAckDropped": true,
+    "turnEndPreserved": true,
+    "exchangeCount": 1,
+    "port": 64140,
+    "frameCounts": {
+      "shell-auth:challenge": 2,
+      "connected": 2,
+      "workspace:init": 2,
+      "panel_config": 3,
+      "shell-auth:authenticated": 2,
+      "error": 4,
+      "screenshot:list": 2,
+      "file_content_response": 70,
+      "workspace:create_manifest": 1,
+      "workspace:created": 1,
+      "workspace:added": 1,
+      "workspace:registry_changed": 1,
+      "workspace:switched": 1,
+      "file_tree_response": 66,
+      "office:palette_state": 2,
+      "state:result": 8,
+      "thread:list": 10,
+      "panel_changed": 2,
+      "thread:created": 1,
+      "thread:opened": 2,
+      "state:worksurface_result": 1,
+      "wire_ready": 1,
+      "message:sent": 1,
+      "turn_begin": 1,
+      "thread:state_changed": 2,
+      "step_begin": 1,
+      "thinking": 1,
+      "tool_call": 1,
+      "tool_call_args": 1,
+      "tool_result": 1,
+      "status_update": 1,
+      "content": 3,
+      "screenshot:updated": 1,
+      "screenshot:data": 1,
+      "turn_end": 1,
+      "exchange_metadata": 1
+    },
+    "importantFrames": [
+      {
+        "type": "shell-auth:authenticated",
+        "message": null
+      },
+      {
+        "type": "error",
+        "message": "No active workspace"
+      },
+      {
+        "type": "error",
+        "message": "No active workspace"
+      },
+      {
+        "type": "error",
+        "message": "Message handling failed"
+      },
+      {
+        "type": "shell-auth:authenticated",
+        "message": null
+      },
+      {
+        "type": "error",
+        "message": "No active workspace"
+      },
+      {
+        "type": "message:sent",
+        "message": null
+      },
+      {
+        "type": "turn_begin",
+        "message": null
+      },
+      {
+        "type": "turn_end",
+        "message": null
+      }
+    ]
+  },
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": null
+}

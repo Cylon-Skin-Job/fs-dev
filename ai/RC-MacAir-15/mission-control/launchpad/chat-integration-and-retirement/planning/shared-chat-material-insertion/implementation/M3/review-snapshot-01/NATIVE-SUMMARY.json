@@ -1,0 +1,367 @@
+{
+  "at": "2026-10-07T22:46:23.911504+00:00",
+  "status": "PASS",
+  "sourceSealSha256": "35cda972a106468eaa279c60da9ef51fc04ec23333f03de4226269b84e14ad07",
+  "receipt": "implementation/M3/native-18/native-receipt.json",
+  "receiptSha256": "96b107e3f731294fbd35274f99ca3ca2ae272558b7ecdce2461c63cc38c485a2",
+  "outerReceipt": "implementation/M3/checks/native-18.json",
+  "outerReceiptSha256": "2c720458c97bf93ceb42df7ddcd286875c8e891ba0964c7585fa97b36eaa2823",
+  "started": "2026-10-07T22:39:55.057Z",
+  "ended": "2026-10-07T22:40:10.345Z",
+  "actualStagedIdentityBinding": "native-18/native-receipt.json.identities; includes serverEntry, Electron binary, current191 renderer artifacts, main/preload/server library/native observer. Runtime commands identify actual staged server entry and Electron executable.",
+  "captures": [
+    {
+      "view": "file-viewer",
+      "host": "main",
+      "kind": "global",
+      "threadId": "th-533bcc52-786d-4ebc-92f1-81f8f4ac2337",
+      "requestId": "screenshot-1791412800638-mj5f8o0pnes",
+      "workspaceId": "material-project",
+      "savedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-00-642Z.png",
+      "bytes": 124791,
+      "width": 3200,
+      "height": 1944,
+      "sha256": "601cf8b95497bb4fb72c818338e77e9966c0b31a11eeeb73f620bccead62d444",
+      "renderedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-00-642Z.png",
+      "nonTargetPreserved": true
+    },
+    {
+      "view": "file-viewer",
+      "host": "side",
+      "kind": "global",
+      "threadId": "2026-10-07T15-39-58-701",
+      "requestId": "screenshot-1791412800862-b32b5xknzb",
+      "workspaceId": "material-project",
+      "savedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-00-865Z.png",
+      "bytes": 144668,
+      "width": 3200,
+      "height": 1944,
+      "sha256": "afba8c9c7a59a09f856ee977b31f6b6f03ecff968644bb169d483d280c36c1b4",
+      "renderedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-00-865Z.png",
+      "nonTargetPreserved": true
+    },
+    {
+      "view": "file-viewer",
+      "host": "main",
+      "kind": "own",
+      "threadId": "th-533bcc52-786d-4ebc-92f1-81f8f4ac2337",
+      "requestId": "screenshot-1791412801094-8sda5ovlyy",
+      "workspaceId": "material-project",
+      "savedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-01-098Z.png",
+      "bytes": 154873,
+      "width": 3200,
+      "height": 1944,
+      "sha256": "9e76a4a4238223e43c6397b44d4b8a26f8a67a592b81b723aa9884c18b093fcc",
+      "renderedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-01-098Z.png",
+      "nonTargetPreserved": true
+    },
+    {
+      "view": "file-viewer",
+      "host": "side",
+      "kind": "own",
+      "threadId": "2026-10-07T15-39-58-701",
+      "requestId": "screenshot-1791412801333-el09xakx9zb",
+      "workspaceId": "material-project",
+      "savedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-01-337Z.png",
+      "bytes": 161462,
+      "width": 3200,
+      "height": 1944,
+      "sha256": "6fe0f6cc858a7f43362c63e76356922008bd4ce0b50094b990cf94b7ab920a1e",
+      "renderedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-01-337Z.png",
+      "nonTargetPreserved": true
+    },
+    {
+      "view": "issues-viewer",
+      "host": "main",
+      "kind": "global",
+      "threadId": "th-009df652-7f4c-4518-b224-51a3dfb1f67a",
+      "requestId": "screenshot-1791412805956-mkn95uj54af",
+      "workspaceId": "material-project",
+      "savedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-05-958Z.png",
+      "bytes": 104739,
+      "width": 3200,
+      "height": 1944,
+      "sha256": "7bc5624ba30b159f0c758d822efaaa8d3d5f2efcd141d07d68f1e6d802d526ed",
+      "renderedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-05-958Z.png",
+      "nonTargetPreserved": true
+    },
+    {
+      "view": "issues-viewer",
+      "host": "side",
+      "kind": "global",
+      "threadId": "2026-10-07T15-40-04-869",
+      "requestId": "screenshot-1791412806183-3ny7y63obm9",
+      "workspaceId": "material-project",
+      "savedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-06-186Z.png",
+      "bytes": 124088,
+      "width": 3200,
+      "height": 1944,
+      "sha256": "ac667210e08b0b50735a09e451ebb78cddd0aa75cb58a61a4e976700739f9a80",
+      "renderedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-06-186Z.png",
+      "nonTargetPreserved": true
+    },
+    {
+      "view": "issues-viewer",
+      "host": "main",
+      "kind": "own",
+      "threadId": "th-009df652-7f4c-4518-b224-51a3dfb1f67a",
+      "requestId": "screenshot-1791412806440-sql2o5usrr",
+      "workspaceId": "material-project",
+      "savedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-06-444Z.png",
+      "bytes": 132007,
+      "width": 3200,
+      "height": 1944,
+      "sha256": "033766b92bb6abdaa548521389004802de6ff75f4a73de5c0a909a8f20b43e1e",
+      "renderedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-06-444Z.png",
+      "nonTargetPreserved": true
+    },
+    {
+      "view": "issues-viewer",
+      "host": "side",
+      "kind": "own",
+      "threadId": "2026-10-07T15-40-04-869",
+      "requestId": "screenshot-1791412806699-l04481u03l",
+      "workspaceId": "material-project",
+      "savedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-06-702Z.png",
+      "bytes": 137632,
+      "width": 3200,
+      "height": 1944,
+      "sha256": "ee133f7422c7523d09e1d659d3cc39b2867d469294f4b40bb45fa8f5402e2898",
+      "renderedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-06-702Z.png",
+      "nonTargetPreserved": true
+    }
+  ],
+  "galleries": [
+    {
+      "view": "file-viewer",
+      "host": "main",
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-00-865Z.png",
+      "nonTargetPreserved": true
+    },
+    {
+      "view": "file-viewer",
+      "host": "side",
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-00-642Z.png",
+      "nonTargetPreserved": true
+    },
+    {
+      "view": "issues-viewer",
+      "host": "main",
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-06-186Z.png",
+      "nonTargetPreserved": true
+    },
+    {
+      "view": "issues-viewer",
+      "host": "side",
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-05-958Z.png",
+      "nonTargetPreserved": true
+    }
+  ],
+  "resources": [
+    {
+      "sourceView": "wiki-viewer",
+      "destinationView": "file-viewer",
+      "sourceRelative": "999-Material_Native/001-Owned_Material/PAGE.md",
+      "sourcePath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Wiki/999-Material_Native/001-Owned_Material/PAGE.md",
+      "workspaceId": "material-project",
+      "threadId": "th-533bcc52-786d-4ebc-92f1-81f8f4ac2337",
+      "host": "main",
+      "renderedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Wiki/999-Material_Native/001-Owned_Material/PAGE.md",
+      "sourceVisibleAtInvocation": false,
+      "actualRetainedDOMButton": true,
+      "nonTargetPreserved": true
+    },
+    {
+      "sourceView": "wiki-viewer",
+      "destinationView": "file-viewer",
+      "sourceRelative": "999-Material_Native/001-Owned_Material/PAGE.md",
+      "sourcePath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Wiki/999-Material_Native/001-Owned_Material/PAGE.md",
+      "workspaceId": "material-project",
+      "threadId": "2026-10-07T15-39-58-701",
+      "host": "side",
+      "renderedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Wiki/999-Material_Native/001-Owned_Material/PAGE.md",
+      "sourceVisibleAtInvocation": false,
+      "actualRetainedDOMButton": true,
+      "nonTargetPreserved": true
+    }
+  ],
+  "sends": [
+    {
+      "view": "file-viewer",
+      "threadId": "th-533bcc52-786d-4ebc-92f1-81f8f4ac2337",
+      "requestId": "02edae56c40eeab1f50a75a11bd5facf",
+      "turnId": "bc1b7806-9d04-4514-8798-398c6a4f2ee1",
+      "exchangeId": 1,
+      "attachments": [
+        {
+          "kind": "file",
+          "label": "file:fusion-capture-2026-10-07T22-40-00-642Z.png",
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-00-642Z.png",
+          "sourceName": "fusion-capture-2026-10-07T22-40-00-642Z",
+          "panel": "screenshots",
+          "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-40-00-642Z.png"
+        },
+        {
+          "kind": "file",
+          "label": "file:fusion-capture-2026-10-07T22-40-01-098Z.png",
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-01-098Z.png",
+          "sourceName": "fusion-capture-2026-10-07T22-40-01-098Z",
+          "panel": "screenshots",
+          "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-40-01-098Z.png"
+        },
+        {
+          "kind": "file",
+          "label": "file:fusion-capture-2026-10-07T22-40-00-865Z.png",
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-00-865Z.png",
+          "sourceName": "fusion-capture-2026-10-07T22-40-00-865Z",
+          "panel": "screenshots",
+          "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-40-00-865Z.png"
+        },
+        {
+          "kind": "wiki",
+          "label": "wiki:material-native:owned-material",
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Wiki/999-Material_Native/001-Owned_Material/PAGE.md",
+          "sourceName": "Owned Material",
+          "panel": "wiki-viewer",
+          "relativePath": "999-Material_Native/001-Owned_Material/PAGE.md"
+        }
+      ],
+      "noOptimisticBubble": true,
+      "exactACKClear": true,
+      "nonTargetPreserved": true
+    },
+    {
+      "view": "file-viewer",
+      "threadId": "2026-10-07T15-39-58-701",
+      "requestId": "0d351af91ff9a4061e5d4ccbefefd111",
+      "turnId": "0ce6416d-4b4f-4b2b-a43b-aa8492ae6739",
+      "exchangeId": 2,
+      "attachments": [
+        {
+          "kind": "file",
+          "label": "file:fusion-capture-2026-10-07T22-40-00-865Z.png",
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-00-865Z.png",
+          "sourceName": "fusion-capture-2026-10-07T22-40-00-865Z",
+          "panel": "screenshots",
+          "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-40-00-865Z.png"
+        },
+        {
+          "kind": "file",
+          "label": "file:fusion-capture-2026-10-07T22-40-01-337Z.png",
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-01-337Z.png",
+          "sourceName": "fusion-capture-2026-10-07T22-40-01-337Z",
+          "panel": "screenshots",
+          "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-40-01-337Z.png"
+        },
+        {
+          "kind": "file",
+          "label": "file:fusion-capture-2026-10-07T22-40-00-642Z.png",
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-00-642Z.png",
+          "sourceName": "fusion-capture-2026-10-07T22-40-00-642Z",
+          "panel": "screenshots",
+          "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-40-00-642Z.png"
+        },
+        {
+          "kind": "wiki",
+          "label": "wiki:material-native:owned-material",
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Wiki/999-Material_Native/001-Owned_Material/PAGE.md",
+          "sourceName": "Owned Material",
+          "panel": "wiki-viewer",
+          "relativePath": "999-Material_Native/001-Owned_Material/PAGE.md"
+        }
+      ],
+      "noOptimisticBubble": true,
+      "exactACKClear": true,
+      "nonTargetPreserved": true
+    },
+    {
+      "view": "issues-viewer",
+      "threadId": "th-009df652-7f4c-4518-b224-51a3dfb1f67a",
+      "requestId": "f03d1c6a6f35c838f3a872c2c72db12d",
+      "turnId": "80fcd758-7371-4671-b887-11028b22786e",
+      "exchangeId": 3,
+      "attachments": [
+        {
+          "kind": "file",
+          "label": "file:fusion-capture-2026-10-07T22-40-05-958Z.png",
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-05-958Z.png",
+          "sourceName": "fusion-capture-2026-10-07T22-40-05-958Z",
+          "panel": "screenshots",
+          "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-40-05-958Z.png"
+        },
+        {
+          "kind": "file",
+          "label": "file:fusion-capture-2026-10-07T22-40-06-444Z.png",
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-06-444Z.png",
+          "sourceName": "fusion-capture-2026-10-07T22-40-06-444Z",
+          "panel": "screenshots",
+          "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-40-06-444Z.png"
+        },
+        {
+          "kind": "file",
+          "label": "file:fusion-capture-2026-10-07T22-40-06-186Z.png",
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-06-186Z.png",
+          "sourceName": "fusion-capture-2026-10-07T22-40-06-186Z",
+          "panel": "screenshots",
+          "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-40-06-186Z.png"
+        }
+      ],
+      "noOptimisticBubble": true,
+      "exactACKClear": true,
+      "nonTargetPreserved": true
+    },
+    {
+      "view": "issues-viewer",
+      "threadId": "2026-10-07T15-40-04-869",
+      "requestId": "4f0dd0d102df54ba92d94e61328c45d2",
+      "turnId": "1de44924-f26c-4ec0-a1cd-37b840d537f2",
+      "exchangeId": 4,
+      "attachments": [
+        {
+          "kind": "file",
+          "label": "file:fusion-capture-2026-10-07T22-40-06-186Z.png",
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-06-186Z.png",
+          "sourceName": "fusion-capture-2026-10-07T22-40-06-186Z",
+          "panel": "screenshots",
+          "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-40-06-186Z.png"
+        },
+        {
+          "kind": "file",
+          "label": "file:fusion-capture-2026-10-07T22-40-06-702Z.png",
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-06-702Z.png",
+          "sourceName": "fusion-capture-2026-10-07T22-40-06-702Z",
+          "panel": "screenshots",
+          "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-40-06-702Z.png"
+        },
+        {
+          "kind": "file",
+          "label": "file:fusion-capture-2026-10-07T22-40-05-958Z.png",
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-40-05-958Z.png",
+          "sourceName": "fusion-capture-2026-10-07T22-40-05-958Z",
+          "panel": "screenshots",
+          "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-40-05-958Z.png"
+        }
+      ],
+      "noOptimisticBubble": true,
+      "exactACKClear": true,
+      "nonTargetPreserved": true
+    }
+  ],
+  "inputEventCount": 17,
+  "spaceKeyEvents": 0,
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "lingeringOwnedPids": [],
+  "tempRootPresentNow": false,
+  "limits": [
+    "Deterministic staged provider and inherited admission/ACK fault seams; no public provider certification.",
+    "Capture IPC, preload, screenshot save/path protection, production renderer and SQLite persistence remain actual.",
+    "Only bounded synthetic fixture prompts and image hashes/dimensions are retained; no PNG payload copied.",
+    "Actual retained Wiki source button DOM-dispatched while hidden, with foreground Main/Side destination mounted; visible controlled renderer A04 independently passed.",
+    "Native17 unexpected trailing-space cause remains unknown/unattributed. It remains FAIL; native18 kept the exact draft-preservation oracle and passed with read-only event observations.",
+    "Native normal accepted snapshot/other-owner preservation and actual ACK/persistence observed; newer draft and remove/re-add generation adversaries remain controlled renderer coverage."
+  ]
+}

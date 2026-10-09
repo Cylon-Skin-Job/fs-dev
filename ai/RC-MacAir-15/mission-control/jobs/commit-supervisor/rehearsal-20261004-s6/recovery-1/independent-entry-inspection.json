@@ -1,0 +1,2710 @@
+{
+  "at": "2026-10-04T20:37:38.518813+00:00",
+  "actor": "/root/s6_supervisor_recovery_1",
+  "actual_predecessor_native_terminal": "Observed exact collaboration.list_agents subtree completed unmet-gate/native END/no descendants",
+  "native_current_tree": "Only /root and this actor running among all returned agents; this actor has no children",
+  "root_disjoint_scope": "Explicit root assignment; root owns E, no private writers; unique recovery-1 ownership",
+  "raw_predecessor_records_full_parsed": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/activation.json",
+      "sha256": "bc790f160fe692c8d57b2516a959db56da1dca4fcdcbda57bca3ccfe5abccbc7",
+      "field_count": 26,
+      "size": 9396
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/actual-owned-stop.command.json",
+      "sha256": "5b112a201bc6951eae3376b5272c3f99a0804f3cda0bd33b1eda92f32a76e007",
+      "field_count": 12,
+      "size": 1568
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-branch.command.json",
+      "sha256": "afd73452a8ec0a6aa0504994585fe60c7316fd4ac70c3c891596c2dcd8b97073",
+      "field_count": 12,
+      "size": 1270
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-configuration.command.json",
+      "sha256": "c71a8f037fe9752f904b9c315d9e3203e6441caf0a542553a8db513b59a465b1",
+      "field_count": 12,
+      "size": 2804
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-head.command.json",
+      "sha256": "37d99df732ef6e3e743ae9acb57c7e53b7e86fd04ebf3e23a3fa782a8264dcb0",
+      "field_count": 12,
+      "size": 1296
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-index-flags.command.json",
+      "sha256": "6c602dc558379077289666700f56d0ed88e0f8adaa737d1cebbdf61e4c0e597c",
+      "field_count": 12,
+      "size": 327330
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-index-stage.command.json",
+      "sha256": "0669deba5c762afb57bef41d94739e5954bd35a429227d10070aa6a88fc6149b",
+      "field_count": 12,
+      "size": 534654
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-reflogs.command.json",
+      "sha256": "eb33a03431d072e59bf53069fa584bbdc37e824d7e236aaa29e25bdc5e1a616f",
+      "field_count": 12,
+      "size": 2056
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-refs.command.json",
+      "sha256": "cd64d5c7055dd549df27a585bd070ed176a7e818da4fe2d9df3ff10d92907097",
+      "field_count": 12,
+      "size": 2600
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-remotes.command.json",
+      "sha256": "26a9294cd8f3132ed40d8de1666179facae4408a2f7950ab34f4a24e0d50cb2a",
+      "field_count": 12,
+      "size": 1365
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-status.command.json",
+      "sha256": "2ba16c1a990093a3dcba0f43c0cf3c82eb888ccbd90face193026c159cb7e44e",
+      "field_count": 12,
+      "size": 9214
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-processes.json",
+      "sha256": "5f24597759a05efd66b0eca93ea49362c791052435e33f6c314187fa4e844ca8",
+      "field_count": 8,
+      "size": 324320
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-branch.command.json",
+      "sha256": "ecd6b1ec1d4659a136dfe3a619e07140cca47c629a08de46abccf40acf156f98",
+      "field_count": 12,
+      "size": 1287
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-configuration.command.json",
+      "sha256": "930eb60a9e5dce976a4fdb6b9883a5eeb5964bd76e5b0225e5077cdbc8f1ab6d",
+      "field_count": 12,
+      "size": 3634
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-head.command.json",
+      "sha256": "5f2a7dfe438439b43966c76e8040d9c6b0c5c4e86bde6839c69660cba6439553",
+      "field_count": 12,
+      "size": 1272
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-index-flags.command.json",
+      "sha256": "11406431ff045e73aeca647bb9feef90e1a5e9722c3603d8ac6c8def96409f1a",
+      "field_count": 12,
+      "size": 327183
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-index-stage.command.json",
+      "sha256": "7d0fdd4ef69b4401ab34940ebde5ff9cc217ae9021c80282e5d5257f65e129c5",
+      "field_count": 12,
+      "size": 534360
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-reflogs.command.json",
+      "sha256": "a8d157558b8a8402f33167d2c673b5674ec898fe3cfb31607d6646d57efd3ec9",
+      "field_count": 12,
+      "size": 16473
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-refs.command.json",
+      "sha256": "a94cbcd054752a09d5a5dbee5049203a342ddfb3f3d4a0ffa2e162c5762f1d98",
+      "field_count": 12,
+      "size": 9007
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-remotes.command.json",
+      "sha256": "c9879ab257519a92b3d86f797dd5c612a0a6cfb333e01f83dd795493332db398",
+      "field_count": 12,
+      "size": 1480
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-status.command.json",
+      "sha256": "cb3247135981f9cf4fbf692633366e0e5c7f76853c51c93c86df719171c8413a",
+      "field_count": 12,
+      "size": 2365431
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-0.command.json",
+      "sha256": "137a72546aac527801b59fc73aa03e007883873533b75ca4762e0d74b4fd157d",
+      "field_count": 12,
+      "size": 1735
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-1.command.json",
+      "sha256": "9945ba0ee7758c070868f752b817556055fa6c09a5c8ff99cfe96d30f08527ae",
+      "field_count": 12,
+      "size": 1769
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-2.command.json",
+      "sha256": "1f4d1e9bd2bd19dbfc47fcd0b52e3b02e2ab44560d0b80e8382580759e013833",
+      "field_count": 12,
+      "size": 1758
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-3.command.json",
+      "sha256": "eaa6e155a981a595043c470442e5d53a8fa45390bba430af304ad2b68273ba8b",
+      "field_count": 12,
+      "size": 1770
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-4.command.json",
+      "sha256": "16b848074b53882147c684fc747ed09439bfbc9e21db643f2bfeb5e11a8304f9",
+      "field_count": 12,
+      "size": 1759
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption.json",
+      "sha256": "b0f547f2b5b66793c0ebedf083f8d0f293935ac90c5ab370c113be1223f845c7",
+      "field_count": 15,
+      "size": 11710237
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-private-add-before-worktree.json",
+      "sha256": "63ec78c25317932d5f7c33ec9672bc43117d5ff15e325d4ac3150d33851f2d30",
+      "field_count": 5,
+      "size": 1937162
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-branch.command.json",
+      "sha256": "b828485d25545e0d76ea923ff8e77544ea6124a8f1ac4d2a4a84e93af72877e7",
+      "field_count": 12,
+      "size": 1254
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-configuration.command.json",
+      "sha256": "925ec1421daf6b748646a30c6cc1fa98d4fc8b8a8850e89112425a63dea8fad7",
+      "field_count": 12,
+      "size": 2788
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-head.command.json",
+      "sha256": "2c8c1f7774cd68479c06e526fb8e488f89f93e0a25b09f3fb57ac9171a59808d",
+      "field_count": 12,
+      "size": 1280
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-index-flags.command.json",
+      "sha256": "c0fca41496ec707a428f7dbdff129a0889a752326e4a6608766b51efb993fe6b",
+      "field_count": 12,
+      "size": 327314
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-index-stage.command.json",
+      "sha256": "0dd7360d541515f27cbd4d234d8f95031baae8ddcc23a155954251d3d4255032",
+      "field_count": 12,
+      "size": 534638
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-reflogs.command.json",
+      "sha256": "19f3844b021764a8a5a7ed6ded1694709cc7ef4e0843959e1ad8d75aed69e1bb",
+      "field_count": 12,
+      "size": 2040
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-refs.command.json",
+      "sha256": "0e216dec7df9d7e9b16d3359bef399cb4bb39fc9f17330323a5096c25057ffc1",
+      "field_count": 12,
+      "size": 2584
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-remotes.command.json",
+      "sha256": "c7ef672c589f3dc1155c9d8fb94c0a9c02fdcd4d0f42bf9f1af3ffccb2c97ac8",
+      "field_count": 12,
+      "size": 1349
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-status.command.json",
+      "sha256": "96872d1adc9c4d4155ee89bf4b12fa9b8cf49f01c8e3df232a9bcbdfebbccc3c",
+      "field_count": 12,
+      "size": 9153
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-process-readback.command.json",
+      "sha256": "ade2b84e43c3d7c26477f425d501965729ee8df14e7d3525984e439da68661a5",
+      "field_count": 12,
+      "size": 2269
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-processes.json",
+      "sha256": "31c18a5d01e076d06badfd44d573306a73eadd924d09dfde56d7ab628ed3ee54",
+      "field_count": 8,
+      "size": 323191
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-branch.command.json",
+      "sha256": "510500141527450971491bfef46787b19a759961fee644e4e23b86c1a974c4f7",
+      "field_count": 12,
+      "size": 1271
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-configuration.command.json",
+      "sha256": "73633f26dd8eb974e59d07ed6cf9ffec662a66910cc9f52d763e08c15f981c9f",
+      "field_count": 12,
+      "size": 3618
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-head.command.json",
+      "sha256": "079a0c593e8d9d5f1e0c0cdfdf89cde765fa3e6bca79acb825c8c4a505add2a1",
+      "field_count": 12,
+      "size": 1256
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-index-flags.command.json",
+      "sha256": "7162865716e4ae46221027dc94f50180887fcc4ef1b797e6df224dc3a11309a5",
+      "field_count": 12,
+      "size": 327167
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-index-stage.command.json",
+      "sha256": "fe70452e85ec1a084335586120e29b9628f7756c3de72cc1b6a2b36e80677600",
+      "field_count": 12,
+      "size": 534344
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-reflogs.command.json",
+      "sha256": "ae9accd7af16f417161180520df34e93b7fd462d77b9a769f525111d0cb6e07a",
+      "field_count": 12,
+      "size": 16457
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-refs.command.json",
+      "sha256": "854086dcfd719538287e3dd9c4d0918764c9a7360b6202f77cc3e88af141eabe",
+      "field_count": 12,
+      "size": 8991
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-remotes.command.json",
+      "sha256": "6f8e59154dcc55cb3f68e6d4fc21c7893b6dac807f6c51a2e8d74612f0224336",
+      "field_count": 12,
+      "size": 1464
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-status.command.json",
+      "sha256": "8443ab2ff6ac6396046d3d37dd4ddcf96eac97566f713655006314e64a93b517",
+      "field_count": 12,
+      "size": 2317901
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-verify-0.command.json",
+      "sha256": "845039d9237e7987b702b4e77a1704df7e23b639363c358f487c145d5e6f59a6",
+      "field_count": 12,
+      "size": 1719
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-verify-1.command.json",
+      "sha256": "4965fe76e5296253909de66d3653eab30e8d7c5f903f954318053dab23ebade7",
+      "field_count": 12,
+      "size": 1753
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-verify-2.command.json",
+      "sha256": "fa3a71f1ce521a1bfff6488a9503abbe97295b9fc1b99965a04b013a88aabbda",
+      "field_count": 12,
+      "size": 1742
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-verify-3.command.json",
+      "sha256": "150c9b5f28a48719b8e48600f60480948a6224d94f3e84085598051b6999477f",
+      "field_count": 12,
+      "size": 1754
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-verify-4.command.json",
+      "sha256": "86dd2c83a7614d8b1d2e9f2352e00d65deaac7f0de1268a6f55c890c40cfa7b5",
+      "field_count": 12,
+      "size": 1741
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop.json",
+      "sha256": "53013df6432f8e1acad7484abc4132c01c3caac6be32a00f9bccc5eb137ca302",
+      "field_count": 15,
+      "size": 11662174
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-branch.command.json",
+      "sha256": "3374695bd43c6b58f3933775b7a392c5c41707138e9a4e610add0748ca8ac04d",
+      "field_count": 12,
+      "size": 1256
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-configuration.command.json",
+      "sha256": "6e2621606a7716e766a527173267f8ac30fff8d6742777d3af88ecb0b2905129",
+      "field_count": 12,
+      "size": 2790
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-head.command.json",
+      "sha256": "ef083c985e0c7c8e78ac757b18d2a15b6bdd0b1d0c7a4a5a41f9ecc273e06b1c",
+      "field_count": 12,
+      "size": 1282
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-index-flags.command.json",
+      "sha256": "095da9c6ce6e521ac345f72dd609d3677fcbfc434a73c830ccd0d7cc68df3011",
+      "field_count": 12,
+      "size": 327316
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-index-stage.command.json",
+      "sha256": "86d190a5d92dd8df0fc1e3f68519f43c5026df24937e234d36e056c86ed4753d",
+      "field_count": 12,
+      "size": 534640
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-reflogs.command.json",
+      "sha256": "e468f46b36c9394758512490cfaae1d34c32c172df4ee0bfc1a4ae982b9a2a07",
+      "field_count": 12,
+      "size": 2042
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-refs.command.json",
+      "sha256": "f9f4fc239a03034d2fb9c0204960d9c495288d696750b67ce9c21a864ab20e6a",
+      "field_count": 12,
+      "size": 2586
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-remotes.command.json",
+      "sha256": "e8c1312ed68354755ac2b70ead7ef23f86e16218c634be64d2242f4de45f23ba",
+      "field_count": 12,
+      "size": 1351
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-status.command.json",
+      "sha256": "121d8171cf0f5c75dd59ef554bccdd24cb455071a96593c05d044a00c486fb65",
+      "field_count": 12,
+      "size": 9155
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-process-readback.command.json",
+      "sha256": "ad0786b954ab19df42c5c473d00bc4757e2ab6eecfcca4ea7b28467a951dcdce",
+      "field_count": 12,
+      "size": 3543
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-processes.json",
+      "sha256": "926b388fd950dec1a7b52507314d1739a8749673700be10754ed1b544309d917",
+      "field_count": 8,
+      "size": 407192
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-branch.command.json",
+      "sha256": "bcd2a2bfc478165db4a4a6453142a8fef29a660c14795524a101cbf7e9280c64",
+      "field_count": 12,
+      "size": 1273
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-configuration.command.json",
+      "sha256": "d89c6665efdc11530fdab410fba5a079bd84bf50ec4677ad086c385a1710ed1e",
+      "field_count": 12,
+      "size": 3620
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-head.command.json",
+      "sha256": "0ce16e42b4d456ea513365d366db7694f3652f2b275b7d54006f3ed0d0799704",
+      "field_count": 12,
+      "size": 1258
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-index-flags.command.json",
+      "sha256": "8ed758b0ce2e5cfccd7c5879ff31edaae974093b334d8434ea065e4864415856",
+      "field_count": 12,
+      "size": 327169
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-index-stage.command.json",
+      "sha256": "21c54fb719a2a4feb3393d38b034dd538a8c05bc0b9d797a823b98d0a853ef77",
+      "field_count": 12,
+      "size": 534346
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-reflogs.command.json",
+      "sha256": "77700aa20f0b24fd42cf5c74fceaa3bf1edbbe358228166c5c3eba5eb0c78d39",
+      "field_count": 12,
+      "size": 16459
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-refs.command.json",
+      "sha256": "da833a448a6866f5329d040aa614297dcb0598a7d8780415095759fa6af744db",
+      "field_count": 12,
+      "size": 8993
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-remotes.command.json",
+      "sha256": "c7cd560900cca9ec7b9ce76e1282e89a4feae471190c03d8dddfbb6ce5bf5921",
+      "field_count": 12,
+      "size": 1466
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-status.command.json",
+      "sha256": "113c564eb7297e33eb483f35127e661d3922463267b36e2c5edde699e8defe49",
+      "field_count": 12,
+      "size": 2284814
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-verify-0.command.json",
+      "sha256": "03090f7f25efbeb2070bdb5e85f1f100fd893a263e94956b042a0f5a32160a7f",
+      "field_count": 12,
+      "size": 1721
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-verify-1.command.json",
+      "sha256": "0f83533e37a9ad01d0872a12f7221b3736005135217e2549f48a2706e322b875",
+      "field_count": 12,
+      "size": 1755
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-verify-2.command.json",
+      "sha256": "3554b3cd81edd6ab6264778552a85bab44a79db66169ca04e24e3e223da1fd7a",
+      "field_count": 12,
+      "size": 1744
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-verify-3.command.json",
+      "sha256": "3e1edb6577c8f4d1090f89bc91556654ae646d1c5ba43879aaf598c8230a61e7",
+      "field_count": 12,
+      "size": 1756
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-verify-4.command.json",
+      "sha256": "4a01c74966e31f8ab7567f98e72a918f9b3daf4d654ec40ef0f11d780809a3e1",
+      "field_count": 12,
+      "size": 1743
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop.json",
+      "sha256": "e449a675b5f4c308e873acf7f772ce4d41c6c61ddee5f7a90552d76b711c1263",
+      "field_count": 15,
+      "size": 11629371
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/checkpoint.json",
+      "sha256": "144bb5ef8f195a403cd596bc593f543c7b11a0f7b7c0a216305d49936e972008",
+      "field_count": 44,
+      "size": 81987
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/current-ownership.json",
+      "sha256": "a7c1ef484b31055bd50421fa8fd8d1162eababe702d3880f840da04141e692bb",
+      "field_count": 17,
+      "size": 9905
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/deviations.json",
+      "sha256": "2c0672f229289b6226697c3efebfe800743913e2b78ded10ad58676f392ceaec",
+      "field_count": 7,
+      "size": 8682
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/final-preservation-proof.json",
+      "sha256": "1950b6731a0ae137ad9d084b7082349031c7a55b7c807ead5e77d2d98ba8f39f",
+      "field_count": 28,
+      "size": 25768
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/final-process-readback.command.json",
+      "sha256": "506c52257f3b6c1ea0c6ace882b4fb3c6538fc8af62606886f49f8855eaa8f21",
+      "field_count": 12,
+      "size": 2275
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/fixed-checkpoint/owned-paths.json",
+      "sha256": "791d60f4417a51264fb6995743a8bd7e2324c2723279278befc0af39bac7fa57",
+      "field_count": 11,
+      "size": 44305
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/fixed-checkpoint/recovery/manifest.json",
+      "sha256": "a885cde0f24e25d9cea6437edad6b9258f365d3a2db08bcb426d690195e4291a",
+      "field_count": 15,
+      "size": 1332748
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/fixed-checkpoint/restore-guard.json",
+      "sha256": "1055f07580fde5b8be0fdb7754d5d584c6167442225eb79acb9e62c16be59a7e",
+      "field_count": 4,
+      "size": 1245117
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/history/S6-FIRST-INTERRUPTION-UNFINISHED-01/activation.json",
+      "sha256": "bc790f160fe692c8d57b2516a959db56da1dca4fcdcbda57bca3ccfe5abccbc7",
+      "field_count": 26,
+      "size": 9396
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/history/S6-FIRST-INTERRUPTION-UNFINISHED-01/checkpoint.json",
+      "sha256": "144bb5ef8f195a403cd596bc593f543c7b11a0f7b7c0a216305d49936e972008",
+      "field_count": 44,
+      "size": 81987
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/history/S6-FIRST-INTERRUPTION-UNFINISHED-01/deviations.json",
+      "sha256": "2c0672f229289b6226697c3efebfe800743913e2b78ded10ad58676f392ceaec",
+      "field_count": 7,
+      "size": 8682
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/history/S6-FIRST-INTERRUPTION-UNFINISHED-01/lifecycle.json",
+      "sha256": "060ad751c15330c4dc3f95b5dee4f9daa2f10618703eca7dc29b2cde7202cb90",
+      "field_count": 15,
+      "size": 1110
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/interruption-result.json",
+      "sha256": "d57a7d0bf2e0d1644eed9b9859676b669be6fdc3f588cf63808925d03e5e5432",
+      "field_count": 20,
+      "size": 1939358
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/lifecycle.json",
+      "sha256": "060ad751c15330c4dc3f95b5dee4f9daa2f10618703eca7dc29b2cde7202cb90",
+      "field_count": 15,
+      "size": 1110
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/mutation-plan.json",
+      "sha256": "dea99d6c96af905dbe6bba8bbf08167723ca1fb4192645372779b14cf0c51164",
+      "field_count": 16,
+      "size": 2612
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/new-fixed-interrupted-verify.command.json",
+      "sha256": "a88fbb86edbed371251150a02949473def7ca7386df50935eafc2b8132192c24",
+      "field_count": 12,
+      "size": 1769
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/new-fixed-public-capture.command.json",
+      "sha256": "6c7ac5e71ab656517727aab6d81c31a8a8c5d4c542f05df1fc75389d997558a2",
+      "field_count": 12,
+      "size": 1939
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/new-fixed-public-current-guard.command.json",
+      "sha256": "3c0955ca8e9ca86c3817fb4a15465b83f825c8efec70497477c6595645b42710",
+      "field_count": 12,
+      "size": 1860
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/new-fixed-public-verify.command.json",
+      "sha256": "5d9fc39a9093690785fab2ca4fb3e89ff3bc8fbaf41fb8a9df86d1311f27ed6c",
+      "field_count": 12,
+      "size": 1757
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/new-fixed-validation.json",
+      "sha256": "64c69e1c00b83fdf9da705347ca5d7f8e0517ff575371950aac00013d009b239",
+      "field_count": 17,
+      "size": 2603
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/owned-stop.json",
+      "sha256": "36767fc80fc0c84006756ad58d3b3f4f821234ec4258245548d43ddbcb577fa8",
+      "field_count": 7,
+      "size": 6548
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/private-test-only-git-add.command.json",
+      "sha256": "730e04572e0fbe75782519a5dee242684893257a49550105db543c26b4ed4951",
+      "field_count": 12,
+      "size": 1268
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/stop-authority-check.json",
+      "sha256": "bef0ff18ec971df846f709065f45a1c978a1654e19a7b5fdaae3780c47c67e1d",
+      "field_count": 12,
+      "size": 1351
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/stop-comparison.json",
+      "sha256": "68111fd04adfd52c5df30a8cec6ad47ce78e0b08c22db0df688a8e1ff462a022",
+      "field_count": 17,
+      "size": 17937
+    }
+  ],
+  "raw_commands": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/actual-owned-stop.command.json",
+      "sha256": "5b112a201bc6951eae3376b5272c3f99a0804f3cda0bd33b1eda92f32a76e007",
+      "command": [
+        "node",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/stop_rehearsal_runtime.mjs",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/runtime-config-fix-xy.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/owned-stop.json"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/actual-owned-stop.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/actual-owned-stop.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-branch.command.json",
+      "sha256": "afd73452a8ec0a6aa0504994585fe60c7316fd4ac70c3c891596c2dcd8b97073",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "symbolic-ref",
+        "-q",
+        "HEAD"
+      ],
+      "exit_code": 1,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-branch.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-branch.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-configuration.command.json",
+      "sha256": "c71a8f037fe9752f904b9c315d9e3203e6441caf0a542553a8db513b59a465b1",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "config",
+        "--null",
+        "--list",
+        "--show-origin"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-configuration.stdout",
+        "sha256": "0a84192202948bd789d2bd8bbb405668470eb300a3539fcdd609677fb2af310e",
+        "size": 1287
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-configuration.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-head.command.json",
+      "sha256": "37d99df732ef6e3e743ae9acb57c7e53b7e86fd04ebf3e23a3fa782a8264dcb0",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-head.stdout",
+        "sha256": "34f9e8be4e66d70e38a9db6e4c8bbccd8c55baeef42d34d30af2d1a59abd9aa5",
+        "size": 41
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-head.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-index-flags.command.json",
+      "sha256": "6c602dc558379077289666700f56d0ed88e0f8adaa737d1cebbdf61e4c0e597c",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "ls-files",
+        "-v",
+        "-z"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-index-flags.stdout",
+        "sha256": "cbef3778f07e94a58a86d94ba89a1a2e042ad914ca2a53189cf699406238fb75",
+        "size": 304896
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-index-flags.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-index-stage.command.json",
+      "sha256": "0669deba5c762afb57bef41d94739e5954bd35a429227d10070aa6a88fc6149b",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "ls-files",
+        "--stage",
+        "-z"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-index-stage.stdout",
+        "sha256": "619b76b3c3fbd808fc8e29a92a62275b6e5dd746ee0f959ba3347717d229ed8d",
+        "size": 507984
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-index-stage.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-reflogs.command.json",
+      "sha256": "eb33a03431d072e59bf53069fa584bbdc37e824d7e236aaa29e25bdc5e1a616f",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "reflog",
+        "show",
+        "--all",
+        "--format=%H%x00%gD%x00%gs"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-reflogs.stdout",
+        "sha256": "b3f9ae92666f1051972395e9a3e87d3b8e350c190aca9e33e9788320398582c2",
+        "size": 686
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-reflogs.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-refs.command.json",
+      "sha256": "cd64d5c7055dd549df27a585bd070ed176a7e818da4fe2d9df3ff10d92907097",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "for-each-ref",
+        "--format=%(refname)%00%(objectname)"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-refs.stdout",
+        "sha256": "9d16de57b401c2857b4e01e956037365f3ca9669a716562248c6be8faf58472d",
+        "size": 1226
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-refs.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-remotes.command.json",
+      "sha256": "26a9294cd8f3132ed40d8de1666179facae4408a2f7950ab34f4a24e0d50cb2a",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "remote",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-remotes.stdout",
+        "sha256": "1dbd41bb2a2f8430550937a06d19a23bec8caf208cbebeb04221f1d9b99c1c1d",
+        "size": 105
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-remotes.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-status.command.json",
+      "sha256": "2ba16c1a990093a3dcba0f43c0cf3c82eb888ccbd90face193026c159cb7e44e",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "status",
+        "--porcelain=v1",
+        "-z",
+        "--untracked-files=all"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-status.stdout",
+        "sha256": "7aba05859566360671e2be09690943d5d485b845dbaa812492cbb7b16ea96ea0",
+        "size": 7335
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-candidate-status.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-branch.command.json",
+      "sha256": "ecd6b1ec1d4659a136dfe3a619e07140cca47c629a08de46abccf40acf156f98",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "symbolic-ref",
+        "-q",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-branch.stdout",
+        "sha256": "6c852b0b1049db218f0e0a9e640331ed2f9482c8397f3d3361245d866dbc48ba",
+        "size": 39
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-branch.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-configuration.command.json",
+      "sha256": "930eb60a9e5dce976a4fdb6b9883a5eeb5964bd76e5b0225e5077cdbc8f1ab6d",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "config",
+        "--null",
+        "--list",
+        "--show-origin"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-configuration.stdout",
+        "sha256": "15b4867e1facba02e3e54d699d8e9133c336ff6bd3beb6aab997538d77efbcb3",
+        "size": 2031
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-configuration.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-head.command.json",
+      "sha256": "5f2a7dfe438439b43966c76e8040d9c6b0c5c4e86bde6839c69660cba6439553",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-head.stdout",
+        "sha256": "34f9e8be4e66d70e38a9db6e4c8bbccd8c55baeef42d34d30af2d1a59abd9aa5",
+        "size": 41
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-head.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-index-flags.command.json",
+      "sha256": "11406431ff045e73aeca647bb9feef90e1a5e9722c3603d8ac6c8def96409f1a",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "ls-files",
+        "-v",
+        "-z"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-index-flags.stdout",
+        "sha256": "4603377e273a8ba6d8018c27df6ddcc17062078a9c7fdf2bd15c59e95ff33875",
+        "size": 304788
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-index-flags.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-index-stage.command.json",
+      "sha256": "7d0fdd4ef69b4401ab34940ebde5ff9cc217ae9021c80282e5d5257f65e129c5",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "ls-files",
+        "--stage",
+        "-z"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-index-stage.stdout",
+        "sha256": "d7a7443545c6eea1eba91b23480aa376bc0c5cc5dc1f1916a0db3be31972fa81",
+        "size": 507732
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-index-stage.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-reflogs.command.json",
+      "sha256": "a8d157558b8a8402f33167d2c673b5674ec898fe3cfb31607d6646d57efd3ec9",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "reflog",
+        "show",
+        "--all",
+        "--format=%H%x00%gD%x00%gs"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-reflogs.stdout",
+        "sha256": "3c85d595a86ebf59dbbb172261e3d2e4d66db0ce83ef59f4de7c06dbeb722020",
+        "size": 13992
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-reflogs.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-refs.command.json",
+      "sha256": "a94cbcd054752a09d5a5dbee5049203a342ddfb3f3d4a0ffa2e162c5762f1d98",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "for-each-ref",
+        "--format=%(refname)%00%(objectname)"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-refs.stdout",
+        "sha256": "2137fda44918eee605a707a4931a0f12f57125dbab104179ca490556d5e74976",
+        "size": 7435
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-refs.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-remotes.command.json",
+      "sha256": "c9879ab257519a92b3d86f797dd5c612a0a6cfb333e01f83dd795493332db398",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "remote",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-remotes.stdout",
+        "sha256": "9abb3f9017325ce52d6ef5854ceff67e52f31399e3b796f906ce57869372c36d",
+        "size": 240
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-remotes.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-status.command.json",
+      "sha256": "cb3247135981f9cf4fbf692633366e0e5c7f76853c51c93c86df719171c8413a",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "status",
+        "--porcelain=v1",
+        "-z",
+        "--untracked-files=all"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-status.stdout",
+        "sha256": "c87cda0498170c87c51d919c3063240dab9173e229431f8b203ce747f40bfb41",
+        "size": 2286241
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-source-status.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-0.command.json",
+      "sha256": "137a72546aac527801b59fc73aa03e007883873533b75ca4762e0d74b4fd157d",
+      "command": [
+        "python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-0.stdout",
+        "sha256": "0f6b8474f2acf3fb88aceae64bbf2d53c7f1ef1c4f1a16e32688208e41b4b852",
+        "size": 272
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-0.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-1.command.json",
+      "sha256": "9945ba0ee7758c070868f752b817556055fa6c09a5c8ff99cfe96d30f08527ae",
+      "command": [
+        "python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/first-wiki-1"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-1.stdout",
+        "sha256": "288f8a5a0788f9cc0c0eb416632b0e80bc91e9879c62bd272b0b7ae2ad9f7c6d",
+        "size": 272
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-1.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-2.command.json",
+      "sha256": "1f4d1e9bd2bd19dbfc47fcd0b52e3b02e2ab44560d0b80e8382580759e013833",
+      "command": [
+        "python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/first"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-2.stdout",
+        "sha256": "074809ef6417f357520f840c8e9689bc0c382dbf72f0d7b6e50a9afde01a8da6",
+        "size": 272
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-2.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-3.command.json",
+      "sha256": "eaa6e155a981a595043c470442e5d53a8fa45390bba430af304ad2b68273ba8b",
+      "command": [
+        "python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/fix-xy-wiki-1"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-3.stdout",
+        "sha256": "ebf5e824b9cc47ab64e8a5b764b187d99f2f2b0a1905ba428bb6c7fbcf5818d0",
+        "size": 272
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-3.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-4.command.json",
+      "sha256": "16b848074b53882147c684fc747ed09439bfbc9e21db643f2bfeb5e11a8304f9",
+      "command": [
+        "python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/fix-xy"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-4.stdout",
+        "sha256": "cfe6c45ad9d19956446549ef3513629298f13988c8f381672db15d47d1d372ba",
+        "size": 272
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-4.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-branch.command.json",
+      "sha256": "b828485d25545e0d76ea923ff8e77544ea6124a8f1ac4d2a4a84e93af72877e7",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "symbolic-ref",
+        "-q",
+        "HEAD"
+      ],
+      "exit_code": 1,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-branch.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-branch.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-configuration.command.json",
+      "sha256": "925ec1421daf6b748646a30c6cc1fa98d4fc8b8a8850e89112425a63dea8fad7",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "config",
+        "--null",
+        "--list",
+        "--show-origin"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-configuration.stdout",
+        "sha256": "0a84192202948bd789d2bd8bbb405668470eb300a3539fcdd609677fb2af310e",
+        "size": 1287
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-configuration.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-head.command.json",
+      "sha256": "2c8c1f7774cd68479c06e526fb8e488f89f93e0a25b09f3fb57ac9171a59808d",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-head.stdout",
+        "sha256": "34f9e8be4e66d70e38a9db6e4c8bbccd8c55baeef42d34d30af2d1a59abd9aa5",
+        "size": 41
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-head.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-index-flags.command.json",
+      "sha256": "c0fca41496ec707a428f7dbdff129a0889a752326e4a6608766b51efb993fe6b",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "ls-files",
+        "-v",
+        "-z"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-index-flags.stdout",
+        "sha256": "cbef3778f07e94a58a86d94ba89a1a2e042ad914ca2a53189cf699406238fb75",
+        "size": 304896
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-index-flags.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-index-stage.command.json",
+      "sha256": "0dd7360d541515f27cbd4d234d8f95031baae8ddcc23a155954251d3d4255032",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "ls-files",
+        "--stage",
+        "-z"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-index-stage.stdout",
+        "sha256": "dda3d7745f74df970fd5eb429bf26fd78d61369eeedc7d3adf3ef79c4047330a",
+        "size": 507984
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-index-stage.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-reflogs.command.json",
+      "sha256": "19f3844b021764a8a5a7ed6ded1694709cc7ef4e0843959e1ad8d75aed69e1bb",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "reflog",
+        "show",
+        "--all",
+        "--format=%H%x00%gD%x00%gs"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-reflogs.stdout",
+        "sha256": "b3f9ae92666f1051972395e9a3e87d3b8e350c190aca9e33e9788320398582c2",
+        "size": 686
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-reflogs.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-refs.command.json",
+      "sha256": "0e216dec7df9d7e9b16d3359bef399cb4bb39fc9f17330323a5096c25057ffc1",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "for-each-ref",
+        "--format=%(refname)%00%(objectname)"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-refs.stdout",
+        "sha256": "9d16de57b401c2857b4e01e956037365f3ca9669a716562248c6be8faf58472d",
+        "size": 1226
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-refs.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-remotes.command.json",
+      "sha256": "c7ef672c589f3dc1155c9d8fb94c0a9c02fdcd4d0f42bf9f1af3ffccb2c97ac8",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "remote",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-remotes.stdout",
+        "sha256": "1dbd41bb2a2f8430550937a06d19a23bec8caf208cbebeb04221f1d9b99c1c1d",
+        "size": 105
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-remotes.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-status.command.json",
+      "sha256": "96872d1adc9c4d4155ee89bf4b12fa9b8cf49f01c8e3df232a9bcbdfebbccc3c",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "status",
+        "--porcelain=v1",
+        "-z",
+        "--untracked-files=all"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-status.stdout",
+        "sha256": "d2edb64b8c9eb9452a7b12c433a9e2e8a575957558c5aa569e802aaccb59b320",
+        "size": 7295
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-candidate-status.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-process-readback.command.json",
+      "sha256": "ade2b84e43c3d7c26477f425d501965729ee8df14e7d3525984e439da68661a5",
+      "command": [
+        "node",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/process-readback.mjs",
+        "after-stop"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-process-readback.stdout",
+        "sha256": "0af36a5f87d41d0c6d6cda9037b4f14472fe5e58ec53eb9aefa75131aeacfc5c",
+        "size": 860
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-process-readback.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-branch.command.json",
+      "sha256": "510500141527450971491bfef46787b19a759961fee644e4e23b86c1a974c4f7",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "symbolic-ref",
+        "-q",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-branch.stdout",
+        "sha256": "6c852b0b1049db218f0e0a9e640331ed2f9482c8397f3d3361245d866dbc48ba",
+        "size": 39
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-branch.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-configuration.command.json",
+      "sha256": "73633f26dd8eb974e59d07ed6cf9ffec662a66910cc9f52d763e08c15f981c9f",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "config",
+        "--null",
+        "--list",
+        "--show-origin"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-configuration.stdout",
+        "sha256": "15b4867e1facba02e3e54d699d8e9133c336ff6bd3beb6aab997538d77efbcb3",
+        "size": 2031
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-configuration.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-head.command.json",
+      "sha256": "079a0c593e8d9d5f1e0c0cdfdf89cde765fa3e6bca79acb825c8c4a505add2a1",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-head.stdout",
+        "sha256": "34f9e8be4e66d70e38a9db6e4c8bbccd8c55baeef42d34d30af2d1a59abd9aa5",
+        "size": 41
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-head.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-index-flags.command.json",
+      "sha256": "7162865716e4ae46221027dc94f50180887fcc4ef1b797e6df224dc3a11309a5",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "ls-files",
+        "-v",
+        "-z"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-index-flags.stdout",
+        "sha256": "4603377e273a8ba6d8018c27df6ddcc17062078a9c7fdf2bd15c59e95ff33875",
+        "size": 304788
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-index-flags.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-index-stage.command.json",
+      "sha256": "fe70452e85ec1a084335586120e29b9628f7756c3de72cc1b6a2b36e80677600",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "ls-files",
+        "--stage",
+        "-z"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-index-stage.stdout",
+        "sha256": "d7a7443545c6eea1eba91b23480aa376bc0c5cc5dc1f1916a0db3be31972fa81",
+        "size": 507732
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-index-stage.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-reflogs.command.json",
+      "sha256": "ae9accd7af16f417161180520df34e93b7fd462d77b9a769f525111d0cb6e07a",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "reflog",
+        "show",
+        "--all",
+        "--format=%H%x00%gD%x00%gs"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-reflogs.stdout",
+        "sha256": "3c85d595a86ebf59dbbb172261e3d2e4d66db0ce83ef59f4de7c06dbeb722020",
+        "size": 13992
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-reflogs.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-refs.command.json",
+      "sha256": "854086dcfd719538287e3dd9c4d0918764c9a7360b6202f77cc3e88af141eabe",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "for-each-ref",
+        "--format=%(refname)%00%(objectname)"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-refs.stdout",
+        "sha256": "2137fda44918eee605a707a4931a0f12f57125dbab104179ca490556d5e74976",
+        "size": 7435
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-refs.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-remotes.command.json",
+      "sha256": "6f8e59154dcc55cb3f68e6d4fc21c7893b6dac807f6c51a2e8d74612f0224336",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "remote",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-remotes.stdout",
+        "sha256": "9abb3f9017325ce52d6ef5854ceff67e52f31399e3b796f906ce57869372c36d",
+        "size": 240
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-remotes.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-status.command.json",
+      "sha256": "8443ab2ff6ac6396046d3d37dd4ddcf96eac97566f713655006314e64a93b517",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "status",
+        "--porcelain=v1",
+        "-z",
+        "--untracked-files=all"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-status.stdout",
+        "sha256": "8dcdac1b55d4dec62593fcce856319b51652c6504340e1d5421437689fc41a77",
+        "size": 2240172
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-status.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-verify-0.command.json",
+      "sha256": "845039d9237e7987b702b4e77a1704df7e23b639363c358f487c145d5e6f59a6",
+      "command": [
+        "python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-verify-0.stdout",
+        "sha256": "c542170a56b0141a4e4e83a2a1b337533c88dfc4e28c59ab20542fccfbb6d8f0",
+        "size": 272
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-verify-0.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-verify-1.command.json",
+      "sha256": "4965fe76e5296253909de66d3653eab30e8d7c5f903f954318053dab23ebade7",
+      "command": [
+        "python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/first-wiki-1"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-verify-1.stdout",
+        "sha256": "76c462369280f2797ee20f8f348c762617e8eddacc227ae8a05fdf2010d86246",
+        "size": 272
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-verify-1.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-verify-2.command.json",
+      "sha256": "fa3a71f1ce521a1bfff6488a9503abbe97295b9fc1b99965a04b013a88aabbda",
+      "command": [
+        "python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/first"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-verify-2.stdout",
+        "sha256": "3ee24e55f4671e99951017ca2d2a40643a7842283cd0e1acf0d3ba8466f73588",
+        "size": 272
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-verify-2.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-verify-3.command.json",
+      "sha256": "150c9b5f28a48719b8e48600f60480948a6224d94f3e84085598051b6999477f",
+      "command": [
+        "python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/fix-xy-wiki-1"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-verify-3.stdout",
+        "sha256": "faa7d8469ec21b2e0a8ee6b00267f18942015c9573c5d4ddc76bffccf64ef65d",
+        "size": 272
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-verify-3.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-verify-4.command.json",
+      "sha256": "86dd2c83a7614d8b1d2e9f2352e00d65deaac7f0de1268a6f55c890c40cfa7b5",
+      "command": [
+        "python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/fix-xy"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-verify-4.stdout",
+        "sha256": "a185aae3eb00512ee1eea27f9bd3e3e10c0a3c89adb7bba4537c2d42b1723d5b",
+        "size": 270
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-verify-4.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-branch.command.json",
+      "sha256": "3374695bd43c6b58f3933775b7a392c5c41707138e9a4e610add0748ca8ac04d",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "symbolic-ref",
+        "-q",
+        "HEAD"
+      ],
+      "exit_code": 1,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-branch.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-branch.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-configuration.command.json",
+      "sha256": "6e2621606a7716e766a527173267f8ac30fff8d6742777d3af88ecb0b2905129",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "config",
+        "--null",
+        "--list",
+        "--show-origin"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-configuration.stdout",
+        "sha256": "0a84192202948bd789d2bd8bbb405668470eb300a3539fcdd609677fb2af310e",
+        "size": 1287
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-configuration.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-head.command.json",
+      "sha256": "ef083c985e0c7c8e78ac757b18d2a15b6bdd0b1d0c7a4a5a41f9ecc273e06b1c",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-head.stdout",
+        "sha256": "34f9e8be4e66d70e38a9db6e4c8bbccd8c55baeef42d34d30af2d1a59abd9aa5",
+        "size": 41
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-head.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-index-flags.command.json",
+      "sha256": "095da9c6ce6e521ac345f72dd609d3677fcbfc434a73c830ccd0d7cc68df3011",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "ls-files",
+        "-v",
+        "-z"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-index-flags.stdout",
+        "sha256": "cbef3778f07e94a58a86d94ba89a1a2e042ad914ca2a53189cf699406238fb75",
+        "size": 304896
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-index-flags.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-index-stage.command.json",
+      "sha256": "86d190a5d92dd8df0fc1e3f68519f43c5026df24937e234d36e056c86ed4753d",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "ls-files",
+        "--stage",
+        "-z"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-index-stage.stdout",
+        "sha256": "dda3d7745f74df970fd5eb429bf26fd78d61369eeedc7d3adf3ef79c4047330a",
+        "size": 507984
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-index-stage.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-reflogs.command.json",
+      "sha256": "e468f46b36c9394758512490cfaae1d34c32c172df4ee0bfc1a4ae982b9a2a07",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "reflog",
+        "show",
+        "--all",
+        "--format=%H%x00%gD%x00%gs"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-reflogs.stdout",
+        "sha256": "b3f9ae92666f1051972395e9a3e87d3b8e350c190aca9e33e9788320398582c2",
+        "size": 686
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-reflogs.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-refs.command.json",
+      "sha256": "f9f4fc239a03034d2fb9c0204960d9c495288d696750b67ce9c21a864ab20e6a",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "for-each-ref",
+        "--format=%(refname)%00%(objectname)"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-refs.stdout",
+        "sha256": "9d16de57b401c2857b4e01e956037365f3ca9669a716562248c6be8faf58472d",
+        "size": 1226
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-refs.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-remotes.command.json",
+      "sha256": "e8c1312ed68354755ac2b70ead7ef23f86e16218c634be64d2242f4de45f23ba",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "remote",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-remotes.stdout",
+        "sha256": "1dbd41bb2a2f8430550937a06d19a23bec8caf208cbebeb04221f1d9b99c1c1d",
+        "size": 105
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-remotes.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-status.command.json",
+      "sha256": "121d8171cf0f5c75dd59ef554bccdd24cb455071a96593c05d044a00c486fb65",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "status",
+        "--porcelain=v1",
+        "-z",
+        "--untracked-files=all"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-status.stdout",
+        "sha256": "d2edb64b8c9eb9452a7b12c433a9e2e8a575957558c5aa569e802aaccb59b320",
+        "size": 7295
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-candidate-status.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-process-readback.command.json",
+      "sha256": "ad0786b954ab19df42c5c473d00bc4757e2ab6eecfcca4ea7b28467a951dcdce",
+      "command": [
+        "node",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/process-readback.mjs",
+        "before-stop"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-process-readback.stdout",
+        "sha256": "cff0cb6bceb0f1e7fbb652cdfcaa8a5d4b5b895768d9b5dc2751f6581616d736",
+        "size": 2026
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-process-readback.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-branch.command.json",
+      "sha256": "bcd2a2bfc478165db4a4a6453142a8fef29a660c14795524a101cbf7e9280c64",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "symbolic-ref",
+        "-q",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-branch.stdout",
+        "sha256": "6c852b0b1049db218f0e0a9e640331ed2f9482c8397f3d3361245d866dbc48ba",
+        "size": 39
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-branch.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-configuration.command.json",
+      "sha256": "d89c6665efdc11530fdab410fba5a079bd84bf50ec4677ad086c385a1710ed1e",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "config",
+        "--null",
+        "--list",
+        "--show-origin"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-configuration.stdout",
+        "sha256": "15b4867e1facba02e3e54d699d8e9133c336ff6bd3beb6aab997538d77efbcb3",
+        "size": 2031
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-configuration.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-head.command.json",
+      "sha256": "0ce16e42b4d456ea513365d366db7694f3652f2b275b7d54006f3ed0d0799704",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-head.stdout",
+        "sha256": "34f9e8be4e66d70e38a9db6e4c8bbccd8c55baeef42d34d30af2d1a59abd9aa5",
+        "size": 41
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-head.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-index-flags.command.json",
+      "sha256": "8ed758b0ce2e5cfccd7c5879ff31edaae974093b334d8434ea065e4864415856",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "ls-files",
+        "-v",
+        "-z"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-index-flags.stdout",
+        "sha256": "4603377e273a8ba6d8018c27df6ddcc17062078a9c7fdf2bd15c59e95ff33875",
+        "size": 304788
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-index-flags.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-index-stage.command.json",
+      "sha256": "21c54fb719a2a4feb3393d38b034dd538a8c05bc0b9d797a823b98d0a853ef77",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "ls-files",
+        "--stage",
+        "-z"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-index-stage.stdout",
+        "sha256": "d7a7443545c6eea1eba91b23480aa376bc0c5cc5dc1f1916a0db3be31972fa81",
+        "size": 507732
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-index-stage.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-reflogs.command.json",
+      "sha256": "77700aa20f0b24fd42cf5c74fceaa3bf1edbbe358228166c5c3eba5eb0c78d39",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "reflog",
+        "show",
+        "--all",
+        "--format=%H%x00%gD%x00%gs"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-reflogs.stdout",
+        "sha256": "3c85d595a86ebf59dbbb172261e3d2e4d66db0ce83ef59f4de7c06dbeb722020",
+        "size": 13992
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-reflogs.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-refs.command.json",
+      "sha256": "da833a448a6866f5329d040aa614297dcb0598a7d8780415095759fa6af744db",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "for-each-ref",
+        "--format=%(refname)%00%(objectname)"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-refs.stdout",
+        "sha256": "2137fda44918eee605a707a4931a0f12f57125dbab104179ca490556d5e74976",
+        "size": 7435
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-refs.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-remotes.command.json",
+      "sha256": "c7cd560900cca9ec7b9ce76e1282e89a4feae471190c03d8dddfbb6ce5bf5921",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "remote",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-remotes.stdout",
+        "sha256": "9abb3f9017325ce52d6ef5854ceff67e52f31399e3b796f906ce57869372c36d",
+        "size": 240
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-remotes.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-status.command.json",
+      "sha256": "113c564eb7297e33eb483f35127e661d3922463267b36e2c5edde699e8defe49",
+      "command": [
+        "git",
+        "-C",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "status",
+        "--porcelain=v1",
+        "-z",
+        "--untracked-files=all"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-status.stdout",
+        "sha256": "458e16ebccd8c1d94e1f90ec661de424a4957c9c5ab5c378f4ec34066f1d3b31",
+        "size": 2208298
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-source-status.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-verify-0.command.json",
+      "sha256": "03090f7f25efbeb2070bdb5e85f1f100fd893a263e94956b042a0f5a32160a7f",
+      "command": [
+        "python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-verify-0.stdout",
+        "sha256": "c542170a56b0141a4e4e83a2a1b337533c88dfc4e28c59ab20542fccfbb6d8f0",
+        "size": 272
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-verify-0.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-verify-1.command.json",
+      "sha256": "0f83533e37a9ad01d0872a12f7221b3736005135217e2549f48a2706e322b875",
+      "command": [
+        "python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/first-wiki-1"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-verify-1.stdout",
+        "sha256": "76c462369280f2797ee20f8f348c762617e8eddacc227ae8a05fdf2010d86246",
+        "size": 272
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-verify-1.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-verify-2.command.json",
+      "sha256": "3554b3cd81edd6ab6264778552a85bab44a79db66169ca04e24e3e223da1fd7a",
+      "command": [
+        "python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/first"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-verify-2.stdout",
+        "sha256": "3ee24e55f4671e99951017ca2d2a40643a7842283cd0e1acf0d3ba8466f73588",
+        "size": 272
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-verify-2.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-verify-3.command.json",
+      "sha256": "3e1edb6577c8f4d1090f89bc91556654ae646d1c5ba43879aaf598c8230a61e7",
+      "command": [
+        "python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/fix-xy-wiki-1"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-verify-3.stdout",
+        "sha256": "faa7d8469ec21b2e0a8ee6b00267f18942015c9573c5d4ddc76bffccf64ef65d",
+        "size": 272
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-verify-3.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-verify-4.command.json",
+      "sha256": "4a01c74966e31f8ab7567f98e72a918f9b3daf4d654ec40ef0f11d780809a3e1",
+      "command": [
+        "python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/fix-xy"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-verify-4.stdout",
+        "sha256": "a185aae3eb00512ee1eea27f9bd3e3e10c0a3c89adb7bba4537c2d42b1723d5b",
+        "size": 270
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-verify-4.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/final-process-readback.command.json",
+      "sha256": "506c52257f3b6c1ea0c6ace882b4fb3c6538fc8af62606886f49f8855eaa8f21",
+      "command": [
+        "node",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/process-readback.mjs",
+        "after-interruption"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/final-process-readback.stdout",
+        "sha256": "2305aeb306607f21b35bff84ea666184c82c8c13a526756633e51abf86b74045",
+        "size": 868
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/final-process-readback.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/new-fixed-interrupted-verify.command.json",
+      "sha256": "a88fbb86edbed371251150a02949473def7ca7386df50935eafc2b8132192c24",
+      "command": [
+        "python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/fixed-checkpoint"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/new-fixed-interrupted-verify.stdout",
+        "sha256": "d9d6f6c93bcf7ed744eb2f3f11f543d67af84ecbac5c2db8c8727998b5aca5b2",
+        "size": 272
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/new-fixed-interrupted-verify.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/new-fixed-public-capture.command.json",
+      "sha256": "6c7ac5e71ab656517727aab6d81c31a8a8c5d4c542f05df1fc75389d997558a2",
+      "command": [
+        "python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "capture",
+        "--repo",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/fixed-checkpoint",
+        "--paths-file",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/fixed-checkpoint/owned-paths.json"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/new-fixed-public-capture.stdout",
+        "sha256": "c4d4f718085e9251c692827569ca1cd7b931001f95c61a24f5f9e46a51021427",
+        "size": 185
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/new-fixed-public-capture.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/new-fixed-public-current-guard.command.json",
+      "sha256": "3c0955ca8e9ca86c3817fb4a15465b83f825c8efec70497477c6595645b42710",
+      "command": [
+        "python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "guard",
+        "--repo",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/fixed-checkpoint",
+        "--ownership-file",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/current-ownership.json"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/new-fixed-public-current-guard.stdout",
+        "sha256": "b48f155fe2ce43cf1c16478a8f507439774c8d8ff58c45039160f9ca7710d555",
+        "size": 109
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/new-fixed-public-current-guard.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/new-fixed-public-verify.command.json",
+      "sha256": "5d9fc39a9093690785fab2ca4fb3e89ff3bc8fbaf41fb8a9df86d1311f27ed6c",
+      "command": [
+        "python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/fixed-checkpoint"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/new-fixed-public-verify.stdout",
+        "sha256": "82e98afb25396713ec26941d0a66202c9bf5a89e31ce6356e0cb2b9dabc5b013",
+        "size": 270
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/new-fixed-public-verify.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/private-test-only-git-add.command.json",
+      "sha256": "730e04572e0fbe75782519a5dee242684893257a49550105db543c26b4ed4951",
+      "command": [
+        "git",
+        "-C",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+        "add",
+        "--",
+        "rehearsal-inputs/checkpoint.bin"
+      ],
+      "exit_code": 0,
+      "stdout_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/private-test-only-git-add.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      },
+      "stderr_raw": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/private-test-only-git-add.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    }
+  ],
+  "raw_command_count": 78,
+  "exact_current_guard_full_state": true,
+  "before_stop_full_state_equal_after_stop": true,
+  "actual_interruption_exact_paths": [
+    "rehearsal-inputs/checkpoint.bin",
+    "rehearsal-inputs/future-addition.txt"
+  ],
+  "source11977_exact": true,
+  "source_cache193_exact": true,
+  "historical_original_job1224_subset_exact": true,
+  "source_physical_index": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+  "private_original_six_absent": true,
+  "owned_tree_selected": [],
+  "private_server_CDP_ports": [
+    63399,
+    63400
+  ],
+  "private_listeners_absent": true,
+  "protected4_and13_current_identifiers_equal": true,
+  "protected_processes": [
+    {
+      "pid": 60871,
+      "ppid": 77002,
+      "uid": 501,
+      "start": "Sat Oct  3 21:22:16 2026",
+      "command": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron --enable-sandbox --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=15 --time-ticks-at-unix-epoch=-1787580447143061 --launch-time-ticks=3503935959044 --shared-files --field-trial-handle=1718379636,r,271901856987793068,7423984494206817947,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,14208098713619163654,15480727340458708817,4 --trace-process-track-uuid=3190709000367499229 --seatbelt-client=65",
+      "cwd": "/",
+      "executable": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer)",
+      "machine": "RC-MacAir-15",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-MacAir-15"
+      }
+    },
+    {
+      "pid": 60874,
+      "ppid": 77002,
+      "uid": 501,
+      "start": "Sat Oct  3 21:22:16 2026",
+      "command": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron --enable-sandbox --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=17 --time-ticks-at-unix-epoch=-1787580447143061 --launch-time-ticks=3503935972695 --shared-files --field-trial-handle=1718379636,r,271901856987793068,7423984494206817947,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,14208098713619163654,15480727340458708817,4 --trace-process-track-uuid=3190709002241582927 --seatbelt-client=65",
+      "cwd": "/",
+      "executable": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer)",
+      "machine": "RC-MacAir-15",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-MacAir-15"
+      }
+    },
+    {
+      "pid": 77002,
+      "ppid": 1,
+      "uid": 501,
+      "start": "Mon Sep 28 01:40:07 2026",
+      "command": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs",
+      "cwd": "/",
+      "executable": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+      "machine": "RC-MacAir-15",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-MacAir-15"
+      }
+    },
+    {
+      "pid": 77005,
+      "ppid": 77002,
+      "uid": 501,
+      "start": "Mon Sep 28 01:40:07 2026",
+      "command": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=gpu-process --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --gpu-preferences=SAAAAAAAAAAgAQAEAAAAAAAAAAAAAGAAAwAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=1718379636,r,271901856987793068,7423984494206817947,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,14208098713619163654,15480727340458708817,4 --trace-process-track-uuid=3190708988185955192 --seatbelt-client=33",
+      "cwd": "/",
+      "executable": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper",
+      "machine": "RC-MacAir-15",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-MacAir-15"
+      }
+    },
+    {
+      "pid": 77006,
+      "ppid": 77002,
+      "uid": 501,
+      "start": "Mon Sep 28 01:40:07 2026",
+      "command": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --shared-files --field-trial-handle=1718379636,r,271901856987793068,7423984494206817947,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,14208098713619163654,15480727340458708817,4 --trace-process-track-uuid=3190708989122997041 --seatbelt-client=33",
+      "cwd": "/",
+      "executable": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper",
+      "machine": "RC-MacAir-15",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-MacAir-15"
+      }
+    },
+    {
+      "pid": 77007,
+      "ppid": 77002,
+      "uid": 501,
+      "start": "Mon Sep 28 01:40:07 2026",
+      "command": "/opt/homebrew/bin/node /Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+      "cwd": "/",
+      "executable": "/opt/homebrew/Cellar/node/25.6.1/bin/node",
+      "machine": "RC-MacAir-15",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-MacAir-15"
+      }
+    },
+    {
+      "pid": 77021,
+      "ppid": 77002,
+      "uid": 501,
+      "start": "Mon Sep 28 01:40:08 2026",
+      "command": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron --enable-sandbox --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=4 --time-ticks-at-unix-epoch=-1787580447143061 --launch-time-ticks=3004361317231 --shared-files --field-trial-handle=1718379636,r,271901856987793068,7423984494206817947,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,14208098713619163654,15480727340458708817,4 --trace-process-track-uuid=3190708990060038890 --seatbelt-client=58",
+      "cwd": "/",
+      "executable": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer)",
+      "machine": "RC-MacAir-15",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-MacAir-15"
+      }
+    },
+    {
+      "pid": 48636,
+      "ppid": 1,
+      "uid": 501,
+      "start": "Thu Oct  1 12:36:56 2026",
+      "command": "/Applications/Fusion Studio Alpha.app/Contents/MacOS/Fusion Studio",
+      "cwd": "/",
+      "executable": "/Applications/Fusion Studio Alpha.app/Contents/MacOS/Fusion Studio",
+      "machine": "RC-Alpha",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-Alpha",
+        "FUSION_APP_USER_DATA": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha"
+      }
+    },
+    {
+      "pid": 48649,
+      "ppid": 48636,
+      "uid": 501,
+      "start": "Thu Oct  1 12:36:59 2026",
+      "command": "/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Helper.app/Contents/MacOS/Fusion Studio Helper --type=gpu-process --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --gpu-preferences=SAAAAAAAAAAgAQAEAAAAAAAAAAAAAGAAAwAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=1718379636,r,16795560770623469277,17716749696725710851,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,2692029682709582238,14835678179294685137,4 --trace-process-track-uuid=3190708988185955192 --seatbelt-client=33",
+      "cwd": "/",
+      "executable": "/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Helper.app/Contents/MacOS/Fusion Studio Helper",
+      "machine": "RC-Alpha",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-Alpha",
+        "FUSION_APP_USER_DATA": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha"
+      }
+    },
+    {
+      "pid": 48650,
+      "ppid": 48636,
+      "uid": 501,
+      "start": "Thu Oct  1 12:36:59 2026",
+      "command": "/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Helper.app/Contents/MacOS/Fusion Studio Helper --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --shared-files --field-trial-handle=1718379636,r,16795560770623469277,17716749696725710851,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,2692029682709582238,14835678179294685137,4 --trace-process-track-uuid=3190708989122997041 --seatbelt-client=33",
+      "cwd": "/",
+      "executable": "/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Helper.app/Contents/MacOS/Fusion Studio Helper",
+      "machine": "RC-Alpha",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-Alpha",
+        "FUSION_APP_USER_DATA": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha"
+      }
+    },
+    {
+      "pid": 48653,
+      "ppid": 48636,
+      "uid": 501,
+      "start": "Thu Oct  1 12:36:59 2026",
+      "command": "/opt/homebrew/bin/node /Applications/Fusion Studio Alpha.app/Contents/Resources/fusion-studio-server/server.js",
+      "cwd": "/",
+      "executable": "/opt/homebrew/Cellar/node/25.6.1/bin/node",
+      "machine": "RC-Alpha",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-Alpha",
+        "FUSION_APP_USER_DATA": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha"
+      }
+    },
+    {
+      "pid": 48666,
+      "ppid": 48636,
+      "uid": 501,
+      "start": "Thu Oct  1 12:37:00 2026",
+      "command": "/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Helper (Renderer).app/Contents/MacOS/Fusion Studio Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Applications/Fusion Studio Alpha.app/Contents/Resources/app.asar --enable-sandbox --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=4 --time-ticks-at-unix-epoch=-1787580445788457 --launch-time-ticks=3302974863234 --shared-files --field-trial-handle=1718379636,r,16795560770623469277,17716749696725710851,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,2692029682709582238,14835678179294685137,4 --trace-process-track-uuid=3190708990060038890 --seatbelt-client=59",
+      "cwd": "/",
+      "executable": "/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Helper (Renderer).app/Contents/MacOS/Fusion Studio Helper (Renderer)",
+      "machine": "RC-Alpha",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-Alpha",
+        "FUSION_APP_USER_DATA": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha"
+      }
+    },
+    {
+      "pid": 60879,
+      "ppid": 48636,
+      "uid": 501,
+      "start": "Sat Oct  3 21:22:17 2026",
+      "command": "/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Helper (Renderer).app/Contents/MacOS/Fusion Studio Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Applications/Fusion Studio Alpha.app/Contents/Resources/app.asar --enable-sandbox --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=12 --time-ticks-at-unix-epoch=-1787580445788457 --launch-time-ticks=3503937070079 --shared-files --field-trial-handle=1718379636,r,16795560770623469277,17716749696725710851,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,2692029682709582238,14835678179294685137,4 --trace-process-track-uuid=3190708997556373682 --seatbelt-client=65",
+      "cwd": "/",
+      "executable": "/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Helper (Renderer).app/Contents/MacOS/Fusion Studio Helper (Renderer)",
+      "machine": "RC-Alpha",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-Alpha",
+        "FUSION_APP_USER_DATA": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha"
+      }
+    }
+  ],
+  "predecessor_stop_receipt": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/owned-stop.json",
+    "sha256": "36767fc80fc0c84006756ad58d3b3f4f821234ec4258245548d43ddbcb577fa8",
+    "record": {
+      "kind": "OWNED_PRIVATE_RUNTIME_STOP",
+      "selected": [
+        {
+          "pid": 31000,
+          "ppid": 1,
+          "start": "Sun Oct  4 12:25:14 2026",
+          "command": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron /private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/electron/main.cjs --user-data-dir=/private/tmp/mc-s6-commit-supervisor-20261004/profile --remote-debugging-address=127.0.0.1 --remote-debugging-port=63399"
+        },
+        {
+          "pid": 31005,
+          "ppid": 31000,
+          "start": "Sun Oct  4 12:25:14 2026",
+          "command": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=gpu-process --user-data-dir=/private/tmp/mc-s6-commit-supervisor-20261004/profile --gpu-preferences=SAAAAAAAAAAgAQAEAAAAAAAAAAAAAGAAAwAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=1718379636,r,11355849668663044004,1711146649005894036,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,6768352386004976364,8765986939302958312,4 --trace-process-track-uuid=3190708988185955192 --seatbelt-client=33"
+        },
+        {
+          "pid": 31006,
+          "ppid": 31000,
+          "start": "Sun Oct  4 12:25:14 2026",
+          "command": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --user-data-dir=/private/tmp/mc-s6-commit-supervisor-20261004/profile --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --shared-files --field-trial-handle=1718379636,r,11355849668663044004,1711146649005894036,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,6768352386004976364,8765986939302958312,4 --trace-process-track-uuid=3190708989122997041 --seatbelt-client=34"
+        },
+        {
+          "pid": 31008,
+          "ppid": 31000,
+          "start": "Sun Oct  4 12:25:14 2026",
+          "command": "/opt/homebrew/bin/node /private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-server/server.js"
+        },
+        {
+          "pid": 31036,
+          "ppid": 31000,
+          "start": "Sun Oct  4 12:25:15 2026",
+          "command": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/private/tmp/mc-s6-commit-supervisor-20261004/profile --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/electron --enable-sandbox --remote-debugging-port=63399 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=4 --time-ticks-at-unix-epoch=-1787585857101160 --launch-time-ticks=3556058471231 --shared-files --field-trial-handle=1718379636,r,11355849668663044004,1711146649005894036,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,6768352386004976364,8765986939302958312,4 --trace-process-track-uuid=3190708990060038890 --seatbelt-client=61"
+        },
+        {
+          "pid": 31138,
+          "ppid": 31000,
+          "start": "Sun Oct  4 12:25:15 2026",
+          "command": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/private/tmp/mc-s6-commit-supervisor-20261004/profile --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/electron --enable-sandbox --remote-debugging-port=63399 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=5 --time-ticks-at-unix-epoch=-1787585857101160 --launch-time-ticks=3556058827487 --shared-files --field-trial-handle=1718379636,r,11355849668663044004,1711146649005894036,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,6768352386004976364,8765986939302958312,4 --trace-process-track-uuid=3190708990997080739 --seatbelt-client=61"
+        }
+      ],
+      "remaining": [],
+      "repo": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+      "profile": "/private/tmp/mc-s6-commit-supervisor-20261004/profile",
+      "machine": "MC-S6",
+      "at": "2026-10-04T20:15:24.935Z"
+    }
+  },
+  "old_guard_preserved": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/fixed-checkpoint/restore-guard.json",
+    "sha256": "1055f07580fde5b8be0fdb7754d5d584c6167442225eb79acb9e62c16be59a7e"
+  },
+  "matching_schedules": [
+    {
+      "path": "/Users/rccurtrightjr./.codex/automations/chat-ar-orchestrator-hourly-check-in/automation.toml",
+      "sha256": "ec7257312e7c4d5393449d5477dda758932315a3461123d6111baad10353403f",
+      "status": "PAUSED",
+      "matching": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/automations/check-chat-wiki-orchestrator/automation.toml",
+      "sha256": "04db689d5c84a756b2bbcc51c7201385f564ea44baee342448d152ab4c5d1178",
+      "status": "PAUSED",
+      "matching": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/automations/check-provenance-wiki-reconciliation/automation.toml",
+      "sha256": "33e85b9b6843a72c82b2ea8f795aa0127c8f5bf14af508f5172c1b0e621ea794",
+      "status": "PAUSED",
+      "matching": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/automations/check-workspaces-and-views-wiki-orchestrator/automation.toml",
+      "sha256": "1d1fb54ac2a80a20cdc82d75694b2e71e82c66abcf01539b83e4dbb43de0a5b4",
+      "status": "PAUSED",
+      "matching": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/automations/monitor-chokidar-first-draft/automation.toml",
+      "sha256": "7af0ff68f3557f9a4bbf1a79a9574081a33e2d0ee13ed11bd4075f5d698d2cbe",
+      "status": "PAUSED",
+      "matching": false
+    }
+  ],
+  "current_ready": false,
+  "publication_operation_authority": "NONE"
+}

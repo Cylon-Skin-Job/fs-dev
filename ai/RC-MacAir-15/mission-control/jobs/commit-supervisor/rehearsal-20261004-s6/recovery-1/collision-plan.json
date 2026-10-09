@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-04T20:38:45.144335+00:00",
+  "actor": "/root/s6_supervisor_recovery_1",
+  "path": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-inputs/checkpoint.bin",
+  "original": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/collision-known-original.bin",
+    "sha256": "a9c4ca3841b8c8c8ceeb84488d6c501543d0ae673f06e6ae67111d61f9bdb07b",
+    "size": 50
+  },
+  "original_hex": "ff00533620636f6e74726f6c6c656420696e74657272757074696f6e20776f726b747265652044495354494e43540a8100fd",
+  "collision": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/collision-known-value.bin",
+    "sha256": "080cd48020f8b2671028fe577b89c20da31e2193eefbb9f39a95391b41512709",
+    "size": 46
+  },
+  "collision_hex": "00ff5336205345434f4e4420636f6c6c6973696f6e2d6f6e6c792062696e61727920776f726b747265650a8000fc",
+  "allowed_scope": "ONLY working bytes of already-owned binary; no Git staging/index/ref/runtime effects",
+  "saved_guard": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/saved-fixed-fresh-guard.json",
+  "guard_sha256": "43472fa8b44aaefd73a165019ca44b0282ad2978de68d752b40297fa4a437447"
+}

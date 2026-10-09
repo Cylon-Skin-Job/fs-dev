@@ -1,0 +1,13 @@
+{
+  "at": "2026-09-27T07:39:45.720420+00:00",
+  "oldRun": "human-1790491451072-fee1354e",
+  "driverPid": 64110,
+  "electronPid": 64115,
+  "commands": {
+    "driver": "/opt/homebrew/Cellar/node/25.6.1/bin/node /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/human-session.mjs",
+    "electron": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron -r /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/playwright-core/lib/server/electron/loader.js --inspect=0 --remote-debugging-port=0 /var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790491451072-fee1354e-dLMOat/stage/fusion-studio-client/electron/main.cjs --chat-architecture-token=chat-architecture-owner-chat-arch-human-1790491451072-fee1354e"
+  },
+  "root": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790491451072-fee1354e-dLMOat",
+  "preserveAll": true,
+  "signal": "SIGTERM"
+}

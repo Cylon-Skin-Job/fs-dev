@@ -100,15 +100,18 @@ function acceptedPromptFrame(frames: Array<Record<string, unknown>>, content: st
 
 async function insertFixtureAttachment(page: import('@playwright/test').Page, threadId: string,
   attachment: Record<string, unknown>) {
-  const status = await page.evaluate(({ threadId, attachment }) => new Promise<string>((resolve) => {
-    const address = { workspaceId: 'boot-fixture', viewId: 'wa-view',
-      threadGroupId: `wa-group-${threadId}`, threadId };
-    window.dispatchEvent(new CustomEvent('fusion:chat-action', {
-      detail: { target: 'current', delivery: 'insert', attachment, capturedAddress: address,
-        claim: () => {}, complete: (result: { status: string }) => resolve(result.status) },
-    }));
-  }), { threadId, attachment });
-  expect(status).toBe('applied');
+  // Provide only the browser gallery source; actual own-composer begin/commit
+  // and the late ACK owner/generation behavior remain production code.
+  await page.evaluate((item) => {
+    Object.defineProperty(window, 'electronAPI', { configurable: true, value: Object.freeze({ ...window.electronAPI,
+      listScreenshots: async () => [{ name: item.label, path: item.path }],
+      readScreenshot: async () => ({ base64: '', mimeType: 'image/png' }) }) });
+  }, attachment);
+  const composer = page.locator(`.rv-chat-area[data-chat-thread-id="${threadId}"]`).first();
+  await composer.getByRole('button', { name: 'Add', exact: true }).click();
+  await composer.getByRole('menuitem', { name: 'Browse screenshots', exact: true }).click();
+  await page.locator('.rv-hover-icon-modal-row', { hasText: String(attachment.label) }).click();
+  await expect(composer.locator('.rv-chat-attachment-pill')).toHaveCount(1);
 }
 
 async function expectDiagnosticLogsAllowlisted(tap: ConsoleTap, canaries: string[] = []) {

@@ -1,0 +1,35 @@
+{
+  "actor": "/root/s6_supervisor_recovery_1",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "command": [
+    "python3.12",
+    "-B",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+    "guard",
+    "--job",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/public-controls/fix-xy-wiki",
+    "--repo",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+    "--ownership-file",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/ownership-fix-xy-wiki-actual.json"
+  ],
+  "started": "2026-10-04T20:42:03.446287+00:00",
+  "finished": "2026-10-04T20:42:04.259198+00:00",
+  "exit_code": 0,
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "GIT_LITERAL_PATHSPECS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "inherited_git_variables_removed": "ALL GIT_* repository/index/object/alternate variables",
+  "stdout_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/fix-xy-wiki-fresh-guard.stdout",
+    "sha256": "79121fe7cabcf3bb225112d5c08dc207adefb917a80e417983fadb7063836fbe",
+    "size": 109
+  },
+  "stderr_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/fix-xy-wiki-fresh-guard.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  }
+}

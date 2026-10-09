@@ -1,0 +1,100 @@
+{
+  "at": "2026-10-04T17:56:22.384140+00:00",
+  "actor": "/root",
+  "finding": "F-ALL5-01",
+  "validation": "material current-evidence gap confirmed: all six actual executed/imported local files omitted from35-entry reuse",
+  "historical_drift_or_failure_established": false,
+  "missing": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_job_snapshot.py",
+      "sha256": "a7f2413aff9807a495c3cd697f14ab813fa254beb8632ea7c2c49b68929010e6",
+      "bound_in_reuse": false,
+      "imports": [
+        "import json",
+        "import os",
+        "from pathlib import Path",
+        "import sys",
+        "import tempfile",
+        "import unittest",
+        "from unittest.mock import patch",
+        "from snapshot_fixture import Fixture, SCRIPTS, SOURCE",
+        "from job_snapshot import SnapshotError, capture, guard, load, verify",
+        "from snapshot_restore import restore",
+        "from snapshot_state import git, ref_state, semantic"
+      ]
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_review_packet.py",
+      "sha256": "7830ec4b4d0b10cbab76e2403bdfceacf78f334e4777835daaaa2fc4e8746504",
+      "bound_in_reuse": false,
+      "imports": [
+        "import copy",
+        "import hashlib",
+        "import json",
+        "from pathlib import Path",
+        "import subprocess",
+        "import sys",
+        "import tempfile",
+        "import unittest"
+      ]
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_wiki_handoff.py",
+      "sha256": "5a35d5586b11af10fea182f3ec45f44c19a14117223e7a54d5328b5e7afe4269",
+      "bound_in_reuse": false,
+      "imports": [
+        "from datetime import datetime, timezone",
+        "from pathlib import Path",
+        "import re",
+        "import tempfile",
+        "import unittest",
+        "from unittest.mock import patch",
+        "from wiki_fixture import WikiFixture, article, digest, STAMP"
+      ]
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/snapshot_fixture.py",
+      "sha256": "79e1cfa9975f1e0b4e2040dd8b259543d207b3a770ee08ce9f171f5f22fbc2d4",
+      "bound_in_reuse": false,
+      "imports": [
+        "import json",
+        "import os",
+        "from pathlib import Path",
+        "import subprocess",
+        "import sys",
+        "import tempfile",
+        "from snapshot_state import git, ref_state, relevant_state"
+      ]
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/wiki_fixture.py",
+      "sha256": "cd2a1024f2acad7844a06406b7ff3f1794a016da21ffdd2d04abfae859e7a6de",
+      "bound_in_reuse": false,
+      "imports": [
+        "from datetime import datetime, timezone",
+        "import hashlib",
+        "import json",
+        "import os",
+        "from pathlib import Path",
+        "import re",
+        "import shutil",
+        "import subprocess"
+      ]
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+      "sha256": "15a250fb476407020a98740d443e95b612d075515a3500740d6ed56f2222d496",
+      "bound_in_reuse": false,
+      "imports": [
+        "import argparse",
+        "import copy",
+        "import json",
+        "import sys"
+      ]
+    }
+  ],
+  "classification": "repair_required",
+  "resolver": "actual installed revised Supervisor check-provenance repair only",
+  "release": "Renew55 with full actual discovered/imported/oracle/implementation dependencies bound pre/post plus raw command/log, then fresh different final manager/reviewer; affected runtime held",
+  "source_product_Wiki_changes_required": false
+}

@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-07T09:14:13.016163+00:00",
+  "exit_code": 1,
+  "index_validation_exit_code": 0,
+  "diff_check_exit_code": 0,
+  "failed_guard": "Expected only TICKET.md to overlap the former published selector set; BULLETIN.md is also selected.",
+  "observed_owned_deltas": [
+    "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/BULLETIN.md",
+    "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/TICKET.md"
+  ],
+  "scope": "Verification-helper expectation error only; both are explicitly declared handoff documentation edits. No product or document repair was needed.",
+  "correction": "Derive the allowed overlap from the declared changed handoff documents intersected with the immutable original selector set, then require exact equality."
+}

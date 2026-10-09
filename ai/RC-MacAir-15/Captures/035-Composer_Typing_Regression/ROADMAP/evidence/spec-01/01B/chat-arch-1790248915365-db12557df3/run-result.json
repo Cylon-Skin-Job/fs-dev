@@ -1,0 +1,18 @@
+{
+  "runId": "chat-arch-1790248915365-db12557df3",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R4-LATE-DRAFT-RECOVERY",
+      "code": 0,
+      "signal": null,
+      "pid": 17269,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 27017
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

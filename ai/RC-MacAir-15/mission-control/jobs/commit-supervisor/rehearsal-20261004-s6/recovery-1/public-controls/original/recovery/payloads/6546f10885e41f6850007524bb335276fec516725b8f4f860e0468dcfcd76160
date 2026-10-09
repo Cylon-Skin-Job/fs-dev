@@ -1,0 +1,23 @@
+---
+id: RCC-0080
+title: 'Chunk A — File Watcher Core (lib/watch/core.js)'
+assignee: rccurtrightjr
+created: 2026-05-22T00:00:00.000Z
+author: rccurtrightjr
+state: closed
+---
+
+Implemented the centralized chokidar subscription API at `fusion-studio-server/lib/watch/core.js`.
+
+### What shipped
+
+- `subscribe({ id, path, options, handler })` — returns an unsubscribe function
+- Single chokidar instance manager; multiple consumers share one watcher
+- `followSymlinks: true` built in
+- Debounce handled via chokidar config (no hand-rolled debounce in callers)
+- `lib/watch/calendar-watcher.js` migrated to core.js
+
+### Files created / modified
+
+- `lib/watch/core.js` (new)
+- `lib/watch/calendar-watcher.js` (new — replaces lib/calendar/apple/watcher.js)

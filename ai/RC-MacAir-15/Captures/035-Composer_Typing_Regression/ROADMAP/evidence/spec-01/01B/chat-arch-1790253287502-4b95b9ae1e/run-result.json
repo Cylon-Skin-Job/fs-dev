@@ -1,0 +1,68 @@
+{
+  "runId": "chat-arch-1790253287502-4b95b9ae1e",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R5-R6-PUBLIC-ACTIONS",
+      "code": 0,
+      "signal": null,
+      "pid": 58248,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 44871
+    },
+    {
+      "id": "R5-CURRENT-ACTIONS",
+      "code": 0,
+      "signal": null,
+      "pid": 63585,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 14728
+    },
+    {
+      "id": "R6-PRODUCTION-ACTION-OWNER",
+      "code": 0,
+      "signal": null,
+      "pid": 65498,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 45098
+    },
+    {
+      "id": "R5-DIAGNOSTIC-APPEND",
+      "code": 0,
+      "signal": null,
+      "pid": 70969,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 3309
+    },
+    {
+      "id": "R5-CURRENT-OWNER",
+      "code": 0,
+      "signal": null,
+      "pid": 71365,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 2755
+    },
+    {
+      "id": "R6-LIFETIME-BOUNDARIES",
+      "code": 0,
+      "signal": null,
+      "pid": 71705,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 45565
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

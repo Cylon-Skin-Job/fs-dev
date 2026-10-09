@@ -1,0 +1,1649 @@
+{
+  "at": "2026-10-04T13:40:03.091709+00:00",
+  "candidate_identity_sha256": "03739c79e6b7aff698d884828d1686002327c85e9be126014eaf8d00a8e518bf",
+  "components": {
+    "target": {
+      "ref": "refs/remotes/origin/agent/exact-workspace-paths",
+      "commit": "d15792920731f85e45b743519d4af2b807d95a9c"
+    },
+    "sources": [
+      {
+        "commit": "d15792920731f85e45b743519d4af2b807d95a9c",
+        "ref": "HEAD",
+        "repo": "/Users/rccurtrightjr./projects/fs-dev"
+      }
+    ],
+    "owned": {
+      "HANDOFF.md": {
+        "job_created": true,
+        "index": [],
+        "base": [
+          {
+            "kind": "blob",
+            "mode": "100644",
+            "oid": "537a77e2183a56f868c8698f394f5081f1d851ef",
+            "payload": "payloads/81cd3622f762573bd8aac05b34b2eae99eeb8d2294e7959774358f52b12472db",
+            "sha256": "81cd3622f762573bd8aac05b34b2eae99eeb8d2294e7959774358f52b12472db"
+          }
+        ],
+        "flag": null,
+        "worktree": {
+          "kind": "missing"
+        }
+      },
+      "README.md": {
+        "job_created": false,
+        "index": [
+          {
+            "mode": "100644",
+            "oid": "c418c1417b0d4cd0b5853f03b64510a6c4590703",
+            "payload": "payloads/1a3bcaa87815969e3ee5f78013084637447404d66767f4d2b595ec29baa09921",
+            "sha256": "1a3bcaa87815969e3ee5f78013084637447404d66767f4d2b595ec29baa09921",
+            "stage": 0
+          }
+        ],
+        "base": [
+          {
+            "kind": "blob",
+            "mode": "100644",
+            "oid": "03fe283c94dfeb68f3c4a2b38dbfd25c0cff4d9e",
+            "payload": "payloads/cf925f299e244964ca105de96b8e1813ea57c6c53b0fd351853a46c55d795904",
+            "sha256": "cf925f299e244964ca105de96b8e1813ea57c6c53b0fd351853a46c55d795904"
+          }
+        ],
+        "flag": "H",
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/057b9ee3a775c5ec1d062b536bf772c1359b5b9dccddb52fc75f95eb65b68b99",
+          "sha256": "057b9ee3a775c5ec1d062b536bf772c1359b5b9dccddb52fc75f95eb65b68b99"
+        }
+      },
+      "ai/MC-S6/System/config/README.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/fdde29fac771a78a17284efc18dec3b8af8d4dee011195822952fb7c5906a794",
+          "sha256": "fdde29fac771a78a17284efc18dec3b8af8d4dee011195822952fb7c5906a794"
+        }
+      },
+      "ai/MC-S6/System/config/cli.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/279fffa7bdec3188411c78c73cdf027426d82582abf9f14cd692762d8cffd590",
+          "sha256": "279fffa7bdec3188411c78c73cdf027426d82582abf9f14cd692762d8cffd590"
+        }
+      },
+      "ai/MC-S6/System/state/README.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/f5fee53dedca69f4c7535b7d66440a47e06e4a779dc840ea87426a6f06ac6c5f",
+          "sha256": "f5fee53dedca69f4c7535b7d66440a47e06e4a779dc840ea87426a6f06ac6c5f"
+        }
+      },
+      "ai/MC-S6/System/state/state.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/7b91678cbdf5e9dadc0b19210941f0e791ee258387f0d6766bb7e3d9bd5e82e0",
+          "sha256": "7b91678cbdf5e9dadc0b19210941f0e791ee258387f0d6766bb7e3d9bd5e82e0"
+        }
+      },
+      "ai/MC-S6/System/styles/README.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/2d0fad0cb26ac37fa4156f2eb212e87b8d72e61987c98a228f1025e3a10d8be8",
+          "sha256": "2d0fad0cb26ac37fa4156f2eb212e87b8d72e61987c98a228f1025e3a10d8be8"
+        }
+      },
+      "ai/MC-S6/System/styles/capture-viewer.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/c917f9c3990adfc8b3eaad3af2917ac7a423fe3f5e8a2c5c810c03398a58cc90",
+          "sha256": "c917f9c3990adfc8b3eaad3af2917ac7a423fe3f5e8a2c5c810c03398a58cc90"
+        }
+      },
+      "ai/MC-S6/System/styles/components.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/2fd05e353d4fe84b6998b9033f6645373165faee083d2eb76166b593b1eca509",
+          "sha256": "2fd05e353d4fe84b6998b9033f6645373165faee083d2eb76166b593b1eca509"
+        }
+      },
+      "ai/MC-S6/System/styles/file-viewer.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/842d7996a2600d51108975d2cda827662a35b9dbf39046e2ea0d5098f7c0b915",
+          "sha256": "842d7996a2600d51108975d2cda827662a35b9dbf39046e2ea0d5098f7c0b915"
+        }
+      },
+      "ai/MC-S6/System/styles/office-viewer.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/2bad3efb84280d713af2c211df9b2453fa64f4de1ec14e84adb0d7af51f579b9",
+          "sha256": "2bad3efb84280d713af2c211df9b2453fa64f4de1ec14e84adb0d7af51f579b9"
+        }
+      },
+      "ai/MC-S6/System/styles/themes.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/fe243c8ec37650384b5a5bc0adf74a4a88ea2175fd0200f1eb9fd310016ea587",
+          "sha256": "fe243c8ec37650384b5a5bc0adf74a4a88ea2175fd0200f1eb9fd310016ea587"
+        }
+      },
+      "ai/MC-S6/System/styles/themes.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/1f3684383c5d89cb68cb79263181c25f40400ad31f5bcf5ee07e8a1f2ed7dcd6",
+          "sha256": "1f3684383c5d89cb68cb79263181c25f40400ad31f5bcf5ee07e8a1f2ed7dcd6"
+        }
+      },
+      "ai/MC-S6/System/styles/tints.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/a150cd72ff372018be49b9e651120b91f930096cf8f55a66e1f1653e37ef4192",
+          "sha256": "a150cd72ff372018be49b9e651120b91f930096cf8f55a66e1f1653e37ef4192"
+        }
+      },
+      "ai/MC-S6/System/styles/variables.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/ec7bd4b169b64158c59c93e068ec026f01338811fa9512a75236812b915ddfbd",
+          "sha256": "ec7bd4b169b64158c59c93e068ec026f01338811fa9512a75236812b915ddfbd"
+        }
+      },
+      "ai/MC-S6/System/styles/views.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/9735d4198b70b179c9b232ccefe4eabf84bec34c1b55fbe471f6d3faa9c4a858",
+          "sha256": "9735d4198b70b179c9b232ccefe4eabf84bec34c1b55fbe471f6d3faa9c4a858"
+        }
+      },
+      "ai/MC-S6/System/triggers/README.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/7b264eda53d565c1a0a8b3ec63d9f75c959de7265f8f7bc21749c02d34ec5a56",
+          "sha256": "7b264eda53d565c1a0a8b3ec63d9f75c959de7265f8f7bc21749c02d34ec5a56"
+        }
+      },
+      "rehearsal-inputs/checkpoint.bin": {
+        "job_created": false,
+        "index": [
+          {
+            "mode": "100644",
+            "oid": "b1ee6b651353ad755171602d1c10656f206ed6b7",
+            "payload": "payloads/198a4c4bdd369fa70da3cbf62473846ce3c621d9f2c764d7c32a42a9f3fef621",
+            "sha256": "198a4c4bdd369fa70da3cbf62473846ce3c621d9f2c764d7c32a42a9f3fef621",
+            "stage": 0
+          }
+        ],
+        "base": [],
+        "flag": "H",
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/c1c4d11e50d8b29cfde2163ba4009f20ab9c865c877fafe642c2c6918407b8b3",
+          "sha256": "c1c4d11e50d8b29cfde2163ba4009f20ab9c865c877fafe642c2c6918407b8b3"
+        }
+      },
+      "rehearsal-inputs/executable.sh": {
+        "job_created": false,
+        "index": [
+          {
+            "mode": "100644",
+            "oid": "039e4d0069c5c26909f86c505b9de66182e6d1f3",
+            "payload": "payloads/306c6ca7407560340797866e077e053627ad409277d1b9da58106fce4cf717cb",
+            "sha256": "306c6ca7407560340797866e077e053627ad409277d1b9da58106fce4cf717cb",
+            "stage": 0
+          }
+        ],
+        "base": [],
+        "flag": "H",
+        "worktree": {
+          "kind": "file",
+          "mode": 489,
+          "payload": "payloads/306c6ca7407560340797866e077e053627ad409277d1b9da58106fce4cf717cb",
+          "sha256": "306c6ca7407560340797866e077e053627ad409277d1b9da58106fce4cf717cb"
+        }
+      },
+      "rehearsal-inputs/future-addition.txt": {
+        "job_created": true,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "missing"
+        }
+      },
+      "rehearsal-inputs/link": {
+        "job_created": false,
+        "index": [
+          {
+            "mode": "120000",
+            "oid": "18e3b0e9f6b35d9e88e029d0d802d4a475edb961",
+            "payload": "payloads/538307dc9b9ec8eec701980c18916bf0091178f02a9fbac575616d1826a6a7ee",
+            "sha256": "538307dc9b9ec8eec701980c18916bf0091178f02a9fbac575616d1826a6a7ee",
+            "stage": 0
+          }
+        ],
+        "base": [],
+        "flag": "H",
+        "worktree": {
+          "kind": "symlink",
+          "payload": "payloads/71e3e721a0e39cb2340d41435f7f3f6809b228b9e93e515f89528536c21776b0",
+          "sha256": "71e3e721a0e39cb2340d41435f7f3f6809b228b9e93e515f89528536c21776b0"
+        }
+      },
+      "rehearsal-inputs/odd '\" $ ;\t\n -- path.bin": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/73d69e7a355ff66eb68f0c4bad294e4d38b66dfe18d776cbd823ac82538789b5",
+          "sha256": "73d69e7a355ff66eb68f0c4bad294e4d38b66dfe18d776cbd823ac82538789b5"
+        }
+      },
+      "rehearsal-inputs/staged.txt": {
+        "job_created": false,
+        "index": [
+          {
+            "mode": "100644",
+            "oid": "8d7beab599dd3071a85d502b2b2223bb0ce94f76",
+            "payload": "payloads/910b1eb40b6b6604f144f62a90865178189810953f34b01ea8cfce7f52d4054c",
+            "sha256": "910b1eb40b6b6604f144f62a90865178189810953f34b01ea8cfce7f52d4054c",
+            "stage": 0
+          }
+        ],
+        "base": [],
+        "flag": "H",
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/c02637ea6722405da1a589ede385f2a39efc5947d323c9ee47452e3ccf5795d7",
+          "sha256": "c02637ea6722405da1a589ede385f2a39efc5947d323c9ee47452e3ccf5795d7"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Agents/registry.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/993afc9f99a21947a95a024a8bbf0df8fa28ef7444ff4dcab8e816615c5aeb69",
+          "sha256": "993afc9f99a21947a95a024a8bbf0df8fa28ef7444ff4dcab8e816615c5aeb69"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Captures/README.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/8cfde410a7f5eb59c97d8c80a17bdcb40df795be141cbdd03454c50f71ba7a56",
+          "sha256": "8cfde410a7f5eb59c97d8c80a17bdcb40df795be141cbdd03454c50f71ba7a56"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Data/Workspace-db/workspace.db": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/27378cd3e8cfb0d85fb34024d95b2caca46514428429ca5e8ff3acbea46a9d14",
+          "sha256": "27378cd3e8cfb0d85fb34024d95b2caca46514428429ca5e8ff3acbea46a9d14"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/closed/RCC-0080.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/6546f10885e41f6850007524bb335276fec516725b8f4f860e0468dcfcd76160",
+          "sha256": "6546f10885e41f6850007524bb335276fec516725b8f4f860e0468dcfcd76160"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/closed/RCC-0081.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/27655316e1c63d575604413dfab73ee7aeda58c899b876c831be05733dc5ba31",
+          "sha256": "27655316e1c63d575604413dfab73ee7aeda58c899b876c831be05733dc5ba31"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/closed/RCC-0082.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/e88bd34afbd0ace94dbb56875b6d8689920d4e4c313ace3405ba13a42073781b",
+          "sha256": "e88bd34afbd0ace94dbb56875b6d8689920d4e4c313ace3405ba13a42073781b"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/closed/RCC-0083.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/8b9f190b94cf82746017232b0c69d96819429cd246ce9779f3df478b2367562b",
+          "sha256": "8b9f190b94cf82746017232b0c69d96819429cd246ce9779f3df478b2367562b"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/closed/RCC-0084.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/81883f06a92f3fb6b1f745e59407ea65b698c634f3be26f80a664f83859714f4",
+          "sha256": "81883f06a92f3fb6b1f745e59407ea65b698c634f3be26f80a664f83859714f4"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/closed/RCC-0085.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/96773cfccdf13a64028563db33683509fe1aaf18ecdb00c8d280c7c55e96d238",
+          "sha256": "96773cfccdf13a64028563db33683509fe1aaf18ecdb00c8d280c7c55e96d238"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/closed/RCC-0086.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/543c5f47983b64a0d8e39aefc9584d9c0c9c6255fb0454ff3529a6e7a7fa8d78",
+          "sha256": "543c5f47983b64a0d8e39aefc9584d9c0c9c6255fb0454ff3529a6e7a7fa8d78"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/content/sync.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/61a32b900103ba63eb2ad09d3c622d00e7de5a77e5490ed24bae69b3fb6acfca",
+          "sha256": "61a32b900103ba63eb2ad09d3c622d00e7de5a77e5490ed24bae69b3fb6acfca"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/content/tickets.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/46fd3bfd39072ecb8acc8b3edc995f29cd927fe251f3bbc8afec972c9dd7e37f",
+          "sha256": "46fd3bfd39072ecb8acc8b3edc995f29cd927fe251f3bbc8afec972c9dd7e37f"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0071.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/5213aa241c8829f45faf520fccface9b7f94b2ff32335a3fb2eb9dabaa7305e1",
+          "sha256": "5213aa241c8829f45faf520fccface9b7f94b2ff32335a3fb2eb9dabaa7305e1"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0072.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/39ca1a0e488975f47179bb2731adae54a5824d41e34b26fc11c58cf959d6d9d4",
+          "sha256": "39ca1a0e488975f47179bb2731adae54a5824d41e34b26fc11c58cf959d6d9d4"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0073.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/76e03532f375f70a73ac090e52e9c59c467c81883b37d51432fbd956d7aa95d6",
+          "sha256": "76e03532f375f70a73ac090e52e9c59c467c81883b37d51432fbd956d7aa95d6"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0074.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/584121801c616348fb74db571352f78e213eaf8c90746790b0c16cb8c5fc3a3b",
+          "sha256": "584121801c616348fb74db571352f78e213eaf8c90746790b0c16cb8c5fc3a3b"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0076.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/8e1c1a2b7d876c93d524f5c41e413a6f53f8094f0eddcb3d729b14619e9f0a72",
+          "sha256": "8e1c1a2b7d876c93d524f5c41e413a6f53f8094f0eddcb3d729b14619e9f0a72"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0077.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/f2335ba3f5fa7778f6e4971fe9a794d48060fde60fb437168388bd157ab827aa",
+          "sha256": "f2335ba3f5fa7778f6e4971fe9a794d48060fde60fb437168388bd157ab827aa"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0078.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/95ce239f7c23d40869b2c340f49271e3f516acaf5004e61672c047eb60b9d7b9",
+          "sha256": "95ce239f7c23d40869b2c340f49271e3f516acaf5004e61672c047eb60b9d7b9"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0079.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/8b9f1249463381386ec0ea1991e5d01435cd66c14e7372fa7da8d6ff9411d971",
+          "sha256": "8b9f1249463381386ec0ea1991e5d01435cd66c14e7372fa7da8d6ff9411d971"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0087.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/4a31c59d2b998be6f547abf475e52ac23ff6147327e07378f810701df48dc856",
+          "sha256": "4a31c59d2b998be6f547abf475e52ac23ff6147327e07378f810701df48dc856"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0088.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/e2143b993f2589e0d78778f3e5188361d0c57ec3eaecfc06fd793ccc43eeba8b",
+          "sha256": "e2143b993f2589e0d78778f3e5188361d0c57ec3eaecfc06fd793ccc43eeba8b"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0089.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/ad3e7b6f651b43fea2a035b782f2f7921f7a76d28652b963d3e78b1d5473480b",
+          "sha256": "ad3e7b6f651b43fea2a035b782f2f7921f7a76d28652b963d3e78b1d5473480b"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0090.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/07454bcff52819b34321d1d599251035ea4df47b8b3b81eeff8d112cf36b7252",
+          "sha256": "07454bcff52819b34321d1d599251035ea4df47b8b3b81eeff8d112cf36b7252"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0091.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/42cc971044a7487979a59bb7f7b190eaae2d5037d5de0627a3b409c705213ed9",
+          "sha256": "42cc971044a7487979a59bb7f7b190eaae2d5037d5de0627a3b409c705213ed9"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0092.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/9253f0c7a6da7b66159f8077864420c778773f931d18570a6ab9059e209755c3",
+          "sha256": "9253f0c7a6da7b66159f8077864420c778773f931d18570a6ab9059e209755c3"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0093.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/ea67f48e54cabecf456c970124dece4fa7fa61adc5448664989fd137fa1fe00a",
+          "sha256": "ea67f48e54cabecf456c970124dece4fa7fa61adc5448664989fd137fa1fe00a"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0094.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/f7281bae17684c019ccd781f753e4ddcf201c4a30c902346f41a57ddfeacef43",
+          "sha256": "f7281bae17684c019ccd781f753e4ddcf201c4a30c902346f41a57ddfeacef43"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0095.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/44fd89fd10d2745c8801284ca3562e050e10a780b181611f18e15229ab024f69",
+          "sha256": "44fd89fd10d2745c8801284ca3562e050e10a780b181611f18e15229ab024f69"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0096.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/fa55661967f8e46e81b87aced0ab027717c53c465d1f0acb07822ad1489bd02a",
+          "sha256": "fa55661967f8e46e81b87aced0ab027717c53c465d1f0acb07822ad1489bd02a"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0097.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/c3a05ac97f111888f634a2896e3c435aaf30c21f5142bb6bc0fd7e4cec2ab9c0",
+          "sha256": "c3a05ac97f111888f634a2896e3c435aaf30c21f5142bb6bc0fd7e4cec2ab9c0"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Issues/scripts/create-ticket.js": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/fb74bfef1057562c27559e666bdf80c6da0caaf6d4e3fc27a06f16ba73869488",
+          "sha256": "fb74bfef1057562c27559e666bdf80c6da0caaf6d4e3fc27a06f16ba73869488"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/001-capture-viewer/content.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/ce1b76a22e15c77d1cbc96e5144bbeec4b00a9f172fd4b52ec115a0a5128c0d5",
+          "sha256": "ce1b76a22e15c77d1cbc96e5144bbeec4b00a9f172fd4b52ec115a0a5128c0d5"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/001-capture-viewer/manifest.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/c4d80d62444e228c1fdacb0b995c7b9d3c3e3c38fe28901ed21ce6eb0062e888",
+          "sha256": "c4d80d62444e228c1fdacb0b995c7b9d3c3e3c38fe28901ed21ce6eb0062e888"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/001-capture-viewer/onboarding/README.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/2628283c219c5a4371d2290962787b95d6ebad62bbb0daa018d66ebcd51ddd6a",
+          "sha256": "2628283c219c5a4371d2290962787b95d6ebad62bbb0daa018d66ebcd51ddd6a"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/001-capture-viewer/state/state.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 384,
+          "payload": "payloads/77fe6797e2f67e53baa78a76dfe39b980cce2468e17617f677cf768af1815b9b",
+          "sha256": "77fe6797e2f67e53baa78a76dfe39b980cce2468e17617f677cf768af1815b9b"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/001-capture-viewer/styles/icon.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/f9df8ceb80f703ec6625ae6df7bc8084e003e7d51a05dfe6681eb27cb2260952",
+          "sha256": "f9df8ceb80f703ec6625ae6df7bc8084e003e7d51a05dfe6681eb27cb2260952"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/001-capture-viewer/styles/layout.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/30b57655042f71dda88fdbc1c84ba9ade67ec1b3e4a545437a814bc22ccacabf",
+          "sha256": "30b57655042f71dda88fdbc1c84ba9ade67ec1b3e4a545437a814bc22ccacabf"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/001-capture-viewer/styles/layout.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/e129a1dac5cc0f40c50d0a97ce8faa39bf4c8e98a0b4991e844985a71d63f7d7",
+          "sha256": "e129a1dac5cc0f40c50d0a97ce8faa39bf4c8e98a0b4991e844985a71d63f7d7"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/002-file-viewer/content.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/0d1dac64773c2582282fa3b54c8000ff376aee7a208417fbbf6a5f95eaaba5f7",
+          "sha256": "0d1dac64773c2582282fa3b54c8000ff376aee7a208417fbbf6a5f95eaaba5f7"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/002-file-viewer/manifest.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/5568a66753ebfc3e200c78d221c75c7b00ccb54b927b87b41c4586b2aead9406",
+          "sha256": "5568a66753ebfc3e200c78d221c75c7b00ccb54b927b87b41c4586b2aead9406"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/002-file-viewer/onboarding/README.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/baf9bb4943bba79218c8e113bbcb6b1e7d0351a2ee0baef258068074284d1fa5",
+          "sha256": "baf9bb4943bba79218c8e113bbcb6b1e7d0351a2ee0baef258068074284d1fa5"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/002-file-viewer/state/state.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 384,
+          "payload": "payloads/e8ddcfaebc9c5665a75e5ef48e6ed7b537f61c3f44ab5c2d461013acb6808331",
+          "sha256": "e8ddcfaebc9c5665a75e5ef48e6ed7b537f61c3f44ab5c2d461013acb6808331"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/002-file-viewer/styles/icon.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/462dc5d4d151fbcbe810f0074c6b8b8f5038da440a11fe12d4698fc094838ec0",
+          "sha256": "462dc5d4d151fbcbe810f0074c6b8b8f5038da440a11fe12d4698fc094838ec0"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/002-file-viewer/styles/layout.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/7647a840f22cfda7c701a1bec80d6585bd24f82822cb14896eb449c5468c6230",
+          "sha256": "7647a840f22cfda7c701a1bec80d6585bd24f82822cb14896eb449c5468c6230"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/002-file-viewer/styles/layout.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/cfa878c69a3b631dfaec685eb0d340272196ecd4060ef40a7534e5ef48edc991",
+          "sha256": "cfa878c69a3b631dfaec685eb0d340272196ecd4060ef40a7534e5ef48edc991"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/content.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/4d41b0d0ac195fd8982e31bc43be47d029ecf55309881320f3f00f639b540e6c",
+          "sha256": "4d41b0d0ac195fd8982e31bc43be47d029ecf55309881320f3f00f639b540e6c"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/manifest.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/27140a3ab112c1312eb52214f755c8d68f17b9d3d0d7aa3aa7ad3bc1dc20ae03",
+          "sha256": "27140a3ab112c1312eb52214f755c8d68f17b9d3d0d7aa3aa7ad3bc1dc20ae03"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/onboarding/README.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/3615edcac2b859dc900d638c15c1775bd0e990b9a0bdef092396807281d689c0",
+          "sha256": "3615edcac2b859dc900d638c15c1775bd0e990b9a0bdef092396807281d689c0"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/state/state.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 384,
+          "payload": "payloads/3c71a7fd1bc11b59e8923f0293e0c9297239db8242fcb67971f02eecca5a9890",
+          "sha256": "3c71a7fd1bc11b59e8923f0293e0c9297239db8242fcb67971f02eecca5a9890"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/styles/icon.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/929525e540a8abbe213f62829d024341f1deda25f1b93ee45bcda7aae5a245ff",
+          "sha256": "929525e540a8abbe213f62829d024341f1deda25f1b93ee45bcda7aae5a245ff"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/styles/layout.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/eab99c668d2aed4c2b60a13cc6757bc3dfea8cf4a9e611c16e7e09967c5fd34d",
+          "sha256": "eab99c668d2aed4c2b60a13cc6757bc3dfea8cf4a9e611c16e7e09967c5fd34d"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/styles/layout.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/a32cfea6d3b36044bd49457a5f1f7218ed1eff62c372e9ba74a3a247c981d81f",
+          "sha256": "a32cfea6d3b36044bd49457a5f1f7218ed1eff62c372e9ba74a3a247c981d81f"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/styles/themes.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/3d9af655164454a9b38638bf8a5501af196bdd2ab0655f2838561dea9da2e274",
+          "sha256": "3d9af655164454a9b38638bf8a5501af196bdd2ab0655f2838561dea9da2e274"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/004-issues-viewer/content.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/7ab10c21d8c92642dfea5825b8f80b1469bfd0fbbf0c39e12d5d94b4e43f5110",
+          "sha256": "7ab10c21d8c92642dfea5825b8f80b1469bfd0fbbf0c39e12d5d94b4e43f5110"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/004-issues-viewer/manifest.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/f2bc28ff523fcf1daa7154de3dcf00dac47cbb2b25f3fc0023c03ce7e92a9fd1",
+          "sha256": "f2bc28ff523fcf1daa7154de3dcf00dac47cbb2b25f3fc0023c03ce7e92a9fd1"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/004-issues-viewer/onboarding/README.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/cec302fd1378247fe9ecb9d9e0fdb86a0b1122870ae71a690221d75e6262db62",
+          "sha256": "cec302fd1378247fe9ecb9d9e0fdb86a0b1122870ae71a690221d75e6262db62"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/004-issues-viewer/state/state.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/3d5d538219975d11b3b7dfe5b20d6cc65e7a65a736a2b349c447d31b1ca94522",
+          "sha256": "3d5d538219975d11b3b7dfe5b20d6cc65e7a65a736a2b349c447d31b1ca94522"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/004-issues-viewer/styles/icon.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/a42a1e7be3f95ffcc7cee1e2632773bdea45209df29065acebb0022c143be9a5",
+          "sha256": "a42a1e7be3f95ffcc7cee1e2632773bdea45209df29065acebb0022c143be9a5"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/004-issues-viewer/styles/layout.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/1a4e08c253d5eb9927adf96df727ffb7573c71ab7c78357feff5ebd61d020c67",
+          "sha256": "1a4e08c253d5eb9927adf96df727ffb7573c71ab7c78357feff5ebd61d020c67"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/004-issues-viewer/styles/layout.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/6bb67f343e8393d58f718d2bccfb935e6aa1dfd1a7c98da855c1d275ab83f4a2",
+          "sha256": "6bb67f343e8393d58f718d2bccfb935e6aa1dfd1a7c98da855c1d275ab83f4a2"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/005-agents-viewer/content.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/b2a80abd5f1a532ef8ae14811c15fe4f2326cde7ad9c786b01c100f19db9dea4",
+          "sha256": "b2a80abd5f1a532ef8ae14811c15fe4f2326cde7ad9c786b01c100f19db9dea4"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/005-agents-viewer/manifest.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/1e00317a56694c7dca8bd921904c8c9efc8db92c66744338c104ef9d087be388",
+          "sha256": "1e00317a56694c7dca8bd921904c8c9efc8db92c66744338c104ef9d087be388"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/005-agents-viewer/onboarding/README.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/a3269ae9cf09698dcb4a6a3ec9c3f8011968d06eee77bb5bd9628907e6f11cda",
+          "sha256": "a3269ae9cf09698dcb4a6a3ec9c3f8011968d06eee77bb5bd9628907e6f11cda"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/005-agents-viewer/state/state.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/d33b79ceacba1b5665ef0eeb21c427f8fa4f89c3ebd1f504e643fb1c8a8a7c2e",
+          "sha256": "d33b79ceacba1b5665ef0eeb21c427f8fa4f89c3ebd1f504e643fb1c8a8a7c2e"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/005-agents-viewer/styles/icon.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/62aacfe13459cd0fc865b371c3c2921d8f13c5a80699418f9af88fa35ee25fb8",
+          "sha256": "62aacfe13459cd0fc865b371c3c2921d8f13c5a80699418f9af88fa35ee25fb8"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/005-agents-viewer/styles/layout.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/b2d57b5b6dc619f5d14cfac33be73a30a1b537bbb4798eff476153701bef0852",
+          "sha256": "b2d57b5b6dc619f5d14cfac33be73a30a1b537bbb4798eff476153701bef0852"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/005-agents-viewer/styles/layout.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/6bb67f343e8393d58f718d2bccfb935e6aa1dfd1a7c98da855c1d275ab83f4a2",
+          "sha256": "6bb67f343e8393d58f718d2bccfb935e6aa1dfd1a7c98da855c1d275ab83f4a2"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/2b9276858645f88d423fb044816deb3b84049b1be09e74369353549d712f2412",
+          "sha256": "2b9276858645f88d423fb044816deb3b84049b1be09e74369353549d712f2412"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/a93d17d7fe8924d9cc077f4e973c3d94743796930c05c9c24bd76fec203d6b6f",
+          "sha256": "a93d17d7fe8924d9cc077f4e973c3d94743796930c05c9c24bd76fec203d6b6f"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/6e3d4171ec9dd14bff1d521f6d9df9b6afa25bfef0b336dba791e1f7fdfc3184",
+          "sha256": "6e3d4171ec9dd14bff1d521f6d9df9b6afa25bfef0b336dba791e1f7fdfc3184"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/c2ba834be53b0d84b17f2e2bbcde7e3b468ae05903c3b5179ef7070f342428d2",
+          "sha256": "c2ba834be53b0d84b17f2e2bbcde7e3b468ae05903c3b5179ef7070f342428d2"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/content.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/cbcad6c1da38cb52095c6a7971673e937377ccac335cacecdb11fd7c218121e8",
+          "sha256": "cbcad6c1da38cb52095c6a7971673e937377ccac335cacecdb11fd7c218121e8"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/manifest.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/8eba2b68a98a5e7b3c6e5d1222328a1c9e640b2c50020dba1363af09a8d0ea72",
+          "sha256": "8eba2b68a98a5e7b3c6e5d1222328a1c9e640b2c50020dba1363af09a8d0ea72"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/onboarding/README.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/86ad57c6de581dc235aa867e51ad7fc21ca3f063b2d07c7427458b4166483444",
+          "sha256": "86ad57c6de581dc235aa867e51ad7fc21ca3f063b2d07c7427458b4166483444"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/state/state.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/9b71d7665ea7062ba50ed65d29f0b4e5c0376f6e9980d6db04995c62008c1b87",
+          "sha256": "9b71d7665ea7062ba50ed65d29f0b4e5c0376f6e9980d6db04995c62008c1b87"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/styles/icon.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/e76052f8fe2bc92486c29da75a38314a9092eea49fac950834f399e2942f441c",
+          "sha256": "e76052f8fe2bc92486c29da75a38314a9092eea49fac950834f399e2942f441c"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/styles/layout.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/a36c58d25e14c23b045c986df5946ba0d1eef5048e4ce3732dbf9bfdc5f5fa11",
+          "sha256": "a36c58d25e14c23b045c986df5946ba0d1eef5048e4ce3732dbf9bfdc5f5fa11"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/config/README.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/fdde29fac771a78a17284efc18dec3b8af8d4dee011195822952fb7c5906a794",
+          "sha256": "fdde29fac771a78a17284efc18dec3b8af8d4dee011195822952fb7c5906a794"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/config/cli.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/457d5ad3e7c095fed90b0c25acd31e1035193297944fd6f5cb6a7deb19edff52",
+          "sha256": "457d5ad3e7c095fed90b0c25acd31e1035193297944fd6f5cb6a7deb19edff52"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/state/README.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/f5fee53dedca69f4c7535b7d66440a47e06e4a779dc840ea87426a6f06ac6c5f",
+          "sha256": "f5fee53dedca69f4c7535b7d66440a47e06e4a779dc840ea87426a6f06ac6c5f"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/state/state.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/0003ffe914a1fdd95edd960af666b9b19e032ddeec0325587ad1202d2402d368",
+          "sha256": "0003ffe914a1fdd95edd960af666b9b19e032ddeec0325587ad1202d2402d368"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/styles/README.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/2d0fad0cb26ac37fa4156f2eb212e87b8d72e61987c98a228f1025e3a10d8be8",
+          "sha256": "2d0fad0cb26ac37fa4156f2eb212e87b8d72e61987c98a228f1025e3a10d8be8"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/styles/capture-viewer.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/c917f9c3990adfc8b3eaad3af2917ac7a423fe3f5e8a2c5c810c03398a58cc90",
+          "sha256": "c917f9c3990adfc8b3eaad3af2917ac7a423fe3f5e8a2c5c810c03398a58cc90"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/styles/components.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/2fd05e353d4fe84b6998b9033f6645373165faee083d2eb76166b593b1eca509",
+          "sha256": "2fd05e353d4fe84b6998b9033f6645373165faee083d2eb76166b593b1eca509"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/styles/file-viewer.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/842d7996a2600d51108975d2cda827662a35b9dbf39046e2ea0d5098f7c0b915",
+          "sha256": "842d7996a2600d51108975d2cda827662a35b9dbf39046e2ea0d5098f7c0b915"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/styles/office-viewer.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/2bad3efb84280d713af2c211df9b2453fa64f4de1ec14e84adb0d7af51f579b9",
+          "sha256": "2bad3efb84280d713af2c211df9b2453fa64f4de1ec14e84adb0d7af51f579b9"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/styles/themes.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/db1b9d60a94f88bebe0dc1e92f6bc2897d3dea61e1d5b6634849c1b5ce826ecb",
+          "sha256": "db1b9d60a94f88bebe0dc1e92f6bc2897d3dea61e1d5b6634849c1b5ce826ecb"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/styles/themes.json": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/1f3684383c5d89cb68cb79263181c25f40400ad31f5bcf5ee07e8a1f2ed7dcd6",
+          "sha256": "1f3684383c5d89cb68cb79263181c25f40400ad31f5bcf5ee07e8a1f2ed7dcd6"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/styles/tints.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/a150cd72ff372018be49b9e651120b91f930096cf8f55a66e1f1653e37ef4192",
+          "sha256": "a150cd72ff372018be49b9e651120b91f930096cf8f55a66e1f1653e37ef4192"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/styles/variables.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/ec7bd4b169b64158c59c93e068ec026f01338811fa9512a75236812b915ddfbd",
+          "sha256": "ec7bd4b169b64158c59c93e068ec026f01338811fa9512a75236812b915ddfbd"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/styles/views.css": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/9735d4198b70b179c9b232ccefe4eabf84bec34c1b55fbe471f6d3faa9c4a858",
+          "sha256": "9735d4198b70b179c9b232ccefe4eabf84bec34c1b55fbe471f6d3faa9c4a858"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/triggers/README.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/7b264eda53d565c1a0a8b3ec63d9f75c959de7265f8f7bc21749c02d34ec5a56",
+          "sha256": "7b264eda53d565c1a0a8b3ec63d9f75c959de7265f8f7bc21749c02d34ec5a56"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/e2877b2a21a23cce18a7b079d1532a8c7a5a8f30467e369248d75e9750ce527c",
+          "sha256": "e2877b2a21a23cce18a7b079d1532a8c7a5a8f30467e369248d75e9750ce527c"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/002-Navigation_Guide/PAGE.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/7a3058e3ca2a0b793e6c4831487b53098a49c4c80f2f3d91f8a2dbe6463b28ed",
+          "sha256": "7a3058e3ca2a0b793e6c4831487b53098a49c4c80f2f3d91f8a2dbe6463b28ed"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/Wiki/PAGE.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/09d0c7fd6ad2882d50c137412194c6060f2e6d9668d7d3a3e1569f3274ea3a6c",
+          "sha256": "09d0c7fd6ad2882d50c137412194c6060f2e6d9668d7d3a3e1569f3274ea3a6c"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/watcher-proof-current.md": {
+        "job_created": true,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "missing"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/watcher-proof-runtime-1.md": {
+        "job_created": true,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "missing"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/watcher-proof-runtime-2.md": {
+        "job_created": true,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "missing"
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/watcher-proof.md": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/35269c7ee1b986aaece6fb9d2dcafc43d80f79e67d547ec91c73f9bb730fd69f",
+          "sha256": "35269c7ee1b986aaece6fb9d2dcafc43d80f79e67d547ec91c73f9bb730fd69f"
+        }
+      },
+      "restart-fusion.sh": {
+        "job_created": false,
+        "index": [
+          {
+            "mode": "100755",
+            "oid": "0de074c720a7187821349c8b13d525845edf2376",
+            "payload": "payloads/a02c0fa38ffcd89e488ef1785cf83dd2f3476230d8fbaf4916063e9dcedd7380",
+            "sha256": "a02c0fa38ffcd89e488ef1785cf83dd2f3476230d8fbaf4916063e9dcedd7380",
+            "stage": 0
+          }
+        ],
+        "base": [
+          {
+            "kind": "blob",
+            "mode": "100755",
+            "oid": "0de074c720a7187821349c8b13d525845edf2376",
+            "payload": "payloads/a02c0fa38ffcd89e488ef1785cf83dd2f3476230d8fbaf4916063e9dcedd7380",
+            "sha256": "a02c0fa38ffcd89e488ef1785cf83dd2f3476230d8fbaf4916063e9dcedd7380"
+          }
+        ],
+        "flag": "H",
+        "worktree": {
+          "kind": "file",
+          "mode": 493,
+          "payload": "payloads/b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+          "sha256": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952"
+        }
+      },
+      "scripts/fusion-restart-probe.mjs": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e",
+          "sha256": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e"
+        }
+      },
+      "scripts/fusion-restart-processes.mjs": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+          "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181"
+        }
+      },
+      "scripts/fusion-restart-target.mjs": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+          "sha256": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d"
+        }
+      },
+      "scripts/fusion-restart.mjs": {
+        "job_created": false,
+        "index": [],
+        "base": [],
+        "flag": null,
+        "worktree": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+          "sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4"
+        }
+      }
+    },
+    "configuration": {
+      "runtime_config": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/runtime-config.json",
+        "sha256": "59d1a19648dcd983a645d74b303075e16bd9983f809e0618e2475d445b442c33"
+      },
+      "ownership_inventory": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/owned-paths.json",
+        "sha256": "4f091726e92b4c9452b9d9580887ec83672f19d64479ab4ecafc23e3e429e580"
+      }
+    },
+    "fixtures": {
+      "authority_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/authority.md",
+      "sha256": "d56710db1edba2ba6ef8798975fb1fb4808a301b0ea2e46bcb81d6645e251010",
+      "prep_freeze_sha256": "ecaa405bd30b1fb5bbe1ef44a0f271971c7fe72d55a833f7abb6bae8cdc8a7b5"
+    },
+    "authority": {
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md": "b4ec0266a8d72f573dd4f3670c671a856ee5cc98b6942aad48683fa22fb14d68",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md": "27aab53da9edbed9f6ee8ceb4917d7c7531a7de914a3c2df7fb2196b6bd4a20c",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/authority.md": "d56710db1edba2ba6ef8798975fb1fb4808a301b0ea2e46bcb81d6645e251010",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-supervisor.toml": "01887fdc12c962be5a7438b513836e6269cff1f9683b7a17c2edfbf2aa961044",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/runtime-config.json": "59d1a19648dcd983a645d74b303075e16bd9983f809e0618e2475d445b442c33",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/SPEC.md": "6d7b351db87e535b0950f94c42c61d503a3ac3fef6587299dfc024c7887df664",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-fixture-authority-approval.json": "33ac9507b74ff700dc7f25e16a0bc19eb903082e96d51d049f11365afaabeb8d",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-private-paths.json": "4a2147669b54de1366bc6cfb7e8b7102b888990eadb2ba3760714b8464c01665",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/test-controller-controls.json": "724e5234bc2834ec67f5f1e268c5d6a11a057607e867622281371f3bca8cb483",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-supervisor-provider-assignment.md": "fc32e46aee5eecf9761228df9053f5090af4c6c398fec453ed2e17c08142b13b",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/approval-receipt.md": "0de192d5c5f0e422a3ab3301a4376c32b120667f61b03b63f661c0502c150a56"
+    },
+    "preparation": {
+      "baseline": "d15792920731f85e45b743519d4af2b807d95a9c",
+      "method": "Accepted independent no-hardlinks local existing-HEAD clone with current installed restart files and disposable fixture preimages; this intake performs capture only. No new commits/ref/index/checkout writes.",
+      "prior_manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/final-recovery/preparation-recovery/recovery/manifest.json",
+      "prior_manifest_sha256": "fb124d573bfb76944718c9784643d8a925e24d70ce7042b9455f0b56b3073975",
+      "source_index_unowned_preservation": "Current original intake sentinels; own job records excluded from source unowned readback, root execution coordination excluded explicitly."
+    }
+  },
+  "read_only_public_current_sha256": "ee63a5c309a1a72dd36db462f520931e777a701acd237c9350d2d5eee4cf6d73",
+  "manifest_sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb",
+  "claims": "Identity/provenance only; no independent review or app readiness."
+}

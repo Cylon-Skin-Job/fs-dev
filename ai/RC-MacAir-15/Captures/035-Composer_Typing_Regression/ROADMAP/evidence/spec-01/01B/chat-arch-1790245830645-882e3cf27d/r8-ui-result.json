@@ -1,0 +1,103 @@
+{
+  "status": "failed",
+  "flows": {
+    "create": {
+      "groupId": "tg-d7d0168e-9ce0-49f3-abee-638e82c1fafe",
+      "threadId": "2026-09-24T03-30-33-746",
+      "mirror": true
+    },
+    "send": {
+      "accepted": true,
+      "receipt": true,
+      "exchangeId": 1
+    },
+    "stop": {
+      "partial": true,
+      "reason": "interrupted",
+      "threadId": "2026-09-24T03-30-33-746"
+    }
+  },
+  "screenshots": [],
+  "frameCounts": {
+    "shell-auth:challenge": 2,
+    "connected": 2,
+    "workspace:init": 2,
+    "panel_config": 3,
+    "shell-auth:authenticated": 2,
+    "screenshot:list": 2,
+    "file_content_response": 91,
+    "error": 2,
+    "workspace:create_manifest": 1,
+    "workspace:created": 1,
+    "workspace:added": 1,
+    "workspace:registry_changed": 1,
+    "workspace:switched": 1,
+    "file_tree_response": 65,
+    "state:result": 7,
+    "office:palette_state": 2,
+    "thread:list": 4,
+    "panel_changed": 1,
+    "thread:created": 1,
+    "thread:opened": 2,
+    "state:worksurface_result": 1,
+    "wire_ready": 1,
+    "message:sent": 1,
+    "turn_begin": 1,
+    "thread:state_changed": 2,
+    "step_begin": 1,
+    "thinking": 1,
+    "tool_call": 1,
+    "tool_call_args": 1,
+    "tool_result": 1,
+    "status_update": 1,
+    "content": 65,
+    "screenshot:updated": 1,
+    "screenshot:data": 1,
+    "turn_end": 1,
+    "exchange_metadata": 1,
+    "chat-turn:saved": 1,
+    "wire_disconnected": 1,
+    "thread:action:error": 1
+  },
+  "errors": [
+    {
+      "type": "error",
+      "message": "No active workspace"
+    },
+    {
+      "type": "error",
+      "message": "Message handling failed"
+    },
+    {
+      "type": "thread:action:error",
+      "requestId": "866baccd-3ec0-4406-887c-5110646d0141",
+      "action": "move_chat_to_side",
+      "threadGroupId": "tg-d7d0168e-9ce0-49f3-abee-638e82c1fafe",
+      "threadId": "2026-09-24T03-30-33-746",
+      "code": "group_busy",
+      "message": "Thread has an active conversation"
+    }
+  ],
+  "consoleErrors": [
+    "[WS] handler_error",
+    "[WS] handler_error",
+    "[SharedStyles] Failed to load workspace styles: Error: Panel \"__settings__\" is not filesystem-backed\n    at Proxy.R (fusion-shell://app/assets/index-LonvtJmn.js:124:81855)\n    at l (fusion-shell://app/assets/index-LonvtJmn.js:124:75968)\n    at WebSocket.xe (fusion-shell://app/assets/index-LonvtJmn.js:124:76198)",
+    "[WS] handler_error",
+    "[WS] handler_error",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "failure": {
+    "message": "timed out waiting for Move membership",
+    "stack": "Error: timed out waiting for Move membership\n    at waitFor (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs:31:9)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r8-ui-electron.mjs:68:3"
+  },
+  "lingering": [],
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  }
+}

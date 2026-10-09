@@ -1,0 +1,50 @@
+{
+  "at": "2026-10-04T18:31:55.975718+00:00",
+  "kind": "ROOT_RAW_PRESERVATION_CHECK",
+  "source_baseline": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/source-file-baseline.json",
+  "source_baseline_sha256": "f817c70bffa52149cef1db75f58ff6ca1e7c3b983e10811a800f55858a441e74",
+  "source_unowned_baseline_entries_checked": 15943,
+  "source_absences_checked": 68,
+  "owned_baseline_exclusions": 22,
+  "explicit_owned_baseline_paths": [
+    "ai/RC-MacAir-15/mission-control/.agents/skills/mc-review-and-merge/SKILL.md",
+    "ai/RC-MacAir-15/mission-control/.agents/skills/mc-review-and-merge/agents/openai.yaml",
+    "ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-implementation-supervisor/SKILL.md",
+    "ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-review-gate/SKILL.md",
+    "ai/RC-MacAir-15/mission-control/.agents/skills/mission-control/SKILL.md",
+    "ai/RC-MacAir-15/mission-control/.agents/skills/monitor/SKILL.md",
+    "ai/RC-MacAir-15/mission-control/.agents/skills/status/references/report-format.md",
+    "ai/RC-MacAir-15/mission-control/.codex/agents/mc-review-and-merge.toml",
+    "ai/RC-MacAir-15/mission-control/.codex/config.toml",
+    "ai/RC-MacAir-15/mission-control/AGENTS.md",
+    "ai/RC-MacAir-15/mission-control/deployment.md",
+    "ai/RC-MacAir-15/mission-control/handoff.md",
+    "ai/RC-MacAir-15/mission-control/index.json",
+    "ai/RC-MacAir-15/mission-control/mission-control.md",
+    "ai/RC-MacAir-15/mission-control/record-templates.md",
+    "ai/RC-MacAir-15/mission-control/registry.md",
+    "ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "ai/RC-MacAir-15/mission-control/session-contract.md",
+    "ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "ai/RC-MacAir-15/mission-control/todo.md",
+    "restart-fusion.sh"
+  ],
+  "excluded_namespaces": [
+    "ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/",
+    "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/",
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/"
+  ],
+  "drift": {},
+  "source_cache_dependency": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-check-protection-pre.json",
+    "sha256": "a7ad97d06a2179fdc340339639ace60123e3fa2c44020a03fd13c8a6fb3355ee"
+  },
+  "source_cache_entries": 193,
+  "source_cache_drift": {},
+  "source_head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "source_refs_equal_precheck": true,
+  "source_physical_index_sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+  "index_matches_original": true,
+  "limits": "Live profile contents naturally vary and are not hash-stability assertions. Installed owned sources separately bound; real restart Wiki article has not yet been edited. No filesystem/Git mutation by this check."
+}

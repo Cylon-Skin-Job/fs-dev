@@ -1,0 +1,93 @@
+{
+  "caseId": "R9-INDICATOR-DISTINCTION",
+  "status": "passed",
+  "states": [
+    {
+      "label": "prompt-acceptance",
+      "observedAt": 504.90000009536743,
+      "store": {
+        "pendingPromptAcceptance": true,
+        "pendingTurnEnd": false,
+        "pendingExchangeSaveTurnId": null,
+        "currentTurnId": null,
+        "currentTurnStatus": null,
+        "activityTurnId": null,
+        "activityRevision": null
+      },
+      "composerDisabled": true,
+      "warming": 1,
+      "completing": 0,
+      "stop": 0,
+      "send": 0,
+      "assistantActivity": 0
+    },
+    {
+      "label": "turn-finalization",
+      "observedAt": 514.5999999046326,
+      "store": {
+        "pendingPromptAcceptance": false,
+        "pendingTurnEnd": true,
+        "pendingExchangeSaveTurnId": null,
+        "currentTurnId": null,
+        "currentTurnStatus": null,
+        "activityTurnId": null,
+        "activityRevision": null
+      },
+      "composerDisabled": true,
+      "warming": 0,
+      "completing": 1,
+      "stop": 0,
+      "send": 0,
+      "assistantActivity": 0
+    },
+    {
+      "label": "active-work",
+      "observedAt": 525.6999998092651,
+      "store": {
+        "pendingPromptAcceptance": false,
+        "pendingTurnEnd": false,
+        "pendingExchangeSaveTurnId": null,
+        "currentTurnId": "r9-turn",
+        "currentTurnStatus": "streaming",
+        "activityTurnId": "r9-turn",
+        "activityRevision": 1
+      },
+      "composerDisabled": false,
+      "warming": 0,
+      "completing": 0,
+      "stop": 1,
+      "send": 0,
+      "assistantActivity": 1
+    },
+    {
+      "label": "idle",
+      "observedAt": 531.0999999046326,
+      "store": {
+        "pendingPromptAcceptance": false,
+        "pendingTurnEnd": false,
+        "pendingExchangeSaveTurnId": null,
+        "currentTurnId": null,
+        "currentTurnStatus": null,
+        "activityTurnId": null,
+        "activityRevision": null
+      },
+      "composerDisabled": false,
+      "warming": 0,
+      "completing": 0,
+      "stop": 0,
+      "send": 1,
+      "assistantActivity": 0
+    }
+  ],
+  "blockedRenderer": {
+    "label": "blocked-renderer",
+    "startedAt": 532,
+    "endedAt": 607,
+    "composerDisabledBefore": false,
+    "composerDisabledAfter": false
+  },
+  "requestIdentityAvailable": false,
+  "requestIdentityBoundary": "current pendingPromptAcceptance has no requestId; SPEC-02/02A owns that future contract",
+  "distinction": "disabled-state indicators are DOM/state claims; a blocked renderer is measured wall time while the composer remains enabled",
+  "contentCaptured": false
+}

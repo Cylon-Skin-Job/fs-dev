@@ -1,0 +1,157 @@
+/**
+ * @module ChatAreaFooter
+ * @role Chat composer — input, tool triggers, send/stop, context usage bar.
+ *
+ * Portable presentation: explicit state/callbacks from the mount host. The
+ * composer model menu receives the exact `threadId`/`surfaceId` so a selection
+ * and its pending/acknowledged state can never be read from a different mount
+ * (§6.2/§6.3).
+ */
+
+import type { RefObject } from 'react';
+import { ChatInput } from '../ChatInput';
+import { MicTrigger } from '../../mic';
+import { SendButtonGroup } from './SendButtonGroup';
+import { ChatLinkAttachments } from './ChatLinkAttachments';
+import { ChatComposerAddMenu } from './ChatComposerAddMenu';
+import { ChatComposerModeMenu } from './ChatComposerModeMenu';
+import { ChatComposerModelMenu } from './ChatComposerModelMenu';
+import { ChatComposerContextMeter } from './ChatComposerContextMeter';
+import type { BeginChatMaterialSource } from '../../lib/chat-material-source';
+import type { ChatLinkAttachment } from '../../lib/chat-file-links/file-link-types';
+import type { TokenUsage } from '../../types';
+import type { ScreenshotAttachmentOwner } from '../../screenshots/chatScreenshotCapture';
+import type { ChatSurfaceInputHandle, ChatSurfaceModelSelection } from './chatSurfaceContract';
+
+export interface ChatAreaFooterProps {
+  mountId: string;
+  panel: string;
+  inputRef: RefObject<ChatSurfaceInputHandle | null>;
+  onSend: (text: string) => void;
+  onStop: () => void;
+  noThread: boolean;
+  isActive: boolean;
+  inputPlaceholder?: string;
+  isTurnActive: boolean;
+  isTurnFinalizing: boolean;
+  isAcceptancePending: boolean;
+  isSubmissionUnresolved: boolean;
+  submissionFeedback: string;
+  canCheckSubmissionStatus: boolean;
+  onCheckSubmissionStatus: () => void;
+  beginMaterial: BeginChatMaterialSource;
+  onWarmIntent: () => void;
+  contextUsage: number;
+  tokenUsage: TokenUsage | null;
+  threadId: string | null;
+  attachments: readonly ChatLinkAttachment[];
+  onRemoveAttachment: (id: string) => void;
+  composerDraft: string;
+  onComposerDraftChange: (text: string) => void;
+  modelSelection: ChatSurfaceModelSelection;
+  onModelSelectionChange: (patch: { modelId?: string | null; variant?: string | null }) => void;
+  screenshotOwner: ScreenshotAttachmentOwner | null;
+}
+
+export function ChatAreaFooter({
+  mountId,
+  panel,
+  inputRef,
+  onSend,
+  onStop,
+  noThread,
+  isActive,
+  inputPlaceholder,
+  isTurnActive,
+  isTurnFinalizing,
+  isAcceptancePending,
+  isSubmissionUnresolved,
+  submissionFeedback,
+  canCheckSubmissionStatus,
+  onCheckSubmissionStatus,
+  beginMaterial,
+  onWarmIntent,
+  contextUsage,
+  tokenUsage,
+  threadId,
+  attachments,
+  onRemoveAttachment,
+  composerDraft,
+  onComposerDraftChange,
+  modelSelection,
+  onModelSelectionChange,
+  screenshotOwner,
+}: ChatAreaFooterProps) {
+  return (
+    <div
+      className={`rv-chat-footer${noThread ? ' rv-chat-footer--disabled' : ''}`}
+      data-chat-mount-id={mountId}
+    >
+      <div className="rv-chat-composer-shell">
+        <ChatLinkAttachments attachments={attachments} onRemove={onRemoveAttachment} />
+        {submissionFeedback && <div className="rv-chat-submission-feedback" role="status">
+          <span>{submissionFeedback}</span>
+          {canCheckSubmissionStatus && <button className="rv-chat-submission-check" type="button"
+            onClick={onCheckSubmissionStatus}>Check status</button>}
+        </div>}
+        <ChatInput
+          ref={inputRef}
+          onSend={onSend}
+          onStop={onStop}
+          disabled={noThread || !isActive || isAcceptancePending || isTurnFinalizing}
+          placeholder={inputPlaceholder}
+          panel={panel}
+          isTurnActive={isTurnActive}
+          onWarmIntent={onWarmIntent}
+          draftText={composerDraft}
+          onDraftChange={onComposerDraftChange}
+        />
+        <div className="rv-chat-composer-meta-row">
+          <div className="rv-chat-composer-tools-left">
+            <ChatComposerAddMenu
+              beginMaterial={beginMaterial}
+              screenshotOwner={screenshotOwner}
+            />
+            <ChatComposerModeMenu />
+          </div>
+          <div className="rv-chat-composer-actions">
+            <ChatComposerContextMeter contextUsage={contextUsage} tokenUsage={tokenUsage} />
+            <ChatComposerModelMenu
+              threadId={threadId}
+              mountId={mountId}
+              selection={modelSelection}
+              onChangeSelection={onModelSelectionChange}
+            />
+            <MicTrigger beginMaterial={beginMaterial} />
+            {isTurnFinalizing ? (
+              <div
+                className="rv-chat-completing-indicator"
+                aria-label="Completing"
+                title="Completing"
+              >
+                <span className="rv-send-warming-wheel" aria-hidden="true" />
+              </div>
+            ) : isTurnActive ? (
+              <button
+                className="rv-chat-footer-btn rv-stop-btn"
+                onClick={onStop}
+                title="Stop generating"
+              >
+                <span className="material-symbols-outlined rv-icon-md">
+                  stop
+                </span>
+              </button>
+            ) : (
+              <SendButtonGroup
+                chatInputRef={inputRef}
+                onSend={onSend}
+                disabled={isSubmissionUnresolved}
+                warming={isAcceptancePending}
+              />
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

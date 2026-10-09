@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-04T20:51:15.208783+00:00",
+  "actor": "/root/s6_supervisor_recovery_1",
+  "result": "REHEARSAL_RECOVERY_COMPLETE",
+  "current_ready": false,
+  "files": {
+    "checkpoint.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/checkpoint.json",
+      "sha256": "dcd7f1f5366508369ea10ef72008302034bf5f232c85483fd627a87d19d72a95"
+    },
+    "report.md": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/report.md",
+      "sha256": "c2edb588786d7bc6ab9e567b6bec35751bc7f6b42696c7fe34e45dac6837b045"
+    },
+    "criterion-map.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/criterion-map.json",
+      "sha256": "d55304ee8a99be68df5b81313525075aa7a5bd5fc5f793ca2c6fcd46f3199500"
+    },
+    "deviations.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/deviations.json",
+      "sha256": "2133d2085d71180a1df1b45c80e2c8684ceefc39215e3574b03ecdaab239fbad"
+    },
+    "lifecycle.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/lifecycle.json",
+      "sha256": "daded22d262ab11f2722288946a9ed29be4c24b10c7af02a598d8915c2f6fef0"
+    },
+    "final-preservation-proof.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/final-preservation-proof.json",
+      "sha256": "6e1ee94dd4d3ca53f783aa1791ccd6ee814b5ce858c1f3ccc370c52269f3cd30"
+    },
+    "actual-restore-order.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/actual-restore-order.json",
+      "sha256": "be79073d2b2f077c5a920f658a1f732f3efe7c6bac60a61ae7c82ba3adc9f2b0"
+    },
+    "all-raw-command-receipts.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/all-raw-command-receipts.json",
+      "sha256": "c63ec0cce0eb5ea387a7d8bcee6402ec3969caac4c65822b59d79b06834c625c"
+    }
+  }
+}

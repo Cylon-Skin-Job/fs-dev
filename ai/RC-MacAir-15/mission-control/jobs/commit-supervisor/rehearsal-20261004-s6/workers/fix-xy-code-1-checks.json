@@ -1,0 +1,518 @@
+{
+  "schema": 1,
+  "actor": "/root/s6_supervisor_fix_xy_1/fix_xy_code_leaf_1",
+  "manager": "/root/s6_supervisor_fix_xy_1",
+  "return": "READY_FOR_HANDOFF_REVIEW",
+  "scope": "REHEARSAL_ONLY exact X/Y source repair",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "actual_memory_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "source_root": "/Users/rccurtrightjr./projects/fs-dev",
+  "candidate_root": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "runtime_identity": "supported default fallback with exact installed SKILL/TOML developer instructions explicitly read; no native loader assertion",
+  "permissions": {
+    "effective_host": "danger-full-access",
+    "approval_policy": "never",
+    "verified_from": "effective host developer instructions; not inferred from config",
+    "assignment_scope": "four existing private app leaves and unique allocated fix-xy-code-1 worker outputs"
+  },
+  "inheritance": {
+    "root_inherited": true,
+    "model_override": false,
+    "reasoning_effort_override": false,
+    "concrete_values": "unexposed; not invented"
+  },
+  "ownership": {
+    "paths": [
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js",
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js",
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css",
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html"
+    ],
+    "manager_report_ownership": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6",
+    "other_writers": "Root E and Supervisor J disjoint; actual native inventory before writes showed only root/manager/this leaf running in this chain",
+    "spawned_children": 0,
+    "external_reviewers": 0,
+    "central_writes": 0,
+    "runtime_effects": 0,
+    "git_writes": 0
+  },
+  "at": "2026-10-04T16:37:59.198421+00:00",
+  "loaded_revisions": {
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md": "54cb3ff16f0fae8847341ba38f53af6afd6aa6d84ac4ddb7df9e20faf13888dc",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/session-contract.md": "d82d5a815a94f8c27b64d1d90aa0085790e3d98408c011e86d6126dd1bd9b570",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-repair-worker/SKILL.md": "f6aa836695ab3cfb22b256e0bc6c5df5cd64b1a65e2ca75654da59be3972daa9",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-repair-worker.toml": "90d9830f49a41ca63712aca1096a31f9224b9bb06d6adea60a9d715b1364fc81",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md": "27aab53da9edbed9f6ee8ceb4917d7c7531a7de914a3c2df7fb2196b6bd4a20c",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-review-gate/SKILL.md": "cc738b3ecebca875b1f6d4460d26c3185dd3b3dd2a93550086742995a0c6c56a",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/wiki-handoff.md": "4d9198cfa72345335294ea3046c6895e10827ec65456ff2c0339c5e8f247c432",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/runtime-handoff.md": "1f32dcb413d10288ced451ba8806dfc1b325e280e6919e35165e8a8d70b50694",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/SPEC.md": "6d7b351db87e535b0950f94c42c61d503a3ac3fef6587299dfc024c7887df664",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/approval-receipt.md": "0de192d5c5f0e422a3ab3301a4376c32b120667f61b03b63f661c0502c150a56",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/authority.md": "d56710db1edba2ba6ef8798975fb1fb4808a301b0ea2e46bcb81d6645e251010",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-code-1-assignment.md": "44b3806284c854cd24c1ff4401b30f4cdde1dd247708b7605b02b77baf2e5a64",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-original-authority.md": "08ad946d809fbf32270c03fcf91f98d69e1ee40d57bd70a91fcba43c27427c38",
+    "/Users/rccurtrightjr./projects/fs-dev/AGENTS.md": "41dc4e9dc4d58e7505cb6fc37b500129502231293894b5f90eda9398315e001d",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/AGENTS.md": "41dc4e9dc4d58e7505cb6fc37b500129502231293894b5f90eda9398315e001d",
+    "/Users/rccurtrightjr./.codex/skills/fusion-electron-restart/SKILL.md": "ca796770a18e1833ac025c24a881a62b7b07e6ee177bb08aaf00798b7b141153",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-fixture-authority-approval.json": "33ac9507b74ff700dc7f25e16a0bc19eb903082e96d51d049f11365afaabeb8d",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-provider-release.json": "640826099fcb1fc2e283b81384a1faba514d98fa2072d7550ce97ee6a6c714df",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-provider-sample.json": "d5fdc410a26a65471c519e1accb2745b93813bf7123299e77e2d95e41de1be40",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-intent-resolution.json": "1596480546b90d78a1f4e048d1163b1fb2f32302ae45fd36ebd5c5ef5c0cab8d",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-fix-xy-event.json": "a45a33baf89912cac89b46f05b4f18f5e30486932368f56d61d850e4fb156ec3",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md": "de3995c68ae84f3b0fa389c6af0327e21dd08f30ac9ffbc7548b76f80ac393d7",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/001-Architecture_Routing/PAGE.md": "4c5fcbf62912c9e8ff6d3d0e1ec07016145e1f1c90c792a162dfcc3ca1b0bfba",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/002-Frontend_UI/PAGE.md": "18a093c333a610ec8d2c77661b29744f1fae6e9ca8f4e113148fee10a0d9fc18",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/PAGE.md": "2b4e55ed7580659b35a91d13f5a7b781960c659868027dd8b6ea6f79e609b105",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md": "bd3e7be468289ac0a6ee6502cd8b9fc340f03fd7568deb59370ed00cc3b2a7a3",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/008-Testing_And_Smoke_Slices/PAGE.md": "e7319750bd27b7ccdad8e5e451b9779044e8fc7a713fc6d461113b409b39018d",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/001-Style_Guide/PAGE.md": "28ae2301be3115e22b6d69691fb5208e2625945998393071874b9a1fbee70629",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/003-Updating_Wikis/PAGE.md": "ec1739e2d693c07c5691fa3624b200915ea1c65257a09b75c853ff1c181a1a78",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/PAGE.md": "2ea02f01a6b71621e59c7b198e53af019194cc4620efdb0ffd8a7199cdadc637",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/005-User_Profile_Preferences_and_Design_Philosophy/PAGE.md": "45fa9f630563d79935d5a461b308c823c0db3ded5c23817ba6d4c8a06c794ed5",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/AGENTS.md": "9d353611f3b5ac94efa92048d1c0f8879d71786bcf1b641f915a0f695f5ef697",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/.agents/wiki-session-contract.md": "b5147866ebec7e7f65de1f5f114f14166fe86ccbd8263f1e6ab584f4ec952d00",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/.agents/skills/wiki-research/SKILL.md": "26ee803266813cae416278ededccb98f9030a84806e28e29abd7cef951ef3736",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/.agents/skills/wiki-repair/SKILL.md": "3fb23901204ffb2789c84a2229bb91dae14bc55cad611178788c5a96537bef70",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/.agents/skills/wiki-audit/SKILL.md": "0e43872db5681508f23ccf2fecf5d8fc1969a6585bb987f81f4cce876c66799e"
+  },
+  "original_authority": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-original-authority.md",
+  "current_entry_identity": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-entry-identity.json",
+    "sha256": "042d9f85bbd77c035146b85e995ac6f85c2d39abd696fbe496b9c4bf8eb5dcd9",
+    "prewrite_owned_matching": 129,
+    "afterwrite_limits": "superseded only for four assigned worktree hashes; whole current identity remains manager-owned"
+  },
+  "checkpoint": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/first/recovery/manifest.json",
+    "sha256": "5bf3fb69c13aacfd60afcb384de2c9975fc917ad3f1f7a49b9176073b7b34d96",
+    "verify_command": "GIT_OPTIONAL_LOCKS=0 python3.12 -B .agents/skills/mc-commit-supervisor/scripts/job_snapshot.py verify --job jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/first",
+    "verify_response": {
+      "result": "VERIFIED",
+      "payloads_valid": true,
+      "matches_checkpoint": true,
+      "status_equal": true,
+      "current_sha256": "6ea76d84ae4ccea79caa693874ded92d88b1c58f73aa6ba0952a9bf2a8b70b06",
+      "manifest_sha256": "5bf3fb69c13aacfd60afcb384de2c9975fc917ad3f1f7a49b9176073b7b34d96"
+    },
+    "original_immutable_manifest_sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb",
+    "preimages": {
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js": {
+        "current": {
+          "exists": true,
+          "sha256": "7a325bf81452d0d785c22fb4bc7cc4950c4abd2c4e6a68604ff683c1d4990b0d",
+          "mode": "0o100644",
+          "kind": "file"
+        },
+        "saved_preimage": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/7a325bf81452d0d785c22fb4bc7cc4950c4abd2c4e6a68604ff683c1d4990b0d",
+          "sha256": "7a325bf81452d0d785c22fb4bc7cc4950c4abd2c4e6a68604ff683c1d4990b0d"
+        },
+        "payload_absolute": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/first/recovery/payloads/7a325bf81452d0d785c22fb4bc7cc4950c4abd2c4e6a68604ff683c1d4990b0d"
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js": {
+        "current": {
+          "exists": true,
+          "sha256": "fc3c3da3961bbd8ba1d9f0d1a320dd8f8baf514e0fc0a7d158d5c474ddfe36a5",
+          "mode": "0o100644",
+          "kind": "file"
+        },
+        "saved_preimage": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/fc3c3da3961bbd8ba1d9f0d1a320dd8f8baf514e0fc0a7d158d5c474ddfe36a5",
+          "sha256": "fc3c3da3961bbd8ba1d9f0d1a320dd8f8baf514e0fc0a7d158d5c474ddfe36a5"
+        },
+        "payload_absolute": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/first/recovery/payloads/fc3c3da3961bbd8ba1d9f0d1a320dd8f8baf514e0fc0a7d158d5c474ddfe36a5"
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html": {
+        "current": {
+          "exists": true,
+          "sha256": "c2ba834be53b0d84b17f2e2bbcde7e3b468ae05903c3b5179ef7070f342428d2",
+          "mode": "0o100644",
+          "kind": "file"
+        },
+        "saved_preimage": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/c2ba834be53b0d84b17f2e2bbcde7e3b468ae05903c3b5179ef7070f342428d2",
+          "sha256": "c2ba834be53b0d84b17f2e2bbcde7e3b468ae05903c3b5179ef7070f342428d2"
+        },
+        "payload_absolute": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/first/recovery/payloads/c2ba834be53b0d84b17f2e2bbcde7e3b468ae05903c3b5179ef7070f342428d2"
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css": {
+        "current": {
+          "exists": true,
+          "sha256": "6e3d4171ec9dd14bff1d521f6d9df9b6afa25bfef0b336dba791e1f7fdfc3184",
+          "mode": "0o100644",
+          "kind": "file"
+        },
+        "saved_preimage": {
+          "kind": "file",
+          "mode": 420,
+          "payload": "payloads/6e3d4171ec9dd14bff1d521f6d9df9b6afa25bfef0b336dba791e1f7fdfc3184",
+          "sha256": "6e3d4171ec9dd14bff1d521f6d9df9b6afa25bfef0b336dba791e1f7fdfc3184"
+        },
+        "payload_absolute": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/first/recovery/payloads/6e3d4171ec9dd14bff1d521f6d9df9b6afa25bfef0b336dba791e1f7fdfc3184"
+      }
+    },
+    "recovery_limits": "Four complete existing file/mode preimages; no restore performed. Runtime/database/cache effects are independent and not exercised."
+  },
+  "proposed_dispositions": [
+    {
+      "control": "X",
+      "proposed": "repair-reported",
+      "acceptance": "manager-owned fresh original affected handoff pending"
+    },
+    {
+      "control": "Y",
+      "proposed": "repair-reported",
+      "acceptance": "manager-owned fresh original affected handoff pending"
+    }
+  ],
+  "actual_checks": {
+    "raw_commands": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-commands.json",
+      "sha256": "232e73f7e9f1cdca93615c70e7c237edb04b1505b6210bfad80edf66d8f6571c",
+      "format": "array of pure command/cwd/time/exit_code/stdout/stderr records",
+      "pointers": [
+        "/0",
+        "/1",
+        "/2",
+        "/3"
+      ]
+    },
+    "command_summary": [
+      {
+        "command": [
+          "node",
+          "--experimental-vm-modules",
+          "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-scenarios.mjs"
+        ],
+        "time": {
+          "started": "2026-10-04T16:35:37.268749+00:00",
+          "finished": "2026-10-04T16:35:37.335563+00:00"
+        },
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "zsh",
+          "-c",
+          "node --input-type=module --check < /private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js"
+        ],
+        "time": {
+          "started": "2026-10-04T16:35:37.335615+00:00",
+          "finished": "2026-10-04T16:35:37.381355+00:00"
+        },
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "zsh",
+          "-c",
+          "node --input-type=module --check < /private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js"
+        ],
+        "time": {
+          "started": "2026-10-04T16:35:37.381390+00:00",
+          "finished": "2026-10-04T16:35:37.423237+00:00"
+        },
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "python3.12",
+          "-B",
+          "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-postflight.py"
+        ],
+        "time": {
+          "started": "2026-10-04T16:35:37.423270+00:00",
+          "finished": "2026-10-04T16:35:38.190063+00:00"
+        },
+        "exit_code": 0
+      }
+    ],
+    "samples": 39,
+    "candidate_inventory_count": 4354,
+    "exact_four_deltas": {
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css": {
+        "before": {
+          "flag": null,
+          "index": [],
+          "worktree": {
+            "kind": "file",
+            "mode": 420,
+            "sha256": "6e3d4171ec9dd14bff1d521f6d9df9b6afa25bfef0b336dba791e1f7fdfc3184"
+          }
+        },
+        "after": {
+          "index": [],
+          "flag": null,
+          "worktree": {
+            "kind": "file",
+            "mode": 420,
+            "sha256": "f0e280d99afff67dda2c753192697d63dd74d20140794537f6cb2ae774ae8f0d"
+          }
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js": {
+        "before": {
+          "flag": null,
+          "index": [],
+          "worktree": {
+            "kind": "file",
+            "mode": 420,
+            "sha256": "fc3c3da3961bbd8ba1d9f0d1a320dd8f8baf514e0fc0a7d158d5c474ddfe36a5"
+          }
+        },
+        "after": {
+          "index": [],
+          "flag": null,
+          "worktree": {
+            "kind": "file",
+            "mode": 420,
+            "sha256": "55bb735409a940717d683a9256a7d55f467a92576923e26fe829518d3effa87e"
+          }
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js": {
+        "before": {
+          "flag": null,
+          "index": [],
+          "worktree": {
+            "kind": "file",
+            "mode": 420,
+            "sha256": "7a325bf81452d0d785c22fb4bc7cc4950c4abd2c4e6a68604ff683c1d4990b0d"
+          }
+        },
+        "after": {
+          "index": [],
+          "flag": null,
+          "worktree": {
+            "kind": "file",
+            "mode": 420,
+            "sha256": "48ae78dfda264edb62fadf5bdd72e1f07c2f5b54b127ddb7296c41188f2d70bf"
+          }
+        }
+      },
+      "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html": {
+        "before": {
+          "flag": null,
+          "index": [],
+          "worktree": {
+            "kind": "file",
+            "mode": 420,
+            "sha256": "c2ba834be53b0d84b17f2e2bbcde7e3b468ae05903c3b5179ef7070f342428d2"
+          }
+        },
+        "after": {
+          "index": [],
+          "flag": null,
+          "worktree": {
+            "kind": "file",
+            "mode": 420,
+            "sha256": "968e599ca4814c3a8e246d9d12ee985e0cf8a9ef8e3cd6d55e6b4a9a9b62f480"
+          }
+        }
+      }
+    },
+    "refs": {
+      "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+      "branch": null,
+      "refs_sha256": "9d16de57b401c2857b4e01e956037365f3ca9669a716562248c6be8faf58472d",
+      "config_sha256": "0a84192202948bd789d2bd8bbb405668470eb300a3539fcdd609677fb2af310e",
+      "index_file_sha256": "f60a305e9691ad6ecac0d696c78dfc5bc779a73004fce64b0e5f955b76eaecbb"
+    },
+    "protected": {
+      "/Users/rccurtrightjr./projects/fs-dev": {
+        "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+        "branch": "refs/heads/agent/exact-workspace-paths",
+        "refs_sha256": "2137fda44918eee605a707a4931a0f12f57125dbab104179ca490556d5e74976",
+        "config_sha256": "15b4867e1facba02e3e54d699d8e9133c336ff6bd3beb6aab997538d77efbcb3",
+        "index_file_sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966"
+      }
+    },
+    "authorities_matching": 52,
+    "suite_dependencies_matching": 35
+  },
+  "raw_file_hashes": {
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-commands.json": "232e73f7e9f1cdca93615c70e7c237edb04b1505b6210bfad80edf66d8f6571c",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-scenarios.mjs": "4456b4ef65bd6cb9cd91e0ef46bc2c739455a712ec13eb06a13f4af90fe29ce0",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-postflight.py": "6cbd74801b66d24cd8ffa333647678d6a0b13f645587728d40bb1785d05750ce"
+  },
+  "retained": {
+    "reuse_dependency_packet": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-unaffected-suite-reuse.json",
+      "sha256": "1618c5e2a61a34a0b2ac54eb0bcfbfceba7fc660e0b580de4a717e7c9c206aae",
+      "matching": 35
+    },
+    "receipts": [
+      {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-python-suite-command.json",
+        "sha256": "e9c1b41ebd26c726451cec204e812eca2cc5a6c6785cdcfa35430624eb16aff1",
+        "command": [
+          "python3.12",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          ".agents/skills/mc-commit-supervisor/tests",
+          "-p",
+          "test_*.py"
+        ],
+        "exit_code": 0
+      },
+      {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-node-suite-command.json",
+        "sha256": "6de2700a795aeb0632dff31348552fd0749a5b0e833765e37a56d0d575de2040",
+        "command": [
+          "node",
+          "--test",
+          ".agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs"
+        ],
+        "exit_code": 0
+      }
+    ],
+    "scope": "Unchanged helper/test/launcher/historical fixture dependencies and raw55Python/17Node PASS; never recast as revised live app proof"
+  },
+  "invalidated": [
+    {
+      "claim": "first code handoff and source scenarios",
+      "reason": "controller/view/HTML/CSS current hashes changed under X/Y"
+    },
+    {
+      "claim": "first Wiki factual handoff and final whole-candidate source gate",
+      "reason": "Checklist Guide lacks revised label/reset and source identity changed; original root/Navigation retain facts/bytes/times"
+    },
+    {
+      "claim": "first build/runtime/UI/reset/reload/Wiki/watcher/owner-ready claims for revised candidate",
+      "reason": "Different revised bytes/control authority; actual renewed runtime is manager-owned"
+    }
+  ],
+  "required_checks_skipped": [
+    {
+      "check": "rerun55Python/17Node",
+      "reason": "all35 current dependency hashes/modes match; retained rawPASS directed by assignment"
+    },
+    {
+      "check": "client build/canonical fullrestart before initializer/native UI/browser storage/Wiki/watch/protection",
+      "reason": "explicit later Supervisor runtime scope; leaf grants no app-readiness claim"
+    },
+    {
+      "check": "independent worker-handoff and final gates",
+      "reason": "leaf cannot spawn reviewers/accept itself; manager owns fresh gates"
+    },
+    {
+      "check": "Wiki page/version edits",
+      "reason": "not in this leaf ownership; later bounded Wiki writer follows accepted code"
+    }
+  ],
+  "warnings": [
+    "Node VM Modules experimental-tool warning in /0 stderr",
+    "One oversized read-only metadata export was truncated by output budget; in-memory JSON parse failed, then bounded selective read succeeded; no files or candidate bytes changed."
+  ],
+  "deviations": [
+    {
+      "id": "FIX-XY-CODE-D1",
+      "original_criterion": "Original draft label Draft report; revised X supersedes only that label, retaining draft identity and all original semantics.",
+      "actual_change": "Changed draft visible label to Review report; review/send IDs and labels remain unchanged.",
+      "reason_authority": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-original-authority.md and C/planning/commit-supervisor/execution/S6-fix-xy-event.json /X.",
+      "files": [
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js"
+      ],
+      "effect": "Current hydration and checkbox writes still use draft/review/send.",
+      "checks": "39 current-source samples, original numerical/reversal/reload/all-states oracles; two syntax checks; four-delta readback.",
+      "risk": "Browser-level revised label still needs manager-owned real runtime verification.",
+      "downstream_consumer": "Checklist iframe, Checklist Guide, fresh code/Wiki/final/runtime gates.",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "FIX-XY-CODE-D2",
+      "original_criterion": "Y requires Reset completion to uncheck all retained rows, update exact summary, persist immediately and survive ordinary reload.",
+      "actual_change": "Added one native Reset button, explicit view callback, reset mutation in existing controller and reused persistCompletion for both completion and reset. Added variable-backed local button CSS.",
+      "reason_authority": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-code-1-assignment.md and C/planning/commit-supervisor/execution/S6-fix-xy-event.json /Y; existing controller owns private fixture completion state/localStorage.",
+      "files": [
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js",
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js",
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css",
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html"
+      ],
+      "effect": "Each reset click persists [] once and synchronously renders allfalse/3 remaining of 3, retaining logical rows/IDs/labels; no listener accumulation across refresh.",
+      "checks": "Two-checked reset/reload; idempotent reset; postreset completion/reversal; all eight completion masks reset and reload; current-source module and HTML/style wiring checks.",
+      "risk": "Minimal DOM/in-memory storage does not establish native pointer/keyboard interaction or actual persisted browser profile behavior.",
+      "downstream_consumer": "Bounded Wiki rewrite and actual public-route/reset/restart smoke.",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "FIX-XY-CODE-D3",
+      "original_criterion": "Installed named worker procedure/profile with root inherited model/effort and verified effective permissions.",
+      "actual_change": "Used assigned supported default fallback; explicitly read and acknowledged exact installed SKILL and TOML developer instructions.",
+      "reason_authority": "Assignment plus session-contract.md Runtime and portability permits supported default with explicit exact paths.",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-checks.json"
+      ],
+      "effect": "Leaf scope retained; no children/external reviewers; effective danger-full-access/never came from host developer instructions, not local config inference.",
+      "checks": "Actual CWD, source/private Git roots, parent assignment and collaboration inventory; all loaded revisions recorded.",
+      "risk": "Native TOML loader/concrete model/effort values are not exposed and no such assertion is made.",
+      "downstream_consumer": "Manager lifecycle and fresh independent handoff.",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "FIX-XY-CODE-D4",
+      "original_criterion": "Meaningful current-source self-check plus retained valid required55/17 evidence; actual successful runtime must be real.",
+      "actual_change": "Added unique VM/minimal-DOM/in-memory-storage scenario and read-only postflight helpers in assigned worker output namespace; used matching35 dependencies to retain55/17 receipts.",
+      "reason_authority": "Leaf assignment explicitly separates current-source checks from later Supervisor actual runtime and directs rerun only invalidated checks.",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-scenarios.mjs",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-postflight.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-commands.json"
+      ],
+      "effect": "39 source scenarios and two syntax commands pass;4354 inventory and52 authority matches recorded; no profile/app effects.",
+      "checks": "/0 scenario, /1-/2 syntax, /3 postflight in pure raw command array.",
+      "risk": "VM Modules experimental warning is test-tool-only. Current app/build/reset before initializer, UI persistence, Wiki/watch/protection remain unverified by this worker.",
+      "downstream_consumer": "Fresh handoff may use immutable derivative of /0-/3; manager must renew original affected gates and real runtime.",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "FIX-XY-CODE-D5",
+      "original_criterion": "Every Git invocation uses GIT_OPTIONAL_LOCKS=0.",
+      "actual_change": "Initial orientation command pwd; git rev-parse --show-toplevel omitted the environment flag. Every later Git read and snapshot invocation explicitly used the flag; no Git write operation occurred.",
+      "reason_authority": "Procedural oversight disclosed; revision-only command performed before mutation.",
+      "files": [],
+      "effect": "Source and candidate index/ref/config fingerprints remain identical to fixed-first after repair; no index refresh/write observed.",
+      "checks": "Final read-only snapshot-state protected/ref equality and source index file f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966.",
+      "risk": "No observed state impact; this note cannot retroactively change the initial invocation.",
+      "downstream_consumer": "Manager procedural accounting; independent gate unaffected.",
+      "proposed_classification": "accepted"
+    }
+  ],
+  "self_check_is_acceptance": false,
+  "live_app_evidence": false,
+  "actual_git_operation_authority": "NONE",
+  "tool_receipts": {
+    "preflight": {
+      "command": "GIT_OPTIONAL_LOCKS=0 python3.12 -B - <<'PY'\nfrom pathlib import Path\nimport json,hashlib,os,stat,subprocess\nC=Path.cwd(); P=Path('/private/tmp/mc-s6-commit-supervisor-20261004/candidate'); J=C/'jobs/commit-supervisor/rehearsal-20261004-s6'\ndef fp(p):\n if not p.exists() and not p.is_symlink(): return {'exists':False}\n s=p.lstat(); data=os.readlink(p).encode() if p.is_symlink() else p.read_bytes()\n return {'exists':True,'sha256':hashlib.sha256(data).hexdigest(),'mode':oct(s.st_mode),'kind':'symlink' if p.is_symlink() else 'file'}\nidp=J/'evidence/fix-xy-entry-identity.json'; ident=json.loads(idp.read_bytes())\nassert fp(idp)['sha256']=='042d9f85bbd77c035146b85e995ac6f85c2d39abd696fbe496b9c4bf8eb5dcd9'\nowned={k:fp(P/k) for k in ident['owned']}; bad=[k for k,v in owned.items() if v!=ident['owned'][k]]\nassert not bad,bad\nsuite_path=J/'evidence/first-unaffected-suite-reuse.json'; suite=json.loads(suite_path.read_bytes()); dep=[]\nfor d in suite['dependencies']:\n actual=fp(Path(d['path'])); match=all(actual[k]==d[k] for k in ('sha256','mode')); assert match,d['path']; dep.append({'path':d['path'],**actual,'matches':match})\nreceipts=[]\nfor n in ['first-python-suite-command.json','first-node-suite-command.json']:\n p=J/'evidence'/n; d=json.loads(p.read_bytes());assert d['exit_code']==0;receipts.append({'path':str(p),**fp(p),'command':d['command'],'exit_code':d['exit_code'],'stdout':d['stdout'],'stderr':d['stderr']})\npaths=[f'rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/{n}' for n in ['checklist-controller.js','checklist-view.js','index.html','checklist.css']]\nmanifest_path=J/'fixed-candidates/first/recovery/manifest.json';m=json.loads(manifest_path.read_bytes());assert fp(manifest_path)['sha256']=='5bf3fb69c13aacfd60afcb384de2c9975fc917ad3f1f7a49b9176073b7b34d96'\npre={}\nfor k in paths:\n w=m['owned'][k]['worktree'];payload=manifest_path.parent/w['payload'];assert hashlib.sha256(payload.read_bytes()).hexdigest()==w['sha256']==owned[k]['sha256'];assert payload.read_bytes()==(P/k).read_bytes();assert stat.S_IMODE((P/k).stat().st_mode)==w['mode'];pre[k]={'current':owned[k],'saved_preimage':w,'payload_absolute':str(payload)}\ngit={}\nfor name,repo in [('source',Path('/Users/rccurtrightjr./projects/fs-dev')),('candidate',P)]:\n git[name]={}\n for label,args in [('root',['rev-parse','--show-toplevel']),('head',['rev-parse','HEAD']),('branch',['branch','--show-current']),('index_stages',['ls-files','--stage','-z']),('refs',['for-each-ref','--format=%(refname) %(objectname)'])]:\n  out=subprocess.check_output(['git','-C',str(repo),*args]);git[name][label]={'sha256':hashlib.sha256(out).hexdigest(),'value':out.decode() if label in ['root','head','branch'] else None}\n git[name]['index_file']=fp(repo/'.git/index')\nprint(json.dumps({'cwd':str(C),'current_owned_matching':len(owned),'preimages':pre,'suite_dependencies':dep,'retained_raw_receipts':receipts,'git':git},indent=2))\nPY",
+      "response": {
+        "chunk_id": "c1d06c",
+        "wall_time_seconds": 0.000006375,
+        "exit_code": 0,
+        "original_token_count": 5201,
+        "output": "{\n  \"cwd\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control\",\n  \"current_owned_matching\": 129,\n  \"preimages\": {\n    \"rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js\": {\n      \"current\": {\n        \"exists\": true,\n        \"sha256\": \"7a325bf81452d0d785c22fb4bc7cc4950c4abd2c4e6a68604ff683c1d4990b0d\",\n        \"mode\": \"0o100644\",\n        \"kind\": \"file\"\n      },\n      \"saved_preimage\": {\n        \"kind\": \"file\",\n        \"mode\": 420,\n        \"payload\": \"payloads/7a325bf81452d0d785c22fb4bc7cc4950c4abd2c4e6a68604ff683c1d4990b0d\",\n        \"sha256\": \"7a325bf81452d0d785c22fb4bc7cc4950c4abd2c4e6a68604ff683c1d4990b0d\"\n      },\n      \"payload_absolute\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/first/recovery/payloads/7a325bf81452d0d785c22fb4bc7cc4950c4abd2c4e6a68604ff683c1d4990b0d\"\n    },\n    \"rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js\": {\n      \"current\": {\n        \"exists\": true,\n        \"sha256\": \"fc3c3da3961bbd8ba1d9f0d1a320dd8f8baf514e0fc0a7d158d5c474ddfe36a5\",\n        \"mode\": \"0o100644\",\n        \"kind\": \"file\"\n      },\n      \"saved_preimage\": {\n        \"kind\": \"file\",\n        \"mode\": 420,\n        \"payload\": \"payloads/fc3c3da3961bbd8ba1d9f0d1a320dd8f8baf514e0fc0a7d158d5c474ddfe36a5\",\n        \"sha256\": \"fc3c3da3961bbd8ba1d9f0d1a320dd8f8baf514e0fc0a7d158d5c474ddfe36a5\"\n      },\n      \"payload_absolute\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/first/recovery/payloads/fc3c3da3961bbd8ba1d9f0d1a320dd8f8baf514e0fc0a7d158d5c474ddfe36a5\"\n    },\n    \"rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html\": {\n      \"current\": {\n        \"exists\": true,\n        \"sha256\": \"c2ba834be53b0d84b17f2e2bbcde7e3b468ae05903c3b5179ef7070f342428d2\",\n        \"mode\": \"0o100644\",\n        \"kind\": \"file\"\n      },\n      \"saved_preimage\": {\n        \"kind\": \"file\",\n        \"mode\": 420,\n        \"payload\": \"payloads/c2ba834be53b0d84b17f2e2bbcde7e3b468ae05903c3b5179ef7070f342428d2\",\n        \"sha256\": \"c2ba834be53b0d84b17f2e2bbcde7e3b468ae05903c3b5179ef7070f342428d2\"\n      },\n      \"payload_absolute\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/first/recovery/payloads/c2ba834be53b0d84b17f2e2bbcde7e3b468ae05903c3b5179ef7070f342428d2\"\n    },\n    \"rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css\": {\n      \"current\": {\n        \"exists\": true,\n        \"sha256\": \"6e3d4171ec9dd14bff1d521f6d9df9b6afa25bfef0b336dba791e1f7fdfc3184\",\n        \"mode\": \"0o100644\",\n        \"kind\": \"file\"\n      },\n      \"saved_preimage\": {\n        \"kind\": \"file\",\n        \"mode\": 420,\n        \"payload\": \"payloads/6e3d4171ec9dd14bff1d521f6d9df9b6afa25bfef0b336dba791e1f7fdfc3184\",\n        \"sha256\": \"6e3d4171ec9dd14bff1d521f6d9df9b6afa25bfef0b336dba791e1f7fdfc3184\"\n      },\n      \"payload_absolute\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/first/recovery/payloads/6e3d4171ec9dd14bff1d521f6d9df9b6afa25bfef0b336dba791e1f7fdfc3184\"\n    }\n  },\n  \"suite_dependencies\": [\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py\",\n      \"exists\": true,\n      \"sha256\": \"d85c8ae1828bfe94426bde87527ddc3430d720604c78cfdab775db5982dabc58\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/snapshot_restore.py\",\n      \"exists\": true,\n      \"sha256\": \"37c75d19a2217759086be00274f14d589a5bb64bb6905f323db7ba1969674c2c\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/snapshot_state.py\",\n      \"exists\": true,\n      \"sha256\": \"a38ffed0cca07299031c2709773caf33ea9065785bf114b6352141fb3310689b\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs\",\n      \"exists\": true,\n      \"sha256\": \"9b4bb189ebff26ceaf9b899abafa75400ebbd5e9157f0a45468640d87459ad85\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh\",\n      \"exists\": true,\n      \"sha256\": \"b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952\",\n      \"mode\": \"0o100755\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs\",\n      \"exists\": true,\n      \"sha256\": \"238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs\",\n      \"exists\": true,\n      \"sha256\": \"d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs\",\n      \"exists\": true,\n      \"sha256\": \"0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs\",\n      \"exists\": true,\n      \"sha256\": \"c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/private/tmp/mc-s6-commit-supervisor-20261004/candidate/restart-fusion.sh\",\n      \"exists\": true,\n      \"sha256\": \"b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952\",\n      \"mode\": \"0o100755\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart-probe.mjs\",\n      \"exists\": true,\n      \"sha256\": \"238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart-processes.mjs\",\n      \"exists\": true,\n      \"sha256\": \"d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart-target.mjs\",\n      \"exists\": true,\n      \"sha256\": \"0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart.mjs\",\n      \"exists\": true,\n      \"sha256\": \"c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/install_rehearsal_fixture.py\",\n      \"exists\": true,\n      \"sha256\": \"5d47ce4a60d80c78975bb322f12b6f3516b17050046022096cab38cfc33b0fd2\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/prepare_rehearsal_shell.mjs\",\n      \"exists\": true,\n      \"sha256\": \"cd1005258b4d9668e591dca46245e9184174434b81b09dab7aca8ba407167a7b\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/authority.md\",\n      \"exists\": true,\n      \"sha256\": \"d56710db1edba2ba6ef8798975fb1fb4808a301b0ea2e46bcb81d6645e251010\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/checklist-controller.js\",\n      \"exists\": true,\n      \"sha256\": \"2b9276858645f88d423fb044816deb3b84049b1be09e74369353549d712f2412\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/checklist-guide.md\",\n      \"exists\": true,\n      \"sha256\": \"e05c868a3f60d3975ce517c02ada96887d4671faed1640e203853bc545d58076\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/checklist-view.js\",\n      \"exists\": true,\n      \"sha256\": \"a93d17d7fe8924d9cc077f4e973c3d94743796930c05c9c24bd76fec203d6b6f\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/checklist.css\",\n      \"exists\": true,\n      \"sha256\": \"6e3d4171ec9dd14bff1d521f6d9df9b6afa25bfef0b336dba791e1f7fdfc3184\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/index.html\",\n      \"exists\": true,\n      \"sha256\": \"c2ba834be53b0d84b17f2e2bbcde7e3b468ae05903c3b5179ef7070f342428d2\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/navigation-guide.md\",\n      \"exists\": true,\n      \"sha256\": \"4fbe50677f55e83003d8af72f2db702c9ffcea3a514f82feacf56ea3c7983970\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_recovery_smoke.py\",\n      \"exists\": true,\n      \"sha256\": \"82c3a378e38f47a03b07956e72abbb9b1313a6563a7e3cc06ee62eab705e6ee2\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs\",\n      \"exists\": true,\n      \"sha256\": \"e11d5dec9ae3219648abcf86bc7651c32f6d3c08b9a7ffffeeef9740424db697\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_watcher_smoke.mjs\",\n      \"exists\": true,\n      \"sha256\": \"f84f2cbe298cb0394751689f3694dd1a532a4ef8475233094b8b5dad406d8267\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_wiki_recovery_smoke.py\",\n      \"exists\": true,\n      \"sha256\": \"f7a46a1701da0c7cf1bdf1eeb1ce3eaf72197bdef4b0783c63ae3d20c155ccb5\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/stop_rehearsal_runtime.mjs\",\n      \"exists\": true,\n      \"sha256\": \"34ffc7d6fb4660679557c2f5aeffaaca0fb5428ae418b1c700ca4a6c32fd213e\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/final-python-suite.log\",\n      \"exists\": true,\n      \"sha256\": \"2c18f0c89ac4725d16e570fd8c626264aa44d8d12b01bd57620ab1115a0aac0b\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/final-runtime-suite.log\",\n      \"exists\": true,\n      \"sha256\": \"6a87a8b7b304e4d3543695899e73fe24166429657c41a1c6b2ba3a56d8a669d0\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/private/tmp/mc-s6-commit-supervisor-20261004/candidate/restart-fusion.sh\",\n      \"exists\": true,\n      \"sha256\": \"b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952\",\n      \"mode\": \"0o100755\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart.mjs\",\n      \"exists\": true,\n      \"sha256\": \"c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart-target.mjs\",\n      \"exists\": true,\n      \"sha256\": \"0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart-processes.mjs\",\n      \"exists\": true,\n      \"sha256\": \"d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    },\n    {\n      \"path\": \"/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart-probe.mjs\",\n      \"exists\": true,\n      \"sha256\": \"238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"matches\": true\n    }\n  ],\n  \"retained_raw_receipts\": [\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-python-suite-command.json\",\n      \"exists\": true,\n      \"sha256\": \"e9c1b41ebd26c726451cec204e812eca2cc5a6c6785cdcfa35430624eb16aff1\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"command\": [\n        \"python3.12\",\n        \"-B\",\n        \"-m\",\n        \"unittest\",\n        \"discover\",\n        \"-s\",\n        \".agents/skills/mc-commit-supervisor/tests\",\n        \"-p\",\n        \"test_*.py\"\n      ],\n      \"exit_code\": 0,\n      \"stdout\": \"\",\n      \"stderr\": \".......................................................\\n----------------------------------------------------------------------\\nRan 55 tests in 21.324s\\n\\nOK\\n\"\n    },\n    {\n      \"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-node-suite-command.json\",\n      \"exists\": true,\n      \"sha256\": \"6de2700a795aeb0632dff31348552fd0749a5b0e833765e37a56d0d575de2040\",\n      \"mode\": \"0o100644\",\n      \"kind\": \"file\",\n      \"command\": [\n        \"node\",\n        \"--test\",\n        \".agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs\"\n      ],\n      \"exit_code\": 0,\n      \"stdout\": \"\\u2714 canonical CLI preserves default DB; explicit and inherited profiles select server-data (235.042ms)\\n\\u2714 CLI rejects unsafe/Alpha/ambiguous arguments without profile changes (515.9255ms)\\n\\u2714 launch environment preserves default DB mode and resolves selected profile/machine/TMPDIR (8.913833ms)\\n\\u2714 selected-only tree includes children and preserves same-checkout other profile and Alpha (6.31975ms)\\n\\u2714 foreign checkout/shared profile, wrong machine, orphan renderer, mode collision refuse before effects (4.429125ms)\\n\\u2714 runtime identity rejects wrong-path/profile/server/renderer instead of certifying a port (4.639125ms)\\n\\u2714 exact renderer profile avoids Alpha prefix collision and CLI profile overrides absent environment (4.318042ms)\\n\\u2714 read-only real-system selector identifies default app and excludes Alpha process tree (337.394292ms)\\n\\u2714 renderer connection oracle requires initialized shell and sustained actual connected state (0.209834ms)\\n\\u2714 injected post-launch failures withhold readiness, preserve DBs/unrelated caches, release lock (13.695666ms)\\n\\u2714 borrowed Electron runtime and linked runtime storage refuse without effects (4.190333ms)\\n\\u2714 linked profile database storage refuses before build/profile/cache mutation (4.182875ms)\\n\\u2714 actual disposable Node tree ownership/termination preserves another live profile (18505.034666ms)\\n\\u2714 PID reuse refuses all signals and ps environment parser retains spaced profile (0.151583ms)\\n\\u2714 inventory disappearance is reobserved; live errors and PID/command changes refuse all stop signals (0.632875ms)\\n\\u2714 PID reuse after SIGTERM never signals the replacement process (0.106542ms)\\n\\u2714 actual disposable exit races at lsof/env and after SIGTERM complete cleanup and preserve another profile (6062.41675ms)\\n\\u2139 {\\\"kind\\\":\\\"ACTUAL_DISPOSABLE_PROCESS_RACES\\\",\\\"schedulingAdapter\\\":\\\"exit only selected fixture at real OS inspection boundary\\\",\\\"observations\\\":[{\\\"boundary\\\":\\\"lsof\\\",\\\"pid\\\":84198,\\\"terminalState\\\":\\\"Z\\\"},{\\\"boundary\\\":\\\"lsof\\\",\\\"cmd\\\":\\\"lsof\\\",\\\"status\\\":1,\\\"stdout\\\":\\\"\\\",\\\"stderr\\\":\\\"\\\"},{\\\"boundary\\\":\\\"lsof\\\",\\\"signals\\\":[],\\\"selectedRemaining\\\":[],\\\"unrelatedPid\\\":84197,\\\"unrelatedAlive\\\":true},{\\\"boundary\\\":\\\"env\\\",\\\"pid\\\":87463,\\\"terminalState\\\":\\\"Z\\\"},{\\\"boundary\\\":\\\"env\\\",\\\"signals\\\":[],\\\"selectedRemaining\\\":[],\\\"unrelatedPid\\\":84197,\\\"unrelatedAlive\\\":true},{\\\"boundary\\\":\\\"after-SIGTERM\\\",\\\"pid\\\":90724,\\\"terminalState\\\":\\\"Z\\\"},{\\\"boundary\\\":\\\"after-SIGTERM\\\",\\\"cmd\\\":\\\"lsof\\\",\\\"status\\\":1,\\\"stdout\\\":\\\"\\\",\\\"stderr\\\":\\\"\\\"},{\\\"boundary\\\":\\\"after-SIGTERM\\\",\\\"signals\\\":[[90724,\\\"SIGTERM\\\"]],\\\"selectedRemaining\\\":[],\\\"unrelatedPid\\\":84197,\\\"unrelatedAlive\\\":true}]}\\n\\u2139 tests 17\\n\\u2139 suites 0\\n\\u2139 pass 17\\n\\u2139 fail 0\\n\\u2139 cancelled 0\\n\\u2139 skipped 0\\n\\u2139 todo 0\\n\\u2139 duration_ms 25775.080167\\n\",\n      \"stderr\": \"\"\n    }\n  ],\n  \"git\": {\n    \"source\": {\n      \"root\": {\n        \"sha256\": \"666c6e05635629e45af20f5a2fbc91fd5d18fd2c81e564709afe93432c8f84d5\",\n        \"value\": \"/Users/rccurtrightjr./projects/fs-dev\\n\"\n      },\n      \"head\": {\n        \"sha256\": \"34f9e8be4e66d70e38a9db6e4c8bbccd8c55baeef42d34d30af2d1a59abd9aa5\",\n        \"value\": \"d15792920731f85e45b743519d4af2b807d95a9c\\n\"\n      },\n      \"branch\": {\n        \"sha256\": \"d8bb83e05f34fdd8ef567c747bbc1eba472ea10bab6a8c46193419aae5bde7f2\",\n        \"value\": \"agent/exact-workspace-paths\\n\"\n      },\n      \"index_stages\": {\n        \"sha256\": \"d7a7443545c6eea1eba91b23480aa376bc0c5cc5dc1f1916a0db3be31972fa81\",\n        \"value\": null\n      },\n      \"refs\": {\n        \"sha256\": \"668fa35556c4cefe9a52165abc4690a7077ac3076cfca39b7ca4287114ad4fe4\",\n        \"value\": null\n      },\n      \"index_file\": {\n        \"exists\": true,\n        \"sha256\": \"f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966\",\n        \"mode\": \"0o100644\",\n        \"kind\": \"file\"\n      }\n    },\n    \"candidate\": {\n      \"root\": {\n        \"sha256\": \"5ab0b0f0c5bd7916457776fe1f19cba701e8e7f57ba2a9f784508f2e340de6d6\",\n        \"value\": \"/private/tmp/mc-s6-commit-supervisor-20261004/candidate\\n\"\n      },\n      \"head\": {\n        \"sha256\": \"34f9e8be4e66d70e38a9db6e4c8bbccd8c55baeef42d34d30af2d1a59abd9aa5\",\n        \"value\": \"d15792920731f85e45b743519d4af2b807d95a9c\\n\"\n      },\n      \"branch\": {\n        \"sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n        \"value\": \"\"\n      },\n      \"index_stages\": {\n        \"sha256\": \"dda3d7745f74df970fd5eb429bf26fd78d61369eeedc7d3adf3ef79c4047330a\",\n        \"value\": null\n      },\n      \"refs\": {\n        \"sha256\": \"469bc6d4ea7c19660513dd3cf98bf16b955e8141aa42379979d4d2c8eb79900b\",\n        \"value\": null\n      },\n      \"index_file\": {\n        \"exists\": true,\n        \"sha256\": \"f60a305e9691ad6ecac0d696c78dfc5bc779a73004fce64b0e5f955b76eaecbb\",\n        \"mode\": \"0o100600\",\n        \"kind\": \"file\"\n      }\n    }\n  }\n}\n"
+      }
+    },
+    "self_diff": {
+      "command": "GIT_OPTIONAL_LOCKS=0 python3.12 -B - <<'PY'\nfrom pathlib import Path\nimport json,difflib,hashlib\nC=Path.cwd();J=C/'jobs/commit-supervisor/rehearsal-20261004-s6';P=Path('/private/tmp/mc-s6-commit-supervisor-20261004/candidate');m_path=J/'fixed-candidates/first/recovery/manifest.json';m=json.loads(m_path.read_bytes())\nfor n in ['checklist-controller.js','checklist-view.js','index.html','checklist.css']:\n k=f'rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/{n}'\n original=(m_path.parent/m['owned'][k]['worktree']['payload']).read_text();current=(P/k).read_text()\n print(''.join(difflib.unified_diff(original.splitlines(True),current.splitlines(True),fromfile='fixed-first/'+k,tofile='current/'+k)))\nreceipts=json.loads((J/'workers/fix-xy-code-1-commands.json').read_bytes());scenario=json.loads(receipts[0]['stdout']);post=json.loads(receipts[3]['stdout'])\nprint(json.dumps({'samples':len(scenario['samples']),'source_hashes':scenario['sourceFiles'],'inventory_count':post['candidate_inventory_count'],'changed_paths':list(post['deltas']),'suite_dependencies':len(post['suite_dependencies_matching']),'authorities':len(post['authority_matching']),'command_file_sha256':hashlib.sha256((J/'workers/fix-xy-code-1-commands.json').read_bytes()).hexdigest()},indent=2))\nPY",
+      "response": {
+        "chunk_id": "54ee9b",
+        "wall_time_seconds": 0.000006584,
+        "exit_code": 0,
+        "original_token_count": 1056,
+        "output": "--- fixed-first/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js\n+++ current/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js\n@@ -1,17 +1,25 @@\n import { renderChecklist } from './checklist-view.js';\n \n const samples = [\n-  { id: 'draft', label: 'Draft report' },\n+  { id: 'draft', label: 'Review report' },\n   { id: 'review', label: 'Review sources' },\n   { id: 'send', label: 'Send summary' },\n ];\n const stored = JSON.parse(localStorage.getItem('checklist-completed') || '[]');\n const tasks = samples.map((task) => ({ ...task, completed: stored.includes(task.id) }));\n \n+function persistCompletion() {\n+  localStorage.setItem('checklist-completed', JSON.stringify(tasks.filter((task) => task.completed).map((task) => task.id)));\n+}\n+\n function refresh() {\n   renderChecklist(tasks, tasks.filter((task) => !task.completed).length, (id, completed) => {\n     tasks.find((task) => task.id === id).completed = completed;\n-    localStorage.setItem('checklist-completed', JSON.stringify(tasks.filter((task) => task.completed).map((task) => task.id)));\n+    persistCompletion();\n+    refresh();\n+  }, () => {\n+    tasks.forEach((task) => { task.completed = false; });\n+    persistCompletion();\n     refresh();\n   });\n }\n\n--- fixed-first/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js\n+++ current/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js\n@@ -1,5 +1,6 @@\n-export function renderChecklist(tasks, remaining, onCompletion) {\n+export function renderChecklist(tasks, remaining, onCompletion, onReset) {\n   document.querySelector('#summary').textContent = `${remaining} remaining of 3`;\n+  document.querySelector('#reset-completion').onclick = onReset;\n   const rows = tasks.map((task) => {\n     const row = document.createElement('label');\n     row.className = 'rv-checklist-row';\n\n--- fixed-first/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html\n+++ current/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html\n@@ -2,5 +2,6 @@\n <html lang=\"en\"><head><meta charset=\"utf-8\"><title>Checklist</title>\n <link rel=\"stylesheet\" href=\"checklist.css\"></head>\n <body><main class=\"rv-checklist\"><h1>Checklist</h1>\n-<p id=\"summary\" aria-live=\"polite\"></p><div id=\"tasks\"></div></main>\n+<p id=\"summary\" aria-live=\"polite\"></p><div id=\"tasks\"></div>\n+<button id=\"reset-completion\" class=\"rv-checklist-reset\" type=\"button\">Reset completion</button></main>\n <script type=\"module\" src=\"checklist-controller.js\"></script></body></html>\n\n--- fixed-first/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css\n+++ current/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css\n@@ -1,2 +1,3 @@\n .rv-checklist { color: var(--text-primary, #ddd); background: var(--bg-primary, #222); padding: var(--space-lg, 24px); font: var(--font-body, 16px system-ui); }\n .rv-checklist-row { display: flex; gap: var(--space-sm, 8px); padding: var(--space-sm, 8px); }\n+.rv-checklist-reset { color: var(--text-primary, #ddd); background: var(--bg-secondary, #333); margin-top: var(--space-sm, 8px); padding: var(--space-sm, 8px); font: inherit; cursor: pointer; }\n\n{\n  \"samples\": 39,\n  \"source_hashes\": {\n    \"checklist-controller.js\": \"48ae78dfda264edb62fadf5bdd72e1f07c2f5b54b127ddb7296c41188f2d70bf\",\n    \"checklist-view.js\": \"55bb735409a940717d683a9256a7d55f467a92576923e26fe829518d3effa87e\",\n    \"index.html\": \"968e599ca4814c3a8e246d9d12ee985e0cf8a9ef8e3cd6d55e6b4a9a9b62f480\",\n    \"checklist.css\": \"f0e280d99afff67dda2c753192697d63dd74d20140794537f6cb2ae774ae8f0d\"\n  },\n  \"inventory_count\": 4354,\n  \"changed_paths\": [\n    \"rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css\",\n    \"rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js\",\n    \"rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js\",\n    \"rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html\"\n  ],\n  \"suite_dependencies\": 35,\n  \"authorities\": 52,\n  \"command_file_sha256\": \"232e73f7e9f1cdca93615c70e7c237edb04b1505b6210bfad80edf66d8f6571c\"\n}\n"
+      }
+    }
+  },
+  "next_safe_action": "Manager observes leaf terminal, freezes current whole identity, obtains distinct fresh read-only original affected code handoff using command-only derivative; then bounded Wiki/fresh final/actual runtime as required."
+}

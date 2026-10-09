@@ -1,0 +1,18 @@
+{
+  "runId": "chat-arch-1790044118571-fd11a37ff0",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R5-DIAGNOSTIC-APPEND",
+      "code": 0,
+      "signal": null,
+      "pid": 89079,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 3062
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

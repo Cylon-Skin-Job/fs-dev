@@ -1,0 +1,84 @@
+{
+  "at": "2026-10-05T04:17:40.720749+00:00",
+  "actor": "/root",
+  "entries": [
+    {
+      "scope": "SPEC final gate procedure",
+      "original_source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-review-1.raw.md",
+      "downstream_impact": "Review provenance/accounting only; no candidate source or later SPEC behavior changed",
+      "id": "SPEC-FINAL-REVIEW1-P01",
+      "original_requirement": "Fresh whole-SPEC review excludes author/manager conversations and previous outer review diagnoses/verdicts",
+      "actual_change": "First whole reviewer printed full S5 inventory files containing nested conversation finals; its gate is excluded and a different fresh reviewer receives a strict whitelist and field-only inventory",
+      "reason_authority": "Local SPEC Review Gate independence contract; prior exposure cannot be undone by timing or technical conclusions",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/cutover-inventory.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/thread-inventory.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-S5-factual-inventory.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-assignment-v2.md"
+      ],
+      "checks": "Native terminal self-disclosure and root bounded structural validation: 3 read summaries and 6 nested final entries; original files hashed without exporting their histories",
+      "observable_effect": "First gate does not satisfy acceptance. Current source and successful suites remain unchanged; replacement gate required",
+      "risk": "Excluded first report retained for owner audit only; its conclusions and conversations withheld from replacement"
+    },
+    {
+      "scope": "SPEC final gate procedure",
+      "original_source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-review-1.raw.md",
+      "downstream_impact": "Review provenance/accounting only; no candidate source or later SPEC behavior changed",
+      "id": "SPEC-FINAL-REVIEW1-P02",
+      "original_requirement": "Read-only Git discovery strips inherited Git variables and disables optional locks",
+      "actual_change": "First reviewer initial pure root lookup omitted explicit GIT_OPTIONAL_LOCKS=0; later reads used the required environment",
+      "reason_authority": "Disclosed procedural omission retained rather than retroactively certified",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-review-1.raw.md"
+      ],
+      "checks": "Native reviewer disclosure; unchanged retained source HEAD/index/ref evidence",
+      "observable_effect": "No observed Git mutation; report-only qualification",
+      "risk": "No claim that initial invocation had the missing setting"
+    },
+    {
+      "scope": "SPEC final gate procedure",
+      "original_source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-review-1.raw.md",
+      "downstream_impact": "Review provenance/accounting only; no candidate source or later SPEC behavior changed",
+      "id": "SPEC-FINAL-REVIEW1-P03",
+      "original_requirement": "Full source/evidence reads use exact paths and do not treat truncation as proof",
+      "actual_change": "Some oversized or guessed-path reads failed or truncated; reviewer corrected with exact targeted reads",
+      "reason_authority": "Full coverage obtained through bounded corrections, with failed reads retained as failed diagnostics",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-review-1.raw.md"
+      ],
+      "checks": "Native procedural disclosure and explicit full-read coverage",
+      "observable_effect": "No source edit; truncated or failed diagnostics excluded as proof",
+      "risk": "Report does not certify incomplete initial outputs"
+    },
+    {
+      "scope": "SPEC final gate procedure",
+      "original_source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-review-1.raw.md",
+      "downstream_impact": "Review provenance/accounting only; no candidate source or later SPEC behavior changed",
+      "id": "SPEC-FINAL-REVIEW1-P04",
+      "original_requirement": "Current file mode comparator matches manifest representation exactly",
+      "actual_change": "Initial comparator compared integer modes with octal strings; corrected exact comparator found zero mismatches",
+      "reason_authority": "Mechanical read-only comparison correction",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-review-1.raw.md"
+      ],
+      "checks": "Native reviewer disclosure and corrected exact zero-mismatch readback",
+      "observable_effect": "No candidate change; only corrected comparison supports mode preservation",
+      "risk": "Initial erroneous comparator remains a failed diagnostic"
+    }
+  ],
+  "source_report_owner_audit_only": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-review-1.raw.md",
+    "exists": true,
+    "kind": "file",
+    "mode": 33060,
+    "size": 27456,
+    "sha256": "b442816d3df04f7bda5433597518a775d7b08ee5071670339ba2c44c3f81027f"
+  },
+  "source_inventory_structural_validation": {
+    "read_summary_count": 3,
+    "nested_final_count": 6,
+    "source_sha256": "70ceebb8bb96561a8b64d1eea9eb3a5600103dfb8df83e0d38dacd27e41bd8de"
+  },
+  "product_source_changed": false,
+  "suites_replayed": false
+}

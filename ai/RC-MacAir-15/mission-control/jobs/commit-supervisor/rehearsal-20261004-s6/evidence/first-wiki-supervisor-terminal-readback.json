@@ -1,0 +1,16 @@
+{
+  "at": "2026-10-04T15:27:11.256770+00:00",
+  "actor": "/root/s6_supervisor_candidate_1",
+  "actual_worker_terminal": "native FINAL_ANSWER",
+  "changed_since_code_handoff": [
+    "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-080936.md",
+    "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md"
+  ],
+  "all_old_authorities_config_index_unchanged": true,
+  "current_identity_sha256": "cf9f2f2ab8e66ffe642ea09e270c51bc760d337a1e85ecbfa490e2bbe5a39d83",
+  "worker_report_sha256": "22148e2c83afbae60ed7806bfff9900e7f6cdf65fe87d345d414b471e021ddcd",
+  "raw_command_receipts_exit0": true,
+  "independent_wiki_handoff": "pending; no writer selfacceptance",
+  "preimage_sha256": "e2877b2a21a23cce18a7b079d1532a8c7a5a8f30467e369248d75e9750ce527c",
+  "preimage_equal_original_payload": true
+}

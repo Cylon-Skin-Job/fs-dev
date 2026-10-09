@@ -1,0 +1,70 @@
+{
+  "at": "2026-10-04T16:27:32.077856+00:00",
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "manager": "/root",
+  "role": "mc-commit-supervisor",
+  "runtime": "supported default fallback",
+  "native_profile_metadata": "unexposed; exact skill/TOML developer instructions explicitly loaded",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "repository": {
+    "root": "/Users/rccurtrightjr./projects/fs-dev",
+    "git_dir": "/Users/rccurtrightjr./projects/fs-dev/.git",
+    "common_dir": "/Users/rccurtrightjr./projects/fs-dev/.git"
+  },
+  "candidate_repository": {
+    "root": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+    "git_dir": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/.git",
+    "common_dir": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/.git"
+  },
+  "source_refs": {
+    "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+    "branch": "refs/heads/agent/exact-workspace-paths",
+    "refs_sha256": "2137fda44918eee605a707a4931a0f12f57125dbab104179ca490556d5e74976",
+    "config_sha256": "15b4867e1facba02e3e54d699d8e9133c336ff6bd3beb6aab997538d77efbcb3",
+    "index_file_sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966"
+  },
+  "candidate_refs": {
+    "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+    "branch": null,
+    "refs_sha256": "9d16de57b401c2857b4e01e956037365f3ca9669a716562248c6be8faf58472d",
+    "config_sha256": "0a84192202948bd789d2bd8bbb405668470eb300a3539fcdd609677fb2af310e",
+    "index_file_sha256": "f60a305e9691ad6ecac0d696c78dfc5bc779a73004fce64b0e5f955b76eaecbb"
+  },
+  "effective_permissions": {
+    "sandbox": "danger-full-access",
+    "approval": "never",
+    "source": "host developer instructions"
+  },
+  "root_settings": "inherited without model/effort overrides; concrete values unexposed",
+  "first_predecessor": "native completed COMMIT_READY_WAITING_OWNER independently observed",
+  "first_identity": {
+    "exists": true,
+    "sha256": "fa91eb339a518ebb0cf878f5f15d0df3f2d5e5309cdf0eadab2c030b1f499a58",
+    "mode": "0o100644",
+    "kind": "file"
+  },
+  "first_current_owned_changes": {},
+  "authority_changes": {},
+  "matching_schedules": [],
+  "event": {
+    "exists": true,
+    "sha256": "a45a33baf89912cac89b46f05b4f18f5e30486932368f56d61d850e4fb156ec3",
+    "mode": "0o100644",
+    "kind": "file"
+  },
+  "scope": "REHEARSAL_ONLY fix-X/Y then second owner wait; actual operation authority NONE",
+  "ownership": "J unique successor records and bounded private leaf writers; root E disjoint; preserve others",
+  "skill": {
+    "exists": true,
+    "sha256": "b4ec0266a8d72f573dd4f3670c671a856ee5cc98b6942aad48683fa22fb14d68",
+    "mode": "0o100644",
+    "kind": "file"
+  },
+  "profile": {
+    "exists": true,
+    "sha256": "01887fdc12c962be5a7438b513836e6269cff1f9683b7a17c2edfbf2aa961044",
+    "mode": "0o100644",
+    "kind": "file"
+  }
+}

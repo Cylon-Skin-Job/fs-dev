@@ -1,0 +1,81 @@
+{
+  "at": "2026-09-27T00:55:35.701187+00:00",
+  "runId": "chat-arch-1790470326608-53c933af4f",
+  "rootExists": false,
+  "recordedPids": [
+    {
+      "pid": 28348,
+      "exists": false
+    },
+    {
+      "pid": 28363,
+      "exists": false
+    },
+    {
+      "pid": 28997,
+      "exists": false
+    },
+    {
+      "pid": 29023,
+      "exists": false
+    },
+    {
+      "pid": 29024,
+      "exists": false
+    },
+    {
+      "pid": 29027,
+      "exists": false
+    },
+    {
+      "pid": 29117,
+      "exists": false
+    }
+  ],
+  "elapsedMs": 72579,
+  "workloadStartedAt": null,
+  "windows": 0,
+  "cycles": 0,
+  "samples": 1,
+  "failure": "short-idle-1: staged Electron lost OS focus immediately before typing: {\"available\":true,\"focused\":false,\"visible\":true,\"minimized\":false,\"windowId\":1,\"url\":\"fusion-shell://app/\"}",
+  "focusPreparation": {
+    "attempts": 1,
+    "elapsedMs": 3,
+    "observation": {
+      "available": true,
+      "focused": true,
+      "visible": true,
+      "minimized": false,
+      "windowId": 1,
+      "url": "fusion-shell://app/"
+    }
+  },
+  "ownedFocus": {
+    "pid": 28997,
+    "windowId": 1,
+    "events": [
+      {
+        "type": "installed",
+        "at": 1790470332094,
+        "focused": true,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      },
+      {
+        "type": "show",
+        "at": 1790470332150,
+        "focused": true,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      }
+    ],
+    "overflow": 0
+  },
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  }
+}

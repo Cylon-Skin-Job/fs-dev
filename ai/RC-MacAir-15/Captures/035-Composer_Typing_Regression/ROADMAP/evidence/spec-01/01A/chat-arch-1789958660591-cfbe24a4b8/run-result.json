@@ -1,0 +1,21 @@
+{
+  "runId": "chat-arch-1789958660591-cfbe24a4b8",
+  "status": "failed",
+  "results": [
+    {
+      "id": "F1-PUBLIC-ROUTE",
+      "code": 1,
+      "signal": null,
+      "pid": 13452,
+      "timedOut": false,
+      "interrupted": false,
+      "elapsedMs": 3625
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "F1-PUBLIC-ROUTE exited 1",
+    "stack": "Error: F1-PUBLIC-ROUTE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:193:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

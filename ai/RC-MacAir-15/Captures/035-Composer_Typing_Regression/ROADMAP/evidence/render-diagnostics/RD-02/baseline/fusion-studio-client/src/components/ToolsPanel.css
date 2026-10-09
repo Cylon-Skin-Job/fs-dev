@@ -1,0 +1,349 @@
+/* ── ToolCallBlock — collapsible tool segment shell ────────────────────── */
+
+.rv-tool-header-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  padding: var(--space-xs, 4px) 0;
+  border: none;
+  background: none;
+  cursor: default;
+  color: var(--tool-label-color, var(--text-dim));
+  font: inherit;
+  opacity: 1;
+}
+
+.rv-tool-header-btn[data-interactive="true"] {
+  cursor: pointer;
+}
+
+.rv-tool-icon {
+  font-size: var(--tool-icon-size, 16px);
+  color: var(--tool-icon-color, currentColor);
+}
+
+.rv-tool-label {
+  font-size: 13px;
+  font-style: var(--tool-label-style, normal);
+}
+
+.rv-tool-arrow-icon {
+  font-size: 16px;
+  vertical-align: middle;
+  margin-left: 2px;
+  transform: rotate(-90deg);
+  transition: transform var(--tool-collapse-ms, 300ms) ease;
+}
+
+.rv-tool-header-btn[data-expanded="true"] .rv-tool-arrow-icon {
+  transform: rotate(0deg);
+}
+
+.rv-tool-content-area {
+  margin-left: var(--space-xl, 24px);
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition:
+    max-height var(--tool-collapse-ms, 300ms) ease,
+    opacity var(--tool-collapse-ms, 300ms) ease;
+  border-left: var(--tool-border-w, 0px) solid var(--tool-border-color, transparent);
+  padding-left: var(--tool-border-pl, 0px);
+}
+
+.rv-tool-content-area[data-expanded="true"] {
+  max-height: 2000px;
+  opacity: 1;
+}
+
+.rv-tool-content-body {
+  padding: var(--space-sm, 8px) 0;
+  font-size: 13px;
+  color: var(--tool-content-color, var(--text-dim));
+}
+
+.rv-shell-command {
+  color: var(--chat-tools-color, currentColor);
+}
+
+.rv-tool-error {
+  display: grid;
+  gap: var(--space-xs, 4px);
+}
+
+.rv-tool-error-title {
+  color: var(--error, #ef4444);
+  font-weight: 600;
+}
+
+.rv-tool-error-context {
+  color: var(--text-dim, currentColor);
+}
+
+.rv-tool-error-context-label {
+  color: var(--text-muted, var(--text-dim, currentColor));
+}
+
+.rv-tool-error-status,
+.rv-tool-error-output {
+  color: var(--error, #ef4444);
+  opacity: 0.88;
+}
+
+.rv-tool-error-output {
+  margin: 0;
+  white-space: pre-wrap;
+  font: inherit;
+}
+
+/* ── ToolsPanel — left-rail workspace/tool switcher ─────────────────────── */
+
+.rv-tools-panel {
+  --interactive-surface-bg: var(--panel-chrome-bg, #1a1a1a);
+  grid-column: 1 / 2;
+  grid-row: 2;
+  background: var(--panel-chrome-bg, #1a1a1a);
+  border-right: 1px solid var(--workspace-border-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.12)));
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+  gap: 4px;
+}
+
+.rv-tool-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--workspace-foreground-color, var(--chrome-accent, var(--text-dim)));
+  cursor: pointer;
+  position: relative;
+}
+
+.rv-tool-btn .material-symbols-outlined {
+  font-size: var(--navigation-rail-icon-size, 24px);
+}
+
+.rv-tool-btn:hover:not(.active),
+.rv-tool-btn:active:not(.active) {
+  color: var(--interactive-contrast-foreground, #ffffff);
+  background: transparent;
+}
+
+.rv-tool-btn:focus-visible {
+  outline: 2px solid var(--interactive-focus-ring, var(--interactive-contrast-foreground, #ffffff));
+  outline-offset: -3px;
+}
+
+.rv-tool-btn.active {
+  color: var(--workspace-accent-color, var(--accent-dim, var(--theme-primary)));
+}
+
+.rv-tool-btn.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 24px;
+  background: var(--workspace-accent-color, var(--accent-dim, var(--theme-primary)));
+  border-radius: 0 2px 2px 0;
+}
+
+/* App-mode two-zone layout with divider */
+.rv-tools-panel--app {
+  gap: 0;
+}
+
+.rv-tools-apps {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+  gap: 8px;
+}
+
+.rv-tools-divider {
+  border: none;
+  border-top: 1px solid var(--workspace-border-color, var(--neutral-chrome-border, rgba(255, 255, 255, 0.25)));
+  margin: 8px 16px;
+}
+
+.rv-tools-tools {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+  gap: 8px;
+}
+
+.rv-tool-btn--app {
+  height: 40px;
+}
+
+.rv-tool-btn--tool {
+  height: 40px;
+}
+
+.rv-view-context-menu {
+  position: fixed;
+  z-index: var(--z-popover, 320);
+  width: min(240px, calc(100vw - var(--space-lg, 24px)));
+  padding: var(--space-sm, 8px);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.18));
+  border-radius: var(--radius-md, 10px);
+  background: var(--panel-chrome-bg, #1a1a1a);
+  box-shadow: var(--shadow-medium, 0 12px 32px rgba(0, 0, 0, 0.42));
+  color: var(--text-primary, #ffffff);
+}
+
+.rv-view-context-heading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  padding: var(--space-xs, 4px) var(--space-xs, 4px) var(--space-sm, 8px);
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  margin-bottom: var(--space-xs, 4px);
+}
+
+.rv-view-context-icon {
+  color: var(--chrome-accent, var(--theme-primary));
+  font-size: var(--icon-size-md, 22px);
+}
+
+.rv-view-context-title-group {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rv-view-context-title,
+.rv-view-context-id {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rv-view-context-title {
+  font-size: var(--font-size-sm, 13px);
+  color: var(--text-primary, #ffffff);
+}
+
+.rv-view-context-id {
+  font-size: var(--font-size-xs, 11px);
+  color: var(--text-dim, rgba(255, 255, 255, 0.58));
+}
+
+.rv-view-context-action,
+.rv-view-context-save {
+  width: 100%;
+  border: none;
+  border-radius: var(--radius-sm, 7px);
+  background: transparent;
+  color: var(--text-primary, #ffffff);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--font-size-sm, 13px);
+  text-align: left;
+}
+
+.rv-view-context-action {
+  padding: var(--space-xs, 4px) var(--space-sm, 8px);
+}
+
+.rv-view-context-action--with-icon {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+}
+
+.rv-view-context-action-icon {
+  color: var(--chrome-accent, var(--theme-primary));
+  font-size: var(--icon-size-sm, 18px);
+}
+
+.rv-view-context-action:hover:not(:disabled),
+.rv-view-context-save:hover:not(:disabled) {
+  background: rgba(var(--theme-primary-rgb), 0.12);
+  color: var(--theme-primary, currentColor);
+}
+
+.rv-view-context-action:disabled,
+.rv-view-context-save:disabled {
+  cursor: not-allowed;
+  color: var(--text-muted, rgba(255, 255, 255, 0.32));
+}
+
+.rv-view-context-action--danger:not(:disabled) {
+  color: var(--error, #ef4444);
+}
+
+.rv-view-context-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs, 4px);
+  padding: var(--space-sm, 8px) var(--space-xs, 4px);
+}
+
+.rv-view-context-label {
+  font-size: var(--font-size-xs, 11px);
+  color: var(--text-dim, rgba(255, 255, 255, 0.58));
+}
+
+.rv-view-context-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.18));
+  border-radius: var(--radius-sm, 7px);
+  background: var(--bg-surface, rgba(255, 255, 255, 0.06));
+  color: var(--text-primary, #ffffff);
+  font: inherit;
+  font-size: var(--font-size-sm, 13px);
+  padding: var(--space-xs, 4px) var(--space-sm, 8px);
+}
+
+.rv-view-context-input:focus {
+  outline: none;
+  border-color: var(--theme-primary, currentColor);
+}
+
+.rv-view-context-save {
+  padding: var(--space-xs, 4px) var(--space-sm, 8px);
+  background: rgba(var(--theme-primary-rgb), 0.08);
+}
+
+.rv-view-context-section {
+  padding: var(--space-xs, 4px) 0;
+}
+
+.rv-view-context-section + .rv-view-context-section {
+  border-top: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  margin-top: var(--space-xs, 4px);
+  padding-top: var(--space-sm, 8px);
+}
+
+.rv-view-context-section-title {
+  padding: var(--space-xs, 4px) var(--space-sm, 8px);
+  color: var(--text-dim, rgba(255, 255, 255, 0.58));
+  font-size: var(--font-size-xs, 11px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.rv-view-context-empty {
+  padding: var(--space-sm, 8px);
+  color: var(--text-dim, rgba(255, 255, 255, 0.58));
+  font-size: var(--font-size-sm, 13px);
+}
+
+.rv-view-context-error {
+  margin-top: var(--space-xs, 4px);
+  padding: var(--space-xs, 4px) var(--space-sm, 8px);
+  border-radius: var(--radius-sm, 7px);
+  background: var(--error-bg, rgba(239, 68, 68, 0.12));
+  color: var(--error, #ef4444);
+  font-size: var(--font-size-xs, 11px);
+}

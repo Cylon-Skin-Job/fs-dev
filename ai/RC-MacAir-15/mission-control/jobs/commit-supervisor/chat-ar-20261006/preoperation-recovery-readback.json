@@ -1,0 +1,71 @@
+{
+  "records": [
+    {
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/recovery/manifest.json",
+      "sha256": "8ebfd14f6e97736ad4d38a6ab1c165a9e106d1607e9c6597f168dce525addef8",
+      "payloads_valid": 178
+    },
+    {
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/restart-wiki-deferral-recovery/recovery/manifest.json",
+      "sha256": "b3b4526b10f15e1a7305fbb55bdf62660c95dba41d58f3a29c35d3840b506977",
+      "payloads_valid": 2
+    },
+    {
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/document-closure-recovery/recovery/manifest.json",
+      "sha256": "e152523e6869d4be974c04558452bdfee97d40bef853411c7a2c9aab966f95e0",
+      "payloads_valid": 0
+    },
+    {
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/fifth-wiki-preimage/recovery/manifest.json",
+      "sha256": "acff93756cd465f294d0b3edadca6bbfd8c2d7e7249d3cd61f7dfeb886fc99d2",
+      "payloads_valid": 2
+    },
+    {
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/retained-view-correction-preimage/recovery/manifest.json",
+      "sha256": "404b4385bdcc46a9f03903ef2115b3ee88307eab8adcf0f9022c2dd07d64651f",
+      "payloads_valid": 9
+    },
+    {
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/side-rail-recovery/recovery/manifest.json",
+      "sha256": "96074c498d79c4c99bab22e3dccc0b80205314ac4663290d72d3a5ab74a22862",
+      "payloads_valid": 1
+    },
+    {
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/recovery/manifest.json",
+      "sha256": "a7caf433bc4ba30e85bcb4970d5e5b71bff7fc4e04c3dc93272085b0c2e0b9f7",
+      "payloads_valid": 11
+    },
+    {
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/component-fixture-preimage/recovery/manifest.json",
+      "sha256": "83642c9a4d2f92a1b38eff135cfb215fcc25643f9fdc93c358a5a6e993e1c5d8",
+      "payloads_valid": 1
+    },
+    {
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-package-recovery/recovery/manifest.json",
+      "sha256": "7207af85d442d2d4eb3aae24e13351b8f390f3c41871e864f3f9a49de23f2d9d",
+      "payloads_valid": 0
+    },
+    {
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/side-placement-recovery/recovery/manifest.json",
+      "sha256": "c7ff5aa555632a3c759036e33a8764e9e5eaf95ccbee36e0e0285a75f2162c4e",
+      "payloads_valid": 2
+    },
+    {
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/planning-authority-closure-recovery/recovery/manifest.json",
+      "sha256": "5899027f031f79d8d5b11123eb6963114b863b4b3bc23d4b2159d5c260cd81d4",
+      "payloads_valid": 0
+    },
+    {
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-final-preedit/recovery/manifest.json",
+      "sha256": "bb33708bac0d9c03eab87292757f623130c68b93942fb94ec80d92a5f172b4e4",
+      "payloads_valid": 6
+    },
+    {
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/bounded-corrections-recovery/recovery/manifest.json",
+      "sha256": "0a1a4d146f2abd78d78e2600ef423161c109f2b1ef3e1fe68e6f8635ed24ad98",
+      "payloads_valid": 5
+    }
+  ],
+  "primary23leaf_preimages_payloads_valid": true,
+  "limits": "Immutable payload validity, not equality of post-repair current candidate to old snapshots; no whole shared-index restore authorization."
+}

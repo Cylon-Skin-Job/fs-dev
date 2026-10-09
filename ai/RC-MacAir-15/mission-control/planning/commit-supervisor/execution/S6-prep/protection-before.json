@@ -1,0 +1,69 @@
+{
+  "at": "2026-10-04T11:40:53.391153+00:00",
+  "dependency_files": 63077,
+  "shared_inode_or_source_link_failures": [],
+  "profile_storage": {
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/Preferences": {
+      "exists": true,
+      "sha256": "f0e43cb69a6791e69476c4780858a97f50255a1d253bead0bf03626ff341e7c3",
+      "volatile": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/Local State": {
+      "exists": true,
+      "sha256": "ed99ee7c5881bef2b9895b6df1058728653c22d630d22c6360c10253f21b647f",
+      "volatile": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server-data/fusion.db": {
+      "exists": true,
+      "sha256": "29bbcf1eedf39bfc4ec1cab593252166805872c3c1ca424aa43e93f47e725e20",
+      "volatile": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server-data/fusion.db-wal": {
+      "exists": false,
+      "sha256": null,
+      "volatile": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server.port": {
+      "exists": true,
+      "sha256": "ea7812cfeb7b019a1eb4fa2410ab3f50a49712eb8a1e93f4802b327059bad754",
+      "volatile": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/Preferences": {
+      "exists": true,
+      "sha256": "ab913052ab22c0be5eb150029ab5af7f0060ff00bbf7c39688d70b0189618514",
+      "volatile": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/Local State": {
+      "exists": true,
+      "sha256": "60f0a642e3b8a1fedad849d4c83cabbd4021f195c778ef5095d607c915a3edf8",
+      "volatile": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server-data/fusion.db": {
+      "exists": true,
+      "sha256": "4829e1ec2d099b8fdde5ba6eafaeff5189e9673009e557631c2c194f4aac5dc8",
+      "volatile": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server-data/fusion.db-wal": {
+      "exists": false,
+      "sha256": null,
+      "volatile": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server.port": {
+      "exists": true,
+      "sha256": "5939ac9daf7975b25a1e4a8b48d6f596fb8dd0ac93820c3f1f0d0a8e98f59d44",
+      "volatile": true
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/data/fusion.db": {
+      "exists": true,
+      "sha256": "d522aff29f06aadeef4d374fcd52796e377d268402783801bbaeaa52266e606d",
+      "volatile": true
+    }
+  },
+  "protected_processes": [
+    "48636     1 Thu Oct  1 12:36:56 2026     /Applications/Fusion Studio Alpha.app/Contents/MacOS/Fusion Studio",
+    "48653 48636 Thu Oct  1 12:36:59 2026     /opt/homebrew/bin/node /Applications/Fusion Studio Alpha.app/Contents/Resources/fusion-studio-server/server.js",
+    "77002     1 Mon Sep 28 01:40:07 2026     /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs",
+    "77007 77002 Mon Sep 28 01:40:07 2026     /opt/homebrew/bin/node /Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js"
+  ],
+  "volatile_note": "Live apps can naturally write these files. Any drift is observed without causal attribution; this preparation never selects or writes these profiles."
+}

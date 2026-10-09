@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-04T16:32:28.185820+00:00",
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "before": "evidence/first-protection-post-runtime.json",
+  "after": "evidence/fix-xy-protection-entry.json",
+  "equal": [
+    "head",
+    "refs",
+    "physicalindex",
+    "193sourcecacheleaves",
+    "4protectedprocesses"
+  ],
+  "excluded": [
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/",
+    "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/"
+  ],
+  "other_unowned_changes": [],
+  "prior_comparison_attempt": "Excluded J only and flagged13 authorized rootE coordination deltas; no outsidechanges. Rechecked with correctexplicitrootE exclusion, originalraw snapshots preserved.",
+  "profile_storage_limit": "Live hashes volatile; compare dev/inode/existence not content equality; no protected content copied"
+}

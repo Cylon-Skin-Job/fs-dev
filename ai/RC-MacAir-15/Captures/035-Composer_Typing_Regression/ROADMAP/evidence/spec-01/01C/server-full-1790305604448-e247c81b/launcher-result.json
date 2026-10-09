@@ -1,0 +1,16 @@
+{
+  "runId": "server-full-1790305604448-e247c81b",
+  "kind": "server-full",
+  "mode": null,
+  "result": {
+    "code": 1,
+    "signal": null,
+    "pid": 67220,
+    "timedOut": false,
+    "interrupted": false,
+    "leakedOwnedPids": [],
+    "elapsedMs": 78493
+  },
+  "failure": null,
+  "ownedRunRootRemoved": true
+}

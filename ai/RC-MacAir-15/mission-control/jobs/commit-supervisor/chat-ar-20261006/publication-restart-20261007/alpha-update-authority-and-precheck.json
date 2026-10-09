@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-07T08:19:58.367447+00:00",
+  "owner_authority": "Actual human answer: Sync, rebuild and reinstall Alpha; original restart instruction retained.",
+  "source": "/Users/rccurtrightjr./Applications/Fusion-Studio-Alpha-Source",
+  "branch": "main",
+  "source_head": "3356e1b73cc5d44028eac5baa02fd542a8bbc385",
+  "dirty_paths": 0,
+  "destination_commit": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "index_sha256": "e5846b8cfc94d2fe404135165a40dd770a28c7e0b6f9c7bf0b3668bb20759239",
+  "db_copy_or_restore": false
+}

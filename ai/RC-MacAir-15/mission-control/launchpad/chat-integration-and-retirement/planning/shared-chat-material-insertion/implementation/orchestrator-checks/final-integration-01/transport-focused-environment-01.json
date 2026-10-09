@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-07T23:24:59.463488+00:00",
+  "port": 52094,
+  "command": [
+    "npx",
+    "--no-install",
+    "playwright",
+    "test",
+    "--config=playwright.chat-architecture.config.ts",
+    "e2e/chat-send-transport.spec.ts",
+    "--grep",
+    "definitely refused prompt",
+    "--workers=1",
+    "--output=/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/transport-focused-01-output"
+  ],
+  "purpose": "Unchanged failed precondition case repeated alone, no source/oracle edits"
+}

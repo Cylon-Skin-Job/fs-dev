@@ -1,0 +1,207 @@
+{
+  "at": "2026-10-04T21:54:44.337949+00:00",
+  "reviewed_manifest": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout-manifest.json",
+    "exists": true,
+    "kind": "file",
+    "mode": 33188,
+    "dev": 16777230,
+    "ino": 259042643,
+    "size": 1598854,
+    "mtime_ns": 1791149283736330394,
+    "sha256": "5a3cd688a30036095af7da276907543961331fe3a11bd7fa2db89486d98357aa"
+  },
+  "current_manifest": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout-manifest.json",
+    "exists": true,
+    "kind": "file",
+    "mode": 33188,
+    "dev": 16777230,
+    "ino": 259042643,
+    "size": 1598854,
+    "mtime_ns": 1791149283736330394,
+    "sha256": "5a3cd688a30036095af7da276907543961331fe3a11bd7fa2db89486d98357aa"
+  },
+  "frozen_current_docs": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md",
+      "frozen_sha256": "d4dce1ca561b013641ca999d4183a73be739b408cfa5e518c750af783420de6d",
+      "current": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 253884811,
+        "size": 11823,
+        "mtime_ns": 1791148867694850265,
+        "sha256": "d4dce1ca561b013641ca999d4183a73be739b408cfa5e518c750af783420de6d"
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+      "frozen_sha256": "432b77f8d83297935d3017063e74fc4172d7376d544139abd0d509cbebc81d16",
+      "current": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 253884813,
+        "size": 24178,
+        "mtime_ns": 1791148867701029608,
+        "sha256": "432b77f8d83297935d3017063e74fc4172d7376d544139abd0d509cbebc81d16"
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+      "frozen_sha256": "ca478d6baa5dc05bff44daca96295736d69a7226037b8ce8223fc51251230bc0",
+      "current": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 253884814,
+        "size": 14365,
+        "mtime_ns": 1791148867695296012,
+        "sha256": "ca478d6baa5dc05bff44daca96295736d69a7226037b8ce8223fc51251230bc0"
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+      "frozen_sha256": "1804c147efba7fd8b5fa892c41ee9be6f906c69a7209ce45c9d419ec81c9869e",
+      "current": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 253884817,
+        "size": 37337,
+        "mtime_ns": 1791148867698308997,
+        "sha256": "1804c147efba7fd8b5fa892c41ee9be6f906c69a7209ce45c9d419ec81c9869e"
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+      "frozen_sha256": "e8a4da6a21b73a293f57626f315da78e3bc8ff77eb841000a8c5dde441e9bafd",
+      "current": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 254286643,
+        "size": 24436,
+        "mtime_ns": 1791148867701588230,
+        "sha256": "e8a4da6a21b73a293f57626f315da78e3bc8ff77eb841000a8c5dde441e9bafd"
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+      "frozen_sha256": "592dd2042cc12042186941128e44b34957e8d9db52773b61ffec3a6ae84d31d9",
+      "current": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 254233150,
+        "size": 19311,
+        "mtime_ns": 1791148867702040311,
+        "sha256": "592dd2042cc12042186941128e44b34957e8d9db52773b61ffec3a6ae84d31d9"
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md",
+      "frozen_sha256": "ccf7a76b4201ce3f5a95b29816f72f85cf1506b6f94172a581c100170dd4b94e",
+      "current": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 65627116,
+        "size": 3428,
+        "mtime_ns": 1791148600081893915,
+        "sha256": "ccf7a76b4201ce3f5a95b29816f72f85cf1506b6f94172a581c100170dd4b94e"
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/.versions/2026-10-04-141458.md",
+      "frozen_sha256": "fa7ecb9041a4d4c9f2f24cba9386b3e844a6dbe98c9af52063b05fe90345a9f0",
+      "current": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 259038572,
+        "size": 819,
+        "mtime_ns": 1791148600080939003,
+        "sha256": "fa7ecb9041a4d4c9f2f24cba9386b3e844a6dbe98c9af52063b05fe90345a9f0"
+      }
+    }
+  ],
+  "own_review_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/reviewer-1.raw.md",
+    "exists": true,
+    "kind": "file",
+    "mode": 33060,
+    "dev": 16777230,
+    "ino": 259045303,
+    "size": 16909,
+    "mtime_ns": 1791150820980414539,
+    "sha256": "7437bf65b0067e5e0ee3c819712ab04477a5579e078cc1368044835d88a0e403"
+  },
+  "review_lifecycle": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/reviewer-1-lifecycle.json",
+    "exists": true,
+    "kind": "file",
+    "mode": 33188,
+    "dev": 16777230,
+    "ino": 259045318,
+    "size": 1638,
+    "mtime_ns": 1791150884336429069,
+    "sha256": "ee80d125e9d23e15aa0e0471885e787406de63cab294d1560209a8fdff415f91"
+  },
+  "neutral85": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/deviations-neutral-v3.json",
+    "exists": true,
+    "kind": "file",
+    "mode": 33188,
+    "dev": 16777230,
+    "ino": 259043101,
+    "size": 143069,
+    "mtime_ns": 1791149283709550987,
+    "sha256": "dc7ff03c6bb903e71e323938fcb2c5f6a1ac8881dba652a557d4b7e229207953"
+  },
+  "report_only_addendum3": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/reviewer-procedural-deviations-addendum.json",
+    "exists": true,
+    "kind": "file",
+    "mode": 33188,
+    "dev": 16777230,
+    "ino": 259045319,
+    "size": 4894,
+    "mtime_ns": 1791150884336802318,
+    "sha256": "3dc2ab1d0f335686f76cd1d218d9d32743e997d8d064ba2d5dcf22d778aef7a9"
+  },
+  "current_source_index": {
+    "exists": true,
+    "kind": "file",
+    "mode": 33188,
+    "dev": 16777230,
+    "ino": 258551291,
+    "size": 623370,
+    "mtime_ns": 1791074406667325743,
+    "sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966"
+  },
+  "current_candidate_index": {
+    "exists": true,
+    "kind": "file",
+    "mode": 33152,
+    "dev": 16777230,
+    "ino": 259033666,
+    "size": 623622,
+    "mtime_ns": 1791146541545411089,
+    "sha256": "f60a305e9691ad6ecac0d696c78dfc5bc779a73004fce64b0e5f955b76eaecbb"
+  },
+  "current_head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "current_candidate_head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "current_ready": false,
+  "qualification": "Current reviewed docs/manifest exact after CLEAN; preservation full filesystem/profile/process scope remains exact at its retained sample times. Disjoint manager E writes are separately owned."
+}

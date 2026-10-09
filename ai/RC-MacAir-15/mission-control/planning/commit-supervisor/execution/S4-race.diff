@@ -1,0 +1,185 @@
+--- /Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-preimages/fusion-restart-processes.mjs
++++ /Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs
+@@ -17,23 +17,58 @@
+   }
+   return env;
+ }
+-export function systemProcesses() {
+-  const lines = run('ps', ['-axo', 'pid=,ppid=,uid=,lstart=,command=']).trim().split('\n');
+-  const records = lines.map((line) => {
+-    const match = line.match(/^\s*(\d+)\s+(\d+)\s+(\d+)\s+(\S+\s+\S+\s+\d+\s+\S+\s+\d+)\s+(.*)$/);
+-    if (!match) throw new Error('unsupported process inventory');
+-    return { pid: Number(match[1]), ppid: Number(match[2]), uid: Number(match[3]), start: match[4], command: match[5] };
+-  });
++const processFields = 'pid=,ppid=,uid=,stat=,lstart=,command=';
++function parseProcess(line) {
++  const match = line.match(/^\s*(\d+)\s+(\d+)\s+(\d+)\s+(\S+)\s+(\S+\s+\S+\s+\d+\s+\S+\s+\d+)\s+(.*)$/);
++  if (!match) throw new Error('unsupported process inventory');
++  return { pid: Number(match[1]), ppid: Number(match[2]), uid: Number(match[3]), state: match[4], start: match[5], command: match[6] };
++}
++const terminal = (record) => /^[ZX]/.test(record.state);
++const emptyExit = (error) => error.status === 1 && !error.code && !error.signal &&
++  !String(error.stdout ?? '').trim() && !String(error.stderr ?? '').trim();
++function reobserve(record, execute) {
++  let output;
++  try { output = execute('ps', ['-p', String(record.pid), '-o', processFields]).trim(); }
++  catch (error) { if (emptyExit(error)) return null; throw error; }
++  if (!output) return null;
++  const current = parseProcess(output);
++  if (current.pid !== record.pid || current.uid !== record.uid || current.start !== record.start) {
++    throw new Error(`process identity changed: ${record.pid}`);
++  }
++  // A zombie may expose <defunct> instead of its former command. It cannot run.
++  if (terminal(current)) return null;
++  if (current.command !== record.command) throw new Error(`process identity changed: ${record.pid}`);
++  return current;
++}
++export function systemProcesses(execute = run) {
++  const lines = execute('ps', ['-axo', processFields]).trim().split('\n').filter(Boolean);
++  const records = lines.map(parseProcess).filter((record) => !terminal(record));
++  const active = [];
+   for (const record of records) {
+-    if (record.uid !== process.getuid() || !/fusion-studio-(client\/electron\/main\.cjs|server\/server\.js)|Fusion Studio.*Contents\/MacOS|Electron\.app\/.*--type=renderer/.test(record.command)) continue;
+-    const files = run('lsof', ['-a', '-p', String(record.pid), '-d', 'cwd,txt', '-Fn']);
+-    record.cwd = files.match(/^n(.+)$/m)?.[1];
+-    record.executables = files.split('\n').filter((line) => line.startsWith('n')).slice(1).map((line) => line.slice(1));
+-    const command = run('ps', ['eww', '-p', String(record.pid), '-o', 'command=']).trim();
+-    if (!command.startsWith(record.command)) throw new Error(`process identity changed: ${record.pid}`);
+-    record.env = parseEnvironment(command);
++    if (record.uid === process.getuid() && /fusion-studio-(client\/electron\/main\.cjs|server\/server\.js)|Fusion Studio.*Contents\/MacOS|Electron\.app\/.*--type=renderer/.test(record.command)) {
++      let files;
++      let command;
++      try { files = execute('lsof', ['-a', '-p', String(record.pid), '-d', 'cwd,txt', '-Fn']); }
++      catch (error) {
++        if (!emptyExit(error) || reobserve(record, execute)) throw error;
++        continue;
++      }
++      try { command = execute('ps', ['eww', '-p', String(record.pid), '-o', 'command=']).trim(); }
++      catch (error) {
++        if (!emptyExit(error) || reobserve(record, execute)) throw error;
++        continue;
++      }
++      const current = reobserve(record, execute);
++      if (!current) continue;
++      if (!files.trim() || !command.startsWith(record.command)) throw new Error(`unverified live process inspection: ${record.pid}`);
++      record.ppid = current.ppid;
++      record.cwd = files.match(/^n(.+)$/m)?.[1];
++      record.executables = files.split('\n').filter((line) => line.startsWith('n')).slice(1).map((line) => line.slice(1));
++      record.env = parseEnvironment(command);
++    }
++    active.push(record);
+   }
+-  return records;
++  return active;
+ }
+ export function processProfile(record, target) {
+   if (!record.env) throw new Error(`unverified profile ownership: ${record.pid}`);
+--- /Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-preimages/test_restart_runtime.mjs
++++ /Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs
+@@ -4,7 +4,7 @@
+ import fs from 'node:fs';
+ import os from 'node:os';
+ import path from 'node:path';
+-import { spawn, spawnSync } from 'node:child_process';
++import { execFileSync, spawn, spawnSync } from 'node:child_process';
+ import { once } from 'node:events';
+ import { fileURLToPath } from 'node:url';
+ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../../../../..');
+@@ -232,3 +232,97 @@
+   assert.deepEqual(signals, []);
+   assert.equal(parseEnvironment('binary main FUSION_APP_USER_DATA=/tmp/profile with spaces FUSION_LOCAL_MACHINE=fixture HOME=/home').FUSION_APP_USER_DATA, '/tmp/profile with spaces');
+ });
++test('inventory disappearance is reobserved; live errors and PID/command changes refuse all stop signals', async () => {
++  const command = `${process.execPath} /fixture/fusion-studio-server/server.js`;
++  const start = 'Sun Oct  4 01:00:00 2026';
++  const row = (state = 'S', date = start, cmd = command, uid = process.getuid()) => `444 1 ${uid} ${state} ${date} ${cmd}\n`;
++  const failure = (stderr = '', code) => Object.assign(new Error('OS inspection failed'), { status: 1, stdout: '', stderr, code });
++  const record = { pid: 444, ppid: 1, start, command };
++  const execute = ({ boundary = 'lsof', error = failure(), observed = '' } = {}) => (cmd, args) => {
++    if (args[0] === '-axo') return row();
++    if (args[0] === '-p') {
++      if (observed instanceof Error) throw observed;
++      return observed;
++    }
++    if ((cmd === 'lsof' && boundary === 'lsof') || (args[0] === 'eww' && boundary === 'env')) throw error;
++    if (cmd === 'lsof') return `p444\nfcwd\nn/fixture\nftxt\nn${process.execPath}\n`;
++    return `${command} FUSION_APP_USER_DATA=/fixture/profile FUSION_LOCAL_MACHINE=fixture`;
++  };
++  for (const options of [
++    {}, { observed: failure() }, { observed: row('Z', start, '<defunct>') }, { observed: row('X') },
++    { boundary: 'env' }, { boundary: 'env', observed: row('Z', start, '<defunct>') },
++  ]) {
++    const signals = [];
++    await stopOwned([record], () => systemProcesses(execute(options)), (...args) => signals.push(args), async () => {});
++    assert.deepEqual(signals, []);
++    assert.deepEqual(systemProcesses(execute(options)), []);
++  }
++  for (const options of [
++    { observed: row() }, { error: failure('permission denied') }, { error: failure('', 'EACCES') },
++    { observed: failure('ps read denied') }, { observed: row('S', 'Sun Oct  4 01:00:01 2026') },
++    { observed: row('Z', 'Sun Oct  4 01:00:01 2026', '<defunct>') }, { observed: row('S', start, '/changed/command') },
++    { boundary: 'env', observed: row() }, { boundary: 'none', observed: row('S', 'Sun Oct  4 01:00:01 2026') },
++    { boundary: 'none', observed: row('S', start, '/changed/command') }, { observed: row('S', start, command, process.getuid() + 1) },
++  ]) {
++    const signals = [];
++    await assert.rejects(stopOwned([record], () => systemProcesses(execute(options)), (...args) => signals.push(args), async () => {}));
++    assert.deepEqual(signals, []);
++  }
++  assert.throws(() => systemProcesses(() => { throw failure('inventory read denied'); }), /OS inspection failed/);
++  assert.throws(() => systemProcesses(() => 'unsupported ps output'), /unsupported process inventory/);
++  assert.throws(() => systemProcesses((cmd, args) => args[0] === '-axo' ? row() : args[0] === '-p' ? row() : ''), /unverified live/);
++});
++test('PID reuse after SIGTERM never signals the replacement process', async () => {
++  const record = { pid: 444, ppid: 1, start: 'old', command: 'fixture' };
++  let reads = 0; const signals = [];
++  await assert.rejects(stopOwned([record], () => [{ ...record, start: ++reads > 2 ? 'new' : 'old' }],
++    (...args) => signals.push(args), async () => {}), /PID reused during stop/);
++  assert.deepEqual(signals, [[444, 'SIGTERM']]);
++});
++test('actual disposable exit races at lsof/env and after SIGTERM complete cleanup and preserve another profile', async (t) => {
++  const { dir, target } = fixture(t);
++  const server = path.join(dir, 'fusion-studio-server/server.js');
++  fs.mkdirSync(path.dirname(server), { recursive: true });
++  fs.writeFileSync(server, "setInterval(() => {}, 1000); process.on('SIGTERM', () => setTimeout(() => process.exit(), 5000));");
++  const env = { ...process.env, FUSION_APP_USER_DATA: target.profile, FUSION_LOCAL_MACHINE: target.machine };
++  const unrelated = spawn(process.execPath, [server], { cwd: target.client, env: { ...env, FUSION_APP_USER_DATA: path.join(dir, 'other') }, stdio: 'ignore' });
++  const children = [unrelated];
++  t.after(() => { for (const child of children) try { child.kill('SIGKILL'); } catch {} });
++  const osExecute = (cmd, args) => execFileSync(cmd, args, { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] });
++  const observations = [];
++  for (const boundary of ['lsof', 'env', 'after-SIGTERM']) {
++    const owner = spawn(process.execPath, [server], { cwd: target.client, env, stdio: 'ignore' }); children.push(owner);
++    await once(owner, 'spawn'); await new Promise((resolve) => setTimeout(resolve, 200));
++    const selected = selectOwnedProcesses(systemProcesses(), { ...target, server });
++    assert.deepEqual(selected.map((r) => r.pid), [owner.pid]);
++    let exited = false; let armed = boundary !== 'after-SIGTERM'; const signals = [];
++    const execute = (cmd, args) => {
++      const selectedPid = args[args.indexOf('-p') + 1] === String(owner.pid);
++      if (!exited && armed && selectedPid && ((cmd === 'lsof' && boundary !== 'env') || (args[0] === 'eww' && boundary === 'env'))) {
++        process.kill(owner.pid, 'SIGKILL'); exited = true;
++        const deadline = Date.now() + 2000; let state;
++        do {
++          const ps = spawnSync('ps', ['-p', String(owner.pid), '-o', 'stat='], { encoding: 'utf8' });
++          assert.equal(Boolean(ps.error || ps.stderr.trim() || ![0, 1].includes(ps.status)), false);
++          state = ps.stdout.trim();
++        } while (state && !/^[ZX]/.test(state) && Date.now() < deadline);
++        assert.equal(!state || /^[ZX]/.test(state), true, 'disposable process reached absence/terminal state');
++        observations.push({ boundary, pid: owner.pid, terminalState: state || 'absent' });
++      }
++      try { return osExecute(cmd, args); }
++      catch (error) {
++        if (exited && selectedPid) observations.push({ boundary, cmd, status: error.status, stdout: String(error.stdout), stderr: String(error.stderr) });
++        throw error;
++      }
++    };
++    await stopOwned(selected, () => systemProcesses(execute), (pid, kind) => {
++      assert.equal(pid, owner.pid); signals.push([pid, kind]); process.kill(pid, kind); armed = true;
++    });
++    assert.equal(exited, true);
++    assert.deepEqual(signals, boundary === 'after-SIGTERM' ? [[owner.pid, 'SIGTERM']] : []);
++    assert.equal(systemProcesses().some((r) => r.pid === owner.pid), false);
++    assert.doesNotThrow(() => process.kill(unrelated.pid, 0));
++    observations.push({ boundary, signals, selectedRemaining: [], unrelatedPid: unrelated.pid, unrelatedAlive: true });
++  }
++  t.diagnostic(JSON.stringify({ kind: 'ACTUAL_DISPOSABLE_PROCESS_RACES', schedulingAdapter: 'exit only selected fixture at real OS inspection boundary', observations }));
++});

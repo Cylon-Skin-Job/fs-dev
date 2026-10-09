@@ -18,16 +18,25 @@ metadata:
     - fusion-studio-client/src/screenshots/ScreenshotsTrigger.tsx
     - fusion-studio-client/src/hooks/useScreenshotCapture.ts
     - fusion-studio-server/lib/workspace/screenshot-service.js
-  last-modified: "2026-10-06T22:15:19Z"
+    - fusion-studio-client/src/lib/chat-action-controller.ts
+    - fusion-studio-client/src/lib/chat-action.ts
+    - fusion-studio-client/src/lib/chat-material-target.ts
+    - fusion-studio-client/src/lib/chat-material-commit.ts
+    - fusion-studio-client/src/state/slices/mountedChatState.ts
+    - fusion-studio-client/src/components/chat/useMountedChatBinding.ts
+    - fusion-studio-client/src/state/chatSubmissionStore.ts
+  last-modified: "2026-10-09T01:12:37Z"
 ---
 
 ## In-app captures and attachments
 
-In the desktop app, **Take screenshot** captures the focused Fusion Studio window. The capture controller snapshots the destination chat and socket before awaiting native capture, then sends `screenshot:file-capture` with that workspace and a request ID. The server validates the active workspace and saves a PNG under its `ai/<machine>/Data/Screenshots/`. Only the matching `screenshot:file-captured` response supplies the saved path for a pending attachment in that exact workspace and chat session; an unrelated response cannot attach a file.
+In the desktop app, **Take screenshot** captures the focused Fusion Studio window through Electron/preload. The screenshot source begins through the shared Chat material owner before native work, capturing the source workspace and socket. It sends the existing `screenshot:file-capture` request with a unique request ID. The server validates the active workspace and protected target path, then saves a PNG under its `ai/<machine>/Data/Screenshots/`. Each save uses a timestamp plus a server-generated UUID in its filename and exclusive file creation: same-time captures retain separate paths, and an existing path causes a correlated `screenshot:error` without overwriting its bytes. Only the correlated `screenshot:file-captured` response provides the original saved absolute path; the attachment retains `Data/Screenshots/<basename>` metadata.
 
-The composer Add menu supplies its explicit workspace, view, Thread group, chat session and mounted-surface lifetime. The view's Main Chat follows its selected Thread group and current primary session. A Main Chat mounted as an explicit content component keeps its hydrated session independently of the outer thread rail. A Side Chat keeps its own session and open service-managed placement, so changing Main Chat selection cannot redirect its capture. The global header camera resolves the selected Main Chat in the active view; it falls back to the current Legacy session only when no qualified Main Chat is available.
+The global header camera uses the same last-active open mounted Main/Side destination as global resource insertion. Main row selection and Side tab selection cannot override actual composer activity; there is no Main/Legacy fallback. The composer Add menu uses its own committed workspace, view, group, session, surface generation and, for Side, exact open placement. Explicit Main components and Side Chat keep their own session independently of unrelated Main selection.
 
-The controller checks ownership before capture and again after native capture and saving. A change to the destination workspace, owning view or chat session cancels attachment; changing the selected Thread group also cancels a view-bound Main capture. Connected composers also cancel when they become inactive or unmount, or when their Side Chat placement closes. A content component retained in a hidden view cannot finish a capture for that view; switching away and back does not revive the old composer capture. Cancellation before the save request leaves no new saved file. Cancellation while the save is pending can leave the PNG in the workspace gallery, but it does not attach it to another chat.
+The source revalidates shared ownership after native capture before save and the common action consumer revalidates synchronously at insertion after save. Unrelated view/focus changes preserve a retained binding. Actual rebind, unmount/close, lost workspace/session/hydration authority or placement replacement cancels permanently, including after equal-string return. Before-save cancellation sends zero save requests. After-save cancellation can leave its source gallery PNG; it adds no attachment and makes no rollback/deletion claim.
+
+The source retains its 30-second save deadline and removes the request's message listener, close listener and timer on every terminal result, including save rejection, send throw, disconnect and timeout. Foreign/out-of-order/duplicate responses cannot cross-write or insert twice. Missing/empty/failed native capture, unavailable target, pending acceptance or invalid prepared material leaves drafts and attachments unchanged with bounded feedback. The screenshot source owns preparation and correlation; only the shared Chat action consumer writes the existing exact-session attachment store. Successful local insertion retains eligible best-effort warming of that captured session, separate from ordinary Send and durable acceptance.
 
 The Screenshots gallery lists image files from the workspace folder and can attach an existing one. Workspace preview images are separate: they capture the app panel on workspace changes and are stored as one PNG row per workspace in SQLite for the ribbon and carousel.
 

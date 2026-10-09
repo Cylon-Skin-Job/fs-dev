@@ -1,0 +1,18 @@
+{
+  "runId": "chat-arch-1789998054939-81890b85c1",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R3-RECONNECT-UI",
+      "code": 0,
+      "signal": null,
+      "pid": 87443,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 11550
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

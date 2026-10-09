@@ -1,0 +1,20 @@
+{
+  "owner": "/root",
+  "source_repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "shared_repos": [],
+  "source_refs": [
+    {
+      "repo": "/Users/rccurtrightjr./projects/fs-dev",
+      "ref": "HEAD",
+      "expected": "d15792920731f85e45b743519d4af2b807d95a9c"
+    }
+  ],
+  "conflicting_writers": [],
+  "ignored_runtime_paths": [],
+  "paths": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md",
+      "job_created": false
+    }
+  ]
+}

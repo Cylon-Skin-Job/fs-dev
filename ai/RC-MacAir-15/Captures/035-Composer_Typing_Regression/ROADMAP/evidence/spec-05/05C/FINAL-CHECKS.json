@@ -1,0 +1,219 @@
+[
+  {
+    "command": [
+      "node",
+      "--check",
+      "fusion-studio-server/lib/thread/ThreadWebSocketHandler.js"
+    ],
+    "exit": 0,
+    "output": "",
+    "lines": 375
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "fusion-studio-server/lib/thread/automation-drain.js"
+    ],
+    "exit": 0,
+    "output": "",
+    "lines": 203
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "fusion-studio-server/lib/thread/automation-runtime-activation.js"
+    ],
+    "exit": 0,
+    "output": "",
+    "lines": 84
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "fusion-studio-server/lib/thread/automation-turn-context.js"
+    ],
+    "exit": 0,
+    "output": "",
+    "lines": 82
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "fusion-studio-server/lib/thread/canonical-drain-context.js"
+    ],
+    "exit": 0,
+    "output": "",
+    "lines": 197
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "fusion-studio-server/lib/thread/runtime-activation.js"
+    ],
+    "exit": 0,
+    "output": "",
+    "lines": 211
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "fusion-studio-server/lib/thread/runtime-dispatch.js"
+    ],
+    "exit": 0,
+    "output": "",
+    "lines": 266
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "fusion-studio-server/lib/thread/runtime-identity.js"
+    ],
+    "exit": 0,
+    "output": "",
+    "lines": 33
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "fusion-studio-server/lib/thread/runtime-prompt-admission.js"
+    ],
+    "exit": 0,
+    "output": "",
+    "lines": 249
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "fusion-studio-server/lib/thread/runtime-response.js"
+    ],
+    "exit": 0,
+    "output": "",
+    "lines": 74
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "fusion-studio-server/lib/thread/runtime-session-activation.js"
+    ],
+    "exit": 0,
+    "output": "",
+    "lines": 98
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "fusion-studio-server/lib/thread/runtime-session-binding.js"
+    ],
+    "exit": 0,
+    "output": "",
+    "lines": 58
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "fusion-studio-server/lib/thread/runtime-stop.js"
+    ],
+    "exit": 0,
+    "output": "",
+    "lines": 281
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "fusion-studio-server/lib/thread/thread-runtime-automation.js"
+    ],
+    "exit": 0,
+    "output": "",
+    "lines": 261
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "fusion-studio-server/lib/thread/thread-runtime-controller.js"
+    ],
+    "exit": 0,
+    "output": "",
+    "lines": 7
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "fusion-studio-server/lib/thread/thread-runtime-manager.js"
+    ],
+    "exit": 0,
+    "output": "",
+    "lines": 400
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "fusion-studio-server/lib/thread/turn-application-context.js"
+    ],
+    "exit": 0,
+    "output": "",
+    "lines": 86
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "fusion-studio-server/lib/ws/thread-ws-handlers.js"
+    ],
+    "exit": 0,
+    "output": "",
+    "lines": 767
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check",
+      "--",
+      "fusion-studio-client/e2e/chat-architecture/run.mjs",
+      "fusion-studio-client/e2e/chat-architecture/server-focused-regressions.mjs",
+      "fusion-studio-client/e2e/chat-architecture/stage-fixture.mjs",
+      "fusion-studio-server/lib/thread/ThreadWebSocketHandler.js",
+      "fusion-studio-server/lib/thread/automation-drain.js",
+      "fusion-studio-server/lib/thread/automation-runtime-activation.js",
+      "fusion-studio-server/lib/thread/automation-turn-context.js",
+      "fusion-studio-server/lib/thread/canonical-drain-context.js",
+      "fusion-studio-server/lib/thread/runtime-activation.js",
+      "fusion-studio-server/lib/thread/runtime-dispatch.js",
+      "fusion-studio-server/lib/thread/runtime-identity.js",
+      "fusion-studio-server/lib/thread/runtime-prompt-admission.js",
+      "fusion-studio-server/lib/thread/runtime-response.js",
+      "fusion-studio-server/lib/thread/runtime-session-activation.js",
+      "fusion-studio-server/lib/thread/runtime-session-binding.js",
+      "fusion-studio-server/lib/thread/runtime-stop.js",
+      "fusion-studio-server/lib/thread/thread-runtime-automation.js",
+      "fusion-studio-server/lib/thread/thread-runtime-controller.js",
+      "fusion-studio-server/lib/thread/thread-runtime-manager.js",
+      "fusion-studio-server/lib/thread/turn-application-context.js",
+      "fusion-studio-server/lib/ws/thread-ws-handlers.js",
+      "fusion-studio-server/test/thread/audit-subscriber-chatlog-finalize.test.js",
+      "fusion-studio-server/test/thread/thread-activation-lifecycle.test.js",
+      "fusion-studio-server/test/thread/thread-runtime-automation.test.js",
+      "fusion-studio-server/test/thread/thread-runtime-controller.test.js",
+      "fusion-studio-server/test/ws/privileged-thread-handlers.test.js",
+      "fusion-studio-server/test/ws/privileged-thread-public-route.integration.test.js"
+    ],
+    "exit": 0,
+    "output": ""
+  }
+]

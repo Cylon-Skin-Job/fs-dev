@@ -1,0 +1,41 @@
+{
+  "observed_at": "2026-10-07T17:23:51.149409+00:00",
+  "state": "M3 preparation only; no Wiki edit/render/test execution",
+  "bindings": {
+    "fusion-studio-client/src/components/wiki/PageViewer.tsx": {
+      "sha256": "34da50e392764a18d0de12ac7137a745678d1d14ce4bec1a7de9fb2f1fc0bbbf",
+      "bytes": 6256
+    },
+    "fusion-studio-client/src/lib/wiki-frontmatter.ts": {
+      "sha256": "e48a66ec45bc49342628d2c86884d1a8975a7bd5fa883eac117e2ca71f817f9c",
+      "bytes": 2227
+    },
+    "fusion-studio-client/src/lib/transforms.ts": {
+      "absent": true
+    },
+    "fusion-studio-client/src/state/wikiStore.ts": {
+      "sha256": "8d7b2ff56c387aac25de7b87c49383301e008308f8e5eb15aa2eece345e53bb4",
+      "bytes": 8663
+    },
+    "fusion-studio-client/src/lib/transforms/index.ts": {
+      "sha256": "93ecff09621820ed1f8b288d9a355f65ff6a8a6782f1fdf1d6a4cbf9b6d353ea",
+      "bytes": 355
+    },
+    "fusion-studio-client/src/lib/transforms/markdown.ts": {
+      "sha256": "5e1100ef1b90c515c0fa8ed8255aec6962fd6bc5a6f5f2716f33a50c099a8721",
+      "bytes": 1288
+    },
+    "fusion-studio-client/src/lib/transforms/code.ts": {
+      "sha256": "3b4bbd99a748cccd47256ac710b75298a9b7f0fe50c4622b7f39f65f2b7dbe38",
+      "bytes": 3482
+    },
+    "fusion-studio-client/src/lib/transforms/file-path-transform.ts": {
+      "sha256": "820115be0dbd9f712a959993dde61d50b17dc236ab668ffc229175ce54cac0e5",
+      "bytes": 2445
+    }
+  },
+  "actual_owner": "PageViewer selects current WikiStore content, parseWikiPage separates header/body/frontmatter metadata, markdownToHtml renders body, actual header/footer expose name/description/source-files etc. Internal relative links resolve through actual wiki-tree nodes.",
+  "assigned_proof": "Owned fixture may supply selected actual changed article bytes and compatible tree data; mount actual production PageViewer and verify visible text/headings/metadata/links. No custom-only HTML substitute. Native chat PNG proof separately prohibits direct chat store patch/capture-save stubs.",
+  "release_condition": "M2 clean acceptance then authorized M3 builder, exact sevenpages plus necessary narrow corrections with adjacent full preimages and real quotedUTCtimestamp; fresh source/meta/link and production viewer readback evidence.",
+  "module_resolution": "lib/transforms is a directory index; markdownToHtml re-exports transforms/markdown.ts, not transforms.ts."
+}

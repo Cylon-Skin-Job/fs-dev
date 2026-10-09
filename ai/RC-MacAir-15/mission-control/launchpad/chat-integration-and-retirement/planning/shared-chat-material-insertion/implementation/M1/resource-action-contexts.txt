@@ -1,0 +1,210 @@
+fusion-studio-client/src/components/FloatingPathActions.tsx:34
+        title={copyTitle}
+      />
+      <SendToChatButton
+        panel={panel}
+        relativePath={relativePath}
+        className="rv-file-page-action"
+        title={sendTitle}
+      />
+    </div>
+  );
+}
+
+fusion-studio-client/src/components/tickets/TicketBoard.tsx:331
+        <div className="rv-ticket-detail-body">{ticket.body || '(no description)'}</div>
+      </div>
+      <FloatingPathActions
+        panel="issues-viewer"
+        relativePath={relativePath}
+        copyTitle="Copy ticket path"
+        sendTitle="Send ticket to chat"
+        ariaLabel="Ticket actions"
+      />
+    </div>
+  );
+}
+
+fusion-studio-client/src/components/capture/FilePageView.tsx:218
+      </div>
+
+      <FloatingPathActions
+        panel={panel}
+        relativePath={file.path}
+        copyTitle="Copy file path"
+        sendTitle="Send file path to chat"
+        ariaLabel={isCaptureView ? 'Capture document actions' : 'Document actions'}
+      />
+
+    </div>
+  );
+
+fusion-studio-client/src/components/office/OfficeDocumentTopbar.tsx:76
+        </button>
+      </div>
+      <FloatingPathActions panel={PANEL} relativePath={file.path} ariaLabel="Office document actions" />
+    </div>
+  );
+}
+
+fusion-studio-client/src/components/office/OfficeGrid.tsx:654
+        />
+      ) : null}
+      <FloatingPathActions
+        panel={PANEL}
+        relativePath={currentFolder}
+        copyTitle="Copy folder path"
+        sendTitle="Send folder path to chat"
+        ariaLabel="Folder actions"
+      />
+    </>
+  ) : null;
+  const handleOfficeHome = useCallback(() => {
+
+fusion-studio-client/src/components/agents/AgentTiles.tsx:218
+        </button>
+      </div>
+      <FloatingPathActions
+        panel="agents-viewer"
+        relativePath={`${agent.folder}/${agent.id}/`}
+        copyTitle="Copy agent path"
+        sendTitle="Send agent path to chat"
+        ariaLabel="Agent actions"
+      />
+
+      {/* Pill tabs */}
+      <div className="rv-agent-detail-pill-bar">
+
+fusion-studio-client/src/components/wiki/TopicList.tsx:42
+                  title="Copy wiki guide path"
+                />
+                <SendToChatButton
+                  panel="wiki-viewer"
+                  relativePath={guideNode.pagePath}
+                  className="rv-file-page-action"
+                  title="Send wiki guide path to chat"
+                />
+              </div>
+            </button>
+          </div>
+          <div className="rv-wiki-topic-divider" role="separator" />
+
+fusion-studio-client/src/components/wiki/TopicList.tsx:85
+                        title="Copy article path"
+                      />
+                      <SendToChatButton
+                        panel="wiki-viewer"
+                        relativePath={article.pagePath}
+                        className="rv-file-page-action"
+                        title="Send article path to chat"
+                      />
+                    </div>
+                  </button>
+                );
+              })}
+
+fusion-studio-client/src/components/wiki/PageViewer.tsx:138
+
+      {viewedPagePath ? (
+        <FloatingPathActions
+          panel="wiki-viewer"
+          relativePath={viewedPagePath}
+          copyTitle="Copy article path"
+          sendTitle="Send article path to chat"
+          ariaLabel="Wiki page actions"
+        />
+      ) : null}
+
+    </div>
+
+fusion-studio-client/src/components/wiki/EdgePanel.tsx:96
+      </div>
+      {viewedPagePath ? (
+        <FloatingPathActions
+          panel="wiki-viewer"
+          relativePath={viewedPagePath}
+          copyTitle="Copy page path"
+          sendTitle="Send page path to chat"
+          ariaLabel="Wiki page actions"
+        />
+      ) : null}
+    </div>
+  );
+
+fusion-studio-client/src/components/file-explorer/FileNode.tsx:48
+          title="Copy file path"
+        />
+        <SendToChatButton
+          panel="file-viewer"
+          relativePath={node.path}
+          className="rv-file-page-action"
+          title="Send file path to chat"
+        />
+      </div>
+    </div>
+  );
+}
+
+fusion-studio-client/src/components/file-explorer/FileDocumentPresenter.tsx:75
+        </button>
+
+        <FloatingPathActions
+          panel="file-viewer"
+          relativePath={path}
+          className="rv-file-floating-actions"
+          copyTitle="Copy file path"
+          sendTitle="Send file path to chat"
+          ariaLabel="File actions"
+        />
+      </div>
+
+
+fusion-studio-client/src/components/file-explorer/FolderNode.tsx:85
+            title="Copy folder path"
+          />
+          <SendToChatButton
+            panel="file-viewer"
+            relativePath={node.path}
+            className="rv-file-page-action"
+            title="Send folder path to chat"
+          />
+        </div>
+      </div>
+      {isExpanded && hasChildrenLoaded && children && children.length > 0 && (
+        <div className="folder-children">
+
+fusion-studio-client/src/components/file-explorer/FileViewer.tsx:95
+
+      {selectedFile && (
+        <FloatingPathActions
+          panel="file-viewer"
+          relativePath={selectedFile.path}
+          className="rv-file-floating-actions"
+          copyTitle="Copy file path"
+          sendTitle="Send file path to chat"
+          ariaLabel="File actions"
+        />
+      )}
+    </div>
+
+fusion-studio-client/src/components/email/EmailDocumentTopbar.tsx:149
+        </button>
+      </div>
+      <FloatingPathActions panel={PANEL} relativePath={file.path} ariaLabel="Email document actions" />
+    </div>
+  );
+}
+
+fusion-studio-client/src/components/email/EmailGrid.tsx:1111
+  ) : 'Home';
+  const headerRightControls = currentFolder && !isSearchSubmitted ? (
+    <FloatingPathActions
+      panel={PANEL}
+      relativePath={currentFolder}
+      copyTitle="Copy folder path"
+      sendTitle="Send folder path to chat"
+      ariaLabel="Folder actions"
+    />
+  ) : null;
+  const handleSidebarAction = useCallback((action: EmailSidebarAction) => {
+    persistEmailViewPatch({

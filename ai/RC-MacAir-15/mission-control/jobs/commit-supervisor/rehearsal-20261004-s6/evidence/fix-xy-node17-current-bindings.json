@@ -1,0 +1,127 @@
+{
+  "at": "2026-10-04T18:14:13.975557+00:00",
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "kind": "CURRENT_NODE17_SOURCE_BINDING",
+  "raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-node-suite-command.json",
+    "sha256": "6de2700a795aeb0632dff31348552fd0749a5b0e833765e37a56d0d575de2040"
+  },
+  "original_dependency_source": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-unaffected-suite-reuse.json",
+    "sha256": "a0fc9a64bfc9f4af7248efa6f1a50cd49d2c4a0b3a795cb5c2684ad42153dd11"
+  },
+  "original_dependency_source_limit": "Hash/individual dependency provenance only; source coverage conclusions are excluded.",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "command": [
+    "node",
+    "--test",
+    ".agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs"
+  ],
+  "started": "2026-10-04T14:13:03.470129+00:00",
+  "finished": "2026-10-04T14:13:29.375986+00:00",
+  "exit_code": 0,
+  "tests": 17,
+  "passes": 17,
+  "unique_source_dependencies": {
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs": {
+      "exists": true,
+      "sha256": "9b4bb189ebff26ceaf9b899abafa75400ebbd5e9157f0a45468640d87459ad85",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh": {
+      "exists": true,
+      "sha256": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+      "mode": "0o100755",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs": {
+      "exists": true,
+      "sha256": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs": {
+      "exists": true,
+      "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs": {
+      "exists": true,
+      "sha256": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs": {
+      "exists": true,
+      "sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/restart-fusion.sh": {
+      "exists": true,
+      "sha256": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+      "mode": "0o100755",
+      "kind": "file"
+    },
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart-probe.mjs": {
+      "exists": true,
+      "sha256": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart-processes.mjs": {
+      "exists": true,
+      "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart-target.mjs": {
+      "exists": true,
+      "sha256": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart.mjs": {
+      "exists": true,
+      "sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+      "mode": "0o100644",
+      "kind": "file"
+    }
+  },
+  "selected_executables_current": {
+    "python3.12": {
+      "selected": "/opt/homebrew/bin/python3.12",
+      "realpath": "/opt/homebrew/Cellar/python@3.12/3.12.13/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+      "version": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 17.0.0 (clang-1700.6.3.2)]",
+      "sys_executable": "/opt/homebrew/opt/python@3.12/bin/python3.12",
+      "prefix": "/opt/homebrew/opt/python@3.12/Frameworks/Python.framework/Versions/3.12"
+    },
+    "node": {
+      "selected": "/opt/homebrew/bin/node",
+      "realpath": "/opt/homebrew/Cellar/node/25.6.1/bin/node",
+      "version": "v25.6.1"
+    },
+    "git": {
+      "selected": "/opt/homebrew/bin/git",
+      "realpath": "/opt/homebrew/Cellar/git/2.53.0/bin/git",
+      "version": "git version 2.53.0"
+    },
+    "bash": {
+      "selected": "/bin/bash",
+      "realpath": "/bin/bash"
+    },
+    "ps": {
+      "selected": "/bin/ps",
+      "realpath": "/bin/ps"
+    },
+    "lsof": {
+      "selected": "/usr/sbin/lsof",
+      "realpath": "/usr/sbin/lsof"
+    }
+  },
+  "selected_executables_current_equal": true,
+  "scope": "Complete local source closure: Node test module, five canonical R restart inputs and five matching private copies. Builtin Node imports, literal source subprocess commands, synthetic fixtures inline in bound test module. Source dependencies equal retained historical fingerprints.",
+  "limits": "Current executable selection/binary fingerprints are supplied by current Python pre/post records; historical Node executable binary bytes were not independently bound and are not reconstructed. Retained17 source mechanics/disposable-race observations only; actual app runtime is mandatory later."
+}

@@ -1,0 +1,192 @@
+{
+  "label": "synthetic public CLI rehearsal, not actual agent gate proof",
+  "commands": [
+    {
+      "name": "initial-material",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-3/initial-material.json"
+      ],
+      "packet_sha256": "04f9f78c931c6ec6f5150f31153f9e3915a36d5b1559935885e1b1fad062901d",
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-3/initial-material-result.json",
+      "exit_code": 0,
+      "state": "repair",
+      "return": "REVIEW_COMPLETE",
+      "result": "findings",
+      "agent_gate_proof": false
+    },
+    {
+      "name": "fresh-worker-handoff",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-3/fresh-worker-handoff.json"
+      ],
+      "packet_sha256": "3d9fc983d23eda0f6e0effed510d7cb994987c11cc37cbdde8d5a0c989ac2252",
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-3/fresh-worker-handoff-result.json",
+      "exit_code": 0,
+      "state": "handoff-validated",
+      "return": "HANDOFF_VALIDATED",
+      "result": "clean",
+      "agent_gate_proof": false
+    },
+    {
+      "name": "fresh-final",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-3/fresh-final.json"
+      ],
+      "packet_sha256": "d1fcc2ff6ac9a09e8bc94576eaae0d54bee50a5834b42bcf462964673a3c4319",
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-3/fresh-final-result.json",
+      "exit_code": 0,
+      "state": "review-complete",
+      "return": "REVIEW_COMPLETE",
+      "result": "clean",
+      "agent_gate_proof": false
+    },
+    {
+      "name": "target-drift",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-3/target-drift.json"
+      ],
+      "packet_sha256": "4b6035d69f120916197a8c1f53610c688f57f5dd83f8c624dd07bd04bce5bd89",
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-3/target-drift-result.json",
+      "exit_code": 0,
+      "state": "unmet-gate",
+      "return": "REVIEW_COMPLETE",
+      "result": "insufficient-evidence",
+      "agent_gate_proof": false
+    },
+    {
+      "name": "missing-reviewer",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-3/missing-reviewer.json"
+      ],
+      "packet_sha256": "0c09eeec7c36e306120cfc96b2f844631146d0049778e89868983f45ec8be7b2",
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-3/missing-reviewer-result.json",
+      "exit_code": 0,
+      "state": "unmet-gate",
+      "return": "REVIEW_COMPLETE",
+      "result": "insufficient-evidence",
+      "agent_gate_proof": false
+    },
+    {
+      "name": "missing-intent",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-3/missing-intent.json"
+      ],
+      "packet_sha256": "309d3d4622d5b8ecc622e6f0c22d973151bfee39c28dfc4979eb2fd885214a40",
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-3/missing-intent-result.json",
+      "exit_code": 0,
+      "state": "needs-owner",
+      "return": "REVIEW_COMPLETE",
+      "result": "insufficient-evidence",
+      "agent_gate_proof": false
+    },
+    {
+      "name": "missing-prerequisite",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-3/missing-prerequisite.json"
+      ],
+      "packet_sha256": "3d7ee4d09a008e1d238b91a0380e06959d32a8b2a8e02c4fbbdddfbdd950f371",
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-3/missing-prerequisite-result.json",
+      "exit_code": 0,
+      "state": "waiting-dependency",
+      "return": "REVIEW_COMPLETE",
+      "result": "insufficient-evidence",
+      "agent_gate_proof": false
+    },
+    {
+      "name": "incomplete-handoff",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-3/incomplete-handoff.json"
+      ],
+      "packet_sha256": "29d019330dddf03fecd17bb9d95f757b7f5f94ba5a00869ae2fd6116769c7a87",
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-3/incomplete-handoff-result.json",
+      "exit_code": 0,
+      "state": "unmet-gate",
+      "return": "REVIEW_COMPLETE",
+      "result": "insufficient-evidence",
+      "agent_gate_proof": false
+    },
+    {
+      "name": "hold-with-material",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-3/hold-with-material.json"
+      ],
+      "packet_sha256": "06b3790702a1975c9e948ed5cfa7e39ffa02eba37c38ba68bddbf21ef8e0d8d0",
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-3/hold-with-material-result.json",
+      "exit_code": 0,
+      "state": "needs-owner",
+      "return": "REVIEW_COMPLETE",
+      "result": "insufficient-evidence",
+      "agent_gate_proof": false
+    },
+    {
+      "name": "shortened-handoff",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-3/shortened-handoff.json"
+      ],
+      "packet_sha256": "900bc455a0082b09cac2150a91bf6d4b2959bee3a16ad5dcc8b574a4d141ba1e",
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-3/shortened-handoff-result.json",
+      "exit_code": 0,
+      "state": "unmet-gate",
+      "return": "REVIEW_COMPLETE",
+      "result": "insufficient-evidence",
+      "agent_gate_proof": false
+    },
+    {
+      "name": "reopened-current-finding",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-3/reopened-current-finding.json"
+      ],
+      "packet_sha256": "e5569ca19d6612396e7610c55f47150e2b7e99a2fe01f7fec6097c0526562259",
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-3/reopened-current-finding-result.json",
+      "exit_code": 0,
+      "state": "repair",
+      "return": "REVIEW_COMPLETE",
+      "result": "findings",
+      "agent_gate_proof": false
+    }
+  ]
+}

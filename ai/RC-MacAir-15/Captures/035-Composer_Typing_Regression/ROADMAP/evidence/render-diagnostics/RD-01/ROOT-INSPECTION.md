@@ -1,0 +1,30 @@
+# RD-01 independent orchestrator inspection and classifications
+
+Currentcontract OWNER-DIRECTION.md/RD-01-CONTRACT.md is directownerauthority; nativefeedRD02 isnextslice, notpartofthisgate. Rootinspectedall12currentchangedpaths, productioncontrollers/parsers/catalog, MessageList/ConnectedChatHistory/Stop/pendingSave, currentstep/terminal/snapshot handlers,actualfixture/newtests andrawchecks. No knownmaterialcurrentfinding afterrepair; freshacceptancegate required.
+
+## Current source/build and checks
+
+Rootfull1972sourceSHA7e1346c29c77f1e005e080bb51c9b25acaf9a33dcf0ccb0df803a0e6524d92f2 (root-source.json),200buildSHA0fd3637f154e116f1ba4a37b31853fbbe1c49746e0f379a3ea1a711885b92b49 (root-build.json). Exactly12sourcechanges againstacceptedinstantcollapse; allother1960inventorypathsunchanged,10predecessorcopiesmatchacceptedbaseline,9nativebuildentriesunchanged. ROOT-SOURCE-IDENTITY.json/root-source-delta.jsonretainproof. Builderinventorieshaveotherdeclaredscope:591client-src,191dist,12changed; notcontradictorycounts.
+
+Rootindependentrun current77PASS40.4s:26newvisiblewait+16instantcollapse+22isolation+13identity. Commandfromclient: ./node_modules/.bin/playwright test e2e/visible-wait.spec.ts e2e/instant-collapse.spec.ts e2e/chat-surface-isolation.spec.ts e2e/chat-surface-identity.spec.ts --config playwright.chat-architecture.config.ts --output ../ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/render-diagnostics/RD-01/root-playwright-repaired. Rawroot-tests-repaired.log. RootnpmrunbuildPASS8.81s Vite,preload+TypeScript; root-build-repaired.log. Lastsource/testedit13:37:13precedesrootlogbirth13:37:15/16; builderconfirmednochangeslater. Existinglargechunkwarning retained. Earlierroot75/build4.58sreceipts arepre-repairhistory.
+
+Focusedlint passesexceptdeclaredpre-existingConnectedChatHistory2refsanalysiserrors reproducedagainstexactpredecessor; itsotherchecksrunwithonlythatcommandruleexcluded. LiveSegmentRendererunuseddisablewarningpre-existing. No sourcelintexemptionadded. Rootreadrawlint-predecessor/lint-gate; finalrepairlogs andbuilderreportretainexactcommands.
+
+## Behavior and repair inspection
+
+The localSurfaceRevealProgress followsactualcontrollerphase transitions; charcountersaremutable/pullonly, nopercharReact/storefanout. VisibleWaitActivity startsoneownedtimer for2000ms and WorkingActivitycomputestimestampseconds; identitykey/unmountcleanup preventsotherturn/surfacecarryover. Rawfragments withno readyoutputandzero-visibleMarkdown do notresetwaiting. Actualrevealing,pacing,orb,hold,collapse,gap andterminal excludeclock; Stop'sexistingpendingSave clearsbeforeturnend. Existing canonicalstepstate/revisionownership unchanged; stepstilldisposesorb, notbypasses2s. No newfinalizationowner; samefileeffect intact. Textcancelled onDone suppressed. Existing text/tool delay/speed/partialflush decisions unchanged; currentconsumerattached/absent tracescompareexactundercontrolledclock, notrealworldwallclockproof.
+
+Emptyblockrepair moved revealingtransitionbelowtotalChars0skip; actualbrowsercases at1800/2200 proveuninterruptedwait. SourceparserFed nowmeansinputextent, notconsumedprefix; incompletefenceassertsreceived/fed13 withsourceCursor0. Transformedtoolsourcecursor remainsnull; nofalseHTML/rawunit subtraction. Surfaceunmountremovesregistryrecord, consumersmustlabelunavailable. GroupedSummary isunused andrestoredexactbaseline; earliercommonreadclaim waswrongandcorrected, no runtimefindingpersists. SeeROOT-FINDINGS.mdretainedchronology; currentcatalogreadactuallyuseslineStreamReveal.
+
+## Authoritative deviations
+
+All8fieldbuilderrecords areinREPORT.mdtableplusper-recordoriginalcriterion/exactpaths/risk supplements. Orchestratorclassifications:
+
+- D1 **accepted**: criterion3/4explicitidentityandimmediateStop → ConnectedChatHistoryprops/MessageListpendingSave; reasonexistingStopprecedesend, duplicatesurfacesneeduniqueidentity; checksactualrouteStop/saved andisolation/identity; effectlocalclockretirement; risknoElectronreadback/explicitfallbackReactID; downstreamRD02readsaddressedsurfaces.
+- D2 **accepted**: criterion4onejobobservations/local2s → progress.ts/VisibleWaitActivity.tsx; reasonsharedcontrollerobservationswithoutduplicateparse; checks26productioncases/build; effectpullonlysnapshotsandtimer; riskmountedonly/unknowntransformedsource; downstreamRD02pollswithoutdrivingreveal.
+- D3 **accepted revertedattempt**, notnecessaryintegration: actualcontrollercriterion → attemptedunusedgrouped-summaryinstrumentation; reasoninitialcatalogassumptionincorrect; exactfile restoredpredecessor; checksreference-sweep/hash; effectnoneincurrentbytes; riskfuturecallerwouldneednewintegration; downstreamnocoverageclaim.
+- D4 **accepted**: criterion3nostalecontinuations → text-animatecancelguard/LiveSegmentRendererfullidentitykey; reasonretiredsurfacesmustnotadvance; checksreplacement/unmount/terminal/collapse; effectcurrentowneronlycompletion; riskbrowserbackgroundtimingdelay; downstreamcurrentlifecyclechecksreplaceprioraffectedclaims.
+- D5 **downstream_impact**, boundedreplacementchecksaccepted: newdirectownerwaitcriterion → oldWorkingtest snapshotoracle2s andactualhandler/componentnewfixture; reasonserversnapshotstepageisnolongervisiblewaitage; paths e2e/support/working-activity-working-cases.ts,e2e/visible-wait.spec.ts; checksrealhandleThreadMessage/handleStreamMessage/MessageListcases plusregressions; effectfreshlocalwait,canonicaltransportunchanged; riskfull-shell@working/socketbootstrapnotexecuted; downstreamdo notclaimfullshell/oldSPEC05displayacceptanceonnewbytes, useboundedcurrentevidence.
+- D6 **accepted validationlimitation**: focusedlint/preserveownerbytes → command-onlyexistingrefs-ruleexclusion forConnectedChatHistory; reason2errorsreproducedexactpredecessor; checksotherchangedfilesfullrules/currentfileotherrules; effectnoneinproduct; riskrepositorywidebaselineerrorsremain; downstreamdisclose, no sourcerulesuppression/newlintdebt.
+
+Source-readyclockonly. RD02nativefeed/tabunfinished; nohumanruntime/profile/chat/Alpha/Git/native-dep/provider/soakactions. FullSPEC06/06B/06Cstatusunchanged.

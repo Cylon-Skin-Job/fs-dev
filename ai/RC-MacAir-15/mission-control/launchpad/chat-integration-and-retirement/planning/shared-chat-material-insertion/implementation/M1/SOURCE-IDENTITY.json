@@ -1,0 +1,161 @@
+{
+  "status": "READY_FOR_ORCHESTRATOR_REVIEW",
+  "runtime_identity": "/root/m1_builder",
+  "role": "mc-spec-slice-builder",
+  "manager": "/root",
+  "memory_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "implementation_root": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev",
+  "branch": "codex/chat-material-01",
+  "HEAD": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "candidate": "sha256:65b324647b7e52f0426f7b2005849d053f4f239420fab07c848170b21ec1d3f3",
+  "sealed_utc": "2026-10-07T13:01:24Z",
+  "product_candidate": {
+    "fusion-studio-client/e2e/chat-material-insertion.spec.ts": {
+      "sha256": "7b43c20093a9c9b47af7aa261921da35c5da940b00cf90118154b8c53c464a6a",
+      "lines": 307
+    },
+    "fusion-studio-client/e2e/chat-surface-identity.spec.ts": {
+      "sha256": "62677ea808ac57ff4b446e449e5078b5e159f2ddf42706306677606e2e0ebfa2",
+      "lines": 627
+    },
+    "fusion-studio-client/e2e/chat-surface-isolation.spec.ts": {
+      "sha256": "068fc92d53e295594b2485db3026a408e41e7ba936940831c18f75501c34c7cf",
+      "lines": 1179
+    },
+    "fusion-studio-client/e2e/support/chat-material-fixture.tsx": {
+      "sha256": "c1dbf2ecf9ac862f16fd5b99ea58963de3d990371ff1a3504d08b45449ed33e8",
+      "lines": 144
+    },
+    "fusion-studio-client/src/components/SendToChatButton.tsx": {
+      "sha256": "26e5008817f8fb841a8b14d9d783a2b3411cb395678cc5e9bf247a6071679302",
+      "lines": 45
+    },
+    "fusion-studio-client/src/components/chat/ChatSurface.tsx": {
+      "sha256": "930a7f9d9b9c1eba391ffbf37c44e778e14f464dc20fa0d35205611dc6077520",
+      "lines": 107
+    },
+    "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx": {
+      "sha256": "b32b696609b0b42f8e88c9bd08c346bd48903f31f351e41479b10d1d7513ceb3",
+      "lines": 147
+    },
+    "fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx": {
+      "sha256": "38de9af221baa8f40b24dd1edc1f198e60c0a85eff23c2b46544293a0485ee12",
+      "lines": 168
+    },
+    "fusion-studio-client/src/components/chat/chatSurfaceContract.ts": {
+      "sha256": "9687c16e7321218b46af9e76aba0561b4b547da96de5887ffc5b20bc85c06302",
+      "lines": 174
+    },
+    "fusion-studio-client/src/components/chat/useChatSessionActions.ts": {
+      "sha256": "1d03a3276b1ad0248bebe280d1c02a2420efe5c184fd09a6af3a111bf11dfa3b",
+      "lines": 326
+    },
+    "fusion-studio-client/src/components/chat/useChatSessionHost.ts": {
+      "sha256": "1586fb2a84b5fc3edc5d4a2e0dd8f7b8fbc78979fa604b75c6217f463be7e6e3",
+      "lines": 197
+    },
+    "fusion-studio-client/src/components/chat/useMountedChatBinding.ts": {
+      "sha256": "4281b983986f0d1dfb6fd2cc64011a591e5ce394517f3ad846dbeb1d518ec006",
+      "lines": 17
+    },
+    "fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts": {
+      "sha256": "6e7793ad865bb3fbea8ea1b1a179204b330c98477af5c2d5d679d33d9b81a49c",
+      "lines": 136
+    },
+    "fusion-studio-client/src/components/chat/useViewChatHost.ts": {
+      "sha256": "9763ce0d749a063236fa94c6a5e7162f5bcc68dc01402141592533bc2436861b",
+      "lines": 272
+    },
+    "fusion-studio-client/src/lib/chat-action-controller.ts": {
+      "sha256": "79697686cf6b55661c87d8eab05db21f43253b2f4f4b965b079c1f424cfad39a",
+      "lines": 133
+    },
+    "fusion-studio-client/src/lib/chat-action.ts": {
+      "sha256": "f8b15ee9e83cd85f4075f10e66cf7f0f9ea5e162c415a822bf3be0c72cfaa1b2",
+      "lines": 126
+    },
+    "fusion-studio-client/src/lib/chat-material-commit.ts": {
+      "sha256": "9ca48a31e7e1acb3a1a98d452ccf4b0480101a2d36d94b076a8107f1a3d67a37",
+      "lines": 63
+    },
+    "fusion-studio-client/src/lib/chat-material-target.ts": {
+      "sha256": "79020c5de3b860ba72486eacf434f8ec04341e0a4417e62c045afd1bf62009ad",
+      "lines": 50
+    },
+    "fusion-studio-client/src/lib/ws/thread-handlers.ts": {
+      "sha256": "5b63d2f06074b2dad8d43ea7acf8f38769ddf9081868178a407203a95e92a390",
+      "lines": 421
+    },
+    "fusion-studio-client/src/state/panelStore.ts": {
+      "sha256": "7b9ecb8386524a89c7b235bcce70ca94613ae611370871d569343f329768b609",
+      "lines": 575
+    },
+    "fusion-studio-client/src/state/panelStoreTypes.ts": {
+      "sha256": "762c7fa2b26923fabb0e2d4585d625417d17e333709b9fd9bdb3c9e8ca97b8bb",
+      "lines": 433
+    },
+    "fusion-studio-client/src/state/slices/chatSurfaceSlice.ts": {
+      "sha256": "0ee04ae43e3e68b88f29b548bb6ad5fe25b0e1a3c5e091e9d40a2af14971a854",
+      "lines": 672
+    },
+    "fusion-studio-client/src/state/slices/mountedChatState.ts": {
+      "sha256": "9302850d0488b37740a4a1ec989da370d8e06073362bdd7e6f549f3bd8767a8a",
+      "lines": 165
+    }
+  },
+  "diff_sha256": "588082b3eaa12ce18137afff587e044d157747e999fd86e5823b73dc34bfe0d9",
+  "normative_inputs": {
+    "SPEC.md": "063562058007928d07477913a1ba05e43a2d191d6e42a0e9cb1d6a6e5c71659e",
+    "TICKET.md": "730b6c92efa396eeb3abdc5ee6c522c692c790db9c288346d141ad57817e0074",
+    "CANDIDATE.json": "a13356706562cef0be0ce914e21f889f10fad3766873fe27909e976363c30541",
+    "OWNER-REQUEST.md": "71dd8441f4ee79f9c0688ec335de0a553d9dfd6f4a6b2b60a93d8f222a529c1d",
+    "OWNER-APPROVAL.md": "459e03d05c8e2144db863cb9e31d46586e80fe2912641ee7157abbfae9a4b942",
+    "implementation/PREFLIGHT.json": "b44631b6490c43eda07b855b79d041af1e901426750cada29fcf4c9f72dd0920"
+  },
+  "accepted_planning_evidence": {
+    "reports/CANDIDATE-BEFORE-CMH-001.json": "297ef7de393a82bcdd908722767179c1d7f95503e031c4d801129e6184dc765f",
+    "reports/CMH-001-REPAIR-RECORD.json": "280b4eea4582aa38c2fb24fd017be7c0e2ff75ee6022ba38d2fcc1017de5b48f",
+    "reports/STANDARDS-WIKI-INVESTIGATION.md": "2811c3c2c877cde932b14bd0f8f62dbde505f4afbb3cb3752cc6fa76f81338da",
+    "reports/STAGE-ASSIGNMENT.json": "157dbf312cd447907ec6f68aa36c178bd3ae1156a5f82979faadf38f5ff7dd4d",
+    "reports/CANDIDATE-HANDOFF-REVIEW-02.md": "2724112444e77f119c0f349c66aa8d636df685d2c6708b7b9e9569c37270e83e",
+    "reports/STAGE-SOURCE-BASELINE.json": "e807a4b43f3e9e96f7b608e7c9441e6883dbcf8fc3bc2b469315f2daac4c79bb",
+    "reports/STANDARDS-HANDOFF-REVIEW-01.md": "bb6e510f9dad8aac3ef4c41aa09261faea3dc131c9530e7d4daab7ac4a685e7a",
+    "reports/RELEASE-VALIDATION-01.md": "de3ae8e92601794105b436a3610949ea7ebd2eabe145ac1be6c808e7e2c35754",
+    "reports/VERIFICATION-HANDOFF-REVIEW-01.md": "f4b3a1f0a4f5248739f595b6e6a5a1654f486fada14f7ddc0e55a88d38ddef80",
+    "reports/STAGE-CHECKS.json": "f8a2bf70d882911724d756fd0af32a11430f85b8177996792f99e4b4ac123b34",
+    "reports/CANDIDATE-HANDOFF-REVIEW-01.md": "258862f003a1f2b299f12e7d0fc9204724834c080c8c92101f08c4a581cb1c69",
+    "reports/VERIFICATION-INVESTIGATION.md": "693a6ab911dbe6c549e997cc898197fc01f22bfc7750ce5c856371fcdf029ab2",
+    "reports/STAGE-REPORT.md": "7fc9891c31b6ed22939c83dae88f9782ebf4b8cf3a8b64a01ef067b48335a35b",
+    "reports/CANDIDATE-STAGE-REVIEW-01.md": "cc8cac13dc8f75a269fd97837c1e5c994dda64bb3215995ad64d04f2d39e0549",
+    "reports/author-source-evidence.json": "3ded48319af3a6a6ab45c23c540833b6eb617151ec31f4e4596f8c9e86f3d7f8",
+    "reports/STAGE-STATE.json": "0bb99e6df74b915405d6f938f963d7a0ca8d4806d6448d66f18edab077b28fd3",
+    "reports/CMH-001-NORMATIVE.diff": "8fd4b2724bfa46d9d9b6aadac0f2c3a06e180a6ca2f6933420416e5bb9c38a36",
+    "reports/ACCEPTED-SYNTHESIS.md": "f7186c2c6e353c2f0134d65b6e444715e670dbb526ad5168d7d3bbbeb2e911e4"
+  },
+  "dependencies": {
+    "client_node_modules": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules",
+    "server_node_modules": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules",
+    "client_link_ignored": true,
+    "server_link_untracked_excluded": true,
+    "policy": "Existing exact primary dependency links, no install/rebuild/mutation."
+  },
+  "runtime": {
+    "node": "v25.6.1",
+    "npm": "11.9.0"
+  },
+  "permissions": {
+    "filesystem": "unrestricted",
+    "approval": "never"
+  },
+  "reviewer_history": [
+    {
+      "reviewer": "/root/m1_builder/builder_review_01",
+      "result": "CLEAN",
+      "terminal": "completed",
+      "report": "BUILDER-REVIEW-01.md",
+      "sha256": "ba1a50bdbd14cd51cfa16331a43dae94abda51c89a6c6d23cfe7a04aa34b7d3f",
+      "source_changed_after_review": false
+    }
+  ]
+}

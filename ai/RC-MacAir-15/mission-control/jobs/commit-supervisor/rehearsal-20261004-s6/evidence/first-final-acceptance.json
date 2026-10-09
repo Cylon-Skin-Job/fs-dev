@@ -1,0 +1,39 @@
+{
+  "at": "2026-10-04T16:02:14.264147+00:00",
+  "actor": "/root/s6_supervisor_candidate_1",
+  "result": "FINAL_REVIEW_ACCEPTED",
+  "scope": "REHEARSAL_ONLY",
+  "covered_identity": "jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-final-identity.json",
+  "covered_sha256": "550c9e2547744aba942995dd1a471ed06012d1bd1e05000dd9d337047ae4ec86",
+  "reports": {
+    "jobs/commit-supervisor/rehearsal-20261004-s6/reviews/final-manager-1.md": "730900e0ea99c160852df883d0f893478ff47d3c12a9aeb7d3d575269de3c4d1",
+    "jobs/commit-supervisor/rehearsal-20261004-s6/reviews/final-manager-1-lifecycle.json": "436b443e5487b08273e2a318b6a001a27e81745bdb074c621f05859ad4bc1429",
+    "jobs/commit-supervisor/rehearsal-20261004-s6/reviews/final-reviewer-1.raw.md": "e0777f6ef80b42c58557d8b22a9b35223dbfa47dbe424d539486d03e28d71863"
+  },
+  "actual_manager_terminal": "native completed observed by own-prefix list_agents",
+  "actual_reviewer_terminal": "native completed observed by own-prefix list_agents; manager preserves full raw inline report",
+  "material_findings": [],
+  "lenses": [
+    "Behavior/Verification",
+    "Standards",
+    "Integrations/Dependencies",
+    "ForwardCompatibility",
+    "WikiImpact"
+  ],
+  "readback": "jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-final-supervisor-readback.json",
+  "deviation_classification": {
+    "id": "FINAL-PROCEDURE-01",
+    "original_criterion": "All Git reads use GIT_OPTIONAL_LOCKS=0",
+    "actual_change": "Initial pwd/root-discovery shell used git rev-parse --show-toplevel without the environment prefix",
+    "reason_authority": "Required read-only repository resolution; omitted prefix on initial call",
+    "files": "No files changed by rev-parse; only own review reports writable",
+    "observable_effect": "Repository root resolved; no index/ref mutation",
+    "checks": "All subsequent Git readbacks use GIT_OPTIONAL_LOCKS=0; protected/candidate refs and physical indexes match checkpoint after review",
+    "risk": "None evidenced for pure rev-parse; mandatory flag retained for subsequent inventory",
+    "downstream_consumer": "Supervisor review lifecycle",
+    "downstream_impact": "No candidate or required-check invalidation",
+    "owning_classification": "Supervisor accepted advisory procedural deviation: literal optional-lock-prefix omission on initial pure root-discovery read; no evidenced source/candidate index/ref change and current gate remains valid",
+    "classification": "accepted"
+  },
+  "runtime_readiness": "PENDING mandatory actual canonical build/restart/preinitializer-reset/UI/Wiki/watcher/private-protection checks; no owner/Git authority"
+}

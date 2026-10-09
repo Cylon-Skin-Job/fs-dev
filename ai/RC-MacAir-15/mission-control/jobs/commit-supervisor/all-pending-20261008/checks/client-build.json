@@ -1,0 +1,14 @@
+{
+  "command": [
+    "npm",
+    "run",
+    "build"
+  ],
+  "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/fusion-studio-client",
+  "started": "2026-10-09T01:02:49.022163+00:00",
+  "ended": "2026-10-09T01:03:02.180164+00:00",
+  "exit_code": 0,
+  "log": "/private/tmp/fusion-main-consolidation-95vxg0_h/client-build.log",
+  "preload_before": "a87aaefb6d60425ec30013a6a1b8a2a3e21d50208a6c1727adc0be9968adef05",
+  "preload_after": "a87aaefb6d60425ec30013a6a1b8a2a3e21d50208a6c1727adc0be9968adef05"
+}

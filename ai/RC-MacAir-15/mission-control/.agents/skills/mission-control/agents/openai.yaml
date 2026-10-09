@@ -1,0 +1,6 @@
+interface:
+  display_name: "Mission Control"
+  short_description: "Restore coordination and route completed builds"
+  default_prompt: "Use $mission-control to establish this task's Mission Control role and restore its durable state. Keep monitoring inactive until I instruct you to monitor."
+policy:
+  allow_implicit_invocation: false

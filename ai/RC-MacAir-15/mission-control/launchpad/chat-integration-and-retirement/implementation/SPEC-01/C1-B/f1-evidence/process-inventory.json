@@ -1,0 +1,30 @@
+{
+  "token": "chat-architecture-c1b-20260929-0150",
+  "electronPid": 16497,
+  "descendants": [
+    16499,
+    16500,
+    16501,
+    16518
+  ],
+  "port": 55583,
+  "runtime": {
+    "electron": "42.0.1",
+    "node": "24.15.0",
+    "focused": false,
+    "visible": true,
+    "profile": "/tmp/chat-c1b-f1-20260929-0150/profile"
+  },
+  "browser": {
+    "viewport": {
+      "width": 1600,
+      "height": 972
+    },
+    "visibilityState": "visible",
+    "performanceObserver": true
+  },
+  "profileRoot": "/tmp/chat-c1b-f1-20260929-0150/profile",
+  "workspaceRoot": "/tmp/chat-c1b-f1-20260929-0150/workspace",
+  "stageRoot": "/tmp/chat-c1b-f1-20260929-0150/stage",
+  "externalProviderProcess": false
+}

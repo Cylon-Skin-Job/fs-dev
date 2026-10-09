@@ -1,0 +1,17 @@
+{
+  "runId": "boot-regressions-1789986837183-9e24ff44",
+  "mode": "--smoke",
+  "status": "observed",
+  "port": 58151,
+  "testResult": {
+    "code": 1,
+    "signal": null,
+    "pid": 5187,
+    "timedOut": false,
+    "interrupted": false,
+    "leakedOwnedPids": [],
+    "elapsedMs": 46974
+  },
+  "failure": null,
+  "ownedRunRootRemoved": true
+}

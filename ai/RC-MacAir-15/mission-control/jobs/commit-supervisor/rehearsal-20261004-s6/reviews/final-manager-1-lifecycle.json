@@ -1,0 +1,272 @@
+{
+  "schema": 1,
+  "scope": "REHEARSAL_ONLY",
+  "mode": "final",
+  "return": "REVIEW_COMPLETE",
+  "result": "clean",
+  "manager": "/root/s6_supervisor_candidate_1/final_review_manager_1",
+  "parent": "/root/s6_supervisor_candidate_1",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "actual_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "implementation_checkout": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "role_loading": {
+    "runtime": "supported default fallback",
+    "exact_skill": ".agents/skills/mc-code-review-orchestrator/SKILL.md",
+    "skill_sha256": "61a2e611803aa918b22b9356e19f1d863a3e7a6ac05cf9cc491f41e175d16129",
+    "exact_toml": ".codex/agents/mc-code-review-orchestrator.toml",
+    "toml_sha256": "1e06b777794a371a2620a7df3d97caaeb95cb67652b18461e1db6f9744b653e0",
+    "acknowledged_before_writes": true,
+    "native_loader_metadata": "unexposed"
+  },
+  "permissions": {
+    "host": "danger-full-access",
+    "approval_policy": "never",
+    "assignment": "candidate/evidence read-only; three report files only"
+  },
+  "settings": {
+    "root_model_effort": "inherited",
+    "overrides": false,
+    "concrete_values": "unexposed"
+  },
+  "reviewer": {
+    "identity": "/root/s6_supervisor_candidate_1/final_review_manager_1/final_reviewer_1",
+    "type": "clean-room-reviewer",
+    "fork_turns": "none",
+    "fresh": true,
+    "read_only": true,
+    "writes": 0,
+    "grandchildren": 0,
+    "settings": "root inherited; no overrides",
+    "terminal_result": "REVIEW_COMPLETE clean",
+    "terminal_observed": "native FINAL_ANSWER plus own-prefix list_agents completed",
+    "raw_path": "reviews/final-reviewer-1.raw.md",
+    "raw_sha256": "e0777f6ef80b42c58557d8b22a9b35223dbfa47dbe424d539486d03e28d71863",
+    "raw_bytes": 6949,
+    "verbatim": true,
+    "closure": "close_agent unavailable; completed terminal observed"
+  },
+  "manager_state_at_write": "consolidation complete; terminal return follows; parent must observe actual completion",
+  "actual_tree": [
+    "/root/s6_supervisor_candidate_1/final_review_manager_1 (running until final return)",
+    "/root/s6_supervisor_candidate_1/final_review_manager_1/final_reviewer_1 (native completed)"
+  ],
+  "current_identity_sha256": "550c9e2547744aba942995dd1a471ed06012d1bd1e05000dd9d337047ae4ec86",
+  "readback": {
+    "exact_command": "python3.12 -B - <<'PY'\nimport pathlib,json,hashlib,stat,os,subprocess\nfrom datetime import datetime,timezone\nc=pathlib.Path.cwd();j=c/'jobs/commit-supervisor/rehearsal-20261004-s6';p=pathlib.Path('/private/tmp/mc-s6-commit-supervisor-20261004/candidate');d=json.loads((j/'evidence/first-final-identity.json').read_bytes());m=json.loads((j/'recovery-supplements/first-wiki-1/recovery/manifest.json').read_bytes());b=json.loads((j/'evidence/first-lower-gate-dependency-bridge.json').read_bytes());env={**os.environ,'GIT_OPTIONAL_LOCKS':'0','GIT_LITERAL_PATHSPECS':'1'}\nfor k in ('GIT_INDEX_FILE','GIT_DIR','GIT_WORK_TREE','GIT_COMMON_DIR'):env.pop(k,None)\ndef sha(raw):return hashlib.sha256(raw).hexdigest()\ndef run(repo,*args):return subprocess.check_output(['git','-C',str(repo),*args],env=env)\ndef rec(f):\n if not os.path.lexists(f):return {'exists':False}\n s=f.lstat();sy=stat.S_ISLNK(s.st_mode);raw=os.fsencode(os.readlink(f)) if sy else f.read_bytes();return {'exists':True,'sha256':sha(raw),'mode':oct(s.st_mode),'kind':'symlink' if sy else 'file'}\ndef refs(repo):\n gd=pathlib.Path(run(repo,'rev-parse','--absolute-git-dir').decode().strip());branch=subprocess.run(['git','-C',str(repo),'symbolic-ref','-q','HEAD'],stdout=subprocess.PIPE,env=env).stdout.decode().strip() or None\n return {'head':run(repo,'rev-parse','HEAD').decode().strip(),'branch':branch,'refs_sha256':sha(run(repo,'for-each-ref','--format=%(refname)%00%(objectname)')),'config_sha256':sha(run(repo,'config','--null','--list','--show-origin')),'index_file_sha256':sha((gd/'index').read_bytes())}\nowned_errors=[n for n,r in d['owned'].items() if rec(p/n)!=r];authority_errors=[n for n,r in d['authority'].items() if rec(pathlib.Path(n))!=r];config_errors=[n for n,r in d['configuration'].items() if rec(pathlib.Path(n))!=r]\nr=json.loads((j/'evidence/first-unaffected-suite-reuse.json').read_bytes());dep_errors=[q['path'] for q in r['dependencies'] if rec(pathlib.Path(q['path']))['sha256']!=q['sha256'] or rec(pathlib.Path(q['path']))['mode']!=q['mode']]\nbridge_errors={k:[n for n,r in b[k].items() if rec(pathlib.Path(n) if pathlib.Path(n).is_absolute() else p/n)!=r] for k in ('code_dependencies','wiki_dependencies','authority','configuration')}\nidx={};flags={}\nfor row in run(p,'ls-files','--stage','-z').split(b'\\0'):\n if row:\n  a,n=row.split(b'\\t',1);mode,oid,stage=a.decode().split();idx.setdefault(os.fsdecode(n),[]).append({'mode':mode,'oid':oid,'stage':int(stage)})\nfor row in run(p,'ls-files','-v','-z').split(b'\\0'):\n if row:flags[os.fsdecode(row[2:])]=chr(row[0])\nnames=set(idx)|set(m['owned'])|{os.fsdecode(n) for n in run(p,'ls-files','--others','--exclude-standard','-z').split(b'\\0') if n};changed=[];index_errors=[]\nfor n in names:\n r=rec(p/n);wt={'kind':'missing'} if not r['exists'] else {'kind':r['kind'],'sha256':r['sha256']}\n if r.get('kind')=='file':wt['mode']=stat.S_IMODE((p/n).lstat().st_mode)\n q={'index':idx.get(n,[]),'flag':flags.get(n),'worktree':wt};old=m['baseline']['paths'].get(n)\n if q!=old:changed.append(n)\n if old is None or q['index']!=old['index'] or q['flag']!=old['flag']:index_errors.append(n)\nresult={'at':datetime.now(timezone.utc).isoformat(),'identity_sha256':sha((j/'evidence/first-final-identity.json').read_bytes()),'owned_count':len(d['owned']),'owned_errors':owned_errors,'authority_count':len(d['authority']),'authority_errors':authority_errors,'configuration_errors':config_errors,'head_match':run(p,'rev-parse','HEAD').decode().strip()==d['head'],'index_match':run(p,'ls-files','--stage','-z').hex()==d['index_z_hex'],'status_match':run(p,'status','--porcelain=v1','-z','--untracked-files=all').hex()==d['status_z_hex'],'suite_dependency_count':len(r['dependencies']) if False else len(json.loads((j/'evidence/first-unaffected-suite-reuse.json').read_bytes())['dependencies']),'suite_dependency_errors':dep_errors,'lower_gate_bridge_errors':bridge_errors,'leaf_count':len(names),'leaf_names_match':names==set(m['baseline']['paths']),'union_changed_paths':sorted(changed),'union_index_errors':index_errors,'candidate_ref_config_index_match':refs(p)==m['baseline']['refs'],'protected_source_ref_config_index_match':all(refs(pathlib.Path(n))==q for n,q in m['baseline']['protected'].items()),'raw_report_sha256':sha((j/'reviews/final-reviewer-1.raw.md').read_bytes())}\nprint(json.dumps(result))\nPY",
+    "result": {
+      "at": "2026-10-04T15:52:55.407121+00:00",
+      "identity_sha256": "550c9e2547744aba942995dd1a471ed06012d1bd1e05000dd9d337047ae4ec86",
+      "owned_count": 129,
+      "owned_errors": [],
+      "authority_count": 50,
+      "authority_errors": [],
+      "configuration_errors": [],
+      "head_match": true,
+      "index_match": true,
+      "status_match": true,
+      "suite_dependency_count": 35,
+      "suite_dependency_errors": [],
+      "lower_gate_bridge_errors": {
+        "code_dependencies": [],
+        "wiki_dependencies": [],
+        "authority": [],
+        "configuration": []
+      },
+      "leaf_count": 4354,
+      "leaf_names_match": true,
+      "union_changed_paths": [
+        "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-080936.md",
+        "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md"
+      ],
+      "union_index_errors": [],
+      "candidate_ref_config_index_match": true,
+      "protected_source_ref_config_index_match": true,
+      "raw_report_sha256": "e0777f6ef80b42c58557d8b22a9b35223dbfa47dbe424d539486d03e28d71863"
+    }
+  },
+  "lower_gate_metadata": {
+    "code_actor": "/root/s6_supervisor_candidate_1/code_handoff_review_3",
+    "wiki_actor": "/root/s6_supervisor_candidate_1/wiki_handoff_review_1",
+    "terminal": "Supervisor-provided native-completed metadata; prior verdicts not read",
+    "code_identity_sha256": "8ae0c59c81ede9db9a69ce7a8a1d3940ed3e6325376cfd9d1db46d126b3a26d4",
+    "wiki_identity_sha256": "cf9f2f2ab8e66ffe642ea09e270c51bc760d337a1e85ecbfa490e2bbe5a39d83",
+    "bridge": "evidence/first-lower-gate-dependency-bridge.json allowed raw fields only",
+    "code_dependency_count": 17,
+    "wiki_dependency_count": 21,
+    "current_matching": true,
+    "preservation_observations": "original full128/129 observations time-qualified; final whole candidate independently rebuilt"
+  },
+  "findings": [],
+  "repair_packet": null,
+  "hold": null,
+  "lens_coverage": [
+    "Behavior/Verification",
+    "Standards",
+    "Integrations/Dependencies",
+    "ForwardCompatibility",
+    "WikiImpact"
+  ],
+  "separate_specialist": {
+    "spawned": false,
+    "reason": "Combined fresh reviewer covered bounded fixture, Wiki and existing launcher/process/profile seams; no concrete uncovered new security/migration/performance/packaging risk"
+  },
+  "neutral_change_accounting": {
+    "path": "first-neutral-change-accounting.json",
+    "sha256": "2ad6629eb057e607ca59040d11068eb0d885182a3e1ac129b8b519f9d27febc6",
+    "full_fields": [
+      {
+        "original_criterion": "Incomplete count, reversible completion, three retained rows",
+        "actual_change": "Current controller remaining expression counts !completed",
+        "reason_authority": "Original fixture criteria under established intent",
+        "files": [
+          "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js"
+        ],
+        "observable_effect": "Current source derives incomplete task count",
+        "checks": [
+          "command-only eleven raw receipts; nine current-source scenarios"
+        ],
+        "risk": "Live app proof later required; existing storage and stableIDs preserved",
+        "downstream_consumer": "Checklist iframe and Checklist Guide",
+        "downstream_impact": "Accurate numerical summary; later public route/reset/navigation proof required",
+        "owning_classification": "accepted technical correction under original intent; fresh gates remain independently required"
+      },
+      {
+        "original_criterion": "Exact released N remaining of 3",
+        "actual_change": "Current view template includes exact released of 3",
+        "reason_authority": "Labeled E/S6-intent-resolution.json",
+        "files": [
+          "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js"
+        ],
+        "observable_effect": "Exact released summary text",
+        "checks": [
+          "command-only scenario and syntax receipts"
+        ],
+        "risk": "Denominator3 follows unchanged original three-task contract",
+        "downstream_consumer": "Checklist iframe, Guide and strict UI oracle",
+        "downstream_impact": "No futurefix scope added",
+        "owning_classification": "accepted technical correction under released intent; fresh gates remain independently required"
+      },
+      {
+        "original_criterion": "Actual installed role instructions and inherited root settings",
+        "actual_change": "Supporteddefault actors explicitly read exact installed skill/TOML; rootsettings inherited without overrides",
+        "reason_authority": "Exact executable assignment and installed fallback contract",
+        "files": [
+          "role-specific unique job reports only"
+        ],
+        "observable_effect": "No product behavior or hostsettings change",
+        "checks": [
+          "actual pre-write acknowledgments; role/sourcehashes; native actor lifecycle"
+        ],
+        "risk": "Native profileloader/concrete model/effort metadata unexposed, not invented",
+        "downstream_consumer": "All workflow gates",
+        "downstream_impact": "No independent review waived",
+        "owning_classification": "accepted supported fallback"
+      },
+      {
+        "original_criterion": "Actual public iframe/reload/fullrestart and Wiki/navigation proof in completeworkflow",
+        "actual_change": "Leaf source selfchecks use VM/minimalDOM/inmemory storage; real canonical runtime belongs to later Supervisor phase",
+        "reason_authority": "Bounded leaf assignment and installed runtime separation",
+        "files": [
+          "workers/code-repair-1-scenarios.mjs",
+          "evidence/first-code-command-only.json"
+        ],
+        "observable_effect": "Source-only raw evidence, no successfulapp claim",
+        "checks": [
+          "source scenarios/syntax receipts; livechecks later"
+        ],
+        "risk": "Real runtime pending until explicit laterphase",
+        "downstream_consumer": "Final review and owner runtime",
+        "downstream_impact": "All original livecriteria retained",
+        "owning_classification": "accepted division of verification, no waiver"
+      },
+      {
+        "original_criterion": "Required raw check exact commands/results/current dependencies",
+        "actual_change": "Unchanged55Python/17Node setup suites were rerun once to preserve exact invocation/result receipts missing from old terse logs",
+        "reason_authority": "Installed current-byte check provenance requirement",
+        "files": [
+          "evidence/first-python-suite-command.json",
+          "evidence/first-node-suite-command.json"
+        ],
+        "observable_effect": "Raw command receipts55/17exit0, no product change",
+        "checks": [
+          "full actual commands/stdout/stderr",
+          "35dependencycurrentreadbacks"
+        ],
+        "risk": "Disposable test processes only; not live app success",
+        "downstream_consumer": "Independent gates and owner packet",
+        "downstream_impact": "Current provenance complete; future reuse requires dependencies match",
+        "owning_classification": "accepted proportionate check provenance correction"
+      },
+      {
+        "original_criterion": "Original-assignment independent packet excludes author diagnoses/prior conclusions",
+        "actual_change": "Mixed worker-check assessment metadata exposed to one excluded earlier session; immutable exact /actual_check_receipts derivative created with originalSHA/pointer provenance and different fresh reviewer used",
+        "reason_authority": "Installed independence boundary; no original behavior/criterion changed",
+        "files": [
+          "evidence/first-code-command-only.json",
+          "code-handoff-original-assignment.md"
+        ],
+        "observable_effect": "Exposure session supplies no acceptance; subsequent packets use raw commands only",
+        "checks": [
+          "exact copied receipt values",
+          "source full-file hash / JSON pointer",
+          "actual fresh actor lifecycle"
+        ],
+        "risk": "Historical exposure cannot be undone in that session; replacedsession reports stay excluded",
+        "downstream_consumer": "Fresh code/Wiki/final gates",
+        "downstream_impact": "Fresh independent gate required; no previousconclusion supplied here",
+        "owning_classification": "accepted procedural correction; original independent criteria retained"
+      },
+      {
+        "original_criterion": "Complete original completion/reversal/visible-row/count/reload/fullrestart documentation in existing Guide, retained root/Nav bytes/times, exclusive fullpreimage and exactsources/actualUTC metadata",
+        "actual_change": "Guide behavior prose rewritten, four owning exactcode paths/actual quotedUTC time added; complete596byte version created only after129union capture; useful links/prose retained",
+        "reason_authority": "Original approved fixture/Wiki obligations and established current code/restart owners",
+        "files": [
+          "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-080936.md",
+          "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md"
+        ],
+        "observable_effect": "Current guide explains all original reader facts; no source feature or navigation structure change",
+        "checks": [
+          "sixactualcommands exit0",
+          "complete129/all4354 exact2leaf delta",
+          "all50authorities/35suitedeps unchanged",
+          "gray-matter/source/link/preimage/retainedtime readbacks"
+        ],
+        "risk": "Actual built-in Wiki/browser/restart still mandatory later; timestamp certifies edit only",
+        "downstream_consumer": "Wiki readers, independent Wiki/final/runtime/owner gates",
+        "downstream_impact": "Original all-three page facts/integrity and later actual built-in Wiki navigation/reload remain independently required",
+        "owning_classification": "accepted"
+      }
+    ]
+  },
+  "classification_observations": [
+    "Incomplete count correction is established original intent; exact current source/scenario hashes match; retained IDs/rows/persistence; downstream iframe/Guide/runtime.",
+    "Exact of 3 wording follows released intent; unchanged three-task denominator; downstream UI oracle/Guide; future X/Y excluded.",
+    "Supported default fallback is permitted; exact skill/profile read; root inheritance/no overrides; unexposed metadata disclosed.",
+    "VM/minimal DOM is a source-check allocation; all real public-route/restart/browser criteria remain later mandatory; no waiver.",
+    "55/17 suite rerun corrected raw invocation provenance; all35 current dependencies match; no live-success inference.",
+    "Earlier mixed-metadata exposure belongs to an excluded other actor; fresh manager/child received only command-only derivatives; source files hashed only; no earlier conclusions relied on.",
+    "Guide/version correction satisfies original entire-Wiki reader/integrity obligations; original128/new129 precreation union/payloads valid; retained root/Nav unchanged; runtime readback still later."
+  ],
+  "additional_deviations": [
+    {
+      "id": "FINAL-PROCEDURE-01",
+      "original_criterion": "All Git reads use GIT_OPTIONAL_LOCKS=0",
+      "actual_change": "Initial pwd/root-discovery shell used git rev-parse --show-toplevel without the environment prefix",
+      "reason_authority": "Required read-only repository resolution; omitted prefix on initial call",
+      "files": "No files changed by rev-parse; only own review reports writable",
+      "observable_effect": "Repository root resolved; no index/ref mutation",
+      "checks": "All subsequent Git readbacks use GIT_OPTIONAL_LOCKS=0; protected/candidate refs and physical indexes match checkpoint after review",
+      "risk": "None evidenced for pure rev-parse; mandatory flag retained for subsequent inventory",
+      "downstream_consumer": "Supervisor review lifecycle",
+      "downstream_impact": "No candidate or required-check invalidation",
+      "owning_classification": "advisory procedural deviation; Supervisor retains final classification authority"
+    }
+  ],
+  "limits": [
+    "Actual current client build/canonical restart/full-reset/browser reload/UI/Wiki navigation/live sustained shell/watcher proof later mandatory",
+    "No live runtime/profile/process preservation claim made",
+    "No readiness for owner packet/SPEC/Git/publication/landing/adoption/Alpha",
+    "No tests regenerated/rerun or runtime launched by manager/reviewer"
+  ],
+  "next_safe_action": "Supervisor separately performs current canonical private build/runtime and original UI/reset/navigation/watcher gates"
+}

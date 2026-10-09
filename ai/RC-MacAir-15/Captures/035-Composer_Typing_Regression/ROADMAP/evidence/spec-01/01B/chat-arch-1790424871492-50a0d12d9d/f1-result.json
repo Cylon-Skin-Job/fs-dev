@@ -1,0 +1,109 @@
+{
+  "status": "passed",
+  "caseId": "F1-PUBLIC-ROUTE",
+  "identity": {
+    "threadGroupId": "tg-c837c770-1259-489f-8f39-2c7c1933c4dd",
+    "viewId": "capture-viewer",
+    "threadId": "2026-09-26T05-14-35-739",
+    "harnessId": "opencode"
+  },
+  "exchange": {
+    "id": 1,
+    "threadId": "2026-09-26T05-14-35-739",
+    "seq": 1,
+    "userInput": "F1 empty Capture composer typing",
+    "assistant": {
+      "parts": [
+        {
+          "type": "think",
+          "content": "Deterministic fixture reasoning"
+        },
+        {
+          "type": "tool_call",
+          "toolCallId": "fixture-tool-1",
+          "name": "read",
+          "arguments": {
+            "path": "fixture.txt"
+          },
+          "result": {
+            "output": "fixture result",
+            "statusMessage": "Fixture read completed",
+            "display": [],
+            "returnedDiff": false,
+            "isError": false,
+            "files": []
+          }
+        },
+        {
+          "type": "text",
+          "content": "Deterministic fixture reply frame-2 "
+        }
+      ]
+    },
+    "metadata": {
+      "messageId": null,
+      "planMode": false,
+      "contextUsage": null,
+      "tokenUsage": {
+        "inputTokens": 10,
+        "outputTokens": 5,
+        "totalTokens": 15
+      },
+      "turnId": "206f0ff8-2f65-4e90-ac54-ebd36f2fceda",
+      "reason": "interrupted",
+      "partial": true,
+      "capturedAt": 1790424876813,
+      "savedAt": 1790424876872,
+      "attachments": [],
+      "mentions": [],
+      "fileMutations": []
+    }
+  },
+  "uiReadback": true,
+  "authenticatedShell": true,
+  "wsFrameCounts": {
+    "shell-auth:challenge": 3,
+    "connected": 3,
+    "workspace:init": 3,
+    "panel_config": 4,
+    "shell-auth:authenticated": 3,
+    "screenshot:list": 3,
+    "file_content_response": 134,
+    "error": 3,
+    "workspace:create_manifest": 1,
+    "workspace:created": 1,
+    "workspace:added": 1,
+    "workspace:registry_changed": 1,
+    "workspace:switched": 1,
+    "file_tree_response": 129,
+    "state:result": 11,
+    "office:palette_state": 3,
+    "thread:list": 6,
+    "panel_changed": 3,
+    "thread:created": 1,
+    "thread:opened": 3,
+    "wire_ready": 1,
+    "state:worksurface_result": 2,
+    "message:sent": 1,
+    "turn_begin": 1,
+    "thread:state_changed": 2,
+    "step_begin": 1,
+    "thinking": 1,
+    "tool_call": 1,
+    "tool_call_args": 1,
+    "tool_result": 1,
+    "status_update": 1,
+    "content": 2,
+    "turn_end": 1,
+    "exchange_metadata": 1,
+    "chat-turn:saved": 1,
+    "wire_disconnected": 1
+  },
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": null
+}

@@ -1,0 +1,62 @@
+{
+  "current_artifacts": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+      "sha256": "f30199373a1e5fbd59d3f3425dcaa2553839d32b70ec62681cca1f26f357acbe",
+      "lines": 315
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/job-template.md",
+      "sha256": "2631f5ba8734a764ca3a4c9bb11b4bf1a8375b81331c259a9f5d35ceab6de5a3",
+      "lines": 102
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/wiki-handoff.md",
+      "sha256": "4d9198cfa72345335294ea3046c6895e10827ec65456ff2c0339c5e8f247c432",
+      "lines": 143
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+      "sha256": "5694da42dabb5e5ca14f95fb35f559c8b2e54c6f0f287db57cb71372de9fe79f",
+      "lines": 271
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+      "sha256": "86041f2634b107fc85f7c15d0f397b59ad8fb0b648ae9990a7b7e592977fa22e",
+      "lines": 122
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/wiki_fixture.py",
+      "sha256": "cd2a1024f2acad7844a06406b7ff3f1794a016da21ffdd2d04abfae859e7a6de",
+      "lines": 175
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_wiki_handoff.py",
+      "sha256": "5a35d5586b11af10fea182f3ec45f44c19a14117223e7a54d5328b5e7afe4269",
+      "lines": 187
+    }
+  ],
+  "baseline_diffs": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+      "diff": "--- \n+++ \n@@ -301,3 +301,15 @@\n Test failures/stale evidence/findings remain repair work. Investigate repeated\n no-progress root facts rather than oscillating guesses; preserve checkpoint,\n exact hold and recovery route without declaring the candidate ready.\n+\n+## Settled Wiki handoff\n+\n+After accepted code repairs settle the actual source identity, follow\n+[wiki-handoff.md](wiki-handoff.md) for bounded research, article dispositions,\n+leaf editing, staged navigation and separate fresh documentation review.\n+The Supervisor owns the coverage assignment and acceptance; the editor owns\n+only assigned articles and its report. Preserve source/page hashes and complete\n+collision-safe preimages, retain no-op pages, and check omissions beyond metadata.\n+This reuses the local Wiki article procedures without starting its manual\n+supervisor or a factual hash scanner. Documentation acceptance joins the final\n+whole-candidate gate; it never supplies runtime, publication or adoption evidence.\n"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/job-template.md",
+      "diff": "--- \n+++ \n@@ -67,3 +67,36 @@\n `resume.md` records predecessor terminal/non-conflicting status and paused schedule,\n freshness/authority checks, retained valid evidence, unfinished authorized action\n and exact hold release. Do not replay completed work or revive an intentional wait.\n+\n+## Wiki assignment and disposition fields\n+\n+Keep the integration's Wiki evidence in this job, separate from durable articles\n+and the manual workflow's `.wiki-runs/`. Follow [wiki-handoff.md](wiki-handoff.md).\n+Supervisor-owned coverage names the original source change/current-state scope,\n+settled code acceptance, actual source checkout/revision and dirty inputs, Wiki\n+home and procedure revisions, exact source/page hashes (including absence),\n+changed/added/renamed/deleted sources and relevant unchanged callers/consumers.\n+Each subject/claim has a canonical article or explicit missing-article finding,\n+statement/evidence/current-versus-future status, and disposition: repair, retain\n+unchanged, consolidate, retire or unresolved. Preserve why it was searched and\n+the limits; `source-files` alone cannot close coverage.\n+\n+The bounded leaf editor packet names manager, actual CWD, exact writable pages\n+and generated blocks, finding IDs, settled source evidence, non-conflicting\n+writers, unique report path and stopping conditions. Its report records complete\n+preimage path/hash and resulting page hash, actual quoted UTC edit time (or\n+retained timestamp), exact metadata/source/link checks, relocations and all fact\n+destinations for consolidation/retirement, staged generation command/log/hash and\n+block import map, excluded operational state and unaffected pages, deviations,\n+source drift/rechecks and recovery limits. A missing new page has an explicit\n+absent preimage; no historical bytes/time are invented.\n+\n+The manager assigns a distinct fresh read-only documentation gate using original\n+coverage and current sources/pages, including retained/missing pages and links.\n+Record actual identity/root inheritance/terminal/closure evidence, immutable raw\n+audit report, independently derived coverage, status (complete/partial/stale),\n+assessment (clean/findings/insufficient-evidence), stable finding dispositions,\n+exact reviewed source/page dependencies and final hash readback. Only current\n+clean review plus required checks yields `HANDOFF_VALIDATED`; editor self-check\n+returns `READY_FOR_HANDOFF_REVIEW`. Preserve affected invalidation and unaffected\n+evidence separately. No documentation report certifies app runtime or landing.\n"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+      "diff": "--- \n+++ \n@@ -161,6 +161,8 @@\n \n Use the Wiki Update package as the source for its separately assigned research/repair/audit procedures and article rules. Its full supervisor run remains manually invoked; the Review and Merge design does not add automatic Wiki Update dispatch, timers or a post-commit hook. An integration job's bounded Wiki editing/review can follow those procedures without claiming that the separate full Wiki Update run occurred. Once factual change detection exists, its candidate list can inform Wiki Impact; required integration documentation coverage cannot depend solely on declared source mappings or an unknown scan baseline.\n \n+The integration setup's [bounded Wiki handoff procedure](.agents/skills/mc-commit-supervisor/references/wiki-handoff.md) makes that reuse explicit: the Commit Supervisor assigns a leaf editor after source identity settles and a separate fresh documentation gate against original coverage, including retained and missing articles. It reuses Research/Repair/Audit article methods without their full manual delegation tree. Exact source/page hashes, complete collision-safe adjacent preimages, actual edit timestamps and staged generated-block imports are recorded in the integration job; operational audit state is excluded. This procedure does not implement the proposed factual scanner, relocate Wiki tooling, prove an actual agent run or activate the top-level role.\n+\n ## Clean-room gates and repair loop\n \n Use clean-room discipline at distinct junctures, with the question appropriate to each gate:\n"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+      "diff": "--- \n+++ \n@@ -93,6 +93,8 @@\n \n Make integration evaluation explicit. Define its authority/coverage lenses, exact candidate identity, reviewer independence, repair routing, pass/hold/incomplete outcomes and how changed inputs invalidate evidence. Keep planning release validation separate from code/integration review. New requirement-definition reports follow the planning worker-handoff rules; a planning verdict alone cannot validate an integrated code candidate.\n \n+The setup's [bounded Wiki handoff](.agents/skills/mc-commit-supervisor/references/wiki-handoff.md) now specifies integration reuse of the existing Wiki Research/Repair/Audit article procedures: settled source identity, original coverage beyond metadata, one leaf editor and a separate manager-assigned fresh documentation gate. The manual Wiki Supervisor and its broader worker delegation remain a separate manual invocation. Article preimages/metadata/timestamps, generated-block staging without operational state and source/page drift checks are explicit; factual scanning and tooling relocation remain separately scoped. Definition and disposable fixture evidence do not prove the later actual Wiki reviewer or running-app handoff.\n+\n When a missing capability or unspecified intent blocks integration, preserve the candidate and issue record, name the affected prerequisite/consumer, and return a bounded question or requirements investigation. Its evaluated report can become input to an owner-assigned Draft/Creation workflow and later implementation. The merge job waits with an observable release condition. Neither it nor MC manufactures an approved new SPEC or launches a prerequisite build just because a gap was found.\n \n Resolve grouping and hold policy from accepted SPECs/dependencies: one completed SPEC is not always a complete integration unit, and unrelated SPECs need not wait without evidence. Account for incompatible/shared changes and consumer adoption. Do not impose a universal all-SPEC completion rule. Where policy truly needs owner intent, present the exact choice and consequence.\n"
+    }
+  ],
+  "resolved_links": 56,
+  "index_sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+  "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "retained_smoke_readback": "pass",
+  "targeted_log": "S3-orchestrator-tests.log"
+}

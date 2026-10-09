@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-09T01:42:39.343232+00:00",
+  "phase": "authorized-publication",
+  "owner": "/root",
+  "authorization": "Direct human Commit everything and make main up to date.",
+  "candidate": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate",
+  "baseline": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "next": "Integrate frozen current bytes; stage/commit all nonignored pending work and push main to origin; separate actual operation receipts in .git/fusion-publication/all-pending-20261008.",
+  "runtime": "disposable candidate/profile only",
+  "primary_index_untouched": true,
+  "new_Alpha_update_authorized": false,
+  "current_final_gate": "CLEAN",
+  "actual_runtime": "RUNTIME_VERIFIED and production screenshot save/gallery/failure smoke passed; disposable app stopped"
+}

@@ -1,0 +1,22 @@
+{
+  "runId": "chat-arch-1790471405317-953cbc1640",
+  "status": "failed",
+  "results": [
+    {
+      "id": "R9-45-MINUTE-SOAK",
+      "code": 1,
+      "signal": null,
+      "pid": 38842,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 33147
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "R9-45-MINUTE-SOAK exited 1",
+    "stack": "Error: R9-45-MINUTE-SOAK exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:492:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

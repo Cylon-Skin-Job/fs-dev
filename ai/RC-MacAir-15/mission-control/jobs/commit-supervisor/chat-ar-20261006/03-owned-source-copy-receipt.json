@@ -1,0 +1,171 @@
+{
+  "at": "2026-10-07T00:29:05.718039+00:00",
+  "status": "PASS",
+  "exact_count": 23,
+  "rows": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/.versions/2026-10-06-151426.md",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 2654,
+      "sha256": "b0b3a19ca50b7ef657f5429e8643a9f1aee75a6f72573d60482a2cc3ca915e5d"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/.versions/2026-10-06-151519.md",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 4767,
+      "sha256": "6479876356a66d6d654a2987eaa1acce410365149e1277f7a08daf8b8642b0be"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 4846,
+      "sha256": "57b85d4acc3034dbc2a64fec9994effa98386419d41bcd6dcc526fbcd6a96d18"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/.versions/2026-10-06-151426.md",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 4117,
+      "sha256": "45001a1860a4f92133b724d2c7e6077ae3e8162cb01006cf0b472a1c97ea4c50"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/.versions/2026-10-06-151519.md",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 5437,
+      "sha256": "47d4dd1f4033cccd7c7285f0ae21ef422bdbb7f14f22f092e6148b3a804d8777"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 5513,
+      "sha256": "6c5c3847270c0bef52f0e858216f54d602472a9400cddcf2c97a39c5d15e437e"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-10-06-151426.md",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 42483,
+      "sha256": "ec38f18dc55ffb9d59f46683116aae158f2cf2643ae76a99a6f26df2d9f6d293"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 42443,
+      "sha256": "47e449cc8809a756958cc0947f4de66d5679b0375ad6c85a4a3caa6829b02946"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-10-06-151426.md",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 7788,
+      "sha256": "9c5cfbecaf10e7db72586dd2bdcc83cb6d65db5874313f26c822c125e9dc9047"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 7774,
+      "sha256": "958dd740990d80ea878e58f603f1bb3d5208b6afc9fc723ce771b4f3864ce0be"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/.versions/2026-10-06-151426.md",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 3664,
+      "sha256": "78a9d4aa551b312053796e83b94b69f218d6cfc4abc55f279d6e11329692cea4"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 3620,
+      "sha256": "7d29228d2e9f5b91bae0fe558f7b0f8c172aaa7a1a4bb4d47091c6545768e4ea"
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-component-registration.spec.ts",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 20550,
+      "sha256": "6f944b2dc873e518c8cd10cf8503e0527677f0f119fa0927006cdf63aca5ceb1"
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-composer-screenshot-menu.spec.ts",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 6062,
+      "sha256": "93db83a1f751645778b55f4c54b50d5372fbfd4a9acc8e363b8b71bb23a1f03a"
+    },
+    {
+      "path": "fusion-studio-client/e2e/prompt-ownership.slice-c.spec.ts",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 28808,
+      "sha256": "733f5a7cdc902a68c75c906338a042340209abf34205ab385f89b691e47ad699"
+    },
+    {
+      "path": "fusion-studio-client/e2e/threaded-chat-host.spec.ts",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 66619,
+      "sha256": "4c2cdef55c38b815cf8d35ed5bcac3c04bf595db5d6126ae6f83f704f17ccb30"
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatSurface.tsx",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 3480,
+      "sha256": "eddbcc616a6b4ccfbf211db031901dcb9fc22ec32d6bbbe0ccd50b8c1ff807f8"
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 5965,
+      "sha256": "b9202119baf0caa6ea08022ba2e6a322ec8c15e874d7d82d68ad8a4b20b12127"
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 6691,
+      "sha256": "b3dcd745e057d9e8d350f6623d8a0b697f47b69778af1e29fc95946c0f758463"
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/sideChatBridge.ts",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 9418,
+      "sha256": "dba500d3f7e28e3b845bc7b2c05478edd361325fb6c9b86cb7366a0f9834a8af"
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 4843,
+      "sha256": "2a1205bd426604f805eb7fe2b93ce8f3be65f1a18207bba7653d6534c01d317a"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat/side-chat-placements.ts",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 2672,
+      "sha256": "109d5f63baf402c39dddf8cc96a93a95d2108e1988fca5dca99a7ad263b417e1"
+    },
+    {
+      "path": "fusion-studio-client/src/screenshots/chatScreenshotCapture.ts",
+      "kind": "file",
+      "mode": 420,
+      "bytes": 7877,
+      "sha256": "18eb2caf9261a19d30ad35c5ac36a64c51ee22e08567e8cfb2ac48d84e9b12f1"
+    }
+  ],
+  "source_index_unchanged": true,
+  "unselected_source_exact": true,
+  "network_used": false
+}

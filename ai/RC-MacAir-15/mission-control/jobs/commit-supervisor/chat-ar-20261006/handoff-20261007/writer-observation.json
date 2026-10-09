@@ -1,0 +1,81 @@
+{
+  "at": "2026-10-07T09:07:33.304Z",
+  "threads": [
+    {
+      "id": "01a10cf2-cd72-7c50-af8d-27588c6a17e6",
+      "title": "Track OpenCode failure modes",
+      "status": "notLoaded"
+    },
+    {
+      "id": "01a0ea32-f152-77a2-afc2-b73e8976685a",
+      "title": "Map Fusion–OpenCode chat failure states",
+      "status": "notLoaded"
+    },
+    {
+      "id": "01a1042c-09df-7473-a1e1-f458eee6b93d",
+      "title": "Orchestrator: Chokidar retirement and…",
+      "status": "notLoaded"
+    },
+    {
+      "id": "01a105eb-8add-7e12-a454-a96b64465cca",
+      "title": "Implement commit supervisor SPEC",
+      "status": "notLoaded"
+    },
+    {
+      "id": "01a0ec68-3e37-78f0-8b59-4b2a536befbc",
+      "title": "Find script trigger boundaries",
+      "status": "notLoaded"
+    },
+    {
+      "id": "01a0ddfd-81fe-7e03-8786-e514d762a797",
+      "title": "🚀 Mission Control",
+      "status": "notLoaded"
+    },
+    {
+      "id": "01a0f9b4-eb49-7383-b46c-80af64a16b6b",
+      "title": "Plan thread family view binding",
+      "status": "notLoaded"
+    },
+    {
+      "id": "01a0e6c9-e4e0-7872-9268-9a77a76f0c57",
+      "title": "Resume chat integration work",
+      "status": "notLoaded"
+    },
+    {
+      "id": "01a0e659-1933-7c30-b7ff-50476ea94d17",
+      "title": "Provision Launchpad folders",
+      "status": "notLoaded"
+    },
+    {
+      "id": "01a0c1c8-6e85-7f83-8d67-2cb5c1476007",
+      "title": "Run roadmap supervisor",
+      "status": "notLoaded"
+    },
+    {
+      "id": "01a0b8c0-3a24-7ef3-b63b-7000b11d46e0",
+      "title": "Look over my wiki. Here is the issue, I need it to reflect cold established fact. But I also may need a pivot to aspirationally defining what new features should look like and how the app will behave. \n\nEverything has gotten very big and complex. The wiki is stale.",
+      "status": "notLoaded"
+    },
+    {
+      "id": "01a0e629-8d24-75b3-a26a-85c68bb40e3c",
+      "title": "Run wiki fact reassignment",
+      "status": "notLoaded"
+    },
+    {
+      "id": "01a0d761-d42c-7df3-9111-613bcb5b01b9",
+      "title": "Plan Fusion Server Roadmap",
+      "status": "notLoaded"
+    },
+    {
+      "id": "01a10cd0-6a6e-76d3-b7a0-dce612d1be30",
+      "title": "🖥️ MC - Schedule",
+      "status": "idle"
+    },
+    {
+      "id": "01a10cda-f556-7733-954b-132a648d8d11",
+      "title": "🚀 1. Chokidar removal and repairs",
+      "status": "active"
+    }
+  ],
+  "scope": "Handoff author is a bounded owner-assigned side chat; no central Mission Control identity or Launchpad main registry transition."
+}

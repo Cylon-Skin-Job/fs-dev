@@ -9,14 +9,16 @@
 - **Category:** harness error reporting
 - **Type:** gap
 - **Severity:** unassessed
-- **Status:** deferred
-- **Source:** [REF-002](REFERENCES.md#ref-002--october-5-harness-and-build-handoff), item 1; [REF-004](REFERENCES.md#ref-004--targeted-source-conversation-reads), original controlled probes and first-item discussion.
+- **Status:** open for discussion; product repair unassigned
+- **Source:** [REF-002](REFERENCES.md#ref-002--october-5-harness-and-build-handoff), item 1; [REF-004](REFERENCES.md#ref-004--targeted-source-conversation-reads), original controlled probes/first-item discussion; [REF-008](REFERENCES.md#ref-008--alpha-model-failure-and-authorized-configuration-correction), separate Alpha model-resolution incident and source correction; [REF-009](REFERENCES.md#ref-009--source-checked-opencode-error-references).
 - **Observation:** Reported OpenCode v1.18.32 local-provider probes rejected 401 after one attempt and persistent 429 after six attempts/five retries. Both direct JSON runs emitted structured error frames and exit 1. Offline replay through the then-current Fusion adapter emitted no canonical Fusion event, leaving generic process-exit feedback. A controlled 401 says nothing about the owner's live key.
+
+  The October 7 Alpha incident is a distinct local model-resolution cause: both native sessions used obsolete Fireworks `deepseek-v4-flash-0731`, spawned/returned IDs and exited 1 before output. A separate scratch reproduction exposed `ProviderModelNotFoundError`, wrapped as `UnknownError` in native JSON; Fusion reported `HARNESS_PROCESS_EXIT` / exit 1. No HTTP status was captured; original Alpha diagnostics lacked the detailed native error. Source correction on October 8 changed only the default to Together `DeepSeek-V4.1-Flash`, independently read back here. Runtime adoption and a real post-correction response remain unverified; no retry/auth/key/stale-session cause is established.
 - **Affected scope:** Follow-on OpenCode adapter error reporting and testing.
 - **Consequence:** The observed adapter boundary loses useful failure details; the probes do not establish the owner's live incident cause.
-- **Resolution needed:** Reproduce on the exact post-closeout baseline and agree on the safe canonical/user-visible result. Proposed check: pass controlled terminal 401 and exhausted 429 frames through the actual adapter route, compare native frame to Fusion event and terminal display, and retain successful-completion coverage. Translation through the existing error contract was an assistant proposal, not an approved repair.
+- **Resolution needed:** Bind actual source/config/runtime to the accepted baseline and agree on safe error feedback. Proposed mapping/check: underlying error → native JSON → Fusion message for HTTP 401, exhausted HTTP 429 and local model-not-found, preserving status/retryability only when exposed. Check terminal and successful routes without treating a wrapped UnknownError as full underlying detail. Translation through the existing contract remains a proposal. Separately verify Alpha model adoption/new activation or explicit per-thread override and a completed/persisted response under a later authorized runtime assignment.
 - **Owner:** Future owner-designated harness session; unassigned. Owner decides consequential product choices.
-- **Next:** Continue the prior first-item discussion here. Assign reproduction/repair after current-build closeout and a scoped owner decision; the named raw probe file is now absent.
+- **Next:** Continue the first-item discussion. Current-build closeout is satisfied at REF-007; reproduction/repair and Alpha response verification remain unassigned. The earlier raw 401/429 probe file is absent.
 - **Related:** I-002, I-003, [CAPTURE](CAPTURE.md), [D-003](DECISIONS.md#d-003--bring-the-existing-opencode-failure-mode-work-into-this-ticket).
 
 ### I-002 — Retry state is not visible through the tested JSON mode
@@ -31,7 +33,7 @@
 - **Consequence:** Fusion cannot reliably display retry state from a signal omitted by the tested input stream. Delay alone cannot establish retry or terminal failure.
 - **Resolution needed:** Decide what retry visibility is required and which supported OpenCode surface can supply evidence. Proposed check: compare native events and Fusion state for success, retry-then-success and exhausted retry on the selected mode. Do not invent retry state or duplicate provider retry policy in transport.
 - **Owner:** Future owner-designated harness session; unassigned. Owner decides consequential product choices.
-- **Next:** Recheck version and actual launch mode after build closeout; recreate missing fixtures before treating the historical matrix as an executable test.
+- **Next:** On a scoped follow-on assignment, recheck version/actual launch mode against the accepted baseline and recreate missing fixtures before treating the historical matrix as an executable test.
 - **Related:** I-001, I-004, I-005, [CAPTURE](CAPTURE.md), [D-002](DECISIONS.md#d-002--finish-the-current-build-before-follow-on-harness-work).
 
 ### I-003 — Accepted-prompt recovery and fresh reopen have unresolved gaps
@@ -61,7 +63,7 @@
 - **Consequence:** CLI exit/output alone may not describe the saved server outcome in that mode. The probe does not establish that Fusion used the path or that it caused a live incident.
 - **Resolution needed:** Establish whether the actual or proposed Fusion launch path uses attachment before selecting a product repair. Proposed check, if applicable: correlate attached output/exit with server terminal events and saved session state for one exact request.
 - **Owner:** Future owner-designated harness session; unassigned. Owner decides consequential product choices.
-- **Next:** Determine mode relevance after current-build closeout; defer attach repair if outside supported scope.
+- **Next:** Determine mode relevance in a scoped follow-on assignment; defer attach repair if outside supported scope. The completed-build gate is not pending.
 - **Related:** I-002, [CAPTURE](CAPTURE.md), [D-002](DECISIONS.md#d-002--finish-the-current-build-before-follow-on-harness-work).
 
 ### I-005 — Intermittent Together socket failure has unresolved attribution
@@ -76,7 +78,7 @@
 - **Consequence:** Key fallback, stale config, connection reuse, server warming and provider attribution remain unsupported incident explanations. Successful comparisons do not disprove intermittent failure.
 - **Resolution needed:** Obtain a bounded trace of an actual failure on an authorized test session: exact request, selected model/credential source, error class, retry and final outcome. Keep provider/network/reuse hypotheses distinct and record content-safe metadata.
 - **Owner:** Future owner-designated harness session; unassigned. Owner decides consequential product choices.
-- **Next:** Carry the historical finding without assigning a cause. After build closeout, select a bounded check if the symptom recurs or affects the selected repair; the original comparison summary is absent.
+- **Next:** Carry the historical finding without assigning a cause. Select a bounded check under a follow-on assignment if the symptom recurs or affects the selected repair; the original comparison summary is absent. Alpha's separate local-model incident does not establish Together/network attribution.
 - **Related:** I-001, I-002, [CAPTURE](CAPTURE.md), [D-002](DECISIONS.md#d-002--finish-the-current-build-before-follow-on-harness-work).
 
 ### I-006 — Metadata lookup failure can silently select another harness
@@ -95,3 +97,7 @@
 - **Related:** I-003, [CAPTURE](CAPTURE.md), [D-002](DECISIONS.md#d-002--finish-the-current-build-before-follow-on-harness-work).
 
 Imported by Codex side chat (ephemeral); evidence checked 2026-10-05T16:47:32Z. All six await baseline reconciliation and product assignment; no proposed check above was run in this intake.
+
+October 8 reconciliation: the accepted build baseline/closeout is recorded at REF-007. Individual historical issue applicability and dirty runtime/config adoption remain to be checked under separate product authority; successful R3 completed-exchange reopening does not test I-003's accepted-before-exchange failure path. All six IDs and original evidence limits are preserved.
+
+October 8 handoff reconciled by Codex side chat (ephemeral), 2026-10-09T00:56:36Z.

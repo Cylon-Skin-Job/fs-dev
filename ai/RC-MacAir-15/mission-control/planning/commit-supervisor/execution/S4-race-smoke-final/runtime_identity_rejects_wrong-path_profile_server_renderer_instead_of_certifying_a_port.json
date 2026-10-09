@@ -1,0 +1,6 @@
+{
+  "test": "runtime identity rejects wrong-path/profile/server/renderer instead of certifying a port",
+  "fixture": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-Wj2TBP",
+  "injected": true,
+  "files": []
+}

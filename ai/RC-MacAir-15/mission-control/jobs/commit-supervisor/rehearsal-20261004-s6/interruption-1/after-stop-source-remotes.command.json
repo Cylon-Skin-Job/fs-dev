@@ -1,0 +1,32 @@
+{
+  "command": [
+    "git",
+    "-C",
+    "/Users/rccurtrightjr./projects/fs-dev",
+    "remote",
+    "-v"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "actor": "/root/s6_supervisor_interruption_1",
+  "started": "2026-10-04T20:15:26.839874+00:00",
+  "finished": "2026-10-04T20:15:26.844168+00:00",
+  "exit_code": 0,
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "GIT_LITERAL_PATHSPECS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "inherited_git_variables_removed": "ALL GIT_* repository/index/object/alternate variables",
+  "stdout_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-remotes.stdout",
+    "sha256": "9abb3f9017325ce52d6ef5854ceff67e52f31399e3b796f906ce57869372c36d",
+    "size": 240
+  },
+  "stderr_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-stop-source-remotes.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  "stdout": "gitlab\thttps://gitlab.com/m1-build-server/fs-dev.git (fetch)\ngitlab\thttps://gitlab.com/m1-build-server/fs-dev.git (push)\norigin\thttps://github.com/Cylon-Skin-Job/fs-dev.git (fetch)\norigin\thttps://github.com/Cylon-Skin-Job/fs-dev.git (push)\n",
+  "stderr": ""
+}

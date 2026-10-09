@@ -1,0 +1,155 @@
+{
+  "kind": "PUBLIC_UI_OBSERVATION",
+  "mode": "fix-xy",
+  "candidate": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "profile": "/private/tmp/mc-s6-commit-supervisor-20261004/profile",
+  "machine": "MC-S6",
+  "samples": [
+    {
+      "action": "all incomplete",
+      "summary": "3 remaining of 3",
+      "rows": [
+        "Review report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "action": "first completed",
+      "summary": "2 remaining of 3",
+      "rows": [
+        "Review report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "action": "second completed",
+      "summary": "1 remaining of 3",
+      "rows": [
+        "Review report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        true,
+        false
+      ]
+    },
+    {
+      "action": "first reversed",
+      "summary": "2 remaining of 3",
+      "rows": [
+        "Review report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        false,
+        true,
+        false
+      ]
+    },
+    {
+      "action": "original reversal ordinary reload retention",
+      "summary": "2 remaining of 3",
+      "rows": [
+        "Review report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        false,
+        true,
+        false
+      ]
+    },
+    {
+      "action": "two completed before reset",
+      "summary": "1 remaining of 3",
+      "rows": [
+        "Review report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        true,
+        false
+      ]
+    },
+    {
+      "action": "reset",
+      "summary": "3 remaining of 3",
+      "rows": [
+        "Review report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "action": "shell reload",
+      "summary": "3 remaining of 3",
+      "rows": [
+        "Review report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "action": "all complete",
+      "summary": "0 remaining of 3",
+      "rows": [
+        "Review report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "action": "all incomplete again",
+      "summary": "3 remaining of 3",
+      "rows": [
+        "Review report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        false,
+        false,
+        false
+      ]
+    }
+  ],
+  "started": "2026-10-04T19:26:12.638Z",
+  "resetPersistedImmediately": "[]",
+  "articleText": "arrow_back\narrow_forward\nChecklist Guide\nmenu_book\nWiki Guide\nlink_2\nchat_paste_go\nCHECKLIST\n◉\nChecklist Guide\nlink_2\nchat_paste_go\n○\nNavigation Guide\nlink_2\nchat_paste_go\nChecklist Guide\n\nHow to complete, reset and revisit the disposable checklist.\n\nChecklist Guide\n\nThe checklist contains Review report (draft), Review sources (review) and Send summary (send). These task IDs remain stable. Select a task checkbox to complete it; clear the checkbox to make it incomplete again. All three task rows and their checkboxes remain visible, including completed tasks.\n\nThe summary uses N remaining of 3, where N counts incomplete tasks. With all tasks incomplete it reads 3 remaining of 3. Complete Review report to reach 2 remaining of 3, then Review sources to reach 1 remaining of 3; clear Review report to return to 2 remaining of 3. Completing every task reaches 0 remaining of 3, and clearing every checkbox returns to 3 remaining of 3.\n\nAn ordinary iframe or shell reload within the same profile retains completion. After the example above, reloading keeps Review sources checked, Review report and Send summary incomplete, and the summary at 2 remaining of 3.\n\nSelect Reset completion to uncheck all three tasks. The summary immediately becomes 3 remaining of 3, and the reset completion state is saved immediately. All three rows, task IDs and labels remain. For example, complete Review report and Review sources, then reset: all three tasks become incomplete. An ordinary reload within the same profile retains this reset, with every checkbox unchecked and 3 remaining of 3.\n\nA full canonical development restart clears browser storage, including Local Storage and Session Storage, before the checklist initializes, so it starts with all three tasks incomplete and 3 remaining of 3.\n\nOpen the built-in Wiki view to return to this guide. See the Navigation Guide for movement between views.\n\nINCOMING EDGES\n\nNone\n\nOUTGOING EDGES\n\nNone\n\nSOURCE FILES\nrehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js\nrehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js\nrehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html\nscripts/fusion-restart-target.mjs\nscripts/fusion-restart.mjs\nCONNECTED SKILLS\n\nNone\n\nRELATED TRIGGER FILES\n\nNone\n\nlink_2\nchat_paste_go\nchrome_reader_mode\nChecklist Guide\nNo child pages loaded\nlink_2\nchat_paste_go",
+  "articleReload": "Checklist Guide",
+  "finished": "2026-10-04T19:26:16.452Z",
+  "sustainedConnectedAfterNavigationReload": true
+}

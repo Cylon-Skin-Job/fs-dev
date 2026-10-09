@@ -1,0 +1,4 @@
+src/lib/chat-material-commit.ts:42:    store.addPendingAttachment(workspaceId, threadId, attachment);
+src/lib/chat-material-commit.ts:61:  store.setDraft(workspaceId, threadId, next);
+src/lib/chat-action-creation.ts:109:      drafts.setDraft(created.workspaceId, created.threadId!, next);
+src/components/chat/ConnectedChatComposer.tsx:114:    useChatComposerDraftStore.getState().setDraft(workspaceId, threadId, text);

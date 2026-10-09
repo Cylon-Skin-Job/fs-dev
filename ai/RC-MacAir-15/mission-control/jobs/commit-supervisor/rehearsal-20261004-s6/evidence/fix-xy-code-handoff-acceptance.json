@@ -1,0 +1,453 @@
+{
+  "at": "2026-10-04T16:55:41.710661+00:00",
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "result": "HANDOFF_VALIDATED",
+  "reviewer": "/root/s6_supervisor_fix_xy_1/fix_xy_code_handoff_1",
+  "actual_native_terminal": true,
+  "raw_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-code-handoff-1.raw.md",
+  "raw_sha256": "9d641d2b0be7ba3c78a2130980b1bef622d551631733773fb1c4b71c433e6044",
+  "original_assignment": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-code-handoff-assignment.md",
+  "covered_identity_sha256": "c3550adee994701e1de95927c8044985ae9c964f5ae1a4523345182512a8f721",
+  "dependencies": {
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js": {
+      "exists": true,
+      "sha256": "48ae78dfda264edb62fadf5bdd72e1f07c2f5b54b127ddb7296c41188f2d70bf",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js": {
+      "exists": true,
+      "sha256": "55bb735409a940717d683a9256a7d55f467a92576923e26fe829518d3effa87e",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html": {
+      "exists": true,
+      "sha256": "968e599ca4814c3a8e246d9d12ee985e0cf8a9ef8e3cd6d55e6b4a9a9b62f480",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css": {
+      "exists": true,
+      "sha256": "f0e280d99afff67dda2c753192697d63dd74d20140794537f6cb2ae774ae8f0d",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/manifest.md": {
+      "exists": true,
+      "sha256": "8eba2b68a98a5e7b3c6e5d1222328a1c9e640b2c50020dba1363af09a8d0ea72",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/content.json": {
+      "exists": true,
+      "sha256": "cbcad6c1da38cb52095c6a7971673e937377ccac335cacecdb11fd7c218121e8",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "restart-fusion.sh": {
+      "exists": true,
+      "sha256": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+      "mode": "0o100755",
+      "kind": "file"
+    },
+    "scripts/fusion-restart.mjs": {
+      "exists": true,
+      "sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "scripts/fusion-restart-target.mjs": {
+      "exists": true,
+      "sha256": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "scripts/fusion-restart-processes.mjs": {
+      "exists": true,
+      "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "scripts/fusion-restart-probe.mjs": {
+      "exists": true,
+      "sha256": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "fusion-studio-client/src/components/ContentArea.tsx": {
+      "exists": true,
+      "sha256": "f3b02f929a2baf1ba18025b41883bf351759815c2204537ccf61454e66ef1327",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "fusion-studio-client/electron/main.cjs": {
+      "exists": true,
+      "sha256": "22d254036040a367782656c3d29730e719dae3056d6d54f4ada94f2ed1bca260",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "fusion-studio-client/electron/protocol-handler.cjs": {
+      "exists": true,
+      "sha256": "e19d345994ae63391141fc3ff509047c0c34dd255e502e947b154c2132e29790",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "fusion-studio-client/electron/server-spawn.cjs": {
+      "exists": true,
+      "sha256": "6fb9d7200858dbba74c649ec8dde6c703052c4429423a07f8b8e6648731b275e",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "fusion-studio-server/lib/db.js": {
+      "exists": true,
+      "sha256": "343780913d538c1dfddf0d430fb2c17ea7e1f3008e3d38936543fc9a29f6ca76",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "fusion-studio-server/lib/workspace/ai-paths.js": {
+      "exists": true,
+      "sha256": "05757f7bb6e77f7b41571455f511e9ee1665d470d5b2dfc799443b8db1cc10ba",
+      "mode": "0o100644",
+      "kind": "file"
+    }
+  },
+  "authority_dependencies": {
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md": {
+      "exists": true,
+      "sha256": "54cb3ff16f0fae8847341ba38f53af6afd6aa6d84ac4ddb7df9e20faf13888dc",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/AGENTS.md": {
+      "exists": true,
+      "sha256": "41dc4e9dc4d58e7505cb6fc37b500129502231293894b5f90eda9398315e001d",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/session-contract.md": {
+      "exists": true,
+      "sha256": "d82d5a815a94f8c27b64d1d90aa0085790e3d98408c011e86d6126dd1bd9b570",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/decisions.md": {
+      "exists": true,
+      "sha256": "d2cc057a1bfd79455fc420a996a19316403afc35ea446593f3d704ca8222b7ff",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md": {
+      "exists": true,
+      "sha256": "e3ffc6d20ff9d31dfe1b0a7f5bbbeabe3351cee9a3c4ec9bc8f990c080dd08ea",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md": {
+      "exists": true,
+      "sha256": "aca67f27b5c1cd4c75e5e8ebfc388c446ff505a9581719e239d6ed40087a49b1",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/SPEC.md": {
+      "exists": true,
+      "sha256": "6d7b351db87e535b0950f94c42c61d503a3ac3fef6587299dfc024c7887df664",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/approval-receipt.md": {
+      "exists": true,
+      "sha256": "0de192d5c5f0e422a3ab3301a4376c32b120667f61b03b63f661c0502c150a56",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-supervisor-provider-assignment.md": {
+      "exists": true,
+      "sha256": "fc32e46aee5eecf9761228df9053f5090af4c6c398fec453ed2e17c08142b13b",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-preparation-acceptance.json": {
+      "exists": true,
+      "sha256": "4989cf4bf4714b2671a504a806be8ace411dad858270a4a77704ed202b0e089a",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-fixture-authority-approval.json": {
+      "exists": true,
+      "sha256": "33ac9507b74ff700dc7f25e16a0bc19eb903082e96d51d049f11365afaabeb8d",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/prep-freeze.json": {
+      "exists": true,
+      "sha256": "ecaa405bd30b1fb5bbe1ef44a0f271971c7fe72d55a833f7abb6bae8cdc8a7b5",
+      "mode": "0o100444",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-private-paths.json": {
+      "exists": true,
+      "sha256": "4a2147669b54de1366bc6cfb7e8b7102b888990eadb2ba3760714b8464c01665",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/final-recovery/owned-paths.json": {
+      "exists": true,
+      "sha256": "522e394ca89dd7f1c1a008785ac0828600211da1a4cae84dba859277b33a827f",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/final-recovery/preparation-recovery/recovery/manifest.json": {
+      "exists": true,
+      "sha256": "fb124d573bfb76944718c9784643d8a925e24d70ce7042b9455f0b56b3073975",
+      "mode": "0o100444",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/test-controller-controls.json": {
+      "exists": true,
+      "sha256": "724e5234bc2834ec67f5f1e268c5d6a11a057607e867622281371f3bca8cb483",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/protection_readback.py": {
+      "exists": true,
+      "sha256": "ce645efb7397ec077289365d2e2a5383104e3746590d6ddc548a3bd4a6d5941b",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md": {
+      "exists": true,
+      "sha256": "b4ec0266a8d72f573dd4f3670c671a856ee5cc98b6942aad48683fa22fb14d68",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-supervisor.toml": {
+      "exists": true,
+      "sha256": "01887fdc12c962be5a7438b513836e6269cff1f9683b7a17c2edfbf2aa961044",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/authority.md": {
+      "exists": true,
+      "sha256": "d56710db1edba2ba6ef8798975fb1fb4808a301b0ea2e46bcb81d6645e251010",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py": {
+      "exists": true,
+      "sha256": "d85c8ae1828bfe94426bde87527ddc3430d720604c78cfdab775db5982dabc58",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/snapshot_state.py": {
+      "exists": true,
+      "sha256": "a38ffed0cca07299031c2709773caf33ea9065785bf114b6352141fb3310689b",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/job-template.md": {
+      "exists": true,
+      "sha256": "21bf5a6b99bb333115c43b594996810159a7a34ddaa360936895cf1ce95d35f8",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/owner-publication.md": {
+      "exists": true,
+      "sha256": "e443f0a689532a42ababb29bf6729a49dc56ba91f6727364f46faafb1ae19785",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/runtime-handoff.md": {
+      "exists": true,
+      "sha256": "1f32dcb413d10288ced451ba8806dfc1b325e280e6919e35165e8a8d70b50694",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/wiki-handoff.md": {
+      "exists": true,
+      "sha256": "4d9198cfa72345335294ea3046c6895e10827ec65456ff2c0339c5e8f247c432",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md": {
+      "exists": true,
+      "sha256": "27aab53da9edbed9f6ee8ceb4917d7c7531a7de914a3c2df7fb2196b6bd4a20c",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/AGENTS.md": {
+      "exists": true,
+      "sha256": "9d353611f3b5ac94efa92048d1c0f8879d71786bcf1b641f915a0f695f5ef697",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/.agents/wiki-session-contract.md": {
+      "exists": true,
+      "sha256": "b5147866ebec7e7f65de1f5f114f14166fe86ccbd8263f1e6ab584f4ec952d00",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/.agents/skills/wiki-research/SKILL.md": {
+      "exists": true,
+      "sha256": "26ee803266813cae416278ededccb98f9030a84806e28e29abd7cef951ef3736",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/.agents/skills/wiki-repair/SKILL.md": {
+      "exists": true,
+      "sha256": "3fb23901204ffb2789c84a2229bb91dae14bc55cad611178788c5a96537bef70",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/.agents/skills/wiki-audit/SKILL.md": {
+      "exists": true,
+      "sha256": "0e43872db5681508f23ccf2fecf5d8fc1969a6585bb987f81f4cce876c66799e",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/001-Style_Guide/PAGE.md": {
+      "exists": true,
+      "sha256": "28ae2301be3115e22b6d69691fb5208e2625945998393071874b9a1fbee70629",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/003-Updating_Wikis/PAGE.md": {
+      "exists": true,
+      "sha256": "ec1739e2d693c07c5691fa3624b200915ea1c65257a09b75c853ff1c181a1a78",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/PAGE.md": {
+      "exists": true,
+      "sha256": "2ea02f01a6b71621e59c7b198e53af019194cc4620efdb0ffd8a7199cdadc637",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/005-User_Profile_Preferences_and_Design_Philosophy/PAGE.md": {
+      "exists": true,
+      "sha256": "45fa9f630563d79935d5a461b308c823c0db3ded5c23817ba6d4c8a06c794ed5",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md": {
+      "exists": true,
+      "sha256": "de3995c68ae84f3b0fa389c6af0327e21dd08f30ac9ffbc7548b76f80ac393d7",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/001-Architecture_Routing/PAGE.md": {
+      "exists": true,
+      "sha256": "4c5fcbf62912c9e8ff6d3d0e1ec07016145e1f1c90c792a162dfcc3ca1b0bfba",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md": {
+      "exists": true,
+      "sha256": "bd3e7be468289ac0a6ee6502cd8b9fc340f03fd7568deb59370ed00cc3b2a7a3",
+      "mode": "0o100600",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/008-Testing_And_Smoke_Slices/PAGE.md": {
+      "exists": true,
+      "sha256": "e7319750bd27b7ccdad8e5e451b9779044e8fc7a713fc6d461113b409b39018d",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./.codex/skills/fusion-electron-restart/SKILL.md": {
+      "exists": true,
+      "sha256": "ca796770a18e1833ac025c24a881a62b7b07e6ee177bb08aaf00798b7b141153",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-provider-release.json": {
+      "exists": true,
+      "sha256": "640826099fcb1fc2e283b81384a1faba514d98fa2072d7550ce97ee6a6c714df",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-provider-sample.json": {
+      "exists": true,
+      "sha256": "d5fdc410a26a65471c519e1accb2745b93813bf7123299e77e2d95e41de1be40",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-intent-resolution.json": {
+      "exists": true,
+      "sha256": "1596480546b90d78a1f4e048d1163b1fb2f32302ae45fd36ebd5c5ef5c0cab8d",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-supervisor-first-candidate-assignment.md": {
+      "exists": true,
+      "sha256": "23d1a3f0a08d9fd157fdea966a95c2ff0f0ad50987d8b50b3dde5c3636785946",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-supervisor-fix-xy-assignment.md": {
+      "exists": true,
+      "sha256": "cec6866ce61cec0238e4006c2bc9a848b43eb4af730364ec04c2ac23e154f382",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-fix-xy-event.json": {
+      "exists": true,
+      "sha256": "a45a33baf89912cac89b46f05b4f18f5e30486932368f56d61d850e4fb156ec3",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-code-review-orchestrator/SKILL.md": {
+      "exists": true,
+      "sha256": "61a2e611803aa918b22b9356e19f1d863a3e7a6ac05cf9cc491f41e175d16129",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-code-review-orchestrator.toml": {
+      "exists": true,
+      "sha256": "1e06b777794a371a2620a7df3d97caaeb95cb67652b18461e1db6f9744b653e0",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-review-gate/SKILL.md": {
+      "exists": true,
+      "sha256": "cc738b3ecebca875b1f6d4460d26c3185dd3b3dd2a93550086742995a0c6c56a",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/.codex/agents/wiki-repair-worker.toml": {
+      "exists": true,
+      "sha256": "b08fced0ad12ffbc40c4a4c1766b2c42eb489a21692ec629ccc3a28329b0f1e4",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/.codex/agents/wiki-auditor.toml": {
+      "exists": true,
+      "sha256": "65189edff3e1b0199c56cd5bebe5151b116bc5429eb457a80d147c32b72dfe11",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/002-Frontend_UI/PAGE.md": {
+      "exists": true,
+      "sha256": "18a093c333a610ec8d2c77661b29744f1fae6e9ca8f4e113148fee10a0d9fc18",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/PAGE.md": {
+      "exists": true,
+      "sha256": "2b4e55ed7580659b35a91d13f5a7b781960c659868027dd8b6ea6f79e609b105",
+      "mode": "0o100600",
+      "kind": "file"
+    }
+  },
+  "configuration_dependencies": {
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/runtime-config-fix-xy.json": {
+      "exists": true,
+      "sha256": "7fba1148c0f66578ff76f294bcbbc5ed3a1f1694cf0bcfa6077db00594d81166",
+      "mode": "0o100644",
+      "kind": "file"
+    }
+  },
+  "raw_commands": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-code-command-only.json",
+  "required_suite_reuse": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-unaffected-suite-reuse.json",
+  "scope": "Complete original affected four app files and immediate seams; source only, no runtime/Wiki/final/owner authority",
+  "material_findings": []
+}

@@ -1,0 +1,25 @@
+{
+  "runId": "boot-regressions-1789987080398-ce59bb7b",
+  "mode": "--working-return",
+  "port": 58365,
+  "baseURL": "http://127.0.0.1:58365",
+  "total": 1,
+  "byStatus": {
+    "unexpected": 1
+  },
+  "setupFailures": [],
+  "cases": [
+    {
+      "id": "working-activity.spec.ts > @working in-flight return restores original startedAt over an already-revealed baseline",
+      "file": "working-activity.spec.ts",
+      "status": "unexpected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "failed",
+          "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.rv-working-activity').first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.rv-working-activity').first()\u001b[22m\n"
+        }
+      ]
+    }
+  ]
+}

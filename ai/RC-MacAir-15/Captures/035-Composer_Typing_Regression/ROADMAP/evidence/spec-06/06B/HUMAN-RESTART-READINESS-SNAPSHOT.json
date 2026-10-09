@@ -1,0 +1,81 @@
+{
+  "at": "2026-09-27T07:43:08.910Z",
+  "runId": "human-1790494814495-ca038557",
+  "targetId": "809CCA9015537C832D1DF7DD3B5A1361",
+  "observation": {
+    "at": 1790494988909,
+    "timeOrigin": 1790494894004.6,
+    "visibility": "visible",
+    "connectedLabel": true,
+    "composers": [
+      {
+        "disabled": false,
+        "readOnly": false,
+        "visible": true,
+        "threadId": null,
+        "placeholder": "Ask about captures...",
+        "length": 0
+      },
+      {
+        "disabled": true,
+        "readOnly": false,
+        "visible": false,
+        "threadId": null,
+        "placeholder": "",
+        "length": 0
+      },
+      {
+        "disabled": true,
+        "readOnly": false,
+        "visible": false,
+        "threadId": null,
+        "placeholder": "",
+        "length": 0
+      },
+      {
+        "disabled": true,
+        "readOnly": false,
+        "visible": false,
+        "threadId": null,
+        "placeholder": "",
+        "length": 0
+      },
+      {
+        "disabled": true,
+        "readOnly": false,
+        "visible": false,
+        "threadId": null,
+        "placeholder": "",
+        "length": 0
+      }
+    ],
+    "buttons": [
+      {
+        "label": "Send message",
+        "disabled": false,
+        "visible": true
+      },
+      {
+        "label": "Send message",
+        "disabled": false,
+        "visible": true
+      },
+      {
+        "label": "Send message",
+        "disabled": false,
+        "visible": true
+      },
+      {
+        "label": "Send message",
+        "disabled": false,
+        "visible": true
+      },
+      {
+        "label": "Send message",
+        "disabled": false,
+        "visible": true
+      }
+    ]
+  },
+  "operation": "Runtime.evaluate DOM reads only; own inspector WebSocket closed; app left open"
+}

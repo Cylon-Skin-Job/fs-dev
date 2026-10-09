@@ -1,0 +1,108 @@
+{
+  "at": "2026-10-04T21:21:07.702096+00:00",
+  "reason": "Dated root-gate continuation plus explicit future current-state source; no future gate assumed complete",
+  "observation_time": "2026-10-04T21:16:40.081914+00:00",
+  "changes": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/preimages/preclarification-AGENTS.md",
+      "before_sha256": "47281d8c8a8fd5749756d7922eef7b68a85b44ae1e15e20a3ebe00d9397c77b1",
+      "current": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 253884811,
+        "size": 11823,
+        "mtime_ns": 1791148867694850265,
+        "sha256": "d4dce1ca561b013641ca999d4183a73be739b408cfa5e518c750af783420de6d"
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/preimages/preclarification-registry.md",
+      "before_sha256": "43f16c75c7ad1420d711a05951feae57629596533c5814ec26c7b4011a1d27eb",
+      "current": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 253884814,
+        "size": 14365,
+        "mtime_ns": 1791148867695296012,
+        "sha256": "ca478d6baa5dc05bff44daca96295736d69a7226037b8ce8223fc51251230bc0"
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/preimages/preclarification-handoff.md",
+      "before_sha256": "70335328515a4f8fe855c88b9aeae17961aeacd68ee484bf92fae258ea62b75e",
+      "current": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 253884817,
+        "size": 37337,
+        "mtime_ns": 1791148867698308997,
+        "sha256": "1804c147efba7fd8b5fa892c41ee9be6f906c69a7209ce45c9d419ec81c9869e"
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/preimages/preclarification-todo.md",
+      "before_sha256": "5f2a3d9bf2c096aec26cf642da340668162b8a12e306e4fdcb4b89460c1518c7",
+      "current": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 253884813,
+        "size": 24178,
+        "mtime_ns": 1791148867701029608,
+        "sha256": "432b77f8d83297935d3017063e74fc4172d7376d544139abd0d509cbebc81d16"
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/preimages/preclarification-deployment.md",
+      "before_sha256": "b71d0df42920ed7c51fe4d14298deea51bc06c243c652fc19e511641de116760",
+      "current": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 254286643,
+        "size": 24436,
+        "mtime_ns": 1791148867701588230,
+        "sha256": "e8a4da6a21b73a293f57626f315da78e3bc8ff77eb841000a8c5dde441e9bafd"
+      }
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/preimages/preclarification-skills-and-agents.md",
+      "before_sha256": "40019e59bd5d7f479f15ebba6953129555d729a9c60b731e3dbe86e2fbb0446e",
+      "current": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 254233150,
+        "size": 19311,
+        "mtime_ns": 1791148867702040311,
+        "sha256": "592dd2042cc12042186941128e44b34957e8d9db52773b61ffec3a6ae84d31d9"
+      }
+    }
+  ],
+  "Wiki_unchanged": {
+    "exists": true,
+    "kind": "file",
+    "mode": 33188,
+    "dev": 16777230,
+    "ino": 65627116,
+    "size": 3428,
+    "mtime_ns": 1791148600081893915,
+    "sha256": "ccf7a76b4201ce3f5a95b29816f72f85cf1506b6f94172a581c100170dd4b94e"
+  },
+  "original_and_Wiki_preimages": "Retained exactly"
+}

@@ -1,0 +1,66 @@
+[
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-pass-1-authority/S3-static-checks.json",
+    "sha256": "6156ff1f52c0fb6db04160a615b75dcb93fdf9a7a89437f7150b35e0692be422"
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-pass-1-authority/S3-wiki-audit-2.log",
+    "sha256": "1e6d8f4ae89a633e9c602b3e7dbda3ffe990f57a98edeb7a9b74617d549e9fc4"
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-pass-1-authority/S3-wiki-audit-1.log",
+    "sha256": "f87a48e776116a8c733a87d77d87186373b8089e8c8756d4a09cfb8a03f77f41"
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-pass-1-authority/S3-cumulative-tests.log",
+    "sha256": "bf789978efee6d5835fa6ade6596ec999d55fb1be92e0d3cfcc37b0cdd3bdd9a"
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-pass-1-authority/S3-tests.log",
+    "sha256": "16e8f77a288d1ab84c99e432fe0c19c853c7f1f60acf3e70fec2bf4b0279acc2"
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-pass-1-authority/S3-current-files.json",
+    "sha256": "1bb96ef15f4ed49b8988034c702c2607375d2f8c7e9ba6fa02a45c9108fd0a78"
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-pass-1-authority/S3-smoke.json",
+    "sha256": "2304212ca4637148abf74d6eb38e15f87d7ff81b0e12a19c26591acd7a01feba"
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-pass-1-authority/S3-checks.json",
+    "sha256": "6c40b9a016886a5aca12dda38e9dff40b4792bfbfef39a785ac239e073f36e5f"
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-pass-1-authority/S3-tests-initial-failure.log",
+    "sha256": "cf7c952adf34085dc2f7ca4037c154d58766ae20c4c3ff57d6117d38082d72ac"
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-pass-1-authority/artifact-preimages/2631f5ba8734a764ca3a4c9bb11b4bf1a8375b81331c259a9f5d35ceab6de5a3",
+    "sha256": "2631f5ba8734a764ca3a4c9bb11b4bf1a8375b81331c259a9f5d35ceab6de5a3"
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-pass-1-authority/artifact-preimages/4d9198cfa72345335294ea3046c6895e10827ec65456ff2c0339c5e8f247c432",
+    "sha256": "4d9198cfa72345335294ea3046c6895e10827ec65456ff2c0339c5e8f247c432"
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-pass-1-authority/artifact-preimages/5a35d5586b11af10fea182f3ec45f44c19a14117223e7a54d5328b5e7afe4269",
+    "sha256": "5a35d5586b11af10fea182f3ec45f44c19a14117223e7a54d5328b5e7afe4269"
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-pass-1-authority/artifact-preimages/cd2a1024f2acad7844a06406b7ff3f1794a016da21ffdd2d04abfae859e7a6de",
+    "sha256": "cd2a1024f2acad7844a06406b7ff3f1794a016da21ffdd2d04abfae859e7a6de"
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-pass-1-authority/artifact-preimages/86041f2634b107fc85f7c15d0f397b59ad8fb0b648ae9990a7b7e592977fa22e",
+    "sha256": "86041f2634b107fc85f7c15d0f397b59ad8fb0b648ae9990a7b7e592977fa22e"
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-pass-1-authority/artifact-preimages/5694da42dabb5e5ca14f95fb35f559c8b2e54c6f0f287db57cb71372de9fe79f",
+    "sha256": "5694da42dabb5e5ca14f95fb35f559c8b2e54c6f0f287db57cb71372de9fe79f"
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-pass-1-authority/artifact-preimages/f30199373a1e5fbd59d3f3425dcaa2553839d32b70ec62681cca1f26f357acbe",
+    "sha256": "f30199373a1e5fbd59d3f3425dcaa2553839d32b70ec62681cca1f26f357acbe"
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "at": "2026-10-04T21:54:44.336026+00:00",
+  "reviewer": "/root/s6_builder/s6_full_review_1",
+  "manager": "/root/s6_builder",
+  "requested_role": "clean-room-reviewer",
+  "fork_turns": "none",
+  "root_model_effort": "Inherited without overrides; concrete model/effort/native loader metadata unexposed",
+  "assignment": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/reviewer-assignment.md",
+  "raw_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/reviewer-1.raw.md",
+  "raw_report_sha256": "7437bf65b0067e5e0ee3c819712ab04477a5579e078cc1368044835d88a0e403",
+  "raw_report_bytes": 16909,
+  "encoding": "Exact inline UTF-8 text; no added heading or trailing newline",
+  "report_time": "2026-10-04T21:48:39Z",
+  "native_terminal": "Actual FINAL_ANSWER received, followed by exact-prefix collaboration.list_agents completed with full same report",
+  "native_completed_observed_at": "2026-10-04T21:54:44.336296+00:00",
+  "return": "REVIEW_COMPLETE \u2014 CLEAN; full S6 builder-owned only",
+  "close_agent": "Unavailable in exposed tool APIs; no closure invented",
+  "material_findings": [],
+  "freshness": "First materially clean full builder pass; no second confirmation review",
+  "source_changes_during_review": [],
+  "post_gate_scope": "Only unique report/lifecycle/deviation/current hash sidecars; reviewed docs/candidate/helper/fixture/manifest unchanged",
+  "next": "Return full S6 READY_FOR_ORCHESTRATOR_REVIEW; root independent full-S6 and whole-SPEC gates remain separate"
+}

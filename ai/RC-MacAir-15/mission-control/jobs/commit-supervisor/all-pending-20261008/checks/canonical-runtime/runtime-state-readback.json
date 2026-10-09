@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-09T01:41:44.294253+00:00",
+  "restored_owned_runtime_state": [
+    "ai/RC-MacAir-15/System/Views/002-file-viewer/state/state.json",
+    "ai/RC-MacAir-15/System/state/state.json"
+  ],
+  "original_drift_preserved": "/private/tmp/fusion-main-consolidation-95vxg0_h/runtime-state-drift",
+  "frozen_identity_mismatches_after_cleanup": [],
+  "normal_and_Alpha": "No restored bytes/databases; all11protected processes unchanged"
+}

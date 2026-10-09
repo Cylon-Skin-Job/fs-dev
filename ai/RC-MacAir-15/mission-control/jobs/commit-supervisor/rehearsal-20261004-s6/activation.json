@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "at": "2026-10-04T13:35:00.920398+00:00",
+  "actor": "/root/s6_supervisor_provider_1",
+  "role": "mc-commit-supervisor",
+  "host": "local",
+  "identity_kind": "runtime child canonical task path; no fabricated persistent UUID",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "actual_memory_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "manager": "/root",
+  "report_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/provider-hold-report.md",
+  "skill_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md",
+  "skill_sha256": "b4ec0266a8d72f573dd4f3670c671a856ee5cc98b6942aad48683fa22fb14d68",
+  "profile_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-supervisor.toml",
+  "profile_sha256": "01887fdc12c962be5a7438b513836e6269cff1f9683b7a17c2edfbf2aa961044",
+  "fallback": "supported default agent explicitly loaded exact installed skill/profile developer instructions; static role catalog lacks mc-commit-supervisor",
+  "effective_permissions": {
+    "sandbox_mode": "danger-full-access",
+    "approval_policy": "never",
+    "evidence": "current host developer permissions; not inferred from config"
+  },
+  "model_effort": {
+    "root_inherited": true,
+    "overrides": false,
+    "concrete_settings_api": "unavailable; no guessed model/effort value"
+  },
+  "ownership": "Job records, original current recovery checkpoint and waiting-dependency hold only this turn. Candidate/profile unchanged. Root owns disjoint execution coordination. Preserve other writers.",
+  "mc": {
+    "active": false,
+    "stopped_cycle": "not applicable; owner-assigned rehearsal; no invented MC cycle"
+  },
+  "predecessor": null,
+  "previous_writers": "Actual collaboration inventory confirms all earlier S4/S5/S6 builders and reviewers terminal; only /root disjoint coordination active. No competing job existed.",
+  "deduplication_key": "6d91237b4a0b279d3a81d96b21900b4c1377bdb511a1e45dc9bc41e76d6edb45",
+  "matching_automation_records": [],
+  "scheduler_checked": "Current $CODEX_HOME/automations/*/automation.toml inventory; no match for job, S6 supervisor, Commit Supervisor or mission-control; no schedules created",
+  "git_operation_authority": "NONE",
+  "first_turn_dispatch_authority": "NONE",
+  "history": "Original persistent owner history thread/turn locators unavailable; pinned approved SPEC/approval/fixture receipts and runtime parent assignment govern without invented UUID."
+}

@@ -1,0 +1,27 @@
+{
+  "id": "SPEC-ROOT-REENTRY-D1",
+  "scope": "Final root coordination",
+  "original_requirement": "Read-only repository discovery and preservation of the original source physical index; optional-lock-free Git wrappers used for this execution",
+  "actual_change": "The root re-entry git rev-parse --show-toplevel invocation did not explicitly set GIT_OPTIONAL_LOCKS=0. Subsequent inspection/check wrappers strip inherited GIT_* and set zero optional locks.",
+  "reason_authority": "Read-only repository-root discovery required by repository instructions; procedural environment omission disclosed.",
+  "files": [],
+  "checks": "Native tool exit0 returned exact primary R; subsequent full physical source index readbacks remain f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966 with refs/stage/config unchanged.",
+  "observable_effect": "No source/index/ref effect observed; no commit, branch move or publication operation.",
+  "risk": "Initial invocation environment cannot be retroactively changed; native tool record has no separately captured UTC start/finish.",
+  "downstream_impact": "No product or slice correction; final check wrappers and current preservation record retain the distinction.",
+  "classification": "accepted",
+  "classification_owner": "/root",
+  "classified_at": "2026-10-04T21:39:07.624143+00:00",
+  "raw_native_tool_derivative": {
+    "argv": [
+      "git",
+      "rev-parse",
+      "--show-toplevel"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stdout": "/Users/rccurtrightjr./projects/fs-dev\n",
+    "provenance": "Exact observed first root re-entry tool result; no invented execution timestamp"
+  },
+  "evidence": "S6-root-recovery-inspection.json and S6-root-closeout-readback.json"
+}

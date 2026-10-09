@@ -1,0 +1,28 @@
+{
+  "runId": "chat-arch-1790139255483-4864372976",
+  "status": "passed",
+  "results": [
+    {
+      "id": "F1-PUBLIC-ROUTE",
+      "code": 0,
+      "signal": null,
+      "pid": 40245,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 6812
+    },
+    {
+      "id": "R7-HISTORY-LIVE",
+      "code": 0,
+      "signal": null,
+      "pid": 41219,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 3895
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

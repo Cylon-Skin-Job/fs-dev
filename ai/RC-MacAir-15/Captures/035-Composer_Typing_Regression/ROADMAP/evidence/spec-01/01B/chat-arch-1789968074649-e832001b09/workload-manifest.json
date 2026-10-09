@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "R3-LOST-ACK-STATUS",
+      "name": "R3 authenticated lost-ACK reconnect/status probe with future receipt assertions"
+    },
+    {
+      "id": "R4-DISTINCT-ATTEMPTS",
+      "name": "R4 authenticated deliberate distinct-attempt probe with future correlation assertions"
+    },
+    {
+      "id": "R4-DUPLICATE-MISMATCH-LATE",
+      "name": "R4 authenticated duplicate/mismatch/remount/restart probe with future correlation assertions"
+    }
+  ],
+  "fixture": "fresh disposable profile, migrated fusion.db, fresh empty Capture workspace",
+  "adapter": "canonical deterministic OpenCode iterator at 20 text frames/second",
+  "scenarioInventory": "R1-R9 concrete IDs and later owning contracts in scenario-inventory.mjs",
+  "enforcementGroup": [
+    "R2-DISCONNECT-BEFORE-CLICK",
+    "R2-ENQUEUE-THROW-RACE",
+    "R3-LOST-ACK-STATUS",
+    "R4-DISTINCT-ATTEMPTS",
+    "R4-DUPLICATE-MISMATCH-LATE"
+  ]
+}

@@ -1,0 +1,141 @@
+{
+  "schema": 1,
+  "manager": "/root/s6_supervisor_fix_xy_1/fix_xy_final_manager_3",
+  "parent": "/root/s6_supervisor_fix_xy_1",
+  "mode": "final",
+  "scope": "REHEARSAL_ONLY_SOURCE_CHECK",
+  "actual_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "source_root": "/Users/rccurtrightjr./projects/fs-dev",
+  "candidate": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "effective_permissions": {
+    "sandbox_mode": "danger-full-access",
+    "approval_policy": "never",
+    "source": "host developer instructions; not local configuration inference"
+  },
+  "profile": {
+    "requested": "mc-code-review-orchestrator",
+    "actual": "supported default fallback",
+    "skill": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-code-review-orchestrator/SKILL.md",
+    "skill_sha256": "61a2e611803aa918b22b9356e19f1d863a3e7a6ac05cf9cc491f41e175d16129",
+    "toml": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-code-review-orchestrator.toml",
+    "toml_sha256": "1e06b777794a371a2620a7df3d97caaeb95cb67652b18461e1db6f9744b653e0",
+    "explicitly_loaded": true,
+    "acknowledged_before_report_writes": true,
+    "native_loader_metadata": "unexposed"
+  },
+  "settings": {
+    "root_model_inherited": true,
+    "root_reasoning_effort_inherited": true,
+    "overrides": [],
+    "concrete_model": "unexposed",
+    "concrete_effort": "unexposed"
+  },
+  "assignment": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-final-review-assignment-3.md",
+    "sha256": "c222a4e553ed03eb4916a446bd671459512556f244bd772c5b9397224aabc125"
+  },
+  "identity": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-final3-identity.json",
+    "sha256": "17becab4ec6c19b79e0efb1c5ec817641da41c6c7dd88d3baaf2a89ded2191a7",
+    "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+    "branch": "",
+    "branch_interpretation": "detached; symbolic-ref exit1/empty output",
+    "owned": 130,
+    "authority": 77,
+    "configuration": 1,
+    "all_current_fingerprints_match": true,
+    "index_status_match": true,
+    "final_readback_at": "2026-10-04T19:18:00.374683+00:00"
+  },
+  "children": [
+    {
+      "identity": "/root/s6_supervisor_fix_xy_1/fix_xy_final_manager_3/reviewer_3",
+      "tool": "collaboration.spawn_agent",
+      "agent_type": "clean-room-reviewer",
+      "task_name": "reviewer_3",
+      "fork_turns": "none",
+      "model_override": null,
+      "effort_override": null,
+      "root_settings_inherited": true,
+      "conversation_inherited": false,
+      "original_authority_neutral_paths_hashes_logistics_only": true,
+      "manager_assessment_messages": 0,
+      "read_only": true,
+      "inline_report_only": true,
+      "writes_reported": 0,
+      "descendants_reported": 0,
+      "native_terminal_observed": true,
+      "native_terminal_kind": "FINAL_ANSWER",
+      "native_subtree_status": "completed",
+      "child_declared_finished_at": "2026-10-04 19:02:43 UTC",
+      "terminal_observation_verified_before_report_write": true,
+      "result": "REVIEW_COMPLETE clean",
+      "raw_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-reviewer-3.raw.md",
+      "raw_sha256": "8d5b30ee5336864717ade91eba5b50170161fe0b7dc9a7b7ed2a59a51cdec92e",
+      "raw_bytes": 11377,
+      "raw_verbatim": true,
+      "closure": "close_agent unavailable; actual terminal completed, no pending actions",
+      "spawn_clock_metadata": "not independently exposed; no timestamp invented"
+    }
+  ],
+  "assessment_after_native_child_terminal": true,
+  "result": "REVIEW_COMPLETE",
+  "review_result": "clean",
+  "material_findings": [],
+  "repair_packet": null,
+  "owner_ruling_packet": null,
+  "all_five_lenses_covered": true,
+  "first_materially_clean_pass_stop": true,
+  "additional_confirmation_passes": 0,
+  "suite_reruns": 0,
+  "runtime_effects": 0,
+  "runtime_required_later": true,
+  "runtime_readiness_granted": false,
+  "owner_acceptance_granted": false,
+  "git_authority_granted": false,
+  "owned_writes": [
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-reviewer-3.raw.md",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-manager-3.md",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-manager-3-lifecycle.json"
+  ],
+  "neutral_accounting": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-neutral-change-accounting-v2.json",
+    "sha256": "1a41d2fd7f500f805c5903438a4a3956c01160906c919f74ba55e167e962bdda",
+    "entries_full_field_preserved": 14,
+    "manager_additional_procedural_entries": [
+      {
+        "id": "FIX-XY-FINAL-MANAGER3-D15",
+        "original_criterion": "Read complete required dependency metadata without dumping baseline/package inventories; preserve bounded useful output.",
+        "actual_change": "Several early metadata-inspection snippets printed nested inventories/path sets, producing truncated tool output. Later inspections used targeted source chunks, selected fields and exact programmatic all-record comparisons.",
+        "reason_authority": "Manager read-only inspection/output-scoping oversight; executable assignment explicitly prohibits inventory dumping.",
+        "files": [],
+        "effect": "Transient oversized tool output only; no candidate/source/profile or evidence mutation. Required local source reads and full current fingerprint/discovery/import/V8 comparisons were separately completed.",
+        "checks": "All130/77/1 final fingerprints; all3808 support equality; exact55 raw names;82 executed modules;11 Node source paths; all original recovery payloads and required local/direct support reads.",
+        "risk": "The noisy/truncated outputs do not establish exhaustive source coverage by themselves; only completed targeted reads and exact successful comparison results support this report.",
+        "downstream_consumer": "Supervisor procedural accounting; no remaining source gate or runtime requirement is waived.",
+        "manager_proposed_classification": "downstream_impact",
+        "manager_disposition": "Advisory; high confidence in read-only effects and final comparisons. No concrete candidate impact or unresolved required read is established."
+      },
+      {
+        "id": "FIX-XY-FINAL-MANAGER3-D16",
+        "original_criterion": "Read-only comparison helpers must use actual source schemas and valid paths.",
+        "actual_change": "One in-memory helper initially used a tuple load return as a dict; one narrow zsh glob search had no matches; one index comparison initially compared absent record with empty new-version index. Each was corrected through actual API/schema or explicit paths and exact existing/full-index checks. Final report prewrite readback initially expected null for detached identity, whose exact schema uses empty string; actual symbolic-ref exit1/empty output and identity empty string were then matched.",
+        "reason_authority": "Routine read-only inspection errors, corrected without rerunning effectful suites or touching candidate state.",
+        "files": [],
+        "effect": "Failed/overstrict transient inspection output, followed by successful comparisons; no writes or runtime effects.",
+        "checks": "Actual load signature read; all four unions/preparation payloads validated; six authorized differences; existing index/flags and exact full index/status bytes match.",
+        "risk": "Initial error output is not successful verification; the corrected successful readbacks are the evidence.",
+        "downstream_consumer": "Supervisor procedural accounting and current review provenance.",
+        "manager_proposed_classification": "downstream_impact",
+        "manager_disposition": "Advisory; high confidence in corrected current readback, no realistic candidate impact established."
+      }
+    ],
+    "classification_owner": "Commit Supervisor; manager classifications are proposals"
+  },
+  "tools_queried_agents_scope": "only /root/s6_supervisor_fix_xy_1/fix_xy_final_manager_3 subtree",
+  "closure_capability": "close_agent unavailable",
+  "intended_terminal": "intentional native REVIEW_COMPLETE clean return then END; parent observes actual manager terminal",
+  "at": "2026-10-04T19:18:00.374683+00:00",
+  "report_sha256": "051d948ed72f3fd5aa3c558cc3dab44c6cdbbb5a83577f16648e08115f442d0c"
+}

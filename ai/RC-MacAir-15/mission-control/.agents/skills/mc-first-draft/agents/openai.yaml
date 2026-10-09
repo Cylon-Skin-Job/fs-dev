@@ -1,0 +1,4 @@
+interface:
+  display_name: "MC First Draft"
+  short_description: "Shape candidate slices and surface decision gaps"
+  default_prompt: "Use $mc-first-draft to shape this prepared packet into a provisional skeleton with vertical slices, smoke scenarios and open questions."

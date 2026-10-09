@@ -1,0 +1,12 @@
+{
+  "message": "page.waitForFunction: Timeout 30000ms exceeded.",
+  "body": "",
+  "launchErrors": [
+    "[WS] workspace_bootstrap_failed",
+    "[WS] handler_error",
+    "[SharedStyles] Failed to load workspace styles: Error: Panel \"__settings__\" is not filesystem-backed\n    at Proxy.R (fusion-shell://app/assets/index-CrMsOite.js:124:82063)\n    at l (fusion-shell://app/assets/index-CrMsOite.js:124:76176)\n    at window.WebSocket.xe (fusion-shell://app/assets/index-CrMsOite.js:124:76406)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "html": "\n    <div id=\"root\"></div>\n  \n\n",
+  "errors": []
+}

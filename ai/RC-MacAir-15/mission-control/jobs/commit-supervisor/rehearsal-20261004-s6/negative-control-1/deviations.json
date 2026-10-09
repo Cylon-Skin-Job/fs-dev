@@ -1,0 +1,136 @@
+{
+  "at": "2026-10-04T19:57:04.303643+00:00",
+  "actor": "/root/s6_supervisor_refusal_1",
+  "entries": [
+    {
+      "id": "NC-D1",
+      "original_criterion": "Load installed named role/CWD/effective settings before writes",
+      "actual_change": "Supported default fallback, exact SKILL/TOML explicit loading",
+      "reason_authority": "Executable assignment and portability contract",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/activation.json"
+      ],
+      "observable_effect": "Bounded actor identity/settings acknowledged",
+      "checks": "Actual CWD/roots; current SKILL/profile hashes; host permissions",
+      "risk": "Native named-loader/concrete settings unexposed",
+      "downstream_consumer": "Root lifecycle/S6 acceptance",
+      "classification": "accepted"
+    },
+    {
+      "id": "NC-D2",
+      "original_criterion": "Every Git read uses GIT_OPTIONAL_LOCKS=0",
+      "actual_change": "First root-only rev-parse omitted flag; all subsequent Git reads disable optional locks",
+      "reason_authority": "Procedural oversight, no retroactive correction",
+      "files": [],
+      "observable_effect": "No observed source index/ref drift",
+      "checks": "Source physical index matches frozen f37b... and before/after exact",
+      "risk": "Cannot reconstruct a pre-first-read physical snapshot",
+      "downstream_consumer": "Procedural accounting",
+      "classification": "accepted"
+    },
+    {
+      "id": "NC-D3",
+      "original_criterion": "Required source content/evidence read completely",
+      "actual_change": "Some grouped outputs/inventories exceeded display budgets; required contract/source portions reread or identity JSON traversed in memory",
+      "reason_authority": "Bounded read-only output correction",
+      "files": [],
+      "observable_effect": "No source writes; full current authority readset retained",
+      "checks": "Read coverage; whole JSON fingerprint comparisons",
+      "risk": "Native lifecycle payload display was large; not retrospective correctness certification",
+      "downstream_consumer": "Root read coverage",
+      "classification": "accepted"
+    },
+    {
+      "id": "NC-D4",
+      "original_criterion": "Actual syntax diagnostic must fail on faulted current controller",
+      "actual_change": "Default Node25 file check exit0; explicit module stdin check same exact hash exit1",
+      "reason_authority": "Module file semantics and root explicitly authorized same-byte diagnostic correction",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/fault-node-check.command.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/fault-module-check.command.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/node-selection.json"
+      ],
+      "observable_effect": "Initial false-success evidence retained, actual injected fault parsed as SyntaxError",
+      "checks": "Exact argv/CWD/executable/version/input hash/stdout/stderr/exit",
+      "risk": "Default file invocation cannot certify syntax; no broad Node causation claim",
+      "downstream_consumer": "S6 actual negative diagnostic/current readiness",
+      "classification": "accepted"
+    },
+    {
+      "id": "NC-D5",
+      "original_criterion": "Observer inspection completes without overwriting records",
+      "actual_change": "First helper assertion failed after default diagnostic; unique observer-v2 resumes with new raw prefix",
+      "reason_authority": "Preserve failed receipt/history; no candidate writes",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/observer.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/observer-v2.py"
+      ],
+      "observable_effect": "Completed four controls after correction",
+      "checks": "inspection.json; immutable initial command receipts",
+      "risk": "Helper failure not gate success",
+      "downstream_consumer": "Root evidence",
+      "classification": "accepted"
+    },
+    {
+      "id": "NC-D6",
+      "original_criterion": "Use exact first Wiki recovery folder",
+      "actual_change": "Two guessed names absent; exact first-wiki-1 then inspected",
+      "reason_authority": "Read-only locator correction",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/first-wiki-recovery-readback.json"
+      ],
+      "observable_effect": "129 union/117 payloads independently validated",
+      "checks": "Exact manifest36c99...; both full versions",
+      "risk": "Earlier absent guesses remain preserved",
+      "downstream_consumer": "Recovery/S6",
+      "classification": "accepted"
+    },
+    {
+      "id": "NC-D7",
+      "original_criterion": "Protection raw bytes and identity claims distinguished",
+      "actual_change": "Two live protected DB hashes/sizes/mtimes changed; exact identities preserved",
+      "reason_authority": "Already-running normal/Alpha processes; observer performed no DB/profile/app effects",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/protection-comparison.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/zero-observer-mutation-proof.json"
+      ],
+      "observable_effect": "No claim of protected DB byte equality; before/after values retained",
+      "checks": "Dev/inode/existence/kind/mode equal; all8 sampled process identities equal; private461 bytes equal",
+      "risk": "Cannot infer protected live DB content preservation from stat identity",
+      "downstream_consumer": "Root protection assessment",
+      "classification": "downstream_impact"
+    },
+    {
+      "id": "NC-D8",
+      "original_criterion": "Keep whole source status raw and own record exclusions explicit",
+      "actual_change": "Source status adds authorized observer N and root E records",
+      "reason_authority": "Disjoint assignment ownership",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/before-source-status.stdout",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/after-source-status.stdout"
+      ],
+      "observable_effect": "NUL-safe raw state retained, exact outside E/J status/11977 source leaves equal",
+      "checks": "zero-observer-mutation-proof",
+      "risk": "Whole source status raw bytes legitimately differ; cannot label global status exact",
+      "downstream_consumer": "Root concurrent record accounting",
+      "classification": "accepted"
+    },
+    {
+      "id": "NC-D9",
+      "original_criterion": "Actual previous writers terminal and no schedule",
+      "actual_change": "Native current subtree observed completed; retired prior leaf terminals retained by predecessor lifecycle",
+      "reason_authority": "Assignment prior terminal transfer and independent native list",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/lifecycle-fix-xy.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/lifecycle.json"
+      ],
+      "observable_effect": "No conflicting current writer or matching schedule",
+      "checks": "Native list returns seven completed; predecessor records four retired actors complete; all5 automations paused",
+      "risk": "Native listing no longer exposes every retired historical child; no invented direct observation of removed entries",
+      "downstream_consumer": "Root actor ledger/S6",
+      "classification": "accepted"
+    }
+  ],
+  "candidate_repairs_performed": [],
+  "no_owner_ruling_required": true
+}

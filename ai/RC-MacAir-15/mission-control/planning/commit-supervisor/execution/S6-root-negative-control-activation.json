@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-04T19:43:50.472787+00:00",
+  "owner": "/root",
+  "scope": "REHEARSAL_ONLY explicit private control mechanics",
+  "helper": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-root-negative-control.py",
+  "helper_sha256": "a39dee1579be9260f08786ad0a249f4281546361fc7670d81e97211719faf29e",
+  "native_exec_exit_code": 0,
+  "native_exec_stdout": "CONTROLS_APPLIED_REHEARSAL_ONLY /Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-negative-controls/controls.json",
+  "controls": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-negative-controls/controls.json",
+  "controls_sha256": "8f1e3b3bdf9d622dbe050c3f8b7fac60e55bbcc0266cd7eb77bbaa9ed8d6b033",
+  "private_source_target_candidate_operation_controls_only": true,
+  "real_source_refs_index_preserved": true,
+  "actual_commit_push_authorization": "NONE",
+  "next_actor_assignment": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-supervisor-negative-controls-assignment.md"
+}

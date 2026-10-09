@@ -1,0 +1,548 @@
+{
+  "owner": "/root/s6_builder-preparation",
+  "source_repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "conflicting_writers": [],
+  "target_ref": "HEAD",
+  "source_refs": [
+    {
+      "repo": "/Users/rccurtrightjr./projects/fs-dev",
+      "ref": "HEAD"
+    }
+  ],
+  "authority_paths": [
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/authority.md",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-private-paths.json"
+  ],
+  "preparation": "independent no-hardlinks existing-ref clone; only accepted five restart files and explicit fixture inputs replayed",
+  "ignored_runtime_paths": [
+    "ai/MC-S6/System/config/README.md",
+    "ai/MC-S6/System/config/cli.json",
+    "ai/MC-S6/System/state/README.md",
+    "ai/MC-S6/System/state/state.json",
+    "ai/MC-S6/System/styles/README.md",
+    "ai/MC-S6/System/styles/capture-viewer.css",
+    "ai/MC-S6/System/styles/components.css",
+    "ai/MC-S6/System/styles/file-viewer.css",
+    "ai/MC-S6/System/styles/office-viewer.css",
+    "ai/MC-S6/System/styles/themes.css",
+    "ai/MC-S6/System/styles/themes.json",
+    "ai/MC-S6/System/styles/tints.css",
+    "ai/MC-S6/System/styles/variables.css",
+    "ai/MC-S6/System/styles/views.css",
+    "ai/MC-S6/System/triggers/README.md"
+  ],
+  "paths": [
+    {
+      "path": "HANDOFF.md",
+      "job_created": true
+    },
+    {
+      "path": "README.md",
+      "job_created": false
+    },
+    {
+      "path": "ai/MC-S6/System/config/README.md",
+      "job_created": false
+    },
+    {
+      "path": "ai/MC-S6/System/config/cli.json",
+      "job_created": false
+    },
+    {
+      "path": "ai/MC-S6/System/state/README.md",
+      "job_created": false
+    },
+    {
+      "path": "ai/MC-S6/System/state/state.json",
+      "job_created": false
+    },
+    {
+      "path": "ai/MC-S6/System/styles/README.md",
+      "job_created": false
+    },
+    {
+      "path": "ai/MC-S6/System/styles/capture-viewer.css",
+      "job_created": false
+    },
+    {
+      "path": "ai/MC-S6/System/styles/components.css",
+      "job_created": false
+    },
+    {
+      "path": "ai/MC-S6/System/styles/file-viewer.css",
+      "job_created": false
+    },
+    {
+      "path": "ai/MC-S6/System/styles/office-viewer.css",
+      "job_created": false
+    },
+    {
+      "path": "ai/MC-S6/System/styles/themes.css",
+      "job_created": false
+    },
+    {
+      "path": "ai/MC-S6/System/styles/themes.json",
+      "job_created": false
+    },
+    {
+      "path": "ai/MC-S6/System/styles/tints.css",
+      "job_created": false
+    },
+    {
+      "path": "ai/MC-S6/System/styles/variables.css",
+      "job_created": false
+    },
+    {
+      "path": "ai/MC-S6/System/styles/views.css",
+      "job_created": false
+    },
+    {
+      "path": "ai/MC-S6/System/triggers/README.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-inputs/checkpoint.bin",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-inputs/executable.sh",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-inputs/future-addition.txt",
+      "job_created": true
+    },
+    {
+      "path": "rehearsal-inputs/link",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-inputs/odd '\" $ ;\t\n -- path.bin",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-inputs/staged.txt",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Agents/registry.json",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Captures/README.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Data/Workspace-db/workspace.db",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/closed/RCC-0080.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/closed/RCC-0081.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/closed/RCC-0082.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/closed/RCC-0083.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/closed/RCC-0084.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/closed/RCC-0085.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/closed/RCC-0086.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/content/sync.json",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/content/tickets.json",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0071.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0072.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0073.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0074.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0076.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0077.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0078.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0079.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0087.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0088.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0089.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0090.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0091.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0092.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0093.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0094.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0095.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0096.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0097.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Issues/scripts/create-ticket.js",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/001-capture-viewer/content.json",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/001-capture-viewer/manifest.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/001-capture-viewer/onboarding/README.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/001-capture-viewer/state/state.json",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/001-capture-viewer/styles/icon.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/001-capture-viewer/styles/layout.css",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/001-capture-viewer/styles/layout.json",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/002-file-viewer/content.json",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/002-file-viewer/manifest.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/002-file-viewer/onboarding/README.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/002-file-viewer/state/state.json",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/002-file-viewer/styles/icon.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/002-file-viewer/styles/layout.css",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/002-file-viewer/styles/layout.json",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/content.json",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/manifest.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/onboarding/README.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/state/state.json",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/styles/icon.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/styles/layout.css",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/styles/layout.json",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/styles/themes.css",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/004-issues-viewer/content.json",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/004-issues-viewer/manifest.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/004-issues-viewer/onboarding/README.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/004-issues-viewer/state/state.json",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/004-issues-viewer/styles/icon.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/004-issues-viewer/styles/layout.css",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/004-issues-viewer/styles/layout.json",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/005-agents-viewer/content.json",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/005-agents-viewer/manifest.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/005-agents-viewer/onboarding/README.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/005-agents-viewer/state/state.json",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/005-agents-viewer/styles/icon.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/005-agents-viewer/styles/layout.css",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/005-agents-viewer/styles/layout.json",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/content.json",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/manifest.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/onboarding/README.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/state/state.json",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/styles/icon.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/styles/layout.css",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/config/README.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/config/cli.json",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/state/README.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/state/state.json",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/styles/README.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/styles/capture-viewer.css",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/styles/components.css",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/styles/file-viewer.css",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/styles/office-viewer.css",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/styles/themes.css",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/styles/themes.json",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/styles/tints.css",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/styles/variables.css",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/styles/views.css",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/System/triggers/README.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/002-Navigation_Guide/PAGE.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Wiki/PAGE.md",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/watcher-proof-current.md",
+      "job_created": true
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/watcher-proof.md",
+      "job_created": false
+    },
+    {
+      "path": "restart-fusion.sh",
+      "job_created": false
+    },
+    {
+      "path": "scripts/fusion-restart-probe.mjs",
+      "job_created": false
+    },
+    {
+      "path": "scripts/fusion-restart-processes.mjs",
+      "job_created": false
+    },
+    {
+      "path": "scripts/fusion-restart-target.mjs",
+      "job_created": false
+    },
+    {
+      "path": "scripts/fusion-restart.mjs",
+      "job_created": false
+    },
+    {
+      "path": "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-054847.md",
+      "job_created": true
+    }
+  ],
+  "runtime": {
+    "profile": "/private/tmp/mc-s6-commit-supervisor-20261004/profile",
+    "recovery": "private disposable only; DB/cache effects excluded; retain evidence and abandon profile"
+  }
+}

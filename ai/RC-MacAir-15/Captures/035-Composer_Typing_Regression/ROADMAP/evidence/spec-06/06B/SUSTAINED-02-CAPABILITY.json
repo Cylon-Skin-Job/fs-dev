@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-09-25T07:02:04.906923+00:00",
+  "method": "read-only /usr/sbin/ioreg -n Root -d1; retain only IOConsoleLocked",
+  "IOConsoleLocked": "Yes",
+  "runId": "chat-arch-1790319550767-95b2a4448b",
+  "measurementStarted": false,
+  "ownedRootExists": false,
+  "exactTokenProcesses": [],
+  "action": "none; no unlock/settings or other-window inspection",
+  "causalLimit": "current locked capability blocks focus acquisition; older hide/blur cause remains unproven"
+}

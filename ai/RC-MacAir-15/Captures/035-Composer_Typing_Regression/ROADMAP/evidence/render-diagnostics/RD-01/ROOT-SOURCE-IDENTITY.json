@@ -1,0 +1,25 @@
+{
+  "sourceFiles": 1972,
+  "sourceManifestSHA256": "7e1346c29c77f1e005e080bb51c9b25acaf9a33dcf0ccb0df803a0e6524d92f2",
+  "changedPaths": [
+    "fusion-studio-client/e2e/support/working-activity-working-cases.ts",
+    "fusion-studio-client/e2e/visible-wait.spec.ts",
+    "fusion-studio-client/src/components/LiveSegmentRenderer.tsx",
+    "fusion-studio-client/src/components/MessageList.tsx",
+    "fusion-studio-client/src/components/chat/ConnectedChatHistory.tsx",
+    "fusion-studio-client/src/components/chat/VisibleWaitActivity.tsx",
+    "fusion-studio-client/src/components/chat/WorkingActivity.tsx",
+    "fusion-studio-client/src/lib/reveal/orchestrator.ts",
+    "fusion-studio-client/src/lib/reveal/progress.ts",
+    "fusion-studio-client/src/lib/reveal/types.ts",
+    "fusion-studio-client/src/lib/text/text-animate.ts",
+    "fusion-studio-client/src/lib/tool-animate.ts"
+  ],
+  "buildFiles": 200,
+  "buildManifestSHA256": "0fd3637f154e116f1ba4a37b31853fbbe1c49746e0f379a3ea1a711885b92b49",
+  "nativeEntries": 9,
+  "nativeMismatch": [],
+  "predecessorCopies": 10,
+  "predecessorMismatch": [],
+  "rootChecks": "77 PASS40.4s; buildPASS8.81s; edits precede both log birthtimes"
+}

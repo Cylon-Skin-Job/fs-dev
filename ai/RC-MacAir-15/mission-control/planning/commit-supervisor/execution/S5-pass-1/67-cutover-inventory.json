@@ -1,0 +1,103 @@
+{
+  "observed_utc": "2026-10-04 10:58:05 UTC",
+  "role": "Codex side chat (ephemeral)",
+  "scope": "S5 setup cutover; no operational role selected",
+  "native_listing": "thread-inventory.json",
+  "bounded_current_reads": "bounded-thread-readbacks.json",
+  "read_summaries": [
+    {
+      "thread": "01a0cc30-3d70-78d2-9abd-1e80f7f758e7",
+      "title": "🚀 Mission Control",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev",
+      "status": {
+        "type": "idle"
+      },
+      "turns": [
+        {
+          "id": "01a105be-e738-7232-adb2-12dffd718444",
+          "status": "completed",
+          "finals": [
+            "Created the [Commit Supervisor SPEC](/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/SPEC.md).\n\nSix ordered slices cover recovery, review/repair, Wiki updates, runtime verification, role migration and end-to-end rehearsal. Clean-room repair loops apply at worker handoffs, Wiki audit and final candidate review.\n\nIndependent handoff, stage and release reviews passed with no material findings. **Ready to assign for implementation.** The resulting workflow ends with a reviewed, running candidate awaiting your commit decision."
+          ]
+        },
+        {
+          "id": "01a105b3-0bc4-7343-b85d-8046ae2f2782",
+          "status": "completed",
+          "finals": [
+            "Incorporated the Wiki handoff into [Review and Merge’s design](/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md) and the successor handoff.\n\nThe design now identifies:\n\n- **Wiki Update:** manually invoked Supervisor → Research → Repair → independent Audit.\n- **Sync Wiki Context:** the narrower Wiki Guide refresh procedure.\n- **Proposed freshness detection:** a read-only source-hash scan that identifies review candidates without declaring articles stale or advancing their factual-review baseline.\n- **Review integrity:** final source/article hashes must match the clean audit; article edit timestamps are not verification dates.\n\nThe script relocation and freshness scan remain proposed work. No Wiki run or automation was started.\n\nWorking-memory validation and whitespace checks passed."
+          ]
+        }
+      ]
+    },
+    {
+      "thread": "01a0fa4d-c613-7081-b26c-730a20cea165",
+      "title": "Explore nightly Mission Control view",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "status": {
+        "type": "idle"
+      },
+      "turns": [
+        {
+          "id": "01a0facb-5ae8-7971-bce9-3ae5273302fa",
+          "status": "completed",
+          "finals": [
+            "Right—that makes the persona part of the thread’s identity. If it’s loaded into the system message at the start of the chat, the thread’s name and icon can represent that persona consistently. Persona buttons can start the right kind of chat, and the selected persona’s front matter supplies its name and icon."
+          ]
+        },
+        {
+          "id": "01a0faca-9e9e-7a62-86e1-499c236a8910",
+          "status": "completed",
+          "finals": [
+            "That makes the thread itself the lightweight process definition: a normal chat thread, with optional automation, a chosen folder, and a pin. A small automation marker tells you it has scheduled runs; a user-chosen icon and name make pinned processes easy to recognize. Overriding the default tab lets a thread open directly into its policy or automation controls when that’s the most useful starting point.\n\nThe persona buttons fit as another layer of thread metadata. A user can choose a prompt/persona from the chat, and its front matter can supply the matching icon and persona details. I’d keep the **thread’s icon** distinct from the **currently selected persona** when a thread can use several personas, so the process stays recognizable even as its active prompt changes.\n\nIt’s a nice “ordinary thread with useful affordances” direction: pin the processes you care about, see which ones run automatically, and give each one the controls and identity that fit its job."
+          ]
+        }
+      ]
+    },
+    {
+      "thread": "01a0e659-1933-7c30-b7ff-50476ea94d17",
+      "title": "Provision Launchpad folders",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "status": {
+        "type": "notLoaded"
+      },
+      "turns": [
+        {
+          "id": "01a0ec67-317a-7232-9e0f-8c91b17984e3",
+          "status": "completed",
+          "finals": [
+            "Start in [Plugin foundation](</Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/plugin-foundation/TICKET.md>). It owns the **trigger-versus-plugin classification** and the **permission vocabulary**, including whether database read and write should be separate grants.\n\nThe current [plugin vision](</Users/rccurtrightjr./projects/plug-ins/ai/RC-MacAir-15/Captures/001-Plugin_System/VISION.md>) treats repo-file triggers as unprivileged and direct database access as plugin-gated, but it describes a broad `db` scope. Your read/write distinction is a choice to work through there.\n\n[Governed events and ledger](</Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/governed-events-and-ledger/TICKET.md>) should receive the resulting rules for event-driven triggers and subscriptions. We can decide later whether the detailed trigger runtime needs its own folder. Tell me your boundary ideas, and I’ll help sort the decisions and open questions into the right records."
+          ]
+        },
+        {
+          "id": "01a0e6a6-15b6-7b80-b1d4-b02f26220a6a",
+          "status": "completed",
+          "finals": [
+            "Provisioned four new Launchpad folders:\n\n- [CHAT-AR integration and retirement](</Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/TICKET.md>)\n- [Plugin foundation](</Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/plugin-foundation/TICKET.md>)\n- [Governed events and ledger](</Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/governed-events-and-ledger/TICKET.md>)\n- [Plugin views and provisioning](</Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/plugin-views-and-provisioning/TICKET.md>)\n\nI narrowed the existing [health folder](</Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/fusion-health-and-governed-observability/TICKET.md>) to dogfood observations, rendering measurements, and logger planning. The [registry](</Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md>) now links all five homes.\n\nAll five folder indexes and the Mission Control index validate; the local link check found no broken paths. These are local, uncommitted memory folders. No sessions or builds were started. The plugin path, first proving plugin, and chat verification scope remain open for you to settle in their folders."
+          ]
+        }
+      ]
+    }
+  ],
+  "jobs": [],
+  "jobs_path": "C/jobs absent",
+  "central_registered_controller": "none; registry inspected",
+  "active_legacy_callers": [
+    "AGENTS.md",
+    "session-contract.md",
+    ".agents/skills/mission-control/SKILL.md",
+    ".agents/skills/monitor/SKILL.md",
+    ".agents/skills/status/references/report-format.md",
+    ".agents/skills/mc-roadmap-implementation-supervisor/SKILL.md",
+    "mission-control.md",
+    "deployment.md",
+    "registry.md",
+    "todo.md",
+    "handoff.md"
+  ],
+  "matching_automation_tomls": [],
+  "cycle_records": [],
+  "prior_awaiting_legacy_handoff": false,
+  "safe_cutover": "No legacy integration writer/job/intentional wait or awaiting handoff identified in bounded current sources. Existing planning and design historical outcomes preserved; no IDs/locations renamed.",
+  "limits": "Native list bounded to 50 recent plus all pinned; supported native reads of pertinent tasks and durable registry/jobs/schedules corroborate no assigned legacy job. Reads do not authorize messages or takeover.",
+  "alias_mapping": "Review and Merge / mc-review-and-merge historical -> Commit Supervisor / mc-commit-supervisor active; old bytes preserved under S5/preimages; any subsequently found old job retains ID/location/pinned procedure/intentional wait."
+}

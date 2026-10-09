@@ -1,0 +1,131 @@
+---
+name: clean-room-loop
+description: "Recheck ordinary work completed in the primary chat from first principles with a default autonomous budget of three materiality-aware independent reviewer passes and explicit owner-authorized extensions. Use only when the user invokes /clean-room-loop or $clean-room-loop after an agreement, minor code/configuration edit, document change, evaluation, or similar completed task. Do not use as the adaptive review policy for automated roadmap- or SPEC-driven implementation."
+---
+
+# Clean Room Loop
+
+Apply this user-invoked skill to the work just completed in the current primary conversation. Keep the independent gate, but optimize for material correctness rather than exhaustive polish.
+
+The default autonomous review budget is three completed reviewer passes. This is a pause-and-ask safeguard, not a limit on the invoking owner's authority. Do not exceed the current authorized budget without an explicit owner instruction. If the owner says `continue`, supplies an additional pass count, or gives a terminal condition such as `loop until clean`, extend the current loop accordingly without requiring a materially new goal. Do not create a roadmap, author or rewrite SPECs, or take over an automated implementation chain. If review exposes missing product intent or a larger design dependency, report the exact blocker and recommend the appropriate planning or implementation workflow instead of absorbing it into this loop.
+
+## Reviewer Runtime
+
+Use one fresh read-only reviewer thread per pass. Every reviewer inherits the model and reasoning effort selected for the invoking root thread; do not pin or substitute a different model at any depth.
+
+Use `fork_turns = "none"` or the surface equivalent so the reviewer receives only the bounded raw packet, not the parent conversation or prior review history. Record each reviewer thread identity and its persisted model/effort when available. A missing model field is reportable evidence, not a reason to create a second model ladder.
+
+The primary agent owns reviewer lifecycle. After capturing each terminal reviewer result, attempt `close_agent` when that capability is available. Before every spawn, reconcile the reviewer ledger and confirm each prior reviewer is terminal or otherwise non-conflicting. Closure is best-effort resource hygiene, not a review prerequisite. If `close_agent` is unavailable or fails, record `closure: unavailable` or the exact error and continue when the runtime accepts the next spawn. Block only on an active conflicting reviewer, an actual spawn rejection or capacity limit, or another substantive review gate.
+
+If a reviewer must be abandoned while active, interrupt it, wait for or confirm a terminal status, capture any usable result, and attempt closure when available. Never close another owner's agent.
+
+A pass counts against the review budget when a fresh reviewer returns a usable terminal review report. An interrupted, rejected, or failed reviewer that returns no usable review does not count as a completed pass, but it remains part of the lifecycle ledger. Do not retry reviewer setup indefinitely: repeated spawn/runtime failures are a substantive unavailable gate.
+
+## Materiality Standard
+
+A finding blocks `CLEAN` only when it has evidence for all four items:
+
+1. the exact violated goal, acceptance criterion, authority, or required handoff contract;
+2. the concrete affected artifact or execution path;
+3. a plausible observable impact, such as wrong behavior, regression, data loss, security exposure, invalid output, failed required validation, or a materially unsupported acceptance claim; and
+4. direct source, diff, test, runtime, rendering, or reproducible evidence.
+
+Treat these as non-blocking advisories unless an explicit authority makes them required:
+
+- style, wording polish, naming taste, alternate designs, or speculative future-proofing;
+- theoretical malformed-input behavior outside the stated contract or trusted boundary without evidence of a realistic path;
+- future-scope work, generalized hardening, or unrelated pre-existing defects;
+- requests for more tests when existing evidence directly proves the behavior and no concrete gap is identified;
+- documentation completeness that does not change meaning, traceability required by an explicit format, or the acceptance decision; and
+- unchanged, previously accepted code outside the direct dependency surface.
+
+Reviewers may include advisories in a `CLEAN` report. Do not repair an advisory merely to satisfy reviewer preference.
+
+## Review Budget, Owner Extensions, And Anti-Spiral Rule
+
+Start with an autonomous budget of at most three completed fresh reviewer passes. Corrections do not reset the current budget. Stop immediately after the first materially clean pass unless the owner explicitly requested a fixed number of completed passes regardless of an earlier clean result.
+
+When the current budget ends with unresolved material findings, pause and report the exact state. Ask for direction only if the owner's instruction did not already authorize an extension. Interpret explicit owner extensions as follows:
+
+- `continue` or `run another loop`: authorize another batch of up to three completed passes;
+- `add N passes` or equivalent: add exactly N completed passes;
+- `loop until clean`: authorize additional fresh passes until the first materially clean result, subject to the anti-spiral and substantive-blocker stops below;
+- a materially new owner-approved goal or scope: start a new invocation with a new primary audit and default budget.
+
+Record the original budget, every owner extension, completed passes, and non-counting failed/interrupted reviewer attempts. Never infer an extension from silence, an old instruction, or the agent's desire to force a clean result.
+
+Stop without claiming `CLEAN`, even when an owner authorized `loop until clean`, when any of these occurs:
+
+- the current authorized budget is exhausted with a material finding unresolved and no extension is already authorized;
+- material findings oscillate between incompatible requirements and cannot be resolved from a cited authority; or
+- a substantive external dependency, owner decision, reviewer runtime failure, or capacity limit prevents the required next pass; or
+- further review would only broaden scope, add optional polish, or revalidate unchanged evidence.
+
+On a budget, blocker, or stagnation stop, report the exact unresolved material finding, review disagreement, or unavailable gate and return it to the owner or implementation path. Never weaken a criterion or relabel a material defect to force clean.
+
+Do not spend another pass solely because a reviewer repeats a rejected/advisory finding or omits the literal word `CLEAN`. After the primary agent validates that the report contains no material finding under this standard, count the pass as clean.
+
+## 1. Primary-Agent Audit
+
+Before spawning a reviewer:
+
+1. Reconstruct the agreed goal and exact acceptance criteria from the latest user instructions and applicable authorities.
+2. Identify the exact work product and classify it as product code/configuration, tests, document/report, evaluation/decision, or a mixed change.
+3. Inspect the artifact, diff, and only the immediate integration points that can materially affect the agreed result.
+4. Run the narrowest meaningful checks. Reuse still-valid evidence for unchanged artifacts.
+5. Record a concise audit seed: goal, scope envelope, authorities, artifacts, checks/results, known residual scope, and provisional material findings or clean assessment.
+
+Do not turn this audit into a new design review or widen the task to improve adjacent code.
+
+## 2. Reviewer Loop
+
+For each pass, spawn one fresh read-only reviewer and give it only:
+
+- the agreed task and acceptance criteria;
+- the bounded work-product paths or raw artifacts;
+- directly relevant authorities and integration points;
+- the checks it may run and raw evidence already available; and
+- the materiality standard above.
+
+Do not disclose your findings, suspected defects, preferred fix, prior reviewer conclusions, or expected verdict. Require one comprehensive sweep. Each blocking finding must include severity, violated criterion, exact evidence, observable impact, and reproduction path. Require `CLEAN` when no unresolved material finding remains, even if advisories exist.
+
+Validate the returned findings yourself:
+
+- Record the reviewer result and terminal disposition, then attempt closure when available before taking the next workflow action.
+- Repair valid material findings and rerun only affected checks.
+- Reject unsupported or advisory findings with concise evidence.
+- After a material correction, inspect again and send the exact revised work to a different fresh reviewer.
+- Stop immediately when the current work is materially clean.
+
+## Proportional Invalidation
+
+- Product code, runtime configuration, schema, or migration edits invalidate affected product evidence.
+- Assertion-, label-, or coverage-only test edits that do not alter fixtures, runtime setup, product execution, or the acceptance oracle invalidate only changed tests and claims unless they expose a product defect.
+- Test harness, fixture, setup, or oracle edits that change exercised behavior invalidate affected product evidence.
+- Documentation/report-only edits invalidate only the document and directly affected claims.
+- Evaluation or status changes invalidate only the decision analysis unless they imply a product change.
+- Unrelated concurrent changes remain outside review and are preserved.
+
+## Clean Result
+
+Treat the work as `CLEAN` only when:
+
+- the primary-agent audit finds no unresolved material in-scope issue;
+- the latest reviewer report contains no validated material finding on the current work product;
+- all required applicable checks pass; and
+- every reviewer thread spawned by this invocation has a recorded terminal disposition and any available closure result; and
+- no material in-scope change occurred afterward.
+
+If a required check or independent fresh-thread review is unavailable, identify the exact missing gate and do not claim clean. Missing `close_agent` alone is not a missing review gate and does not prevent `CLEAN`.
+
+## Closeout
+
+Report concisely:
+
+- default budget, owner-authorized extensions, completed reviewer pass count, and persisted model/effort when available;
+- reviewer terminal disposition, closure result when available, and any lifecycle degradation;
+- material findings and corrections;
+- rejected/advisory findings only when decision-relevant;
+- checks and exact results;
+- residual or future scope; and
+- final `CLEAN` status or exact unavailable/blocking gate.

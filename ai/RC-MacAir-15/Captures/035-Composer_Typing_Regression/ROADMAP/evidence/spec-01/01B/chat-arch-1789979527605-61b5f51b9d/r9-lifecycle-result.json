@@ -1,0 +1,227 @@
+{
+  "status": "passed",
+  "caseId": "R9-INDICATOR-DISTINCTION",
+  "authenticatedShell": true,
+  "fixtures": {
+    "f2": {
+      "id": "F2-DETERMINISTIC-HISTORY-V1",
+      "exchanges": 30,
+      "renderedMessages": 60,
+      "includes": [
+        "text",
+        "code",
+        "lists",
+        "tables",
+        "collapsed-tool-results",
+        "reply-metadata"
+      ],
+      "dense": {
+        "exchanges": 2,
+        "assistantPayloadBytes": 534528,
+        "sha256": "9b06d21b677d93e4479544db39cf56f86eb4d3cd25fb603740407f263e7420dc"
+      }
+    },
+    "f5": {
+      "frameIntervalMs": 50,
+      "textFrames": 20
+    }
+  },
+  "identity": {
+    "threadId": "2026-09-21T01-38-25-203",
+    "threadGroupId": "tg-2b2369cf-cfda-4cf1-b94d-906b5450e479"
+  },
+  "startupPanelRetry": 0,
+  "promptSha256": "cd1c0609dcfacded3b68e10673cf1f542e1a0216656856d8e7b2ba01e3e6bb7f",
+  "promptContentRecorded": false,
+  "sendAt": 410.69999980926514,
+  "transitions": {
+    "acceptance": {
+      "at": 471.59999990463257,
+      "composerDisabled": true,
+      "acceptanceWheel": 1,
+      "finalizingWheel": 0,
+      "stop": 0,
+      "send": 0,
+      "assistantActivity": 30
+    },
+    "activity": {
+      "at": 896.0999999046326,
+      "composerDisabled": false,
+      "acceptanceWheel": 0,
+      "finalizingWheel": 0,
+      "stop": 1,
+      "send": 0,
+      "assistantActivity": 31
+    },
+    "finalizing": {
+      "at": 1931.5999999046326,
+      "composerDisabled": true,
+      "acceptanceWheel": 0,
+      "finalizingWheel": 1,
+      "stop": 0,
+      "send": 0,
+      "assistantActivity": 31
+    },
+    "idle": {
+      "at": 5625.799999713898,
+      "composerDisabled": false,
+      "acceptanceWheel": 0,
+      "finalizingWheel": 0,
+      "stop": 0,
+      "send": 1,
+      "assistantActivity": 31
+    }
+  },
+  "received": [
+    {
+      "type": "message:sent",
+      "at": 874.1999998092651,
+      "turnIdPresent": false
+    },
+    {
+      "type": "turn_begin",
+      "at": 899.6999998092651,
+      "turnIdPresent": true
+    },
+    {
+      "type": "thinking",
+      "at": 911.3999996185303,
+      "turnIdPresent": true
+    },
+    {
+      "type": "tool_call",
+      "at": 915.5999999046326,
+      "turnIdPresent": true
+    },
+    {
+      "type": "status_update",
+      "at": 924.1999998092651,
+      "turnIdPresent": true
+    },
+    {
+      "type": "content",
+      "at": 924.1999998092651,
+      "turnIdPresent": true
+    },
+    {
+      "type": "content",
+      "at": 938.1999998092651,
+      "turnIdPresent": true
+    },
+    {
+      "type": "content",
+      "at": 990.7999997138977,
+      "turnIdPresent": true
+    },
+    {
+      "type": "content",
+      "at": 1041.1999998092651,
+      "turnIdPresent": true
+    },
+    {
+      "type": "content",
+      "at": 1093,
+      "turnIdPresent": true
+    },
+    {
+      "type": "content",
+      "at": 1146.5999999046326,
+      "turnIdPresent": true
+    },
+    {
+      "type": "content",
+      "at": 1197.6999998092651,
+      "turnIdPresent": true
+    },
+    {
+      "type": "content",
+      "at": 1250.1999998092651,
+      "turnIdPresent": true
+    },
+    {
+      "type": "content",
+      "at": 1302.5,
+      "turnIdPresent": true
+    },
+    {
+      "type": "content",
+      "at": 1353.0999999046326,
+      "turnIdPresent": true
+    },
+    {
+      "type": "content",
+      "at": 1405.3999996185303,
+      "turnIdPresent": true
+    },
+    {
+      "type": "content",
+      "at": 1457.6999998092651,
+      "turnIdPresent": true
+    },
+    {
+      "type": "content",
+      "at": 1510.0999999046326,
+      "turnIdPresent": true
+    },
+    {
+      "type": "content",
+      "at": 1562.3999996185303,
+      "turnIdPresent": true
+    },
+    {
+      "type": "content",
+      "at": 1614.0999999046326,
+      "turnIdPresent": true
+    },
+    {
+      "type": "content",
+      "at": 1665.5,
+      "turnIdPresent": true
+    },
+    {
+      "type": "content",
+      "at": 1718,
+      "turnIdPresent": true
+    },
+    {
+      "type": "content",
+      "at": 1768.7999997138977,
+      "turnIdPresent": true
+    },
+    {
+      "type": "content",
+      "at": 1821.6999998092651,
+      "turnIdPresent": true
+    },
+    {
+      "type": "content",
+      "at": 1874,
+      "turnIdPresent": true
+    },
+    {
+      "type": "turn_end",
+      "at": 1927.5,
+      "turnIdPresent": true
+    },
+    {
+      "type": "chat-turn:saved",
+      "at": 1937,
+      "turnIdPresent": true
+    }
+  ],
+  "blockedRenderer": {
+    "startedAt": 5734.799999713898,
+    "endedAt": 5809.799999713898,
+    "disabledBefore": false,
+    "disabledAfter": false
+  },
+  "requestIdentityAvailable": false,
+  "requestIdentityBoundary": "current prompt/message frames have no requestId; SPEC-02/02A owns that future contract",
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": null
+}

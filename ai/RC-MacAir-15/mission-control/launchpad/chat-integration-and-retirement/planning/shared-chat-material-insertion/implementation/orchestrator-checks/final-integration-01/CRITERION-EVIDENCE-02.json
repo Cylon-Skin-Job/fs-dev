@@ -1,0 +1,1019 @@
+{
+  "at": "2026-10-07T23:47:14.644146+00:00",
+  "workId": "CHAT-MATERIAL-SPEC-01",
+  "source_seal_sha256": "35cda972a106468eaa279c60da9ef51fc04ec23333f03de4226269b84e14ad07",
+  "renderer_receipt_sha256": "ae151f3a27d2cd372b392981618b1f2da9b44956387c5acecfb5477e5f91d165",
+  "renderer_log_sha256": "1487d41fc6151ab3346645d0cc2823964ee98eb872aa9c8bb7d8b6f6cdbe8834",
+  "acceptance": {
+    "A01": {
+      "state": "verified_technical_completion",
+      "scenario": "Global resource, Main last activated; Side still tab-selected",
+      "criterion": "Main only receives source attachment; persistent Side selection cannot override actual Main activity",
+      "exact_current_renderer_cases": [
+        {
+          "line": 39,
+          "case": "\u2713   26 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:30:1 \u203a A01/A02/A04 pointer Main and Side activity wins over persistent row/tab and source panel focus (1.2s)"
+        }
+      ],
+      "renderer_receipt": "renderer-02.json",
+      "scope": "Actual production callers/consumer/stores under controlled source/transport delays; native normalcapture/save/ACK complements selectedcriteria, noteveryadversary.",
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "A02": {
+      "state": "verified_technical_completion",
+      "scenario": "Global resource/header camera, Side last activated; Main row selected",
+      "criterion": "Side only receives material; no Main/Legacy fallback, including adapterless Side host",
+      "exact_current_renderer_cases": [
+        {
+          "line": 39,
+          "case": "\u2713   26 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:30:1 \u203a A01/A02/A04 pointer Main and Side activity wins over persistent row/tab and source panel focus (1.2s)"
+        },
+        {
+          "line": 51,
+          "case": "\u2713   38 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:148:1 \u203a A02 adapterless Side requires its exact service placement, no Main population (231ms)"
+        },
+        {
+          "line": 113,
+          "case": "\u2713  100 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:42:5 \u203a A02/A10 own camera main survives other retained focus (301ms)"
+        },
+        {
+          "line": 114,
+          "case": "\u2713  101 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:42:5 \u203a A02/A10 global camera main survives other retained focus (323ms)"
+        },
+        {
+          "line": 115,
+          "case": "\u2713  102 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:42:5 \u203a A02/A10 own camera side survives other retained focus (291ms)"
+        },
+        {
+          "line": 116,
+          "case": "\u2713  103 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:42:5 \u203a A02/A10 global camera side survives other retained focus (294ms)"
+        }
+      ],
+      "renderer_receipt": "renderer-02.json",
+      "scope": "Actual production callers/consumer/stores under controlled source/transport delays; native normalcapture/save/ACK complements selectedcriteria, noteveryadversary.",
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "A03": {
+      "state": "verified_technical_completion",
+      "scenario": "Switch Main\u2192Side and Side\u2192Main by pointer and keyboard",
+      "criterion": "At each click exact active committed owner captured; mount/re-render/order/late hydration cannot steal it",
+      "exact_current_renderer_cases": [
+        {
+          "line": 40,
+          "case": "\u2713   27 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:50:1 \u203a A03 keyboard focus switches both directions; duplicate attachment is a truthful no-op (271ms)"
+        },
+        {
+          "line": 41,
+          "case": "\u2713   28 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:68:1 \u203a A03 registration, rerender, StrictMode and late history cannot steal activation (339ms)"
+        },
+        {
+          "line": 42,
+          "case": "\u2713   29 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:83:1 \u203a A03 real rail selection explicitly activates its exact mounted Main (288ms)"
+        },
+        {
+          "line": 43,
+          "case": "\u2713   30 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:93:1 \u203a A03 delayed Main population and automatic MRU open cannot steal retained foreground Side (279ms)"
+        },
+        {
+          "line": 62,
+          "case": "\u2713   49 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:211:1 \u203a A03 Side tab selection through the real connected bridge publishes exact placement activation (287ms)"
+        },
+        {
+          "line": 65,
+          "case": "\u2713   52 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:240:1 \u203a A03/A08 duplicate explicit Main keeps its independent lifetime; rail activation identifies view Main (466ms)"
+        }
+      ],
+      "renderer_receipt": "renderer-02.json",
+      "scope": "Actual production callers/consumer/stores under controlled source/transport delays; native normalcapture/save/ACK complements selectedcriteria, noteveryadversary.",
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "A04": {
+      "state": "verified_technical_completion",
+      "scenario": "Resource source view differs from active destination; global button takes DOM focus",
+      "criterion": "Source panel/root/path remains intact; destination remains last active foreground chat; no sourceViewId targeting",
+      "exact_current_renderer_cases": [
+        {
+          "line": 39,
+          "case": "\u2713   26 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:30:1 \u203a A01/A02/A04 pointer Main and Side activity wins over persistent row/tab and source panel focus (1.2s)"
+        }
+      ],
+      "renderer_receipt": "renderer-02.json",
+      "scope": "Actual production callers/consumer/stores under controlled source/transport delays; native normalcapture/save/ACK complements selectedcriteria, noteveryadversary.",
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "A05": {
+      "state": "verified_technical_completion",
+      "scenario": "No chat, collapsed/closed/unhydrated/stale active record; stale currentThreadId present",
+      "criterion": "Explicit unavailable; zero capture/fetch where begin rejected, zero draft/attachment/send/create mutation; no fallback",
+      "exact_current_renderer_cases": [
+        {
+          "line": 44,
+          "case": "\u2713   31 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:106:1 \u203a A05 unhydrated Main population denies the former active owner before source work (252ms)"
+        },
+        {
+          "line": 45,
+          "case": "\u2713   32 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:115:1 \u203a A05 no activation rejects before reading a source root despite stale global thread (214ms)"
+        },
+        {
+          "line": 46,
+          "case": "\u2713   33 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:125:3 \u203a A05/A13 collapsed active owner gives no target or source preparation (371ms)"
+        },
+        {
+          "line": 47,
+          "case": "\u2713   34 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:125:3 \u203a A05/A13 closed active owner gives no target or source preparation (324ms)"
+        },
+        {
+          "line": 48,
+          "case": "\u2713   35 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:125:3 \u203a A05/A13 foreground active owner gives no target or source preparation (255ms)"
+        },
+        {
+          "line": 49,
+          "case": "\u2713   36 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:125:3 \u203a A05/A13 foreign active owner gives no target or source preparation (330ms)"
+        },
+        {
+          "line": 50,
+          "case": "\u2713   37 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:125:3 \u203a A05/A13 unhydrated active owner gives no target or source preparation (256ms)"
+        },
+        {
+          "line": 63,
+          "case": "\u2713   50 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:220:1 \u203a A05 duplicate view bindings cannot win a pending activation by registration order (231ms)"
+        },
+        {
+          "line": 136,
+          "case": "\u2713  123 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:171:3 \u203a A05/A15 no active owner and pending block native work; unknown composes without second Send (365ms)"
+        }
+      ],
+      "renderer_receipt": "renderer-02.json",
+      "scope": "Actual production callers/consumer/stores under controlled source/transport delays; native normalcapture/save/ACK complements selectedcriteria, noteveryadversary.",
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "A06": {
+      "state": "verified_technical_completion",
+      "scenario": "Plus-menu gallery, clipboard selected/top item, recent selected/top item; Main and Side",
+      "criterion": "Each uses own composer independent of global activity; one shared exact-owner store write; text/pill renders there",
+      "exact_current_renderer_cases": [
+        {
+          "line": 70,
+          "case": "\u2713   57 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:50:5 \u203a A06 main clipboard-top begins at actual action and uses its own composer (277ms)"
+        },
+        {
+          "line": 71,
+          "case": "\u2713   58 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:50:5 \u203a A06 main clipboard-row begins at actual action and uses its own composer (313ms)"
+        },
+        {
+          "line": 72,
+          "case": "\u2713   59 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:50:5 \u203a A06 main recent-top begins at actual action and uses its own composer (273ms)"
+        },
+        {
+          "line": 73,
+          "case": "\u2713   60 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:50:5 \u203a A06 main recent-row begins at actual action and uses its own composer (314ms)"
+        },
+        {
+          "line": 74,
+          "case": "\u2713   61 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:50:5 \u203a A06 main gallery begins at actual action and uses its own composer (309ms)"
+        },
+        {
+          "line": 75,
+          "case": "\u2713   62 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:50:5 \u203a A06 side clipboard-top begins at actual action and uses its own composer (294ms)"
+        },
+        {
+          "line": 76,
+          "case": "\u2713   63 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:50:5 \u203a A06 side clipboard-row begins at actual action and uses its own composer (306ms)"
+        },
+        {
+          "line": 77,
+          "case": "\u2713   64 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:50:5 \u203a A06 side recent-top begins at actual action and uses its own composer (274ms)"
+        },
+        {
+          "line": 78,
+          "case": "\u2713   65 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:50:5 \u203a A06 side recent-row begins at actual action and uses its own composer (311ms)"
+        },
+        {
+          "line": 79,
+          "case": "\u2713   66 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:50:5 \u203a A06 side gallery begins at actual action and uses its own composer (308ms)"
+        },
+        {
+          "line": 103,
+          "case": "\u2713   90 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:324:5 \u203a A06 adapterless Side clipboard-top uses placement authority without Main rows (275ms)"
+        },
+        {
+          "line": 104,
+          "case": "\u2713   91 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:324:5 \u203a A06 adapterless Side recent-top uses placement authority without Main rows (269ms)"
+        },
+        {
+          "line": 105,
+          "case": "\u2713   92 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:324:5 \u203a A06 adapterless Side gallery uses placement authority without Main rows (313ms)"
+        }
+      ],
+      "renderer_receipt": "renderer-02.json",
+      "scope": "Actual production callers/consumer/stores under controlled source/transport delays; native normalcapture/save/ACK complements selectedcriteria, noteveryadversary.",
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "A07": {
+      "state": "verified_technical_completion",
+      "scenario": "Deferred clipboard/recents; another chat/view gains focus; originating tuple retained",
+      "criterion": "Original destination receives material once; all other owners unchanged; no focus theft",
+      "exact_current_renderer_cases": [
+        {
+          "line": 52,
+          "case": "\u2713   39 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:156:1 \u203a A07 shared commit retains exact owner through unrelated focus/view and preserves latest typed draft (270ms)"
+        },
+        {
+          "line": 80,
+          "case": "\u2713   67 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:67:5 \u203a A07/A16 deferred clipboard-top keeps retained owner and fresh selection after typing/focus (268ms)"
+        },
+        {
+          "line": 81,
+          "case": "\u2713   68 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:67:5 \u203a A07/A16 deferred recent-top keeps retained owner and fresh selection after typing/focus (282ms)"
+        }
+      ],
+      "renderer_receipt": "renderer-02.json",
+      "scope": "Actual production callers/consumer/stores under controlled source/transport delays; native normalcapture/save/ACK complements selectedcriteria, noteveryadversary.",
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "A08": {
+      "state": "verified_technical_completion",
+      "scenario": "Explicit Main content or Side composer; outer Main group selection changes; placement retained",
+      "criterion": "Original exact component chat receives material; unrelated rail selection not cancellation",
+      "exact_current_renderer_cases": [
+        {
+          "line": 65,
+          "case": "\u2713   52 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:240:1 \u203a A03/A08 duplicate explicit Main keeps its independent lifetime; rail activation identifies view Main (466ms)"
+        },
+        {
+          "line": 83,
+          "case": "\u2713   70 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:99:5 \u203a A08 deferred side source survives unrelated Main selection (305ms)"
+        },
+        {
+          "line": 84,
+          "case": "\u2713   71 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:99:5 \u203a A08 deferred explicit source survives unrelated Main selection (309ms)"
+        }
+      ],
+      "renderer_receipt": "renderer-02.json",
+      "scope": "Actual production callers/consumer/stores under controlled source/transport delays; native normalcapture/save/ACK complements selectedcriteria, noteveryadversary.",
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "A09": {
+      "state": "verified_technical_completion",
+      "scenario": "Rebind workspace/view/group/session or unmount/close originating composer during preparation, then return",
+      "criterion": "Old operation cancelled before mutation; new equal-string mount/generation cannot revive it",
+      "exact_current_renderer_cases": [
+        {
+          "line": 53,
+          "case": "\u2713   40 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:170:3 \u203a A09/A13 workspace loss and return permanently cancels captured operation (220ms)"
+        },
+        {
+          "line": 54,
+          "case": "\u2713   41 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:170:3 \u203a A09/A13 hydration loss and return permanently cancels captured operation (211ms)"
+        },
+        {
+          "line": 55,
+          "case": "\u2713   42 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:170:3 \u203a A09/A13 placement loss and return permanently cancels captured operation (223ms)"
+        },
+        {
+          "line": 56,
+          "case": "\u2713   43 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:170:3 \u203a A09/A13 socket loss and return permanently cancels captured operation (225ms)"
+        },
+        {
+          "line": 57,
+          "case": "\u2713   44 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:170:3 \u203a A09/A13 binding loss and return permanently cancels captured operation (230ms)"
+        },
+        {
+          "line": 58,
+          "case": "\u2713   45 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:180:1 \u203a A09 actual unmount/remount with equal tuple cannot revive a captured lease (325ms)"
+        },
+        {
+          "line": 64,
+          "case": "\u2713   51 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:231:1 \u203a A09 view-bound Main rebind and return invalidates old operation (309ms)"
+        },
+        {
+          "line": 85,
+          "case": "\u2713   72 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:119:5 \u203a A09/A11/A13 real deferred clipboard cancels on rebind and does not revive (327ms)"
+        },
+        {
+          "line": 86,
+          "case": "\u2713   73 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:119:5 \u203a A09/A11/A13 real deferred clipboard cancels on unmount and does not revive (261ms)"
+        },
+        {
+          "line": 87,
+          "case": "\u2713   74 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:119:5 \u203a A09/A11/A13 real deferred clipboard cancels on placement and does not revive (266ms)"
+        },
+        {
+          "line": 88,
+          "case": "\u2713   75 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:119:5 \u203a A09/A11/A13 real deferred clipboard cancels on hydration and does not revive (294ms)"
+        },
+        {
+          "line": 89,
+          "case": "\u2713   76 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:119:5 \u203a A09/A11/A13 real deferred clipboard cancels on workspace and does not revive (281ms)"
+        },
+        {
+          "line": 90,
+          "case": "\u2713   77 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:119:5 \u203a A09/A11/A13 real deferred clipboard cancels on binding and does not revive (281ms)"
+        },
+        {
+          "line": 91,
+          "case": "\u2713   78 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:147:3 \u203a A09/A16 old callbacks after genuine same-instance tuple reuse reject before write or focus (225ms)"
+        },
+        {
+          "line": 98,
+          "case": "\u2713   85 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:263:5 \u203a A09/A11 mic explicit cancel during permission prevents late source completion (269ms)"
+        },
+        {
+          "line": 99,
+          "case": "\u2713   86 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:263:5 \u203a A09/A11 mic explicit cancel during recording prevents late source completion (254ms)"
+        },
+        {
+          "line": 100,
+          "case": "\u2713   87 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:263:5 \u203a A09/A11 mic explicit cancel during processing prevents late source completion (262ms)"
+        },
+        {
+          "line": 106,
+          "case": "\u2713   93 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:335:5 \u203a A09 microphone tuple rebind during permission cancels old preparation permanently (340ms)"
+        },
+        {
+          "line": 107,
+          "case": "\u2713   94 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:335:5 \u203a A09 microphone tuple rebind during processing cancels old preparation permanently (389ms)"
+        },
+        {
+          "line": 117,
+          "case": "\u2713  104 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible workspace during capture (267ms)"
+        },
+        {
+          "line": 118,
+          "case": "\u2713  105 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible hydration during capture (254ms)"
+        },
+        {
+          "line": 119,
+          "case": "\u2713  106 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible placement during capture (264ms)"
+        },
+        {
+          "line": 120,
+          "case": "\u2713  107 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible binding during capture (256ms)"
+        },
+        {
+          "line": 121,
+          "case": "\u2713  108 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible unmount during capture (373ms)"
+        },
+        {
+          "line": 122,
+          "case": "\u2713  109 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible workspace during save (263ms)"
+        },
+        {
+          "line": 123,
+          "case": "\u2713  110 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible hydration during save (282ms)"
+        },
+        {
+          "line": 124,
+          "case": "\u2713  111 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible placement during save (274ms)"
+        },
+        {
+          "line": 125,
+          "case": "\u2713  112 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible binding during save (270ms)"
+        },
+        {
+          "line": 126,
+          "case": "\u2713  113 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible unmount during save (391ms)"
+        }
+      ],
+      "renderer_receipt": "renderer-02.json",
+      "scope": "Actual production callers/consumer/stores under controlled source/transport delays; native normalcapture/save/ACK complements selectedcriteria, noteveryadversary.",
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "A10": {
+      "state": "verified_technical_completion",
+      "scenario": "Global/composer screenshot native/save delayed; focus switches only, retained same surface/open placement",
+      "criterion": "Original valid owner receives correlated saved-path attachment; no redirect/cancellation from currentPanel/isActive alone",
+      "exact_current_renderer_cases": [
+        {
+          "line": 113,
+          "case": "\u2713  100 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:42:5 \u203a A02/A10 own camera main survives other retained focus (301ms)"
+        },
+        {
+          "line": 114,
+          "case": "\u2713  101 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:42:5 \u203a A02/A10 global camera main survives other retained focus (323ms)"
+        },
+        {
+          "line": 115,
+          "case": "\u2713  102 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:42:5 \u203a A02/A10 own camera side survives other retained focus (291ms)"
+        },
+        {
+          "line": 116,
+          "case": "\u2713  103 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:42:5 \u203a A02/A10 global camera side survives other retained focus (294ms)"
+        }
+      ],
+      "renderer_receipt": "renderer-02.json",
+      "scope": "Actual production callers/consumer/stores under controlled source/transport delays; native normalcapture/save/ACK complements selectedcriteria, noteveryadversary.",
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "A11": {
+      "state": "verified_technical_completion",
+      "scenario": "Composer closure or Side placement close during capture/save; close then reopen",
+      "criterion": "Before-save zero save request; after-save PNG may remain but no attachment; closure cancels permanently",
+      "exact_current_renderer_cases": [
+        {
+          "line": 85,
+          "case": "\u2713   72 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:119:5 \u203a A09/A11/A13 real deferred clipboard cancels on rebind and does not revive (327ms)"
+        },
+        {
+          "line": 86,
+          "case": "\u2713   73 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:119:5 \u203a A09/A11/A13 real deferred clipboard cancels on unmount and does not revive (261ms)"
+        },
+        {
+          "line": 87,
+          "case": "\u2713   74 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:119:5 \u203a A09/A11/A13 real deferred clipboard cancels on placement and does not revive (266ms)"
+        },
+        {
+          "line": 88,
+          "case": "\u2713   75 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:119:5 \u203a A09/A11/A13 real deferred clipboard cancels on hydration and does not revive (294ms)"
+        },
+        {
+          "line": 89,
+          "case": "\u2713   76 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:119:5 \u203a A09/A11/A13 real deferred clipboard cancels on workspace and does not revive (281ms)"
+        },
+        {
+          "line": 90,
+          "case": "\u2713   77 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:119:5 \u203a A09/A11/A13 real deferred clipboard cancels on binding and does not revive (281ms)"
+        },
+        {
+          "line": 98,
+          "case": "\u2713   85 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:263:5 \u203a A09/A11 mic explicit cancel during permission prevents late source completion (269ms)"
+        },
+        {
+          "line": 99,
+          "case": "\u2713   86 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:263:5 \u203a A09/A11 mic explicit cancel during recording prevents late source completion (254ms)"
+        },
+        {
+          "line": 100,
+          "case": "\u2713   87 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:263:5 \u203a A09/A11 mic explicit cancel during processing prevents late source completion (262ms)"
+        },
+        {
+          "line": 117,
+          "case": "\u2713  104 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible workspace during capture (267ms)"
+        },
+        {
+          "line": 118,
+          "case": "\u2713  105 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible hydration during capture (254ms)"
+        },
+        {
+          "line": 119,
+          "case": "\u2713  106 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible placement during capture (264ms)"
+        },
+        {
+          "line": 120,
+          "case": "\u2713  107 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible binding during capture (256ms)"
+        },
+        {
+          "line": 121,
+          "case": "\u2713  108 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible unmount during capture (373ms)"
+        },
+        {
+          "line": 122,
+          "case": "\u2713  109 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible workspace during save (263ms)"
+        },
+        {
+          "line": 123,
+          "case": "\u2713  110 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible hydration during save (282ms)"
+        },
+        {
+          "line": 124,
+          "case": "\u2713  111 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible placement during save (274ms)"
+        },
+        {
+          "line": 125,
+          "case": "\u2713  112 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible binding during save (270ms)"
+        },
+        {
+          "line": 126,
+          "case": "\u2713  113 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible unmount during save (391ms)"
+        }
+      ],
+      "renderer_receipt": "renderer-02.json",
+      "scope": "Actual production callers/consumer/stores under controlled source/transport delays; native normalcapture/save/ACK complements selectedcriteria, noteveryadversary.",
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "A12": {
+      "state": "verified_technical_completion",
+      "scenario": "Two concurrent screenshots/text operations for distinct owners; wrong/duplicate/out-of-order response",
+      "criterion": "Each owns its correlation/token; no cross-attachment or double commit; terminal listeners/timers cleaned",
+      "exact_current_renderer_cases": [
+        {
+          "line": 92,
+          "case": "\u2713   79 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:176:3 \u203a A12 concurrent source requests complete out of order only once in their own owners (457ms)"
+        },
+        {
+          "line": 127,
+          "case": "\u2713  114 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:105:3 \u203a A12 concurrent cameras own out-of-order/foreign/duplicate results and cleanup (349ms)"
+        }
+      ],
+      "renderer_receipt": "renderer-02.json",
+      "scope": "Actual production callers/consumer/stores under controlled source/transport delays; native normalcapture/save/ACK complements selectedcriteria, noteveryadversary.",
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "A13": {
+      "state": "verified_technical_completion",
+      "scenario": "Deleted session/group, foreign workspace/descriptor, lost/replaced hydration/workspace generation, invalid material",
+      "criterion": "Bounded unavailable/cancelled/invalid result; no owner reconstruction, stale mirror write or alternate destination",
+      "exact_current_renderer_cases": [
+        {
+          "line": 46,
+          "case": "\u2713   33 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:125:3 \u203a A05/A13 collapsed active owner gives no target or source preparation (371ms)"
+        },
+        {
+          "line": 47,
+          "case": "\u2713   34 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:125:3 \u203a A05/A13 closed active owner gives no target or source preparation (324ms)"
+        },
+        {
+          "line": 48,
+          "case": "\u2713   35 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:125:3 \u203a A05/A13 foreground active owner gives no target or source preparation (255ms)"
+        },
+        {
+          "line": 49,
+          "case": "\u2713   36 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:125:3 \u203a A05/A13 foreign active owner gives no target or source preparation (330ms)"
+        },
+        {
+          "line": 50,
+          "case": "\u2713   37 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:125:3 \u203a A05/A13 unhydrated active owner gives no target or source preparation (256ms)"
+        },
+        {
+          "line": 53,
+          "case": "\u2713   40 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:170:3 \u203a A09/A13 workspace loss and return permanently cancels captured operation (220ms)"
+        },
+        {
+          "line": 54,
+          "case": "\u2713   41 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:170:3 \u203a A09/A13 hydration loss and return permanently cancels captured operation (211ms)"
+        },
+        {
+          "line": 55,
+          "case": "\u2713   42 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:170:3 \u203a A09/A13 placement loss and return permanently cancels captured operation (223ms)"
+        },
+        {
+          "line": 56,
+          "case": "\u2713   43 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:170:3 \u203a A09/A13 socket loss and return permanently cancels captured operation (225ms)"
+        },
+        {
+          "line": 57,
+          "case": "\u2713   44 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:170:3 \u203a A09/A13 binding loss and return permanently cancels captured operation (230ms)"
+        },
+        {
+          "line": 59,
+          "case": "\u2713   46 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:187:1 \u203a A13 invalid material changes no store; A16 exact selection uses latest matching revision (221ms)"
+        },
+        {
+          "line": 68,
+          "case": "\u2713   55 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:293:1 \u203a A13 source failure are distinct terminal results with no mutation (211ms)"
+        },
+        {
+          "line": 69,
+          "case": "\u2713   56 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:302:1 \u203a A13 source abort cancels before shared commit (208ms)"
+        },
+        {
+          "line": 85,
+          "case": "\u2713   72 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:119:5 \u203a A09/A11/A13 real deferred clipboard cancels on rebind and does not revive (327ms)"
+        },
+        {
+          "line": 86,
+          "case": "\u2713   73 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:119:5 \u203a A09/A11/A13 real deferred clipboard cancels on unmount and does not revive (261ms)"
+        },
+        {
+          "line": 87,
+          "case": "\u2713   74 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:119:5 \u203a A09/A11/A13 real deferred clipboard cancels on placement and does not revive (266ms)"
+        },
+        {
+          "line": 88,
+          "case": "\u2713   75 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:119:5 \u203a A09/A11/A13 real deferred clipboard cancels on hydration and does not revive (294ms)"
+        },
+        {
+          "line": 89,
+          "case": "\u2713   76 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:119:5 \u203a A09/A11/A13 real deferred clipboard cancels on workspace and does not revive (281ms)"
+        },
+        {
+          "line": 90,
+          "case": "\u2713   77 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:119:5 \u203a A09/A11/A13 real deferred clipboard cancels on binding and does not revive (281ms)"
+        },
+        {
+          "line": 110,
+          "case": "\u2713   97 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:416:5 \u203a A13 source failure from actual clipboard-top leaves composer owners unchanged (270ms)"
+        },
+        {
+          "line": 111,
+          "case": "\u2713   98 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:416:5 \u203a A13 source failure from actual recent-top leaves composer owners unchanged (261ms)"
+        },
+        {
+          "line": 117,
+          "case": "\u2713  104 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible workspace during capture (267ms)"
+        },
+        {
+          "line": 118,
+          "case": "\u2713  105 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible hydration during capture (254ms)"
+        },
+        {
+          "line": 119,
+          "case": "\u2713  106 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible placement during capture (264ms)"
+        },
+        {
+          "line": 120,
+          "case": "\u2713  107 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible binding during capture (256ms)"
+        },
+        {
+          "line": 121,
+          "case": "\u2713  108 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible unmount during capture (373ms)"
+        },
+        {
+          "line": 122,
+          "case": "\u2713  109 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible workspace during save (263ms)"
+        },
+        {
+          "line": 123,
+          "case": "\u2713  110 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible hydration during save (282ms)"
+        },
+        {
+          "line": 124,
+          "case": "\u2713  111 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible placement during save (274ms)"
+        },
+        {
+          "line": 125,
+          "case": "\u2713  112 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible binding during save (270ms)"
+        },
+        {
+          "line": 126,
+          "case": "\u2713  113 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:75:5 \u203a A09/A11/A13 camera irreversible unmount during save (391ms)"
+        }
+      ],
+      "renderer_receipt": "renderer-02.json",
+      "scope": "Actual production callers/consumer/stores under controlled source/transport delays; native normalcapture/save/ACK complements selectedcriteria, noteveryadversary.",
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "A14": {
+      "state": "verified_technical_completion",
+      "scenario": "Native missing/empty/error, save rejection/send exception/disconnect/deadline",
+      "criterion": "No draft/pill mutation or misleading success; source-owned timeout cleanup; no source-file rollback claim",
+      "exact_current_renderer_cases": [
+        {
+          "line": 128,
+          "case": "\u2713  115 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:134:5 \u203a A14 camera unsupported cleans terminal resources without insertion (258ms)"
+        },
+        {
+          "line": 129,
+          "case": "\u2713  116 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:134:5 \u203a A14 camera empty cleans terminal resources without insertion (261ms)"
+        },
+        {
+          "line": 130,
+          "case": "\u2713  117 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:134:5 \u203a A14 camera error cleans terminal resources without insertion (257ms)"
+        },
+        {
+          "line": 131,
+          "case": "\u2713  118 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:134:5 \u203a A14 camera save-error cleans terminal resources without insertion (270ms)"
+        },
+        {
+          "line": 132,
+          "case": "\u2713  119 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:134:5 \u203a A14 camera malformed-save cleans terminal resources without insertion (264ms)"
+        },
+        {
+          "line": 133,
+          "case": "\u2713  120 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:134:5 \u203a A14 camera send-throw cleans terminal resources without insertion (273ms)"
+        },
+        {
+          "line": 134,
+          "case": "\u2713  121 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:134:5 \u203a A14 camera disconnect cleans terminal resources without insertion (268ms)"
+        },
+        {
+          "line": 135,
+          "case": "\u2713  122 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:134:5 \u203a A14 camera deadline cleans terminal resources without insertion (257ms)"
+        }
+      ],
+      "renderer_receipt": "renderer-02.json",
+      "scope": "Actual production callers/consumer/stores under controlled source/transport delays; native normalcapture/save/ACK complements selectedcriteria, noteveryadversary.",
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "A15": {
+      "state": "verified_technical_completion",
+      "scenario": "pending acceptance vs unknown attempt; existing warm intent; ordinary Send after staged material",
+      "criterion": "pending remains busy; unknown permits compose edit/pill without resend; existing warming paths target captured owner under existing eligibility, non-warming paths gain no mandate; staging makes no prompt/create frame; Send bubbles/clearing occur only on exact server ACK",
+      "exact_current_renderer_cases": [
+        {
+          "line": 60,
+          "case": "\u2713   47 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:200:3 \u203a A15 pending acceptance preserves existing composer admission (249ms)"
+        },
+        {
+          "line": 61,
+          "case": "\u2713   48 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:200:3 \u203a A15 unknown acceptance preserves existing composer admission (265ms)"
+        },
+        {
+          "line": 93,
+          "case": "\u2713   80 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:199:5 \u203a A15 pending gates actual source preparation and suppresses warm as appropriate (277ms)"
+        },
+        {
+          "line": 94,
+          "case": "\u2713   81 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:199:5 \u203a A15 unknown gates actual source preparation and suppresses warm as appropriate (275ms)"
+        },
+        {
+          "line": 95,
+          "case": "\u2713   82 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:214:3 \u203a A15 own source warms captured thread; suppressed/failed warming preserves valid insertion (580ms)"
+        },
+        {
+          "line": 136,
+          "case": "\u2713  123 [fixture-only-chromium] \u203a e2e/support/chat-material-screenshot-cases.ts:171:3 \u203a A05/A15 no active owner and pending block native work; unknown composes without second Send (365ms)"
+        }
+      ],
+      "renderer_receipt": "renderer-02.json",
+      "scope": "Actual production callers/consumer/stores under controlled source/transport delays; native normalcapture/save/ACK complements selectedcriteria, noteveryadversary.",
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "A16": {
+      "state": "verified_technical_completion",
+      "scenario": "Cursor replacement, intervening typing, duplicate same-session mounts, mic/diagnostic delayed completion",
+      "criterion": "Latest draft preserved, intended source behavior retained, one revision/attachment mutation, independent transient mounts; diagnostics remain redacted compose-only",
+      "exact_current_renderer_cases": [
+        {
+          "line": 59,
+          "case": "\u2713   46 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:187:1 \u203a A13 invalid material changes no store; A16 exact selection uses latest matching revision (221ms)"
+        },
+        {
+          "line": 80,
+          "case": "\u2713   67 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:67:5 \u203a A07/A16 deferred clipboard-top keeps retained owner and fresh selection after typing/focus (268ms)"
+        },
+        {
+          "line": 81,
+          "case": "\u2713   68 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:67:5 \u203a A07/A16 deferred recent-top keeps retained owner and fresh selection after typing/focus (282ms)"
+        },
+        {
+          "line": 82,
+          "case": "\u2713   69 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:84:3 \u203a A16 stale editor value safely paragraph-appends to latest owner draft (264ms)"
+        },
+        {
+          "line": 91,
+          "case": "\u2713   78 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:147:3 \u203a A09/A16 old callbacks after genuine same-instance tuple reuse reject before write or focus (225ms)"
+        },
+        {
+          "line": 96,
+          "case": "\u2713   83 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:240:5 \u203a A16 main microphone completion keeps own material lease (260ms)"
+        },
+        {
+          "line": 97,
+          "case": "\u2713   84 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:240:5 \u203a A16 side microphone completion keeps own material lease (262ms)"
+        },
+        {
+          "line": 101,
+          "case": "\u2713   88 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:300:5 \u203a A16 diagnostic begins before retrieval and survives other focus (234ms)"
+        },
+        {
+          "line": 102,
+          "case": "\u2713   89 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:300:5 \u203a A16 diagnostic begins before retrieval and cancels on real rebind (286ms)"
+        },
+        {
+          "line": 108,
+          "case": "\u2713   95 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:373:5 \u203a A16 direct Ask AI unavailable preserves fixed source failure and disabled actions (387ms)"
+        },
+        {
+          "line": 109,
+          "case": "\u2713   96 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:373:5 \u203a A16 direct Ask AI malformed preserves fixed source failure and disabled actions (369ms)"
+        },
+        {
+          "line": 112,
+          "case": "\u2713   99 [fixture-only-chromium] \u203a e2e/support/chat-material-source-cases.ts:443:3 \u203a A16 prepared emoji records once through its existing editor side effect (260ms)"
+        }
+      ],
+      "renderer_receipt": "renderer-02.json",
+      "scope": "Actual production callers/consumer/stores under controlled source/transport delays; native normalcapture/save/ACK complements selectedcriteria, noteveryadversary.",
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "A17": {
+      "state": "verified_technical_completion",
+      "scenario": "Cross-view/thread/store isolation and existing workflow regression",
+      "criterion": "Other drafts/attachments/transcripts unchanged; source paths/attachment order/generations preserved; explicit workspace Create/Send/New Chat remain distinct commands",
+      "exact_current_renderer_cases": [
+        {
+          "line": 66,
+          "case": "\u2713   53 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:260:1 \u203a A17 resource wrapper keeps source and attachment order; independent Send waits for exact ACK (341ms)"
+        },
+        {
+          "line": 67,
+          "case": "\u2713   54 [fixture-only-chromium] \u203a e2e/chat-material-insertion.spec.ts:281:1 \u203a A17 ordinary New Chat activates the acknowledged new Main without material send/create modes (299ms)"
+        }
+      ],
+      "renderer_receipt": "renderer-02.json",
+      "scope": "Actual production callers/consumer/stores under controlled source/transport delays; native normalcapture/save/ACK complements selectedcriteria, noteveryadversary.",
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    }
+  },
+  "requirements": {
+    "R-01": {
+      "state": "verified_technical_completion",
+      "requirement": "Reuse chat action, draft and attachment owners",
+      "current_client_sources": [
+        "src/lib/chat-action-controller.ts",
+        "src/lib/chat-material-commit.ts",
+        "src/state/chatComposerDraftStore.ts",
+        "src/state/chatFileLinkStore.ts"
+      ],
+      "acceptance": [
+        "A01",
+        "A06",
+        "A16",
+        "A17"
+      ],
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "R-02": {
+      "state": "verified_technical_completion",
+      "requirement": "Global actions target the active open chat, Main or Side",
+      "current_client_sources": [
+        "src/state/slices/mountedChatState.ts",
+        "src/lib/chat-material-target.ts",
+        "src/components/chat/useChatMountInteractions.ts"
+      ],
+      "acceptance": [
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A05"
+      ],
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "R-03": {
+      "state": "verified_technical_completion",
+      "requirement": "Every composer action targets that composer's chat",
+      "current_client_sources": [
+        "src/components/chat/useMountedChatBinding.ts",
+        "src/components/chat/useComposerMaterialSource.ts",
+        "src/components/chat/useChatSessionActions.ts"
+      ],
+      "acceptance": [
+        "A06",
+        "A07",
+        "A08",
+        "A09"
+      ],
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "R-04": {
+      "state": "verified_technical_completion",
+      "requirement": "Resolve/snapshot before source preparation; delay never redirects",
+      "current_client_sources": [
+        "src/components/SendToChatButton.tsx",
+        "src/screenshots/chatScreenshotCapture.ts",
+        "src/clipboard/ClipboardTrigger.tsx",
+        "src/recent-files/RecentFilesTrigger.tsx",
+        "src/mic/MicTrigger.tsx",
+        "src/components/chat/ChatDiagnosticDetails.tsx"
+      ],
+      "acceptance": [
+        "A07",
+        "A09",
+        "A10",
+        "A11",
+        "A12"
+      ],
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "R-05": {
+      "state": "verified_technical_completion",
+      "requirement": "Cancel real rebind/unmount/closed placement/invalid destination",
+      "current_client_sources": [
+        "src/state/slices/mountedChatState.ts",
+        "src/lib/chat-material-target.ts",
+        "src/components/chat/useMountedChatBinding.ts"
+      ],
+      "acceptance": [
+        "A09",
+        "A11",
+        "A13"
+      ],
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "R-06": {
+      "state": "verified_technical_completion",
+      "requirement": "Other focus/view changes preserve a still-valid captured owner",
+      "current_client_sources": [
+        "src/lib/chat-material-target.ts",
+        "src/components/chat/useComposerMaterialSource.ts",
+        "src/screenshots/chatScreenshotCapture.ts"
+      ],
+      "acceptance": [
+        "A07",
+        "A08",
+        "A10"
+      ],
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "R-07": {
+      "state": "verified_technical_completion",
+      "requirement": "Sources prepare independently; preserve screenshot correlation",
+      "current_client_sources": [
+        "src/screenshots/chatScreenshotCapture.ts",
+        "src/lib/chat-material-source.ts",
+        "e2e/chat-material-native-scenario.mjs"
+      ],
+      "acceptance": [
+        "A10",
+        "A11",
+        "A12",
+        "A14"
+      ],
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "R-08": {
+      "state": "verified_technical_completion",
+      "requirement": "Compose only; preserve ordinary Send acceptance/persistence/provenance",
+      "current_client_sources": [
+        "src/lib/chat-action.ts",
+        "src/lib/chat-action-controller.ts",
+        "src/lib/chat-action-creation.ts",
+        "src/components/chat/useChatSessionActions.ts",
+        "src/lib/ws/thread-handlers.ts"
+      ],
+      "acceptance": [
+        "A15",
+        "A16",
+        "A17"
+      ],
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "R-09": {
+      "state": "verified_technical_completion",
+      "requirement": "Inventory all material entry points and close bypasses",
+      "current_client_sources": [
+        "src/lib/chat-material-commit.ts",
+        "src/components/chat/useComposerMaterialSource.ts",
+        "src/lib/chat-action-controller.ts"
+      ],
+      "acceptance": [
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A09",
+        "A10",
+        "A11",
+        "A12",
+        "A13",
+        "A14",
+        "A15",
+        "A16",
+        "A17"
+      ],
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    },
+    "R-10": {
+      "state": "verified_technical_completion",
+      "requirement": "Renew affected checks and independent review proportionately",
+      "current_client_sources": [
+        "e2e/chat-material-insertion.spec.ts",
+        "e2e/chat-material-native-scenario.mjs",
+        "e2e/chat-material-wiki.spec.ts"
+      ],
+      "acceptance": [
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A09",
+        "A10",
+        "A11",
+        "A12",
+        "A13",
+        "A14",
+        "A15",
+        "A16",
+        "A17"
+      ],
+      "final_review": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md"
+    }
+  },
+  "all_required_final_checks": [
+    "build-01.json",
+    "server-full-01.json",
+    "server-focused-01.json",
+    "renderer-02.json",
+    "wiki-01.json",
+    "native-01.json"
+  ],
+  "supplemental_native": {
+    "A01_A02_A06_A10_A15_A17": "8realPNGcapture/save/pills in adaptedFile+adapterlessIssues Main/Side,4gallery,4publicSend exactACK/SQLite metadata order/nonTargets",
+    "A04": "2 actual hidden retained productionWikiDOMhandlers to foregroundFileMain/Side; visiblebrowsercase separate"
+  },
+  "limits": [
+    "All27 technical criteria verified with materiallyclean finalintegrationreview; completedSPEC humanacceptance remains pending.",
+    "Original renderer01 and nativefailedattempts preserved with no unsupportedcause ororaclewaiver.",
+    "1 baselinefullserver skip; controlledprovider, microphone/media and hiddenWiki nativehandler limits remain exactly stated infinalreview."
+  ],
+  "predecessor": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/CRITERION-EVIDENCE-01.json",
+    "sha256": "38334542f38b3c32cba0c3d9be900877e942e9ba9280b4397baca742906da2e1"
+  },
+  "independent_final_review": {
+    "identity": "/root/final_integration_review_01",
+    "result": "REVIEW_COMPLETE CLEAN",
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md",
+    "sha256": "d77ac55af618dd5bb794b92a6c80a8c366a28d6ff7a6191ba525dcf4a66aed63"
+  }
+}

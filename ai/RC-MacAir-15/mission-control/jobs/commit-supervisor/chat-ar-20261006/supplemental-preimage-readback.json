@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-06T21:49:19.835524+00:00",
+  "side_placement_manifest": "c7ff5aa555632a3c759036e33a8764e9e5eaf95ccbee36e0e0285a75f2162c4e",
+  "payloads_valid": true,
+  "matches_checkpoint": false,
+  "reason": "Only added Codex turn-diff checkpoint ref; exact leaf/index/candidate/branch/target/source refs unchanged. Host provenance inferred from reserved ref namespace; no product branch movement.",
+  "added_refs": [
+    "5d38675e314617458d6544fe9cac5353cdf87ded refs/codex/turn-diffs/checkpoints/69bb2f0cc969e107f9dec558d0ada270/98c46bf0c984729283c2f64f31d1313a/1791323192876/0000c8fa-2dfc-45d8-a785-977d35f3ca00"
+  ],
+  "deleted_refs": [],
+  "source_index_unchanged": true,
+  "supplemental_rail_manifest": "96074c498d79c4c99bab22e3dccc0b80205314ac4663290d72d3a5ab74a22862",
+  "supplemental_rail_readback": {
+    "payloads_valid": true,
+    "matches_checkpoint": true,
+    "status_equal": true
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "state": "REVIEW_COMPLETE",
+  "result": "clean",
+  "mode": "final",
+  "reviewer": "/root/chat_commit_final_review/final_code",
+  "manager": "/root/chat_commit_final_review",
+  "freshSession": true,
+  "inheritedReviewerHistory": false,
+  "modelEffortOverride": false,
+  "findings": [],
+  "candidate": {
+    "root": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+    "branch": "codex/chat-retirement-and-startup-repair",
+    "head": "3356e1b73cc5d44028eac5baa02fd542a8bbc385",
+    "stagedTree": "1befa26e94a3487ef91d309665ff389b2e959b65",
+    "indexEntries": 5620,
+    "indexMatchesFrozenTree": true,
+    "ownedRows": 1669,
+    "ownedMismatches": 0,
+    "inventorySha256": "6741bf3ccc50fb70dd4d5f88f99cd9982b1c8f3f864d1452f6a4a73a2f79ec98"
+  },
+  "source": {
+    "root": "/Users/rccurtrightjr./projects/fs-dev",
+    "branch": "agent/exact-workspace-paths",
+    "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+    "ownedRows": 1669,
+    "ownedMismatches": 0,
+    "inventorySha256": "2e63d95ecef115ab98733af8f659e969cb5d059ba63e2e2dbfec0cf1598fc610",
+    "rawIndexSha256": "8c2f62d2d71cc47a2c5ca767375290e860835e7eec19014f13b8f1475a1c26a4"
+  },
+  "runtimeSupport": {
+    "rows": 5,
+    "mismatches": 0,
+    "stagedOverlap": [],
+    "manifestSha256": "d4ae4338a17046259795b668c636205aa38217299a071ee443af57f427f9892f"
+  },
+  "retainedDependencies": {
+    "rows": 832,
+    "currentMismatches": 0,
+    "scope": "server, Electron, tests, configuration, migrations, packages, native sources and selected absences"
+  },
+  "currentCodeSha256": {
+    "fusion-studio-server/lib/startup.js": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+    "fusion-studio-server/lib/views/readiness-startup.js": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+    "fusion-studio-server/lib/testing/isolated-provenance-runtime.js": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f",
+    "fusion-studio-client/src/lib/ws/thread-handlers.ts": "7b45de46522d0cb67666bf63fe286474eb9c4e3fb6e6ee644ae5cf5e7058d81b",
+    "fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx": "b3dcd745e057d9e8d350f6623d8a0b697f47b69778af1e29fc95946c0f758463",
+    "fusion-studio-client/src/screenshots/chatScreenshotCapture.ts": "18eb2caf9261a19d30ad35c5ac36a64c51ee22e08567e8cfb2ac48d84e9b12f1",
+    "fusion-studio-client/src/lib/chat/side-chat-placements.ts": "109d5f63baf402c39dddf8cc96a93a95d2108e1988fca5dca99a7ad263b417e1"
+  },
+  "checks": {
+    "reviewerReruns": [],
+    "currentFocusedScreenshotPassed": 34,
+    "currentCumulativeRendererPassed": 106,
+    "currentFunctionalClientBuild": "passed",
+    "retainedFinalServerFocusedPassed": 186,
+    "retainedFullServerPassed": 3265,
+    "retainedFullServerSkipped": 1,
+    "retainedNativePretest": "passed",
+    "negativeControls": "expected failures independently inspected",
+    "guardedScenarios": [
+      "normal",
+      "fact-publish-failure"
+    ],
+    "historicalSupersededRuns": "preserved, not used as current functional evidence"
+  },
+  "eofNormalization": {
+    "pretrimSha256": "93878e20774164e6c0e5840caba3ffcb0c135829e08d945500bf8ad72ddad7b9",
+    "currentSha256": "109d5f63baf402c39dddf8cc96a93a95d2108e1988fca5dca99a7ad263b417e1",
+    "independentlyVerifiedPreimageEqualsCurrentPlusNewline": true
+  },
+  "limits": [
+    "full Markdown publication covered separately",
+    "current candidate native app, screenshot and rendered Wiki validation pending Supervisor step",
+    "controlled browser dependencies are not native capture or provider proof",
+    "retained public runtime evidence supports unchanged underlying chat contract",
+    "no runtime or publication readiness granted"
+  ],
+  "reviewerOperations": {
+    "worktreeEdits": false,
+    "indexEditsObserved": false,
+    "refEditsObserved": false,
+    "reportFileWrites": false,
+    "appsProvidersProfilesAccessed": false,
+    "subagentsSpawned": false,
+    "exception": "initial candidate git write-tree returned existing supplied tree; possible object-store write not attested absent"
+  },
+  "terminalState": "completed"
+}

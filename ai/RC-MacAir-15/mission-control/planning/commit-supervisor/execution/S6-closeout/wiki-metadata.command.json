@@ -1,0 +1,29 @@
+{
+  "started": "2026-10-04T21:23:21.966453+00:00",
+  "finished": "2026-10-04T21:23:22.027198+00:00",
+  "command": [
+    "node",
+    "-e",
+    "const {createRequire}=require('node:module');const fs=require('node:fs');const req=createRequire(process.argv[1]);const matter=req('gray-matter');const p=process.argv[2];const x=matter(fs.readFileSync(p,'utf8'));process.stdout.write(JSON.stringify(x.data));",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/package.json",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "exit_code": 0,
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "GIT_LITERAL_PATHSPECS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "git_environment": "All inherited GIT_* stripped",
+  "stdout": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/wiki-metadata.stdout",
+    "sha256": "0b44da9c0cba06ef1a07b067d96eaa34a07605a22c9f0d02fb684bc4f3d9faf4",
+    "size": 340
+  },
+  "stderr": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/wiki-metadata.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  }
+}

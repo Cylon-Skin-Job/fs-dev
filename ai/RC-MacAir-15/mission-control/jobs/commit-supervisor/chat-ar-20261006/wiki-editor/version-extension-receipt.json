@@ -1,0 +1,53 @@
+{
+  "at": "2026-10-06T22:14:26.200166+00:00",
+  "local_capture_timestamp": "2026-10-06-151426",
+  "local_timezone": "America/Los_Angeles",
+  "extension_authority": "Root explicit release allows actual-timestamp version leaves. These extend automatic-checkpoint deletion scope and require final root owned inventory/manual private-clone-only cleanup or abandonment; no source restore.",
+  "pages": [
+    {
+      "page": "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md",
+      "preimage_sha256": "ec38f18dc55ffb9d59f46683116aae158f2cf2643ae76a99a6f26df2d9f6d293",
+      "preimage_bytes": 42483,
+      "preimage_mode": "0o644",
+      "version": "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-10-06-151426.md",
+      "version_preimage_kind": "absent",
+      "version_preimage_absence_verified_at": "2026-10-06T22:14:26.200216+00:00"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+      "preimage_sha256": "b0b3a19ca50b7ef657f5429e8643a9f1aee75a6f72573d60482a2cc3ca915e5d",
+      "preimage_bytes": 2654,
+      "preimage_mode": "0o644",
+      "version": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/.versions/2026-10-06-151426.md",
+      "version_preimage_kind": "absent",
+      "version_preimage_absence_verified_at": "2026-10-06T22:14:26.200242+00:00"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md",
+      "preimage_sha256": "45001a1860a4f92133b724d2c7e6077ae3e8162cb01006cf0b472a1c97ea4c50",
+      "preimage_bytes": 4117,
+      "preimage_mode": "0o644",
+      "version": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/.versions/2026-10-06-151426.md",
+      "version_preimage_kind": "absent",
+      "version_preimage_absence_verified_at": "2026-10-06T22:14:26.200268+00:00"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md",
+      "preimage_sha256": "9c5cfbecaf10e7db72586dd2bdcc83cb6d65db5874313f26c822c125e9dc9047",
+      "preimage_bytes": 7788,
+      "preimage_mode": "0o644",
+      "version": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-10-06-151426.md",
+      "version_preimage_kind": "absent",
+      "version_preimage_absence_verified_at": "2026-10-06T22:14:26.200292+00:00"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md",
+      "preimage_sha256": "78a9d4aa551b312053796e83b94b69f218d6cfc4abc55f279d6e11329692cea4",
+      "preimage_bytes": 3664,
+      "preimage_mode": "0o644",
+      "version": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/.versions/2026-10-06-151426.md",
+      "version_preimage_kind": "absent",
+      "version_preimage_absence_verified_at": "2026-10-06T22:14:26.200316+00:00"
+    }
+  ]
+}

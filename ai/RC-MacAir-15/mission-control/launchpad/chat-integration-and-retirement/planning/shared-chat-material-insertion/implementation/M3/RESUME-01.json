@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-07T22:34:49.996494+00:00",
+  "builder": "/root/m3_builder",
+  "status": "RESUMED",
+  "desktopLocked": false,
+  "sourceSealSha256": "6fcef6edfdf2439a45eec626a1d854ed67db209b7c78988a6aeaa48a713fd316",
+  "sourceMismatches": [],
+  "caffeinate": "Root-owned PID15210; builder does not control it",
+  "authority": "Same approved M3 assignment resumed after owner unlock; no renewed scope approval needed"
+}

@@ -1,0 +1,29 @@
+{
+  "started": "2026-10-04T21:24:11.550020+00:00",
+  "finished": "2026-10-04T21:24:11.553752+00:00",
+  "command": [
+    "git",
+    "-C",
+    "/Users/rccurtrightjr./projects/fs-dev",
+    "rev-parse",
+    "HEAD"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "exit_code": 0,
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "GIT_LITERAL_PATHSPECS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "git_environment": "All inherited GIT_* stripped",
+  "stdout": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/after-source-head.stdout",
+    "sha256": "34f9e8be4e66d70e38a9db6e4c8bbccd8c55baeef42d34d30af2d1a59abd9aa5",
+    "size": 41
+  },
+  "stderr": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/after-source-head.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  }
+}

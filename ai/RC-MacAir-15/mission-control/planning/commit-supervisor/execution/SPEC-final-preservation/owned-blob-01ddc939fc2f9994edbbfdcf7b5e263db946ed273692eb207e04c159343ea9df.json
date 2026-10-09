@@ -1,0 +1,22 @@
+{
+  "actor": "/root",
+  "argv": [
+    "git",
+    "-C",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+    "cat-file",
+    "blob",
+    "b1ee6b651353ad755171602d1c10656f206ed6b7"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "started": "2026-10-05T03:27:12.926518+00:00",
+  "finished": "2026-10-05T03:27:12.931667+00:00",
+  "exit": 0,
+  "stdout_hex": "73746167656400ff80",
+  "stderr_hex": "",
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "GIT_LITERAL_PATHSPECS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  }
+}

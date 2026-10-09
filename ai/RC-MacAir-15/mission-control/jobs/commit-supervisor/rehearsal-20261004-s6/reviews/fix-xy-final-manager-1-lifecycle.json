@@ -1,0 +1,284 @@
+{
+  "schema": 1,
+  "scope": "REHEARSAL_ONLY",
+  "mode": "final-source-check",
+  "manager": "/root/s6_supervisor_fix_xy_1/fix_xy_final_manager_1",
+  "parent": "/root/s6_supervisor_fix_xy_1",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "actual_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "loading": "Supported default fallback explicitly loaded installed mc-code-review-orchestrator SKILL.md and TOML developer instructions, session contract, workflow and maintained gate before any owned report writes.",
+  "skill_sha256": "61a2e611803aa918b22b9356e19f1d863a3e7a6ac05cf9cc491f41e175d16129",
+  "profile_sha256": "1e06b777794a371a2620a7df3d97caaeb95cb67652b18461e1db6f9744b653e0",
+  "effective_permissions": {
+    "sandbox_mode": "danger-full-access",
+    "approval_policy": "never",
+    "source": "effective host developer instructions"
+  },
+  "root_inheritance": {
+    "model": "inherited",
+    "reasoning_effort": "inherited",
+    "overrides": false,
+    "concrete_values_exposed": false,
+    "native_loader_metadata_exposed": false
+  },
+  "manager_state": "returning-review-complete",
+  "candidate_identity_sha256": "aefbc18b32b2815ced41b441e88627f443e0171115b9c8de1c642c5d294b7801",
+  "child": {
+    "identity": "/root/s6_supervisor_fix_xy_1/fix_xy_final_manager_1/fresh_all5_reviewer_1",
+    "agent_type": "clean-room-reviewer",
+    "fork_turns": "none",
+    "model_override_supplied": false,
+    "effort_override_supplied": false,
+    "all_five_lenses_assigned": true,
+    "read_only": true,
+    "inline_only": true,
+    "file_writes_authorized": false,
+    "children_authorized": false,
+    "native_observed_status": "completed",
+    "native_observation": "Actual collaboration.list_agents filtered only to this manager subtree returned agent_status.completed containing the complete terminal inline report.",
+    "raw_report_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-reviewer-1.raw.md",
+    "observation_recorded_by_utc": "2026-10-04T17:55:43Z",
+    "actual_completion_timestamp_exposed": false,
+    "raw_report_sha256": "19eb7a0531f276e19bf838f997047b14d08ed69b2e6cb8d389ad5f0eec315daa",
+    "raw_report_bytes": 21111,
+    "raw_report_verbatim": true,
+    "raw_final_newline_added": false,
+    "final_result": "insufficient-evidence"
+  },
+  "closure": "close_agent is unavailable; terminal status must be observed, not fabricated",
+  "runtime": "Mandatory later gate, not performed or waived by this source/check review",
+  "return": "REVIEW_COMPLETE",
+  "return_state": "unmet-gate",
+  "result": "insufficient-evidence",
+  "findings": [
+    {
+      "id": "F-ALL5-01",
+      "status": "open",
+      "severity": "material",
+      "confidence": "high",
+      "kind": "evidence-gap",
+      "independently_validated": true
+    }
+  ],
+  "all_five_lenses_current": true,
+  "current_readback": {
+    "at": "2026-10-04T17:56:54.387269+00:00",
+    "whole_identity_sha256": "aefbc18b32b2815ced41b441e88627f443e0171115b9c8de1c642c5d294b7801",
+    "owned_count": 130,
+    "authority_count": 66,
+    "configuration_count": 1,
+    "fingerprint_mismatches": [],
+    "index_z_equal": true,
+    "status_z_equal": true,
+    "listed_reuse_dependency_count": 35,
+    "listed_reuse_mismatches": [],
+    "missing_executed_dependencies": [
+      {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_job_snapshot.py",
+        "current_sha256": "a7f2413aff9807a495c3cd697f14ab813fa254beb8632ea7c2c49b68929010e6",
+        "in_reuse": false,
+        "in_authority": false,
+        "in_owned": false
+      },
+      {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_review_packet.py",
+        "current_sha256": "7830ec4b4d0b10cbab76e2403bdfceacf78f334e4777835daaaa2fc4e8746504",
+        "in_reuse": false,
+        "in_authority": false,
+        "in_owned": false
+      },
+      {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_wiki_handoff.py",
+        "current_sha256": "5a35d5586b11af10fea182f3ec45f44c19a14117223e7a54d5328b5e7afe4269",
+        "in_reuse": false,
+        "in_authority": false,
+        "in_owned": false
+      },
+      {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/snapshot_fixture.py",
+        "current_sha256": "79e1cfa9975f1e0b4e2040dd8b259543d207b3a770ee08ce9f171f5f22fbc2d4",
+        "in_reuse": false,
+        "in_authority": false,
+        "in_owned": false
+      },
+      {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/wiki_fixture.py",
+        "current_sha256": "cd2a1024f2acad7844a06406b7ff3f1794a016da21ffdd2d04abfae859e7a6de",
+        "in_reuse": false,
+        "in_authority": false,
+        "in_owned": false
+      },
+      {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "current_sha256": "15a250fb476407020a98740d443e95b612d075515a3500740d6ed56f2222d496",
+        "in_reuse": false,
+        "in_authority": false,
+        "in_owned": false
+      }
+    ],
+    "discovered_python_test_modules": [
+      "test_job_snapshot.py",
+      "test_review_packet.py",
+      "test_wiki_handoff.py"
+    ],
+    "candidate_refs": {
+      "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+      "branch": null,
+      "refs_sha256": "9d16de57b401c2857b4e01e956037365f3ca9669a716562248c6be8faf58472d",
+      "config_sha256": "0a84192202948bd789d2bd8bbb405668470eb300a3539fcdd609677fb2af310e",
+      "index_file_sha256": "f60a305e9691ad6ecac0d696c78dfc5bc779a73004fce64b0e5f955b76eaecbb"
+    },
+    "source_protected_equals_union": true,
+    "candidate_refs_equal_union": true,
+    "unowned_equal_union": true,
+    "current_inventory_count": 4355,
+    "raw_artifact_sha256": {
+      "evidence/fix-xy-code-command-only.json": "d91d3ff8c0058134b4622013923a30b902ee6207f6caab35c3a46ee83ce91179",
+      "evidence/fix-xy-wiki-command-only.json": "3b3975a2d8b090c70abd0b23eb94d2fe21198b78a08d72a28ab9fc4c00b27573",
+      "evidence/fix-xy-wiki-baseline-metadata.json": "317c0b1664b85a89f42cb1f4827e723a640a02666ae260337d296ffd3cc60438",
+      "evidence/fix-xy-unaffected-suite-reuse.json": "a0fc9a64bfc9f4af7248efa6f1a50cd49d2c4a0b3a795cb5c2684ad42153dd11",
+      "evidence/first-python-suite-command.json": "e9c1b41ebd26c726451cec204e812eca2cc5a6c6785cdcfa35430624eb16aff1",
+      "evidence/first-node-suite-command.json": "6de2700a795aeb0632dff31348552fd0749a5b0e833765e37a56d0d575de2040",
+      "fix-xy-neutral-change-accounting.json": "4ec0eb18996ab23f87f5c9c79cea9a36f6287909740edb13b163fe3bf8a03aee"
+    },
+    "child_raw_sha256": "19eb7a0531f276e19bf838f997047b14d08ed69b2e6cb8d389ad5f0eec315daa",
+    "child_raw_bytes": 21111
+  },
+  "hold_packet": {
+    "kind": "gate",
+    "id": "F-ALL5-01",
+    "status": "open",
+    "state": "unmet-gate",
+    "severity": "material",
+    "confidence": "high",
+    "question": "Can the retained historical 55-test Python success support the required current check despite omitted executed test/oracle/implementation dependencies?",
+    "checked_sources": [
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md:226",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-final-review-assignment.md",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-python-suite-command.json",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-unaffected-suite-reuse.json",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-final-identity.json",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_job_snapshot.py",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_review_packet.py",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_wiki_handoff.py",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/snapshot_fixture.py",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/wiki_fixture.py",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_job_snapshot.py:9",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_wiki_handoff.py:9",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_review_packet.py:13",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_review_packet.py:57",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/wiki_fixture.py:17",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/wiki_fixture.py:143",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/wiki_fixture.py:166"
+    ],
+    "affected_behavior": "Certification of the required current 55-test Python check and final source/check gate; no checklist or Wiki product defect established.",
+    "provider": "Commit Supervisor and the existing first-python-suite-command.json producer; exact raw historical receipt preserved.",
+    "consumer": "Current final source/check gate, mandatory subsequent runtime, and eventual owner packet.",
+    "evidence": {
+      "child_raw_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-reviewer-1.raw.md",
+      "child_raw_sha256": "19eb7a0531f276e19bf838f997047b14d08ed69b2e6cb8d389ad5f0eec315daa",
+      "child_native_status": "completed",
+      "discovery": {
+        "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+        "command": [
+          "python3.12",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          ".agents/skills/mc-commit-supervisor/tests",
+          "-p",
+          "test_*.py"
+        ],
+        "historical_exit": 0,
+        "historical_tests": 55,
+        "current_discovered_modules": [
+          "test_job_snapshot.py",
+          "test_review_packet.py",
+          "test_wiki_handoff.py"
+        ]
+      },
+      "reuse_listed_count": 35,
+      "listed_dependencies_current": true,
+      "missing": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_job_snapshot.py",
+          "current_sha256": "a7f2413aff9807a495c3cd697f14ab813fa254beb8632ea7c2c49b68929010e6",
+          "in_reuse": false,
+          "in_authority": false,
+          "in_owned": false
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_review_packet.py",
+          "current_sha256": "7830ec4b4d0b10cbab76e2403bdfceacf78f334e4777835daaaa2fc4e8746504",
+          "in_reuse": false,
+          "in_authority": false,
+          "in_owned": false
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_wiki_handoff.py",
+          "current_sha256": "5a35d5586b11af10fea182f3ec45f44c19a14117223e7a54d5328b5e7afe4269",
+          "in_reuse": false,
+          "in_authority": false,
+          "in_owned": false
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/snapshot_fixture.py",
+          "current_sha256": "79e1cfa9975f1e0b4e2040dd8b259543d207b3a770ee08ce9f171f5f22fbc2d4",
+          "in_reuse": false,
+          "in_authority": false,
+          "in_owned": false
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/wiki_fixture.py",
+          "current_sha256": "cd2a1024f2acad7844a06406b7ff3f1794a016da21ffdd2d04abfae859e7a6de",
+          "in_reuse": false,
+          "in_authority": false,
+          "in_owned": false
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+          "current_sha256": "15a250fb476407020a98740d443e95b612d075515a3500740d6ed56f2222d496",
+          "in_reuse": false,
+          "in_authority": false,
+          "in_owned": false
+        }
+      ],
+      "source_index_and_HEAD": "Read-only git ls-files --stage and git ls-tree -r HEAD for all six source-relative paths returned exit0 and no entries; pinned HEAD does not fill the missing binding.",
+      "immediate_edges": [
+        "test_job_snapshot.py:9 -> snapshot_fixture.py -> scripts/snapshot_state.py, job_snapshot.py, snapshot_restore.py",
+        "test_wiki_handoff.py:9 -> wiki_fixture.py -> repository fusion-studio-server/scripts/wiki.js and client node_modules/gray-matter",
+        "test_review_packet.py:13,57 -> scripts/review_packet.py"
+      ],
+      "identity_sha256": "aefbc18b32b2815ced41b441e88627f443e0171115b9c8de1c642c5d294b7801",
+      "readback_at": "2026-10-04T17:56:54.387269+00:00"
+    },
+    "unknowns": [
+      "Execution-time hashes of the six omitted files and supporting Wiki CLI/parser closure are not established by the supplied receipt/reuse identity.",
+      "Historical file drift or an actual test failure is not established."
+    ],
+    "resolver": "/root/s6_supervisor_fix_xy_1 (Commit Supervisor)",
+    "route": "Return this consolidated evidence hold to the assigned Supervisor; this manager dispatches no repair worker and performs no check rerun.",
+    "release_condition": "Supply execution-time bindings covering the omitted discovered modules, fixtures, review_packet implementation and actual supporting Wiki CLI/parser inputs, then prove current equality; alternatively renew the affected cumulative 55-test Python check with complete pre/post dependency bindings, exact raw command/result and unchanged reviewed candidate. Preserve the old receipt. Obtain fresh independent current all-five-lens final review under the original authority before runtime. The unchanged bound 17-test Node receipt does not require replay solely because of this gap.",
+    "preserved_progress": [
+      "All130 owned/66 authority/one configuration plus exact index/status and protection readbacks match the pinned candidate.",
+      "Current source code and three-page Wiki satisfy reviewed original/X/Y semantics; 39 source samples and syntax/Wiki receipts are qualified source mechanics.",
+      "The separately bound 17-test Node success remains retained and grants no successful-app-runtime claim.",
+      "Original provider/intent releases remain qualified history; no owner intent hold reopened."
+    ],
+    "next_safe_action": "Supervisor completes bounded Python evidence repair within its assigned execution scope, preserves these current bytes and raw reports, then requests a different fresh final source/check review. Mandatory actual runtime follows a materially clean source/check gate."
+  },
+  "own_native_terminal": "Pending parent native observation after this manager sends its final END; no fabricated completed/closed state.",
+  "ended_requested": true,
+  "effects": {
+    "authorized_report_writes_only": true,
+    "test_reruns": false,
+    "runtime": false,
+    "candidate_source_wiki_mutation": false,
+    "git_ref_index_remote": false,
+    "alpha": false,
+    "tasks_timers_mc_features": false
+  }
+}

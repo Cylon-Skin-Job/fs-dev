@@ -1,0 +1,17 @@
+{
+  "actor": "/root/s6_supervisor_candidate_1",
+  "started": "2026-10-04T16:03:28.573379+00:00",
+  "finished": "2026-10-04T16:03:31.415910+00:00",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "command": [
+    "node",
+    "jobs/commit-supervisor/rehearsal-20261004-s6/first_live_readback.mjs",
+    "jobs/commit-supervisor/rehearsal-20261004-s6/runtime-config.json",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-bFErPY/verified.json",
+    "before-initializer",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-preinitializer-reset.json"
+  ],
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": ""
+}

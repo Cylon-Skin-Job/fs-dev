@@ -1,0 +1,24 @@
+{
+  "finding": "CMH-001",
+  "at": "2026-10-07T10:11:10.027882+00:00",
+  "before_candidate": "sha256:f68de0235fa3bf24e3d11cfd0ece3599c113c0fc0fa06de24fa1bb7e2807ed4d",
+  "after_candidate": "sha256:65b324647b7e52f0426f7b2005849d053f4f239420fab07c848170b21ec1d3f3",
+  "exact_preimage": "reports/CANDIDATE-BEFORE-CMH-001.json",
+  "preimage_sha256": "297ef7de393a82bcdd908722767179c1d7f95503e031c4d801129e6184dc765f",
+  "normative_diff": "reports/CMH-001-NORMATIVE.diff",
+  "diff_sha256": "8fd4b2724bfa46d9d9b6aadac0f2c3a06e180a6ca2f6933420416e5bb9c38a36",
+  "artifacts": [
+    {
+      "path": "TICKET.md",
+      "before_sha256": "c29e2646b34b6d2e0ee9bf083ef0cce07954f27c887294cbe035ae088dcc0e41",
+      "after_sha256": "730b6c92efa396eeb3abdc5ee6c522c692c790db9c288346d141ad57817e0074"
+    },
+    {
+      "path": "SPEC.md",
+      "before_sha256": "1764a387605f65a0a65dfdd59b55c9a6a9e55a38030f506ff0da1caa393c1db6",
+      "after_sha256": "063562058007928d07477913a1ba05e43a2d191d6e42a0e9cb1d6a6e5c71659e"
+    }
+  ],
+  "disposition": "author repaired pending new fresh affected worker handoff review; initial report unchanged",
+  "source_evidence_sha256": "3ded48319af3a6a6ab45c23c540833b6eb617151ec31f4e4596f8c9e86f3d7f8"
+}

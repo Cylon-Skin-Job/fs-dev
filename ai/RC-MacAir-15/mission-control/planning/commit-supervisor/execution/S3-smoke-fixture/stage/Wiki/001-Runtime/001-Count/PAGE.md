@@ -1,0 +1,16 @@
+---
+name: "Count"
+description: "Fixture article."
+metadata:
+  source-files:
+    - "src/count.js"
+  last-modified: "2026-10-04T09:49:59Z"
+---
+
+# Count
+
+Current count returns n + 2.
+
+Approved future: a separate display choice.
+
+Open choice: display format.

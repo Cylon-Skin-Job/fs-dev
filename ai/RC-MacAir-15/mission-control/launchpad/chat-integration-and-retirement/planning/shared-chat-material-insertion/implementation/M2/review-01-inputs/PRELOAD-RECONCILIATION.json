@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-07T16:52:43.920810+00:00",
+  "path": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/fusion-studio-client/electron/preload.cjs",
+  "pre_build_sha256": "a87aaefb6d60425ec30013a6a1b8a2a3e21d50208a6c1727adc0be9968adef05",
+  "generated_sha256": "b200cc4f24c59ca53c4aebda40cdeeb8e3743da06fceb3006eb8b0a63a93ece3",
+  "restored_sha256": "a87aaefb6d60425ec30013a6a1b8a2a3e21d50208a6c1727adc0be9968adef05",
+  "generated_receipt": "checks/build-05.json",
+  "renderer_receipt": "checks/renderer-08.json",
+  "source_changes": [
+    "fusion-studio-client/electron/preload.cjs"
+  ],
+  "generated_copy": "preload-generated-build-05.cjs",
+  "diff": "preload-generated.patch",
+  "reason": "No preload API/source change; restore only own build-generated artifact to exact verified pre-M2 bytes. Built browser renderer test does not execute preload artifact; no claim restored file was rebuilt."
+}

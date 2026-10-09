@@ -1,0 +1,28 @@
+{
+  "runId": "chat-arch-1789971030100-46bf6854b1",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R4-DUPLICATE-MISMATCH",
+      "code": 0,
+      "signal": null,
+      "pid": 74802,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 7400
+    },
+    {
+      "id": "R4-LATE-DRAFT-RECOVERY",
+      "code": 0,
+      "signal": null,
+      "pid": 75350,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 30057
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

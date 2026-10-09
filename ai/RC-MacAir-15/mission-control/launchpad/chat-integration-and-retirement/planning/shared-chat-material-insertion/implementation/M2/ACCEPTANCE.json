@@ -1,0 +1,32 @@
+{
+  "status": "M2_ACCEPTED",
+  "scope": "Approved M2 only; M3 and final integrated acceptance remain",
+  "accepted_at": "2026-10-07T17:40:10.282614+00:00",
+  "owner_authority": "OWNER-APPROVAL.md unchanged exact candidate",
+  "HEAD": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "source_packet": "orchestrator-checks/acceptance-inputs-01.json",
+  "source_packet_sha256": "9eb615ac65b246aec8020dfbe5f4d7c6ab5ab10905c29a7bbe496f0b99a3b000",
+  "source_seal_sha256": "7177c3cc452e4391e3c5e31bb682532c358b7ade99e252a4cbc54b3029b82883",
+  "M2_patch_sha256": "2dd542f33818191999fa33a9d0b8da8276b9f6c71c472229bb239886e67ba43a",
+  "builder": "/root/m2_builder",
+  "builder_handoff": "HANDOFF.json",
+  "builder_review": "/root/m2_builder/builder_review_02 CLEAN after material diagnostic repair",
+  "orchestrator": "/root",
+  "inspection": "orchestrator-checks/INSPECTION-AND-CHECKS-01.json",
+  "checks": [
+    "orchestrator-checks/build-01.json",
+    "orchestrator-checks/renderer-01.json"
+  ],
+  "renderer_result": "165 passed, including 74 material cases",
+  "deviations": "orchestrator-checks/deviations-01.json M2-D01\u2013D08 accepted",
+  "acceptance_reviewer": "/root/m2_acceptance_review_01",
+  "acceptance_report": "ORCHESTRATOR-ACCEPTANCE-REVIEW-01.md",
+  "acceptance_report_sha256": "6167211368e0c022215d9237a11465cdccac959cd2b45ad2cd554155b58cd21d",
+  "freshness": "orchestrator-checks/acceptance-freshness-01.json",
+  "terminal_lifecycle": "Builder, two builder reviewers and distinct acceptance reviewer completed; close_agent unavailable",
+  "limits": "Controlled renderer sources; actual native capture/save, server persistence, required Wiki, fresh full server and final integrated review remain pending",
+  "downstream_impact": "Compatible bounded source/owner/selection convergence; M3 preserves these seams and diagnostic failure feedback",
+  "next_safe_action": "Fresh M3 builder; no renewed owner approval required inside approved single SPEC",
+  "whole_SPEC_owner_acceptance": "pending",
+  "publication": "not authorized"
+}

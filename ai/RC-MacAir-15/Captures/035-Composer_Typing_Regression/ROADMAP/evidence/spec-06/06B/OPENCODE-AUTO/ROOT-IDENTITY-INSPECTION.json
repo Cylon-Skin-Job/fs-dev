@@ -1,0 +1,19 @@
+{
+  "at": "2026-09-27T08:20:25.293316+00:00",
+  "inventories": {
+    "source": {
+      "files": 1964,
+      "mismatches": [],
+      "manifestSha256": "559e477742fd8436d7fc702786aefd465166b07fdd0b9eb37e5e251d8f5ee844"
+    },
+    "build": {
+      "files": 200,
+      "mismatches": [],
+      "manifestSha256": "b070d633863382e48ea2f6d677a92cfe65b9a4dea79caa87975711c109c70b03"
+    }
+  },
+  "changedPaths": [
+    "fusion-studio-server/lib/harness/opencode/index.js",
+    "fusion-studio-server/test/harness/opencode/harness-send-message.test.js"
+  ]
+}

@@ -16,7 +16,11 @@ metadata:
     - fusion-studio-server/lib/file-mutations/reported-ui-context.js
     - fusion-studio-server/lib/event-registry/seed-catalog.js
     - fusion-studio-server/lib/subscriptions/admission.js
-  last-modified: "2026-09-28T04:56:08Z"
+    - fusion-studio-client/src/lib/chat-material-target.ts
+    - fusion-studio-client/src/lib/chat-material-commit.ts
+    - fusion-studio-client/src/state/slices/mountedChatState.ts
+    - fusion-studio-client/src/components/chat/useMountedChatBinding.ts
+  last-modified: "2026-10-07T20:18:16Z"
 ---
 
 Status: the underlying provenance assessment was source-inspected on 2026-09-19; this cleanup rechecked attachment staging and send ownership against the current development source. The general UI Action Provenance Module described by this page is future work. The implemented counterpart is the optional mediated-save context reader and carrier; it is not a universal command wrapper, a `ui.action` publisher or a prompt-attachment adapter. Tests were inspected, not rerun; no runtime claim is made.
@@ -28,6 +32,12 @@ Status: the underlying provenance assessment was source-inspected on 2026-09-19;
 Production Office and Email document save paths call the shared store; current File Viewer consumers read content and stage attachments rather than exposing a mediated text-save editor. A generic reader accepting a registered panel does not mean every view supplies tab context. The reader's connected-owner source is specifically the File owner, and it omits unavailable or mismatching detail.
 
 `SendToChatButton` resolves a resource attachment and dispatches the existing browser chat action. `chat-action-controller` stages that attachment for the addressed workspace/session; on actual composer send, `useChatSessionActions` snapshots pending attachments into `sendMessage`; `chatSlice` sends the ordinary `prompt`. These are operational Chat paths. Source and registry searches find no general UI-action envelope or publisher in that path. Attachment staging, navigation and actual prompt sending must not be advertised as emitting `ui.action` today.
+
+## Source resource and composer destination
+
+Global **Send to Chat** captures the last actually active eligible open mounted Main or Side composer before resource preparation. The source panel/root/path describes the attachment subject, independently of that destination. A source button taking DOM focus does not redirect it; missing/stale activity has no Main/Legacy fallback. Shared begin/commit validates the captured binding and writes through existing exact-session stores. A retained owner survives unrelated view/focus changes; actual lifetime or authority loss cancels permanently.
+
+Staging prepares a pill for review/editing and creates no prompt, chat or general `ui.action` fact. Ordinary Send remains a separate server-owned acceptance and persistence boundary; existing attachment order, metadata, receipt clearing and provenance retain their owners. Captured insertion destination is operational authority, not a new UI provenance envelope or a claim about active resource context at later send.
 
 ## Approved direction and first pair
 

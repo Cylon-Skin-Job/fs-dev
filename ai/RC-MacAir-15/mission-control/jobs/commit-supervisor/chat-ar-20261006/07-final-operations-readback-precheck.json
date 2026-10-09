@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-07T00:31:58.952866+00:00",
+  "label": "07-final-operations-readback",
+  "tree": "1c80f83c6c4b2b61e42c4dbb988c1f942b672ade",
+  "candidate_head": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "source_head": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "source_branch": "main",
+  "source_refs": "feb740b6fd45246a69cdd4cbae76d18adcbc1cbe refs/heads/agent/alpha-office-editor-promotion\n87231c62b03d58f6eefa65472f2f2a6e559406bc refs/heads/agent/alpha-packaged-log-path\nd15792920731f85e45b743519d4af2b807d95a9c refs/heads/agent/exact-workspace-paths\n5434527aeb8bc1426e2ef46c83db6739fc68ba5a refs/heads/agent/oe009-complete-office-work\n501eb35379ac0278f9aa20ef7f6b99a16241bac1 refs/heads/agent/rcc-0108-roadmap\n806b33521907ed4b51cf792d5ef664fe319ea349 refs/heads/agent/universal-view-tab-bar-spec\n888025748036180c3cdf4749fcd749e17a149bec refs/heads/archive/rcc-0108-dirty-state\n6565c01a123644d99d987171248a6d7b09f8105b refs/heads/archive/universal-view-tab-bar-wip\na4a4262587a7f72f89f5b9b9c2f54878fe5381bb refs/heads/codex/chat-retirement-and-startup-repair\n22cc435230a209531378c17db56ba17db323e8bf refs/heads/codex/implement-tabs03-tab-target-placem\nacf12dafe7499b04995617e5d9c1512775e5ba12 refs/heads/codex/prov01-accepted-source\n2a275a344588b7e604ad666433dff98818c69380 refs/heads/codex/prov01-integration\na4a4262587a7f72f89f5b9b9c2f54878fe5381bb refs/heads/main\nbafc1ed0bf6b951d647d9a313f87612f81a012bf refs/remotes/gitlab/HEAD\nbafc1ed0bf6b951d647d9a313f87612f81a012bf refs/remotes/gitlab/main\n3d7e43f1972f24ac41886283855ce0f7adf84bd2 refs/remotes/gitlab/spec-bs-001-validation-findings\n3356e1b73cc5d44028eac5baa02fd542a8bbc385 refs/remotes/origin/HEAD\nd15792920731f85e45b743519d4af2b807d95a9c refs/remotes/origin/agent/exact-workspace-paths\n3356e1b73cc5d44028eac5baa02fd542a8bbc385 refs/remotes/origin/main\nacf12dafe7499b04995617e5d9c1512775e5ba12 refs/remotes/prov01/accepted-source\n",
+  "candidate_support_separate": true,
+  "source_copied": true,
+  "source_staged": true,
+  "required_current_gates_match": true,
+  "unselected_source_bytes_match": true,
+  "owner_authority": "Actual human local merge/commit and coherent inspected-documentation instructions, owner-operation-authority.md; no push/PR/Alpha."
+}

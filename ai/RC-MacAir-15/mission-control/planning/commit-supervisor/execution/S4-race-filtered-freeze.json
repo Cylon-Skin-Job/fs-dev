@@ -1,0 +1,15 @@
+{
+  "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-filtered-manifest.json",
+  "manifest_sha256": "88f974ccbf35e3828676e51fbe13b133571ea56b8350a7d423bc4919997b7a39",
+  "current_packet_identity": "sha256:3d36ef2d8e7edf9112b4eb79624f1a1f0dbf629e82c6c45ca78a6521fce79c23",
+  "entries": 74,
+  "original_immutable_manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-pass-1/manifest.json",
+  "excluded": [
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-orchestrator-preliminary.json",
+      "frozen": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-pass-1/036-S4-race-orchestrator-preliminary.json",
+      "sha256": "f10f0e897469cf019d696617c69efae271f381104e01e3bfe445af4c6f5aafb2"
+    }
+  ],
+  "reason": "Manager assessment is excluded from fresh reviewer inputs; all remaining frozen/current artifact bytes unchanged."
+}

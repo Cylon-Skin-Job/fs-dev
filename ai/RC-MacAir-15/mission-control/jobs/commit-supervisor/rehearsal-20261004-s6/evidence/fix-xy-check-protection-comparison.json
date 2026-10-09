@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-04T18:14:14.006656+00:00",
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "before": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-check-protection-pre.json",
+    "sha256": "a7ad97d06a2179fdc340339639ace60123e3fa2c44020a03fd13c8a6fb3355ee"
+  },
+  "after": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-check-protection-post2.json",
+    "sha256": "a3b9f2a36926fa9224d6a0f7961e8a22ba084901cc27b7f0be1bb5f7466074e7"
+  },
+  "excluded": [
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/",
+    "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/"
+  ],
+  "equal": [
+    "head",
+    "refs",
+    "index",
+    "source_build_caches",
+    "processes"
+  ],
+  "other_unowned_changes": [],
+  "profile_identity_changes": [],
+  "profile_limit": "Active hashes volatile; dev/inode/existence/mode equality only. No copied user contents."
+}

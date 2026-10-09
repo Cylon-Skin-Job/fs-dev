@@ -1,0 +1,16 @@
+{
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "started": "2026-10-04T19:19:13.462782+00:00",
+  "finished": "2026-10-04T19:19:14.291768+00:00",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "command": [
+    "python3.12",
+    "-B",
+    "jobs/commit-supervisor/rehearsal-20261004-s6/fix_xy_runtime_integrity.py",
+    "pre",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-runtime-source-pre.json"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-runtime-source-pre.json\", \"sha256\": \"b2cae64fa04a5a2432ba31f5d62bbfa4b4f549726f23040f18be014941959587\", \"owned\": 130, \"authority\": 77, \"55deps\": 3808, \"17deps\": 11, \"whole_tests\": 20, \"expected_runtime_only_deltas\": []}\n",
+  "stderr": ""
+}

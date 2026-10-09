@@ -27,6 +27,9 @@ kimi_wikis.json
 fusion-studio-server/data/*.db
 fusion-studio-server/data/*.db-journal
 fusion-studio-server/data/*.db-wal
+# Local database backups and Node runtime compilation caches
+fusion-studio-server/data/backups/
+**/node-compile-cache/
 # Large bundled binaries — download at build time, never commit
 fusion-studio-client/electron/resources/pandoc/
 fusion-studio-client/electron/resources/models/

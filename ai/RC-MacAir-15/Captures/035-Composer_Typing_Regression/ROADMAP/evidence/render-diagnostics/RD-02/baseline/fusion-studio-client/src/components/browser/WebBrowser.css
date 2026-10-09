@@ -1,0 +1,25 @@
+/* WebBrowser — general web browser layout with tabs */
+
+.rv-web-browser {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.rv-web-browser-iframe-container {
+  flex: 1;
+  position: relative;
+  min-height: 0;
+}
+
+.rv-web-browser-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}

@@ -1,0 +1,17 @@
+{
+  "command": [
+    "npx",
+    "--no-install",
+    "playwright",
+    "test",
+    "--config=playwright.chat-architecture.config.ts",
+    "e2e/chat-material-wiki.spec.ts",
+    "--workers=1",
+    "--output=/private/tmp/fusion-main-consolidation-95vxg0_h/wiki-output"
+  ],
+  "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/fusion-studio-client",
+  "started": "2026-10-09T01:06:13.474617+00:00",
+  "ended": "2026-10-09T01:06:19.210437+00:00",
+  "exit_code": 0,
+  "log": "/private/tmp/fusion-main-consolidation-95vxg0_h/wiki.log"
+}

@@ -1,0 +1,41 @@
+{
+  "at": "2026-10-04T17:06:16.233029+00:00",
+  "actor": "/root",
+  "scope": "Read-only archive verification; active Wiki writer may legitimately change current checkpoint equality",
+  "manifest_sha256": "5227a7a7d38dddec138aff13c16f2ee8a22bda1a53657f203a47d80857827617",
+  "union_added": [
+    "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-095624.md"
+  ],
+  "union_removed": [],
+  "payloads": 118,
+  "payload_hash_failures": [],
+  "original_guide_preimage": {
+    "flag": null,
+    "index": [],
+    "worktree": {
+      "kind": "file",
+      "mode": 420,
+      "sha256": "a3d372eba6208c2fbee71cd046f305a91fc7c44185c5dae42b5da50e5cbcfdce"
+    }
+  },
+  "new_version_preimage": {
+    "flag": null,
+    "index": [],
+    "worktree": {
+      "kind": "missing"
+    }
+  },
+  "public_verify": {
+    "command": [
+      "/opt/homebrew/bin/python3.12",
+      "-B",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+      "verify",
+      "--job",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/fix-xy-wiki-1"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"result\": \"VERIFIED\", \"payloads_valid\": true, \"matches_checkpoint\": true, \"status_equal\": true, \"current_sha256\": \"4b6ecb6cfbd6cea78ea82773364b0af26d353f8633b0c3b265c3bb7cb70c596f\", \"manifest_sha256\": \"5227a7a7d38dddec138aff13c16f2ee8a22bda1a53657f203a47d80857827617\"}\n",
+    "stderr": ""
+  }
+}

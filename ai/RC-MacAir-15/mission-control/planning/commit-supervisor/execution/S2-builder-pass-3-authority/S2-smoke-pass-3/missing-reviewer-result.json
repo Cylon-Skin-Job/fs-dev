@@ -1,0 +1,105 @@
+{
+  "agent_gate_proof": false,
+  "candidate": {
+    "authority": {
+      "SPEC": "approved"
+    },
+    "configuration": {
+      "profile": "disposable"
+    },
+    "fixtures": {
+      "oracle": "correct"
+    },
+    "owned": {
+      "code.py": {
+        "index": "base",
+        "mode": "100644",
+        "worktree": "fixed"
+      }
+    },
+    "preparation": "replay-owned-bytes",
+    "sources": [
+      "source-1"
+    ],
+    "target": "target-1"
+  },
+  "dispatch_actions": [],
+  "dispositions": {
+    "F1": [
+      {
+        "actor": "fixture-manager",
+        "evidence": "fixture/repro.log",
+        "status": "open"
+      },
+      {
+        "actor": "fixture-writer",
+        "status": "repair-reported"
+      },
+      {
+        "actor": "fixture-manager",
+        "candidate": {
+          "authority": {
+            "SPEC": "approved"
+          },
+          "configuration": {
+            "profile": "disposable"
+          },
+          "fixtures": {
+            "oracle": "correct"
+          },
+          "owned": {
+            "code.py": {
+              "index": "base",
+              "mode": "100644",
+              "worktree": "fixed"
+            }
+          },
+          "preparation": "replay-owned-bytes",
+          "sources": [
+            "source-1"
+          ],
+          "target": "target-1"
+        },
+        "handoff_id": "F1-handoff",
+        "reviewers": [
+          "fixture-handoff-reviewer"
+        ],
+        "status": "handoff-validated"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "assigned_paths": [
+        "code.py"
+      ],
+      "authority": "approved behavior criterion",
+      "confidence": "medium",
+      "evidence": "fixture/repro.log",
+      "id": "F1",
+      "impact": "accepted input returns incorrect result",
+      "path": "code.py",
+      "severity": "high",
+      "validated": true
+    }
+  ],
+  "gaps": [
+    "missing independent reviewer",
+    "missing lens: Behavior & Verification",
+    "missing lens: Standards Compliance",
+    "missing lens: Integrations & Dependencies",
+    "missing lens: Forward Compatibility",
+    "missing lens: Wiki Impact"
+  ],
+  "hold_packet": null,
+  "invalidated": [],
+  "raw_reports": [],
+  "repair_packet": null,
+  "result": "insufficient-evidence",
+  "return": "REVIEW_COMPLETE",
+  "state": "unmet-gate",
+  "unaffected": [
+    "behavior",
+    "F1-handoff"
+  ]
+}

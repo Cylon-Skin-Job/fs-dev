@@ -1,0 +1,102 @@
+{
+  "gate": "M2 builder; proposed classifications only",
+  "upstream": "M1-D01–D06 accepted in implementation/M1/orchestrator-checks/deviations-01.json; downstream constraints adopted, original records unchanged",
+  "records": [
+    {
+      "id": "M2-D01",
+      "original_text": "M2 expected source/menu/footer/session callbacks; sources prepare independently; reuse the existing action consumer and stores",
+      "actual_change": "Add portable chat-material-source types and connected useComposerMaterialSource adapter",
+      "reason_authority": "Mechanical common begin/cancellation/prepared completion and presentation seam needed for all M2 callers under SPEC 4.1/4.3; no new action consumer or store",
+      "files": ["src/lib/chat-material-source.ts", "src/components/chat/useComposerMaterialSource.ts"],
+      "checks": "Actual Main/Side/adapterless menus, pending/unknown, warm suppression/failure, source errors and deferred source suite",
+      "observable_effect": "Sources receive an already-bound operation before preparation and one prepared commit; editor presentation and warm use only captured owner",
+      "risk": "Shared connected seam affects all source callers; covered through actual public UI and cumulative checks",
+      "downstream": "M3 should use beginMaterial for own camera while preserving camera preparation/correlation; globals use existing global begin directly",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "M2-D02",
+      "original_text": "Exact originating committed lifetime; stale same-instance callbacks must not retarget; expected host/contract integration",
+      "actual_change": "Accepted M1 registration returns a distinct lifetime holder; host material callback slots keyed by owner tuple; old holder/slot cleared in layout cleanup",
+      "reason_authority": "An old closure reading a mutable shared ref would otherwise acquire the rebound composer; SPEC R-04/R-05/A09/A16 requires permanent rejection",
+      "files": ["src/components/chat/useMountedChatBinding.ts", "src/components/chat/useChatSessionHost.ts", "src/components/chat/ChatSurface.tsx", "src/components/chat/ConnectedChatComposer.tsx", "src/components/chat/chatSurfaceContract.ts", "src/components/chat/useChatMountInteractions.ts"],
+      "checks": "Same DOM node retained across actual tuple reuse; old begin/text/attachment reject before any write/focus; equal tuple return remains dead; actual unmount/loss tests",
+      "observable_effect": "No late callback can read a replacement adapter; unrelated focus/isActive changes retain the original lifetime",
+      "risk": "Accepted M1 host seam changes, so cumulative original registration/identity/activation/isolation checks renewed",
+      "downstream": "M3 captures this holder at camera action start; does not fetch current owner after native awaits",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "M2-D03",
+      "original_text": "Preserve composer cursor replacement/current selection, latest draft and existing intended source behavior; editor/native operations remain existing owners",
+      "actual_change": "Add readSelection/restoreCaret/recordMaterialText to existing editor adapter; remove external material insertText callback use; preserve emoji-recent recording for cursor sources through existing API only",
+      "reason_authority": "SPEC 4.1/A16 requires latest matching selection without mutating through a rebound input; prior insertText also recorded prepared-text emoji recents",
+      "files": ["src/components/ChatInput.tsx", "src/components/chat/chatSurfaceContract.ts", "src/components/chat/useComposerMaterialSource.ts", "src/components/chat/useChatMountInteractions.ts"],
+      "checks": "Cursor replacement, intervening typing, stale DOM paragraph append, duplicate mounts, focused original caret guard, emoji record once; diagnostics don't gain emoji side effect",
+      "observable_effect": "Store remains the mutation owner; current editor is presentation/selection only; no new focus theft",
+      "risk": "ChatInput already exceeds file-size goal; bounded 17-line API addition avoids unrelated editor rewrite",
+      "downstream": "Unsupported adapters safely append; M3 attachment camera requires no cursor operation",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "M2-D04",
+      "original_text": "Diagnostic capture before retrieval at actual Ask AI click; connected history callback contract as needed",
+      "actual_change": "Diagnostic callback now receives lazy prepare() rather than already-retrieved text; propagate type through MessageList and portable contract",
+      "reason_authority": "Original details UI awaited retrieval before invoking session action; SPEC R-04 requires synchronous begin first",
+      "files": ["src/components/MessageList.tsx", "src/components/chat/ChatDiagnosticDetails.tsx", "src/components/chat/chatSurfaceContract.ts", "src/components/chat/useChatSessionActions.ts"],
+      "checks": "Actual redacted history diagnostic controls deferred retrieval survives other focus/cancels on real rebind; existing diagnostic action and prompt ownership regression",
+      "observable_effect": "Pending/unavailable denies before report retrieval; validated report paragraph-appends to captured composer only; no warm/send",
+      "risk": "Small callback contract crossing renewed in actual UI and build; validation/redaction/retrieval handlers unchanged",
+      "downstream": "Other history presenters use the lazy preparation contract, no second diagnostic insertion consumer",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "M2-D05",
+      "original_text": "Only necessary lease/cancellation plumbing in VoiceRecorder/useAudioCapture; preserve recording/transcription behavior; explicit cancellation/real lifetime change cancels late insertion",
+      "actual_change": "Forward AbortSignal, stabilize stop callback, retain current UI callbacks via refs, guard permission/device/media/context/transcription awaits and onstop, stop late/temporary stream tracks, abort HTTP transcription and prevent cancelled state callbacks",
+      "reason_authority": "Existing MediaRecorder.onstop transcribed even stopRecording(true); callback-dependent effect cleanup accidentally stopped retained operations; delayed acquisition otherwise starts work after cancellation. Required bounded M2 lifecycle repair, no capture redesign",
+      "files": ["src/mic/MicTrigger.tsx", "src/mic/VoiceRecorder.tsx", "src/mic/useAudioCapture.ts"],
+      "checks": "Main/Side deferred transcription preserves original destination/focus; explicit cancel permission/recording/processing; same-instance tuple reuse permission/processing; late acquisition track-stop assertion",
+      "observable_effect": "Explicit source cancel/retirement prevents late recording/transcription/insertion; retained callback rerenders no longer cancel work; success closes source UI after commit",
+      "risk": "Uncancelable browser permission request may still resolve, but returned tracks are stopped and no recorder or insertion starts; physical hardware not certified by fixture",
+      "downstream": "No server/STT prompt/capture behavior redesign; native mic verification not claimed. M3 must preserve shared lifecycle cancellation",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "M2-D06",
+      "original_text": "Duplicate mounts keep independent transient menu state; successful menu initiation close isn't composer closure; explicit source cancel invalidates",
+      "actual_change": "Remove fixed source-modal ids to use existing generated per-instance IDs; use original composed event path for shared outside-click containment",
+      "reason_authority": "Fixed IDs conflate distinct mounts; mic Send swaps old button before document outside-click listener runs, falsely cancelling processing. Direct failing trace proves required M2 integration seam",
+      "files": ["src/components/hover-icon-modal/useHoverIconModal.ts", "src/clipboard/ClipboardTrigger.tsx", "src/recent-files/RecentFilesTrigger.tsx", "src/screenshots/ScreenshotsTrigger.tsx", "src/mic/MicTrigger.tsx"],
+      "checks": "Failure mic-debug-05 and repaired mic-diagnostic-06; final Main/Side source UI, duplicate surface/menu isolation, shared menu structure regression",
+      "observable_effect": "An inside command click remains inside after its DOM button is replaced; explicit Escape/outside cancel still aborts mic; menus keep distinct identities",
+      "risk": "Shared hover-modal handler serves other controls; existing containment retained as fallback, menu/isolation regression renewed",
+      "downstream": "No menu visual redesign; M3 public camera uses same source initiation-close distinction",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "M2-D07",
+      "original_text": "Expand real material fixture/public menus; keep source-bound menu/diagnostic checks; responsibilities under 400-line goal; camera menu spec listed in M3",
+      "actual_change": "Extend accepted fixture using actual authenticated ws-client plus controlled source boundaries, split source fixture/cases into cohesive support modules; migrate only changed gallery/clipboard/recent callback source assertions in existing camera-menu suite",
+      "reason_authority": "M2 public source behavior must be real and cumulative; old callback assertions would certify removed bypass. Mechanical test integration, camera assertions kept for M3",
+      "files": ["e2e/chat-material-insertion.spec.ts", "e2e/support/chat-material-fixture.tsx", "e2e/support/chat-material-source-fixture.ts", "e2e/support/chat-material-source-cases.ts", "e2e/chat-composer-screenshot-menu.spec.ts"],
+      "checks": "72 material cases plus identity/isolation/registration/diagnostic/menu/Send/System/prompt ownership/recovery checks in final current-byte renderer receipt",
+      "observable_effect": "Production callers/consumer/stores observed through deterministic deferred data; source-string assertions remain only structural supplementary evidence",
+      "risk": "Transport/media/native preparation controlled in browser fixture, so actual native PNG/provider certification remains M3/final pending",
+      "downstream": "M3 retains cumulative cases and completes obsolete direct-camera assertions/native scenario; fixture adapters are test-only, no product flag/parallel path",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "M2-D08",
+      "original_text": "Build generates tracked preload; reconcile only own generated artifact to verified baseline if API/source unchanged, preserving exact hashes/diff/dist receipts",
+      "actual_change": "Record generated preload bytes/hash/diff and built renderer inventory, then restore exact pre-M2 tracked preload",
+      "reason_authority": "Explicit M2 dispatch instruction; no Electron/preload API source change",
+      "files": ["electron/preload.cjs", "implementation/M2/PRELOAD-RECONCILIATION.json", "implementation/M2/BUILD-OUTPUT.json"],
+      "checks": "Pre-build copied baseline/hash in START.json, successful fresh build receipt; final restored artifact matches exact hash and no preload-source diff",
+      "observable_effect": "No unintended generated-only product delta; tested built renderer remains identified separately",
+      "risk": "Final dirty source seal differs from check snapshot only for explicitly reconciled artifact; exact addendum demonstrates irrelevant renderer-test seam",
+      "downstream": "Manager/final builds repeat receipt and reconcile according to their own source API changes; no fabricated build of restored generated artifact",
+      "proposed_classification": "accepted"
+    }
+  ]
+}

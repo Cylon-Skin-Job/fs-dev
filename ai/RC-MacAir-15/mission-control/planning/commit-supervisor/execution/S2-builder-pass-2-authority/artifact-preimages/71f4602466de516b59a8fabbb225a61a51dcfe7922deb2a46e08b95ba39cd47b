@@ -1,0 +1,4 @@
+interface:
+  display_name: "MC Commit Repair Worker"
+  short_description: "Repair assigned integration findings as a leaf worker"
+  default_prompt: "Use $mc-commit-repair-worker to repair these assigned findings under established intent and return evidence for the Commit Supervisor's independent handoff review."

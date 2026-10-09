@@ -1,0 +1,35 @@
+{
+  "recordedAt": "2026-09-27T05:13:30.421962+00:00",
+  "source": "Supervisor task 01a0c1c8-6e85-7f83-8d67-2cb5c1476007 report; not independently repeated here",
+  "authorization": "Owner approved restarting only native computer-use helper and resuming tests after demonstrated health",
+  "recovery": {
+    "terminatedExactHelperPid": 11078,
+    "relaunchedVerifiedInstalledApp": true,
+    "newHelperPid": 59859,
+    "newHelperAlive": true,
+    "unchangedDesktopPid": 10980,
+    "unchangedRuntimePid": 11010,
+    "protectedCaffeinatePid": 55084
+  },
+  "checks": [
+    {
+      "method": "CUA reset followed by fresh getState",
+      "durationSeconds": 5.6,
+      "result": "-10005 codex app-server exited before response",
+      "nativeApps": []
+    },
+    {
+      "method": "getState after helper remained alive for2m39s",
+      "durationSeconds": 31.6,
+      "result": "initialize timeout",
+      "nativeApps": []
+    }
+  ],
+  "browserLimit": "Inventory lists IAB; actual browser health not proven",
+  "uiActions": false,
+  "fixtureLaunch": false,
+  "sourceOrFixtureChanges": false,
+  "status": "BLOCKED external native-control boundary",
+  "pending": "Single assessed unchanged-candidate SOAK05 after demonstrated native health; full owner symptom acceptance and06C remain pending",
+  "scopeLimit": "Helper-only recovery exhausted; broader desktop restart not authorized"
+}

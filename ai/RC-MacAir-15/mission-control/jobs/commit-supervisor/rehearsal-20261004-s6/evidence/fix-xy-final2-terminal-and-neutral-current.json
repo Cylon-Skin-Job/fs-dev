@@ -1,0 +1,33 @@
+{
+  "at": "2026-10-04T18:44:45.694068+00:00",
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "kind": "ACTUAL_FINAL2_TERMINALS_AND_CURRENT_NEUTRAL_BINDINGS",
+  "manager_native_completed": true,
+  "manager_return": "REVIEW_COMPLETE insufficient-evidence/unmet-gate END",
+  "child_native_completed": true,
+  "child_return": "REVIEW_COMPLETE insufficient-evidence/unmet-gate END",
+  "observations": "Direct actual FINAL_ANSWER manager2 received; direct collaboration.list_agents exact manager2 subtree returned both completed with native final text. Child raw fully read and preserved; exact message order in manager2 lifecycle.",
+  "manager_report": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-manager-2.md",
+    "sha256": "773fa1f00ace4de9cdb0035166785b6225f0b12a4c004266b0eaa544fbed4e4d"
+  },
+  "lifecycle": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-manager-2-lifecycle.json",
+    "sha256": "fba0bdda7c887eae5073b374ac132bfb7342508bb0f3478f64d1bbe0e4dd4cea"
+  },
+  "child_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-reviewer-2.raw.md",
+    "sha256": "9abe3ae883efd28517c524d83ab92d8177311991b5cc9de9204027a119cc5dc3"
+  },
+  "native_finding": "FINAL2-INDEPENDENCE-001",
+  "supervisor_alias": "F-ALL5-02",
+  "severity": "material for fresh gate",
+  "confidence": "high, direct exact messages",
+  "product_defect_inferred": false,
+  "current55_dependency_count": 3808,
+  "current55_mismatches": [],
+  "currentNode17_dependency_count": 11,
+  "currentNode17_mismatches": [],
+  "candidate130_index_status_source_target_config_unchanged": true,
+  "next": "different fresh manager3/reviewer; old diagnoses/assessments excluded; runtime held"
+}

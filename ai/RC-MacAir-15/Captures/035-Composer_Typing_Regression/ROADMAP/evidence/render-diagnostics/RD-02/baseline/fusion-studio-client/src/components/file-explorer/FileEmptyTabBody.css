@@ -1,0 +1,44 @@
+/*
+ * VIEW-02 §6 — File Empty-tab body (the reference Empty pattern).
+ *
+ * Centered folder icon + "Open file" (larger font) + "Select a file from the
+ * workspace tree" (normal font). The floating dock control mirrors the
+ * accepted document-presenter dock (same toggle seam) and anchors to the
+ * generic Empty panel's positioned surface. Every value traces back to the
+ * established CSS variables.
+ */
+
+.rv-file-empty-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  text-align: center;
+}
+
+.rv-file-empty-body-icon {
+  color: var(--content-accent-color, var(--accent-color, #8ab4f8));
+  font-size: var(--icon-size-xl, 48px);
+}
+
+.rv-file-empty-body-heading {
+  margin: 0;
+  color: var(--content-heading-color, var(--text-primary, #f5f5f5));
+  font-size: var(--font-size-xl, 22px);
+  font-weight: var(--font-weight-semibold, 600);
+}
+
+.rv-file-empty-body-copy {
+  margin: 0;
+  color: var(--content-muted-color, var(--text-dim, #999));
+  font-size: var(--font-size-sm, 13px);
+}
+
+/* The generic `.rv-empty-tab-panel` is the positioned ancestor; this matches
+ * the accepted document-presenter dock geometry (top 8px / right 12px). */
+.rv-file-empty-dock {
+  position: absolute;
+  top: var(--space-sm, 8px);
+  right: var(--space-md, 16px);
+  z-index: 9;
+}

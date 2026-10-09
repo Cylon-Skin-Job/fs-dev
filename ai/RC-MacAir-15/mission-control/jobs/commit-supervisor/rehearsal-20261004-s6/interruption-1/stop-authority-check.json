@@ -1,0 +1,32 @@
+{
+  "at": "2026-10-04T20:15:22.129427+00:00",
+  "actor": "/root/s6_supervisor_interruption_1",
+  "exact_current_state_matches_fixed": true,
+  "current_fixed_manifest_sha256": "fd15619a9ebd65f9600e6867054ddd15dbaef589a607d2177c9f3528e33f5e9e",
+  "five_accepted_candidate_source_sha256": {
+    "restart-fusion.sh": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+    "scripts/fusion-restart.mjs": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+    "scripts/fusion-restart-target.mjs": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+    "scripts/fusion-restart-processes.mjs": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+    "scripts/fusion-restart-probe.mjs": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e"
+  },
+  "stop_helper_sha256": "34ffc7d6fb4660679557c2f5aeffaaca0fb5428ae418b1c700ca4a6c32fd213e",
+  "runtime_config_sha256": "7fba1148c0f66578ff76f294bcbbc5ed3a1f1694cf0bcfa6077db00594d81166",
+  "protected_root_ids": [
+    48636,
+    48653,
+    77002,
+    77007
+  ],
+  "selected_ids": [
+    31000,
+    31005,
+    31006,
+    31008,
+    31036,
+    31138
+  ],
+  "no_conflicting_writers": true,
+  "matching_schedules": [],
+  "runtime_scope": "ONLY exact candidate/private profile/MC-S6 process tree; no build/restart/cache/DB/profile restore"
+}

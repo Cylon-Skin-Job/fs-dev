@@ -1,0 +1,69 @@
+{
+  "at": "2026-10-06T23:16:54.775214+00:00",
+  "orchestrator": "/root/chat_commit_final_review",
+  "manager": "/root",
+  "mode": "final",
+  "pass": 2,
+  "fresh_reviewer": {
+    "identity": "/root/chat_commit_final_review/final_affected_02",
+    "role": "clean-room-reviewer",
+    "fork_turns": "none",
+    "root_model_effort_inherited": true,
+    "model_effort_override": false,
+    "parent_or_author_history_inherited": false,
+    "prior_verdict_diagnosis_supplied": false,
+    "actual_terminal_status": "completed",
+    "actual_status_evidence": "FINAL_ANSWER event containing terminal REVIEW_COMPLETE and no remaining tools/children attestation",
+    "result": "clean",
+    "raw_report": "affected-raw.md",
+    "raw_sha256": "1de2a94dbd77cce0cead26ec70c03b9546add88a7bc77ff0928571641d5cf519",
+    "scope": "Affected article/source/navigation/history and current publication package binding",
+    "attestation": {
+      "fresh_independent_session": true,
+      "inherited_parent_conversation_or_prior_reviewer_history": false,
+      "prior_reviewer_reports_consulted": false,
+      "prior_reviewer_conclusions_used": false,
+      "read_only": true,
+      "filesystem_writes": false,
+      "git_reads_all_used_GIT_OPTIONAL_LOCKS_0": true,
+      "git_index_object_or_ref_writes": false,
+      "subagents_spawned": false,
+      "runtime_app_profile_provider_native_or_archival_actions": false,
+      "model_and_effort": "Inherited root settings; no override requested or selected.",
+      "effective_permissions": "Developer-provided Full Access / approval never; assignment restrictions observed.",
+      "lifecycle": "Terminal REVIEW_COMPLETE on first materially clean affected pass. close_agent unavailable; parent owns lifecycle recording."
+    }
+  },
+  "retained_reviewers": [
+    {
+      "identity": "/root/chat_commit_final_review/final_code",
+      "terminal_status": "completed",
+      "scope": "Code/runtime evidence lenses; all code/config/test/fixture dependencies unchanged",
+      "raw_report": "retained-code-raw.md",
+      "raw_sha256": "62b7e3183b8a00728b44f42bc6c01c4f10bb053d776d1772a6b4bad0d002089f"
+    },
+    {
+      "identity": "/root/chat_commit_final_review/final_docs",
+      "terminal_status": "completed",
+      "scope": "Whole documentation/package coverage EXCLUDING current restart article and affected publication closure; historical finding preserved unchanged",
+      "raw_report": "retained-docs-raw.md",
+      "raw_sha256": "6da8085c3068514b7482bbf5477cdbbb4180d56fcf73dc5c11fcfda7ebfff4c2"
+    }
+  ],
+  "fresh_restoration_handoff": {
+    "identity": "/root/restart_wiki_handoff_01",
+    "actual_terminal_status": "completed",
+    "source": "Manager acceptance and immutable full raw report hash readback",
+    "accepted_by": "/root",
+    "raw_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/restart-wiki-handoff-01/review.raw.md",
+    "raw_sha256": "315ca9845d61803db89471e5f5bfba5e7a9f27e121c1c23f7c2341f67466a9c0"
+  },
+  "closure": {
+    "close_agent_available": false,
+    "availability_check": "ALL_TOOLS name search returned []; collaboration API exposes no close_agent",
+    "attempt": "Capability checked; no supported close operation exists",
+    "effect": "Terminal lifecycle preserved; unavailable closure is a limit only, not missing independent review"
+  },
+  "active_conflicting_candidate_writers": [],
+  "no_persistent_session_uuid_invented": true
+}

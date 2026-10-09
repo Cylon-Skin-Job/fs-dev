@@ -1,0 +1,15 @@
+{"at":1789979323442,"type":"session-start","threadId":"2026-09-21T01-28-43-433","sessionKey":"[\"r5-r6-project\",\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1789979313341-d35e7d14ae-p26prL/r5-r6-project\",\"2026-09-21T01-28-43-433\"]","externalProcess":false}
+{"at":1789979329087,"type":"session-start","threadId":"2026-09-21T01-28-49-082","sessionKey":"[\"r5-r6-project\",\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1789979313341-d35e7d14ae-p26prL/r5-r6-project\",\"2026-09-21T01-28-49-082\"]","externalProcess":false}
+{"at":1789979329089,"type":"gate","gate":"before-stop","owner":"adapter","occurrence":1}
+{"at":1789979329089,"type":"gate","gate":"after-stop","owner":"adapter","occurrence":1}
+{"at":1789979329089,"type":"gate","gate":"before-shutdown","owner":"adapter","occurrence":1}
+{"at":1789979329089,"type":"gate","gate":"after-shutdown","owner":"adapter","occurrence":1}
+{"at":1789979339226,"type":"session-start","threadId":"2026-09-21T01-28-59-217","sessionKey":"[\"r5-r6-project\",\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1789979313341-d35e7d14ae-p26prL/r5-r6-project\",\"2026-09-21T01-28-59-217\"]","externalProcess":false}
+{"at":1789979339228,"type":"gate","gate":"before-stop","owner":"adapter","occurrence":2}
+{"at":1789979339228,"type":"gate","gate":"after-stop","owner":"adapter","occurrence":2}
+{"at":1789979339228,"type":"gate","gate":"before-shutdown","owner":"adapter","occurrence":2}
+{"at":1789979339228,"type":"gate","gate":"after-shutdown","owner":"adapter","occurrence":2}
+{"at":1789979344251,"type":"gate","gate":"before-stop","owner":"adapter","occurrence":3}
+{"at":1789979344251,"type":"gate","gate":"after-stop","owner":"adapter","occurrence":3}
+{"at":1789979344252,"type":"gate","gate":"before-shutdown","owner":"adapter","occurrence":3}
+{"at":1789979344252,"type":"gate","gate":"after-shutdown","owner":"adapter","occurrence":3}

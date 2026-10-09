@@ -1,0 +1,109 @@
+{
+  "at": "2026-10-04T18:39:31.705817+00:00",
+  "actor": "/root",
+  "scope": "INDEPENDENCE_ISSUE_VALIDATION_NOT_CANDIDATE_ACCEPTANCE",
+  "native_child": "/root/s6_supervisor_fix_xy_1/fix_xy_final_manager_2/final_reviewer_2",
+  "native_child_status": "completed",
+  "native_child_report_fully_read": true,
+  "native_manager_status_at_observation": "completed; root exact-subtree native final fully read",
+  "finding": "FINAL2-INDEPENDENCE-001",
+  "original_requirement": "Fresh independent final review must derive from original authority/current source/raw neutral evidence without manager assessments.",
+  "actual_change": "Manager sent running fresh child an interim correctness assessment, then disregard/stop instructions.",
+  "exact_exposed_phrase": "My own review has no established material finding",
+  "observable_effect": "Child expressly returned insufficient-evidence/unmet-gate; no uncontaminated independent final pass exists from this turn.",
+  "four_dimension_validation": {
+    "specific_criterion": "Freshness/independence required by executable final2 assignment and review contract",
+    "downstream_or_violated_behavior": "Current final gate cannot release revised runtime or second owner wait",
+    "observable_effect": "Assessment was directly received and acknowledged in actual terminal report",
+    "evidence": "Exact subtree native completed report; manager raw exposure/correction preservation pending"
+  },
+  "severity": "Blocking for this gate; no product-defect severity inferred",
+  "confidence": "Certain from directly read native terminal",
+  "files": "No product/candidate/check implementation change required; retain manager/child raw and exposure history",
+  "checks": "Current-2 fully bound55 and protected source inspections remain unchanged facts; exposed reviewer technical observations are historical, not independent acceptance.",
+  "risk": "Disregard cannot undo received assessment; reusing exposed actor would falsely certify freshness.",
+  "downstream_spec_impact": "Different fresh manager/reviewer after actual manager/child terminal, then revised real runtime and second owner wait; later control/recovery/closeout remain held",
+  "classification": "repair_required",
+  "resolver": "Actual revised Supervisor preserves raw history and dispatches different fresh gate with explicit no-assessment communications boundary",
+  "remaining": "Different fresh manager3/reviewer source/check gate, then revised real runtime and second owner wait. No product repair/check rerun indicated while current dependencies match.",
+  "manager_report_and_lifecycle_fully_read_preterminal": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-manager-2.md",
+      "sha256_at_full_read": "b26543dacbbb8366674272325d19b9f733951f517d341f336cafc29736d971e0",
+      "bytes": 20121
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-manager-2-lifecycle.json",
+      "sha256_at_full_read": "61b5bd3b9d4b17bf8d71135cba3c3b5ec79d997afbaf87aba5b11472976b1183",
+      "bytes": 5763
+    }
+  ],
+  "exact_full_exposure_independently_read": [
+    {
+      "order": 1,
+      "direction": "manager to child",
+      "type": "interim assessment exposure",
+      "exact_text": "My own review has no established material finding. Independently read all app/capsule/Wiki/version/recovery/source/check coverage and immediate ContentArea/protocol/wiki parser/readback/live oracles. V8 support shows views/readiness/create-service/query bodies load-only, gray-matter YAML parser actually executes while JS-engine/esprima is module initialization only. Please finish at first materially clean pass without extra confirmation; preserve full inline raw report and native terminal. Any finding should retain all four dimensions/severity/confidence. No requested verdict."
+    },
+    {
+      "order": 2,
+      "direction": "manager to child",
+      "type": "immediate correction",
+      "exact_text": "Correction: disregard the preceding manager assessment as evidence. Your report must derive independently from original authority/current sources/raw receipts only. The procedural request to stop at first materially clean pass and return actual native terminal still applies; no extra confirmation pass or desired result."
+    },
+    {
+      "order": 3,
+      "direction": "parent to manager",
+      "type": "independence invalidation and required return",
+      "exact_text": "Your disclosed manager-to-child interim assessment exposure invalidates the child's fresh independence under the exact assignment's no-prior-manager-verdict rule. A disregard instruction cannot restore that consumed evidence boundary. Please preserve exact exposed message and correction in your own report/lifecycle, preserve child raw report verbatim and actual native terminal, and return REVIEW_COMPLETE insufficient-evidence/unmet-gate then END. Do not label this a materially clean final pass or dispatch another child before reporting; I will route a different fresh independent final gate after your actual terminal. This is an independence repair, not a confirmation pass."
+    },
+    {
+      "order": 4,
+      "direction": "manager to child",
+      "type": "stop and preserve raw observations",
+      "exact_text": "Parent has determined that my inadvertent interim-assessment exposure invalidates this child's fresh independence under the assignment. A disregard instruction cannot restore it. Stop further review work and return your exact inline raw report now with completed source/check observations, remaining coverage/limits and this exposure, then END. No further pass or children. I will preserve your verbatim final report/native terminal and return insufficient-evidence/unmet-gate for the independence boundary; please do not imply fresh-gate acceptance."
+    }
+  ],
+  "manager_finding_alias": "FINAL2-INDEPENDENCE-1",
+  "raw_child_native_read": "Complete inline completed report directly read through exact native subtree; manager raw persistence remains pending.",
+  "last_root_read_at": "2026-10-04T18:48:14.785703+00:00",
+  "manager_terminal_observed_at": "2026-10-04T18:48:14.785703+00:00",
+  "native_manager_return": "REVIEW_COMPLETE insufficient-evidence/unmet-gate END",
+  "final_saved_artifacts": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-manager-2.md",
+      "sha256": "773fa1f00ace4de9cdb0035166785b6225f0b12a4c004266b0eaa544fbed4e4d",
+      "bytes": 41324,
+      "full_read": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-manager-2-lifecycle.json",
+      "sha256": "fba0bdda7c887eae5073b374ac132bfb7342508bb0f3478f64d1bbe0e4dd4cea",
+      "bytes": 7213,
+      "full_read": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-reviewer-2.raw.md",
+      "sha256": "9abe3ae883efd28517c524d83ab92d8177311991b5cc9de9204027a119cc5dc3",
+      "bytes": 14608,
+      "full_read": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-final2-terminal-and-neutral-current.json",
+      "sha256": "8effb683c2fda7cf6a04be41cf1e84db1a3c9a7d45cf151ac5dc493c30bd0f52",
+      "bytes": 1962,
+      "full_read": true
+    }
+  ],
+  "replacement_assignment": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-final-review-assignment-3.md",
+    "sha256": "c222a4e553ed03eb4916a446bd671459512556f244bd772c5b9397224aabc125",
+    "full_read": true,
+    "strict_neutral_only_communications": true
+  },
+  "supervisor_alias": "F-ALL5-02",
+  "repair_classification": "accepted",
+  "repair_accepted_at": "2026-10-04T19:26:43.747621+00:00",
+  "repair_acceptance": "S6-root-revised-final3-inspection.json",
+  "historical_invalidity_preserved": true
+}

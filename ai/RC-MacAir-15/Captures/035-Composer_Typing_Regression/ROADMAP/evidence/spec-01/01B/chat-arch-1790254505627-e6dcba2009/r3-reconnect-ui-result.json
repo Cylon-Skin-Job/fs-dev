@@ -1,0 +1,371 @@
+{
+  "caseId": "R3-RECONNECT-UI",
+  "status": "executed",
+  "authenticatedShell": true,
+  "startupPanelReadiness": "exact-rail-before-activation",
+  "fixture": "F5",
+  "owner": "SPEC-02/02C",
+  "missingContracts": [],
+  "assertionsEvaluated": true,
+  "statusEndpointFabricated": false,
+  "promptContentRecorded": false,
+  "promptSha256": "3104ce1f83cf65829ace38bb73b8a8dd13c996a68078a6d4ce74714605b9a7c4",
+  "transport": {
+    "beforeReconnect": {
+      "sentTypes": {
+        "shell-auth:proof": 1,
+        "office:palette_get": 1,
+        "state:get": 2,
+        "screenshot:list": 1,
+        "file_content_request": 53,
+        "set_panel": 2,
+        "file_tree_request": 65,
+        "thread:list": 2,
+        "state:set": 5,
+        "workspace:state_push": 1,
+        "thread:open-assistant": 1,
+        "state:worksurface_get": 1,
+        "thread:open": 1,
+        "thread:warm": 1,
+        "prompt": 1
+      },
+      "receivedTypes": {
+        "shell-auth:challenge": 1,
+        "connected": 1,
+        "workspace:init": 1,
+        "panel_config": 1,
+        "shell-auth:authenticated": 1,
+        "office:palette_state": 1,
+        "screenshot:list": 1,
+        "thread:list": 4,
+        "panel_changed": 2,
+        "file_content_response": 53,
+        "state:result": 7,
+        "file_tree_response": 65,
+        "error": 1,
+        "thread:created": 1,
+        "thread:opened": 2,
+        "state:worksurface_result": 1,
+        "wire_ready": 1,
+        "turn_begin": 1,
+        "thread:state_changed": 2,
+        "step_begin": 1,
+        "thinking": 1,
+        "tool_call": 1,
+        "tool_call_args": 1,
+        "tool_result": 1,
+        "status_update": 1,
+        "content": 3,
+        "turn_end": 1,
+        "exchange_metadata": 1,
+        "chat-turn:saved": 1
+      },
+      "openTransitions": [
+        {
+          "type": "workspace:init",
+          "code": null,
+          "message": null,
+          "requestId": null,
+          "threadId": null,
+          "threadGroupId": null,
+          "workspaceId": "r3-reconnect-ui-project",
+          "panel": null
+        },
+        {
+          "type": "panel_changed",
+          "code": null,
+          "message": null,
+          "requestId": null,
+          "threadId": null,
+          "threadGroupId": null,
+          "workspaceId": null,
+          "panel": "file-viewer"
+        },
+        {
+          "type": "panel_changed",
+          "code": null,
+          "message": null,
+          "requestId": null,
+          "threadId": null,
+          "threadGroupId": null,
+          "workspaceId": null,
+          "panel": "capture-viewer"
+        },
+        {
+          "type": "error",
+          "code": null,
+          "message": "No active workspace",
+          "requestId": null,
+          "threadId": null,
+          "threadGroupId": null,
+          "workspaceId": null,
+          "panel": null
+        },
+        {
+          "type": "thread:opened",
+          "code": null,
+          "message": null,
+          "requestId": null,
+          "threadId": "2026-09-24T05-55-22-269",
+          "threadGroupId": "tg-155d1acd-7cd5-49a4-8beb-ed767aef0010",
+          "workspaceId": "r3-reconnect-ui-project",
+          "panel": "capture-viewer"
+        },
+        {
+          "type": "thread:opened",
+          "code": null,
+          "message": null,
+          "requestId": null,
+          "threadId": "2026-09-24T05-55-22-269",
+          "threadGroupId": "tg-155d1acd-7cd5-49a4-8beb-ed767aef0010",
+          "workspaceId": "r3-reconnect-ui-project",
+          "panel": "capture-viewer"
+        }
+      ],
+      "openRequests": [
+        {
+          "type": "set_panel",
+          "requestId": null,
+          "threadId": null,
+          "threadGroupId": null,
+          "panel": "file-viewer"
+        },
+        {
+          "type": "set_panel",
+          "requestId": null,
+          "threadId": null,
+          "threadGroupId": null,
+          "panel": "capture-viewer"
+        },
+        {
+          "type": "thread:open",
+          "requestId": null,
+          "threadId": null,
+          "threadGroupId": "tg-155d1acd-7cd5-49a4-8beb-ed767aef0010",
+          "panel": null
+        }
+      ],
+      "promptRequestIds": [
+        "e1483bf89ceee4534c9abda6deb8591d"
+      ],
+      "acceptanceRequestIds": [],
+      "statusRequests": []
+    },
+    "afterReconnect": {
+      "sentTypes": {
+        "shell-auth:proof": 2,
+        "office:palette_get": 2,
+        "state:get": 2,
+        "screenshot:list": 2,
+        "file_content_request": 102,
+        "set_panel": 3,
+        "file_tree_request": 68,
+        "thread:list": 3,
+        "state:set": 5,
+        "workspace:state_push": 1,
+        "thread:open-assistant": 1,
+        "state:worksurface_get": 2,
+        "thread:open": 1,
+        "thread:warm": 1,
+        "prompt": 1,
+        "screenshot:capture": 1,
+        "thread:action": 1,
+        "screenshot:request": 1
+      },
+      "receivedTypes": {
+        "shell-auth:challenge": 2,
+        "connected": 2,
+        "workspace:init": 2,
+        "panel_config": 2,
+        "shell-auth:authenticated": 2,
+        "office:palette_state": 2,
+        "screenshot:list": 2,
+        "thread:list": 5,
+        "panel_changed": 3,
+        "file_content_response": 91,
+        "state:result": 7,
+        "file_tree_response": 67,
+        "error": 1,
+        "thread:created": 1,
+        "thread:opened": 2,
+        "state:worksurface_result": 2,
+        "wire_ready": 1,
+        "turn_begin": 1,
+        "thread:state_changed": 2,
+        "step_begin": 1,
+        "thinking": 1,
+        "tool_call": 1,
+        "tool_call_args": 1,
+        "tool_result": 1,
+        "status_update": 1,
+        "content": 3,
+        "turn_end": 1,
+        "exchange_metadata": 1,
+        "chat-turn:saved": 1,
+        "thread:action:completed": 1,
+        "screenshot:data": 1
+      },
+      "openTransitions": [
+        {
+          "type": "workspace:init",
+          "code": null,
+          "message": null,
+          "requestId": null,
+          "threadId": null,
+          "threadGroupId": null,
+          "workspaceId": "r3-reconnect-ui-project",
+          "panel": null
+        },
+        {
+          "type": "panel_changed",
+          "code": null,
+          "message": null,
+          "requestId": null,
+          "threadId": null,
+          "threadGroupId": null,
+          "workspaceId": null,
+          "panel": "file-viewer"
+        },
+        {
+          "type": "panel_changed",
+          "code": null,
+          "message": null,
+          "requestId": null,
+          "threadId": null,
+          "threadGroupId": null,
+          "workspaceId": null,
+          "panel": "capture-viewer"
+        },
+        {
+          "type": "error",
+          "code": null,
+          "message": "No active workspace",
+          "requestId": null,
+          "threadId": null,
+          "threadGroupId": null,
+          "workspaceId": null,
+          "panel": null
+        },
+        {
+          "type": "thread:opened",
+          "code": null,
+          "message": null,
+          "requestId": null,
+          "threadId": "2026-09-24T05-55-22-269",
+          "threadGroupId": "tg-155d1acd-7cd5-49a4-8beb-ed767aef0010",
+          "workspaceId": "r3-reconnect-ui-project",
+          "panel": "capture-viewer"
+        },
+        {
+          "type": "thread:opened",
+          "code": null,
+          "message": null,
+          "requestId": null,
+          "threadId": "2026-09-24T05-55-22-269",
+          "threadGroupId": "tg-155d1acd-7cd5-49a4-8beb-ed767aef0010",
+          "workspaceId": "r3-reconnect-ui-project",
+          "panel": "capture-viewer"
+        },
+        {
+          "type": "workspace:init",
+          "code": null,
+          "message": null,
+          "requestId": null,
+          "threadId": null,
+          "threadGroupId": null,
+          "workspaceId": "r3-reconnect-ui-project",
+          "panel": null
+        },
+        {
+          "type": "panel_changed",
+          "code": null,
+          "message": null,
+          "requestId": null,
+          "threadId": null,
+          "threadGroupId": null,
+          "workspaceId": null,
+          "panel": "capture-viewer"
+        }
+      ],
+      "openRequests": [
+        {
+          "type": "set_panel",
+          "requestId": null,
+          "threadId": null,
+          "threadGroupId": null,
+          "panel": "file-viewer"
+        },
+        {
+          "type": "set_panel",
+          "requestId": null,
+          "threadId": null,
+          "threadGroupId": null,
+          "panel": "capture-viewer"
+        },
+        {
+          "type": "thread:open",
+          "requestId": null,
+          "threadId": null,
+          "threadGroupId": "tg-155d1acd-7cd5-49a4-8beb-ed767aef0010",
+          "panel": null
+        },
+        {
+          "type": "set_panel",
+          "requestId": null,
+          "threadId": null,
+          "threadGroupId": null,
+          "panel": "capture-viewer"
+        }
+      ],
+      "promptRequestIds": [
+        "e1483bf89ceee4534c9abda6deb8591d"
+      ],
+      "acceptanceRequestIds": [],
+      "statusRequests": [
+        {
+          "requestId": "e1483bf89ceee4534c9abda6deb8591d",
+          "action": "prompt_receipt_status"
+        }
+      ]
+    }
+  },
+  "observations": {
+    "acceptanceAckDropped": true,
+    "requestIdAvailable": true,
+    "statusRequestAvailable": true,
+    "statusRecoveryAvailable": true,
+    "statusOutcome": "accepted",
+    "statusTurnId": "8efc5e62-a6d8-432f-85c8-56d66355d771",
+    "sameRendererUi": {
+      "userBubbleCount": 1,
+      "composerEnabled": true,
+      "visibleRecoveryStatusSeen": true
+    },
+    "userBubbleCount": 1,
+    "providerDispatchCount": 1,
+    "persistence": {
+      "exchangeCount": 1,
+      "activityCount": 1,
+      "activityTurnIds": [
+        "8efc5e62-a6d8-432f-85c8-56d66355d771"
+      ],
+      "receiptTables": [
+        {
+          "table": "prompt_submission_receipts",
+          "requestColumn": "request_id",
+          "matchingRows": 1
+        }
+      ],
+      "receiptRows": 1
+    }
+  },
+  "violations": [],
+  "failureTransport": null,
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": null
+}

@@ -1,0 +1,153 @@
+{
+  "observed_at": "2026-10-07T16:59:28.405919+00:00",
+  "phase": "Historical pre-repair frozen candidate; not M2 acceptance",
+  "source_seal_sha256": "6d14d36dc325ac5501ac3e9bee3f26ad5eee0d4a380b7fea13b42952f5f87361",
+  "files_count": 42,
+  "M2_changes_count": 26,
+  "authorities_count": 29,
+  "source_authority_receipt_errors": [],
+  "checks": [
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/build-01.json",
+      "sha256": "83822ae272c40db353c3d5392ce77e58fef097f4d60c6a2bfca66be9c3bdbb89",
+      "raw_log_sha256": "0a0548097f36f611fd7d928d5e8ec42ee80b2c11e7430c64bb09251dfc304b85",
+      "matches_seal": true,
+      "exit_code": 0,
+      "source_stable": false,
+      "dependencies_stable": true
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/build-02.json",
+      "sha256": "16c8afb3e48c7e27744ae4f3c37986a17050f6eec598c8e696eba439ea63d50d",
+      "raw_log_sha256": "581865dec84617eb65bd34e65eeb0b9e4eeaa32d2bca01e40fa9e456a7384a33",
+      "matches_seal": true,
+      "exit_code": 0,
+      "source_stable": true,
+      "dependencies_stable": true
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/build-03.json",
+      "sha256": "f021a96e5ea781aaffcd942e0551ae4b5107a81356b70417744c5aa8b670df2c",
+      "raw_log_sha256": "a0d91718b4a68d0c6d0226d02b015af817a818f90e661dc597b1919938b94c4a",
+      "matches_seal": true,
+      "exit_code": 0,
+      "source_stable": true,
+      "dependencies_stable": true
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/build-04.json",
+      "sha256": "78e0e065f8483f108f2ab2c8c98c57b665445085dbf95400b987b75ba9500a2c",
+      "raw_log_sha256": "f336543d7abd9f85eb5a5d7a0fac04c62a030dfadb7bdde14b8042332a6212e9",
+      "matches_seal": true,
+      "exit_code": 0,
+      "source_stable": true,
+      "dependencies_stable": true
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/build-05.json",
+      "sha256": "be3195c7342b3bcd6d13f2226a56ff47df4e7db69f76811d543ad36ed1f7cf2b",
+      "raw_log_sha256": "50d621eb9313e04943931629d527ff453f1080fcaff582447195a953ef404c77",
+      "matches_seal": true,
+      "exit_code": 0,
+      "source_stable": true,
+      "dependencies_stable": true
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/material-01.json",
+      "sha256": "793f0d8547bcb554e1ec17f5e530870efc390f4d0955442f181a2dd847375eb6",
+      "raw_log_sha256": "cf9e4331bed2a1dff5ef7e01f90b8ed6746475d9ae39dd78b7b9d4da62d514eb",
+      "matches_seal": true,
+      "exit_code": 130,
+      "source_stable": true,
+      "dependencies_stable": true
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/material-02.json",
+      "sha256": "d8dfe7bf96288b5d95ae544666c38702ff05140051a5b3a898f2c1c4b1b9ec1c",
+      "raw_log_sha256": "a7d8cbb0fcca08c9296d3449757be135471b01affb8fe84205ac456f8f9bf29b",
+      "matches_seal": true,
+      "exit_code": 0,
+      "source_stable": true,
+      "dependencies_stable": true
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/material-03.json",
+      "sha256": "7fe13b93623e2bdb66f89063ed792bd848f84bae67690a4cd29c31576ca92077",
+      "raw_log_sha256": "7ee37d8f189836d5656d4a44f68974f9992b4ee7665d9446303f11f28ff4de74",
+      "matches_seal": true,
+      "exit_code": 1,
+      "source_stable": true,
+      "dependencies_stable": true
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/mic-debug-05.json",
+      "sha256": "6faaeb4cda5ffb733165cdc4550d7836eb6b1a7194f791693cf786cfcd10227d",
+      "raw_log_sha256": "ed01e2c993f6bc72da46359b7f7fd437120a5c628929093a4d6d23a425ba5259",
+      "matches_seal": true,
+      "exit_code": 1,
+      "source_stable": true,
+      "dependencies_stable": true
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/mic-diagnostic-04.json",
+      "sha256": "b1a08d824ccdf0f73a43e72e88fc3d00e515098971517470633dcba5e8e3a401",
+      "raw_log_sha256": "c8815c0cc5cde0d47cd3b355687c015821114f553cf5421efd40407c38789a71",
+      "matches_seal": true,
+      "exit_code": 1,
+      "source_stable": true,
+      "dependencies_stable": true
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/mic-diagnostic-06.json",
+      "sha256": "092f3127ab2079b7362d99552e18a5a83afb50af9823a109bf7d1c6ab725f4cf",
+      "raw_log_sha256": "e38a8a2974aa5be41aa60e6c3ac00f96bd2e083a2782c89e0907cda66a2dd2a7",
+      "matches_seal": true,
+      "exit_code": 0,
+      "source_stable": true,
+      "dependencies_stable": true
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/renderer-07.json",
+      "sha256": "f0bef7f12f5459f282ad0ae05d93a0b556415f55f20770b9527ae5ff40878690",
+      "raw_log_sha256": "4e0940a88442ffee91e412a4cff61a679bbc7e3392b4665c914dbfd03fef78f0",
+      "matches_seal": true,
+      "exit_code": 0,
+      "source_stable": true,
+      "dependencies_stable": true
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/renderer-08.json",
+      "sha256": "18a761f16f53e75967b76395d93b48cfeea19d9912de0f7bad45686ea178de68",
+      "raw_log_sha256": "bf6f03a415b3f8cf514080e6245be679787c9dbc62e988a85198f7224cd1a3d7",
+      "matches_seal": true,
+      "exit_code": 0,
+      "source_stable": true,
+      "dependencies_stable": true
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/structural-09.json",
+      "sha256": "f8eddc27163bb70543cb8cb9744e978a3fcd359883ff3d919778b7165b5c5eca",
+      "raw_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches_seal": true,
+      "exit_code": 0,
+      "source_stable": true,
+      "dependencies_stable": true
+    }
+  ],
+  "dist_count": 191,
+  "dist_mismatches": [],
+  "finding": {
+    "id": "ROOT-M2-01",
+    "priority": "material",
+    "path": "fusion-studio-client/src/components/chat/ChatDiagnosticDetails.tsx",
+    "lines": [
+      156,
+      162
+    ],
+    "trace": "Ask AI prepare => resolveReport sets unavailable and returns null => source.fail yields false => handleAskAI overwrites unavailable with composer-unavailable; controls re-enabled",
+    "requirement": "Preserve existing diagnostic fixed source-unavailable failure and explicit source/target distinction; no auto prompt/warm",
+    "evidence": "Read current full component and patch, existing malformed/unavailable cases only invoke View. Builder independently confirms trace. Runtime failure case assigned for repair",
+    "disposition": "Sent to M2 responsible builder; coordinate review terminal before repair, renewed checks and fresh builder gate required"
+  },
+  "advisory": "D03 size rationale corrected; ChatInput current364 lines."
+}

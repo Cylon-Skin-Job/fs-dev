@@ -1,0 +1,60 @@
+{
+  "at": "2026-10-04T21:05:05.924191+00:00",
+  "actor": "/root",
+  "native_actor": "/root/s6_supervisor_recovery_1",
+  "native_completion_observed": "actual FINAL plus exact-subtree list_agents completed/no children",
+  "closure": "close_agent unavailable; native END observed",
+  "inspection": "Full helpers/report/deviations/lifecycle read; independent raw comparisons and current filesystem checks",
+  "raw_receipts": 191,
+  "exit_counts": {
+    "1": 11,
+    "0": 180
+  },
+  "checkpoint_pins": 27,
+  "recovery_criteria": 16,
+  "readbacks": [
+    {
+      "label": "fixed",
+      "owned": 130,
+      "full": 4355,
+      "sha256": "2105172842fc57fc16e93f8114af72fb937f42e9fe617168cab27b8165485317"
+    },
+    {
+      "label": "fix-xy-wiki",
+      "owned": 130,
+      "full": 4355,
+      "sha256": "874c983356865b493713dab35d2eb2b88e4f4b607f7bda9211f0af4ec797636a"
+    },
+    {
+      "label": "first-wiki",
+      "owned": 129,
+      "full": 4354,
+      "sha256": "740a0ce3febf3fe2cecab1e35ae6f54017169b816f0b6c33cda755c39347896d"
+    },
+    {
+      "label": "original",
+      "owned": 128,
+      "full": 4353,
+      "sha256": "bc86805675fd1f5494ce1ffee1266e489726594ae0438c2a84f1afedfd383b57"
+    }
+  ],
+  "source_leaves": 11977,
+  "cache_leaves": 193,
+  "historical_job": 1844,
+  "archives": 6,
+  "public_byte_exact_control_copies": 4,
+  "protected_roots": 4,
+  "protected_tree_total": 13,
+  "process_samples": 5,
+  "storage_identities": 11,
+  "private_profile_exact": true,
+  "profile_db_qualification": "Live protected DB byte/mtime/size volatility allowed; identities preserved; no database copy/restore",
+  "original_source_physical_index": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+  "original_guard_retained": true,
+  "root_current_original_readback": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-root-original-current-readback.json",
+  "current_ready": false,
+  "private_preview_stopped": true,
+  "publication": [],
+  "result": "RECOVERY_RAW_AND_CURRENT_PRESERVATION_INSPECTED",
+  "remaining": "Responsible S6 factual docs and fresh full-S6/whole gates, final suite"
+}

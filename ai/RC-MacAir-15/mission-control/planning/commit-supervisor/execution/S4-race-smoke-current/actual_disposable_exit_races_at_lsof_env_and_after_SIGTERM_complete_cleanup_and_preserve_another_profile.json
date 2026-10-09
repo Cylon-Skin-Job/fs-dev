@@ -1,0 +1,11 @@
+{
+  "test": "actual disposable exit races at lsof/env and after SIGTERM complete cleanup and preserve another profile",
+  "fixture": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-uq2gKY",
+  "injected": true,
+  "files": [
+    {
+      "path": "fusion-studio-server/server.js",
+      "bytes": "setInterval(() => {}, 1000); process.on('SIGTERM', () => setTimeout(() => process.exit(), 5000));"
+    }
+  ]
+}

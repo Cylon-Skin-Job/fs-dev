@@ -1,0 +1,28 @@
+{
+  "kind": "PREPARATION_PUBLIC_BOOTSTRAP_ONLY",
+  "candidate": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "profile": "/private/tmp/mc-s6-commit-supervisor-20261004/profile",
+  "machine": "MC-S6",
+  "workspace": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace",
+  "database": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/server-data/fusion.db",
+  "tools": [
+    "Captures",
+    "Files",
+    "Wiki",
+    "Issues",
+    "Agents",
+    "Checklist"
+  ],
+  "runtime": {
+    "generation": "4e27733c-e863-44b5-b77a-991fad984da9",
+    "httpOrigin": "http://127.0.0.1:60512",
+    "webSocketUrl": "ws://127.0.0.1:60512"
+  },
+  "workspaces": [
+    {
+      "id": "rehearsal-workspace",
+      "label": "S6 Checklist",
+      "repo_path": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace"
+    }
+  ]
+}

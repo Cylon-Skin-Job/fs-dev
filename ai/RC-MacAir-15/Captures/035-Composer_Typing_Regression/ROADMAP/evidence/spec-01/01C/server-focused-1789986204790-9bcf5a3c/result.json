@@ -1,0 +1,15 @@
+{
+  "runId": "server-focused-1789986204790-9bcf5a3c",
+  "status": "passed",
+  "result": {
+    "code": 0,
+    "signal": null,
+    "pid": 2374,
+    "timedOut": false,
+    "interrupted": false,
+    "leakedOwnedPids": [],
+    "elapsedMs": 5257
+  },
+  "failure": null,
+  "ownedRunRootRemoved": true
+}

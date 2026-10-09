@@ -1,0 +1,24 @@
+{
+  "actor": "/root",
+  "argv": [
+    "bash",
+    "-n",
+    "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "started_at": "2026-10-05T03:23:27.118155+00:00",
+  "finished_at": "2026-10-05T03:23:27.120957+00:00",
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "",
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "executable": {
+    "exists": true,
+    "kind": "file",
+    "mode": "0o100555",
+    "sha256": "c372d1d6d4f07e0a917f3660aa79df00cbb50323972c22c3d90ec17d2096d039"
+  }
+}

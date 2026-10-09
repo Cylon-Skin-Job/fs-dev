@@ -1,0 +1,113 @@
+{
+  "state": "ALPHA_RUNTIME_VERIFIED",
+  "at": "2026-10-07T08:26:51.769Z",
+  "sourceCommit": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "mainPid": 52519,
+  "serverPid": 52545,
+  "rendererPids": [
+    52557,
+    52566
+  ],
+  "port": 61057,
+  "profile": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha",
+  "machine": "RC-Alpha",
+  "mainExecutable": "/Applications/Fusion Studio Alpha.app/Contents/MacOS/Fusion Studio Alpha",
+  "serverEntry": "/Applications/Fusion Studio Alpha.app/Contents/Resources/fusion-studio-server/server.js",
+  "serverUrl": "http://localhost:61057",
+  "debugPort": 61056,
+  "connectedAfterWorkspaceInit": true,
+  "samples": 16,
+  "durationMs": 3000,
+  "workspaceCount": 6,
+  "activeWorkspace": {
+    "id": "fs-dev",
+    "label": "Fs Dev",
+    "active": true
+  },
+  "ribbon": [
+    {
+      "id": "fs-dev",
+      "label": "Fs Dev",
+      "active": true
+    },
+    {
+      "id": "fusion-home",
+      "label": "Fusion Home",
+      "active": false
+    },
+    {
+      "id": "solobooks",
+      "label": "Solobooks",
+      "active": false
+    },
+    {
+      "id": "media-editor",
+      "label": "Media Editor",
+      "active": false
+    },
+    {
+      "id": "system-manager",
+      "label": "System Manager",
+      "active": false
+    },
+    {
+      "id": "karens-lab",
+      "label": "Karens Lab",
+      "active": false
+    }
+  ],
+  "workspacePaths": [
+    {
+      "workspaceId": "fs-dev",
+      "system": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-Alpha/System",
+      "exists": true
+    },
+    {
+      "workspaceId": "fusion-home",
+      "system": "/Users/rccurtrightjr./projects/Fusion-Home/ai/RC-Alpha/System",
+      "exists": true
+    },
+    {
+      "workspaceId": "solobooks",
+      "system": "/Users/rccurtrightjr./projects/solobooks/ai/RC-Alpha/System",
+      "exists": true
+    },
+    {
+      "workspaceId": "media-editor",
+      "system": "/Users/rccurtrightjr./projects/media-editor/ai/RC-Alpha/System",
+      "exists": true
+    },
+    {
+      "workspaceId": "system-manager",
+      "system": "/Users/rccurtrightjr./projects/fs-dev/System_Manager/ai/RC-Alpha/System",
+      "exists": true
+    },
+    {
+      "workspaceId": "karens-lab",
+      "system": "/Users/rccurtrightjr./projects/karens-lab/ai/RC-Alpha/System",
+      "exists": true
+    }
+  ],
+  "foreignMainServersPreserved": [
+    {
+      "pid": 12886,
+      "unchanged": true
+    },
+    {
+      "pid": 12892,
+      "unchanged": true
+    },
+    {
+      "pid": 50654,
+      "unchanged": true
+    },
+    {
+      "pid": 50659,
+      "unchanged": true
+    }
+  ],
+  "currentServerLog": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server-live.log",
+  "currentSanitizedLogLineCount": 39,
+  "limits": "Current logging intentionally minimizes startup/request diagnostics to categories and does not literally expose workspace count, active ID or paths. Those values are verified through the native initialized shell, read-only SQLite pre/post readbacks, all six Alpha System paths, and exact main/server/renderer environment. No raw prompt/provider test or registry/profile rewrite performed.",
+  "appScreenshot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/publication-restart-20261007/alpha-connected.png"
+}

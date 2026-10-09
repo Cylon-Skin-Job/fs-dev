@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { execFileSync } from 'node:child_process';
+import { systemProcesses, listenerPids, validateRuntime, descendants } from '/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart-processes.mjs';
+const base=path.dirname(process.argv[2]);
+const target=JSON.parse(fs.readFileSync(base+'/target.json'));const original=JSON.parse(fs.readFileSync(base+'/verified.json'));
+const records=systemProcesses();const serverListeners=listenerPids(original.serverPort),debugListeners=listenerPids(original.debugPort);
+const current=validateRuntime(records,target,original.mainPid,original.serverPort,serverListeners,original.debugPort,debugListeners);
+const own=new Set([original.mainPid,...descendants(records,original.mainPid).map(r=>r.pid)]);
+const selected=records.filter(r=>own.has(r.pid));
+const storage=execFileSync('lsof',['-a','-p',String(current.serverPid),'-Fn'],{encoding:'utf8'}).split('\n').filter(r=>r.startsWith('p')||(r.startsWith('n')&&(r.includes('/profile/')||r.includes('/fusion-studio-server/data/fusion.db'))));
+if(!storage.some(r=>r.includes(target.database)))throw new Error('selected profile database not observed open');
+if(storage.some(r=>r.includes('/candidate/fusion-studio-server/data/fusion.db')))throw new Error('unexpected default storage');
+const result={at:new Date().toISOString(),kind:'ACTUAL_CURRENT_PROCESS_LISTENER_PROFILE_DB_READBACK',target,current,serverListeners,debugListeners,selected_processes:selected,open_storage_records:storage,environment_whitelist_only:true,signals_sent:0};
+fs.writeFileSync(process.argv[3],JSON.stringify(result,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({mainPid:current.mainPid,serverPid:current.serverPid,serverListeners,debugListeners,ownedProcesses:selected.length,selectedDatabaseOpen:true}));

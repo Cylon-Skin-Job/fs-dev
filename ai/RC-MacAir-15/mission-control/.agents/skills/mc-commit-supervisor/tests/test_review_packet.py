@@ -1,0 +1,378 @@
+"""Public CLI rehearsals: synthetic evidence does not certify real agent gates."""
+
+import copy
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+import unittest
+
+
+SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "review_packet.py"
+LENSES = ["Behavior & Verification", "Standards Compliance", "Integrations & Dependencies",
+          "Forward Compatibility", "Wiki Impact"]
+
+
+def base_packet(phase="initial"):
+    candidate = {"target": "target-1", "sources": ["source-1"],
+                 "owned": {"code.py": {"worktree": "bad", "index": "base", "mode": "100644"}},
+                 "configuration": {"profile": "disposable"}, "fixtures": {"oracle": "correct"},
+                 "authority": {"SPEC": "approved"}, "preparation": "replay-owned-bytes"}
+    return {"phase": phase, "candidate": candidate, "orchestrator_id": "fixture-manager",
+            "participants": ["fixture-writer"], "required_checks": ["behavior"],
+            "evidence": [{"id": "behavior", "dependencies": copy.deepcopy(candidate),
+                          "raw_path": "fixture/behavior.log", "result": "pass"}],
+            "reviews": [{"identity": "fixture-reviewer-1", "terminal": True,
+                         "clean_room": True, "read_only": True, "root_inherited": True,
+                         "dependencies": copy.deepcopy(candidate), "raw_path": "fixture/review-1.md",
+                         "lenses": list(LENSES), "result": "clean", "findings": []}],
+            "findings": [], "dispositions": {}, "assigned_paths": ["code.py"]}
+
+
+def material():
+    return {"id": "F1", "authority": "approved behavior criterion", "path": "code.py",
+            "impact": "accepted input returns incorrect result", "evidence": "fixture/repro.log",
+            "severity": "high", "confidence": "medium", "validated": True,
+            "assigned_paths": ["code.py"]}
+
+
+def issue(kind):
+    return {"kind": kind, "question": "Which accepted provider owns this missing result?",
+            "checked_sources": ["fixture/decisions.md", "fixture/proposals.md", "history unavailable"],
+            "affected_behavior": "consumer lacks required value", "provider": "provider-1",
+            "consumer": "consumer-1", "evidence": ["fixture/repro.log"], "unknowns": ["provider release"],
+            "resolver": "owner/provider maintainer", "route": "bounded requirement investigation",
+            "release_condition": "accepted provider revision and consumer readback pass",
+            "preserved_progress": ["unrelated checked seam"], "next_safe_action": "continue independent checks"}
+
+
+class ReviewPacketTests(unittest.TestCase):
+    def run_packet(self, packet, code=0):
+        with tempfile.TemporaryDirectory(prefix="commit-review-packet-") as tmp:
+            path = Path(tmp) / "packet.json"
+            path.write_text(json.dumps(packet), encoding="utf-8")
+            before = hashlib.sha256(path.read_bytes()).hexdigest()
+            result = subprocess.run([sys.executable, "-B", str(SCRIPT), "--packet", str(path)],
+                                    text=True, capture_output=True, check=False)
+            self.assertEqual(result.returncode, code, result.stderr + result.stdout)
+            self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), before)
+            self.assertEqual(sorted(p.name for p in Path(tmp).iterdir()), ["packet.json"])
+            response = json.loads(result.stdout)
+            self.assertEqual(response["dispatch_actions"], [])
+            if code == 0:
+                self.assertFalse(response["agent_gate_proof"])
+            return response
+
+    def test_material_to_repair_to_separate_handoff_to_fresh_final(self):
+        packet = base_packet()
+        packet["reviews"][0].update(result="findings", findings=[material()])
+        first = self.run_packet(packet)
+        self.assertEqual((first["state"], first["result"]), ("repair", "findings"))
+        self.assertEqual(first["repair_packet"]["finding_ids"], ["F1"])
+        self.assertEqual(first["raw_reports"], packet["reviews"])
+
+        repaired = base_packet("worker-handoff")
+        repaired["candidate"]["owned"]["code.py"]["worktree"] = "fixed"
+        repaired["evidence"][0]["dependencies"] = copy.deepcopy(repaired["candidate"])
+        repaired["reviews"][0].update(identity="fixture-handoff-reviewer",
+                                      dependencies=copy.deepcopy(repaired["candidate"]))
+        repaired["participants"].extend(["fixture-reviewer-1", "fixture-initial-orchestrator"])
+        repaired["findings"] = [material()]
+        repaired["dispositions"] = copy.deepcopy(first["dispositions"])
+        repaired["dispositions"]["F1"].append({"status": "repair-reported", "actor": "fixture-writer"})
+        gate = self.run_packet(repaired)
+        self.assertEqual(gate["return"], "HANDOFF_VALIDATED")
+        self.assertEqual(gate["dispositions"]["F1"][0], first["dispositions"]["F1"][0])
+        self.assertEqual(gate["dispositions"]["F1"][-1]["reviewers"], ["fixture-handoff-reviewer"])
+
+        final = copy.deepcopy(repaired)
+        final.update(phase="final", orchestrator_id="fixture-final-orchestrator")
+        final["participants"].extend(["fixture-manager", "fixture-handoff-reviewer"])
+        final["reviews"][0]["identity"] = "fixture-final-reviewer"
+        final["evidence"].append({"id": "F1-handoff", "kind": "worker-handoff", "result": "pass",
+                                  "fresh_independent": True, "raw_path": "fixture/handoff.md",
+                                  "dependencies": copy.deepcopy(final["candidate"]), "assigned_paths": ["code.py"]})
+        final["dispositions"] = copy.deepcopy(gate["dispositions"])
+        final["dispositions"]["F1"][-1]["handoff_id"] = "F1-handoff"
+        self.assertEqual(self.run_packet(final)["result"], "clean")
+
+    def test_final_handoff_requires_all_original_assignment_paths(self):
+        for case in ("authority-only", "missing-secondary-path", "missing-assignment", "legitimate-narrow"):
+            with self.subTest(case=case):
+                packet = base_packet("final")
+                finding = material()
+                finding["assigned_paths"].append("adapter.py")
+                packet["candidate"]["owned"]["adapter.py"] = {"worktree": "adapter-fixed"}
+                packet["candidate"]["owned"]["unrelated.py"] = {"worktree": "unrelated-change"}
+                packet["findings"] = [finding]
+                claim = {"id": "F1-handoff", "kind": "worker-handoff", "result": "pass",
+                         "fresh_independent": True, "raw_path": "fixture/handoff.md",
+                         "assigned_paths": list(finding["assigned_paths"]),
+                         "dependencies": {"authority": packet["candidate"]["authority"],
+                                          "owned": {p: copy.deepcopy(packet["candidate"]["owned"][p])
+                                                    for p in finding["assigned_paths"]}}}
+                if case == "authority-only":
+                    claim["dependencies"].pop("owned")
+                if case == "missing-secondary-path":
+                    claim["dependencies"]["owned"].pop("adapter.py")
+                if case == "missing-assignment":
+                    finding.pop("assigned_paths")
+                packet["dispositions"] = {"F1": [{"status": "handoff-validated", "handoff_id": claim["id"]}]}
+                packet["evidence"][0]["dependencies"] = copy.deepcopy(packet["candidate"])
+                packet["reviews"][0]["dependencies"] = copy.deepcopy(packet["candidate"])
+                packet["evidence"].append(claim)
+                result = self.run_packet(packet)
+                self.assertEqual(result["result"], "clean" if case == "legitimate-narrow" else "insufficient-evidence")
+
+    def test_holds_preserve_raw_reviews_findings_and_independent_repair_packet(self):
+        for kind, state in (("intent", "needs-owner"), ("prerequisite", "waiting-dependency"), ("gate", "unmet-gate")):
+            with self.subTest(kind=kind):
+                packet = base_packet()
+                packet["reviews"][0].update(result="findings", findings=[material()])
+                packet["issue"] = issue(kind)
+                result = self.run_packet(packet)
+                self.assertEqual(result["state"], state)
+                self.assertEqual(result["raw_reports"], packet["reviews"])
+                self.assertEqual(result["findings"], [material()])
+                self.assertEqual(result["dispositions"]["F1"][0]["status"], "open")
+                self.assertEqual(result["repair_packet"]["finding_ids"], ["F1"])
+                self.assertEqual(result["hold_packet"], packet["issue"])
+
+    def test_hold_does_not_accept_worker_handoff(self):
+        packet = base_packet("worker-handoff")
+        packet["findings"] = [material()]
+        packet["dispositions"] = {"F1": [{"status": "repair-reported"}]}
+        packet["issue"] = issue("intent")
+        result = self.run_packet(packet)
+        self.assertEqual(result["state"], "needs-owner")
+        self.assertEqual(result["return"], "REVIEW_COMPLETE")
+        self.assertEqual(result["dispositions"]["F1"][-1]["status"], "repair-reported")
+
+    def test_current_material_finding_cannot_be_hidden_by_repair_report(self):
+        for phase in ("worker-handoff", "final"):
+            with self.subTest(phase=phase):
+                packet = base_packet(phase)
+                packet["reviews"][0].update(result="findings", findings=[material()])
+                packet["dispositions"] = {"F1": [{"status": "repair-reported"}]}
+                self.assertEqual(self.run_packet(packet)["state"], "repair")
+
+    def test_duplicate_advisory_does_not_suppress_validated_material_root_cause(self):
+        packet = base_packet()
+        note = material()
+        note.update(severity="advisory", confidence="high")
+        packet["reviews"][0].update(result="findings", findings=[material(), note])
+        result = self.run_packet(packet)
+        self.assertEqual(result["state"], "repair")
+        self.assertEqual(len(result["findings"]), 2)
+        self.assertEqual(result["repair_packet"]["finding_ids"], ["F1"])
+
+    def test_handoff_requires_original_assigned_path_coverage(self):
+        packet = base_packet("worker-handoff")
+        packet["reviews"][0]["dependencies"] = {"authority": packet["candidate"]["authority"]}
+        self.assertEqual(self.run_packet(packet)["state"], "unmet-gate")
+
+    def test_shortened_packet_cannot_shorten_original_finding_assignment(self):
+        for covers_adapter in (False, True):
+            with self.subTest(covers_adapter=covers_adapter):
+                packet = base_packet("worker-handoff")
+                finding = material()
+                finding["assigned_paths"].append("adapter.py")
+                packet["findings"] = [finding]
+                packet["dispositions"] = {"F1": [{"status": "repair-reported"}]}
+                packet["candidate"]["owned"]["adapter.py"] = {"worktree": "fixed"}
+                packet["evidence"][0]["dependencies"] = copy.deepcopy(packet["candidate"])
+                review_owned = copy.deepcopy(packet["candidate"]["owned"])
+                if not covers_adapter:
+                    review_owned.pop("adapter.py")
+                packet["reviews"][0]["dependencies"] = {"authority": packet["candidate"]["authority"], "owned": review_owned}
+                result = self.run_packet(packet)
+                self.assertEqual(result["return"], "HANDOFF_VALIDATED" if covers_adapter else "REVIEW_COMPLETE")
+                self.assertEqual(result["dispositions"]["F1"][-1]["status"], "handoff-validated" if covers_adapter else "repair-reported")
+
+    def test_fresh_supported_same_id_reopens_historical_disposition(self):
+        for old_severity in ("high", "critical"):
+            for disposition in ("not-supported", "resolved", "handoff-validated", "advisory"):
+                with self.subTest(old_severity=old_severity, disposition=disposition):
+                    packet = base_packet("final")
+                    old = material()
+                    old.update(validated=False, severity=old_severity, evidence="prior/unsupported.log")
+                    packet["findings"] = [old]
+                    event = {"status": disposition, "validation_evidence": "prior/rejection.log"}
+                    packet["dispositions"] = {"F1": [event]}
+                    current = material()
+                    packet["reviews"][0].update(result="findings", findings=[current])
+                    result = self.run_packet(packet)
+                    self.assertEqual(result["state"], "repair")
+                    self.assertEqual(result["repair_packet"]["findings"], [current])
+                    self.assertEqual(result["findings"], [old, current])
+                    self.assertEqual(result["dispositions"]["F1"][0], event)
+                    self.assertEqual(result["dispositions"]["F1"][-1]["status"], "open")
+
+    def test_rejection_must_match_current_bytes_and_finding_evidence(self):
+        for applicable in (False, True):
+            with self.subTest(applicable=applicable):
+                packet = base_packet("final")
+                finding = material()
+                finding["validated"] = False
+                packet["reviews"][0].update(result="findings", findings=[finding])
+                event = {"status": "not-supported", "validation_evidence": "fixture/independent-rejection.log",
+                         "finding_evidence": finding["evidence"], "dependencies": copy.deepcopy(packet["candidate"])}
+                if not applicable:
+                    event["dependencies"]["target"] = "old-target"
+                packet["dispositions"] = {"F1": [event]}
+                self.assertEqual(self.run_packet(packet)["result"], "clean" if applicable else "insufficient-evidence")
+
+    def test_omitted_owned_path_is_incomplete_evidence(self):
+        packet = base_packet("final")
+        packet["evidence"].append({"id": "missing-path", "raw_path": "fixture/missing.log", "result": "pass",
+                                  "dependencies": {"owned": {"missing.py": None}}})
+        self.assertIn("missing-path", self.run_packet(packet)["invalidated"])
+
+    def test_terminal_dispositions_preserve_raw_history_and_route_current_evidence(self):
+        for status in ("resolved", "handoff-validated", "advisory", "not-supported"):
+            modes = ["current-advisory", "stale-closure", "fresh-material"]
+            if status == "advisory":
+                modes.extend(["current-advisory-withdrawn", "current-advisory-raw-material"])
+            for mode in modes:
+                with self.subTest(status=status, mode=mode):
+                    packet = base_packet("final")
+                    old = material()
+                    old["validated"] = status != "not-supported" and mode != "current-advisory-withdrawn"
+                    packet["findings"] = [old]
+                    event = {"status": status, "validation_evidence": "fixture/classification.md",
+                             "finding_evidence": old["evidence"], "dependencies": copy.deepcopy(packet["candidate"]),
+                             "handoff_id": "F1-handoff"}
+                    packet["dispositions"] = {"F1": [event]}
+                    claim = {"id": "F1-handoff", "kind": "worker-handoff", "result": "pass",
+                             "fresh_independent": True, "raw_path": "fixture/handoff.md",
+                             "dependencies": copy.deepcopy(packet["candidate"]), "assigned_paths": ["code.py"]}
+                    if mode == "stale-closure":
+                        event["dependencies"]["target"] = "prior-target"
+                        claim["dependencies"]["target"] = "prior-target"
+                    packet["evidence"].append(claim)
+                    current = material()
+                    if mode != "fresh-material":
+                        current.update(severity="high" if mode == "current-advisory-raw-material" else "advisory",
+                                       validated=False, impact="Optional polish")
+                    packet["reviews"][0].update(result="findings", findings=[current])
+                    result = self.run_packet(packet)
+                    self.assertEqual(result["findings"][0], old)
+                    self.assertEqual(result["dispositions"]["F1"][0], event)
+                    if mode.startswith("current-advisory"):
+                        self.assertEqual(result["result"], "clean")
+                    elif mode == "fresh-material":
+                        self.assertEqual(result["state"], "repair")
+                        self.assertEqual(result["dispositions"]["F1"][-1]["status"], "open")
+                    else:
+                        self.assertNotEqual(result["result"], "clean")
+
+    def test_materiality_dimensions_require_independent_validation(self):
+        for dimension in ("authority", "path", "impact", "evidence", "validated"):
+            with self.subTest(dimension=dimension):
+                packet = base_packet()
+                finding = material()
+                finding.pop(dimension)
+                packet["reviews"][0].update(result="findings", findings=[finding])
+                result = self.run_packet(packet)
+                self.assertEqual(result["state"], "unmet-gate")
+
+    def test_each_identity_component_invalidates_affected_claims(self):
+        for component, changed in (("target", "target-2"), ("sources", ["source-2"]),
+                                   ("owned", {"code.py": {"worktree": "new"}}),
+                                   ("configuration", {"profile": "new"}), ("fixtures", {"oracle": "new"}),
+                                   ("authority", {"SPEC": "new"}), ("preparation", "different-recipe")):
+            with self.subTest(component=component):
+                packet = base_packet("final")
+                packet["evidence"].append({"id": "unrelated", "result": "pass", "raw_path": "fixture/static.log",
+                                          "dependencies": {"authority": {"SPEC": "approved"}}})
+                packet["candidate"][component] = changed
+                result = self.run_packet(packet)
+                self.assertIn("behavior", result["invalidated"])
+                self.assertEqual(result["state"], "unmet-gate")
+                self.assertIn("unrelated", result["invalidated"] if component == "authority" else result["unaffected"])
+
+    def test_narrow_handoff_survives_unrelated_owned_path_change(self):
+        packet = base_packet("worker-handoff")
+        packet["candidate"]["owned"]["other.py"] = {"worktree": "other"}
+        result = self.run_packet(packet)
+        self.assertIn("behavior", result["unaffected"])
+        self.assertEqual(result["return"], "HANDOFF_VALIDATED")
+
+    def test_missing_or_nonfresh_reviewers_and_lenses_withhold_gate(self):
+        mutations = [lambda p: p.update(reviews=[]),
+                     lambda p: p["reviews"][0].update(identity="fixture-writer"),
+                     lambda p: p["reviews"][0].update(terminal=False),
+                     lambda p: p["reviews"][0].update(clean_room=False),
+                     lambda p: p["reviews"][0].update(read_only=False),
+                     lambda p: p["reviews"][0].update(root_inherited=False),
+                     lambda p: p["reviews"][0].update(raw_path=""),
+                     lambda p: p["participants"].append("fixture-manager")]
+        mutations += [lambda p, lens=lens: p["reviews"][0]["lenses"].remove(lens) for lens in LENSES]
+        for index, mutate in enumerate(mutations):
+            with self.subTest(index=index):
+                packet = base_packet("final")
+                mutate(packet)
+                self.assertEqual(self.run_packet(packet)["state"], "unmet-gate")
+
+    def test_split_reviewers_cover_all_lenses(self):
+        packet = base_packet("final")
+        second = copy.deepcopy(packet["reviews"][0])
+        packet["reviews"][0]["lenses"] = LENSES[:2]
+        second.update(identity="fixture-reviewer-2", lenses=LENSES[2:])
+        packet["reviews"].append(second)
+        self.assertEqual(self.run_packet(packet)["result"], "clean")
+
+    def test_missing_reviewer_retains_known_repair_packet_but_gate_is_unmet(self):
+        packet = base_packet()
+        packet.update(reviews=[], findings=[material()])
+        result = self.run_packet(packet)
+        self.assertEqual(result["state"], "unmet-gate")
+        self.assertEqual(result["repair_packet"]["finding_ids"], ["F1"])
+
+    def test_bounded_issue_table_preserves_progress_and_never_dispatches(self):
+        for kind, state in (("intent", "needs-owner"), ("prerequisite", "waiting-dependency"), ("gate", "unmet-gate")):
+            with self.subTest(kind=kind):
+                packet = base_packet()
+                packet["issue"] = issue(kind)
+                result = self.run_packet(packet)
+                self.assertEqual(result["state"], state)
+                self.assertEqual(result["hold_packet"], packet["issue"])
+                self.assertEqual(result["unaffected"], ["behavior"])
+
+    def test_deferred_material_or_selfaccepted_handoff_is_not_clean(self):
+        for status in ("deferred", "repair-reported", "handoff-validated", "resolved"):
+            with self.subTest(status=status):
+                packet = base_packet("final")
+                packet["findings"] = [material()]
+                packet["dispositions"] = {"F1": [{"status": status}]}
+                result = self.run_packet(packet)
+                self.assertNotEqual(result["result"], "clean")
+
+    def test_advisory_confidence_does_not_raise_severity(self):
+        packet = base_packet("final")
+        note = material()
+        note.update(severity="advisory", confidence="high", validated=False)
+        packet["reviews"][0].update(result="findings", findings=[note])
+        result = self.run_packet(packet)
+        self.assertEqual(result["result"], "clean")
+        self.assertEqual(result["raw_reports"][0]["findings"][0], note)
+
+    def test_failed_check_is_repair_work(self):
+        packet = base_packet()
+        packet["evidence"][0]["result"] = "fail"
+        self.assertEqual(self.run_packet(packet)["state"], "repair")
+
+    def test_malformed_packet_refuses_without_mutation(self):
+        mutations = [lambda p: p["candidate"].pop("target"), lambda p: p.update(required_checks=[]),
+                     lambda p: p["reviews"].append(copy.deepcopy(p["reviews"][0])),
+                     lambda p: p.update(issue={"kind": "intent"})]
+        for mutate in mutations:
+            packet = base_packet()
+            mutate(packet)
+            self.assertEqual(self.run_packet(packet, 2)["state"], "REFUSED")
+
+
+if __name__ == "__main__":
+    unittest.main()

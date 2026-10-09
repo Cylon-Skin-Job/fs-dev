@@ -1,0 +1,191 @@
+/**
+ * ThreadIndex - Thread metadata CRUD against SQLite
+ *
+ * One job: read/write thread metadata in the threads table.
+ * MRU ordering via updated_at DESC (replaces JS object insertion-order trick).
+ */
+
+const { getDb } = require('../db');
+
+class ThreadIndex {
+  /**
+   * @param {string} workspaceId - Workspace identifier (workspaces.id)
+   *
+   * All threads are workspace-scoped (RCC-0095). The `scope` column is
+   * still written as 'project' so reads keep excluding any legacy
+   * view-scoped rows that may remain in older databases.
+   */
+  constructor(workspaceId) {
+    if (!workspaceId) throw new Error('ThreadIndex: workspaceId is required');
+    this.workspaceId = workspaceId;
+  }
+
+
+
+  /**
+   * Get all threads ordered by MRU (most recent first)
+   * @returns {Promise<Array<{threadId: string, entry: object}>>}
+   */
+  async list() {
+    const db = getDb();
+    const rows = await db('threads')
+      .where('workspace_id', this.workspaceId)
+      .where('scope', 'project')
+      .orderBy('updated_at', 'desc');
+
+    return rows.map((row) => ({
+      threadId: row.thread_id,
+      entry: this._toEntry(row),
+    }));
+  }
+
+  /**
+   * Get a single thread by ID
+   * @param {string} threadId
+   * @returns {Promise<object|null>}
+   */
+  async get(threadId) {
+    const db = getDb();
+    const row = await db('threads')
+      .where('thread_id', threadId)
+      .where('workspace_id', this.workspaceId)
+      .where('scope', 'project')
+      .first();
+    return row ? this._toEntry(row) : null;
+  }
+
+  /**
+   * Distinguish a stale ID from an ID owned by another workspace without
+   * returning any foreign thread data to the caller.
+   * @param {string} threadId
+   * @returns {Promise<boolean>}
+   */
+  async existsOutsideWorkspace(threadId) {
+    const db = getDb();
+    const row = await db('threads')
+      .select('workspace_id', 'scope')
+      .where('thread_id', threadId)
+      .first();
+    return Boolean(row && (row.workspace_id !== this.workspaceId || row.scope !== 'project'));
+  }
+
+
+
+  /**
+   * Update a thread entry
+   * @param {string} threadId
+   * @param {object} updates - camelCase fields
+   * @returns {Promise<object|null>}
+   */
+  async update(threadId, updates) {
+    const db = getDb();
+    const dbUpdates = {};
+
+    if (updates.name !== undefined) dbUpdates.name = updates.name;
+    if (updates.status !== undefined) dbUpdates.status = updates.status;
+    if (updates.messageCount !== undefined) dbUpdates.message_count = updates.messageCount;
+    if (updates.resumedAt !== undefined) dbUpdates.resumed_at = updates.resumedAt;
+    if (updates.updatedAt !== undefined) dbUpdates.updated_at = updates.updatedAt;
+    if (updates.harnessConfig !== undefined) {
+      dbUpdates.harness_config = updates.harnessConfig ? JSON.stringify(updates.harnessConfig) : null;
+    }
+
+    if (Object.keys(dbUpdates).length === 0) return this.get(threadId);
+
+    const count = await db('threads')
+      .where('thread_id', threadId)
+      .where('workspace_id', this.workspaceId)
+      .where('scope', 'project')
+      .update(dbUpdates);
+    if (count === 0) return null;
+
+    return this.get(threadId);
+  }
+
+  /**
+   * Rename a thread
+   * @param {string} threadId
+   * @param {string} newName
+   */
+  async rename(threadId, newName) {
+    return this.update(threadId, { name: newName });
+  }
+
+  /**
+   * Mark thread as active and bump MRU
+   * @param {string} threadId
+   */
+  async activate(threadId) {
+    return this.update(threadId, { status: 'active', updatedAt: Date.now() });
+  }
+
+  /**
+   * Mark thread as suspended
+   * @param {string} threadId
+   */
+  async suspend(threadId) {
+    return this.update(threadId, { status: 'suspended' });
+  }
+
+  /**
+   * Increment message count
+   * @param {string} threadId
+   */
+  async incrementMessageCount(threadId) {
+    const db = getDb();
+    const count = await db('threads')
+      .where('thread_id', threadId)
+      .where('workspace_id', this.workspaceId)
+      .where('scope', 'project')
+      .increment('message_count', 1);
+    if (count === 0) return null;
+    return this.get(threadId);
+  }
+
+  /**
+   * Update resumed timestamp
+   * @param {string} threadId
+   */
+  async markResumed(threadId) {
+    return this.update(threadId, { resumedAt: new Date().toISOString() });
+  }
+
+
+
+  /**
+   * Bump MRU timestamp
+   * @param {string} threadId
+   */
+  async touch(threadId) {
+    return this.update(threadId, { updatedAt: Date.now() });
+  }
+
+
+
+  /**
+   * Map a DB row (snake_case) to the ThreadEntry shape (camelCase)
+   * @private
+   */
+  _toEntry(row) {
+    const entry = {
+      name: row.name,
+      createdAt: row.created_at,
+      messageCount: row.message_count,
+      status: row.status,
+      scope: row.scope,
+      viewId: row.view_id,
+    };
+    if (row.resumed_at) entry.resumedAt = row.resumed_at;
+    if (row.harness_id) entry.harnessId = row.harness_id;
+    if (row.harness_config) {
+      try {
+        entry.harnessConfig = JSON.parse(row.harness_config);
+      } catch {
+        entry.harnessConfig = null;
+      }
+    }
+    return entry;
+  }
+}
+
+module.exports = { ThreadIndex };

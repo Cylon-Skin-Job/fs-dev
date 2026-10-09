@@ -54,3 +54,41 @@ Summary: This folder finishes the current last-build repair/verification/closeou
 Concurrency: Built-in checks observed the source investigation and orchestrator idle; “Audit chat integration build” is active on the same build. This operation changes only folder scope records and preserves audit/implementation evidence. It sends no task message and changes no assignment. Recheck writers before follow-on work.
 Next: Finish the current job under existing requirements, then reconcile exact baseline and residual findings for the new home.
 Outcome: Scope records and follow-on home prepared. No build acceptance, checkpoint transition, product repair, task dispatch or recipient acknowledgment claimed.
+
+### B-005 — Completed-build and publication handoff
+
+Type: source-backed completion and owner-requested handoff.
+Status: prepared; current build and authorized publication/deployment complete; later assignment remains owner-directed.
+Owner/chat: Codex side chat (ephemeral), /root, owner-assigned Commit Supervisor.
+Target: current build owner and an explicitly designated later successor.
+Source: direct human “Create a handoff.”; completed-work owner acceptance; explicit merge/commit, checked-documentation, push/restart and Alpha sync/build/reinstall directions preserved in the job.
+Recorded-at: 2026-10-07T09:11:36.751942+00:00
+Summary: [Current completed-build handoff](HANDOFF-COMPLETED-BUILD-2026-10-07.md) records owner-accepted retirement/startup repair, current final review, main commit/push `a4a4262587a7f72f89f5b9b9c2f54878fe5381bb`, successful development restart and Alpha sync/build/install/restart. The dated October 5 manual-result/publication-pending observations are historical for this unit. Pending packages and evidence limits remain explicit; broader harness scope is not absorbed.
+Concurrency: Current built-in chat inventory observed only this bounded author active in the source project; registered main **Resume chat integration work** was notLoaded. No main registration/history boundary or central MC record was changed.
+Next: Read the new handoff and exact operation receipts; no current-build operation remains unfinished. Keep apps and pending work intact. A later bounded owner assignment chooses follow-on work.
+Outcome: Dated handoff and local TICKET/BULLETIN/index routing prepared. No new task/message, history checkpoint, Git operation, app restart or schedule was performed by this documentation turn. These new documentation edits remain uncommitted; this bulletin does not establish recipient delivery or approval.
+
+### B-006 — Next shared chat material insertion planning handoff
+
+Type: owner-directed planning completion and implementation hold.
+Status: candidate ready for owner discussion; implementation explicitly held.
+Owner/chat: Codex side chat (ephemeral), /root, Creation Supervisor.
+Target: the human owner and a later explicitly assigned implementation owner.
+Source: D-009 and [the literal current owner request](planning/shared-chat-material-insertion/OWNER-REQUEST.md), including “This will be our next ticket and SPEC. Don't build.”
+Recorded-at: 2026-10-07T10:49:28.672944+00:00
+Summary: [CHAT-MATERIAL-01 ticket](planning/shared-chat-material-insertion/TICKET.md) and [CHAT-MATERIAL-SPEC-01](planning/shared-chat-material-insertion/SPEC.md) define one shared existing action/store owner, global versus own-composer Main/Side destinations, early snapshots, real-lifetime cancellation, source preparation/correlation, compose-only insertion, three ordered slices and renewed checks/Wiki scope. Candidate `sha256:65b324647b7e52f0426f7b2005849d053f4f239420fab07c848170b21ec1d3f3` passed fresh worker, separate stage and [independent release validation](planning/shared-chat-material-insertion/reports/RELEASE-VALIDATION-01.md), report SHA-256 `de3ae8e92601794105b436a3610949ea7ebd2eabe145ac1be6c808e7e2c35754`. Original CMH-001/repair evidence is preserved; no unresolved planning finding remains.
+Concurrency: stage manager, author, two investigators, five distinct stage-side reviewers and root's distinct release reviewer are completed. Only the bounded supervisor's final routing/sweep writes remain. Existing main identity/history state and unrelated dirty work are preserved.
+Next: discuss the exact reviewed candidate under [the planning return point](planning/shared-chat-material-insertion/PLANNING.md). “Don't build” remains effective; a later owner assignment must approve the exact candidate before implementation dispatch.
+Outcome: planning documentation and independent review only. No product code/test/build, app/Alpha operation, Git publication, history checkpoint, main transition, persistent task/message or schedule. The completed prior build remains closed; broader harness/health scopes remain separate. This advisory record does not deliver a message or grant owner approval.
+
+### B-007 — Approved SPEC Orchestrator session dispatched
+
+Type: owner-directed exact-candidate implementation handoff.
+Status: session created and active preflight verified; implementation completion and owner acceptance remain separate.
+Owner/chat: Codex side chat (ephemeral), `/root`, Creation Supervisor for handoff only.
+Target: [new SPEC Orchestrator session](codex://threads/01a11655-f57c-76c1-b12b-b127815efa24), thread `01a11655-f57c-76c1-b12b-b127815efa24`, host `local`.
+Source: current human “Spawn another session to run as SPEC Orchestrator”; D-010 and [OWNER-APPROVAL](planning/shared-chat-material-insertion/OWNER-APPROVAL.md).
+Recorded-at: 2026-10-07T12:29:09.088825+00:00
+Summary: separate local project session created for candidate `sha256:65b324647b7e52f0426f7b2005849d053f4f239420fab07c848170b21ec1d3f3`, using the exact reviewed single SPEC and mc-orchestrator procedure. The latest owner assignment supersedes the earlier Don't build preparation hold only for this SPEC. Actual create-thread result supplies identity; no model/effort override or worktree environment was requested. The prompt carries complete sources, approval, fresh review gates, required tests/native/Wiki evidence and ledger/report ownership under the package's implementation/.
+Next: follow the new session's implementation and completed-SPEC owner review; initial active preflight is verified in the dispatch receipt. Do not begin another SPEC, commit/push/merge, update Alpha or repeat prior-build operations under this handoff.
+Outcome: exact approval and session creation, not implementation completion, owner acceptance or publication. Existing registered main/checkpoint and unrelated work remain preserved; no MC/timer activation or message to an existing persistent task. Earlier B-006 planning-only hold is dated and superseded as stated above.

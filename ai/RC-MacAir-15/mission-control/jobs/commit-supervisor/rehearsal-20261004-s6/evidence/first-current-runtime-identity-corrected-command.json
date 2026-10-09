@@ -1,0 +1,14 @@
+{
+  "actor": "/root/s6_supervisor_candidate_1",
+  "started": "2026-10-04T16:07:50.853356+00:00",
+  "finished": "2026-10-04T16:07:51.478945+00:00",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "command": [
+    "node",
+    "jobs/commit-supervisor/rehearsal-20261004-s6/first_runtime_identity.mjs",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-current-runtime-identity.json"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"mainPid\":5349,\"serverPid\":5358,\"serverListeners\":[5358],\"debugListeners\":[5349],\"ownedProcesses\":6,\"selectedDatabaseOpen\":true}\n",
+  "stderr": ""
+}

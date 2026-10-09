@@ -1,0 +1,17 @@
+{
+  "recorded_at": "2026-10-07T23:16:02.642439+00:00",
+  "actual_build_started": "2026-10-07T23:15:01.843444+00:00",
+  "all_slices_accepted_before_build": {
+    "M1": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M1/ACCEPTANCE.json",
+    "M2": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/ACCEPTANCE.json",
+    "M3": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/ACCEPTANCE.json"
+  },
+  "source_seal_sha256": "35cda972a106468eaa279c60da9ef51fc04ec23333f03de4226269b84e14ad07",
+  "before_backup_timestamp": "2026-10-07T23:15:01.593601+00:00",
+  "preload_before_sha256": "a87aaefb6d60425ec30013a6a1b8a2a3e21d50208a6c1727adc0be9968adef05",
+  "source_sha256": "2f5b8e8ca6cd914b4cd93693da772fe6036b63941c5dac160d7026a4541b1407",
+  "build_script_sha256": "398c159ba2891ca42b39c9feefe131210e5ea1ea421df836f6926836aff0742a",
+  "runner_sha256": "0ff584ce79a3e528c3cd8e75e8c4617975aaedbdc522e3f05f7034578cc97c87",
+  "state": "Mandatory fresh post-all-accepted final integration in progress",
+  "recording_correction": "START recording was completed after build because prep used a nonexistent preload-src filename; own before backup was already saved before build. Actual source is unchanged preload-source.cjs, raw build receipt supplies command chronology. No productchange/result failure."
+}

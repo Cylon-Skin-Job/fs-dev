@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-04T20:42:27.142784+00:00",
+  "actor": "/root/s6_supervisor_recovery_1",
+  "label": "original",
+  "original_job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6",
+  "control_job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/public-controls/original",
+  "manifest_sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb",
+  "historical_owner": "/root/s6_supervisor_provider_1",
+  "active_actor": "/root/s6_supervisor_recovery_1",
+  "guard": {
+    "result": "GUARDED",
+    "expected_sha256": "6dcbeaab263a3afccab588dbffb7e884e96a87dc1f001bdbacf0ad2f2086fda2"
+  },
+  "actual_restore": {
+    "result": "RESTORED",
+    "index_worktree_equal": true,
+    "status_equal": true,
+    "restored_sha256": "88fced4a620d17d82ea965c8620be303f571385b914fc4972f160ac098edbb77",
+    "manifest_sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb"
+  },
+  "removed_only_manifest_declared_job_created_absent_leaves": [],
+  "owned_count": 128,
+  "full_inventory_count": 4353,
+  "full_readback": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/original-full-exact-readback.json",
+  "current_ready": false,
+  "original_namespace_public_verify": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/original-original-namespace-verify.command.json",
+  "all_source_refs_config_physical_index_history_archives_protected_preserved": true
+}

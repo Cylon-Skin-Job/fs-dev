@@ -1,0 +1,27 @@
+[
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/run.mjs",
+    "before": "6140fbdc21a04ba1e3ca78a7a82262e166898cd1c1e004c6ef034a7aa6378c28",
+    "after": "dcf6f54b018ef79c12dc27a1cc606e4f48fea4b182747e970ae536051a8064da"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/soak-actions.mjs",
+    "before": "5a394c7f4f5b7071db4a1552ccf0b9456f2254688b8c745e67eea29b588bb9ef",
+    "after": "e3d8907f9d5ed6f232cd3b00c0198af54d8f441152de61cd8648bd08574546b0"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/soak-delete-native.mjs",
+    "before": null,
+    "after": "9ec46111045965f88341782dd04dba3a85f941bd7f967944e19609ff90a5c8bc"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/soak-delete-native.test.mjs",
+    "before": null,
+    "after": "acdbe6efce9568bb7cdb1e3367c7f3abfb9e6c86cb0fcac22b80dae9253af75e"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/soak-electron.mjs",
+    "before": "99821cd7a9bb4f7b12272786dd6b85ffe029a13856c568643d7f86cac7c35d05",
+    "after": "a929044bdb865a5bda8ca15ebb8f41fabc10dd335ff2aa77b440c1efcffaf1d5"
+  }
+]

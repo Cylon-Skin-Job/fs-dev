@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-04T21:26:58.988841+00:00",
+  "execution": "NOT executed. Require actual all-six acceptance receipt; exclusive output namespaces retained",
+  "sources": {
+    "SPEC-final-suite-runner.py": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite-runner.py",
+      "sha256": "8a15996c3d1e4093f5b1db61df94087385520cb1948784edba8f97fd46d5a079",
+      "prepared_only": true
+    },
+    "SPEC-final-python-bindings.py": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-python-bindings.py",
+      "sha256": "c68ad9c0e21aa0ffcb37ba5a40629f0b8ea09ac67c0854de23a095f1f84fd565",
+      "prepared_only": true
+    },
+    "SPEC-final-static-checks.py": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-static-checks.py",
+      "sha256": "a632fb92f2a425c785c13ba115d5e343ecd74139bf2f439d6c2e62f9b226fb05",
+      "prepared_only": true
+    },
+    "SPEC-final-preservation-check.py": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-preservation-check.py",
+      "sha256": "dfae87f13355d8e1c1371a48c4418e7719c70d06f3006af49d37a3b853315aa6",
+      "prepared_only": true
+    }
+  }
+}

@@ -5,19 +5,16 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { ScreenshotsTrigger } from '../../screenshots';
-import { captureAndAttachScreenshot } from '../../screenshots/chatScreenshotCapture';
-import type { ScreenshotAttachmentOwner } from '../../screenshots/chatScreenshotCapture';
 import { ClipboardTrigger } from '../../clipboard';
 import { RecentFilesTrigger } from '../../recent-files';
-import type { ChatLinkAttachment } from '../../lib/chat-file-links/file-link-types';
+import type { BeginChatMaterialSource } from '../../lib/chat-material-source';
 
 interface ChatComposerAddMenuProps {
-  onAttach: (attachment: ChatLinkAttachment) => void;
-  onInsert: (text: string) => void;
-  screenshotOwner: ScreenshotAttachmentOwner | null;
+  beginMaterial: BeginChatMaterialSource;
+  onTakeScreenshot: () => void;
 }
 
-export function ChatComposerAddMenu({ onAttach, onInsert, screenshotOwner }: ChatComposerAddMenuProps) {
+export function ChatComposerAddMenu({ beginMaterial, onTakeScreenshot }: ChatComposerAddMenuProps) {
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -42,18 +39,14 @@ export function ChatComposerAddMenu({ onAttach, onInsert, screenshotOwner }: Cha
 
   const handleCapture = useCallback(() => {
     setOpen(false);
-    if (screenshotOwner) void captureAndAttachScreenshot(screenshotOwner);
-  }, [screenshotOwner]);
+    onTakeScreenshot();
+  }, [onTakeScreenshot]);
 
-  const handleAttach = useCallback((attachment: ChatLinkAttachment) => {
-    setOpen(false);
-    onAttach(attachment);
-  }, [onAttach]);
-
-  const handleInsert = useCallback((text: string) => {
-    setOpen(false);
-    onInsert(text);
-  }, [onInsert]);
+  const handleBegin = useCallback<BeginChatMaterialSource>((options) => {
+    const result = beginMaterial(options);
+    if (result.status === 'ready') setOpen(false);
+    return result;
+  }, [beginMaterial]);
 
   return (
     <div className="rv-chat-composer-add" ref={rootRef}>
@@ -83,12 +76,12 @@ export function ChatComposerAddMenu({ onAttach, onInsert, screenshotOwner }: Cha
               <span className="material-symbols-outlined" aria-hidden="true">control_camera</span>
             </button>
             <ScreenshotsTrigger
-              onAttach={handleAttach}
+              beginMaterial={handleBegin}
               triggerVariant="submenu"
             />
           </div>
-          <ClipboardTrigger onInsert={handleInsert} triggerVariant="submenu" />
-          <RecentFilesTrigger onInsert={handleInsert} triggerVariant="submenu" />
+          <ClipboardTrigger beginMaterial={handleBegin} triggerVariant="submenu" />
+          <RecentFilesTrigger beginMaterial={handleBegin} triggerVariant="submenu" />
         </div>
       )}
     </div>

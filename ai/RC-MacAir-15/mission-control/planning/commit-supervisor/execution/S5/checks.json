@@ -1,0 +1,154 @@
+{
+  "at": "2026-10-04T11:02:04.167818+00:00",
+  "checks": [
+    {
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-memory-maintenance/scripts/validate_index.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit": 0,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/index.log",
+      "log_sha256": "8354e26bfa33b2476d540259dcf96de50a1f6a92cd652c7d5b6de249e2dc033d"
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./.codex/skills/.system/skill-creator/scripts/quick_validate.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit": 0,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/skill-mc-commit-supervisor.log",
+      "log_sha256": "db349825903d66adffea3ecf1bd8e1803043e8a71cf1a051235dabc5371f5bb0"
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./.codex/skills/.system/skill-creator/scripts/quick_validate.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-code-review-orchestrator"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit": 0,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/skill-mc-code-review-orchestrator.log",
+      "log_sha256": "db349825903d66adffea3ecf1bd8e1803043e8a71cf1a051235dabc5371f5bb0"
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./.codex/skills/.system/skill-creator/scripts/quick_validate.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-repair-worker"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit": 0,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/skill-mc-commit-repair-worker.log",
+      "log_sha256": "db349825903d66adffea3ecf1bd8e1803043e8a71cf1a051235dabc5371f5bb0"
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./.codex/skills/.system/skill-creator/scripts/quick_validate.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mission-control"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit": 0,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/skill-mission-control.log",
+      "log_sha256": "db349825903d66adffea3ecf1bd8e1803043e8a71cf1a051235dabc5371f5bb0"
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./.codex/skills/.system/skill-creator/scripts/quick_validate.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/monitor"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit": 0,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/skill-monitor.log",
+      "log_sha256": "db349825903d66adffea3ecf1bd8e1803043e8a71cf1a051235dabc5371f5bb0"
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./.codex/skills/.system/skill-creator/scripts/quick_validate.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/status"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit": 0,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/skill-status.log",
+      "log_sha256": "db349825903d66adffea3ecf1bd8e1803043e8a71cf1a051235dabc5371f5bb0"
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./.codex/skills/.system/skill-creator/scripts/quick_validate.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-implementation-supervisor"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit": 0,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/skill-mc-roadmap-implementation-supervisor.log",
+      "log_sha256": "db349825903d66adffea3ecf1bd8e1803043e8a71cf1a051235dabc5371f5bb0"
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit": 0,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/cumulative-python.log",
+      "log_sha256": "b04b57b4c244d42fc886324aeda022d0728c7f51825539b5f22c1eef2237e536"
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/node",
+        "--test",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit": 0,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/cumulative-node.log",
+      "log_sha256": "d34ee4a0d8bb4f9e89d2596bdb2387eec485d3e37b67ac58efd2da2c41ba0e4a"
+    }
+  ],
+  "static": {
+    "profiles": 12,
+    "skills": 22,
+    "all_profile_paths_resolve": true,
+    "model_override": false,
+    "non_agent_config_unchanged": true,
+    "full_access_retained": true,
+    "indexed_documents": 21,
+    "links": 259,
+    "remaining_aliases": 61,
+    "each_alias_classified": true,
+    "legacy_entry_profile_absent": true,
+    "accepted_workflow_and_template_prefixes_equal": true,
+    "current_modes_equal": true
+  },
+  "source": {
+    "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+    "index_sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+    "preserved_unowned_baseline_files": 15875,
+    "unowned_drift": []
+  },
+  "runtime": "S6 required; S5 does not claim actual app/profile/role rehearsal",
+  "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/current-manifest.json",
+  "manifest_sha256": "e61a55051eb1981a6375230669ebd367fca7cb5b5eb7f900a4dc8c31187b7936"
+}

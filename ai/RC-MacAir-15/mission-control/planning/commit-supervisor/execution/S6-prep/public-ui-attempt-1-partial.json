@@ -1,0 +1,80 @@
+{
+  "kind": "PUBLIC_UI_OBSERVATION",
+  "mode": "observe",
+  "candidate": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "profile": "/private/tmp/mc-s6-commit-supervisor-20261004/profile",
+  "machine": "MC-S6",
+  "samples": [
+    {
+      "action": "all incomplete",
+      "summary": "3 remaining",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "action": "first completed",
+      "summary": "3 remaining",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "action": "second completed",
+      "summary": "3 remaining",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        true,
+        false
+      ]
+    },
+    {
+      "action": "first reversed",
+      "summary": "3 remaining",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        false,
+        true,
+        false
+      ]
+    },
+    {
+      "action": "shell reload",
+      "summary": "3 remaining",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        false,
+        true,
+        false
+      ]
+    }
+  ],
+  "started": "2026-10-04T11:45:03.746Z"
+}

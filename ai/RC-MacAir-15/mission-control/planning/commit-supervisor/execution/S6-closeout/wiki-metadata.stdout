@@ -1,0 +1,1 @@
+{"name":"Fusion Restart","description":"Fusion restart script behavior and when to use it for chat validation.","metadata":{"source-files":["restart-fusion.sh","scripts/fusion-restart.mjs","scripts/fusion-restart-target.mjs","scripts/fusion-restart-processes.mjs","scripts/fusion-restart-probe.mjs"],"last-modified":"2026-10-04T21:16:40Z"}}

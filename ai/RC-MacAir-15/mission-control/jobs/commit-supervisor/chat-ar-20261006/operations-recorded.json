@@ -1,0 +1,93 @@
+{
+  "state": "OPERATIONS_RECORDED",
+  "status": "complete",
+  "job_id": "chat-ar-20261006",
+  "at": "2026-10-07T00:31:58.993339+00:00",
+  "owner": "/root",
+  "signature": "Codex side chat (ephemeral)",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "source_repository": "/Users/rccurtrightjr./projects/fs-dev",
+  "private_candidate": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+  "branch": "main",
+  "commit": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "parent": "3356e1b73cc5d44028eac5baa02fd542a8bbc385",
+  "tree": "1c80f83c6c4b2b61e42c4dbb988c1f942b672ade",
+  "owner_authority": "owner-operation-authority.md; actual human merge/commit and inspected ready documentation instructions",
+  "old_source_agent_ref": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "old_local_main": "737293389d202bd327362a75cce991e5cbb53391",
+  "remote_origin_main_unchanged": "3356e1b73cc5d44028eac5baa02fd542a8bbc385",
+  "source_codex_branch": "codex/chat-retirement-and-startup-repair",
+  "source_ahead_of_origin_main": 1,
+  "changed_paths": 1605,
+  "changed_markdown_paths": 940,
+  "explicit_owned_selectors": 1668,
+  "landing_copies": 23,
+  "staged_paths_remaining": 0,
+  "owned_unstaged_paths_remaining": 0,
+  "unselected_preserved": 20303,
+  "unselected_snapshot": "primary-unselected-preoperation-pass-02.json",
+  "operations": [
+    {
+      "label": "01-local-commit",
+      "receipt": "01-local-commit-receipt.json",
+      "at": "2026-10-07T00:24:43.905246+00:00",
+      "finished": "2026-10-07T00:24:44.177008+00:00",
+      "success": true
+    },
+    {
+      "label": "02-local-branch-transfer",
+      "receipt": "02-local-branch-transfer-receipt.json",
+      "at": "2026-10-07T00:28:23.563765+00:00",
+      "finished": "2026-10-07T00:28:24.099134+00:00",
+      "success": true
+    },
+    {
+      "label": "03-owned-source-copy",
+      "receipt": "03-owned-source-copy-receipt.json",
+      "at": "2026-10-07T00:29:05.718039+00:00",
+      "finished": "2026-10-07T00:29:05.718039+00:00",
+      "success": true
+    },
+    {
+      "label": "04-stage-owned-source",
+      "receipt": "04-stage-owned-source-receipt.json",
+      "at": "2026-10-07T00:29:34.167079+00:00",
+      "finished": "2026-10-07T00:29:34.304519+00:00",
+      "success": true
+    },
+    {
+      "label": "05-local-main-fast-forward",
+      "receipt": "05-local-main-fast-forward-receipt.json",
+      "at": "2026-10-07T00:29:55.414290+00:00",
+      "finished": "2026-10-07T00:29:55.501693+00:00",
+      "success": true
+    },
+    {
+      "label": "06-select-local-main",
+      "receipt": "06-select-local-main-receipt.json",
+      "at": "2026-10-07T00:30:20.427285+00:00",
+      "finished": "2026-10-07T00:30:20.461433+00:00",
+      "success": true
+    }
+  ],
+  "independent_final_gate": "final-review-pass-02/seal.json",
+  "runtime_gate": "runtime-acceptance.json",
+  "runtime_preservation_gate": "runtime-preservation-receipt.json",
+  "source_index_sha256": "d9ccdbfc3f8fc40c359271d493a2cc1de36c0f127058cb72410095341b2307fd",
+  "network_publication": {
+    "push_performed": false,
+    "pr_created": false,
+    "pr_merged": false,
+    "remote_ref_updates": false
+  },
+  "alpha": {
+    "source_sync": false,
+    "build": false,
+    "install": false,
+    "restart": false
+  },
+  "consumer_adoption": "Not asserted by a local main landing",
+  "central_mc_records": "Not written; this bounded side chat has no central integration-summary ownership",
+  "next_unfinished_authorized_action": null,
+  "pending_work": "Unselected MC setup/framework/operative Launchpad instructions, Capture035 mixed diagnostics, restart-support package/current article and runtime/generated state remain preserved and uncommitted."
+}

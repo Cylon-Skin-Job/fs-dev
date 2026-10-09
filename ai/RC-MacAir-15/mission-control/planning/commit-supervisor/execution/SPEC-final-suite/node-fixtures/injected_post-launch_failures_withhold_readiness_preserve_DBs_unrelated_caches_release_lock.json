@@ -1,0 +1,47 @@
+{
+  "test": "injected post-launch failures withhold readiness, preserve DBs/unrelated caches, release lock",
+  "fixture": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-s9BN47",
+  "injected": true,
+  "files": [
+    {
+      "path": "selected profile/fusion-restart/run-JPLvK8/failure.json",
+      "bytes": "{\n  \"state\": \"UNMET_RUNTIME_CHECK\",\n  \"mainPid\": 111,\n  \"error\": \"wrong main path/profile/machine\"\n}\n"
+    },
+    {
+      "path": "selected profile/fusion-restart/run-JPLvK8/target.json",
+      "bytes": "{\n  \"repo\": \"/Users/rccurtrightjr./projects/fs-dev\",\n  \"client\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client\",\n  \"main\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs\",\n  \"server\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js\",\n  \"machine\": \"RC-MacAir-15\",\n  \"profile\": \"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-s9BN47/selected profile\",\n  \"profileMode\": \"explicit\",\n  \"defaultProfile\": \"/Users/rccurtrightjr./Library/Application Support/Fusion Studio\",\n  \"bin\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron\",\n  \"runtime\": \"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-s9BN47/selected profile/fusion-restart\",\n  \"portFile\": \"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-s9BN47/selected profile/server.port\",\n  \"dryRun\": false,\n  \"database\": \"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-s9BN47/selected profile/server-data/fusion.db\",\n  \"serverLog\": \"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-s9BN47/selected profile/server-live.log\"\n}\n"
+    },
+    {
+      "path": "selected profile/fusion-restart/run-RITXdA/failure.json",
+      "bytes": "{\n  \"state\": \"UNMET_RUNTIME_CHECK\",\n  \"mainPid\": 111,\n  \"error\": \"dead or wrong server path/ancestry/listener\"\n}\n"
+    },
+    {
+      "path": "selected profile/fusion-restart/run-RITXdA/target.json",
+      "bytes": "{\n  \"repo\": \"/Users/rccurtrightjr./projects/fs-dev\",\n  \"client\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client\",\n  \"main\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs\",\n  \"server\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js\",\n  \"machine\": \"RC-MacAir-15\",\n  \"profile\": \"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-s9BN47/selected profile\",\n  \"profileMode\": \"explicit\",\n  \"defaultProfile\": \"/Users/rccurtrightjr./Library/Application Support/Fusion Studio\",\n  \"bin\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron\",\n  \"runtime\": \"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-s9BN47/selected profile/fusion-restart\",\n  \"portFile\": \"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-s9BN47/selected profile/server.port\",\n  \"dryRun\": false,\n  \"database\": \"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-s9BN47/selected profile/server-data/fusion.db\",\n  \"serverLog\": \"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-s9BN47/selected profile/server-live.log\"\n}\n"
+    },
+    {
+      "path": "selected profile/fusion-restart/run-U8v9MT/failure.json",
+      "bytes": "{\n  \"state\": \"UNMET_RUNTIME_CHECK\",\n  \"mainPid\": 111,\n  \"error\": \"wrong main path/profile/machine\"\n}\n"
+    },
+    {
+      "path": "selected profile/fusion-restart/run-U8v9MT/target.json",
+      "bytes": "{\n  \"repo\": \"/Users/rccurtrightjr./projects/fs-dev\",\n  \"client\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client\",\n  \"main\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs\",\n  \"server\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js\",\n  \"machine\": \"RC-MacAir-15\",\n  \"profile\": \"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-s9BN47/selected profile\",\n  \"profileMode\": \"explicit\",\n  \"defaultProfile\": \"/Users/rccurtrightjr./Library/Application Support/Fusion Studio\",\n  \"bin\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron\",\n  \"runtime\": \"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-s9BN47/selected profile/fusion-restart\",\n  \"portFile\": \"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-s9BN47/selected profile/server.port\",\n  \"dryRun\": false,\n  \"database\": \"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-s9BN47/selected profile/server-data/fusion.db\",\n  \"serverLog\": \"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-s9BN47/selected profile/server-live.log\"\n}\n"
+    },
+    {
+      "path": "selected profile/fusion-restart/run-VsAGrr/failure.json",
+      "bytes": "{\n  \"state\": \"UNMET_RUNTIME_CHECK\",\n  \"mainPid\": 111,\n  \"error\": \"renderer disconnected or workspace:init shell unavailable\"\n}\n"
+    },
+    {
+      "path": "selected profile/fusion-restart/run-VsAGrr/target.json",
+      "bytes": "{\n  \"repo\": \"/Users/rccurtrightjr./projects/fs-dev\",\n  \"client\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client\",\n  \"main\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs\",\n  \"server\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js\",\n  \"machine\": \"RC-MacAir-15\",\n  \"profile\": \"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-s9BN47/selected profile\",\n  \"profileMode\": \"explicit\",\n  \"defaultProfile\": \"/Users/rccurtrightjr./Library/Application Support/Fusion Studio\",\n  \"bin\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron\",\n  \"runtime\": \"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-s9BN47/selected profile/fusion-restart\",\n  \"portFile\": \"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-s9BN47/selected profile/server.port\",\n  \"dryRun\": false,\n  \"database\": \"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-s9BN47/selected profile/server-data/fusion.db\",\n  \"serverLog\": \"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-s9BN47/selected profile/server-live.log\"\n}\n"
+    },
+    {
+      "path": "selected profile/server-data/fusion.db",
+      "bytes": "DB sentinel"
+    },
+    {
+      "path": "unrelated/Cache/keep",
+      "bytes": "cache sentinel"
+    }
+  ]
+}

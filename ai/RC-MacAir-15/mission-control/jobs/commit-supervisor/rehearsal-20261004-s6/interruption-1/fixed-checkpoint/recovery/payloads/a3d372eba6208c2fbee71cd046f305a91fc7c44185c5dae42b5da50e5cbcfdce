@@ -1,0 +1,21 @@
+---
+name: Checklist Guide
+description: How to complete and revisit the disposable checklist.
+metadata:
+  source-files:
+    - rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js
+    - rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js
+    - scripts/fusion-restart-target.mjs
+    - scripts/fusion-restart.mjs
+  last-modified: "2026-10-04T15:18:44Z"
+---
+
+# Checklist Guide
+
+The checklist contains Draft report, Review sources and Send summary. Select a task checkbox to complete it; clear the checkbox to make it incomplete again. All three task rows and their checkboxes remain visible, including completed tasks.
+
+The summary uses `N remaining of 3`, where N counts incomplete tasks. With all tasks incomplete it reads `3 remaining of 3`. Complete Draft report to reach `2 remaining of 3`, then Review sources to reach `1 remaining of 3`; clear Draft report to return to `2 remaining of 3`. Completing every task reaches `0 remaining of 3`, and clearing every checkbox returns to `3 remaining of 3`.
+
+An ordinary iframe or shell reload within the same profile retains completion. After the example above, reloading keeps Review sources checked, Draft report and Send summary incomplete, and the summary at `2 remaining of 3`. A full canonical development restart clears browser storage, including Local Storage and Session Storage, so the checklist starts with all three tasks incomplete and `3 remaining of 3`.
+
+Open the built-in Wiki view to return to this guide. See the [Navigation Guide](../002-Navigation_Guide/PAGE.md) for movement between views.

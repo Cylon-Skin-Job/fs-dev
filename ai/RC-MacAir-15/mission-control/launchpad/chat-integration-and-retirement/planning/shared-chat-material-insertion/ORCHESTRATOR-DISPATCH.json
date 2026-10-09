@@ -1,0 +1,27 @@
+{
+  "kind": "spec_orchestrator_dispatch_receipt",
+  "recorded_at": "2026-10-07T12:30:27.743689+00:00",
+  "candidateId": "sha256:65b324647b7e52f0426f7b2005849d053f4f239420fab07c848170b21ec1d3f3",
+  "approval": "OWNER-APPROVAL.md",
+  "threadId": "01a11655-f57c-76c1-b12b-b127815efa24",
+  "hostId": "local",
+  "projectId": "06d43426-d4f7-4667-9199-2ca9a73879bf",
+  "environment": "local",
+  "model_effort_override": false,
+  "initial_progress_verification": {
+    "tool": "mcp__codex_app__wait_threads",
+    "thread_status": "active",
+    "turnId": "01a11655-f726-7562-b24c-c677052e5989",
+    "turn_status": "inProgress",
+    "error": null,
+    "assistant_commentary": "The checkout is still on main, with the unrelated dirty files present. The assignment and approval receipt release the earlier \u201cDon\u2019t build\u201d hold for this SPEC. I\u2019m verifying the package and required guidance before creating an isolated implementation checkout.",
+    "meaning": "Initial active preflight verified; no implementation/slice completion, review, owner acceptance or publication claimed."
+  },
+  "retained_gates": [
+    "fresh slice builders and independent builder/orchestrator/final reviews",
+    "required actual verification and deviation/Wiki accounting",
+    "completed-SPEC owner acceptance",
+    "separate commit/publication/Alpha authorization"
+  ],
+  "writer": "Codex side chat (ephemeral), /root, Creation Supervisor handoff"
+}

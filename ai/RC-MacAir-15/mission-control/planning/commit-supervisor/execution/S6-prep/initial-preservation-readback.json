@@ -1,0 +1,27 @@
+{
+  "result": "PASS",
+  "initial_unowned_inspected": 11957,
+  "root_execution_and_owned_test_paths_excluded": true,
+  "accepted_dependency_drift": {
+    "scripts/fusion-restart-processes.mjs": {
+      "original": {
+        "sha256": "3f5f209457b90e1d0fd44266de7934ee3116d3f7a122a1f9d85a6d9e88d98d56",
+        "symlink": null,
+        "mode": 33188
+      },
+      "current": {
+        "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+        "symlink": null,
+        "mode": 33188
+      }
+    }
+  },
+  "ignored_cache_hashes_equal": true,
+  "cache_leaves": 193,
+  "private_dependency_files": 63077,
+  "shared_inode_or_source_link_failures": [],
+  "source_index_current": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+  "source_index_original": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+  "head_equal": true,
+  "refs_equal": true
+}

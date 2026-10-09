@@ -1,0 +1,96 @@
+{
+  "status": "failed",
+  "windows": [],
+  "cycles": [],
+  "samples": [],
+  "durationMs": 2700000,
+  "errors": [],
+  "observationAdapter": {
+    "renderer": "index-D_35dGzh.js",
+    "server": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790305171770-91b133a83b/soak-server-resources.ndjson",
+    "mode": "read-only counts; fixture-only stage append"
+  },
+  "fixtures": {
+    "f2": {
+      "id": "F2-DETERMINISTIC-HISTORY-V1",
+      "exchanges": 30,
+      "renderedMessages": 60,
+      "includes": [
+        "text",
+        "code",
+        "lists",
+        "tables",
+        "collapsed-tool-results",
+        "reply-metadata"
+      ],
+      "dense": {
+        "exchanges": 2,
+        "assistantPayloadBytes": 534528,
+        "sha256": "9b06d21b677d93e4479544db39cf56f86eb4d3cd25fb603740407f263e7420dc"
+      }
+    },
+    "f3": {
+      "id": "F3-DETERMINISTIC-WORKSPACE-V1",
+      "algorithm": "label-repeated-to-fixed-byte-count",
+      "counts": {
+        "smallFiles": 1000,
+        "captureFolders": 100,
+        "wikiPages": 100,
+        "officeDocuments": 20
+      },
+      "totalFiles": 1220,
+      "totalContentBytes": 11059200,
+      "root": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790305171770-91b133a83b-B96uU0/soak-workspace/sustained-project",
+      "everyPathFixtureContained": true,
+      "manifestHash": "421c0ef8f5e255bb333a82a9f26d28c74eb2c8d55e95fc262ad241ed45740079"
+    },
+    "f5": {
+      "frameIntervalMs": 50,
+      "textFrames": 10000,
+      "maxCharacters": 200
+    }
+  },
+  "identity": {
+    "baseThreadId": "2026-09-24T19-59-34-754",
+    "baseGroupId": "tg-1a58e0b7-d7b3-40d5-9ba4-9267344d65fd",
+    "denseThreadId": "2026-09-24T19-59-34-945",
+    "project": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790305171770-91b133a83b-B96uU0/soak-workspace/sustained-project"
+  },
+  "calibration": {
+    "counts": {
+      "renderTextInstant": 152,
+      "MessageList": 4,
+      "InstantSegmentRenderer": 32,
+      "ChatAreaHeader": 18,
+      "ThreadRail": 19,
+      "ContentArea": 9,
+      "ChatAreaFooter": 16
+    },
+    "discovered": [
+      "ChatAreaFooter",
+      "ChatAreaHeader",
+      "ContentArea",
+      "InstantSegmentRenderer",
+      "MessageList",
+      "ThreadRail",
+      "renderTextInstant"
+    ]
+  },
+  "bootstrap": {
+    "status": "not-applicable-to-non-timing-lifecycle-check"
+  },
+  "observerCalibration": [
+    79,
+    75
+  ],
+  "failure": {
+    "message": "timed out waiting for Move peers",
+    "stack": "Error: timed out waiting for Move peers\n    at waitFor (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs:31:9)\n    at async lifecycleCycle (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/soak-actions.mjs:72:3)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/soak-electron.mjs:110:19"
+  },
+  "lingeringOwnedPids": [],
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  }
+}

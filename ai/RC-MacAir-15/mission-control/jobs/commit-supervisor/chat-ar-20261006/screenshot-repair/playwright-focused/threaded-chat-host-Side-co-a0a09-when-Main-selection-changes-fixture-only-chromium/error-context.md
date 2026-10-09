@@ -1,0 +1,101 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e5]:
+      - complementary [ref=e6]:
+        - generic [ref=e7]:
+          - button "Hide threads" [ref=e8]: dock_to_right
+          - combobox "Thread view" [ref=e9] [cursor=pointer]:
+            - option "Active Threads" [selected]
+            - option "Archive"
+        - button "edit_squareNew chat" [ref=e10]
+        - separator [ref=e11]
+        - generic [ref=e12]:
+          - generic [ref=e13]:
+            - generic [ref=e14]:
+              - generic "Screenshot New Chat" [ref=e15]: Screenshot New Chat●
+              - button "More options" [ref=e16]: more_vert
+            - generic [ref=e18]: 1 msgs · 12/31/2025
+          - generic [ref=e19]:
+            - generic [ref=e20]:
+              - generic "Alpha" [ref=e21]: Alpha●
+              - button "More options" [expanded] [ref=e22]: more_vert
+            - generic [ref=e24]: 1 msgs · 12/31/2025
+      - generic [ref=e25]:
+        - button "More options" [ref=e28]: event_list
+        - generic [ref=e31]: Start a conversation
+        - generic [ref=e33]:
+          - textbox "Ask about fixture-a..." [ref=e37]
+          - generic [ref=e38]:
+            - generic [ref=e39]:
+              - button "Add" [ref=e41] [cursor=pointer]:
+                - generic [ref=e42]: add
+              - button "Mode" [ref=e44]: shield_lockMode
+            - generic [ref=e45]:
+              - 'button "Context usage: 0%" [ref=e47]'
+              - button "DeepSeek V4 Flash" [ref=e49]: DeepSeek V4 Flashkeyboard_arrow_down
+              - button "Voice input (click to open)" [ref=e51] [cursor=pointer]:
+                - generic [ref=e52]: mic
+              - button "Send message" [ref=e54]: arrow_upward
+    - generic [ref=e56]:
+      - complementary [ref=e57]:
+        - generic [ref=e58]:
+          - button "Hide threads" [ref=e59]: dock_to_right
+          - combobox "Thread view" [ref=e60] [cursor=pointer]:
+            - option "Active Threads" [selected]
+            - option "Archive"
+        - button "edit_squareNew chat" [ref=e61]
+        - separator [ref=e62]
+        - generic [ref=e64]: No threads yet
+      - generic [ref=e65]:
+        - button "More options" [ref=e68]: event_list
+        - generic [ref=e71]: No thread selected
+        - generic [ref=e73]:
+          - textbox [disabled] [ref=e77]
+          - generic [ref=e78]:
+            - generic [ref=e79]:
+              - button "Add" [ref=e81] [cursor=pointer]:
+                - generic [ref=e82]: add
+              - button "Mode" [ref=e84]: shield_lockMode
+            - generic [ref=e85]:
+              - 'button "Context usage: 0%" [ref=e87]'
+              - button "DeepSeek V4 Flash" [ref=e89]: DeepSeek V4 Flashkeyboard_arrow_down
+              - button "Voice input (click to open)" [ref=e91] [cursor=pointer]:
+                - generic [ref=e92]: mic
+              - button "Send message" [ref=e94]: arrow_upward
+    - generic [ref=e96]:
+      - generic [ref=e97]:
+        - generic [ref=e98]:
+          - button "Show threads" [ref=e99]: dock_to_right
+          - button "New chat" [ref=e100]: edit_square
+        - button "More options" [ref=e102]: event_list
+      - generic [ref=e105]: Start a conversation
+      - generic [ref=e107]:
+        - textbox "Ask about chat-surface-component-screenshot-component..." [ref=e111]
+        - generic [ref=e112]:
+          - generic [ref=e113]:
+            - button "Add" [ref=e115] [cursor=pointer]:
+              - generic [ref=e116]: add
+            - button "Mode" [ref=e118]: shield_lockMode
+          - generic [ref=e119]:
+            - 'button "Context usage: 0%" [ref=e121]'
+            - button "DeepSeek V4 Flash" [ref=e123]: DeepSeek V4 Flashkeyboard_arrow_down
+            - button "Voice input (click to open)" [ref=e125] [cursor=pointer]:
+              - generic [ref=e126]: mic
+            - button "Send message" [ref=e128]: arrow_upward
+  - menu "Thread options" [ref=e129]:
+    - menuitem "Rename" [active] [ref=e130] [cursor=pointer]:
+      - generic [ref=e131]: edit
+      - generic [ref=e132]: Rename
+    - menuitem "Copy Link" [ref=e133] [cursor=pointer]:
+      - generic [ref=e134]: link_2
+      - generic [ref=e135]: Copy Link
+    - menuitem "View Markdown" [ref=e136] [cursor=pointer]:
+      - generic [ref=e137]: docs
+      - generic [ref=e138]: View Markdown
+    - menuitem "Delete" [ref=e139] [cursor=pointer]:
+      - generic [ref=e140]: delete
+      - generic [ref=e141]: Delete
+```

@@ -1,0 +1,3306 @@
+// Unit persistence adapter: real lease/row validation is covered by isolated
+// public-route deletion/admission and submission integration tests.
+jest.mock('../../lib/thread-groups/session-transactions', () => ({
+  ...jest.requireActual('../../lib/thread-groups/session-transactions'),
+  withSessionAdmission: jest.fn(async (_workspaceId, _threadId, work) => work()),
+}));
+
+'use strict';
+
+const fs = require('fs/promises');
+const os = require('os');
+const path = require('path');
+
+jest.mock('uuid', () => ({ v4: jest.fn(() => 'generated-wire-turn') }));
+
+jest.mock('../../lib/thread/ThreadWebSocketHandler', () => ({
+  getState: jest.fn(),
+  getCurrentThreadManager: jest.fn(),
+  activateThreadSession: jest.fn(() => Promise.resolve()),
+  handleMessageSend: jest.fn(),
+}));
+
+// The receipt repository is exercised through the staged public-route suite;
+// this controller unit suite substitutes only that durable boundary.
+jest.mock('../../lib/thread/prompt-submission-service', () => ({
+  begin: jest.fn(async () => ({ ok: true, replayed: false })),
+  isReserved: jest.fn(async () => true),
+  reject: jest.fn(async () => true),
+  accept: jest.fn(async (_identity, turnId, groups) => {
+    const activity = await groups.recordPromptAccepted({ threadId: _identity.threadId, turnId });
+    return { ok: activity.ok, receipt: { turnId, content: 'hello' } };
+  }),
+  claimDispatch: jest.fn(async () => true),
+  failBeforeDispatch: jest.fn(async () => true),
+  noteClaimedFailure: jest.fn(async () => true),
+}));
+
+jest.mock('../../lib/wire/process-manager', () => ({
+  attachClientToWire: jest.fn(),
+  getWireForThread: jest.fn(),
+  unregisterWire: jest.fn(),
+}));
+
+// SPEC-03 Slice C: the diagnostic service is mocked file-wide with the
+// failure-shaped default (null ⇒ no diagnosticId); Slice C tests override
+// per-case. This keeps every pre-existing test on the no-ID path.
+jest.mock('../../lib/thread/harness-diagnostic-service', () => ({
+  persistDiagnosticReport: jest.fn(async () => null),
+}));
+
+const ThreadWebSocketHandler = require('../../lib/thread/ThreadWebSocketHandler');
+const { attachClientToWire, getWireForThread, unregisterWire } = require('../../lib/wire/process-manager');
+const { RUNTIME_STATES, threadRuntimeManager } = require('../../lib/thread/thread-runtime-manager');
+const { createWireMessageRouter } = require('../../lib/wire/message-router');
+const {
+  createAgentTurnAuthorityRef,
+  releaseAgentTurnAuthorityRef,
+} = require('../../lib/agent-provenance/turn-authority');
+const {
+  createCanonicalChatEventApplier,
+} = require('../../lib/wire/canonical-chat-event-applier');
+const {
+  createCanonicalHarnessEventBridge,
+} = require('../../lib/wire/canonical-harness-event-bridge');
+const {
+  createCanonicalDrainControl,
+  createCanonicalRouteContext,
+} = require('../../lib/thread/canonical-drain-context');
+const {
+  HarnessRuntimeError,
+  HARNESS_RUNTIME_ERROR_MESSAGES,
+} = require('../../lib/harness/errors');
+const { persistDiagnosticReport } = require('../../lib/thread/harness-diagnostic-service');
+const promptSubmission = require('../../lib/thread/prompt-submission-service');
+const {
+  acceptPromptThroughRuntime,
+  getRuntimeKey,
+  stopRuntimeTurn,
+  warmRuntimeForIntent,
+} = require('../../lib/thread/thread-runtime-controller');
+
+function flushAsyncWork() {
+  return new Promise(resolve => setImmediate(resolve));
+}
+
+function makeHarness(events = [{ type: 'turn_begin' }]) {
+  return {
+    _usesDirectCanonicalEvents: true,
+    async *_sendMessage(input) {
+      events.push({ type: 'sent', input });
+      yield { type: 'turn_end' };
+    },
+  };
+}
+
+function makeDeps(overrides = {}) {
+  const ws = { send: jest.fn() };
+  const session = {
+    currentWorkspaceId: 'workspace-1',
+    projectRoot: '/tmp/project',
+  };
+  const manager = {
+    workspaceId: 'workspace-1',
+    projectRoot: '/tmp/project',
+    getThread: jest.fn(() => Promise.resolve({ entry: {} })),
+    // SPEC-01 §5.4: prompt acceptance records the group activity before
+    // message:sent. Production managers always own the Thread Group service.
+    threadGroups: { activate: jest.fn(async () => ({ ok: true })), recordPromptAccepted: jest.fn(async () => ({ ok: true, advanced: true })) },
+  };
+  ThreadWebSocketHandler.getState.mockReturnValue({
+    panelId: 'view-1',
+    viewName: 'view-1',
+    threadId: 'thread-1',
+    threadManager: manager,
+  });
+    ThreadWebSocketHandler.handleMessageSend.mockResolvedValue(true);
+    ThreadWebSocketHandler.getCurrentThreadManager.mockReturnValue(null);
+  return {
+    ws,
+    session,
+    manager,
+    clientMsg: { type: 'prompt', threadId: 'thread-1', requestId: 'attempt-0001', user_input: 'hello' },
+    wireLifecycle: {},
+    projectRoot: '/tmp/project',
+    spawnAndSetupWire: jest.fn(() => Promise.resolve(makeHarness(overrides.events))),
+    handleCanonicalHarnessEvent: jest.fn(),
+    ...overrides,
+  };
+}
+
+function parsedFrames(deps) {
+  return deps.ws.send.mock.calls.map(([raw]) => JSON.parse(raw));
+}
+
+describe('thread runtime prompt controller', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+    threadRuntimeManager.runtimes.clear();
+    attachClientToWire.mockReturnValue(true);
+    getWireForThread.mockReturnValue(null);
+    unregisterWire.mockReturnValue(undefined);
+    ThreadWebSocketHandler.handleMessageSend.mockResolvedValue(true);
+  });
+
+  test('cold prompt warms runtime and accepts the prompt', async () => {
+    const deps = makeDeps();
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    expect(deps.spawnAndSetupWire).toHaveBeenCalledTimes(1);
+    expect(ThreadWebSocketHandler.handleMessageSend).toHaveBeenCalledWith(deps.ws, {
+      threadId: 'thread-1',
+      content: 'hello',
+      requestId: 'attempt-0001',
+      turnId: expect.any(String),
+      sendAcknowledgement: false,
+      suppressFailureFrame: true,
+    });
+    expect(deps.handleCanonicalHarnessEvent).toHaveBeenCalledWith(
+      { type: 'turn_end' },
+      deps.ws,
+      expect.objectContaining({
+        route: expect.objectContaining({ threadId: 'thread-1', acceptedUserInput: 'hello' }),
+        control: expect.objectContaining({ drainId: expect.any(String) }),
+      })
+    );
+    // Normal completion (self-cleared drain, not superseded) returns the
+    // runtime to READY.
+    expect(threadRuntimeManager.getRuntimeState(getRuntimeKey(deps.manager, 'thread-1')))
+      .toBe(RUNTIME_STATES.READY);
+  });
+
+  test('post-commit message helper failure keeps accepted ACK and forbids dispatch', async () => {
+    const events = [];
+    const deps = makeDeps({ events });
+    ThreadWebSocketHandler.handleMessageSend.mockRejectedValueOnce(new Error('injected helper failure'));
+    await acceptPromptThroughRuntime(deps);
+    expect(parsedFrames(deps)).toEqual(expect.arrayContaining([
+      expect.objectContaining({ type: 'message:sent', requestId: 'attempt-0001', turnId: expect.any(String) }),
+      expect.objectContaining({ type: 'error', requestId: 'attempt-0001', code: 'accepted_execution_failed' }),
+    ]));
+    expect(events.some((event) => event.type === 'sent')).toBe(false);
+    expect(promptSubmission.failBeforeDispatch).toHaveBeenCalledWith(
+      { workspaceId: 'workspace-1', threadId: 'thread-1', requestId: 'attempt-0001' },
+      'metadata_helper_failed',
+    );
+  });
+
+  test('lost accepted ACK plus activation failure remains an accepted execution failure', async () => {
+    const events = [];
+    const deps = makeDeps({ events });
+    deps.ws.send.mockImplementation((raw) => {
+      if (JSON.parse(raw).type === 'message:sent') throw new Error('injected lost ACK');
+    });
+    ThreadWebSocketHandler.activateThreadSession.mockRejectedValueOnce(new Error('injected activation failure'));
+    await acceptPromptThroughRuntime(deps);
+    expect(parsedFrames(deps)).toEqual(expect.arrayContaining([
+      expect.objectContaining({ type: 'message:sent', turnId: expect.any(String) }),
+      expect.objectContaining({ type: 'error', code: 'accepted_execution_failed' }),
+    ]));
+    expect(events.some((event) => event.type === 'sent')).toBe(false);
+    expect(promptSubmission.failBeforeDispatch).toHaveBeenCalledWith(
+      { workspaceId: 'workspace-1', threadId: 'thread-1', requestId: 'attempt-0001' },
+      'session_activation_failed',
+    );
+  });
+
+  test('failed durable dispatch claim clears the drain and never invokes provider', async () => {
+    const events = [];
+    const deps = makeDeps({ events });
+    promptSubmission.claimDispatch.mockResolvedValueOnce(false);
+    await acceptPromptThroughRuntime(deps);
+    const key = getRuntimeKey(deps.manager, 'thread-1');
+    expect(threadRuntimeManager.getActiveDrain(key)).toBeNull();
+    expect(threadRuntimeManager.getRuntimeState(key)).toBe(RUNTIME_STATES.READY);
+    expect(events.some((event) => event.type === 'sent')).toBe(false);
+    expect(promptSubmission.failBeforeDispatch).toHaveBeenCalledWith(
+      { workspaceId: 'workspace-1', threadId: 'thread-1', requestId: 'attempt-0001' },
+      'dispatch_claim_failed',
+    );
+    expect(parsedFrames(deps)).toEqual(expect.arrayContaining([
+      expect.objectContaining({ type: 'message:sent', turnId: expect.any(String) }),
+      expect.objectContaining({ type: 'error', code: 'accepted_execution_failed' }),
+    ]));
+  });
+
+  test('prompt activity is recorded before message:sent with the accepted turn identity', async () => {
+    const deps = makeDeps();
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    expect(deps.manager.threadGroups.recordPromptAccepted).toHaveBeenCalledTimes(1);
+    const [activityArgs] = deps.manager.threadGroups.recordPromptAccepted.mock.calls[0];
+    expect(activityArgs).toMatchObject({ threadId: 'thread-1' });
+    expect(typeof activityArgs.turnId).toBe('string');
+    expect(activityArgs.turnId.length).toBeGreaterThan(0);
+    // The durable activity lands before the user-message commit / message:sent.
+    expect(deps.manager.threadGroups.recordPromptAccepted.mock.invocationCallOrder[0])
+      .toBeLessThan(ThreadWebSocketHandler.handleMessageSend.mock.invocationCallOrder[0]);
+  });
+
+  test('a failed activity persist rejects the prompt before message:sent or dispatch', async () => {
+    const deps = makeDeps();
+    deps.manager.threadGroups.recordPromptAccepted.mockResolvedValue({ ok: false, code: 'not_found' });
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    expect(ThreadWebSocketHandler.handleMessageSend).not.toHaveBeenCalled();
+    expect(deps.spawnAndSetupWire).toHaveBeenCalledTimes(1);
+    expect(deps.handleCanonicalHarnessEvent).not.toHaveBeenCalled();
+    expect(parsedFrames(deps).some((frame) => frame.type === 'error'
+      && frame.threadId === 'thread-1')).toBe(true);
+  });
+
+  test('an activity write failure rejects the prompt through the normal acceptance path', async () => {
+    const deps = makeDeps();
+    deps.manager.threadGroups.recordPromptAccepted.mockRejectedValue(new Error('write failed'));
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    expect(ThreadWebSocketHandler.handleMessageSend).not.toHaveBeenCalled();
+    expect(parsedFrames(deps).some((frame) => frame.type === 'error'
+      && frame.threadId === 'thread-1')).toBe(true);
+  });
+
+  test('an explicit nullable variant clears the persisted prompt selection', async () => {
+    const wire = makeHarness([]);
+    const deps = makeDeps({
+      clientMsg: {
+        type: 'prompt', threadId: 'thread-1', user_input: 'hello',
+        harnessConfig: { model: 'provider/model', variant: null },
+      },
+      spawnAndSetupWire: jest.fn(async () => wire),
+    });
+    deps.manager.updateHarnessConfig = jest.fn(async () => ({}));
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    expect(deps.manager.updateHarnessConfig).toHaveBeenCalledWith('thread-1', {
+      model: 'provider/model', variant: null,
+    });
+  });
+
+  test('prompt and warm reject a stale workspace/manager binding before lookup or spawn', async () => {
+    const deps = makeDeps({ projectRoot: '/workspace-b' });
+    deps.session.currentWorkspaceId = 'workspace-b';
+    deps.session.projectRoot = '/workspace-b';
+
+    await acceptPromptThroughRuntime(deps);
+    await warmRuntimeForIntent({
+      ...deps,
+      clientMsg: { type: 'thread:warm', threadId: 'thread-1' },
+    });
+
+    expect(deps.manager.getThread).not.toHaveBeenCalled();
+    expect(deps.spawnAndSetupWire).not.toHaveBeenCalled();
+    expect(parsedFrames(deps).filter(frame => frame.type === 'error')).toHaveLength(2);
+  });
+
+  test('reattaches a ready runtime to the current websocket before draining live events', async () => {
+    const order = [];
+    const deps = makeDeps({
+      spawnAndSetupWire: jest.fn(),
+    });
+    const wire = {
+      _usesDirectCanonicalEvents: true,
+      async *_sendMessage() {
+        order.push('send');
+        yield { type: 'turn_end' };
+      },
+    };
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    threadRuntimeManager.markReady(runtimeKey);
+    getWireForThread.mockReturnValue(wire);
+    ThreadWebSocketHandler.handleMessageSend.mockImplementation(async () => {
+      order.push('persist');
+      return true;
+    });
+    attachClientToWire.mockImplementation(() => {
+      order.push('attach');
+      return true;
+    });
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    expect(deps.spawnAndSetupWire).not.toHaveBeenCalled();
+    expect(attachClientToWire).toHaveBeenCalledWith('thread-1', wire, '/tmp/project', deps.ws, {
+      workspaceId: 'workspace-1',
+      projectRoot: '/tmp/project',
+      workspaceEpoch: undefined,
+      viewId: null,
+    });
+    expect(order).toEqual(['persist', 'attach', 'send']);
+  });
+
+  test('concurrent WARMING prompts reserve one runtime owner before either can transfer it', async () => {
+    let releaseSpawn;
+    const spawned = new Promise(resolve => { releaseSpawn = resolve; });
+    let releaseTurn;
+    const turnMayFinish = new Promise(resolve => { releaseTurn = resolve; });
+    const wire = {
+      _usesDirectCanonicalEvents: true,
+      async *_sendMessage() {
+        await turnMayFinish;
+        yield { type: 'turn_end' };
+      },
+    };
+    let resolveWire;
+    const wireReady = new Promise(resolve => { resolveWire = resolve; });
+    const spawnAndSetupWire = jest.fn(() => {
+      releaseSpawn();
+      return wireReady;
+    });
+    const first = makeDeps({ spawnAndSetupWire });
+    const second = makeDeps({ spawnAndSetupWire });
+    second.manager = first.manager;
+    const firstState = {
+      panelId: 'view-1', viewName: 'view-1', threadId: 'thread-1',
+      activatedThreadId: null, threadManager: first.manager,
+    };
+    const secondState = {
+      panelId: 'view-1', viewName: 'view-1', threadId: 'thread-1',
+      activatedThreadId: null, threadManager: first.manager,
+    };
+    ThreadWebSocketHandler.getState.mockImplementation(socket => (
+      socket === first.ws ? firstState : secondState
+    ));
+
+    const firstPrompt = acceptPromptThroughRuntime(first);
+    await spawned;
+    const secondPrompt = acceptPromptThroughRuntime(second);
+    resolveWire(wire);
+    await Promise.all([firstPrompt, secondPrompt]);
+
+    expect(spawnAndSetupWire).toHaveBeenCalledTimes(1);
+    expect(ThreadWebSocketHandler.activateThreadSession).toHaveBeenCalledTimes(1);
+    expect(ThreadWebSocketHandler.activateThreadSession)
+      .toHaveBeenCalledWith(first.ws, 'thread-1', wire, expect.any(Object));
+    expect(ThreadWebSocketHandler.handleMessageSend).toHaveBeenCalledTimes(1);
+    expect(parsedFrames(second)).toContainEqual(expect.objectContaining({
+      type: 'error', recoverable: true,
+    }));
+    expect(threadRuntimeManager.getRuntimeState(getRuntimeKey(first.manager, 'thread-1')))
+      .toBe(RUNTIME_STATES.IN_FLIGHT);
+
+    releaseTurn();
+    await flushAsyncWork();
+    expect(threadRuntimeManager.getRuntimeState(getRuntimeKey(first.manager, 'thread-1')))
+      .toBe(RUNTIME_STATES.READY);
+  });
+
+  test('persists user acceptance before draining _sendMessage events', async () => {
+    const order = [];
+    const wire = {
+      _usesDirectCanonicalEvents: true,
+      async *_sendMessage() {
+        order.push('send');
+        yield { type: 'turn_end' };
+      },
+    };
+    const deps = makeDeps({ spawnAndSetupWire: jest.fn(() => Promise.resolve(wire)) });
+    ThreadWebSocketHandler.handleMessageSend.mockImplementation(async () => {
+      order.push('persist');
+      return true;
+    });
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    expect(order).toEqual(['persist', 'send']);
+  });
+
+  test('never projects connection transport authority into a turn application context', async () => {
+    let capturedContext;
+    const wire = {
+      _usesDirectCanonicalEvents: true,
+      async *_sendMessage() { yield { type: 'turn_end' }; },
+    };
+    const handleCanonicalHarnessEvent = jest.fn();
+    handleCanonicalHarnessEvent.drainHarnessEvents = jest.fn(async (events, _ws, options) => {
+      capturedContext = options.turnApplicationContext;
+      expect(capturedContext).not.toHaveProperty('connectionRole');
+      for await (const _event of events) {}
+    });
+    const deps = makeDeps({
+      spawnAndSetupWire: jest.fn(() => Promise.resolve(wire)),
+      handleCanonicalHarnessEvent,
+    });
+    // Deliberately enumerable to prove the product projection is safe even if
+    // an injected/future session owner fails to make transport state private.
+    deps.session.connectionRole = 'trusted-shell';
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    expect(handleCanonicalHarnessEvent.drainHarnessEvents).toHaveBeenCalledTimes(1);
+    expect(capturedContext).not.toHaveProperty('connectionRole');
+    expect(deps.session.connectionRole).toBe('trusted-shell');
+  });
+
+  test('captures immutable authority from server-resolved thread and wire identity', async () => {
+    const temporaryRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'fusion-runtime-authority-'));
+    try {
+      let finishDrain;
+      const drainMayFinish = new Promise(resolve => { finishDrain = resolve; });
+      const wire = {
+        _usesDirectCanonicalEvents: true,
+        _harnessId: 'opencode',
+        _provider: 'opencode',
+        async *_sendMessage() {
+          await drainMayFinish;
+          yield { type: 'turn_end' };
+        },
+      };
+      const deps = makeDeps({
+        projectRoot: temporaryRoot,
+        spawnAndSetupWire: jest.fn(() => Promise.resolve(wire)),
+      });
+      deps.session.projectRoot = temporaryRoot;
+      deps.manager.projectRoot = temporaryRoot;
+      deps.manager.getThread.mockResolvedValue({ entry: { harnessId: 'opencode' } });
+
+      await acceptPromptThroughRuntime(deps);
+      const acceptedAuthority = deps.session.pendingAgentTurnAuthority;
+      deps.session.currentWorkspaceId = 'workspace-B';
+      deps.session.currentThreadId = 'thread-B';
+      deps.session.projectRoot = '/workspace/B';
+
+      expect(Object.isFrozen(acceptedAuthority)).toBe(true);
+      expect(acceptedAuthority).toMatchObject({
+        workspaceId: 'workspace-1', threadId: 'thread-1', harnessId: 'opencode',
+        provider: 'opencode', canonicalRoot: await fs.realpath(temporaryRoot),
+      });
+      finishDrain();
+      await flushAsyncWork();
+      expect(deps.session).toMatchObject({
+        pendingTurnId: null,
+        pendingAgentTurnAuthority: null,
+        pendingUserInput: null,
+        pendingAttachments: [],
+        currentWorkspaceId: 'workspace-B',
+        currentThreadId: 'thread-B',
+        projectRoot: '/workspace/B',
+      });
+    } finally {
+      await fs.rm(temporaryRoot, { recursive: true, force: true });
+    }
+  });
+
+  test('one real same-socket router keeps concurrent foreground drains turn-local', async () => {
+    const temporaryRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'fusion-runtime-concurrent-'));
+    try {
+      const ws = { send: jest.fn(), readyState: 1 };
+      const session = {
+        currentWorkspaceId: 'workspace-1', currentThreadId: null, currentScope: 'project',
+        currentViewId: null, projectRoot: temporaryRoot, currentTurn: null,
+        pendingAttachments: [], assistantParts: [], hasToolCalls: false, toolArgs: {},
+        wire: null,
+      };
+      const manager = {
+        workspaceId: 'workspace-1', projectRoot: temporaryRoot,
+        getThread: jest.fn(async threadId => ({ threadId, entry: { harnessId: 'opencode' } })),
+        threadGroups: { activate: jest.fn(async () => ({ ok: true })), recordPromptAccepted: jest.fn(async () => ({ ok: true, advanced: true })) },
+      };
+      ThreadWebSocketHandler.getState.mockReturnValue({
+        panelId: 'view-1', viewName: 'view-1', threadId: 'thread-A', threadManager: manager,
+      });
+      ThreadWebSocketHandler.getCurrentThreadManager.mockReturnValue(null);
+      const emitted = [];
+      const captures = [];
+      const activityOwner = {
+        jsonSafePersistedResult: value => JSON.parse(JSON.stringify(value)),
+        captureTerminalSnapshot: jest.fn(async (authority, event) => {
+          captures.push([authority.threadId, authority.turnId, event.toolCallId]);
+          return { replay: false };
+        }),
+        interruptOpen: jest.fn(async () => []),
+      };
+      const router = createWireMessageRouter({
+        session,
+        ws,
+        emit: (type, payload) => emitted.push({ type, payload }),
+        checkSettingsBounce: () => null,
+        activityOwner,
+      });
+      let markABegun;
+      const aBegun = new Promise(resolve => { markABegun = resolve; });
+      let releaseA;
+      const aMayContinue = new Promise(resolve => { releaseA = resolve; });
+      const terminal = (toolCallId, filePath, output) => ({
+        type: 'tool_snapshot', origin: 'terminal_snapshot', harnessId: 'opencode', provider: 'opencode',
+        timestamp: 30, timestampSource: 'provider_reported', observedAt: 100,
+        toolCallId, toolName: 'write', nativeToolName: 'write', status: 'completed',
+        hasInput: true, input: { filePath }, executionStartedReportedAt: 10,
+        terminalReportedAt: 20, terminalSnapshotReportedAt: 30,
+        result: { output, display: [], returnedDiff: false, isError: false, files: [] },
+      });
+      const wireA = {
+        _usesDirectCanonicalEvents: true, _harnessId: 'opencode', _provider: 'opencode',
+        async *_sendMessage() {
+          yield { type: 'turn_begin', userInput: 'prompt A' };
+          markABegun();
+          await aMayContinue;
+          yield { type: 'content', text: 'late A' };
+          yield terminal('tool-A', 'src/a.txt', 'A result');
+        },
+      };
+      const wireB = {
+        _usesDirectCanonicalEvents: true, _harnessId: 'opencode', _provider: 'opencode',
+        async *_sendMessage() {
+          yield { type: 'turn_begin', userInput: 'prompt B' };
+          yield { type: 'content', text: 'B text' };
+          yield terminal('tool-B', 'src/b.txt', 'B result');
+        },
+      };
+      const wires = new Map([['thread-A', wireA], ['thread-B', wireB]]);
+      getWireForThread.mockImplementation(threadId => wires.get(threadId) || null);
+      for (const threadId of wires.keys()) {
+        threadRuntimeManager.markReady({
+          workspaceId: 'workspace-1', projectRoot: temporaryRoot,
+          workspaceEpoch: undefined, scope: 'project', threadId,
+        });
+      }
+
+      const common = {
+        ws,
+        session,
+        manager,
+        wireLifecycle: {},
+        projectRoot: temporaryRoot,
+        spawnAndSetupWire: jest.fn(),
+        handleCanonicalHarnessEvent: router.handleCanonicalHarnessEvent,
+      };
+      await acceptPromptThroughRuntime({
+        ...common,
+        clientMsg: { type: 'prompt', threadId: 'thread-A', requestId: 'attempt-concurrent-A', user_input: 'prompt A' },
+      });
+      await aBegun;
+      await acceptPromptThroughRuntime({
+        ...common,
+        clientMsg: { type: 'prompt', threadId: 'thread-B', requestId: 'attempt-concurrent-B', user_input: 'prompt B' },
+      });
+
+      for (let attempt = 0; attempt < 50
+        && !emitted.some(item => item.type === 'chat:turn_end' && item.payload.threadId === 'thread-B'); attempt += 1) {
+        await flushAsyncWork();
+      }
+      expect(emitted.filter(item => item.type === 'chat:turn_end').map(item => item.payload.threadId))
+        .toEqual(['thread-B']);
+      releaseA();
+      for (let attempt = 0; attempt < 50
+        && emitted.filter(item => item.type === 'chat:turn_end').length < 2; attempt += 1) {
+        await flushAsyncWork();
+      }
+
+      const endings = emitted.filter(item => item.type === 'chat:turn_end');
+      expect(endings.map(item => item.payload.threadId)).toEqual(['thread-B', 'thread-A']);
+      expect(endings.find(item => item.payload.threadId === 'thread-A').payload)
+        .toMatchObject({ fullText: 'late A', userInput: 'prompt A' });
+      expect(endings.find(item => item.payload.threadId === 'thread-B').payload)
+        .toMatchObject({ fullText: 'B text', userInput: 'prompt B' });
+      expect(captures.map(([threadId, , toolCallId]) => [threadId, toolCallId])).toEqual([
+        ['thread-B', 'tool-B'],
+        ['thread-A', 'tool-A'],
+      ]);
+      expect(new Set(captures.map(([, turnId]) => turnId).filter(Boolean)).size).toBe(2);
+      expect(endings).toHaveLength(2);
+
+      let markCBegun;
+      const cBegun = new Promise(resolve => { markCBegun = resolve; });
+      let releaseC;
+      const cMayContinue = new Promise(resolve => { releaseC = resolve; });
+      wires.set('thread-C', {
+        _usesDirectCanonicalEvents: true, _harnessId: 'opencode', _provider: 'opencode',
+        async *_sendMessage() {
+          yield { type: 'turn_begin', userInput: 'prompt C' };
+          markCBegun();
+          await cMayContinue;
+          yield { type: 'content', text: 'C survived D error' };
+        },
+      });
+      wires.set('thread-D', {
+        _usesDirectCanonicalEvents: true, _harnessId: 'opencode', _provider: 'opencode',
+        async *_sendMessage() {
+          yield { type: 'turn_begin', userInput: 'prompt D' };
+          yield { type: 'content', text: 'D partial' };
+          throw new Error('D foreground iterator failed');
+        },
+      });
+      for (const threadId of ['thread-C', 'thread-D']) {
+        threadRuntimeManager.markReady({
+          workspaceId: 'workspace-1', projectRoot: temporaryRoot,
+          workspaceEpoch: undefined, scope: 'project', threadId,
+        });
+      }
+      await acceptPromptThroughRuntime({
+        ...common,
+        clientMsg: { type: 'prompt', threadId: 'thread-C', user_input: 'prompt C' },
+      });
+      await cBegun;
+      await acceptPromptThroughRuntime({
+        ...common,
+        clientMsg: { type: 'prompt', threadId: 'thread-D', user_input: 'prompt D' },
+      });
+      for (let attempt = 0; attempt < 50
+        && !emitted.some(item => item.type === 'chat:turn_end' && item.payload.threadId === 'thread-D'); attempt += 1) {
+        await flushAsyncWork();
+      }
+      expect(emitted.filter(item => item.type === 'chat:turn_end' && item.payload.threadId === 'thread-C'))
+        .toHaveLength(0);
+      expect(emitted.filter(item => item.type === 'chat:turn_end' && item.payload.threadId === 'thread-D'))
+        .toHaveLength(1);
+      releaseC();
+      for (let attempt = 0; attempt < 50
+        && !emitted.some(item => item.type === 'chat:turn_end' && item.payload.threadId === 'thread-C'); attempt += 1) {
+        await flushAsyncWork();
+      }
+      expect(emitted.filter(item => item.type === 'chat:turn_end' && item.payload.threadId === 'thread-C'))
+        .toHaveLength(1);
+      expect(emitted.find(item => item.type === 'chat:turn_end' && item.payload.threadId === 'thread-C').payload.fullText)
+        .toBe('C survived D error');
+
+      let markEBegun;
+      const eBegun = new Promise(resolve => { markEBegun = resolve; });
+      let releaseE;
+      const eMayFinish = new Promise(resolve => { releaseE = resolve; });
+      let releaseF;
+      const fMayBegin = new Promise(resolve => { releaseF = resolve; });
+      wires.set('thread-E', {
+        _usesDirectCanonicalEvents: true, _harnessId: 'opencode', _provider: 'opencode',
+        _stopSession: jest.fn(async () => {}),
+        async *_sendMessage() {
+          yield { type: 'turn_begin', userInput: 'prompt E' };
+          yield { type: 'content', text: 'E partial' };
+          yield { type: 'thinking', text: 'E thought' };
+          yield { type: 'status_update', tokenUsage: { total: 7 }, messageId: 'message-E' };
+          markEBegun();
+          await eMayFinish;
+          yield { type: 'content', text: 'late E must be ignored' };
+        },
+      });
+      wires.set('thread-F', {
+        _usesDirectCanonicalEvents: true, _harnessId: 'opencode', _provider: 'opencode',
+        async *_sendMessage() {
+          await fMayBegin;
+          yield { type: 'turn_begin', userInput: 'prompt F' };
+          yield { type: 'content', text: 'F completed' };
+        },
+      });
+      for (const threadId of ['thread-E', 'thread-F']) {
+        threadRuntimeManager.markReady({
+          workspaceId: 'workspace-1', projectRoot: temporaryRoot,
+          workspaceEpoch: undefined, scope: 'project', threadId,
+        });
+      }
+      await acceptPromptThroughRuntime({
+        ...common,
+        clientMsg: { type: 'prompt', threadId: 'thread-E', user_input: 'prompt E' },
+      });
+      await eBegun;
+
+      session.currentWorkspaceId = 'workspace-F-navigation';
+      session.currentThreadId = 'thread-F';
+      session.projectRoot = temporaryRoot;
+      manager.workspaceId = 'workspace-F-navigation';
+      manager.projectRoot = temporaryRoot;
+      threadRuntimeManager.markReady({
+        workspaceId: 'workspace-F-navigation', projectRoot: temporaryRoot,
+        workspaceEpoch: undefined, scope: 'project', threadId: 'thread-F',
+      });
+      await acceptPromptThroughRuntime({
+        ...common,
+        clientMsg: {
+          type: 'prompt',
+          threadId: 'thread-F',
+          user_input: 'prompt F',
+          attachments: [{ kind: 'file', label: 'F', path: '/workspace/F/attachment.txt' }],
+        },
+      });
+      const pendingFAuthority = session.pendingAgentTurnAuthority;
+      const pendingFAttachments = session.pendingAttachments;
+      // Stop the already accepted E drain through its original runtime key;
+      // the live workspace binding remains F and is restored immediately.
+      manager.workspaceId = 'workspace-1';
+      manager.projectRoot = temporaryRoot;
+      await stopRuntimeTurn({
+        ws,
+        session,
+        clientMsg: { type: 'turn:stop', threadId: 'thread-E' },
+        handleCanonicalHarnessEvent: router.handleCanonicalHarnessEvent,
+      });
+      manager.workspaceId = 'workspace-F-navigation';
+      manager.projectRoot = temporaryRoot;
+
+      expect(emitted.filter(item => item.type === 'chat:turn_end' && item.payload.threadId === 'thread-E'))
+        .toHaveLength(1);
+      expect(session.currentWorkspaceId).toBe('workspace-F-navigation');
+      expect(session.currentThreadId).toBe('thread-F');
+      expect(session.projectRoot).toBe(temporaryRoot);
+      expect(session.pendingTurnId).toBe(pendingFAuthority.turnId);
+      expect(session.pendingAgentTurnAuthority).toBe(pendingFAuthority);
+      expect(session.pendingUserInput).toBe('prompt F');
+      expect(session.pendingAttachments).toBe(pendingFAttachments);
+      expect(session.pendingAttachments).toEqual([
+        expect.objectContaining({ label: 'F', path: '/workspace/F/attachment.txt' }),
+      ]);
+      expect(session.currentTurn).toBeNull();
+      expect(session.assistantParts).toEqual([]);
+      expect(session.toolArgs).toEqual({});
+      expect(session.tokenUsage).not.toEqual({ total: 7 });
+      expect(session.messageId).not.toBe('message-E');
+
+      releaseF();
+      for (let attempt = 0; attempt < 50
+        && !emitted.some(item => item.type === 'chat:turn_end' && item.payload.threadId === 'thread-F'); attempt += 1) {
+        await flushAsyncWork();
+      }
+      await flushAsyncWork();
+      expect(session).toMatchObject({
+        currentWorkspaceId: 'workspace-F-navigation',
+        currentThreadId: 'thread-F',
+        projectRoot: temporaryRoot,
+        pendingTurnId: null,
+        pendingAgentTurnAuthority: null,
+        pendingUserInput: null,
+        pendingAttachments: [],
+      });
+      releaseE();
+      await flushAsyncWork();
+      expect(emitted.filter(item => item.type === 'chat:turn_end' && item.payload.threadId === 'thread-E'))
+        .toHaveLength(1);
+
+      session.currentWorkspaceId = 'workspace-1';
+      session.projectRoot = temporaryRoot;
+      manager.workspaceId = 'workspace-1';
+      manager.projectRoot = temporaryRoot;
+      let markGBegun;
+      const gBegun = new Promise(resolve => { markGBegun = resolve; });
+      let releaseG;
+      const gMayFinish = new Promise(resolve => { releaseG = resolve; });
+      let releaseH;
+      const hMayBegin = new Promise(resolve => { releaseH = resolve; });
+      wires.set('thread-G', {
+        _usesDirectCanonicalEvents: true, _harnessId: 'opencode', _provider: 'opencode',
+        async *_sendMessage() {
+          yield { type: 'turn_begin', userInput: 'prompt G' };
+          markGBegun();
+          await gMayFinish;
+          yield { type: 'content', text: 'G completed' };
+        },
+      });
+      wires.set('thread-H', {
+        _usesDirectCanonicalEvents: true, _harnessId: 'opencode', _provider: 'opencode',
+        async *_sendMessage() {
+          await hMayBegin;
+          yield { type: 'turn_begin', userInput: 'prompt H' };
+          yield { type: 'content', text: 'H completed' };
+        },
+      });
+      for (const threadId of ['thread-G', 'thread-H']) {
+        threadRuntimeManager.markReady({
+          workspaceId: 'workspace-1', projectRoot: temporaryRoot,
+          workspaceEpoch: undefined, scope: 'project', threadId,
+        });
+      }
+      await acceptPromptThroughRuntime({
+        ...common,
+        clientMsg: { type: 'prompt', threadId: 'thread-G', user_input: 'prompt G' },
+      });
+      await gBegun;
+      await acceptPromptThroughRuntime({
+        ...common,
+        clientMsg: {
+          type: 'prompt',
+          threadId: 'thread-H',
+          user_input: 'prompt H',
+          attachments: [{ kind: 'file', label: 'H', path: '/workspace/H/attachment.txt' }],
+        },
+      });
+      const pendingH = {
+        turnId: session.pendingTurnId,
+        authority: session.pendingAgentTurnAuthority,
+        userInput: session.pendingUserInput,
+        attachments: session.pendingAttachments,
+      };
+      releaseG();
+      for (let attempt = 0; attempt < 50
+        && !emitted.some(item => item.type === 'chat:turn_end' && item.payload.threadId === 'thread-G'); attempt += 1) {
+        await flushAsyncWork();
+      }
+      await flushAsyncWork();
+      expect(session.pendingTurnId).toBe(pendingH.turnId);
+      expect(session.pendingAgentTurnAuthority).toBe(pendingH.authority);
+      expect(session.pendingUserInput).toBe(pendingH.userInput);
+      expect(session.pendingAttachments).toBe(pendingH.attachments);
+
+      releaseH();
+      for (let attempt = 0; attempt < 50
+        && !emitted.some(item => item.type === 'chat:turn_end' && item.payload.threadId === 'thread-H'); attempt += 1) {
+        await flushAsyncWork();
+      }
+      await flushAsyncWork();
+      expect(session).toMatchObject({
+        pendingTurnId: null,
+        pendingAgentTurnAuthority: null,
+        pendingUserInput: null,
+        pendingAttachments: [],
+      });
+    } finally {
+      await fs.rm(temporaryRoot, { recursive: true, force: true });
+    }
+  });
+
+  test('warming prompts share one warm-up and do not spawn twice', async () => {
+    let resolveWarm;
+    const warmPromise = new Promise(resolve => { resolveWarm = resolve; });
+    const wire = makeHarness([]);
+    const deps = makeDeps({ spawnAndSetupWire: jest.fn(() => warmPromise) });
+
+    const first = acceptPromptThroughRuntime(deps);
+    const second = acceptPromptThroughRuntime(deps);
+    resolveWarm(wire);
+    await Promise.all([first, second]);
+    await flushAsyncWork();
+
+    expect(deps.spawnAndSetupWire).toHaveBeenCalledTimes(1);
+    expect(ThreadWebSocketHandler.handleMessageSend).toHaveBeenCalledTimes(1);
+  });
+
+  test('in-flight runtime rejects another prompt without sending', async () => {
+    const deps = makeDeps();
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    threadRuntimeManager.markInFlight(runtimeKey);
+
+    await acceptPromptThroughRuntime(deps);
+
+    expect(ThreadWebSocketHandler.handleMessageSend).not.toHaveBeenCalled();
+    expect(deps.spawnAndSetupWire).not.toHaveBeenCalled();
+    expect(JSON.parse(deps.ws.send.mock.calls[0][0])).toMatchObject({
+      type: 'error',
+      threadId: 'thread-1',
+      recoverable: true,
+    });
+  });
+
+  test.each([
+    ['accepted prompt', 'async'],
+    ['warm intent', 'async'],
+    ['accepted prompt', 'sync'],
+  ])('%s %s spawn failure stays fixed-safe in frame and server diagnostic', async (entrypoint, failureMode) => {
+    const canary = `CANARY_SECRET_WARM_${entrypoint}_${failureMode}`;
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const spawnAndSetupWire = failureMode === 'sync'
+      ? jest.fn(() => { throw new Error(canary); })
+      : jest.fn(() => Promise.reject(new Error(canary)));
+    const deps = makeDeps({ spawnAndSetupWire });
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+
+    if (entrypoint === 'warm intent') {
+      await warmRuntimeForIntent({
+        ws: deps.ws,
+        session: deps.session,
+        clientMsg: { type: 'thread:warm', threadId: 'thread-1' },
+        wireLifecycle: deps.wireLifecycle,
+        projectRoot: deps.projectRoot,
+        spawnAndSetupWire: deps.spawnAndSetupWire,
+      });
+    } else {
+      await acceptPromptThroughRuntime(deps);
+    }
+
+    expect(threadRuntimeManager.getRuntimeState(runtimeKey)).toBe(RUNTIME_STATES.COLD);
+    expect(parsedFrames(deps)).toEqual([{
+      type: 'error',
+      scope: 'project',
+      message: 'Thread warm-up failed',
+      workspaceId: 'workspace-1',
+      threadId: 'thread-1',
+      recoverable: true,
+      ...(entrypoint === 'accepted prompt' ? { requestId: 'attempt-0001' } : {}),
+    }]);
+    expect(errorSpy.mock.calls).toEqual([[
+      '[ThreadRuntime] Thread warm-up failed',
+      { threadId: 'thread-1', marker: 'THREAD_WARM_UP_FAILED' },
+    ]]);
+    expect(JSON.stringify(deps.ws.send.mock.calls)).not.toContain(canary);
+    expect(JSON.stringify(errorSpy.mock.calls)).not.toContain(canary);
+  });
+
+  test('shared warming-promise rejection stays fixed-safe for the joining caller', async () => {
+    const canary = 'CANARY_SECRET_SHARED_WARM_PROMISE';
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const deps = makeDeps({ spawnAndSetupWire: jest.fn() });
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    const warmPromise = Promise.reject(new Error(canary));
+    // Prevent the deliberately rejected fixture from becoming unhandled before
+    // ensureReadyRuntime attaches its own await/catch.
+    warmPromise.catch(() => {});
+    threadRuntimeManager.markWarming(runtimeKey, warmPromise);
+
+    await warmRuntimeForIntent({
+      ws: deps.ws,
+      session: deps.session,
+      clientMsg: { type: 'thread:warm', threadId: 'thread-1' },
+      wireLifecycle: deps.wireLifecycle,
+      projectRoot: deps.projectRoot,
+      spawnAndSetupWire: deps.spawnAndSetupWire,
+    });
+
+    expect(deps.spawnAndSetupWire).not.toHaveBeenCalled();
+    expect(threadRuntimeManager.getRuntimeState(runtimeKey)).toBe(RUNTIME_STATES.COLD);
+    expect(parsedFrames(deps)).toEqual([{
+      type: 'error',
+      scope: 'project',
+      message: 'Thread warm-up failed',
+      workspaceId: 'workspace-1',
+      threadId: 'thread-1',
+      recoverable: true,
+    }]);
+    expect(errorSpy.mock.calls).toEqual([[
+      '[ThreadRuntime] Thread warm-up failed',
+      { threadId: 'thread-1', marker: 'THREAD_WARM_UP_FAILED' },
+    ]]);
+    expect(JSON.stringify(deps.ws.send.mock.calls)).not.toContain(canary);
+    expect(JSON.stringify(errorSpy.mock.calls)).not.toContain(canary);
+  });
+
+  test.each(['accepted prompt', 'warm intent'])(
+    '%s thread lookup rejection is contained with one fixed-safe frame',
+    async (entrypoint) => {
+      const canary = `CANARY_SECRET_GET_THREAD_${entrypoint}`;
+      const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      const deps = makeDeps();
+      deps.manager.getThread.mockRejectedValue(new Error(canary));
+
+      if (entrypoint === 'warm intent') {
+        await warmRuntimeForIntent({
+          ws: deps.ws,
+          session: deps.session,
+          clientMsg: { type: 'thread:warm', threadId: 'thread-1' },
+          wireLifecycle: deps.wireLifecycle,
+          projectRoot: deps.projectRoot,
+          spawnAndSetupWire: deps.spawnAndSetupWire,
+        });
+      } else {
+        await acceptPromptThroughRuntime(deps);
+      }
+
+      expect(deps.spawnAndSetupWire).not.toHaveBeenCalled();
+      expect(parsedFrames(deps)).toEqual([{
+        type: 'error',
+        scope: 'project',
+        message: 'Thread lookup failed',
+        workspaceId: 'workspace-1',
+        threadId: 'thread-1',
+        recoverable: true,
+        ...(entrypoint === 'accepted prompt' ? { requestId: 'attempt-0001' } : {}),
+      }]);
+      expect(errorSpy.mock.calls).toEqual([[
+        '[ThreadRuntime] Thread lookup failed',
+        { threadId: 'thread-1', marker: 'THREAD_LOOKUP_FAILED' },
+      ]]);
+      expect(JSON.stringify({ frames: deps.ws.send.mock.calls, logs: errorSpy.mock.calls }))
+        .not.toContain(canary);
+    }
+  );
+
+  test('post-commit message helper rejection keeps accepted identity and fixed-safe output', async () => {
+    const canary = 'CANARY_SECRET_HANDLE_MESSAGE_SEND';
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const deps = makeDeps();
+    ThreadWebSocketHandler.handleMessageSend.mockRejectedValue(new Error(canary));
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+
+    await expect(acceptPromptThroughRuntime(deps)).resolves.toBeUndefined();
+
+    expect(threadRuntimeManager.getRuntimeState(runtimeKey)).toBe(RUNTIME_STATES.READY);
+    expect(attachClientToWire).not.toHaveBeenCalled();
+    expect(parsedFrames(deps)).toEqual([{
+      type: 'message:sent', scope: 'project', workspaceId: 'workspace-1',
+      threadId: 'thread-1', requestId: 'attempt-0001', turnId: expect.any(String), content: 'hello',
+    }, {
+      type: 'error',
+      scope: 'project',
+      code: 'accepted_execution_failed',
+      message: 'Accepted prompt could not start',
+      workspaceId: 'workspace-1',
+      threadId: 'thread-1',
+      recoverable: true,
+      requestId: 'attempt-0001',
+    }]);
+    expect(errorSpy.mock.calls).toEqual([]);
+    expect(JSON.stringify({ frames: deps.ws.send.mock.calls, logs: errorSpy.mock.calls }))
+      .not.toContain(canary);
+  });
+
+  test('thread warm on cold runtime spawns once and marks ready', async () => {
+    const deps = makeDeps();
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+
+    await warmRuntimeForIntent({
+      ws: deps.ws,
+      session: deps.session,
+      clientMsg: { type: 'thread:warm', threadId: 'thread-1' },
+      wireLifecycle: deps.wireLifecycle,
+      projectRoot: deps.projectRoot,
+      spawnAndSetupWire: deps.spawnAndSetupWire,
+    });
+
+    expect(deps.spawnAndSetupWire).toHaveBeenCalledTimes(1);
+    expect(threadRuntimeManager.getRuntimeState(runtimeKey)).toBe(RUNTIME_STATES.READY);
+  });
+
+  test('thread warm while warming shares warm promise and does not spawn twice', async () => {
+    let resolveWarm;
+    const warmPromise = new Promise(resolve => { resolveWarm = resolve; });
+    const wire = makeHarness([]);
+    const deps = makeDeps({ spawnAndSetupWire: jest.fn(() => warmPromise) });
+
+    const first = warmRuntimeForIntent({
+      ws: deps.ws,
+      session: deps.session,
+      clientMsg: { type: 'thread:warm', threadId: 'thread-1' },
+      wireLifecycle: deps.wireLifecycle,
+      projectRoot: deps.projectRoot,
+      spawnAndSetupWire: deps.spawnAndSetupWire,
+    });
+    const second = warmRuntimeForIntent({
+      ws: deps.ws,
+      session: deps.session,
+      clientMsg: { type: 'thread:warm', threadId: 'thread-1' },
+      wireLifecycle: deps.wireLifecycle,
+      projectRoot: deps.projectRoot,
+      spawnAndSetupWire: deps.spawnAndSetupWire,
+    });
+
+    resolveWarm(wire);
+    await Promise.all([first, second]);
+
+    expect(deps.spawnAndSetupWire).toHaveBeenCalledTimes(1);
+    expect(ThreadWebSocketHandler.handleMessageSend).not.toHaveBeenCalled();
+  });
+
+  test('thread warm while ready with registered wire does not spawn', async () => {
+    const deps = makeDeps();
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    const wire = makeHarness([]);
+    threadRuntimeManager.markReady(runtimeKey);
+    getWireForThread.mockReturnValue(wire);
+
+    await warmRuntimeForIntent({
+      ws: deps.ws,
+      session: deps.session,
+      clientMsg: { type: 'thread:warm', threadId: 'thread-1' },
+      wireLifecycle: deps.wireLifecycle,
+      projectRoot: deps.projectRoot,
+      spawnAndSetupWire: deps.spawnAndSetupWire,
+    });
+
+    expect(deps.spawnAndSetupWire).not.toHaveBeenCalled();
+    expect(ThreadWebSocketHandler.handleMessageSend).not.toHaveBeenCalled();
+  });
+
+  test('thread warm replaces a closed wire left behind by idle expiry', async () => {
+    const replacementWire = makeHarness([]);
+    const deps = makeDeps({
+      spawnAndSetupWire: jest.fn(() => Promise.resolve(replacementWire)),
+    });
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    const expiredWire = { ...makeHarness([]), killed: true, signalCode: 'SIGTERM' };
+    threadRuntimeManager.markReady(runtimeKey);
+    getWireForThread.mockReturnValueOnce(expiredWire).mockReturnValueOnce(expiredWire);
+
+    await warmRuntimeForIntent({
+      ws: deps.ws,
+      session: deps.session,
+      clientMsg: { type: 'thread:warm', threadId: 'thread-1' },
+      wireLifecycle: deps.wireLifecycle,
+      projectRoot: deps.projectRoot,
+      spawnAndSetupWire: deps.spawnAndSetupWire,
+    });
+
+    expect(unregisterWire).toHaveBeenCalledWith('thread-1', runtimeKey, expiredWire);
+    expect(deps.spawnAndSetupWire).toHaveBeenCalledTimes(1);
+    expect(threadRuntimeManager.getRuntimeState(runtimeKey)).toBe(RUNTIME_STATES.READY);
+  });
+
+  test('thread warm while busy does not stop, send, spawn, or scare user', async () => {
+    const deps = makeDeps();
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    threadRuntimeManager.markInFlight(runtimeKey);
+
+    await warmRuntimeForIntent({
+      ws: deps.ws,
+      session: deps.session,
+      clientMsg: { type: 'thread:warm', threadId: 'thread-1' },
+      wireLifecycle: deps.wireLifecycle,
+      projectRoot: deps.projectRoot,
+      spawnAndSetupWire: deps.spawnAndSetupWire,
+    });
+
+    expect(deps.spawnAndSetupWire).not.toHaveBeenCalled();
+    expect(ThreadWebSocketHandler.handleMessageSend).not.toHaveBeenCalled();
+    expect(deps.ws.send).not.toHaveBeenCalled();
+  });
+
+  test('thread warm while stopping does not stop, send, spawn, or scare user', async () => {
+    const deps = makeDeps();
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    threadRuntimeManager.markState(runtimeKey, RUNTIME_STATES.STOPPING);
+
+    await warmRuntimeForIntent({
+      ws: deps.ws,
+      session: deps.session,
+      clientMsg: { type: 'thread:warm', threadId: 'thread-1' },
+      wireLifecycle: deps.wireLifecycle,
+      projectRoot: deps.projectRoot,
+      spawnAndSetupWire: deps.spawnAndSetupWire,
+    });
+
+    expect(deps.spawnAndSetupWire).not.toHaveBeenCalled();
+    expect(ThreadWebSocketHandler.handleMessageSend).not.toHaveBeenCalled();
+    expect(deps.ws.send).not.toHaveBeenCalled();
+  });
+
+  test('stop on in-flight runtime emits one interrupted terminal turn and marks runtime cold', async () => {
+    const stop = jest.fn(() => Promise.resolve());
+    const wire = { _stopSession: stop };
+    const deps = makeDeps({ handleCanonicalHarnessEvent: jest.fn() });
+    Object.assign(deps.session, {
+      currentThreadId: 'thread-1',
+      toolArgs: { 'tool-live': '{"path":"secret"}' },
+      toolNamesById: { 'tool-live': 'write' },
+      bouncedToolCalls: new Set(['tool-live']),
+      contextUsage: { used: 1 },
+      tokenUsage: { total: 2 },
+      messageId: 'message-live',
+      planMode: true,
+    });
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    threadRuntimeManager.markInFlight(runtimeKey);
+    threadRuntimeManager.beginLiveTurn(runtimeKey, {
+      turnId: 'turn-live',
+      userInput: 'hello',
+    });
+    threadRuntimeManager.appendLiveContent(runtimeKey, 'partial');
+    getWireForThread.mockReturnValue(wire);
+
+    await stopRuntimeTurn({
+      ws: deps.ws,
+      session: deps.session,
+      clientMsg: { type: 'turn:stop', threadId: 'thread-1' },
+      handleCanonicalHarnessEvent: deps.handleCanonicalHarnessEvent,
+    });
+
+    expect(deps.handleCanonicalHarnessEvent).toHaveBeenCalledTimes(1);
+    // No active drain record was claimed, so the synthesized terminal event
+    // carries no drain context (2-arg call shape preserved).
+    expect(deps.handleCanonicalHarnessEvent).toHaveBeenCalledWith({
+      type: 'turn_end',
+      reason: 'interrupted',
+      partial: true,
+    }, deps.ws);
+    expect(stop).toHaveBeenCalledTimes(1);
+    expect(unregisterWire).toHaveBeenCalledWith('thread-1', runtimeKey, wire);
+    expect(threadRuntimeManager.getRuntimeState(runtimeKey)).toBe(RUNTIME_STATES.COLD);
+    expect(deps.session).toMatchObject({
+      currentTurn: null,
+      assistantParts: [],
+      toolArgs: {},
+      toolNamesById: {},
+      contextUsage: null,
+      tokenUsage: null,
+      messageId: null,
+      planMode: false,
+    });
+    expect(deps.session.bouncedToolCalls).toEqual(new Set());
+  });
+
+  test('a rebound stop prefers restored live authority over stale pending navigation state', async () => {
+    const canonicalTmp = await fs.realpath('/tmp');
+    const authority = await createAgentTurnAuthorityRef({
+      workspaceId: 'workspace-1', threadId: 'thread-1', turnId: 'turn-live',
+      harnessId: 'opencode', provider: 'opencode', workspaceRoot: canonicalTmp,
+    });
+    const pendingAuthority = await createAgentTurnAuthorityRef({
+      workspaceId: 'workspace-1', threadId: 'thread-2', turnId: 'turn-pending',
+      harnessId: 'opencode', provider: 'opencode', workspaceRoot: canonicalTmp,
+    });
+    const stop = jest.fn(() => Promise.resolve());
+    const wire = { _stopSession: stop };
+    const deps = makeDeps();
+    deps.manager.projectRoot = canonicalTmp;
+    deps.projectRoot = canonicalTmp;
+    Object.assign(deps.session, {
+      currentThreadId: 'thread-1',
+      currentScope: 'project',
+      projectRoot: canonicalTmp,
+      pendingUserInput: 'hello',
+      pendingTurnId: 'turn-live',
+      pendingAgentTurnAuthority: authority,
+      pendingAttachments: [],
+      currentTurn: null,
+      assistantParts: [],
+      hasToolCalls: false,
+      toolArgs: {},
+      toolNamesById: {},
+    });
+    const emitted = [];
+    const router = createWireMessageRouter({
+      session: deps.session,
+      ws: deps.ws,
+      emit: (type, payload) => emitted.push({ type, payload }),
+      checkSettingsBounce: () => null,
+      activityOwner: {
+        interruptOpen: jest.fn(async () => []),
+      },
+    });
+    deps.handleCanonicalHarnessEvent = router.handleCanonicalHarnessEvent;
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    threadRuntimeManager.markInFlight(runtimeKey);
+    await deps.handleCanonicalHarnessEvent({ type: 'turn_begin', userInput: 'hello' }, deps.ws);
+    deps.session.pendingAgentTurnAuthority = pendingAuthority;
+    deps.session.pendingTurnId = 'turn-pending';
+    deps.session.pendingUserInput = 'pending';
+    getWireForThread.mockReturnValue(wire);
+
+    await stopRuntimeTurn({
+      ws: deps.ws,
+      session: deps.session,
+      clientMsg: { type: 'turn:stop', threadId: 'thread-1' },
+      handleCanonicalHarnessEvent: deps.handleCanonicalHarnessEvent,
+    });
+
+    const endings = emitted.filter(item => item.type === 'chat:turn_end');
+    expect(endings).toHaveLength(1);
+    expect(endings[0].payload).toMatchObject({
+      workspaceId: 'workspace-1', threadId: 'thread-1', turnId: 'turn-live',
+    });
+    releaseAgentTurnAuthorityRef(authority);
+    releaseAgentTurnAuthorityRef(pendingAuthority);
+  });
+
+  test('stubborn process receives SIGKILL after the bounded SIGTERM close wait', async () => {
+    jest.useFakeTimers();
+    try {
+      let closeProcess;
+      const closed = new Promise(resolve => { closeProcess = resolve; });
+      const stop = jest.fn((signal) => {
+        if (signal === 'SIGKILL') closeProcess();
+        return closed;
+      });
+      const wire = { _stopSession: stop };
+      const deps = makeDeps({ handleCanonicalHarnessEvent: jest.fn(async () => {}) });
+      const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+      threadRuntimeManager.markInFlight(runtimeKey);
+      threadRuntimeManager.beginLiveTurn(runtimeKey, {
+        turnId: 'turn-live',
+        userInput: 'hello',
+      });
+      getWireForThread.mockReturnValue(wire);
+
+      const stopped = stopRuntimeTurn({
+        ws: deps.ws,
+        session: deps.session,
+        clientMsg: { type: 'turn:stop', threadId: 'thread-1' },
+        handleCanonicalHarnessEvent: deps.handleCanonicalHarnessEvent,
+      });
+      await jest.advanceTimersByTimeAsync(0);
+      expect(stop).toHaveBeenCalledTimes(1);
+      expect(stop).toHaveBeenLastCalledWith('SIGTERM');
+
+      await jest.advanceTimersByTimeAsync(2_000);
+      await stopped;
+      expect(stop.mock.calls.map(([signal]) => signal)).toEqual(['SIGTERM', 'SIGKILL']);
+      expect(deps.handleCanonicalHarnessEvent).toHaveBeenCalledTimes(1);
+      expect(unregisterWire).toHaveBeenCalledTimes(1);
+      expect(threadRuntimeManager.getRuntimeState(runtimeKey)).toBe(RUNTIME_STATES.COLD);
+    } finally {
+      jest.useRealTimers();
+    }
+  });
+
+  test('a process that never closes after SIGKILL retains tracked STOPPING ownership', async () => {
+    jest.useFakeTimers();
+    try {
+      const neverCloses = new Promise(() => {});
+      const stop = jest.fn(() => neverCloses);
+      const wire = { _stopSession: stop };
+      const deps = makeDeps({ handleCanonicalHarnessEvent: jest.fn(async () => {}) });
+      const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+      threadRuntimeManager.markInFlight(runtimeKey);
+      threadRuntimeManager.beginLiveTurn(runtimeKey, { turnId: 'turn-live', userInput: 'hello' });
+      getWireForThread.mockReturnValue(wire);
+
+      const stopped = stopRuntimeTurn({
+        ws: deps.ws,
+        session: deps.session,
+        clientMsg: { type: 'turn:stop', threadId: 'thread-1' },
+        handleCanonicalHarnessEvent: deps.handleCanonicalHarnessEvent,
+      });
+      await jest.advanceTimersByTimeAsync(3_000);
+      await stopped;
+
+      expect(stop.mock.calls.map(([signal]) => signal)).toEqual(['SIGTERM', 'SIGKILL']);
+      expect(deps.handleCanonicalHarnessEvent).toHaveBeenCalledTimes(1);
+      expect(unregisterWire).not.toHaveBeenCalled();
+      expect(threadRuntimeManager.getRuntimeState(runtimeKey)).toBe(RUNTIME_STATES.STOPPING);
+    } finally {
+      jest.useRealTimers();
+    }
+  });
+
+  test('interrupted synthesis exception cannot disclose or prevent bound-stop cleanup', async () => {
+    const canary = 'CANARY_SECRET_INTERRUPTED_SYNTHESIS';
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const deps = makeDeps({
+      handleCanonicalHarnessEvent: jest.fn(() => { throw new Error(canary); }),
+    });
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    const stopHarness = jest.fn(() => Promise.resolve());
+    const control = createCanonicalDrainControl({
+      drainId: 'stop-synthesis-drain',
+      runtimeKey,
+      touchThreadSession: () => {},
+      stopHarness,
+    });
+    threadRuntimeManager.claimActiveDrain(runtimeKey, control, null);
+    threadRuntimeManager.beginLiveTurn(runtimeKey, {
+      turnId: 'turn-live',
+      userInput: 'hello',
+    });
+    threadRuntimeManager.markInFlight(runtimeKey);
+
+    await expect(stopRuntimeTurn({
+      ws: deps.ws,
+      session: deps.session,
+      clientMsg: { type: 'turn:stop', threadId: 'thread-1' },
+      handleCanonicalHarnessEvent: deps.handleCanonicalHarnessEvent,
+    })).resolves.toBeUndefined();
+
+    expect(deps.handleCanonicalHarnessEvent).toHaveBeenCalledTimes(1);
+    expect(stopHarness).toHaveBeenCalledTimes(1);
+    expect(unregisterWire).not.toHaveBeenCalled();
+    expect(threadRuntimeManager.getActiveDrain(runtimeKey)).toBeNull();
+    expect(threadRuntimeManager.getRuntimeState(runtimeKey)).toBe(RUNTIME_STATES.COLD);
+    expect(deps.ws.send).not.toHaveBeenCalled();
+    expect(errorSpy.mock.calls).toEqual([[
+      '[ThreadRuntime] Interrupted-turn synthesis failed',
+      {
+        threadId: 'thread-1',
+        drainId: 'stop-synthesis-drain',
+        marker: 'INTERRUPTED_TURN_SYNTHESIS_FAILED',
+      },
+    ]]);
+    expect(JSON.stringify({ frames: deps.ws.send.mock.calls, logs: errorSpy.mock.calls }))
+      .not.toContain(canary);
+  });
+
+  test('legacy stop rejection cannot disclose and retains tracked STOPPING ownership', async () => {
+    const canary = 'CANARY_SECRET_LEGACY_STOPWIRE';
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const stopSession = jest.fn(async () => { throw new Error(canary); });
+    const wire = { _stopSession: stopSession };
+    const deps = makeDeps({ handleCanonicalHarnessEvent: jest.fn() });
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    threadRuntimeManager.beginLiveTurn(runtimeKey, {
+      turnId: 'turn-live',
+      userInput: 'hello',
+    });
+    threadRuntimeManager.markInFlight(runtimeKey);
+    getWireForThread.mockReturnValue(wire);
+
+    await expect(stopRuntimeTurn({
+      ws: deps.ws,
+      session: deps.session,
+      clientMsg: { type: 'turn:stop', threadId: 'thread-1' },
+      handleCanonicalHarnessEvent: deps.handleCanonicalHarnessEvent,
+    })).resolves.toBeUndefined();
+
+    expect(deps.handleCanonicalHarnessEvent).toHaveBeenCalledTimes(1);
+    expect(stopSession).toHaveBeenCalledTimes(2);
+    expect(stopSession).toHaveBeenNthCalledWith(1, 'SIGTERM');
+    expect(stopSession).toHaveBeenNthCalledWith(2, 'SIGKILL');
+    expect(unregisterWire).not.toHaveBeenCalled();
+    expect(threadRuntimeManager.getRuntimeState(runtimeKey)).toBe(RUNTIME_STATES.STOPPING);
+    expect(deps.ws.send).not.toHaveBeenCalled();
+    expect(warnSpy.mock.calls).toEqual([[
+      '[ThreadRuntime] Legacy harness stop failed',
+      { threadId: 'thread-1', marker: 'LEGACY_HARNESS_STOP_FAILED' },
+    ]]);
+    expect(JSON.stringify({ frames: deps.ws.send.mock.calls, logs: warnSpy.mock.calls }))
+      .not.toContain(canary);
+  });
+
+  test('arbitrary bound-control stop rejection is contained and ownership stays tracked', async () => {
+    const canary = 'CANARY_SECRET_ARBITRARY_BOUND_STOP';
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const deps = makeDeps({ handleCanonicalHarnessEvent: jest.fn() });
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    const control = createCanonicalDrainControl({
+      drainId: 'arbitrary-bound-stop',
+      runtimeKey,
+      touchThreadSession: () => {},
+      stopHarness: async () => { throw new Error(canary); },
+    });
+    threadRuntimeManager.claimActiveDrain(runtimeKey, control, null);
+    threadRuntimeManager.beginLiveTurn(runtimeKey, {
+      turnId: 'turn-live',
+      userInput: 'hello',
+    });
+    threadRuntimeManager.markInFlight(runtimeKey);
+
+    await expect(stopRuntimeTurn({
+      ws: deps.ws,
+      session: deps.session,
+      clientMsg: { type: 'turn:stop', threadId: 'thread-1' },
+      handleCanonicalHarnessEvent: deps.handleCanonicalHarnessEvent,
+    })).resolves.toBeUndefined();
+
+    expect(deps.handleCanonicalHarnessEvent).toHaveBeenCalledTimes(1);
+    expect(unregisterWire).not.toHaveBeenCalled();
+    expect(threadRuntimeManager.getActiveDrain(runtimeKey)).toMatchObject({ drainId: 'arbitrary-bound-stop' });
+    expect(threadRuntimeManager.getRuntimeState(runtimeKey)).toBe(RUNTIME_STATES.STOPPING);
+    expect(deps.ws.send).not.toHaveBeenCalled();
+    expect(warnSpy.mock.calls).toEqual([[
+      '[ThreadRuntime] Harness stop failed',
+      {
+        threadId: 'thread-1',
+        drainId: 'arbitrary-bound-stop',
+        marker: 'HARNESS_STOP_FAILED',
+      },
+    ]]);
+    expect(JSON.stringify({ frames: deps.ws.send.mock.calls, logs: warnSpy.mock.calls }))
+      .not.toContain(canary);
+  });
+
+  test('stop is recoverable no-op when runtime is not in flight', async () => {
+    const deps = makeDeps({ handleCanonicalHarnessEvent: jest.fn() });
+
+    await stopRuntimeTurn({
+      ws: deps.ws,
+      session: deps.session,
+      clientMsg: { type: 'turn:stop', threadId: 'thread-1' },
+      handleCanonicalHarnessEvent: deps.handleCanonicalHarnessEvent,
+    });
+
+    expect(deps.handleCanonicalHarnessEvent).not.toHaveBeenCalled();
+    expect(JSON.parse(deps.ws.send.mock.calls[0][0])).toMatchObject({
+      type: 'error',
+      threadId: 'thread-1',
+      recoverable: true,
+    });
+  });
+
+  test('missing live turn does not reserve a provider that Stop cannot retire', async () => {
+    const deps = makeDeps({ handleCanonicalHarnessEvent: jest.fn() });
+    deps.manager.beginSessionRetirement = jest.fn(() => ({ wireProcess: {} }));
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    threadRuntimeManager.markInFlight(runtimeKey);
+
+    await stopRuntimeTurn({
+      ws: deps.ws,
+      session: deps.session,
+      clientMsg: { type: 'turn:stop', threadId: 'thread-1' },
+      handleCanonicalHarnessEvent: deps.handleCanonicalHarnessEvent,
+    });
+
+    expect(deps.manager.beginSessionRetirement).not.toHaveBeenCalled();
+    expect(JSON.parse(deps.ws.send.mock.calls[0][0])).toMatchObject({
+      type: 'error',
+      message: 'No live turn is available to stop.',
+    });
+  });
+
+  test('Stop rejects inconsistent manager and delivery wire owners before either is touched', async () => {
+    const deps = makeDeps({ handleCanonicalHarnessEvent: jest.fn() });
+    const managerWire = { _stopSession: jest.fn(async () => {}) };
+    const registryWire = { _stopSession: jest.fn(async () => {}) };
+    deps.manager.getSession = jest.fn(() => ({
+      state: 'active',
+      wireProcess: managerWire,
+      ws: deps.ws,
+    }));
+    deps.manager.beginSessionRetirement = jest.fn(() => ({ wireProcess: managerWire }));
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    threadRuntimeManager.markInFlight(runtimeKey);
+    threadRuntimeManager.beginLiveTurn(runtimeKey, {
+      turnId: 'turn-live',
+      userInput: 'hello',
+    });
+    getWireForThread.mockReturnValue(registryWire);
+
+    await stopRuntimeTurn({
+      ws: deps.ws,
+      session: deps.session,
+      clientMsg: { type: 'turn:stop', threadId: 'thread-1' },
+      handleCanonicalHarnessEvent: deps.handleCanonicalHarnessEvent,
+    });
+
+    expect(deps.manager.beginSessionRetirement).not.toHaveBeenCalled();
+    expect(managerWire._stopSession).not.toHaveBeenCalled();
+    expect(registryWire._stopSession).not.toHaveBeenCalled();
+    expect(unregisterWire).not.toHaveBeenCalled();
+    expect(threadRuntimeManager.getRuntimeState(runtimeKey)).toBe(RUNTIME_STATES.IN_FLIGHT);
+    expect(JSON.parse(deps.ws.send.mock.calls[0][0])).toMatchObject({
+      type: 'error',
+      message: 'Thread runtime is not currently streaming.',
+    });
+  });
+
+  test('duplicate stop while stopping does not emit duplicate terminal events', async () => {
+    const deps = makeDeps({ handleCanonicalHarnessEvent: jest.fn() });
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    threadRuntimeManager.markState(runtimeKey, RUNTIME_STATES.STOPPING);
+
+    await stopRuntimeTurn({
+      ws: deps.ws,
+      session: deps.session,
+      clientMsg: { type: 'turn:stop', threadId: 'thread-1' },
+      handleCanonicalHarnessEvent: deps.handleCanonicalHarnessEvent,
+    });
+
+    expect(deps.handleCanonicalHarnessEvent).not.toHaveBeenCalled();
+    expect(deps.ws.send).not.toHaveBeenCalled();
+  });
+});
+
+describe('canonical drain binding (SPEC-01 Slice B)', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+    threadRuntimeManager.runtimes.clear();
+    attachClientToWire.mockReturnValue(true);
+    getWireForThread.mockReturnValue(null);
+    unregisterWire.mockReturnValue(undefined);
+  });
+
+  function makeBoundWire(extra = {}) {
+    return {
+      _usesDirectCanonicalEvents: true,
+      async *_sendMessage() {
+        yield { type: 'turn_end' };
+      },
+      ...extra,
+    };
+  }
+
+  test('claims the active drain before consuming the first harness event', async () => {
+    const order = [];
+    const originalClaim = threadRuntimeManager.claimActiveDrain.bind(threadRuntimeManager);
+    const claimSpy = jest.spyOn(threadRuntimeManager, 'claimActiveDrain')
+      .mockImplementation((key, control, routeContext) => {
+        order.push('claim');
+        return originalClaim(key, control, routeContext);
+      });
+    const wire = {
+      _usesDirectCanonicalEvents: true,
+      async *_sendMessage() {
+        order.push('send-start');
+        yield { type: 'turn_end' };
+      },
+    };
+    const deps = makeDeps({
+      spawnAndSetupWire: jest.fn(() => Promise.resolve(wire)),
+      handleCanonicalHarnessEvent: jest.fn((event) => {
+        order.push(`event:${event.type}`);
+      }),
+    });
+    ThreadWebSocketHandler.handleMessageSend.mockImplementation(async () => {
+      order.push('persist');
+      return true;
+    });
+    attachClientToWire.mockImplementation(() => {
+      order.push('attach');
+      return true;
+    });
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    expect(order).toEqual(['persist', 'attach', 'claim', 'send-start', 'event:turn_end']);
+    claimSpy.mockRestore();
+  });
+
+  test('claimed record carries drain identity, route context, and live control closures', async () => {
+    const claimSpy = jest.spyOn(threadRuntimeManager, 'claimActiveDrain');
+    const stopSession = jest.fn(() => Promise.resolve());
+    const wire = makeBoundWire({ _stopSession: stopSession });
+    const deps = makeDeps({ spawnAndSetupWire: jest.fn(() => Promise.resolve(wire)) });
+    deps.manager.touchSession = jest.fn();
+    deps.clientMsg.attachments = [{ kind: 'image', label: 'pic.png', path: '/tmp/pic.png' }];
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    const record = claimSpy.mock.results[0].value;
+    expect(threadRuntimeManager.getActiveDrain(runtimeKey)).toBeNull();
+
+    expect(record).toBeTruthy();
+    expect(record.turnId).toBeNull();
+    expect(record.drainId).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
+    expect(record.control.drainId).toBe(record.drainId);
+    expect(record.control.runtimeKey).toMatchObject({
+      workspaceId: 'workspace-1',
+      scope: 'project',
+      threadId: 'thread-1',
+    });
+
+    record.control.touchThreadSession();
+    expect(deps.manager.touchSession).toHaveBeenCalledWith('thread-1');
+
+    await record.control.stopHarness();
+    expect(stopSession).toHaveBeenCalledTimes(1);
+
+    expect(record.routeContext).toMatchObject({
+      workspaceId: 'workspace-1',
+      workspace: 'workspace:workspace-1',
+      projectRoot: '/tmp/project',
+      scope: 'project',
+      threadId: 'thread-1',
+      acceptedUserInput: 'hello',
+    });
+    expect(record.routeContext.attachments).toEqual([
+      { kind: 'image', label: 'pic.png', path: '/tmp/pic.png', sourceName: 'pic.png' },
+    ]);
+  });
+
+  test('workspace drain retirement stops the provider and awaits iterator quiescence before resolving', async () => {
+    let releaseQueuedEvent;
+    const queuedEventMayRun = new Promise(resolve => { releaseQueuedEvent = resolve; });
+    let markDrainStarted;
+    const drainStarted = new Promise(resolve => { markDrainStarted = resolve; });
+    const stopSession = jest.fn(async () => {});
+    const wire = {
+      _usesDirectCanonicalEvents: true,
+      _stopSession: stopSession,
+      async *_sendMessage() {
+        markDrainStarted();
+        await queuedEventMayRun;
+        yield { type: 'content', text: 'stale workspace event' };
+      },
+    };
+    const admittedEvents = [];
+    const handleCanonicalHarnessEvent = jest.fn(async (event, _ws, drainContext) => {
+      if (threadRuntimeManager.isDrainCurrent(
+        drainContext.control.runtimeKey,
+        drainContext.control.drainId,
+      )) admittedEvents.push(event);
+    });
+    const deps = makeDeps({
+      spawnAndSetupWire: jest.fn(async () => wire),
+      handleCanonicalHarnessEvent,
+    });
+
+    await acceptPromptThroughRuntime(deps);
+    await drainStarted;
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    let retirementResolved = false;
+    const retiring = threadRuntimeManager.retireActiveDrain(runtimeKey)
+      .then(() => { retirementResolved = true; });
+    await flushAsyncWork();
+
+    expect(stopSession).toHaveBeenCalledWith('SIGTERM');
+    expect(retirementResolved).toBe(false);
+    expect(threadRuntimeManager.getActiveDrain(runtimeKey)).toBeNull();
+
+    releaseQueuedEvent();
+    await retiring;
+
+    expect(retirementResolved).toBe(true);
+    expect(admittedEvents).toEqual([]);
+    expect(threadRuntimeManager.getRuntimeState(runtimeKey)).toBe(RUNTIME_STATES.COLD);
+  });
+
+  test('bound drain retirement follows a transferred provider owner after the spawning client is gone', async () => {
+    let releaseQueuedEvent;
+    const queuedEventMayRun = new Promise(resolve => { releaseQueuedEvent = resolve; });
+    let markDrainStarted;
+    const drainStarted = new Promise(resolve => { markDrainStarted = resolve; });
+    const wire = {
+      _usesDirectCanonicalEvents: true,
+      _stopSession: jest.fn(async () => {}),
+      async *_sendMessage() {
+        markDrainStarted();
+        await queuedEventMayRun;
+        yield { type: 'content', text: 'retired event' };
+      },
+    };
+    const ownerB = { send: jest.fn(), readyState: 1 };
+    const deps = makeDeps({
+      spawnAndSetupWire: jest.fn(async () => wire),
+      handleCanonicalHarnessEvent: jest.fn(async (_event, _ws, drainContext) => {
+        expect(threadRuntimeManager.isDrainCurrent(
+          drainContext.control.runtimeKey, drainContext.control.drainId,
+        )).toBe(false);
+      }),
+    });
+    const transferredSession = { ws: ownerB, wireProcess: wire, state: 'active' };
+    deps.manager.getSession = jest.fn(() => transferredSession);
+    deps.manager.beginSessionRetirement = jest.fn((_threadId, owner) => (
+      owner === ownerB ? transferredSession : null
+    ));
+    deps.manager.completeStoppedSession = jest.fn(async () => true);
+
+    await acceptPromptThroughRuntime(deps);
+    await drainStarted;
+    ThreadWebSocketHandler.getState.mockReturnValue(null);
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    let retired = false;
+    const retiring = threadRuntimeManager.retireActiveDrain(runtimeKey)
+      .then(() => { retired = true; });
+    await flushAsyncWork();
+
+    expect(deps.manager.beginSessionRetirement).toHaveBeenCalledWith('thread-1', ownerB);
+    expect(wire._stopSession).toHaveBeenCalledWith('SIGTERM');
+    expect(retired).toBe(false);
+
+    releaseQueuedEvent();
+    await retiring;
+    expect(retired).toBe(true);
+    expect(deps.manager.completeStoppedSession).toHaveBeenCalledWith('thread-1', wire);
+    expect(threadRuntimeManager.getRuntimeState(runtimeKey)).toBe(RUNTIME_STATES.COLD);
+  });
+
+  test('bound harness stop exception becomes a fixed rejection without disclosing provider text', async () => {
+    const claimSpy = jest.spyOn(threadRuntimeManager, 'claimActiveDrain');
+    const canary = 'CANARY_SECRET_BOUND_HARNESS_STOP';
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const stopSession = jest.fn(async () => { throw new Error(canary); });
+    const wire = makeBoundWire({ _stopSession: stopSession });
+    const deps = makeDeps({ spawnAndSetupWire: jest.fn(() => Promise.resolve(wire)) });
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    const record = claimSpy.mock.results[0].value;
+    expect(threadRuntimeManager.getActiveDrain(getRuntimeKey(deps.manager, 'thread-1'))).toBeNull();
+    expect(record).toBeTruthy();
+    await expect(record.control.stopHarness()).rejects.toThrow('Provider termination failed');
+
+    expect(stopSession).toHaveBeenCalledTimes(2);
+    expect(parsedFrames(deps).filter((frame) => frame.type !== 'message:sent')).toEqual([]);
+    expect(warnSpy).not.toHaveBeenCalled();
+    expect(JSON.stringify(warnSpy.mock.calls)).not.toContain(canary);
+  });
+
+  test('mutating clientMsg.attachments after acceptance leaves the stored route untouched', async () => {
+    const claimSpy = jest.spyOn(threadRuntimeManager, 'claimActiveDrain');
+    const wire = makeBoundWire();
+    const deps = makeDeps({ spawnAndSetupWire: jest.fn(() => Promise.resolve(wire)) });
+    deps.clientMsg.attachments = [{ path: '/tmp/a.txt', label: 'a.txt' }];
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    const record = claimSpy.mock.results[0].value;
+    expect(threadRuntimeManager.getActiveDrain(getRuntimeKey(deps.manager, 'thread-1'))).toBeNull();
+
+    deps.clientMsg.attachments.push({ path: '/tmp/evil.txt' });
+    deps.clientMsg.attachments[0].path = '/tmp/mutated.txt';
+
+    expect(record.routeContext.attachments).toEqual([
+      { kind: 'file', label: 'a.txt', path: '/tmp/a.txt', sourceName: 'a.txt' },
+    ]);
+    expect(Object.isFrozen(record.routeContext)).toBe(true);
+    expect(Object.isFrozen(record.routeContext.attachments)).toBe(true);
+    expect(Object.isFrozen(record.routeContext.attachments[0])).toBe(true);
+
+    // SPEC-01 Slice C: accepted input/attachments live ONLY in the frozen
+    // route context — the connection session stores none of them.
+    expect(deps.session.pendingUserInput).toBeUndefined();
+    expect(deps.session.pendingAttachments).toBeUndefined();
+  });
+
+  test('empty user_input is rejected before warming, persistence, or IN_FLIGHT', async () => {
+    const deps = makeDeps();
+
+    await acceptPromptThroughRuntime({
+      ...deps,
+      clientMsg: { type: 'prompt', threadId: 'thread-1', user_input: '' },
+    });
+    await flushAsyncWork();
+
+    expect(deps.spawnAndSetupWire).not.toHaveBeenCalled();
+    expect(ThreadWebSocketHandler.handleMessageSend).not.toHaveBeenCalled();
+    expect(deps.handleCanonicalHarnessEvent).not.toHaveBeenCalled();
+    expect(threadRuntimeManager.getRuntimeState(getRuntimeKey(deps.manager, 'thread-1'))).toBe(RUNTIME_STATES.COLD);
+    expect(JSON.parse(deps.ws.send.mock.calls[0][0])).toMatchObject({
+      type: 'error',
+      message: 'Prompt requires a non-empty user_input',
+      threadId: 'thread-1',
+    });
+  });
+
+  test('a drain-binding failure rolls back and omits the thrown value from frame and log', async () => {
+    const canary = 'CANARY_SECRET_DRAIN_BINDING';
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const wire = makeBoundWire();
+    const deps = makeDeps({ spawnAndSetupWire: jest.fn(() => Promise.resolve(wire)) });
+    jest.spyOn(threadRuntimeManager, 'claimActiveDrain').mockImplementationOnce(() => {
+      throw new Error(canary);
+    });
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    expect(threadRuntimeManager.getRuntimeState(runtimeKey)).toBe(RUNTIME_STATES.READY);
+    expect(threadRuntimeManager.getActiveDrain(runtimeKey)).toBeNull();
+    expect(deps.handleCanonicalHarnessEvent).not.toHaveBeenCalled();
+    expect(parsedFrames(deps)).toEqual([{
+      type: 'message:sent', scope: 'project', workspaceId: 'workspace-1',
+      threadId: 'thread-1', requestId: 'attempt-0001', turnId: expect.any(String), content: 'hello',
+    }, {
+      type: 'error',
+      scope: 'project',
+      code: 'accepted_execution_failed',
+      message: 'Accepted prompt could not start',
+      workspaceId: 'workspace-1',
+      threadId: 'thread-1',
+      recoverable: true,
+      requestId: 'attempt-0001',
+    }]);
+    expect(errorSpy.mock.calls).toEqual([]);
+    expect(JSON.stringify(deps.ws.send.mock.calls)).not.toContain(canary);
+    expect(JSON.stringify(errorSpy.mock.calls)).not.toContain(canary);
+  });
+});
+
+describe('runtime drain authority (SPEC-01 Slice C)', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+    threadRuntimeManager.runtimes.clear();
+    attachClientToWire.mockReturnValue(true);
+    getWireForThread.mockReturnValue(null);
+    unregisterWire.mockReturnValue(undefined);
+  });
+
+  function makeBoundWire(extra = {}) {
+    return {
+      _usesDirectCanonicalEvents: true,
+      async *_sendMessage() {
+        yield { type: 'turn_end' };
+      },
+      ...extra,
+    };
+  }
+
+  test('every iterator event carries the claimed drain context (route + control)', async () => {
+    const wire = makeBoundWire();
+    const deps = makeDeps({ spawnAndSetupWire: jest.fn(() => Promise.resolve(wire)) });
+    deps.manager.touchSession = jest.fn();
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    expect(threadRuntimeManager.getActiveDrain(runtimeKey)).toBeNull();
+
+    expect(deps.handleCanonicalHarnessEvent).toHaveBeenCalled();
+    for (const call of deps.handleCanonicalHarnessEvent.mock.calls) {
+      const [, , drainContext] = call;
+      expect(drainContext).toBeTruthy();
+      expect(drainContext.route).toMatchObject({
+        workspaceId: 'workspace-1',
+        scope: 'project',
+        threadId: 'thread-1',
+        acceptedUserInput: 'hello',
+      });
+      expect(drainContext.control.drainId).toMatch(/^[0-9a-f-]{36}$/);
+      expect(Object.isFrozen(drainContext.route)).toBe(true);
+    }
+  });
+
+  test('loop error after the drain was superseded is a diagnostic-only no-op', async () => {
+    const canary = 'CANARY_SECRET_SUPERSEDED_ITERATOR';
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    let releaseError;
+    const errorGate = new Promise(resolve => { releaseError = resolve; });
+    let started;
+    const startGate = new Promise(resolve => { started = resolve; });
+    const wire = {
+      _usesDirectCanonicalEvents: true,
+      async *_sendMessage() {
+        started();
+        yield { type: 'turn_begin' };
+        await errorGate;
+        throw new Error(canary);
+      },
+    };
+    const deps = makeDeps({ spawnAndSetupWire: jest.fn(() => Promise.resolve(wire)) });
+
+    await acceptPromptThroughRuntime(deps);
+    await startGate;
+
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    const originalRecord = threadRuntimeManager.getActiveDrain(runtimeKey);
+    expect(originalRecord).toBeTruthy();
+
+    // A replacement drain takes over the same runtime key.
+    const replacementControl = createCanonicalDrainControl({
+      drainId: 'replacement-drain',
+      runtimeKey,
+      touchThreadSession: () => {},
+      stopHarness: async () => {},
+    });
+    threadRuntimeManager.claimActiveDrain(runtimeKey, replacementControl, null);
+
+    releaseError();
+    await flushAsyncWork();
+
+    // No ws error send, no state stomp of the replacement drain.
+    expect(parsedFrames(deps).filter((frame) => frame.type !== 'message:sent')).toEqual([]);
+    expect(threadRuntimeManager.getActiveDrain(runtimeKey)?.drainId).toBe('replacement-drain');
+    // The stale path must not touch runtime state at all — the replacement
+    // drain's own lifecycle stays in charge (still IN_FLIGHT here).
+    expect(threadRuntimeManager.getRuntimeState(runtimeKey)).toBe(RUNTIME_STATES.IN_FLIGHT);
+    expect(warnSpy.mock.calls).toContainEqual([
+      '[ThreadRuntime] Ignoring superseded iterator failure',
+      {
+        threadId: 'thread-1',
+        drainId: originalRecord.drainId,
+        marker: 'SUPERSEDED_ITERATOR_FAILURE',
+      },
+    ]);
+    expect(JSON.stringify(warnSpy.mock.calls)).not.toContain(canary);
+  });
+
+  test('stop through a claimed + bound drain terminalizes and clears-if-current', async () => {
+    const stopSession = jest.fn(() => Promise.resolve());
+    const wire = { _stopSession: stopSession };
+    const deps = makeDeps();
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    getWireForThread.mockReturnValue(wire);
+
+    // Compose the REAL bridge/applier chain exactly like message-router does.
+    const emitted = [];
+    const applier = createCanonicalChatEventApplier({
+      emit: (type, payload) => emitted.push({ type, payload }),
+      checkSettingsBounce: () => null,
+      generateTurnId: () => 'server-turn-1',
+    });
+    const bridge = createCanonicalHarnessEventBridge({
+      applyChatEvent: applier.applyChatEvent,
+      bindDrainTurn: (drainContext, turnId) => threadRuntimeManager.bindTurnToDrain(
+        drainContext.control.runtimeKey,
+        drainContext.control.drainId,
+        turnId
+      ),
+    });
+
+    // Acceptance-shaped claim, then the REAL bridge path begins and binds.
+    const routeContext = createCanonicalRouteContext({
+      workspaceId: 'workspace-1',
+      workspace: 'workspace:workspace-1',
+      projectRoot: '/tmp/project',
+      scope: 'project',
+      threadId: 'thread-1',
+      acceptedUserInput: 'hello',
+      attachments: [],
+    });
+    // SPEC-01 Slice D: the BOUND control is the stop mechanism and is
+    // observable separately from the registry wire.
+    const boundStopHarness = jest.fn(() => Promise.resolve());
+    const control = createCanonicalDrainControl({
+      drainId: 'stop-drain',
+      runtimeKey,
+      touchThreadSession: () => {},
+      stopHarness: boundStopHarness,
+    });
+    threadRuntimeManager.claimActiveDrain(runtimeKey, control, routeContext);
+    bridge.applyHarnessEvent({
+      type: 'turn_begin',
+      userInput: 'hello',
+    }, null, { route: routeContext, control }); // begins + binds server-turn-1
+    expect(threadRuntimeManager.resolveBoundTurnId(runtimeKey, 'stop-drain')).toBe('server-turn-1');
+    threadRuntimeManager.markInFlight(runtimeKey);
+
+    await stopRuntimeTurn({
+      ws: deps.ws,
+      session: deps.session,
+      clientMsg: { type: 'turn:stop', threadId: 'thread-1' },
+      handleCanonicalHarnessEvent: bridge.applyHarnessEvent,
+    });
+
+    const endEvent = emitted.find(e => e.type === 'chat:turn_end');
+    expect(endEvent).toBeDefined();
+    expect(endEvent.payload).toMatchObject({
+      threadId: 'thread-1',
+      turnId: 'server-turn-1',
+      reason: 'interrupted',
+      partial: true,
+      userInput: 'hello',
+    });
+
+    // Terminalization cleared-if-current; the completed snapshot remains.
+    expect(threadRuntimeManager.getActiveDrain(runtimeKey)).toBeNull();
+    expect(threadRuntimeManager.getLiveTurn(runtimeKey)).toMatchObject({
+      status: 'interrupted',
+      turnId: 'server-turn-1',
+    });
+    // SPEC-01 Slice D: the stop went through the BOUND control capability —
+    // never the registry/session wire mechanism.
+    expect(boundStopHarness).toHaveBeenCalledTimes(1);
+    expect(stopSession).not.toHaveBeenCalled();
+    expect(unregisterWire).toHaveBeenCalledWith('thread-1', runtimeKey, wire);
+    expect(threadRuntimeManager.getRuntimeState(runtimeKey)).toBe(RUNTIME_STATES.COLD);
+  });
+});
+
+describe('stop supersession guard (SPEC-01 Slice D)', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+    threadRuntimeManager.runtimes.clear();
+    attachClientToWire.mockReturnValue(true);
+    getWireForThread.mockReturnValue(null);
+    unregisterWire.mockReturnValue(undefined);
+  });
+
+  /** Real bridge/applier chain exactly like message-router composes it. */
+  function makeBridge() {
+    let turnCounter = 0;
+    const applier = createCanonicalChatEventApplier({
+      emit: () => {},
+      checkSettingsBounce: () => null,
+      generateTurnId: () => `server-turn-${++turnCounter}`,
+    });
+    return createCanonicalHarnessEventBridge({
+      applyChatEvent: applier.applyChatEvent,
+      bindDrainTurn: (drainContext, turnId) => threadRuntimeManager.bindTurnToDrain(
+        drainContext.control.runtimeKey,
+        drainContext.control.drainId,
+        turnId
+      ),
+    });
+  }
+
+  function makeRouteContext(userInput) {
+    return createCanonicalRouteContext({
+      workspaceId: 'workspace-1',
+      workspace: 'workspace:workspace-1',
+      projectRoot: '/tmp/project',
+      scope: 'project',
+      threadId: 'thread-1',
+      acceptedUserInput: userInput,
+      attachments: [],
+    });
+  }
+
+  test('late Stop completion from old drain A cannot affect replacement drain B', async () => {
+    const deps = makeDeps();
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    const bridge = makeBridge();
+
+    // Drain A with a SLOW stopHarness so its Stop completion lands after
+    // supersession — the deterministic mid-call interleaving.
+    let releaseStopA;
+    const stopAGate = new Promise(resolve => { releaseStopA = resolve; });
+    let stopAEntered = false;
+    const controlA = createCanonicalDrainControl({
+      drainId: 'drain-A',
+      runtimeKey,
+      touchThreadSession: () => {},
+      stopHarness: async () => {
+        stopAEntered = true;
+        await stopAGate;
+      },
+    });
+    const routeA = makeRouteContext('input A');
+    threadRuntimeManager.claimActiveDrain(runtimeKey, controlA, routeA);
+    bridge.applyHarnessEvent({ type: 'turn_begin', userInput: 'input A' }, null, { route: routeA, control: controlA });
+    expect(threadRuntimeManager.resolveBoundTurnId(runtimeKey, 'drain-A')).toBe('server-turn-1');
+    threadRuntimeManager.markInFlight(runtimeKey);
+
+    // Stop A. The call runs synchronously through capture → STOPPING →
+    // interrupted-turn_end synthesis (which terminalizes + clears A's own
+    // record) and then suspends inside control.stopHarness() at the gate.
+    const stopPromise = stopRuntimeTurn({
+      ws: deps.ws,
+      session: deps.session,
+      clientMsg: { type: 'turn:stop', threadId: 'thread-1' },
+      handleCanonicalHarnessEvent: bridge.applyHarnessEvent,
+    });
+    await flushAsyncWork();
+    expect(stopAEntered).toBe(true);
+
+    // Supersession mid-stop: replacement drain B claims the runtime key and
+    // begins + binds its own turn; the runtime goes back IN_FLIGHT for B.
+    const controlB = createCanonicalDrainControl({
+      drainId: 'drain-B',
+      runtimeKey,
+      touchThreadSession: () => {},
+      stopHarness: async () => {},
+    });
+    const routeB = makeRouteContext('input B');
+    threadRuntimeManager.claimActiveDrain(runtimeKey, controlB, routeB);
+    bridge.applyHarnessEvent({ type: 'turn_begin', userInput: 'input B' }, null, { route: routeB, control: controlB });
+    threadRuntimeManager.markInFlight(runtimeKey);
+    expect(threadRuntimeManager.resolveBoundTurnId(runtimeKey, 'drain-B')).toBe('server-turn-2');
+
+    // A's slow stop resolves AFTER B took over.
+    releaseStopA();
+    await stopPromise;
+    await flushAsyncWork();
+
+    // B's record, bound turn, and live snapshot survive untouched...
+    expect(threadRuntimeManager.getActiveDrain(runtimeKey)?.drainId).toBe('drain-B');
+    expect(threadRuntimeManager.resolveBoundTurnId(runtimeKey, 'drain-B')).toBe('server-turn-2');
+    expect(threadRuntimeManager.getLiveTurn(runtimeKey)).toMatchObject({
+      status: 'in_flight',
+      turnId: 'server-turn-2',
+      fullText: '',
+    });
+    // ...B-era runtime state was not forced COLD by A's late completion...
+    expect(threadRuntimeManager.getRuntimeState(runtimeKey)).toBe(RUNTIME_STATES.IN_FLIGHT);
+    // ...and no unregisterWire side effect hit the slot B may own.
+    expect(unregisterWire).not.toHaveBeenCalledWith('thread-1');
+  });
+
+  test('stop of a never-begun claimed drain clears only its own orphaned record', async () => {
+    const deps = makeDeps();
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    const bridge = makeBridge();
+
+    // Claimed but never begun: no bound turn, so the synthesized interrupted
+    // turn_end is dropped pre-binding and cannot clear the record itself.
+    const boundStopHarness = jest.fn(() => Promise.resolve());
+    const control = createCanonicalDrainControl({
+      drainId: 'drain-orphan',
+      runtimeKey,
+      touchThreadSession: () => {},
+      stopHarness: boundStopHarness,
+    });
+    threadRuntimeManager.claimActiveDrain(runtimeKey, control, makeRouteContext('orphan input'));
+    threadRuntimeManager.beginLiveTurn(runtimeKey, { turnId: 'legacy-live', userInput: 'orphan input' });
+    threadRuntimeManager.markInFlight(runtimeKey);
+
+    await stopRuntimeTurn({
+      ws: deps.ws,
+      session: deps.session,
+      clientMsg: { type: 'turn:stop', threadId: 'thread-1' },
+      handleCanonicalHarnessEvent: bridge.applyHarnessEvent,
+    });
+    await flushAsyncWork();
+
+    // Bound control stopped; the orphaned never-begun record was removed by
+    // the stop path's clear-if-current; runtime landed cold.
+    expect(boundStopHarness).toHaveBeenCalledTimes(1);
+    expect(threadRuntimeManager.getActiveDrain(runtimeKey)).toBeNull();
+    expect(unregisterWire).not.toHaveBeenCalled();
+    expect(threadRuntimeManager.getRuntimeState(runtimeKey)).toBe(RUNTIME_STATES.COLD);
+  });
+});
+
+describe('companion error boundary — genuine markers only (SPEC-03 Slice A)', () => {
+  function parsedFrames(deps) {
+    return deps.ws.send.mock.calls.map(([raw]) => JSON.parse(raw));
+  }
+
+  function makeThrowingDeps(thrown) {
+    const wire = {
+      _usesDirectCanonicalEvents: true,
+      async *_sendMessage() {
+        yield { type: 'turn_begin', userInput: 'hello' };
+        throw thrown;
+      },
+    };
+    return makeDeps({ spawnAndSetupWire: jest.fn(() => Promise.resolve(wire)) });
+  }
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+    threadRuntimeManager.runtimes.clear();
+    attachClientToWire.mockReturnValue(true);
+    getWireForThread.mockReturnValue(null);
+    unregisterWire.mockReturnValue(undefined);
+  });
+
+  test('a genuine HARNESS_AUTHENTICATION_FAILED marker sends the fixed auth_error companion with no raw error fields', async () => {
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const marker = new HarnessRuntimeError('HARNESS_AUTHENTICATION_FAILED', {
+      version: 1,
+      harnessId: 'opencode',
+      category: 'authentication',
+      hadRenderableOutput: false,
+      hadToolCalls: false,
+      truncatedFields: [],
+      stderrExcerpt: 'redacted provider text',
+    });
+    const deps = makeThrowingDeps(marker);
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    const frames = parsedFrames(deps);
+    const companion = frames.find((frame) => frame.type === 'auth_error');
+    expect(companion).toEqual({
+      type: 'auth_error',
+      scope: 'project',
+      workspaceId: 'workspace-1',
+      threadId: 'thread-1',
+      recoverable: true,
+      requestId: 'attempt-0001',
+      code: 'accepted_execution_failed',
+      message: HARNESS_RUNTIME_ERROR_MESSAGES.HARNESS_AUTHENTICATION_FAILED,
+    });
+    // Exactly one companion; no raw error serialization anywhere.
+    expect(frames.filter((frame) => frame.type === 'auth_error')).toHaveLength(1);
+    for (const frame of frames) {
+      const serialized = JSON.stringify(frame);
+      expect(serialized).not.toContain('redacted provider text');
+      expect(frame).not.toHaveProperty('error');
+      expect(frame).not.toHaveProperty('stack');
+    }
+    expect(JSON.stringify(errorSpy.mock.calls)).not.toContain('redacted provider text');
+    expect(errorSpy.mock.calls).toContainEqual([
+      '[WS] Harness sendMessage failed',
+      {
+        threadId: 'thread-1',
+        drainId: expect.any(String),
+        marker: 'AUTHENTICATION_FAILED',
+      },
+    ]);
+    // Runtime returned to READY after the failed turn.
+    expect(threadRuntimeManager.getRuntimeState(getRuntimeKey(deps.manager, 'thread-1')))
+      .toBe(RUNTIME_STATES.READY);
+  });
+
+  test.each([
+    ['an auth-shaped plain Error with code -32004', (() => {
+      const lookalike = new Error('Authentication failed for this account');
+      lookalike.code = -32004;
+      return lookalike;
+    })()],
+    ['a plain object shaped like the marker', {
+      code: 'HARNESS_AUTHENTICATION_FAILED',
+      name: 'HarnessRuntimeError',
+      message: HARNESS_RUNTIME_ERROR_MESSAGES.HARNESS_AUTHENTICATION_FAILED,
+    }],
+  ])('%s takes the generic path (lookalikes are never classified)', async (_label, thrown) => {
+    const deps = makeThrowingDeps(thrown);
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    const frames = parsedFrames(deps);
+    expect(frames.some((frame) => frame.type === 'auth_error')).toBe(false);
+    const generic = frames.at(-1);
+    expect(generic).toMatchObject({
+      type: 'error',
+      scope: 'project',
+      threadId: 'thread-1',
+      recoverable: true,
+    });
+    for (const frame of frames) {
+      expect(frame).not.toHaveProperty('error');
+      expect(frame).not.toHaveProperty('stack');
+    }
+  });
+
+  test('non-authentication genuine markers take the generic path without raw serialization', async () => {
+    const marker = new HarnessRuntimeError('HARNESS_PROCESS_EXIT', {
+      version: 1,
+      harnessId: 'opencode',
+      category: 'process_exit',
+      exitCode: 1,
+      hadRenderableOutput: true,
+      hadToolCalls: false,
+      truncatedFields: ['stderrExcerpt'],
+      stderrExcerpt: 'redacted exit tail',
+    });
+    const deps = makeThrowingDeps(marker);
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    const frames = parsedFrames(deps);
+    expect(frames.some((frame) => frame.type === 'auth_error')).toBe(false);
+    expect(frames.at(-1)).toMatchObject({
+      type: 'error',
+      recoverable: true,
+      threadId: 'thread-1',
+    });
+    const serialized = JSON.stringify(frames);
+    expect(serialized).not.toContain('redacted exit tail');
+    expect(serialized).not.toContain('HarnessRuntimeError');
+  });
+
+  test('no sent frame in any failure scenario carries a raw error object or stack text', async () => {
+    const scenarios = [
+      new HarnessRuntimeError('HARNESS_MODEL_TIMEOUT'),
+      Object.assign(new Error('boom'), { code: -32004 }),
+    ];
+    for (const thrown of scenarios) {
+      const deps = makeThrowingDeps(thrown);
+      await acceptPromptThroughRuntime(deps);
+      await flushAsyncWork();
+      for (const [raw] of deps.ws.send.mock.calls) {
+        const frame = JSON.parse(raw);
+        expect(frame).not.toHaveProperty('error');
+        expect(raw).not.toContain('at ');
+        expect(raw).not.toContain('stack');
+      }
+    }
+  });
+});
+
+describe('failure-path canonical terminalization (SPEC-03 Slice B)', () => {
+  const { TURN_TERMINAL_ERROR_CATALOG } = require('../../lib/thread/turn-terminal-error');
+
+  function parsedFrames(deps) {
+    return deps.ws.send.mock.calls.map(([raw]) => JSON.parse(raw));
+  }
+
+  /** Real bridge/applier chain exactly like message-router composes it. */
+  function makeRealBridge() {
+    let turnCounter = 0;
+    const applier = createCanonicalChatEventApplier({
+      emit: () => {},
+      checkSettingsBounce: () => null,
+      generateTurnId: () => `server-turn-${++turnCounter}`,
+    });
+    return createCanonicalHarnessEventBridge({
+      applyChatEvent: applier.applyChatEvent,
+      bindDrainTurn: (drainContext, turnId) => threadRuntimeManager.bindTurnToDrain(
+        drainContext.control.runtimeKey,
+        drainContext.control.drainId,
+        turnId
+      ),
+    });
+  }
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+    threadRuntimeManager.runtimes.clear();
+    attachClientToWire.mockReturnValue(true);
+    getWireForThread.mockReturnValue(null);
+    unregisterWire.mockReturnValue(undefined);
+  });
+
+  test('post-begin iterator exception synthesizes EXACTLY ONE error turn_end through the bound context and still sends the companion', async () => {
+    const marker = new HarnessRuntimeError('HARNESS_MODEL_TIMEOUT');
+    const wire = {
+      _usesDirectCanonicalEvents: true,
+      async *_sendMessage() {
+        yield { type: 'turn_begin', userInput: 'hello' };
+        yield { type: 'content', text: 'partial answer' };
+        throw marker;
+      },
+    };
+    const deps = makeDeps({ spawnAndSetupWire: jest.fn(() => Promise.resolve(wire)) });
+    deps.manager.touchSession = jest.fn();
+
+    // Real chain: the synthesized terminal flows bridge → applier → runtime.
+    deps.handleCanonicalHarnessEvent = makeRealBridge().applyHarnessEvent;
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    // The bound machinery terminalized the failed turn exactly once...
+    const liveTurn = threadRuntimeManager.getLiveTurn(runtimeKey);
+    expect(liveTurn).toMatchObject({
+      status: 'error',
+      turnId: 'server-turn-1',
+      fullText: 'partial answer',
+      userInput: 'hello',
+    });
+    expect(liveTurn.terminalError).toEqual(TURN_TERMINAL_ERROR_CATALOG.MODEL_TIMEOUT);
+    expect(threadRuntimeManager.getActiveDrain(runtimeKey)).toBeNull(); // clear-if-current ran
+    // ...the runtime returned to READY...
+    expect(threadRuntimeManager.getRuntimeState(runtimeKey)).toBe(RUNTIME_STATES.READY);
+    // ...and the Slice-A companion notification STILL went out (after synthesis).
+    const frames = parsedFrames(deps);
+    const companions = frames.filter((frame) => frame.type === 'error' || frame.type === 'auth_error');
+    expect(companions).toHaveLength(1);
+    expect(companions[0]).toMatchObject({
+      type: 'error',
+      scope: 'project',
+      threadId: 'thread-1',
+      recoverable: true,
+    });
+  });
+
+  test('post-begin generic failure terminalizes once while companion and server diagnostics omit raw material', async () => {
+    const canary = 'CANARY_SECRET_POST_BEGIN_0108';
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const wire = {
+      _usesDirectCanonicalEvents: true,
+      async *_sendMessage() {
+        yield { type: 'turn_begin', userInput: 'hello' };
+        yield { type: 'content', text: 'safe partial' };
+        throw new Error(canary);
+      },
+    };
+    const deps = makeDeps({ spawnAndSetupWire: jest.fn(() => Promise.resolve(wire)) });
+    deps.manager.touchSession = jest.fn();
+    deps.handleCanonicalHarnessEvent = makeRealBridge().applyHarnessEvent;
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    const liveTurn = threadRuntimeManager.getLiveTurn(runtimeKey);
+    expect(liveTurn).toMatchObject({
+      status: 'error',
+      turnId: 'server-turn-1',
+      fullText: 'safe partial',
+    });
+    expect(liveTurn.terminalError).toEqual(
+      TURN_TERMINAL_ERROR_CATALOG.MODEL_RESPONSE_FAILED
+    );
+    expect(threadRuntimeManager.getActiveDrain(runtimeKey)).toBeNull();
+
+    const companions = parsedFrames(deps)
+      .filter((frame) => frame.type === 'error' || frame.type === 'auth_error');
+    expect(companions).toEqual([{
+      type: 'error',
+      scope: 'project',
+      workspaceId: 'workspace-1',
+      threadId: 'thread-1',
+      recoverable: true,
+      requestId: 'attempt-0001',
+      code: 'accepted_execution_failed',
+      message: TURN_TERMINAL_ERROR_CATALOG.MODEL_RESPONSE_FAILED.message,
+    }]);
+    expect(JSON.stringify(deps.ws.send.mock.calls)).not.toContain(canary);
+    expect(JSON.stringify(errorSpy.mock.calls)).not.toContain(canary);
+    expect(errorSpy.mock.calls).toContainEqual([
+      '[WS] Harness sendMessage failed',
+      {
+        threadId: 'thread-1',
+        drainId: expect.any(String),
+        marker: 'MODEL_RESPONSE_FAILED',
+      },
+    ]);
+  });
+
+  test('terminal synthesis exception is value-minimized and still emits one fixed companion', async () => {
+    const iteratorCanary = 'CANARY_SECRET_SYNTHESIS_ITERATOR';
+    const synthesisCanary = 'CANARY_SECRET_SYNTHESIS_HANDLER';
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const wire = {
+      _usesDirectCanonicalEvents: true,
+      async *_sendMessage() {
+        yield { type: 'turn_begin', userInput: 'hello' };
+        throw new Error(iteratorCanary);
+      },
+    };
+    const deps = makeDeps({ spawnAndSetupWire: jest.fn(() => Promise.resolve(wire)) });
+    deps.handleCanonicalHarnessEvent = jest.fn((event, _ws, drainContext) => {
+      if (event.type === 'turn_begin') {
+        threadRuntimeManager.bindTurnToDrain(
+          drainContext.control.runtimeKey,
+          drainContext.control.drainId,
+          'bound-turn-for-synthesis-failure'
+        );
+      } else if (event.type === 'turn_end' && event.reason === 'error') {
+        throw new Error(synthesisCanary);
+      }
+    });
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    const companions = parsedFrames(deps)
+      .filter((frame) => frame.type === 'error' || frame.type === 'auth_error');
+    expect(companions).toEqual([{
+      type: 'error',
+      scope: 'project',
+      workspaceId: 'workspace-1',
+      threadId: 'thread-1',
+      recoverable: true,
+      requestId: 'attempt-0001',
+      code: 'accepted_execution_failed',
+      message: TURN_TERMINAL_ERROR_CATALOG.MODEL_RESPONSE_FAILED.message,
+    }]);
+    expect(deps.handleCanonicalHarnessEvent.mock.calls
+      .filter(([event]) => event.type === 'turn_end' && event.reason === 'error'))
+      .toHaveLength(1);
+    expect(errorSpy.mock.calls).toEqual([
+      [
+        '[ThreadRuntime] Error-turn synthesis failed',
+        {
+          threadId: 'thread-1',
+          drainId: expect.any(String),
+          marker: 'ERROR_TURN_SYNTHESIS_FAILED',
+        },
+      ],
+      [
+        '[WS] Harness sendMessage failed',
+        {
+          threadId: 'thread-1',
+          drainId: expect.any(String),
+          marker: 'MODEL_RESPONSE_FAILED',
+        },
+      ],
+    ]);
+    const ordinaryMaterial = JSON.stringify({
+      frames: deps.ws.send.mock.calls,
+      errors: errorSpy.mock.calls,
+    });
+    expect(ordinaryMaterial).not.toContain(iteratorCanary);
+    expect(ordinaryMaterial).not.toContain(synthesisCanary);
+    expect(threadRuntimeManager.getRuntimeState(getRuntimeKey(deps.manager, 'thread-1')))
+      .toBe(RUNTIME_STATES.READY);
+  });
+
+  test('pre-begin iterator exception creates NO canonical event and keeps only the notification', async () => {
+    const wire = {
+      _usesDirectCanonicalEvents: true,
+      async *_sendMessage() {
+        throw new HarnessRuntimeError('HARNESS_PROCESS_EXIT'); // throws before any event
+      },
+    };
+    const deps = makeDeps({ spawnAndSetupWire: jest.fn(() => Promise.resolve(wire)) });
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    // No canonical event at all — no exchange, no snapshot, no terminalization.
+    expect(deps.handleCanonicalHarnessEvent).not.toHaveBeenCalled();
+    expect(threadRuntimeManager.getLiveTurn(getRuntimeKey(deps.manager, 'thread-1'))).toBeNull();
+    expect(threadRuntimeManager.getActiveDrain(getRuntimeKey(deps.manager, 'thread-1'))).toBeNull();
+    expect(threadRuntimeManager.getResourceBusyState(getRuntimeKey(deps.manager, 'thread-1'))).toBeNull();
+    // Notification behavior unchanged.
+    const frames = parsedFrames(deps);
+    expect(frames.at(-1)).toMatchObject({
+      type: 'error',
+      scope: 'project',
+      threadId: 'thread-1',
+      recoverable: true,
+    });
+    expect(threadRuntimeManager.getRuntimeState(getRuntimeKey(deps.manager, 'thread-1')))
+      .toBe(RUNTIME_STATES.READY);
+  });
+
+  test('pre-begin generic failure keeps one fixed companion and value-minimized server diagnostics', async () => {
+    const canary = 'CANARY_SECRET_PRE_BEGIN_0108';
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const wire = {
+      _usesDirectCanonicalEvents: true,
+      async *_sendMessage() {
+        throw new Error(canary);
+      },
+    };
+    const deps = makeDeps({ spawnAndSetupWire: jest.fn(() => Promise.resolve(wire)) });
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    expect(deps.handleCanonicalHarnessEvent).not.toHaveBeenCalled();
+    expect(threadRuntimeManager.getLiveTurn(getRuntimeKey(deps.manager, 'thread-1'))).toBeNull();
+    const companions = parsedFrames(deps)
+      .filter((frame) => frame.type === 'error' || frame.type === 'auth_error');
+    expect(companions).toEqual([{
+      type: 'error',
+      scope: 'project',
+      workspaceId: 'workspace-1',
+      threadId: 'thread-1',
+      recoverable: true,
+      requestId: 'attempt-0001',
+      code: 'accepted_execution_failed',
+      message: TURN_TERMINAL_ERROR_CATALOG.MODEL_RESPONSE_FAILED.message,
+    }]);
+    expect(JSON.stringify(deps.ws.send.mock.calls)).not.toContain(canary);
+    expect(JSON.stringify(errorSpy.mock.calls)).not.toContain(canary);
+    expect(errorSpy.mock.calls).toContainEqual([
+      '[WS] Harness sendMessage failed',
+      {
+        threadId: 'thread-1',
+        drainId: expect.any(String),
+        marker: 'MODEL_RESPONSE_FAILED',
+      },
+    ]);
+    expect(threadRuntimeManager.getRuntimeState(getRuntimeKey(deps.manager, 'thread-1')))
+      .toBe(RUNTIME_STATES.READY);
+  });
+
+  test('lookalike errors normalize to the generic MODEL_RESPONSE_FAILED catalog row on the synthesized terminal', async () => {
+    const lookalike = new Error('Authentication failed for this account');
+    lookalike.code = -32004;
+    const deps = makeDeps({
+      spawnAndSetupWire: jest.fn(() => Promise.resolve({
+        _usesDirectCanonicalEvents: true,
+        async *_sendMessage() {
+          yield { type: 'turn_begin', userInput: 'hello' };
+          throw lookalike;
+        },
+      })),
+    });
+    // The mock handler simulates the bridge's bind-once so the synthesized
+    // begin binds exactly like production; capture every call.
+    deps.handleCanonicalHarnessEvent = jest.fn((event, ws, dc) => {
+      if (event.type === 'turn_begin' && dc?.control) {
+        threadRuntimeManager.bindTurnToDrain(dc.control.runtimeKey, dc.control.drainId, 'mock-bound-turn');
+      }
+    });
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    const syntheses = deps.handleCanonicalHarnessEvent.mock.calls
+      .filter(([event]) => event.type === 'turn_end' && event.reason === 'error');
+    expect(syntheses).toHaveLength(1);
+    const [synthesized,, drainContext] = syntheses[0];
+    expect(synthesized).toMatchObject({ type: 'turn_end', reason: 'error', partial: true });
+    expect(synthesized.terminalError).toEqual(TURN_TERMINAL_ERROR_CATALOG.MODEL_RESPONSE_FAILED);
+    // Synthesis carries the SAME claimed drain context as every iterator event.
+    expect(drainContext.route).toMatchObject({ threadId: 'thread-1', acceptedUserInput: 'hello' });
+    expect(drainContext.control.drainId).toMatch(/^[0-9a-f-]{36}$/);
+  });
+
+  test('a genuine auth marker synthesizes the specific AUTHENTICATION_FAILED envelope plus the fixed-text companion', async () => {
+    const marker = new HarnessRuntimeError('HARNESS_AUTHENTICATION_FAILED');
+    const deps = makeDeps({
+      spawnAndSetupWire: jest.fn(() => Promise.resolve({
+        _usesDirectCanonicalEvents: true,
+        async *_sendMessage() {
+          yield { type: 'turn_begin', userInput: 'hello' };
+          throw marker;
+        },
+      })),
+    });
+    // Same bind-once simulation as the lookalike test.
+    deps.handleCanonicalHarnessEvent = jest.fn((event, ws, dc) => {
+      if (event.type === 'turn_begin' && dc?.control) {
+        threadRuntimeManager.bindTurnToDrain(dc.control.runtimeKey, dc.control.drainId, 'mock-bound-turn');
+      }
+    });
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    const synthesisCall = deps.handleCanonicalHarnessEvent.mock.calls
+      .find(([event]) => event.type === 'turn_end' && event.reason === 'error');
+    expect(synthesisCall).toBeTruthy();
+    const [synthesized, , drainContext] = synthesisCall;
+    expect(synthesized.partial).toBe(true);
+    expect(synthesized.terminalError).toEqual(TURN_TERMINAL_ERROR_CATALOG.AUTHENTICATION_FAILED);
+
+    const frames = parsedFrames(deps);
+    expect(frames.filter((frame) => frame.type === 'auth_error')).toHaveLength(1);
+    // No frame ever serializes raw error material (class name, stacks).
+    for (const frame of frames) {
+      expect(JSON.stringify(frame)).not.toContain('HarnessRuntimeError');
+      expect(frame).not.toHaveProperty('error');
+      expect(frame).not.toHaveProperty('stack');
+      expect(frame).not.toHaveProperty('terminalError'); // companions stay envelope-free
+    }
+  });
+});
+
+describe('diagnosticId wiring through the existing terminal chain (SPEC-03 Slice C)', () => {
+  const { TURN_TERMINAL_ERROR_CATALOG } = require('../../lib/thread/turn-terminal-error');
+
+  function makeCandidate() {
+    return {
+      version: 1,
+      harnessId: 'opencode',
+      category: 'timeout',
+      hadRenderableOutput: true,
+      hadToolCalls: false,
+      truncatedFields: [],
+    };
+  }
+
+  /** Real bridge/applier chain exactly like message-router composes it. */
+  function makeRealBridge() {
+    const emitted = [];
+    let turnCounter = 0;
+    const applier = createCanonicalChatEventApplier({
+      emit: (type, payload) => emitted.push({ type, payload }),
+      checkSettingsBounce: () => null,
+      generateTurnId: () => `server-turn-${++turnCounter}`,
+    });
+    const bridge = createCanonicalHarnessEventBridge({
+      applyChatEvent: applier.applyChatEvent,
+      bindDrainTurn: (drainContext, turnId) => threadRuntimeManager.bindTurnToDrain(
+        drainContext.control.runtimeKey,
+        drainContext.control.drainId,
+        turnId
+      ),
+    });
+    return { bridge, emitted };
+  }
+
+  function makeThrowingDeps(thrown, handleCanonicalHarnessEvent) {
+    const wire = {
+      _usesDirectCanonicalEvents: true,
+      async *_sendMessage() {
+        yield { type: 'turn_begin', userInput: 'hello' };
+        yield { type: 'content', text: 'partial answer' };
+        throw thrown;
+      },
+    };
+    const deps = makeDeps({
+      spawnAndSetupWire: jest.fn(() => Promise.resolve(wire)),
+      handleCanonicalHarnessEvent,
+    });
+    deps.manager.touchSession = jest.fn(); // bound drain control closure calls it
+    return deps;
+  }
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+    threadRuntimeManager.runtimes.clear();
+    attachClientToWire.mockReturnValue(true);
+    getWireForThread.mockReturnValue(null);
+    unregisterWire.mockReturnValue(undefined);
+    persistDiagnosticReport.mockResolvedValue(null); // failure-shaped default
+  });
+
+  test('genuine marker + candidate: error turn_end, terminal snapshot, and service binding all carry the diagnosticId', async () => {
+    persistDiagnosticReport.mockResolvedValue('diag-uuid-1');
+    const marker = new HarnessRuntimeError('HARNESS_MODEL_TIMEOUT', makeCandidate());
+    const { bridge, emitted } = makeRealBridge();
+    const deps = makeThrowingDeps(marker, bridge.applyHarnessEvent);
+    deps.manager.touchSession = jest.fn();
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    // The service received the authoritative prompt-bound identity and ONLY
+    // the already-sanitized closed candidate (never the raw error).
+    expect(persistDiagnosticReport).toHaveBeenCalledTimes(1);
+    const [bindingArg, candidateArg] = persistDiagnosticReport.mock.calls[0];
+    expect(bindingArg).toEqual({
+      workspaceId: 'workspace-1',
+      projectRoot: '/tmp/project',
+      workspaceEpoch: undefined,
+      threadId: 'thread-1',
+      turnId: 'server-turn-1',
+    });
+    expect(candidateArg).toEqual(makeCandidate());
+    expect(candidateArg).toBe(marker.candidate); // the sanitized candidate itself
+
+    const expectedEnvelope = {
+      ...TURN_TERMINAL_ERROR_CATALOG.MODEL_TIMEOUT,
+      diagnosticId: 'diag-uuid-1',
+    };
+    // Exactly ONE wire turn_end carries the envelope incl. diagnosticId.
+    const ends = emitted.filter((entry) => entry.type === 'chat:turn_end');
+    expect(ends).toHaveLength(1);
+    expect(ends[0].payload).toMatchObject({
+      threadId: 'thread-1',
+      turnId: 'server-turn-1',
+      reason: 'error',
+      partial: true,
+    });
+    expect(ends[0].payload.terminalError).toEqual(expectedEnvelope);
+    // The retained terminal snapshot carries the SAME envelope (published
+    // seq === retained seq chain; no second publication path).
+    const liveTurn = threadRuntimeManager.getLiveTurn(getRuntimeKey(deps.manager, 'thread-1'));
+    expect(liveTurn.status).toBe('error');
+    expect(liveTurn.terminalError).toEqual(expectedEnvelope);
+    expect(liveTurn.fullText).toBe('partial answer');
+    expect(threadRuntimeManager.getRuntimeState(getRuntimeKey(deps.manager, 'thread-1')))
+      .toBe(RUNTIME_STATES.READY);
+  });
+
+  test('absent candidate: the service is never called and the envelope carries no diagnosticId', async () => {
+    const marker = new HarnessRuntimeError('HARNESS_PROCESS_EXIT'); // no candidate
+    const { bridge, emitted } = makeRealBridge();
+    const deps = makeThrowingDeps(marker, bridge.applyHarnessEvent);
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    expect(persistDiagnosticReport).not.toHaveBeenCalled();
+    const ends = emitted.filter((entry) => entry.type === 'chat:turn_end');
+    expect(ends).toHaveLength(1);
+    expect(ends[0].payload.terminalError).toEqual(TURN_TERMINAL_ERROR_CATALOG.HARNESS_EXITED);
+    expect('diagnosticId' in ends[0].payload.terminalError).toBe(false);
+  });
+
+  test('service failure (null) leaves terminalization exactly as Slice B — no diagnosticId, same single error terminal', async () => {
+    persistDiagnosticReport.mockResolvedValue(null);
+    const marker = new HarnessRuntimeError('HARNESS_AUTHENTICATION_FAILED', makeCandidate());
+    const { bridge, emitted } = makeRealBridge();
+    const deps = makeThrowingDeps(marker, bridge.applyHarnessEvent);
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    expect(persistDiagnosticReport).toHaveBeenCalledTimes(1);
+    const ends = emitted.filter((entry) => entry.type === 'chat:turn_end');
+    expect(ends).toHaveLength(1);
+    expect(ends[0].payload.terminalError).toEqual(TURN_TERMINAL_ERROR_CATALOG.AUTHENTICATION_FAILED);
+    expect('diagnosticId' in ends[0].payload.terminalError).toBe(false);
+    const liveTurn = threadRuntimeManager.getLiveTurn(getRuntimeKey(deps.manager, 'thread-1'));
+    expect(liveTurn.status).toBe('error');
+    expect(liveTurn.terminalError).toEqual(TURN_TERMINAL_ERROR_CATALOG.AUTHENTICATION_FAILED);
+    expect(threadRuntimeManager.getRuntimeState(getRuntimeKey(deps.manager, 'thread-1')))
+      .toBe(RUNTIME_STATES.READY);
+  });
+
+  test('rejecting diagnostic dependency is fixed-safe and cannot wedge interactive terminalization', async () => {
+    const canary = 'CANARY_INTERACTIVE_DIAGNOSTIC_REJECTION_0108';
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    persistDiagnosticReport.mockRejectedValue(new Error(canary));
+    const marker = new HarnessRuntimeError('HARNESS_MODEL_TIMEOUT', makeCandidate());
+    const { bridge, emitted } = makeRealBridge();
+    const deps = makeThrowingDeps(marker, bridge.applyHarnessEvent);
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    const ends = emitted.filter((entry) => entry.type === 'chat:turn_end');
+    expect(ends).toHaveLength(1);
+    expect(ends[0].payload.terminalError).toEqual(TURN_TERMINAL_ERROR_CATALOG.MODEL_TIMEOUT);
+    expect('diagnosticId' in ends[0].payload.terminalError).toBe(false);
+    const runtimeKey = getRuntimeKey(deps.manager, 'thread-1');
+    expect(threadRuntimeManager.getRuntimeState(runtimeKey)).toBe(RUNTIME_STATES.READY);
+    expect(threadRuntimeManager.getActiveDrain(runtimeKey)).toBeNull();
+    expect(warnSpy.mock.calls).toContainEqual([
+      '[HarnessDiagnostics] Terminal persistence dependency failed',
+      {
+        workspaceId: 'workspace-1',
+        threadId: 'thread-1',
+        turnId: 'server-turn-1',
+        marker: 'HARNESS_DIAGNOSTIC_DEPENDENCY_FAILED',
+      },
+    ]);
+    expect(JSON.stringify({
+      frames: deps.ws.send.mock.calls,
+      emitted,
+      warnLogs: warnSpy.mock.calls,
+      errorLogs: errorSpy.mock.calls,
+    })).not.toContain(canary);
+  });
+
+  test('a non-genuine error carrying a candidate-shaped property never reaches the service', async () => {
+    const lookalike = new Error('boom');
+    lookalike.candidate = makeCandidate(); // hostile: plain errors are never markers
+    const { bridge, emitted } = makeRealBridge();
+    const deps = makeThrowingDeps(lookalike, bridge.applyHarnessEvent);
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    expect(persistDiagnosticReport).not.toHaveBeenCalled();
+    const ends = emitted.filter((entry) => entry.type === 'chat:turn_end');
+    expect(ends).toHaveLength(1);
+    expect(ends[0].payload.terminalError).toEqual(TURN_TERMINAL_ERROR_CATALOG.MODEL_RESPONSE_FAILED);
+    expect('diagnosticId' in ends[0].payload.terminalError).toBe(false);
+  });
+
+  test('regression guard: a normal completion never carries terminalError at all', async () => {
+    const { bridge, emitted } = makeRealBridge();
+    const wire = {
+      _usesDirectCanonicalEvents: true,
+      async *_sendMessage() {
+        yield { type: 'turn_begin', userInput: 'hello' };
+        yield { type: 'turn_end' };
+      },
+    };
+    const deps = makeDeps({
+      spawnAndSetupWire: jest.fn(() => Promise.resolve(wire)),
+      handleCanonicalHarnessEvent: bridge.applyHarnessEvent,
+    });
+    deps.manager.touchSession = jest.fn();
+
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+
+    const ends = emitted.filter((entry) => entry.type === 'chat:turn_end');
+    expect(ends).toHaveLength(1);
+    expect(ends[0].payload.reason).toBe('complete');
+    expect('terminalError' in ends[0].payload).toBe(false);
+    expect(persistDiagnosticReport).not.toHaveBeenCalled();
+  });
+});
+
+// SPEC-05C: deferred operations must retain exact generation and drain ownership.
+describe('runtime owner stamps across asynchronous boundaries', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+    threadRuntimeManager.runtimes.clear();
+    getWireForThread.mockReturnValue(null);
+    ThreadWebSocketHandler.handleMessageSend.mockResolvedValue(true);
+  });
+  const gate = () => {
+    let resolve, reject;
+    const promise = new Promise((yes, no) => { resolve = yes; reject = no; });
+    return { promise, resolve, reject };
+  };
+  function claim(key, id, stopHarness = jest.fn(async () => {})) {
+    const control = createCanonicalDrainControl({ drainId: id, runtimeKey: key,
+      touchThreadSession() {}, stopHarness });
+    const route = createCanonicalRouteContext({ ...key, workspace: `workspace:${key.workspaceId}`,
+      acceptedUserInput: id, attachments: [] });
+    const record = threadRuntimeManager.claimActiveDrain(key, control, route);
+    return { record, control, route };
+  }
+  function bridgeWith(emit = () => {}) {
+    const applier = createCanonicalChatEventApplier({ emit, checkSettingsBounce: () => null,
+      generateTurnId: () => 'owned-turn' });
+    return createCanonicalHarnessEventBridge({ applyChatEvent: applier.applyChatEvent,
+      bindDrainTurn: (context, id) => threadRuntimeManager.bindTurnToDrain(
+        context.control.runtimeKey, context.control.drainId, id) });
+  }
+
+  test.each(['resolve', 'reject'])('late warm %s cannot recreate a fenced generation or cool its replacement', async outcome => {
+    const delayed = gate();
+    const deps = makeDeps({ spawnAndSetupWire: jest.fn(() => delayed.promise) });
+    const key = getRuntimeKey(deps.manager, 'thread-1');
+    const warming = warmRuntimeForIntent(deps);
+    await flushAsyncWork();
+    expect(threadRuntimeManager.getRuntimeState(key)).toBe(RUNTIME_STATES.WARMING);
+    threadRuntimeManager.fenceResource(key);
+    const replacement = { ...key, workspaceEpoch: 'replacement-epoch' };
+    threadRuntimeManager.markState(replacement, RUNTIME_STATES.STOPPING);
+    delayed[outcome](outcome === 'resolve' ? makeHarness() : new Error('late warm failure'));
+    await warming;
+    expect(threadRuntimeManager.getRuntime(key)).toBeNull();
+    expect(threadRuntimeManager.getRuntimeState(replacement)).toBe(RUNTIME_STATES.STOPPING);
+    expect(ThreadWebSocketHandler.activateThreadSession).not.toHaveBeenCalled();
+  });
+
+  test('dispatch claim delay cannot dispatch or reset a replaced drain even after replacement clears', async () => {
+    const delayed = gate();
+    const sent = jest.fn();
+    const wire = { _usesDirectCanonicalEvents: true, async *_sendMessage() { sent(); } };
+    const deps = makeDeps({ spawnAndSetupWire: jest.fn(async () => wire) });
+    promptSubmission.claimDispatch.mockImplementationOnce(() => delayed.promise);
+    const accepting = acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+    const key = getRuntimeKey(deps.manager, 'thread-1');
+    expect(threadRuntimeManager.getActiveDrain(key)).toBeTruthy();
+    claim(key, 'replacement');
+    threadRuntimeManager.clearActiveDrainIfCurrent(key, 'replacement');
+    threadRuntimeManager.markState(key, RUNTIME_STATES.STOPPING);
+    delayed.resolve(true);
+    await accepting;
+    expect(sent).not.toHaveBeenCalled();
+    expect(threadRuntimeManager.getRuntimeState(key)).toBe(RUNTIME_STATES.STOPPING);
+    expect(threadRuntimeManager.getActiveDrain(key)).toBeNull();
+  });
+
+  test('delayed old retire callback cannot select a newer drain on the same runtime and provider', async () => {
+    const delayed = gate();
+    const stopped = jest.fn(async () => {});
+    const wire = { _usesDirectCanonicalEvents: true, _stopSession: stopped,
+      async *_sendMessage() { await delayed.promise; } };
+    const deps = makeDeps({ spawnAndSetupWire: jest.fn(async () => wire) });
+    await acceptPromptThroughRuntime(deps);
+    const key = getRuntimeKey(deps.manager, 'thread-1');
+    const old = threadRuntimeManager.getActiveDrain(key);
+    const replacementStop = jest.fn(async () => {});
+    claim(key, 'replacement', replacementStop);
+    expect(await old.retire()).toBe(false);
+    expect(stopped).not.toHaveBeenCalled();
+    expect(replacementStop).not.toHaveBeenCalled();
+    expect(threadRuntimeManager.getActiveDrain(key).drainId).toBe('replacement');
+    delayed.resolve();
+    await old.completion;
+  });
+
+  test('Stop rechecks after delayed finalization before touching a provider reused by replacement', async () => {
+    const deps = makeDeps();
+    const key = getRuntimeKey(deps.manager, 'thread-1');
+    const stopped = jest.fn(async () => {});
+    const context = claim(key, 'original', stopped);
+    const bridge = bridgeWith();
+    await bridge.applyHarnessEvent({ type: 'turn_begin' }, deps.ws, context);
+    threadRuntimeManager.markInFlight(key);
+    const delayed = gate();
+    const finalizer = async (event, ws, ctx) => {
+      await bridge.applyHarnessEvent(event, ws, ctx);
+      await delayed.promise;
+    };
+    const stopping = stopRuntimeTurn({ ...deps, handleCanonicalHarnessEvent: finalizer, returnOutcome: true });
+    await flushAsyncWork();
+    claim(key, 'replacement', stopped);
+    threadRuntimeManager.markInFlight(key);
+    delayed.resolve();
+    expect(await stopping).toBe(false);
+    expect(stopped).not.toHaveBeenCalled();
+    expect(threadRuntimeManager.getActiveDrain(key).drainId).toBe('replacement');
+  });
+
+  test.each(['bound', 'never-begun', 'preclaim'])('Stop %s completion cannot cool replacement during session retirement', async mode => {
+    const deps = makeDeps();
+    const key = getRuntimeKey(deps.manager, 'thread-1');
+    const delayed = gate();
+    const wire = { _stopSession: jest.fn(async () => {}) };
+    const managed = { ws: deps.ws, wireProcess: wire };
+    deps.manager.getSession = jest.fn(() => managed);
+    deps.manager.beginSessionRetirement = jest.fn(() => managed);
+    deps.manager.completeStoppedSession = jest.fn(() => delayed.promise);
+    const bridge = bridgeWith();
+    if (mode !== 'preclaim') {
+      const context = claim(key, 'original');
+      if (mode === 'bound') await bridge.applyHarnessEvent({ type: 'turn_begin' }, deps.ws, context);
+    } else threadRuntimeManager.beginLiveTurn(key, { turnId: 'old-turn', userInput: 'old' });
+    threadRuntimeManager.markInFlight(key);
+    const stopping = stopRuntimeTurn({ ...deps, handleCanonicalHarnessEvent: bridge.applyHarnessEvent,
+      allowInactiveDrain: true, returnOutcome: true });
+    await flushAsyncWork();
+    expect(deps.manager.completeStoppedSession).toHaveBeenCalledTimes(1);
+    threadRuntimeManager.fenceResource(key);
+    claim(key, 'replacement');
+    threadRuntimeManager.clearActiveDrainIfCurrent(key, 'replacement');
+    threadRuntimeManager.markState(key, RUNTIME_STATES.STOPPING);
+    delayed.resolve(true);
+    expect(await stopping).toBe(false);
+    expect(threadRuntimeManager.getRuntimeState(key)).toBe(RUNTIME_STATES.STOPPING);
+  });
+
+  test('late iterator error after generation fencing is silent and cannot resurrect old runtime', async () => {
+    const delayed = gate();
+    const wire = { _usesDirectCanonicalEvents: true, async *_sendMessage() { await delayed.promise; } };
+    const deps = makeDeps({ spawnAndSetupWire: jest.fn(async () => wire) });
+    await acceptPromptThroughRuntime(deps);
+    const key = getRuntimeKey(deps.manager, 'thread-1');
+    const old = threadRuntimeManager.getActiveDrain(key);
+    deps.ws.send.mockClear();
+    threadRuntimeManager.fenceResource(key);
+    delayed.reject(new Error('stale provider failure'));
+    await old.completion;
+    expect(threadRuntimeManager.getRuntime(key)).toBeNull();
+    expect(deps.ws.send).not.toHaveBeenCalled();
+    expect(promptSubmission.noteClaimedFailure).not.toHaveBeenCalled();
+  });
+
+  test('terminal publication failure retains partial snapshot and releases only its completed drain', async () => {
+    const emit = jest.fn(type => { if (type === 'chat:turn_end') throw new Error('persistence unavailable'); });
+    const bridge = bridgeWith(emit);
+    const wire = { _usesDirectCanonicalEvents: true, async *_sendMessage() {
+      yield { type: 'turn_begin' }; yield { type: 'content', text: 'retained partial' };
+      yield { type: 'turn_end', partial: true, reason: 'interrupted' };
+    } };
+    const handler = bridge.applyHarnessEvent;
+    handler.drainHarnessEvents = bridge.drainHarnessEvents;
+    const deps = makeDeps({ spawnAndSetupWire: jest.fn(async () => wire), handleCanonicalHarnessEvent: handler });
+    await acceptPromptThroughRuntime(deps);
+    await flushAsyncWork();
+    const key = getRuntimeKey(deps.manager, 'thread-1');
+    expect(threadRuntimeManager.getLiveTurn(key)).toMatchObject({ fullText: 'retained partial', status: 'interrupted' });
+    expect(threadRuntimeManager.getActiveDrain(key)).toBeNull();
+    expect(threadRuntimeManager.getRuntimeState(key)).toBe(RUNTIME_STATES.READY);
+    expect(emit.mock.calls.filter(([type]) => type === 'chat:turn_end')).toHaveLength(1);
+  });
+
+  test('canonical terminalization rejects foreign turn identity and cannot restart the same terminal drain', () => {
+    const deps = makeDeps();
+    const key = getRuntimeKey(deps.manager, 'thread-1');
+    claim(key, 'drain');
+    threadRuntimeManager.beginCanonicalTurn(key, 'drain', { turnId: 'turn', userInput: 'original' });
+    threadRuntimeManager.bindTurnToDrain(key, 'drain', 'turn');
+    expect(threadRuntimeManager.terminalizeTurn(key, { drainId: 'drain', turnId: 'foreign' })).toBe(false);
+    expect(threadRuntimeManager.getLiveTurn(key).status).toBe('in_flight');
+    expect(threadRuntimeManager.terminalizeTurn(key, { drainId: 'drain', turnId: 'turn' })).toBe(true);
+    expect(threadRuntimeManager.beginCanonicalTurn(key, 'drain', { turnId: 'again', userInput: 'overwrite' })).toEqual({ accepted: false });
+    expect(threadRuntimeManager.getLiveTurn(key).userInput).toBe('original');
+  });
+});
+
+test('retired transport after runtime reservation releases only its still-owned IN_FLIGHT state', async () => {
+  jest.clearAllMocks(); jest.restoreAllMocks(); threadRuntimeManager.runtimes.clear();
+  getWireForThread.mockReturnValue(null);
+  const deps = makeDeps();
+  const admissions = require('../../lib/thread-groups/session-transactions');
+  admissions.withSessionAdmission.mockImplementationOnce(async (_workspace, _thread, work) => {
+    const reserved = await work();
+    deps.session.workspaceBindingState = 'retired';
+    return reserved;
+  });
+  await acceptPromptThroughRuntime(deps);
+  const key = getRuntimeKey(deps.manager, 'thread-1');
+  expect(threadRuntimeManager.getRuntimeState(key)).toBe(RUNTIME_STATES.READY);
+  expect(promptSubmission.reject).toHaveBeenCalledWith(expect.objectContaining({ threadId: 'thread-1' }), 'activation_failed');
+  expect(promptSubmission.accept).not.toHaveBeenCalled();
+  expect(promptSubmission.claimDispatch).not.toHaveBeenCalled();
+});
+
+test('preclaim Stop provider completion does not unregister a reused replacement wire', async () => {
+  jest.clearAllMocks(); jest.restoreAllMocks(); threadRuntimeManager.runtimes.clear();
+  let release;
+  const delay = new Promise(resolve => { release = resolve; });
+  const wire = { _stopSession: jest.fn(() => delay) };
+  const deps = makeDeps();
+  deps.session.currentThreadId = 'thread-1'; deps.session.wire = wire;
+  getWireForThread.mockReturnValue(wire);
+  const key = getRuntimeKey(deps.manager, 'thread-1');
+  threadRuntimeManager.beginLiveTurn(key, { turnId: 'old-turn', userInput: 'old' });
+  threadRuntimeManager.markInFlight(key);
+  const stopping = stopRuntimeTurn({ ...deps, returnOutcome: true });
+  await flushAsyncWork();
+  expect(wire._stopSession).toHaveBeenCalled();
+  threadRuntimeManager.claimActiveDrain(key, createCanonicalDrainControl({ drainId: 'replacement', runtimeKey: key,
+    touchThreadSession() {}, stopHarness: async () => {} }));
+  threadRuntimeManager.markInFlight(key);
+  release();
+  expect(await stopping).toBe(false);
+  expect(unregisterWire).not.toHaveBeenCalled();
+  expect(deps.session.wire).toBe(wire);
+  expect(threadRuntimeManager.getRuntimeState(key)).toBe(RUNTIME_STATES.IN_FLIGHT);
+});
+
+test('terminal publication failure fences late canonical content, tool and status before drain clear', async () => {
+  jest.clearAllMocks(); jest.restoreAllMocks(); threadRuntimeManager.runtimes.clear();
+  const deps = makeDeps();
+  const key = getRuntimeKey(deps.manager, 'thread-1');
+  const control = createCanonicalDrainControl({ drainId: 'terminal-drain', runtimeKey: key,
+    touchThreadSession() {}, stopHarness: async () => {} });
+  const route = createCanonicalRouteContext({ ...key, workspace: 'workspace:workspace-1',
+    acceptedUserInput: 'retained', attachments: [] });
+  threadRuntimeManager.claimActiveDrain(key, control, route);
+  const emit = jest.fn(type => { if (type === 'chat:turn_end') throw new Error('write unavailable'); });
+  const applier = createCanonicalChatEventApplier({ emit, checkSettingsBounce: () => null,
+    generateTurnId: () => 'terminal-turn' });
+  const context = { route, control };
+  applier.applyChatEvent({ type: 'turn_begin', payload: {} }, deps.ws, context);
+  threadRuntimeManager.bindTurnToDrain(key, control.drainId, 'terminal-turn');
+  applier.applyChatEvent({ type: 'content', payload: { text: 'partial output' } }, deps.ws, context);
+  await expect(applier.applyChatEvent({ type: 'turn_end', payload: { reason: 'interrupted', partial: true } },
+    deps.ws, context)).rejects.toThrow('write unavailable');
+  expect(threadRuntimeManager.getActiveDrain(key).turn.terminalized).toBe(true);
+  const retained = threadRuntimeManager.getLiveTurn(key);
+  emit.mockClear();
+  await applier.applyChatEvent({ type: 'content', payload: { text: 'late corruption' } }, deps.ws, context);
+  await applier.applyChatEvent({ type: 'tool_call', payload: { toolCallId: 'late-tool', toolName: 'shell' } }, deps.ws, context);
+  await applier.applyChatEvent({ type: 'status_update', payload: { tokenUsage: { input: 99 } } }, deps.ws, context);
+  expect(threadRuntimeManager.getLiveTurn(key)).toEqual(retained);
+  expect(emit).not.toHaveBeenCalled();
+  threadRuntimeManager.clearActiveDrainIfCurrent(key, control.drainId);
+});
+
+test.each(['empty', 'throw'])('completed %s interactive iterator releases its pre-begin reservation', async (mode) => {
+  jest.clearAllMocks(); jest.restoreAllMocks(); threadRuntimeManager.runtimes.clear();
+  attachClientToWire.mockReturnValue(true); getWireForThread.mockReturnValue(null);
+  const wire = { _usesDirectCanonicalEvents: true, async *_sendMessage() {
+    if (mode === 'throw') throw new Error('provider failed before begin');
+  } };
+  const deps = makeDeps({ spawnAndSetupWire: jest.fn(async () => wire) });
+  await acceptPromptThroughRuntime(deps);
+  await flushAsyncWork();
+  const key = getRuntimeKey(deps.manager, 'thread-1');
+  expect(threadRuntimeManager.getActiveDrain(key)).toBeNull();
+  expect(threadRuntimeManager.getResourceBusyState(key)).toBeNull();
+  expect(threadRuntimeManager.getRuntimeState(key)).toBe(RUNTIME_STATES.READY);
+  expect(threadRuntimeManager.getLiveTurn(key)).toBeNull();
+  expect(deps.handleCanonicalHarnessEvent).not.toHaveBeenCalled();
+  expect(parsedFrames(deps).filter(frame => frame.type === 'message:sent')).toHaveLength(1);
+});
+
+test('completed interactive iterator preserves STOPPING after actual provider retirement failure', async () => {
+  jest.clearAllMocks(); jest.restoreAllMocks(); threadRuntimeManager.runtimes.clear();
+  attachClientToWire.mockReturnValue(true); getWireForThread.mockReturnValue(null);
+  let finish;
+  const gate = new Promise(resolve => { finish = resolve; });
+  const wire = { _usesDirectCanonicalEvents: true,
+    _stopSession: jest.fn(async () => { throw new Error('provider termination failed'); }),
+    async *_sendMessage() { await gate; } };
+  const deps = makeDeps({ spawnAndSetupWire: jest.fn(async () => wire) });
+  await acceptPromptThroughRuntime(deps);
+  await flushAsyncWork();
+  const key = getRuntimeKey(deps.manager, 'thread-1');
+  const record = threadRuntimeManager.getActiveDrain(key);
+  expect(await record.retire()).toBe(false);
+  expect(wire._stopSession).toHaveBeenCalled();
+  finish(); await record.completion;
+  expect(threadRuntimeManager.getRuntimeState(key)).toBe(RUNTIME_STATES.STOPPING);
+  expect(threadRuntimeManager.getActiveDrain(key)).toBe(record);
+  expect(threadRuntimeManager.getResourceBusyState(key)).toBe('draining');
+});
+
+// Stop must keep the exact delivery route until terminal bus effects settle.
+describe('Stop terminal persistence delivery barrier', () => {
+  const eventBus = require('../../lib/event-bus');
+  const removers = [];
+  beforeEach(() => {
+    jest.clearAllMocks(); jest.restoreAllMocks(); threadRuntimeManager.runtimes.clear();
+  });
+  afterEach(() => { removers.splice(0).forEach(remove => remove()); jest.useRealTimers(); });
+  function setup() {
+    const deps = makeDeps();
+    deps.session.workspaceEpoch = 'stop-save-epoch';
+    const key = getRuntimeKey(deps.manager, 'thread-1', deps.session.workspaceEpoch);
+    const stopHarness = jest.fn(async () => {});
+    const wire = {};
+    getWireForThread.mockReturnValue(wire);
+    const control = createCanonicalDrainControl({ drainId: 'stop-save-drain', runtimeKey: key,
+      touchThreadSession() {}, stopHarness });
+    const route = createCanonicalRouteContext({ ...key, workspace: 'workspace:workspace-1',
+      acceptedUserInput: 'save before teardown', attachments: [] });
+    threadRuntimeManager.claimActiveDrain(key, control, route);
+    const applier = createCanonicalChatEventApplier({ emit: eventBus.emit, checkSettingsBounce: () => null,
+      generateTurnId: () => 'stop-save-turn' });
+    const bridge = createCanonicalHarnessEventBridge({ applyChatEvent: applier.applyChatEvent,
+      bindDrainTurn: (ctx, id) => threadRuntimeManager.bindTurnToDrain(ctx.control.runtimeKey, ctx.control.drainId, id) });
+    return { deps, key, stopHarness, context: { control, route }, bridge };
+  }
+  async function begin(fixture) {
+    await fixture.bridge.applyHarnessEvent({ type: 'turn_begin' }, fixture.deps.ws, fixture.context);
+    threadRuntimeManager.markInFlight(fixture.key);
+  }
+  function stop(fixture) {
+    return stopRuntimeTurn({ ...fixture.deps, handleCanonicalHarnessEvent: fixture.bridge.applyHarnessEvent,
+      returnOutcome: true });
+  }
+  test.each(['saved', 'failed'])('delayed %s effect settles before provider teardown without inventing a saved acknowledgement', async outcome => {
+    const fixture = setup(); await begin(fixture);
+    let release;
+    const gate = new Promise(resolve => { release = resolve; });
+    const acknowledgements = [];
+    removers.push(eventBus.on('chat:turn_end', async event => {
+      await gate;
+      if (outcome === 'failed') throw new Error('injected save failure');
+      expect(unregisterWire).not.toHaveBeenCalled();
+      expect(fixture.stopHarness).not.toHaveBeenCalled();
+      eventBus.emit('chat-turn:saved', event);
+    }));
+    removers.push(eventBus.on('chat-turn:saved', event => acknowledgements.push(event.turnId)));
+    const stopping = stop(fixture); await flushAsyncWork();
+    expect(fixture.stopHarness).not.toHaveBeenCalled();
+    expect(unregisterWire).not.toHaveBeenCalled();
+    release(); expect(await stopping).toBe(true);
+    expect(acknowledgements).toEqual(outcome === 'saved' ? ['stop-save-turn'] : []);
+    expect(fixture.stopHarness).toHaveBeenCalledTimes(1);
+    expect(unregisterWire).toHaveBeenCalledTimes(1);
+  });
+  test('a replacement claimed during delayed save is never stopped or unregistered', async () => {
+    const fixture = setup(); await begin(fixture);
+    let release;
+    removers.push(eventBus.on('chat:turn_end', () => new Promise(resolve => { release = resolve; })));
+    const stopping = stop(fixture); await flushAsyncWork();
+    const replacementStop = jest.fn();
+    const replacement = createCanonicalDrainControl({ drainId: 'replacement', runtimeKey: fixture.key,
+      touchThreadSession() {}, stopHarness: replacementStop });
+    threadRuntimeManager.claimActiveDrain(fixture.key, replacement, fixture.context.route);
+    threadRuntimeManager.markInFlight(fixture.key);
+    release(); expect(await stopping).toBe(false);
+    expect(fixture.stopHarness).not.toHaveBeenCalled();
+    expect(replacementStop).not.toHaveBeenCalled();
+    expect(unregisterWire).not.toHaveBeenCalled();
+    expect(threadRuntimeManager.getActiveDrain(fixture.key).drainId).toBe('replacement');
+  });
+  test('a held save hits the bounded deadline but still terminates the provider and cools the exact runtime', async () => {
+    const fixture = setup(); await begin(fixture);
+    let release;
+    removers.push(eventBus.on('chat:turn_end', () => new Promise(resolve => { release = resolve; })));
+    jest.useFakeTimers({ doNotFake: ['setImmediate', 'performance'] });
+    const stopping = stop(fixture); await flushAsyncWork();
+    await jest.advanceTimersByTimeAsync(3001);
+    expect(await stopping).toBe(true);
+    expect(fixture.stopHarness).toHaveBeenCalledTimes(1);
+    expect(unregisterWire).toHaveBeenCalledTimes(1);
+    expect(threadRuntimeManager.getRuntimeState(fixture.key)).toBe(RUNTIME_STATES.COLD);
+    release(); await flushAsyncWork();
+  });
+});

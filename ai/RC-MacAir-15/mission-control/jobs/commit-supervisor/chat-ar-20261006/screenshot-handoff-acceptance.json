@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-06T22:12:00.167395+00:00",
+  "state": "HANDOFF_VALIDATED",
+  "reviewer": "/root/screenshot_handoff_review_02",
+  "worker": "/root/screenshot_repair",
+  "raw_review_sha256": "edf0de56770b2c2fa85ef69406dc03bfdb4c9c3ad1b23311fcf7ed94b60e7e3e",
+  "current_code_packet_sha256": "d2a8d88c0a48c69218644641657c7feb71c2dd0c719e4dc688c8c473e3eee0b3",
+  "checks_sha256": "64c2fd4cbce7eb44680bf777559fd82a3dc8620776713e662d9fdb522feefac7",
+  "checks": {
+    "build": 0,
+    "focused": 34,
+    "cumulative": 106
+  },
+  "finding": "IR-CHAT-001 handoff-validated; final current-byte confirmation still required",
+  "lifecycle": "worker/reviewer terminal, close_agent unavailable",
+  "limits": "Native capture/runtime and settledWiki/wholecandidate gate remain separate"
+}

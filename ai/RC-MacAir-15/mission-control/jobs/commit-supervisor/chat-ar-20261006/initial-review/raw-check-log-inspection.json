@@ -1,0 +1,105 @@
+{
+  "scope": "Raw retained log readouts; commands/identity are recorded separately in source evidence manifests",
+  "logs": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/cumulative-focused.log",
+      "sha256": "37f0298d4cf58c7f6a6888f1afc8fc990091b5ae19ab64fd4185d4d87ca8e535",
+      "bytes": 21122,
+      "raw_summary_lines": [
+        "Test Suites: 19 passed, 19 total",
+        "Tests:       186 passed, 186 total",
+        "Time:        64.062 s",
+        "Ran all test suites within paths \"test/runtime/workspace-startup-integrity.test.js\", \"test/runtime/isolated-provenance-runtime.test.js\", \"test/watch/watcher-retirement.test.js\", \"test/event-registry/startup-integration.test.js\", \"test/views/view-readiness-coordinator.test.js\", \"test/views/view-relocation-recovery.test.js\", \"test/ledger/event-ledger.test.js\", \"test/screenshot-file-capture-request-id.test.js\", \"test/screenshot-protected-view-path.test.js\", \"test/calendar/apple-listener-retirement."
+      ],
+      "rerun": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/server-full.log",
+      "sha256": "c30c7ae7786bb3b33d79a798b92ea76c78d24c88fc664d8fe4c98f5f8d3b8062",
+      "bytes": 22671,
+      "raw_summary_lines": [
+        "> fusion-studio-server@1.0.0 pretest",
+        "> npm run build:native-observer",
+        "> fusion-studio-server@1.0.0 build:native-observer",
+        "> node-gyp rebuild --directory native/secure-file-observer",
+        "> fusion-studio-server@1.0.0 test",
+        "Test Suites: 221 passed, 221 total",
+        "Tests:       1 skipped, 3265 passed, 3266 total",
+        "Time:        112.097 s, estimated 114 s",
+        "Ran all test suites."
+      ],
+      "rerun": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/client-build.log",
+      "sha256": "20136de4105cd398d1ddce92db9b9fa4c04eb2f8223ba911789175a3307b5971",
+      "bytes": 16614,
+      "raw_summary_lines": [
+        "> fusion-studio-client@0.0.0 build",
+        "> npm run build:preload && tsc -b && vite build",
+        "> fusion-studio-client@0.0.0 build:preload",
+        "> node electron/build-preload.mjs",
+        "transforming...",
+        "\u2713 1957 modules transformed.",
+        "\u2713 built in 3.86s"
+      ],
+      "rerun": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/new-chat-fixtures.log",
+      "sha256": "404fd5f95ea62032d00d722b500682f8fed461f1900556c39228023f090b29b9",
+      "bytes": 9231,
+      "raw_summary_lines": [
+        "  34 passed (24.3s)"
+      ],
+      "rerun": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/guarded-launcher-current.log",
+      "sha256": "5dfcc8d4352c906e470b77dea3e596365d39e5f07ef7efda187e71f23d5492b0",
+      "bytes": 20859,
+      "raw_summary_lines": [
+        "  2 passed (15.2s)",
+        "  1 passed (5.1s)",
+        "  \"status\": \"FILE_VIEWER_LIVE_PROVENANCE_OK\","
+      ],
+      "rerun": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R3/orchestrator-guarded-launcher-current.log",
+      "sha256": "5846371ccd9ee2cd321c4781705441b9a3d4b056120ba1d462cca22805a94734",
+      "bytes": 20819,
+      "raw_summary_lines": [
+        "  2 passed (15.7s)",
+        "  1 passed (4.9s)",
+        "  \"status\": \"FILE_VIEWER_LIVE_PROVENANCE_OK\","
+      ],
+      "rerun": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R1/negative-startup-preimage.log",
+      "sha256": "f2b852d444c9ab2f2aeebbe1d62915a3484d96a4cd4e2f197599e14cc1303adf",
+      "bytes": 1738,
+      "raw_summary_lines": [
+        "Audited startup registry rejection: unknown isolated provenance startup effect: workspace-automation-pipeline",
+        "Test Suites: 1 failed, 1 total",
+        "Tests:       1 failed, 2 skipped, 3 total",
+        "Time:        5.72 s, estimated 7 s",
+        "Ran all test suites within paths \"test/runtime/workspace-startup-integrity.test.js\"."
+      ],
+      "rerun": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/R2/identity-only-negative.log",
+      "sha256": "8b3cedca6beda9d4d551b4172ab4acf55bd81905d7862ed0f924c4eff72ab633",
+      "bytes": 13816,
+      "raw_summary_lines": [
+        "Test Suites: 1 failed, 1 total",
+        "Tests:       2 failed, 11 skipped, 13 total",
+        "Time:        11.241 s, estimated 40 s",
+        "Ran all test suites within paths \"test/runtime/workspace-startup-integrity.test.js\"."
+      ],
+      "rerun": false
+    }
+  ]
+}

@@ -1,0 +1,378 @@
+const { spawn, execSync } = require('child_process');
+const fs = require('fs');
+const path = require('path');
+const { seedPackagedGlobalConfigs } = require('./system-manager-seed.cjs');
+const { createServerReadinessParser } = require('./server-readiness.cjs');
+const { createServerWorkspaceBindingParser } = require('./server-workspace-binding.cjs');
+
+// Resolve system node binary — Electron's process.execPath is the Electron
+// binary, not node. The server uses native modules (better-sqlite3) compiled
+// for system Node, so we must spawn with the same node that installed them.
+function resolveNodeBinary() {
+  try {
+    return execSync('which node', { encoding: 'utf8' }).trim();
+  } catch {
+    return 'node'; // fallback to PATH
+  }
+}
+
+const NODE_BINARY = resolveNodeBinary();
+
+const CLOSED_OUTPUT_ERROR_CODES = new Set([
+  'EPIPE',
+  'ERR_STREAM_ALREADY_FINISHED',
+  'ERR_STREAM_DESTROYED',
+  'ERR_STREAM_PREMATURE_CLOSE',
+  'ERR_STREAM_WRITE_AFTER_END',
+]);
+
+function isClosedOutputError(error) {
+  return Boolean(error && CLOSED_OUTPUT_ERROR_CODES.has(error.code));
+}
+
+function createBestEffortStreamForwarder(destination) {
+  let forwardingStopped = false;
+  let pendingWrites = 0;
+  let listenerAttached = false;
+  let detachHandle = null;
+  let failureThrowHandle = null;
+  let pendingFailure = null;
+
+  const removeErrorListener = () => {
+    if (detachHandle) clearImmediate(detachHandle);
+    detachHandle = null;
+    if (!listenerAttached) return;
+    listenerAttached = false;
+    destination.removeListener('error', onError);
+  };
+  const attachErrorListener = () => {
+    if (detachHandle) {
+      clearImmediate(detachHandle);
+      detachHandle = null;
+    }
+    if (listenerAttached) return;
+    listenerAttached = true;
+    destination.on('error', onError);
+  };
+  const scheduleDetach = () => {
+    if (!listenerAttached || pendingWrites !== 0 || detachHandle) return;
+    // Writable callbacks can receive an error immediately before the matching
+    // `error` event. Keep the write-scoped guard through that final turn, then
+    // remove it even while the server child remains open.
+    detachHandle = setImmediate(() => {
+      detachHandle = null;
+      if (pendingWrites === 0) removeErrorListener();
+    });
+  };
+  const onError = (error) => {
+    if (isClosedOutputError(error)) {
+      forwardingStopped = true;
+      scheduleDetach();
+      return;
+    }
+    if (failureThrowHandle) clearImmediate(failureThrowHandle);
+    failureThrowHandle = null;
+    pendingFailure = null;
+    forwardingStopped = true;
+    removeErrorListener();
+    throw error;
+  };
+
+  return Object.freeze({
+    write(value) {
+      if (
+        forwardingStopped
+        || destination.destroyed === true
+        || destination.writableEnded === true
+        || destination.writable === false
+      ) {
+        forwardingStopped = true;
+        return false;
+      }
+      attachErrorListener();
+      pendingWrites += 1;
+      let completed = false;
+      const complete = (error) => {
+        if (completed) return;
+        completed = true;
+        pendingWrites -= 1;
+        if (isClosedOutputError(error)) forwardingStopped = true;
+        else if (error && !pendingFailure) {
+          forwardingStopped = true;
+          pendingFailure = error;
+          failureThrowHandle = setImmediate(() => {
+            failureThrowHandle = null;
+            const failure = pendingFailure;
+            pendingFailure = null;
+            removeErrorListener();
+            throw failure;
+          });
+        }
+        scheduleDetach();
+      };
+      try {
+        destination.write(value, complete);
+        return true;
+      } catch (error) {
+        complete();
+        if (isClosedOutputError(error)) {
+          forwardingStopped = true;
+          return false;
+        }
+        throw error;
+      }
+    },
+    close() {
+      forwardingStopped = true;
+      scheduleDetach();
+    },
+  });
+}
+
+function pipeServerOutput(child, options = {}) {
+  const {
+    stdout = process.stdout,
+    stderr = process.stderr,
+    onStdout = () => {},
+  } = options;
+  const stdoutForwarder = createBestEffortStreamForwarder(stdout);
+  const stderrForwarder = createBestEffortStreamForwarder(stderr);
+
+  const handleStdout = (chunk) => {
+    const text = chunk.toString();
+    onStdout(text);
+    stdoutForwarder.write('[server] output\n');
+  };
+  const handleStderr = (_chunk) => {
+    stderrForwarder.write('[server:err] output\n');
+  };
+  const cleanup = () => {
+    child.stdout.removeListener('data', handleStdout);
+    child.stderr.removeListener('data', handleStderr);
+    stdoutForwarder.close();
+    stderrForwarder.close();
+  };
+
+  child.stdout.on('data', handleStdout);
+  child.stderr.on('data', handleStderr);
+  child.once('close', cleanup);
+  return cleanup;
+}
+
+function resolveServerPath(resourcesPath) {
+  if (resourcesPath) {
+    const packagedServerPath = path.join(resourcesPath, 'fusion-studio-server', 'server.js');
+    if (fs.existsSync(packagedServerPath)) {
+      return packagedServerPath;
+    }
+  }
+  return path.join(__dirname, '..', '..', 'fusion-studio-server', 'server.js');
+}
+
+function attachServerWorkspaceBindingChannel({
+  child,
+  workspaceBindingPipe,
+  onBinding,
+  isStartupSettled,
+  onStartupFailure,
+  onEstablishedFailure,
+}) {
+  let failed = false;
+  let detached = false;
+
+  const reportFailure = (error) => {
+    if (failed) return;
+    failed = true;
+    if (child.killed) return;
+    if (isStartupSettled()) {
+      onEstablishedFailure(error);
+      return;
+    }
+    onStartupFailure(new Error('Server workspace binding channel failed'));
+  };
+  const workspaceBindingParser = createServerWorkspaceBindingParser({
+    onBinding,
+    onError: reportFailure,
+  });
+  const handleData = (chunk) => {
+    if (!failed) workspaceBindingParser.push(chunk);
+  };
+  const handleEnd = () => {
+    workspaceBindingParser.end();
+    reportFailure(new Error('server_workspace_binding_closed'));
+  };
+  const handleClose = () => {
+    reportFailure(new Error('server_workspace_binding_closed'));
+    detach();
+  };
+  const handleError = (error) => {
+    reportFailure(error instanceof Error ? error : new Error('server_workspace_binding_stream_error'));
+  };
+  const handleChildClose = () => detach();
+  const detach = () => {
+    if (detached) return;
+    detached = true;
+    workspaceBindingPipe.removeListener('data', handleData);
+    workspaceBindingPipe.removeListener('end', handleEnd);
+    workspaceBindingPipe.removeListener('close', handleClose);
+    workspaceBindingPipe.removeListener('error', handleError);
+    child.removeListener('close', handleChildClose);
+  };
+
+  workspaceBindingPipe.on('data', handleData);
+  workspaceBindingPipe.once('end', handleEnd);
+  workspaceBindingPipe.once('close', handleClose);
+  workspaceBindingPipe.on('error', handleError);
+  child.once('close', handleChildClose);
+  return detach;
+}
+
+/**
+ * Spawns fusion-studio-server/server.js as a child process.
+ * Resolves with the port once the server emits SERVER_READY:{port} on stdout.
+ * Rejects if the process exits before signalling ready.
+ *
+ * @param {object} opts
+ * @param {Function} opts.onExit   — called when server process dies unexpectedly
+ * @param {string} opts.resourcesPath   — root containing models/prompts/pandoc
+ * @param {string} opts.userDataPath   — writable Electron userData directory
+ * @param {string} opts.focusStatePath   — path to the focus-state JSON snapshot
+ * @returns {Promise<{ port: number, process: ChildProcess }>}
+ */
+function spawnServer({
+  onExit = () => {},
+  resourcesPath,
+  userDataPath,
+  focusStatePath,
+  environment = process.env,
+  port = 0,
+  nativeObserverHealthOnly = false,
+  bootstrapAuthority = null,
+  onWorkspaceBinding = () => {},
+  onWorkspaceBindingError = () => {},
+}) {
+  return new Promise((resolve, reject) => {
+    let ready = false;
+    const packaged = Boolean(resourcesPath && fs.existsSync(
+      path.join(resourcesPath, 'fusion-studio-server', 'server.js'),
+    ));
+    seedPackagedGlobalConfigs({ resourcesPath, userDataPath, packaged });
+    const serverPath = resolveServerPath(resourcesPath);
+    const env = {
+      ...environment,
+      PORT: String(port),
+    };
+    if (resourcesPath) env.FUSION_RESOURCES_PATH = resourcesPath;
+    if (userDataPath) env.FUSION_APP_USER_DATA = userDataPath;
+    if (packaged) env.FUSION_APP_PACKAGED = '1';
+    if (!nativeObserverHealthOnly) env.FUSION_ELECTRON_SERVER = '1';
+    if (focusStatePath) env.FUSION_FOCUS_STATE_PATH = focusStatePath;
+    if (nativeObserverHealthOnly) env.FUSION_SECURE_OBSERVER_HEALTH_ONLY = '1';
+
+    console.log('[Resources] configured');
+
+    let bootstrapPayload = null;
+    if (!nativeObserverHealthOnly) {
+      try {
+        bootstrapPayload = bootstrapAuthority?.takeBootstrapPayload();
+      } catch {
+        reject(new Error('Shell bootstrap unavailable'));
+        return;
+      }
+      if (typeof bootstrapPayload !== 'string') {
+        reject(new Error('Shell bootstrap unavailable'));
+        return;
+      }
+    }
+
+    const child = spawn(NODE_BINARY, [serverPath], {
+      env,   // PORT=0 → OS assigns free port
+      stdio: nativeObserverHealthOnly
+        ? ['ignore', 'pipe', 'pipe']
+        : ['ignore', 'pipe', 'pipe', 'pipe', 'pipe'],
+    });
+    let bootstrapWritten = nativeObserverHealthOnly;
+    let workspaceBindingReceived = nativeObserverHealthOnly;
+    let pendingReady = null;
+    let settled = false;
+    const fail = (error) => {
+      if (settled) return;
+      settled = true;
+      child.kill('SIGTERM');
+      reject(error);
+    };
+    const maybeResolve = (value) => {
+      if (settled || !bootstrapWritten || !workspaceBindingReceived) {
+        pendingReady = value;
+        return;
+      }
+      settled = true;
+      resolve(value);
+    };
+    if (!nativeObserverHealthOnly) {
+      const bootstrapPipe = child.stdio[3];
+      bootstrapPipe.once('error', () => fail(new Error('Shell bootstrap delivery failed')));
+      bootstrapPipe.end(bootstrapPayload, 'utf8', (error) => {
+        if (error) {
+          fail(new Error('Shell bootstrap delivery failed'));
+          return;
+        }
+        bootstrapWritten = true;
+        if (pendingReady) maybeResolve(pendingReady);
+      });
+      const workspaceBindingPipe = child.stdio[4];
+      attachServerWorkspaceBindingChannel({
+        child,
+        workspaceBindingPipe,
+        onBinding(binding) {
+          onWorkspaceBinding(binding, bootstrapAuthority.generation);
+          workspaceBindingReceived = true;
+          if (pendingReady) maybeResolve(pendingReady);
+        },
+        isStartupSettled: () => settled,
+        onStartupFailure: fail,
+        onEstablishedFailure: onWorkspaceBindingError,
+      });
+    }
+    const readinessParser = createServerReadinessParser(
+      (readyPort) => {
+        ready = true;
+        maybeResolve({ port: readyPort, process: child });
+      },
+      fail,
+    );
+
+    pipeServerOutput(child, {
+      onStdout(text) {
+        const observerMatch = text.match(/SECURE_FILE_OBSERVER_READY:(darwin):([^:\s]+):(\d+):([^:\s]+)/);
+        if (nativeObserverHealthOnly && observerMatch) {
+          ready = true;
+          maybeResolve({
+            port: null,
+            process: child,
+            nativeObserver: Object.freeze({
+              platform: observerMatch[1],
+              arch: observerMatch[2],
+              moduleAbi: parseInt(observerMatch[3], 10),
+              fixture: observerMatch[4],
+            }),
+          });
+          return;
+        }
+        readinessParser.push(text);
+      },
+    });
+
+    child.on('exit', (code, signal) => {
+      // child.killed means Electron intentionally signalled this child.
+      if (child.killed) return;
+      if (ready) {
+        onExit(code, signal);
+        return;
+      }
+      fail(new Error(`Server exited with code ${code} before signalling ready`));
+    });
+  });
+}
+
+module.exports = { attachServerWorkspaceBindingChannel, pipeServerOutput, spawnServer };

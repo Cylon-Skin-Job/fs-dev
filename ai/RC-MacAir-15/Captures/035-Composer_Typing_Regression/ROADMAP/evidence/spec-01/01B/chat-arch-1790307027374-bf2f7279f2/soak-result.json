@@ -1,0 +1,1317 @@
+{
+  "status": "failed",
+  "windows": [],
+  "cycles": [
+    {
+      "number": 1,
+      "groupId": "tg-287fb309-bb50-420e-aff3-ac3db44fd0e6",
+      "memberIds": [
+        "2026-09-24T20-31-34-549",
+        "th-01816b5f-0f85-4796-a745-5f12cefbd297"
+      ],
+      "sideSend": {
+        "prompt": {
+          "sequence": 43,
+          "at": 1790307095433,
+          "direction": "outbound",
+          "type": "prompt",
+          "requestId": "80ad17b7a8ec18c3fe222b11a273283d",
+          "threadId": "2026-09-24T20-31-34-549"
+        },
+        "ack": {
+          "sequence": 44,
+          "at": 1790307095837,
+          "direction": "inbound",
+          "type": "message:sent",
+          "requestId": "80ad17b7a8ec18c3fe222b11a273283d",
+          "threadId": "2026-09-24T20-31-34-549",
+          "turnId": "c10245d6-779c-4cd0-bc30-0845c98985ff"
+        }
+      },
+      "mainSend": {
+        "prompt": {
+          "sequence": 46,
+          "at": 1790307096000,
+          "direction": "outbound",
+          "type": "prompt",
+          "requestId": "80ed537c09ce1f2f16c015133599498c",
+          "threadId": "th-01816b5f-0f85-4796-a745-5f12cefbd297"
+        },
+        "ack": {
+          "sequence": 47,
+          "at": 1790307096406,
+          "direction": "inbound",
+          "type": "message:sent",
+          "requestId": "80ed537c09ce1f2f16c015133599498c",
+          "threadId": "th-01816b5f-0f85-4796-a745-5f12cefbd297",
+          "turnId": "5efa8525-7e5e-4780-8c6d-7b090007111d"
+        }
+      },
+      "sideStop": {
+        "receipt": {
+          "request_id": "80ad17b7a8ec18c3fe222b11a273283d",
+          "turn_id": "c10245d6-779c-4cd0-bc30-0845c98985ff",
+          "outcome": "accepted"
+        },
+        "exchangeId": 36
+      },
+      "mainStop": {
+        "receipt": {
+          "request_id": "80ed537c09ce1f2f16c015133599498c",
+          "turn_id": "5efa8525-7e5e-4780-8c6d-7b090007111d",
+          "outcome": "accepted"
+        },
+        "exchangeId": 37
+      },
+      "resumedSide": {
+        "prompt": {
+          "sequence": 52,
+          "at": 1790307098920,
+          "direction": "outbound",
+          "type": "prompt",
+          "requestId": "dc952e475934ec0de08d36e702a60d97",
+          "threadId": "2026-09-24T20-31-34-549"
+        },
+        "ack": {
+          "sequence": 53,
+          "at": 1790307099326,
+          "direction": "inbound",
+          "type": "message:sent",
+          "requestId": "dc952e475934ec0de08d36e702a60d97",
+          "threadId": "2026-09-24T20-31-34-549",
+          "turnId": "ab905264-2322-4678-891d-7d03bee76611"
+        }
+      },
+      "resumedSideStop": {
+        "receipt": {
+          "request_id": "dc952e475934ec0de08d36e702a60d97",
+          "turn_id": "ab905264-2322-4678-891d-7d03bee76611",
+          "outcome": "accepted"
+        },
+        "exchangeId": 38
+      },
+      "faults": [
+        "authenticated socket close/reconnect"
+      ],
+      "viewSwitches": 2,
+      "move": true,
+      "sideCloseReopen": true,
+      "delete": true
+    }
+  ],
+  "samples": [
+    {
+      "label": "warmed-baseline",
+      "at": 1790307094529,
+      "heap": {
+        "usedSize": 25812032,
+        "totalSize": 27312128,
+        "embedderHeapUsedSize": 54286344,
+        "backingStorageSize": 5892247
+      },
+      "dom": {
+        "documents": 2,
+        "nodes": 27286,
+        "jsEventListeners": 947
+      },
+      "caches": {
+        "worksurfaceEntries": 2,
+        "remoteRevisions": 0,
+        "members": 0,
+        "chats": 2,
+        "usage": 2,
+        "tokens": 2,
+        "wire": 1,
+        "selection": 2,
+        "drafts": 0,
+        "revisions": 0,
+        "attachments": 0,
+        "attachmentGenerations": 0,
+        "attempts": 0,
+        "feedback": 0
+      },
+      "processMemory": {
+        "metrics": [
+          {
+            "pid": 40814,
+            "type": "Browser",
+            "memory": {
+              "workingSetSize": 151312,
+              "peakWorkingSetSize": 197440
+            }
+          },
+          {
+            "pid": 40827,
+            "type": "GPU",
+            "memory": {
+              "workingSetSize": 89584,
+              "peakWorkingSetSize": 165664
+            }
+          },
+          {
+            "pid": 40828,
+            "type": "Utility",
+            "memory": {
+              "workingSetSize": 37680,
+              "peakWorkingSetSize": 43328
+            }
+          },
+          {
+            "pid": 40923,
+            "type": "Tab",
+            "memory": {
+              "workingSetSize": 413248,
+              "peakWorkingSetSize": 1017648
+            }
+          }
+        ],
+        "main": {
+          "private": 53761,
+          "shared": 240
+        }
+      },
+      "server": {
+        "at": 1790307093828,
+        "pid": 40840,
+        "adapterSessions": 1,
+        "runtimes": 1,
+        "drains": 0,
+        "sessions": 1,
+        "timeouts": 1,
+        "listeners": 43,
+        "memory": {
+          "rss": 283164672,
+          "heapTotal": 202506240,
+          "heapUsed": 89416840,
+          "external": 3462073,
+          "arrayBuffers": 833124
+        }
+      }
+    },
+    {
+      "label": "cycle-1",
+      "at": 1790307108124,
+      "heap": {
+        "usedSize": 26047776,
+        "totalSize": 27312128,
+        "embedderHeapUsedSize": 53212608,
+        "backingStorageSize": 5892639
+      },
+      "dom": {
+        "documents": 2,
+        "nodes": 27286,
+        "jsEventListeners": 951
+      },
+      "caches": {
+        "worksurfaceEntries": 2,
+        "remoteRevisions": 0,
+        "members": 0,
+        "chats": 2,
+        "usage": 2,
+        "tokens": 2,
+        "wire": 1,
+        "selection": 2,
+        "drafts": 0,
+        "revisions": 0,
+        "attachments": 0,
+        "attachmentGenerations": 0,
+        "attempts": 0,
+        "feedback": 0
+      },
+      "processMemory": {
+        "metrics": [
+          {
+            "pid": 40814,
+            "type": "Browser",
+            "memory": {
+              "workingSetSize": 154512,
+              "peakWorkingSetSize": 197440
+            }
+          },
+          {
+            "pid": 40827,
+            "type": "GPU",
+            "memory": {
+              "workingSetSize": 142624,
+              "peakWorkingSetSize": 165664
+            }
+          },
+          {
+            "pid": 40828,
+            "type": "Utility",
+            "memory": {
+              "workingSetSize": 37680,
+              "peakWorkingSetSize": 43328
+            }
+          },
+          {
+            "pid": 40923,
+            "type": "Tab",
+            "memory": {
+              "workingSetSize": 437936,
+              "peakWorkingSetSize": 1017648
+            }
+          }
+        ],
+        "main": {
+          "private": 54001,
+          "shared": 23232
+        }
+      },
+      "server": {
+        "at": 1790307107843,
+        "pid": 40840,
+        "adapterSessions": 1,
+        "runtimes": 1,
+        "drains": 0,
+        "sessions": 1,
+        "timeouts": 1,
+        "listeners": 43,
+        "memory": {
+          "rss": 289374208,
+          "heapTotal": 204079104,
+          "heapUsed": 74024120,
+          "external": 3381888,
+          "arrayBuffers": 752939
+        }
+      }
+    }
+  ],
+  "durationMs": 2700000,
+  "errors": [],
+  "observationAdapter": {
+    "renderer": "index-DNc_-_-s.js",
+    "server": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790307027374-bf2f7279f2/soak-server-resources.ndjson",
+    "mode": "read-only counts; fixture-only stage append"
+  },
+  "fixtures": {
+    "f2": {
+      "id": "F2-DETERMINISTIC-HISTORY-V1",
+      "exchanges": 30,
+      "renderedMessages": 60,
+      "includes": [
+        "text",
+        "code",
+        "lists",
+        "tables",
+        "collapsed-tool-results",
+        "reply-metadata"
+      ],
+      "dense": {
+        "exchanges": 2,
+        "assistantPayloadBytes": 534528,
+        "sha256": "9b06d21b677d93e4479544db39cf56f86eb4d3cd25fb603740407f263e7420dc"
+      }
+    },
+    "f3": {
+      "id": "F3-DETERMINISTIC-WORKSPACE-V1",
+      "algorithm": "label-repeated-to-fixed-byte-count",
+      "counts": {
+        "smallFiles": 1000,
+        "captureFolders": 100,
+        "wikiPages": 100,
+        "officeDocuments": 20
+      },
+      "totalFiles": 1220,
+      "totalContentBytes": 11059200,
+      "root": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790307027374-bf2f7279f2-cT2cP8/soak-workspace/sustained-project",
+      "everyPathFixtureContained": true,
+      "manifestHash": "421c0ef8f5e255bb333a82a9f26d28c74eb2c8d55e95fc262ad241ed45740079"
+    },
+    "f5": {
+      "frameIntervalMs": 50,
+      "textFrames": 10000,
+      "maxCharacters": 200
+    }
+  },
+  "identity": {
+    "baseThreadId": "2026-09-24T20-30-30-310",
+    "baseGroupId": "tg-a989d457-8a42-4419-a12d-445a13031836",
+    "denseThreadId": "2026-09-24T20-30-30-507",
+    "project": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790307027374-bf2f7279f2-cT2cP8/soak-workspace/sustained-project"
+  },
+  "routes": {
+    "sequence": 67,
+    "frames": [
+      {
+        "sequence": 1,
+        "at": 1790307032585,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mugekzcm-0",
+        "groupId": "tg-ff5c141b-df85-45d1-aed8-d87f98e5c629",
+        "lane": "content",
+        "contentRevision": null,
+        "placementRevision": null
+      },
+      {
+        "sequence": 2,
+        "at": 1790307032752,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-switch-mugekzeu-1",
+        "groupId": "tg-ff5c141b-df85-45d1-aed8-d87f98e5c629",
+        "lane": "content",
+        "contentRevision": "wsr_19ca3450812ab7fba3517c171a79a6ee",
+        "placementRevision": "wsr_8a793587762b3f964bc6f95a3ababe6b"
+      },
+      {
+        "sequence": 3,
+        "at": 1790307032758,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mugekzht-2",
+        "groupId": "tg-a989d457-8a42-4419-a12d-445a13031836",
+        "lane": "content",
+        "contentRevision": "wsr_1a28aab37366e986a7673520651afdf2",
+        "placementRevision": "wsr_455fd524b0ad588856bb68703dca159a"
+      },
+      {
+        "sequence": 4,
+        "at": 1790307033948,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-switch-mugel0eo-3",
+        "groupId": "tg-a989d457-8a42-4419-a12d-445a13031836",
+        "lane": "content",
+        "contentRevision": "wsr_2368f61b9a38223c90eeb75575750a01",
+        "placementRevision": "wsr_455fd524b0ad588856bb68703dca159a"
+      },
+      {
+        "sequence": 5,
+        "at": 1790307034114,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mugel0f0-4",
+        "groupId": "tg-ff5c141b-df85-45d1-aed8-d87f98e5c629",
+        "lane": "content",
+        "contentRevision": "wsr_19ca3450812ab7fba3517c171a79a6ee",
+        "placementRevision": "wsr_8a793587762b3f964bc6f95a3ababe6b"
+      },
+      {
+        "sequence": 6,
+        "at": 1790307034297,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-switch-mugel0of-5",
+        "groupId": "tg-ff5c141b-df85-45d1-aed8-d87f98e5c629",
+        "lane": "content",
+        "contentRevision": "wsr_af43d5e3a1be42b0b3c0bb25d4241273",
+        "placementRevision": "wsr_8a793587762b3f964bc6f95a3ababe6b"
+      },
+      {
+        "sequence": 7,
+        "at": 1790307034395,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mugel0oq-6",
+        "groupId": "tg-a989d457-8a42-4419-a12d-445a13031836",
+        "lane": "content",
+        "contentRevision": "wsr_2368f61b9a38223c90eeb75575750a01",
+        "placementRevision": "wsr_455fd524b0ad588856bb68703dca159a"
+      },
+      {
+        "sequence": 8,
+        "at": 1790307034675,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mugel0yq-7",
+        "groupId": "tg-f9027191-574e-49c2-88df-41525212e117",
+        "lane": "content",
+        "contentRevision": null,
+        "placementRevision": null
+      },
+      {
+        "sequence": 9,
+        "at": 1790307034978,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-switch-mugel175-8",
+        "groupId": "tg-a989d457-8a42-4419-a12d-445a13031836",
+        "lane": "content",
+        "contentRevision": "wsr_4cdf822d1321e745ae20ad14ff95333d",
+        "placementRevision": "wsr_455fd524b0ad588856bb68703dca159a"
+      },
+      {
+        "sequence": 10,
+        "at": 1790307035065,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mugel17m-9",
+        "groupId": "tg-f9027191-574e-49c2-88df-41525212e117",
+        "lane": "content",
+        "contentRevision": null,
+        "placementRevision": null
+      },
+      {
+        "sequence": 11,
+        "at": 1790307035281,
+        "direction": "inbound",
+        "type": "thread:action:completed",
+        "action": "move_chat_to_side",
+        "requestId": "3b39607b-34af-4884-8069-a0a07ad6c2ab",
+        "threadId": "2026-09-24T20-30-34-533",
+        "groupId": "tg-f9027191-574e-49c2-88df-41525212e117"
+      },
+      {
+        "sequence": 12,
+        "at": 1790307035283,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mugel1g1-a",
+        "groupId": "tg-f9027191-574e-49c2-88df-41525212e117",
+        "lane": "content",
+        "contentRevision": "wsr_47b2d2a76a92d8a77ad1d0a68f37a5a6",
+        "placementRevision": "wsr_6d66690bf462d23d3e4c7c1c314c2ff3"
+      },
+      {
+        "sequence": 13,
+        "at": 1790307036252,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "fbcd4b30fb13d80d08fc91b5783b7550",
+        "threadId": "2026-09-24T20-30-34-533"
+      },
+      {
+        "sequence": 14,
+        "at": 1790307036661,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "fbcd4b30fb13d80d08fc91b5783b7550",
+        "threadId": "2026-09-24T20-30-34-533",
+        "turnId": "ddeecde2-d640-424f-b49d-0bafefb59cfd"
+      },
+      {
+        "sequence": 15,
+        "at": 1790307036670,
+        "direction": "inbound",
+        "type": "turn_begin",
+        "threadId": "2026-09-24T20-30-34-533",
+        "turnId": "ddeecde2-d640-424f-b49d-0bafefb59cfd"
+      },
+      {
+        "sequence": 16,
+        "at": 1790307036817,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "aca15023f4893a692ae6f93a821ecbc0",
+        "threadId": "th-0f6cbdeb-ea4d-4ed0-984f-1d500f904201"
+      },
+      {
+        "sequence": 17,
+        "at": 1790307037224,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "aca15023f4893a692ae6f93a821ecbc0",
+        "threadId": "th-0f6cbdeb-ea4d-4ed0-984f-1d500f904201",
+        "turnId": "81d0e2e6-17c3-47b5-a735-428b425c4236"
+      },
+      {
+        "sequence": 18,
+        "at": 1790307037228,
+        "direction": "inbound",
+        "type": "turn_begin",
+        "threadId": "th-0f6cbdeb-ea4d-4ed0-984f-1d500f904201",
+        "turnId": "81d0e2e6-17c3-47b5-a735-428b425c4236"
+      },
+      {
+        "sequence": 19,
+        "at": 1790307038588,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-flush-mugel3zc-b",
+        "groupId": "tg-f9027191-574e-49c2-88df-41525212e117",
+        "lane": "content",
+        "contentRevision": "wsr_e2e610fb7bc873aab10822327827c837",
+        "placementRevision": "wsr_6d66690bf462d23d3e4c7c1c314c2ff3"
+      },
+      {
+        "sequence": 20,
+        "at": 1790307038765,
+        "direction": "inbound",
+        "type": "turn_end",
+        "threadId": "2026-09-24T20-30-34-533",
+        "turnId": "ddeecde2-d640-424f-b49d-0bafefb59cfd"
+      },
+      {
+        "sequence": 21,
+        "at": 1790307039010,
+        "direction": "inbound",
+        "type": "chat-turn:saved",
+        "threadId": "2026-09-24T20-30-34-533",
+        "turnId": "ddeecde2-d640-424f-b49d-0bafefb59cfd"
+      },
+      {
+        "sequence": 22,
+        "at": 1790307039717,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "e344fec5e0f14e6e1e977f249d4a6bc9",
+        "threadId": "2026-09-24T20-30-34-533"
+      },
+      {
+        "sequence": 23,
+        "at": 1790307040124,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "e344fec5e0f14e6e1e977f249d4a6bc9",
+        "threadId": "2026-09-24T20-30-34-533",
+        "turnId": "c2b90972-e07c-408a-8422-746765e21d8d"
+      },
+      {
+        "sequence": 24,
+        "at": 1790307040129,
+        "direction": "inbound",
+        "type": "turn_begin",
+        "threadId": "2026-09-24T20-30-34-533",
+        "turnId": "c2b90972-e07c-408a-8422-746765e21d8d"
+      },
+      {
+        "sequence": 25,
+        "at": 1790307040281,
+        "direction": "inbound",
+        "type": "turn_end",
+        "threadId": "th-0f6cbdeb-ea4d-4ed0-984f-1d500f904201",
+        "turnId": "81d0e2e6-17c3-47b5-a735-428b425c4236"
+      },
+      {
+        "sequence": 26,
+        "at": 1790307040526,
+        "direction": "inbound",
+        "type": "chat-turn:saved",
+        "threadId": "th-0f6cbdeb-ea4d-4ed0-984f-1d500f904201",
+        "turnId": "81d0e2e6-17c3-47b5-a735-428b425c4236"
+      },
+      {
+        "sequence": 27,
+        "at": 1790307041248,
+        "direction": "inbound",
+        "type": "turn_end",
+        "threadId": "2026-09-24T20-30-34-533",
+        "turnId": "c2b90972-e07c-408a-8422-746765e21d8d"
+      },
+      {
+        "sequence": 28,
+        "at": 1790307041500,
+        "direction": "inbound",
+        "type": "chat-turn:saved",
+        "threadId": "2026-09-24T20-30-34-533",
+        "turnId": "c2b90972-e07c-408a-8422-746765e21d8d"
+      },
+      {
+        "sequence": 29,
+        "at": 1790307041631,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-placement-close-mugel6c0-c",
+        "groupId": "tg-f9027191-574e-49c2-88df-41525212e117",
+        "lane": "placement",
+        "contentRevision": "wsr_e2e610fb7bc873aab10822327827c837",
+        "placementRevision": "wsr_e654a5eefb439e1f057c3bf5f4b04af9"
+      },
+      {
+        "sequence": 30,
+        "at": 1790307042014,
+        "direction": "inbound",
+        "type": "thread:action:completed",
+        "action": "open_member_in_side",
+        "requestId": "404aeb00-fe3c-4a29-847f-4b1e69402857",
+        "threadId": "2026-09-24T20-30-34-533",
+        "groupId": "tg-f9027191-574e-49c2-88df-41525212e117"
+      },
+      {
+        "sequence": 31,
+        "at": 1790307042015,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mugel6n2-d",
+        "groupId": "tg-f9027191-574e-49c2-88df-41525212e117",
+        "lane": "content",
+        "contentRevision": "wsr_e2e610fb7bc873aab10822327827c837",
+        "placementRevision": "wsr_170a82bfa242e9c0ce607e2b64bfc5d0"
+      },
+      {
+        "sequence": 32,
+        "at": 1790307045167,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mugel8zd-e",
+        "groupId": "tg-f9027191-574e-49c2-88df-41525212e117",
+        "lane": "content",
+        "contentRevision": "wsr_e2e610fb7bc873aab10822327827c837",
+        "placementRevision": "wsr_170a82bfa242e9c0ce607e2b64bfc5d0"
+      },
+      {
+        "sequence": 33,
+        "at": 1790307045287,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mugel95s-f",
+        "groupId": "tg-f9027191-574e-49c2-88df-41525212e117",
+        "lane": "content",
+        "contentRevision": "wsr_e2e610fb7bc873aab10822327827c837",
+        "placementRevision": "wsr_170a82bfa242e9c0ce607e2b64bfc5d0"
+      },
+      {
+        "sequence": 34,
+        "at": 1790307046751,
+        "direction": "inbound",
+        "type": "thread:action:completed",
+        "action": "delete",
+        "requestId": "20dcbafb-9111-47b1-a7c4-8789d9f0ebe4",
+        "threadId": "th-0f6cbdeb-ea4d-4ed0-984f-1d500f904201",
+        "groupId": "tg-f9027191-574e-49c2-88df-41525212e117"
+      },
+      {
+        "sequence": 35,
+        "at": 1790307047079,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mugelae8-g",
+        "groupId": "tg-ff5c141b-df85-45d1-aed8-d87f98e5c629",
+        "lane": "content",
+        "contentRevision": "wsr_af43d5e3a1be42b0b3c0bb25d4241273",
+        "placementRevision": "wsr_8a793587762b3f964bc6f95a3ababe6b"
+      },
+      {
+        "sequence": 36,
+        "at": 1790307047248,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-switch-mugelao6-h",
+        "groupId": "tg-ff5c141b-df85-45d1-aed8-d87f98e5c629",
+        "lane": "content",
+        "contentRevision": "wsr_77c4d862eaf5dedca0e5b57e1f46eaca",
+        "placementRevision": "wsr_8a793587762b3f964bc6f95a3ababe6b"
+      },
+      {
+        "sequence": 37,
+        "at": 1790307047346,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mugelaog-i",
+        "groupId": "tg-a989d457-8a42-4419-a12d-445a13031836",
+        "lane": "content",
+        "contentRevision": "wsr_4cdf822d1321e745ae20ad14ff95333d",
+        "placementRevision": "wsr_455fd524b0ad588856bb68703dca159a"
+      },
+      {
+        "sequence": 38,
+        "at": 1790307094665,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mugemb9d-j",
+        "groupId": "tg-287fb309-bb50-420e-aff3-ac3db44fd0e6",
+        "lane": "content",
+        "contentRevision": null,
+        "placementRevision": null
+      },
+      {
+        "sequence": 39,
+        "at": 1790307094956,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-switch-mugembhd-k",
+        "groupId": "tg-a989d457-8a42-4419-a12d-445a13031836",
+        "lane": "content",
+        "contentRevision": "wsr_7852d6d7d0f6cb1897862e914bf7741c",
+        "placementRevision": "wsr_455fd524b0ad588856bb68703dca159a"
+      },
+      {
+        "sequence": 40,
+        "at": 1790307095046,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mugembhp-l",
+        "groupId": "tg-287fb309-bb50-420e-aff3-ac3db44fd0e6",
+        "lane": "content",
+        "contentRevision": null,
+        "placementRevision": null
+      },
+      {
+        "sequence": 41,
+        "at": 1790307095248,
+        "direction": "inbound",
+        "type": "thread:action:completed",
+        "action": "move_chat_to_side",
+        "requestId": "4a60209a-06e2-4a00-9100-bc78e0931fc3",
+        "threadId": "2026-09-24T20-31-34-549",
+        "groupId": "tg-287fb309-bb50-420e-aff3-ac3db44fd0e6"
+      },
+      {
+        "sequence": 42,
+        "at": 1790307095250,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mugembps-m",
+        "groupId": "tg-287fb309-bb50-420e-aff3-ac3db44fd0e6",
+        "lane": "content",
+        "contentRevision": "wsr_176a2924c1810cfe401952709b225c4f",
+        "placementRevision": "wsr_f3e51fdd36078e84a88fec67e0ac55b7"
+      },
+      {
+        "sequence": 43,
+        "at": 1790307095433,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "80ad17b7a8ec18c3fe222b11a273283d",
+        "threadId": "2026-09-24T20-31-34-549"
+      },
+      {
+        "sequence": 44,
+        "at": 1790307095837,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "80ad17b7a8ec18c3fe222b11a273283d",
+        "threadId": "2026-09-24T20-31-34-549",
+        "turnId": "c10245d6-779c-4cd0-bc30-0845c98985ff"
+      },
+      {
+        "sequence": 45,
+        "at": 1790307095839,
+        "direction": "inbound",
+        "type": "turn_begin",
+        "threadId": "2026-09-24T20-31-34-549",
+        "turnId": "c10245d6-779c-4cd0-bc30-0845c98985ff"
+      },
+      {
+        "sequence": 46,
+        "at": 1790307096000,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "80ed537c09ce1f2f16c015133599498c",
+        "threadId": "th-01816b5f-0f85-4796-a745-5f12cefbd297"
+      },
+      {
+        "sequence": 47,
+        "at": 1790307096406,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "80ed537c09ce1f2f16c015133599498c",
+        "threadId": "th-01816b5f-0f85-4796-a745-5f12cefbd297",
+        "turnId": "5efa8525-7e5e-4780-8c6d-7b090007111d"
+      },
+      {
+        "sequence": 48,
+        "at": 1790307096410,
+        "direction": "inbound",
+        "type": "turn_begin",
+        "threadId": "th-01816b5f-0f85-4796-a745-5f12cefbd297",
+        "turnId": "5efa8525-7e5e-4780-8c6d-7b090007111d"
+      },
+      {
+        "sequence": 49,
+        "at": 1790307097770,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-flush-mugemdnc-n",
+        "groupId": "tg-287fb309-bb50-420e-aff3-ac3db44fd0e6",
+        "lane": "content",
+        "contentRevision": "wsr_ac6dab6e48e2644870b5d2a6b3d5e744",
+        "placementRevision": "wsr_f3e51fdd36078e84a88fec67e0ac55b7"
+      },
+      {
+        "sequence": 50,
+        "at": 1790307097948,
+        "direction": "inbound",
+        "type": "turn_end",
+        "threadId": "2026-09-24T20-31-34-549",
+        "turnId": "c10245d6-779c-4cd0-bc30-0845c98985ff"
+      },
+      {
+        "sequence": 51,
+        "at": 1790307098188,
+        "direction": "inbound",
+        "type": "chat-turn:saved",
+        "threadId": "2026-09-24T20-31-34-549",
+        "turnId": "c10245d6-779c-4cd0-bc30-0845c98985ff"
+      },
+      {
+        "sequence": 52,
+        "at": 1790307098920,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "dc952e475934ec0de08d36e702a60d97",
+        "threadId": "2026-09-24T20-31-34-549"
+      },
+      {
+        "sequence": 53,
+        "at": 1790307099326,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "dc952e475934ec0de08d36e702a60d97",
+        "threadId": "2026-09-24T20-31-34-549",
+        "turnId": "ab905264-2322-4678-891d-7d03bee76611"
+      },
+      {
+        "sequence": 54,
+        "at": 1790307099330,
+        "direction": "inbound",
+        "type": "turn_begin",
+        "threadId": "2026-09-24T20-31-34-549",
+        "turnId": "ab905264-2322-4678-891d-7d03bee76611"
+      },
+      {
+        "sequence": 55,
+        "at": 1790307099382,
+        "direction": "inbound",
+        "type": "turn_end",
+        "threadId": "th-01816b5f-0f85-4796-a745-5f12cefbd297",
+        "turnId": "5efa8525-7e5e-4780-8c6d-7b090007111d"
+      },
+      {
+        "sequence": 56,
+        "at": 1790307099625,
+        "direction": "inbound",
+        "type": "chat-turn:saved",
+        "threadId": "th-01816b5f-0f85-4796-a745-5f12cefbd297",
+        "turnId": "5efa8525-7e5e-4780-8c6d-7b090007111d"
+      },
+      {
+        "sequence": 57,
+        "at": 1790307100348,
+        "direction": "inbound",
+        "type": "turn_end",
+        "threadId": "2026-09-24T20-31-34-549",
+        "turnId": "ab905264-2322-4678-891d-7d03bee76611"
+      },
+      {
+        "sequence": 58,
+        "at": 1790307100591,
+        "direction": "inbound",
+        "type": "chat-turn:saved",
+        "threadId": "2026-09-24T20-31-34-549",
+        "turnId": "ab905264-2322-4678-891d-7d03bee76611"
+      },
+      {
+        "sequence": 59,
+        "at": 1790307100732,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-placement-close-mugemfxq-o",
+        "groupId": "tg-287fb309-bb50-420e-aff3-ac3db44fd0e6",
+        "lane": "placement",
+        "contentRevision": "wsr_ac6dab6e48e2644870b5d2a6b3d5e744",
+        "placementRevision": "wsr_d178c81ae3ab90cf1fc8abeb4d49e5f5"
+      },
+      {
+        "sequence": 60,
+        "at": 1790307101100,
+        "direction": "inbound",
+        "type": "thread:action:completed",
+        "action": "open_member_in_side",
+        "requestId": "c71b315a-257a-49d9-a1e7-f6985f15cdd6",
+        "threadId": "2026-09-24T20-31-34-549",
+        "groupId": "tg-287fb309-bb50-420e-aff3-ac3db44fd0e6"
+      },
+      {
+        "sequence": 61,
+        "at": 1790307101101,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mugemg8c-p",
+        "groupId": "tg-287fb309-bb50-420e-aff3-ac3db44fd0e6",
+        "lane": "content",
+        "contentRevision": "wsr_ac6dab6e48e2644870b5d2a6b3d5e744",
+        "placementRevision": "wsr_0908819f73cf5b0bea67f8337348fc31"
+      },
+      {
+        "sequence": 62,
+        "at": 1790307104239,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mugemikk-q",
+        "groupId": "tg-287fb309-bb50-420e-aff3-ac3db44fd0e6",
+        "lane": "content",
+        "contentRevision": "wsr_ac6dab6e48e2644870b5d2a6b3d5e744",
+        "placementRevision": "wsr_0908819f73cf5b0bea67f8337348fc31"
+      },
+      {
+        "sequence": 63,
+        "at": 1790307104340,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mugemiq3-r",
+        "groupId": "tg-287fb309-bb50-420e-aff3-ac3db44fd0e6",
+        "lane": "content",
+        "contentRevision": "wsr_ac6dab6e48e2644870b5d2a6b3d5e744",
+        "placementRevision": "wsr_0908819f73cf5b0bea67f8337348fc31"
+      },
+      {
+        "sequence": 64,
+        "at": 1790307105486,
+        "direction": "inbound",
+        "type": "thread:action:completed",
+        "action": "delete",
+        "requestId": "0273cc7c-2e5a-4d52-9f26-8fc6680d960e",
+        "threadId": "th-01816b5f-0f85-4796-a745-5f12cefbd297",
+        "groupId": "tg-287fb309-bb50-420e-aff3-ac3db44fd0e6"
+      },
+      {
+        "sequence": 65,
+        "at": 1790307105806,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mugemjpg-s",
+        "groupId": "tg-ff5c141b-df85-45d1-aed8-d87f98e5c629",
+        "lane": "content",
+        "contentRevision": "wsr_77c4d862eaf5dedca0e5b57e1f46eaca",
+        "placementRevision": "wsr_8a793587762b3f964bc6f95a3ababe6b"
+      },
+      {
+        "sequence": 66,
+        "at": 1790307105947,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-switch-mugemjyq-t",
+        "groupId": "tg-ff5c141b-df85-45d1-aed8-d87f98e5c629",
+        "lane": "content",
+        "contentRevision": "wsr_c8e672b66401670b39d9cd8ecdb785e0",
+        "placementRevision": "wsr_8a793587762b3f964bc6f95a3ababe6b"
+      },
+      {
+        "sequence": 67,
+        "at": 1790307105962,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mugemjz0-u",
+        "groupId": "tg-a989d457-8a42-4419-a12d-445a13031836",
+        "lane": "content",
+        "contentRevision": "wsr_7852d6d7d0f6cb1897862e914bf7741c",
+        "placementRevision": "wsr_455fd524b0ad588856bb68703dca159a"
+      }
+    ],
+    "content": {
+      "2026-09-24T20-30-34-533": {
+        "count": 63,
+        "firstAt": 1790307036684,
+        "maxCharacters": 28,
+        "lastAt": 1790307041205
+      },
+      "th-0f6cbdeb-ea4d-4ed0-984f-1d500f904201": {
+        "count": 60,
+        "firstAt": 1790307037231,
+        "maxCharacters": 28,
+        "lastAt": 1790307040248
+      },
+      "2026-09-24T20-31-34-549": {
+        "count": 61,
+        "firstAt": 1790307095842,
+        "maxCharacters": 28,
+        "lastAt": 1790307100302
+      },
+      "th-01816b5f-0f85-4796-a745-5f12cefbd297": {
+        "count": 58,
+        "firstAt": 1790307096413,
+        "maxCharacters": 28,
+        "lastAt": 1790307099336
+      }
+    },
+    "errors": [],
+    "worksurfaces": [
+      {
+        "cycle": "warmup",
+        "label": "before-reconnect",
+        "bindings": {
+          "sustained-project::capture-viewer": {
+            "workspaceId": "sustained-project",
+            "viewId": "capture-viewer",
+            "threadGroupId": "tg-f9027191-574e-49c2-88df-41525212e117",
+            "adapterId": "capture-viewer",
+            "adapterVersion": 1,
+            "contentRevision": "wsr_e2e610fb7bc873aab10822327827c837",
+            "placementRevision": "wsr_170a82bfa242e9c0ce607e2b64bfc5d0"
+          }
+        },
+        "pending": {},
+        "conflicts": {},
+        "entries": [
+          "sustained-project::capture-viewer::tg-ff5c141b-df85-45d1-aed8-d87f98e5c629",
+          "sustained-project::capture-viewer::tg-a989d457-8a42-4419-a12d-445a13031836",
+          "sustained-project::capture-viewer::tg-f9027191-574e-49c2-88df-41525212e117"
+        ],
+        "remote": {}
+      },
+      {
+        "cycle": "warmup",
+        "label": "after-reconnect",
+        "bindings": {
+          "sustained-project::capture-viewer": {
+            "workspaceId": "sustained-project",
+            "viewId": "capture-viewer",
+            "threadGroupId": "tg-f9027191-574e-49c2-88df-41525212e117",
+            "adapterId": "capture-viewer",
+            "adapterVersion": 1,
+            "contentRevision": "wsr_e2e610fb7bc873aab10822327827c837",
+            "placementRevision": "wsr_170a82bfa242e9c0ce607e2b64bfc5d0"
+          }
+        },
+        "pending": {},
+        "conflicts": {},
+        "entries": [
+          "sustained-project::capture-viewer::tg-ff5c141b-df85-45d1-aed8-d87f98e5c629",
+          "sustained-project::capture-viewer::tg-a989d457-8a42-4419-a12d-445a13031836",
+          "sustained-project::capture-viewer::tg-f9027191-574e-49c2-88df-41525212e117"
+        ],
+        "remote": {}
+      },
+      {
+        "cycle": "warmup",
+        "label": "after-delete",
+        "bindings": {
+          "sustained-project::capture-viewer": {
+            "workspaceId": "sustained-project",
+            "viewId": "capture-viewer",
+            "threadGroupId": "tg-ff5c141b-df85-45d1-aed8-d87f98e5c629",
+            "adapterId": "capture-viewer",
+            "adapterVersion": 1,
+            "contentRevision": null,
+            "placementRevision": null
+          }
+        },
+        "pending": {},
+        "conflicts": {},
+        "entries": [
+          "sustained-project::capture-viewer::tg-ff5c141b-df85-45d1-aed8-d87f98e5c629",
+          "sustained-project::capture-viewer::tg-a989d457-8a42-4419-a12d-445a13031836"
+        ],
+        "remote": {}
+      },
+      {
+        "cycle": 1,
+        "label": "before-reconnect",
+        "bindings": {
+          "sustained-project::capture-viewer": {
+            "workspaceId": "sustained-project",
+            "viewId": "capture-viewer",
+            "threadGroupId": "tg-287fb309-bb50-420e-aff3-ac3db44fd0e6",
+            "adapterId": "capture-viewer",
+            "adapterVersion": 1,
+            "contentRevision": "wsr_ac6dab6e48e2644870b5d2a6b3d5e744",
+            "placementRevision": "wsr_0908819f73cf5b0bea67f8337348fc31"
+          }
+        },
+        "pending": {},
+        "conflicts": {},
+        "entries": [
+          "sustained-project::capture-viewer::tg-ff5c141b-df85-45d1-aed8-d87f98e5c629",
+          "sustained-project::capture-viewer::tg-a989d457-8a42-4419-a12d-445a13031836",
+          "sustained-project::capture-viewer::tg-287fb309-bb50-420e-aff3-ac3db44fd0e6"
+        ],
+        "remote": {}
+      },
+      {
+        "cycle": 1,
+        "label": "after-reconnect",
+        "bindings": {
+          "sustained-project::capture-viewer": {
+            "workspaceId": "sustained-project",
+            "viewId": "capture-viewer",
+            "threadGroupId": "tg-287fb309-bb50-420e-aff3-ac3db44fd0e6",
+            "adapterId": "capture-viewer",
+            "adapterVersion": 1,
+            "contentRevision": "wsr_ac6dab6e48e2644870b5d2a6b3d5e744",
+            "placementRevision": "wsr_0908819f73cf5b0bea67f8337348fc31"
+          }
+        },
+        "pending": {},
+        "conflicts": {},
+        "entries": [
+          "sustained-project::capture-viewer::tg-ff5c141b-df85-45d1-aed8-d87f98e5c629",
+          "sustained-project::capture-viewer::tg-a989d457-8a42-4419-a12d-445a13031836",
+          "sustained-project::capture-viewer::tg-287fb309-bb50-420e-aff3-ac3db44fd0e6"
+        ],
+        "remote": {}
+      },
+      {
+        "cycle": 1,
+        "label": "after-delete",
+        "bindings": {
+          "sustained-project::capture-viewer": {
+            "workspaceId": "sustained-project",
+            "viewId": "capture-viewer",
+            "threadGroupId": "tg-ff5c141b-df85-45d1-aed8-d87f98e5c629",
+            "adapterId": "capture-viewer",
+            "adapterVersion": 1,
+            "contentRevision": "wsr_77c4d862eaf5dedca0e5b57e1f46eaca",
+            "placementRevision": "wsr_8a793587762b3f964bc6f95a3ababe6b"
+          }
+        },
+        "pending": {},
+        "conflicts": {},
+        "entries": [
+          "sustained-project::capture-viewer::tg-ff5c141b-df85-45d1-aed8-d87f98e5c629",
+          "sustained-project::capture-viewer::tg-a989d457-8a42-4419-a12d-445a13031836"
+        ],
+        "remote": {}
+      }
+    ]
+  },
+  "calibration": {
+    "counts": {
+      "renderTextInstant": 152,
+      "MessageList": 4,
+      "InstantSegmentRenderer": 32,
+      "ChatAreaHeader": 18,
+      "ThreadRail": 19,
+      "ContentArea": 9,
+      "ChatAreaFooter": 16
+    },
+    "discovered": [
+      "ChatAreaFooter",
+      "ChatAreaHeader",
+      "ContentArea",
+      "InstantSegmentRenderer",
+      "MessageList",
+      "ThreadRail",
+      "renderTextInstant"
+    ]
+  },
+  "bootstrap": {
+    "status": "not-applicable-to-non-timing-lifecycle-check"
+  },
+  "observerCalibration": [
+    91,
+    75
+  ],
+  "warmup": {
+    "number": "warmup",
+    "groupId": "tg-f9027191-574e-49c2-88df-41525212e117",
+    "memberIds": [
+      "2026-09-24T20-30-34-533",
+      "th-0f6cbdeb-ea4d-4ed0-984f-1d500f904201"
+    ],
+    "sideSend": {
+      "prompt": {
+        "sequence": 13,
+        "at": 1790307036252,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "fbcd4b30fb13d80d08fc91b5783b7550",
+        "threadId": "2026-09-24T20-30-34-533"
+      },
+      "ack": {
+        "sequence": 14,
+        "at": 1790307036661,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "fbcd4b30fb13d80d08fc91b5783b7550",
+        "threadId": "2026-09-24T20-30-34-533",
+        "turnId": "ddeecde2-d640-424f-b49d-0bafefb59cfd"
+      }
+    },
+    "mainSend": {
+      "prompt": {
+        "sequence": 16,
+        "at": 1790307036817,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "aca15023f4893a692ae6f93a821ecbc0",
+        "threadId": "th-0f6cbdeb-ea4d-4ed0-984f-1d500f904201"
+      },
+      "ack": {
+        "sequence": 17,
+        "at": 1790307037224,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "aca15023f4893a692ae6f93a821ecbc0",
+        "threadId": "th-0f6cbdeb-ea4d-4ed0-984f-1d500f904201",
+        "turnId": "81d0e2e6-17c3-47b5-a735-428b425c4236"
+      }
+    },
+    "sideStop": {
+      "receipt": {
+        "request_id": "fbcd4b30fb13d80d08fc91b5783b7550",
+        "turn_id": "ddeecde2-d640-424f-b49d-0bafefb59cfd",
+        "outcome": "accepted"
+      },
+      "exchangeId": 33
+    },
+    "mainStop": {
+      "receipt": {
+        "request_id": "aca15023f4893a692ae6f93a821ecbc0",
+        "turn_id": "81d0e2e6-17c3-47b5-a735-428b425c4236",
+        "outcome": "accepted"
+      },
+      "exchangeId": 34
+    },
+    "resumedSide": {
+      "prompt": {
+        "sequence": 22,
+        "at": 1790307039717,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "e344fec5e0f14e6e1e977f249d4a6bc9",
+        "threadId": "2026-09-24T20-30-34-533"
+      },
+      "ack": {
+        "sequence": 23,
+        "at": 1790307040124,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "e344fec5e0f14e6e1e977f249d4a6bc9",
+        "threadId": "2026-09-24T20-30-34-533",
+        "turnId": "c2b90972-e07c-408a-8422-746765e21d8d"
+      }
+    },
+    "resumedSideStop": {
+      "receipt": {
+        "request_id": "e344fec5e0f14e6e1e977f249d4a6bc9",
+        "turn_id": "c2b90972-e07c-408a-8422-746765e21d8d",
+        "outcome": "accepted"
+      },
+      "exchangeId": 35
+    },
+    "faults": [
+      "authenticated socket close/reconnect"
+    ],
+    "viewSwitches": 2,
+    "move": true,
+    "sideCloseReopen": true,
+    "delete": true
+  },
+  "settleMs": 45000,
+  "failure": {
+    "message": "equivalent settled renderer listeners\n\n951 !== 947\n",
+    "stack": "AssertionError [ERR_ASSERTION]: equivalent settled renderer listeners\n\n951 !== 947\n\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/soak-electron.mjs:138:12",
+    "dom": {
+      "body": "AI source\nLocal: RC-MacAir-15\narrow_drop_down\nConnected\nchevron_left\nSustained Input Fixture\nchevron_right\ncontrol_camera\nfirst_page\nlast_page\ndiscover_tune\nhub\nmacOS Connectors\nmail\nApple Mail\ncalendar_month\nApple Calendar\nnote_stack\nApple Notes\ntask_alt\nApple Reminders\nClose\nopen_run\ncode_blocks\nfull_coverage\nbusiness_messages\nrobot_2\ndescription\nsettings\ndock_to_right\nActive Threads\nArchive\nedit_square\nNew chat\n2026-09-24T20-30-30\nmore_vert\n0 msgs · 1m ago\n2026-09-24T20-30-30\nmore_vert\n0 msgs · 1m ago\nevent_list\nSynthetic user request 1\nDeterministic exchange 1\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t1\nconst exchange = 1;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 1\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 2\nDeterministic exchange 2\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t2\nconst exchange = 2;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 2\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 3\nDeterministic exchange 3\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t3\nconst exchange = 3;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 3\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 4\nDeterministic exchange 4\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t4\nconst exchange = 4;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 4\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 5\nDeterministic exchange 5\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t5\nconst exchange = 5;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 5\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 6\nDeterministic exchange 6\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t6\nconst exchange = 6;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 6\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 7\nDeterministic exchange 7\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t7\nconst exchange = 7;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 7\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 8\nDeterministic exchange 8\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t8\nconst exchange = 8;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 8\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 9\nDeterministic exchange 9\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t9\nconst exchange = 9;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 9\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 10\nDeterministic exchange 10\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t10\nconst exchange = 10;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 10\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 11\nDeterministic exchange 11\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t11\nconst exchange = 11;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 11\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 12\nDeterministic exchange 12\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t12\nconst exchange = 12;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 12\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 13\nDeterministic exchange 13\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t13\nconst exchange = 13;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 13\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 14\nDeterministic exchange 14\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t14\nconst exchange = 14;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 14\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 15\nDeterministic exchange 15\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t15\nconst exchange = 15;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 15\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 16\nDeterministic exchange 16\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t16\nconst exchange = 16;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 16\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 17\nDeterministic exchange 17\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t17\nconst exchange = 17;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 17\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 18\nDeterministic exchange 18\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t18\nconst exchange = 18;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 18\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 19\nDeterministic exchange 19\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t19\nconst exchange = 19;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 19\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 20\nDeterministic exchange 20\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t20\nconst exchange = 20;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 20\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 21\nDeterministic exchange 21\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t21\nconst exchange = 21;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 21\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 22\nDeterministic exchange 22\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t22\nconst exchange = 22;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 22\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 23\nDeterministic exchange 23\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t23\nconst exchange = 23;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 23\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 24\nDeterministic exchange 24\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t24\nconst exchange = 24;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 24\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 25\nDeterministic exchange 25\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t25\nconst exchange = 25;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 25\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 26\nDeterministic exchange 26\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t26\nconst exchange = 26;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 26\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 27\nDeterministic exchange 27\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t27\nconst exchange = 27;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 27\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 28\nDeterministic exchange 28\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t28\nconst exchange = 28;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 28\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 29\nDeterministic exchange 29\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t29\nconst exchange = 29;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 29\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 30\nDeterministic exchange 30\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t30\nconst exchange = 30;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 30\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nadd\nshield_lock\nDeepSeek V4 Flash\nkeyboard_arrow_down\nmic\narrow_upward\nopen_run\nCAPTURE\nclose\nadd\nCapture\nchevron_right\nDocuments and Artifacts\nsearch\nDocument and Artifact Capture\nHome\nRecent\nStarred\nArchive\nFIXTURE\n1\nkid_star\n\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architec",
+      "surfaces": [
+        {
+          "thread": "2026-09-24T20-30-30-310",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        }
+      ]
+    }
+  },
+  "lingeringOwnedPids": [],
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  }
+}

@@ -1,0 +1,15 @@
+# B12 correlated setup diagnostic dispatch
+
+Supervisor explicitly authorized implementation, tests, fresh reviews and one bounded diagnostic following the concrete plan. The prior hold is resolved; no repeated approval of the test plan is needed. Root must deliver a near-term setup notice and exact READY identity before the run. Do not chain performance tests afterward.
+
+Owner action: click once inside the exact marked fixture, then leave it foreground and undisturbed for about one minute. No retrospective visual report is needed. The existing trusted-pointer acquisition establishes actual interaction; this does not establish native-method or symptom acceptance. Maximum run deadline remains four minutes including acquisition.
+
+Builder `/root/builder06b` is sole writer of fixture modules/tests and builder evidence. Root coordinates, independently inspects/reruns checks, classifies deviations and obtains fresh acceptance review. No production changes are authorized by this diagnostic scope. Preserve all shared work. Retain pre-edit file snapshots outside source manifest so full current/predecessor comparison is available.
+
+Add diagnostic-only bounded observations of exact owned window/process: phase wall/monotonic timestamps, per-document performance timeOrigin identity, main window and renderer focus/visibility events plus low-rate bounded samples, pass-through method-call tracing preserving receiver/arguments/result/exceptions without recording argument/content data, explicit completion/closing marker and durable cleanup request/completion timestamps. No additional reactivation in settling. Keep fixed workload, 45-second settle, strict criteria, explicit-only inventory and unconditional stop before typing. Full cleanup and overflow/incomplete-observation reporting are required.
+
+Read-only basis: screenshot bootstrap records performance.now relative values without persisted document timeOrigin, whereas owned window events use Date.now. Existing finally snapshots ownedFocus before closeOwnedApp, so expected closure is absent from that event receipt. The owner clarified initial appearance/click/expected closure only; earlier autonomous-return wording is superseded. These gaps prevent exact phase/cleanup correlation and make another subjective visual report unhelpful.
+
+Inspection and review must distinguish tracing a JavaScript call from proving causation: an event without a traced call does not prove an OS/external cause. A clean setup run does not satisfy V-RENDER/V-SOAK or original symptoms. Keep all existing timing/focus gates. No other-app/window/process inventory, screenshots/text/content capture, settings changes, live profile access, publishing or Alpha operation. Supervisor's eight-hour caffeinate remains untouched.
+
+No runtime launch until code/tests/builder review/root inspection/root review complete and setup notice is delivered. Then run exactly one diagnostic and return correlated evidence or the precise remaining ambiguity. 06C remains barred.

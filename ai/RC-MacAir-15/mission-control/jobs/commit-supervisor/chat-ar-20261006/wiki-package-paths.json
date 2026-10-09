@@ -1,0 +1,14 @@
+[
+  "ai/RC-MacAir-15/Wiki/.agents/package-status.md",
+  "ai/RC-MacAir-15/Wiki/.agents/skills/wiki-audit/SKILL.md",
+  "ai/RC-MacAir-15/Wiki/.agents/skills/wiki-repair/SKILL.md",
+  "ai/RC-MacAir-15/Wiki/.agents/skills/wiki-research/SKILL.md",
+  "ai/RC-MacAir-15/Wiki/.agents/skills/wiki-update/SKILL.md",
+  "ai/RC-MacAir-15/Wiki/.agents/wiki-session-contract.md",
+  "ai/RC-MacAir-15/Wiki/.codex/agents/wiki-auditor.toml",
+  "ai/RC-MacAir-15/Wiki/.codex/agents/wiki-repair-worker.toml",
+  "ai/RC-MacAir-15/Wiki/.codex/agents/wiki-research-worker.toml",
+  "ai/RC-MacAir-15/Wiki/.codex/agents/wiki-update-supervisor.toml",
+  "ai/RC-MacAir-15/Wiki/.codex/config.toml",
+  "ai/RC-MacAir-15/Wiki/AGENTS.md"
+]

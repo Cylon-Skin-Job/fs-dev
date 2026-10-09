@@ -1,0 +1,43 @@
+src/clipboard/ClipboardTrigger.tsx:5: * Click on a row → fetch value via clipboard:use → call onInsert(value) so
+src/emojis/EmojiTrigger.tsx:10:  onInsert?: (text: string) => void;
+src/emojis/EmojiTrigger.tsx:18:  onInsert,
+src/emojis/EmojiTrigger.tsx:24:  void onInsert;
+src/state/chatFileLinkStore.ts:14:  addPendingAttachment: (
+src/state/chatFileLinkStore.ts:94:  addPendingAttachment: (workspaceId, threadId, attachment) => set((state) => {
+src/lib/chat-action-controller.ts:67:    store.addPendingAttachment(workspaceId, threadId, request.attachment);
+src/lib/chat-action-controller.ts:81:    store.setDraft(workspaceId, threadId, next);
+src/state/chatComposerDraftStore.ts:6:  setDraft: (workspaceId: string, threadId: string, text: string) => void;
+src/state/chatComposerDraftStore.ts:20:  setDraft: (workspaceId, threadId, text) => set((state) => ({
+src/lib/chat-action-creation.ts:1:import { dispatchChatAction, type ChatActionAddress, type ChatActionRequest, type ChatActionResult } from './chat-action';
+src/lib/chat-action-creation.ts:90:      void dispatchChatAction({ content: resolved, target: 'current', delivery: 'send',
+src/lib/chat-action-creation.ts:103:      drafts.setDraft(created.workspaceId, created.threadId!, next);
+src/lib/chat-action-creation.ts:152:      else void dispatchChatAction({ content: resolved, target: 'current',
+src/lib/chat-material-commit.ts:42:    store.addPendingAttachment(workspaceId, threadId, attachment);
+src/lib/chat-material-commit.ts:61:  store.setDraft(workspaceId, threadId, next);
+src/screenshots/index.ts:10:export { captureAndAttachScreenshot, SCREENSHOT_FLASH_EVENT } from './chatScreenshotCapture';
+src/screenshots/chatScreenshotCapture.ts:20:export interface ScreenshotAttachmentOwner {
+src/screenshots/chatScreenshotCapture.ts:33:function currentPrimaryOwner(
+src/screenshots/chatScreenshotCapture.ts:35:): ScreenshotAttachmentOwner | null {
+src/screenshots/chatScreenshotCapture.ts:51:  owner: ScreenshotAttachmentOwner,
+src/screenshots/chatScreenshotCapture.ts:58:    const current = currentPrimaryOwner(state);
+src/screenshots/chatScreenshotCapture.ts:145:export async function captureAndAttachScreenshot(
+src/screenshots/chatScreenshotCapture.ts:146:  requestedOwner?: ScreenshotAttachmentOwner,
+src/screenshots/chatScreenshotCapture.ts:152:  const owner = requestedOwner ?? currentPrimaryOwner(panelState);
+src/screenshots/chatScreenshotCapture.ts:192:    useChatFileLinkStore.getState().addPendingAttachment(
+src/lib/chat-action.ts:25:  sourceViewId?: string;
+src/lib/chat-action.ts:70:export function dispatchChatAction(action: ChatActionPayload): Promise<ChatActionResult> {
+src/lib/chat-action.ts:71:  const capturedAddress = action.address ?? captureChatActionAddress(action.sourceViewId);
+src/components/App.tsx:35:  captureAndAttachScreenshot,
+src/components/App.tsx:76:    void captureAndAttachScreenshot();
+src/components/SystemViewer.tsx:6:import { dispatchChatAction } from '../lib/chat-action';
+src/components/SystemViewer.tsx:83:    const result = await dispatchChatAction({
+src/components/SystemViewer.tsx:92:      sourceViewId: 'system-viewer',
+src/components/chat/ChatComposerAddMenu.tsx:8:import { captureAndAttachScreenshot } from '../../screenshots/chatScreenshotCapture';
+src/components/chat/ChatComposerAddMenu.tsx:9:import type { ScreenshotAttachmentOwner } from '../../screenshots/chatScreenshotCapture';
+src/components/chat/ChatComposerAddMenu.tsx:16:  screenshotOwner: ScreenshotAttachmentOwner | null;
+src/components/chat/ChatComposerAddMenu.tsx:44:    if (screenshotOwner) void captureAndAttachScreenshot(screenshotOwner);
+src/components/chat/ChatAreaFooter.tsx:23:import type { ScreenshotAttachmentOwner } from '../../screenshots/chatScreenshotCapture';
+src/components/chat/ChatAreaFooter.tsx:53:  screenshotOwner: ScreenshotAttachmentOwner | null;
+src/components/chat/ConnectedChatComposer.tsx:22:import type { ScreenshotAttachmentOwner } from '../../screenshots/chatScreenshotCapture';
+src/components/chat/ConnectedChatComposer.tsx:82:  const screenshotOwner = useMemo<ScreenshotAttachmentOwner | null>(() => ownerReady ? {
+src/components/chat/ConnectedChatComposer.tsx:130:    useChatComposerDraftStore.getState().setDraft(workspaceId, threadId, text);

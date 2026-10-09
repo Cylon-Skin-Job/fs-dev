@@ -1,0 +1,42 @@
+--- a/fusion-studio-client/src/components/MessageList.tsx
++++ b/fusion-studio-client/src/components/MessageList.tsx
+@@ -28,6 +28,7 @@
+  * └─────────────────────────────────────────────────────────────────┘
+  */
+ 
++import { memo } from 'react';
+ import { usePanelStore } from '../state/panelStore';
+ import type { Message, AssistantTurn, StreamSegment } from '../types';
+ import { LiveSegmentRenderer } from './LiveSegmentRenderer';
+@@ -149,7 +150,7 @@
+   );
+ }
+ 
+-export function MessageList({
++export const MessageList = memo(function MessageList({
+   threadId,
+   messages,
+   currentTurn,
+@@ -244,4 +245,4 @@
+       )}
+     </>
+   );
+-}
++});
+--- a/fusion-studio-client/src/components/ContentArea.tsx
++++ b/fusion-studio-client/src/components/ContentArea.tsx
+@@ -55,7 +55,7 @@
+   );
+ }
+ 
+-export const ContentArea: React.FC<ContentAreaProps> = ({ panel }) => {
++export const ContentArea = React.memo(function ContentArea({ panel }: ContentAreaProps) {
+   const configs = usePanelStore((state) => state.panelConfigs);
+   const config = configs.find((c) => c.id === panel);
+   const StaticComponent = CONTENT_COMPONENTS[panel];
+@@ -113,4 +113,4 @@
+       </div>
+     </ContentFrame>
+   );
+-};
++});

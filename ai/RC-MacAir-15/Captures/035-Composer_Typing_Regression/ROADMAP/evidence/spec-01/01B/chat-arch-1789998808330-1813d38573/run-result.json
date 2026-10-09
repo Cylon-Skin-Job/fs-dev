@@ -1,0 +1,18 @@
+{
+  "runId": "chat-arch-1789998808330-1813d38573",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R4-DISTINCT-ATTEMPTS",
+      "code": 0,
+      "signal": null,
+      "pid": 41700,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 11132
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

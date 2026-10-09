@@ -1,0 +1,24 @@
+{
+  "state": "current integrated candidate accepted by slice and final integration gates; supervisor/owner acceptance pending",
+  "count": 105,
+  "sha256": "da6ecbffec10d9f79951ecf6c2fb65996eb2a8ebfb341c5f26bd31458ca4ea73",
+  "slices": {
+    "05A": {
+      "manifestSha256": "6db4eed15de32045150a2ad60bc91d2071fabee53902f103c852691a2806093e",
+      "files": 15
+    },
+    "05B": {
+      "manifestSha256": "f057e0ad94b78fd805824ab925f8a05567d7d7ea0fd1f2516bc2da8ae2197f20",
+      "files": 24
+    },
+    "05C": {
+      "manifestSha256": "b4c05e2456693fb809e62ed1bcf66afe37b893932bfe9a35f221973a4a99af50",
+      "files": 27
+    },
+    "05D": {
+      "manifestSha256": "5fe5337047401bf19aed7a4c90d6d82cd0fb6d0e5a4ade5c1bfea980b5394792",
+      "files": 78
+    }
+  },
+  "productionOver400": {}
+}

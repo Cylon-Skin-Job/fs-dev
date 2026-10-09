@@ -1,0 +1,30 @@
+{
+  "fusion-studio-client/e2e/chat-architecture/owned-focus-observation.mjs": {
+    "before": "26eb49aa4a33eb7d8a8ae5dee0d66329423226f2614a0cc546408262c58014e3",
+    "after": "4c0588dd1d36aef00c4d351c9275dfecec6c2d15df02d4b293eae45d2e7d538a"
+  },
+  "fusion-studio-client/e2e/chat-architecture/owner-foreground.mjs": {
+    "before": null,
+    "after": "eef9c11efafe5ea05cf98c3cef5cb56b80266eca622a0c87ea49846508b8b63c"
+  },
+  "fusion-studio-client/e2e/chat-architecture/owner-foreground.test.mjs": {
+    "before": null,
+    "after": "f18beec66f8af12a743438846a768f7bf20adde90027dae7197f28e08b603508"
+  },
+  "fusion-studio-client/e2e/chat-architecture/r1-electron.mjs": {
+    "before": "5d7b2590e9ba845d532154ce58d5310c2a73e96f74415dad54d10b762c935972",
+    "after": "19a6f41d1c891c22341d009e41431776273fbce7a02b4fcdaa56a634ff2ef73a"
+  },
+  "fusion-studio-client/e2e/chat-architecture/r1-sustained-electron.mjs": {
+    "before": "ce6a4702b3ec527bb2bb148aff619e4b699a4f72702f16052767d9e9618b5599",
+    "after": "b35a66da9abecfd9f4b17fe5430fc242ee6d736623e396cc563452de19a42bf8"
+  },
+  "fusion-studio-client/e2e/chat-architecture/run.mjs": {
+    "before": "11e39d59170946036e7ae832c3e92b711a3783f05c7e3f49c292eb52ba22da55",
+    "after": "22b6e6fc7621f42e78ae302ca75e3d50bb7fc93ed239d51e9afd308d1d989397"
+  },
+  "fusion-studio-client/e2e/chat-architecture/soak-electron.mjs": {
+    "before": "ce20197ffa06209abfeb5044e89fd412a2dbb41e3d0eefe2758951a8d98132e7",
+    "after": "b27ea8266f1c346237f1495c89bea842208b8159e864e6990c4f8be986629fe5"
+  }
+}

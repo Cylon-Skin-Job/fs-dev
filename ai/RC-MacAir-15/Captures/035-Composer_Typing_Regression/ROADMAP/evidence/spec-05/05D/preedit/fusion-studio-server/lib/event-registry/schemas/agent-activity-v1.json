@@ -1,0 +1,251 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fusion://schemas/agent-activity-v1",
+  "title": "Agent activity query family v1",
+  "oneOf": [
+    { "$ref": "#/$defs/request" },
+    { "$ref": "#/$defs/toolResult" },
+    { "$ref": "#/$defs/edgeResult" },
+    { "$ref": "#/$defs/envelopeInvalid" },
+    { "$ref": "#/$defs/workspaceUnavailable" },
+    { "$ref": "#/$defs/pairError" }
+  ],
+  "$defs": {
+    "uuid": { "type": "string", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$" },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "boundedId": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "toolCallId": { "type": "string", "minLength": 1, "maxLength": 512 },
+    "path": { "type": "string", "minLength": 1, "maxLength": 4096 },
+    "folder": { "type": "string", "maxLength": 4096 },
+    "fileName": { "type": "string", "minLength": 1, "maxLength": 255 },
+    "time": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+    "positiveInteger": { "type": "integer", "minimum": 1, "maximum": 9007199254740991 },
+    "status": { "enum": ["announced", "completed", "error", "blocked", "interrupted"] },
+    "accessFamily": { "enum": ["read", "write", "execute", "unknown"] },
+    "accessKind": { "enum": ["read", "write", "create", "delete", "move_from", "move_to", "execute", "unknown"] },
+    "basis": { "enum": ["structured_path", "shell_input_redirection", "shell_output_redirection", "shell_known_operand"] },
+    "skipReason": { "enum": ["outside_workspace", "invalid_path", "final_symlink", "not_regular_file", "unsupported_text", "too_large", "blocked_before_execution"] },
+    "failureReason": { "enum": ["workspace_unavailable", "unreadable", "secure_open_unavailable", "observation_timeout", "observation_incomplete", "unstable_during_observation", "identity_conflict"] },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "version", "requestId", "workspaceId", "workspaceEpoch", "subject"],
+      "properties": {
+        "type": { "const": "agent:activity:query" },
+        "version": { "const": 1 },
+        "requestId": { "$ref": "#/$defs/boundedId" },
+        "workspaceId": { "$ref": "#/$defs/boundedId" },
+        "workspaceEpoch": { "$ref": "#/$defs/uuid" },
+        "subject": { "enum": ["tool_calls", "resource_edges"] },
+        "panel": { "$ref": "#/$defs/boundedId" },
+        "path": { "$ref": "#/$defs/path" },
+        "fileName": { "$ref": "#/$defs/fileName" },
+        "folderPrefix": { "$ref": "#/$defs/folder" },
+        "activityId": { "$ref": "#/$defs/uuid" },
+        "threadId": { "$ref": "#/$defs/boundedId" },
+        "turnId": { "$ref": "#/$defs/boundedId" },
+        "exchangeId": { "$ref": "#/$defs/positiveInteger" },
+        "toolCallId": { "$ref": "#/$defs/toolCallId" },
+        "harnessId": { "$ref": "#/$defs/boundedId" },
+        "toolNames": { "type": "array", "minItems": 1, "maxItems": 16, "uniqueItems": true, "items": { "$ref": "#/$defs/boundedId" } },
+        "statuses": { "type": "array", "minItems": 1, "maxItems": 16, "uniqueItems": true, "items": { "$ref": "#/$defs/status" } },
+        "accessFamilies": { "type": "array", "minItems": 1, "maxItems": 16, "uniqueItems": true, "items": { "$ref": "#/$defs/accessFamily" } },
+        "accessKinds": { "type": "array", "minItems": 1, "maxItems": 16, "uniqueItems": true, "items": { "$ref": "#/$defs/accessKind" } },
+        "changedOnly": { "type": "boolean" },
+        "since": { "$ref": "#/$defs/time" },
+        "until": { "$ref": "#/$defs/time" },
+        "cursor": { "type": "string", "pattern": "^[1-9][0-9]{0,19}$" },
+        "limit": { "type": "integer", "minimum": 1, "maximum": 100 }
+      }
+    },
+    "timing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["announcedObservedAt"],
+      "properties": {
+        "announcedObservedAt": { "$ref": "#/$defs/time" },
+        "announcedReportedAt": { "$ref": "#/$defs/time" },
+        "executionStartedReportedAt": { "$ref": "#/$defs/time" },
+        "argumentsObservedAt": { "$ref": "#/$defs/time" },
+        "argumentsReportedAt": { "$ref": "#/$defs/time" },
+        "terminalObservedAt": { "$ref": "#/$defs/time" },
+        "terminalReportedAt": { "$ref": "#/$defs/time" },
+        "terminalSnapshotReportedAt": { "$ref": "#/$defs/time" },
+        "reconciledAt": { "$ref": "#/$defs/time" },
+        "exchangeSavedAt": { "$ref": "#/$defs/time" },
+        "exchangeBoundAt": { "$ref": "#/$defs/time" }
+      }
+    },
+    "detailRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "exchangeId", "toolCallId"],
+      "properties": {
+        "kind": { "const": "exchange_tool_part" },
+        "exchangeId": { "$ref": "#/$defs/positiveInteger" },
+        "toolCallId": { "$ref": "#/$defs/toolCallId" }
+      }
+    },
+    "toolItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "activityId", "eventId", "workspaceId", "threadId", "turnId", "harnessId", "provider", "toolCallId", "toolName", "nativeToolName", "status", "timing", "fingerprints", "candidates", "resources", "fact"],
+      "properties": {
+        "kind": { "const": "tool_call" },
+        "activityId": { "$ref": "#/$defs/uuid" },
+        "eventId": { "$ref": "#/$defs/uuid" },
+        "workspaceId": { "$ref": "#/$defs/boundedId" },
+        "threadId": { "$ref": "#/$defs/boundedId" },
+        "turnId": { "$ref": "#/$defs/boundedId" },
+        "exchangeId": { "$ref": "#/$defs/positiveInteger" },
+        "harnessId": { "$ref": "#/$defs/boundedId" },
+        "provider": { "$ref": "#/$defs/boundedId" },
+        "toolCallId": { "$ref": "#/$defs/toolCallId" },
+        "toolName": { "$ref": "#/$defs/boundedId" },
+        "nativeToolName": { "$ref": "#/$defs/boundedId" },
+        "status": { "$ref": "#/$defs/status" },
+        "timing": { "$ref": "#/$defs/timing" },
+        "fingerprints": {
+          "type": "object", "additionalProperties": false,
+          "properties": { "argumentsSha256": { "$ref": "#/$defs/sha256" }, "resultSha256": { "$ref": "#/$defs/sha256" } }
+        },
+        "candidates": {
+          "type": "object", "additionalProperties": false, "required": ["reported", "retained", "truncated"],
+          "properties": {
+            "reported": { "type": "integer", "minimum": 0, "maximum": 65 },
+            "retained": { "type": "integer", "minimum": 0, "maximum": 64 },
+            "truncated": { "type": "boolean" }
+          }
+        },
+        "resources": {
+          "type": "object", "additionalProperties": false, "required": ["count", "changedCount"],
+          "properties": {
+            "count": { "type": "integer", "minimum": 0, "maximum": 64 },
+            "changedCount": { "type": "integer", "minimum": 0, "maximum": 64 }
+          }
+        },
+        "fact": {
+          "type": "object", "additionalProperties": false, "required": ["admissionState", "ledgerState"],
+          "properties": {
+            "admissionState": { "enum": ["not_ready", "pending", "admitted", "conflict"] },
+            "ledgerState": { "enum": ["not_ready", "pending", "running", "stored", "conflict", "failed"] }
+          }
+        },
+        "detailRef": { "$ref": "#/$defs/detailRef" }
+      }
+    },
+    "acceptedResource": {
+      "type": "object", "additionalProperties": false, "required": ["path", "fileName", "folderPath"],
+      "properties": {
+        "resourceId": { "$ref": "#/$defs/uuid" },
+        "path": { "$ref": "#/$defs/path" },
+        "fileName": { "$ref": "#/$defs/fileName" },
+        "folderPath": { "$ref": "#/$defs/folder" }
+      }
+    },
+    "snapshotBytes": {
+      "type": "object", "additionalProperties": false, "required": ["state", "sha256", "byteLength", "relation"],
+      "properties": {
+        "state": { "const": "bytes" }, "sha256": { "$ref": "#/$defs/sha256" },
+        "byteLength": { "type": "integer", "minimum": 0, "maximum": 10485760 },
+        "relation": { "enum": ["first_observation", "changed"] }
+      }
+    },
+    "snapshotAbsent": {
+      "type": "object", "additionalProperties": false, "required": ["state", "byteLength", "relation"],
+      "properties": {
+        "state": { "const": "absent" }, "byteLength": { "const": 0 },
+        "relation": { "enum": ["first_observation", "changed"] }
+      }
+    },
+    "observation": {
+      "oneOf": [
+        { "type": "object", "additionalProperties": false, "required": ["state"], "properties": { "state": { "const": "pending" } } },
+        {
+          "type": "object", "additionalProperties": false, "required": ["state", "reason", "observedAt"],
+          "properties": { "state": { "const": "skipped" }, "reason": { "$ref": "#/$defs/skipReason" }, "observedAt": { "$ref": "#/$defs/time" } }
+        },
+        {
+          "type": "object", "additionalProperties": false, "required": ["state", "reason", "observedAt"],
+          "properties": { "state": { "const": "failed" }, "reason": { "$ref": "#/$defs/failureReason" }, "observedAt": { "$ref": "#/$defs/time" } }
+        },
+        {
+          "type": "object", "additionalProperties": false, "required": ["state", "observedAt", "snapshotId", "snapshot"],
+          "properties": {
+            "state": { "enum": ["first_observation", "changed", "unchanged"] },
+            "observedAt": { "$ref": "#/$defs/time" },
+            "snapshotId": { "$ref": "#/$defs/uuid" },
+            "previousSnapshotId": { "$ref": "#/$defs/uuid" },
+            "snapshot": { "oneOf": [{ "$ref": "#/$defs/snapshotBytes" }, { "$ref": "#/$defs/snapshotAbsent" }] }
+          }
+        }
+      ]
+    },
+    "edgeItem": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "edgeId", "activityId", "workspaceId", "threadId", "turnId", "harnessId", "toolCallId", "toolName", "status", "candidateSha256", "access", "observation"],
+      "properties": {
+        "kind": { "const": "resource_edge" },
+        "edgeId": { "$ref": "#/$defs/uuid" }, "activityId": { "$ref": "#/$defs/uuid" },
+        "workspaceId": { "$ref": "#/$defs/boundedId" }, "threadId": { "$ref": "#/$defs/boundedId" },
+        "turnId": { "$ref": "#/$defs/boundedId" }, "exchangeId": { "$ref": "#/$defs/positiveInteger" },
+        "harnessId": { "$ref": "#/$defs/boundedId" }, "toolCallId": { "$ref": "#/$defs/toolCallId" },
+        "toolName": { "$ref": "#/$defs/boundedId" }, "status": { "$ref": "#/$defs/status" },
+        "candidateSha256": { "$ref": "#/$defs/sha256" },
+        "resource": { "$ref": "#/$defs/acceptedResource" },
+        "access": {
+          "type": "object", "additionalProperties": false, "required": ["family", "kind", "extractionBasis"],
+          "properties": { "family": { "$ref": "#/$defs/accessFamily" }, "kind": { "$ref": "#/$defs/accessKind" }, "extractionBasis": { "$ref": "#/$defs/basis" } }
+        },
+        "observation": { "$ref": "#/$defs/observation" },
+        "detailRef": { "$ref": "#/$defs/detailRef" }
+      }
+    },
+    "toolResult": {
+      "type": "object", "additionalProperties": false,
+      "required": ["type", "version", "requestId", "workspaceId", "workspaceEpoch", "subject", "items"],
+      "properties": {
+        "type": { "const": "agent:activity:result" }, "version": { "const": 1 },
+        "requestId": { "$ref": "#/$defs/boundedId" }, "workspaceId": { "$ref": "#/$defs/boundedId" },
+        "workspaceEpoch": { "$ref": "#/$defs/uuid" }, "subject": { "const": "tool_calls" },
+        "items": { "type": "array", "maxItems": 100, "items": { "$ref": "#/$defs/toolItem" } },
+        "nextCursor": { "type": "string", "pattern": "^[1-9][0-9]{0,19}$" }
+      }
+    },
+    "edgeResult": {
+      "type": "object", "additionalProperties": false,
+      "required": ["type", "version", "requestId", "workspaceId", "workspaceEpoch", "subject", "items"],
+      "properties": {
+        "type": { "const": "agent:activity:result" }, "version": { "const": 1 },
+        "requestId": { "$ref": "#/$defs/boundedId" }, "workspaceId": { "$ref": "#/$defs/boundedId" },
+        "workspaceEpoch": { "$ref": "#/$defs/uuid" }, "subject": { "const": "resource_edges" },
+        "items": { "type": "array", "maxItems": 100, "items": { "$ref": "#/$defs/edgeItem" } },
+        "nextCursor": { "type": "string", "pattern": "^[1-9][0-9]{0,19}$" }
+      }
+    },
+    "envelopeInvalid": {
+      "type": "object", "additionalProperties": false, "required": ["type", "version", "code"],
+      "properties": {
+        "type": { "const": "agent:activity:error" }, "version": { "const": 1 },
+        "code": { "const": "invalid_request" }, "requestId": { "$ref": "#/$defs/boundedId" }
+      }
+    },
+    "workspaceUnavailable": {
+      "type": "object", "additionalProperties": false, "required": ["type", "version", "code", "requestId"],
+      "properties": {
+        "type": { "const": "agent:activity:error" }, "version": { "const": 1 },
+        "code": { "const": "workspace_unavailable" }, "requestId": { "$ref": "#/$defs/boundedId" }
+      }
+    },
+    "pairError": {
+      "type": "object", "additionalProperties": false,
+      "required": ["type", "version", "code", "requestId", "workspaceId", "workspaceEpoch"],
+      "properties": {
+        "type": { "const": "agent:activity:error" }, "version": { "const": 1 },
+        "code": { "enum": ["invalid_request", "stale_workspace", "query_failed"] },
+        "requestId": { "$ref": "#/$defs/boundedId" }, "workspaceId": { "$ref": "#/$defs/boundedId" },
+        "workspaceEpoch": { "$ref": "#/$defs/uuid" }
+      }
+    }
+  }
+}

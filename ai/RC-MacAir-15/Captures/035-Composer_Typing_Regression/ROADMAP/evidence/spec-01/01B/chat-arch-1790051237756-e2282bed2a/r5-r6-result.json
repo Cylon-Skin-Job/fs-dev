@@ -1,0 +1,148 @@
+{
+  "systemSetupReadiness": {
+    "id": "R5-SYSTEM-FIXTURE-READINESS",
+    "sourceCapsuleVerified": true,
+    "boundedRebind": false,
+    "initial": null,
+    "final": {
+      "workspaceLabel": "R5 System Fixture",
+      "chatWorkspaceId": "system-files",
+      "connected": true,
+      "projectionFrames": [
+        {
+          "workspaceId": "system-files",
+          "unavailable": false,
+          "viewIds": [
+            "capture-viewer",
+            "file-viewer",
+            "wiki-viewer",
+            "issues-viewer",
+            "agents-viewer",
+            "system-viewer"
+          ]
+        }
+      ],
+      "railTitles": [
+        "Captures",
+        "Files",
+        "Wiki",
+        "Issues",
+        "Agents",
+        "System"
+      ]
+    }
+  },
+  "systemAttemptSnapshot": {
+    "afterClick": {
+      "phase": "after-create-click",
+      "radio": [
+        {
+          "value": "New Folder",
+          "checked": true
+        },
+        {
+          "value": "Choose Existing Folder",
+          "checked": false
+        }
+      ],
+      "name": "R5 Synthetic Workspace",
+      "selectedFolder": null,
+      "overlay": true,
+      "actionEvents": [
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "workspace-manager.workspace-creation",
+          "target": "new",
+          "delivery": "insert"
+        }
+      ],
+      "sentFrames": [
+        {
+          "type": "prompt:resolve",
+          "requestId": "chat-action-muc6as6k-1"
+        }
+      ],
+      "sentDelta": {
+        "prompt:resolve": 1
+      },
+      "receivedDelta": {
+        "thread:list": 1,
+        "file_content_response": 4,
+        "file_tree_response": 1
+      },
+      "toast": null,
+      "activeThreadId": null,
+      "chatWorkspaceId": "system-files",
+      "workspaceLabel": "R5 System Fixture",
+      "resolvedCommandObserved": false
+    },
+    "atFailure": {
+      "phase": "failure",
+      "radio": [
+        {
+          "value": "New Folder",
+          "checked": true
+        },
+        {
+          "value": "Choose Existing Folder",
+          "checked": false
+        }
+      ],
+      "name": "R5 Synthetic Workspace",
+      "selectedFolder": null,
+      "overlay": true,
+      "actionEvents": [
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "workspace-manager.workspace-creation",
+          "target": "new",
+          "delivery": "insert"
+        }
+      ],
+      "sentFrames": [
+        {
+          "type": "prompt:resolve",
+          "requestId": "chat-action-muc6as6k-1"
+        },
+        {
+          "type": "thread:open-assistant",
+          "requestId": "chat-action-muc6as6k-1"
+        }
+      ],
+      "sentDelta": {
+        "file_content_request": 3,
+        "file_tree_request": 60,
+        "state:set": 3,
+        "prompt:resolve": 1,
+        "thread:open-assistant": 1
+      },
+      "receivedDelta": {
+        "thread:list": 7,
+        "panel_changed": 1,
+        "file_content_response": 13,
+        "file_tree_response": 64,
+        "state:result": 5,
+        "prompt:resolved": 1,
+        "error": 2
+      },
+      "toast": null,
+      "activeThreadId": null,
+      "chatWorkspaceId": "system-files",
+      "workspaceLabel": "R5 System Fixture",
+      "resolvedCommandObserved": true
+    }
+  },
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": {
+    "name": "Error",
+    "message": "timed out waiting for System prompt/new applied and overlay closed",
+    "stack": "Error: timed out waiting for System prompt/new applied and overlay closed\n    at waitFor (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs:31:9)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r5-r6-electron.mjs:905:3"
+  }
+}

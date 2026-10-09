@@ -1,0 +1,458 @@
+{
+  "at": "2026-10-06T22:06:24.543645+00:00",
+  "controllerHome": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "candidate": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+  "branch": "codex/chat-retirement-and-startup-repair",
+  "head": "3356e1b73cc5d44028eac5baa02fd542a8bbc385",
+  "currentDependencyPacket": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/current-byte-evidence.json",
+  "currentDependencyPacketSha256": "d2a8d88c0a48c69218644641657c7feb71c2dd0c719e4dc688c8c473e3eee0b3",
+  "invocationEvidence": "Exact invocations reconstructed from executed tool commands/session IDs in this worker turn, with raw logs preserved; checks are not inferred from log presence alone. Earlier processes completed with listed codes. Final bytes are separately hash-pinned.",
+  "checks": [
+    {
+      "name": "initial-production-build",
+      "cwd": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/fusion-studio-client",
+      "command": "npm run build > '/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/client-build.log' 2>&1",
+      "rawLog": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/client-build.log",
+      "rawLogSha256": "b91c88666b5cc0b00f9c4742533a7925d005b0f9c856c90f5838e786825e8a1c",
+      "exitCode": 0,
+      "execSession": 38633,
+      "scripts": [
+        "npm run build:preload",
+        "tsc -b",
+        "vite build"
+      ],
+      "notes": "Historical first repair build. Invalidated as current production evidence by retained-view correction; raw preserved."
+    },
+    {
+      "name": "first-focused-screenshot",
+      "cwd": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/fusion-studio-client",
+      "command": "CHAT_TRANSPORT_TEST_PORT=43791 npx --no-install playwright test --config=playwright.chat-architecture.config.ts e2e/threaded-chat-host.spec.ts e2e/prompt-ownership.slice-c.spec.ts -g screenshot --output='/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/playwright-focused' > '/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/screenshot-focused.log' 2>&1",
+      "port": 43791,
+      "baseURL": "http://127.0.0.1:43791",
+      "config": {
+        "path": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/fusion-studio-client/playwright.chat-architecture.config.ts",
+        "sha256": "cb9e918351eac456daabdf02bd2eb41ead52e7c42824a43a34add4cd0a9c0be6",
+        "project": "fixture-only-chromium",
+        "reuseExistingServer": false,
+        "excludedByConfig": "built client boots the real app on the isolated server without runtime errors"
+      },
+      "server": {
+        "path": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/fusion-studio-client/e2e/chat-transport-test-server.mjs",
+        "sha256": "aa7750c8b8234c978ce457aebecccea47e149497e5ebbe17f941deee3261e0b5",
+        "profilePattern": "os.tmpdir()/fusion-chat-transport-profile-*",
+        "soleWorkspacePattern": "os.tmpdir()/fusion-chat-transport-workspace-*/fixture",
+        "machineIdentity": "RC-MacAir-15",
+        "providerProof": false,
+        "normalProfileOrAlphaAccess": false,
+        "staticDistAppBoot": "excluded; fixture pages use controlled browser dependency setup"
+      },
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/playwright-focused",
+      "rawLog": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/screenshot-focused.log",
+      "rawLogSha256": "3d057531459d07e81ef2c782f014bcfca1222f83e615b96a70ac28422921fe86",
+      "exitCode": 1,
+      "rawSummary": [
+        "3 failed",
+        "23 passed (34.2s)"
+      ],
+      "notes": "23 passed /3 failed: test row-center gesture hit More options rather than row text. Traces/error snapshots preserved. No production fix implied by gesture correction.",
+      "execSession": 85301
+    },
+    {
+      "name": "focused-after-gesture-correction",
+      "cwd": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/fusion-studio-client",
+      "command": "CHAT_TRANSPORT_TEST_PORT=43791 npx --no-install playwright test --config=playwright.chat-architecture.config.ts e2e/threaded-chat-host.spec.ts e2e/prompt-ownership.slice-c.spec.ts -g screenshot --output='/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/playwright-focused-rerun' > '/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/screenshot-focused-rerun.log' 2>&1",
+      "port": 43791,
+      "baseURL": "http://127.0.0.1:43791",
+      "config": {
+        "path": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/fusion-studio-client/playwright.chat-architecture.config.ts",
+        "sha256": "cb9e918351eac456daabdf02bd2eb41ead52e7c42824a43a34add4cd0a9c0be6",
+        "project": "fixture-only-chromium",
+        "reuseExistingServer": false,
+        "excludedByConfig": "built client boots the real app on the isolated server without runtime errors"
+      },
+      "server": {
+        "path": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/fusion-studio-client/e2e/chat-transport-test-server.mjs",
+        "sha256": "aa7750c8b8234c978ce457aebecccea47e149497e5ebbe17f941deee3261e0b5",
+        "profilePattern": "os.tmpdir()/fusion-chat-transport-profile-*",
+        "soleWorkspacePattern": "os.tmpdir()/fusion-chat-transport-workspace-*/fixture",
+        "machineIdentity": "RC-MacAir-15",
+        "providerProof": false,
+        "normalProfileOrAlphaAccess": false,
+        "staticDistAppBoot": "excluded; fixture pages use controlled browser dependency setup"
+      },
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/playwright-focused-rerun",
+      "rawLog": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/screenshot-focused-rerun.log",
+      "rawLogSha256": "945939e21f3e56edac80c924770898de51e4101d6ed3940b84a2cade31dd9f6d",
+      "exitCode": 0,
+      "rawSummary": [
+        "26 passed (12.8s)"
+      ],
+      "notes": "26 passed. Historical pre-retained-view repair evidence; cannot establish current component view cancellation.",
+      "execSession": 94542
+    },
+    {
+      "name": "first-cumulative",
+      "cwd": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/fusion-studio-client",
+      "command": "CHAT_TRANSPORT_TEST_PORT=43791 npx --no-install playwright test --config=playwright.chat-architecture.config.ts e2e/threaded-chat-host.spec.ts e2e/chat-send-transport.spec.ts e2e/prompt-ownership.slice-c.spec.ts e2e/chat-composer-screenshot-menu.spec.ts e2e/side-chat-isolation.spec.ts e2e/side-chat-adapterless-native.spec.ts e2e/side-chat-placement-recovery.spec.ts e2e/chat-component-registration.spec.ts e2e/move-chat-to-side-chat.spec.ts --output='/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/playwright-cumulative' > '/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/chat-cumulative.log' 2>&1",
+      "port": 43791,
+      "baseURL": "http://127.0.0.1:43791",
+      "config": {
+        "path": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/fusion-studio-client/playwright.chat-architecture.config.ts",
+        "sha256": "cb9e918351eac456daabdf02bd2eb41ead52e7c42824a43a34add4cd0a9c0be6",
+        "project": "fixture-only-chromium",
+        "reuseExistingServer": false,
+        "excludedByConfig": "built client boots the real app on the isolated server without runtime errors"
+      },
+      "server": {
+        "path": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/fusion-studio-client/e2e/chat-transport-test-server.mjs",
+        "sha256": "aa7750c8b8234c978ce457aebecccea47e149497e5ebbe17f941deee3261e0b5",
+        "profilePattern": "os.tmpdir()/fusion-chat-transport-profile-*",
+        "soleWorkspacePattern": "os.tmpdir()/fusion-chat-transport-workspace-*/fixture",
+        "machineIdentity": "RC-MacAir-15",
+        "providerProof": false,
+        "normalProfileOrAlphaAccess": false,
+        "staticDistAppBoot": "excluded; fixture pages use controlled browser dependency setup"
+      },
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/playwright-cumulative",
+      "rawLog": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/chat-cumulative.log",
+      "rawLogSha256": "63eb307e9c383e517abfb272e602568ae09a52db260d9c90f6def7cd4a2b1786",
+      "exitCode": 1,
+      "rawSummary": [
+        "1 failed",
+        "97 passed (53.6s)"
+      ],
+      "notes": "97 passed /1 failed: existing component fixture lacked installed product-send admission capability; prompt correctly refused. Port preflight bind failed (Address already in use) immediately after prior lane cleanup; configured fresh server still started with reuseExistingServer=false and completed this run. No attach to a live server.",
+      "execSession": 20532
+    },
+    {
+      "name": "component-fixture-after-capability-setup",
+      "cwd": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/fusion-studio-client",
+      "command": "CHAT_TRANSPORT_TEST_PORT=43792 npx --no-install playwright test --config=playwright.chat-architecture.config.ts e2e/chat-component-registration.spec.ts --output='/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/playwright-component-rerun' > '/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/component-rerun.log' 2>&1",
+      "port": 43792,
+      "baseURL": "http://127.0.0.1:43792",
+      "config": {
+        "path": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/fusion-studio-client/playwright.chat-architecture.config.ts",
+        "sha256": "cb9e918351eac456daabdf02bd2eb41ead52e7c42824a43a34add4cd0a9c0be6",
+        "project": "fixture-only-chromium",
+        "reuseExistingServer": false,
+        "excludedByConfig": "built client boots the real app on the isolated server without runtime errors"
+      },
+      "server": {
+        "path": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/fusion-studio-client/e2e/chat-transport-test-server.mjs",
+        "sha256": "aa7750c8b8234c978ce457aebecccea47e149497e5ebbe17f941deee3261e0b5",
+        "profilePattern": "os.tmpdir()/fusion-chat-transport-profile-*",
+        "soleWorkspacePattern": "os.tmpdir()/fusion-chat-transport-workspace-*/fixture",
+        "machineIdentity": "RC-MacAir-15",
+        "providerProof": false,
+        "normalProfileOrAlphaAccess": false,
+        "staticDistAppBoot": "excluded; fixture pages use controlled browser dependency setup"
+      },
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/playwright-component-rerun",
+      "rawLog": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/component-rerun.log",
+      "rawLogSha256": "0d0ce59149c646057aa74faa1ff2d6a3a486854eb3203ac329f8f62aa68523de",
+      "exitCode": 0,
+      "rawSummary": [
+        "7 passed (5.7s)"
+      ],
+      "notes": "7 passed; original prompt/threadId/no-persisted-or-outbound-surfaceId assertions unchanged.",
+      "execSession": 9619
+    },
+    {
+      "name": "current-focused-retained-view",
+      "cwd": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/fusion-studio-client",
+      "command": "CHAT_TRANSPORT_TEST_PORT=43793 npx --no-install playwright test --config=playwright.chat-architecture.config.ts e2e/threaded-chat-host.spec.ts e2e/prompt-ownership.slice-c.spec.ts -g screenshot --output='/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/playwright-retained-view' > '/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/screenshot-retained-view.log' 2>&1",
+      "port": 43793,
+      "baseURL": "http://127.0.0.1:43793",
+      "config": {
+        "path": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/fusion-studio-client/playwright.chat-architecture.config.ts",
+        "sha256": "cb9e918351eac456daabdf02bd2eb41ead52e7c42824a43a34add4cd0a9c0be6",
+        "project": "fixture-only-chromium",
+        "reuseExistingServer": false,
+        "excludedByConfig": "built client boots the real app on the isolated server without runtime errors"
+      },
+      "server": {
+        "path": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/fusion-studio-client/e2e/chat-transport-test-server.mjs",
+        "sha256": "aa7750c8b8234c978ce457aebecccea47e149497e5ebbe17f941deee3261e0b5",
+        "profilePattern": "os.tmpdir()/fusion-chat-transport-profile-*",
+        "soleWorkspacePattern": "os.tmpdir()/fusion-chat-transport-workspace-*/fixture",
+        "machineIdentity": "RC-MacAir-15",
+        "providerProof": false,
+        "normalProfileOrAlphaAccess": false,
+        "staticDistAppBoot": "excluded; fixture pages use controlled browser dependency setup"
+      },
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/playwright-retained-view",
+      "rawLog": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/screenshot-retained-view.log",
+      "rawLogSha256": "f91f94872c9cdc0b624c46e75feb3a107224a87c40996f71e1455f534b448bea",
+      "exitCode": 0,
+      "rawSummary": [
+        "34 passed (42.4s)"
+      ],
+      "notes": "34 passed, including8 retained real WorkspacePanel component view-switch/return cases. Captured current production bytes before any cosmetic EOF cleanup; captured test bytes unchanged.",
+      "execSession": 81797,
+      "testedProductionAndTestIdentity": [
+        {
+          "path": "fusion-studio-client/e2e/chat-component-registration.spec.ts",
+          "sha256": "6f944b2dc873e518c8cd10cf8503e0527677f0f119fa0927006cdf63aca5ceb1"
+        },
+        {
+          "path": "fusion-studio-client/e2e/chat-composer-screenshot-menu.spec.ts",
+          "sha256": "93db83a1f751645778b55f4c54b50d5372fbfd4a9acc8e363b8b71bb23a1f03a"
+        },
+        {
+          "path": "fusion-studio-client/e2e/prompt-ownership.slice-c.spec.ts",
+          "sha256": "733f5a7cdc902a68c75c906338a042340209abf34205ab385f89b691e47ad699"
+        },
+        {
+          "path": "fusion-studio-client/e2e/threaded-chat-host.spec.ts",
+          "sha256": "4c2cdef55c38b815cf8d35ed5bcac3c04bf595db5d6126ae6f83f704f17ccb30"
+        },
+        {
+          "path": "fusion-studio-client/src/components/chat/ChatSurface.tsx",
+          "sha256": "eddbcc616a6b4ccfbf211db031901dcb9fc22ec32d6bbbe0ccd50b8c1ff807f8"
+        },
+        {
+          "path": "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+          "sha256": "b9202119baf0caa6ea08022ba2e6a322ec8c15e874d7d82d68ad8a4b20b12127"
+        },
+        {
+          "path": "fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx",
+          "sha256": "b3dcd745e057d9e8d350f6623d8a0b697f47b69778af1e29fc95946c0f758463"
+        },
+        {
+          "path": "fusion-studio-client/src/components/chat/sideChatBridge.ts",
+          "sha256": "dba500d3f7e28e3b845bc7b2c05478edd361325fb6c9b86cb7366a0f9834a8af"
+        },
+        {
+          "path": "fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts",
+          "sha256": "2a1205bd426604f805eb7fe2b93ce8f3be65f1a18207bba7653d6534c01d317a"
+        },
+        {
+          "path": "fusion-studio-client/src/lib/chat/side-chat-placements.ts",
+          "sha256": "93878e20774164e6c0e5840caba3ffcb0c135829e08d945500bf8ad72ddad7b9"
+        },
+        {
+          "path": "fusion-studio-client/src/screenshots/chatScreenshotCapture.ts",
+          "sha256": "18eb2caf9261a19d30ad35c5ac36a64c51ee22e08567e8cfb2ac48d84e9b12f1"
+        }
+      ],
+      "newlineOnlyRetention": {
+        "authority": "Root explicitly retained106tests/build on sole EOF trim; canonical runtime later rebuilds",
+        "pretrimSha256": "93878e20774164e6c0e5840caba3ffcb0c135829e08d945500bf8ad72ddad7b9",
+        "currentSha256": "109d5f63baf402c39dddf8cc96a93a95d2108e1988fca5dca99a7ad263b417e1",
+        "beforeEqualsAfterPlusNewline": true,
+        "evidencePath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/eof-trim-readback.json",
+        "evidenceSha256": "315568ef7aaf8c0cdea37976c0b5322f03f963acf6f0194629fe9c75f695e1a6",
+        "tokensStatementsImportsAssertionsUnchanged": true
+      }
+    },
+    {
+      "name": "current-retained-view-production-build",
+      "cwd": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/fusion-studio-client",
+      "command": "npm run build > '/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/client-build-retained-view.log' 2>&1",
+      "rawLog": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/client-build-retained-view.log",
+      "rawLogSha256": "ca73a51c9dc2393c3375c77658aa6a80c7a384b31d2042a15caaa5352d0aef6c",
+      "exitCode": 0,
+      "execSession": 17548,
+      "scripts": [
+        "npm run build:preload",
+        "tsc -b",
+        "vite build"
+      ],
+      "notes": "Current functional repair build; preload/TypeScript/renderer succeeded. Existing gray-matter eval, CaptureTiles dynamic/static import and >500k chunk warnings persist.",
+      "testedProductionAndTestIdentity": [
+        {
+          "path": "fusion-studio-client/e2e/chat-component-registration.spec.ts",
+          "sha256": "6f944b2dc873e518c8cd10cf8503e0527677f0f119fa0927006cdf63aca5ceb1"
+        },
+        {
+          "path": "fusion-studio-client/e2e/chat-composer-screenshot-menu.spec.ts",
+          "sha256": "93db83a1f751645778b55f4c54b50d5372fbfd4a9acc8e363b8b71bb23a1f03a"
+        },
+        {
+          "path": "fusion-studio-client/e2e/prompt-ownership.slice-c.spec.ts",
+          "sha256": "733f5a7cdc902a68c75c906338a042340209abf34205ab385f89b691e47ad699"
+        },
+        {
+          "path": "fusion-studio-client/e2e/threaded-chat-host.spec.ts",
+          "sha256": "4c2cdef55c38b815cf8d35ed5bcac3c04bf595db5d6126ae6f83f704f17ccb30"
+        },
+        {
+          "path": "fusion-studio-client/src/components/chat/ChatSurface.tsx",
+          "sha256": "eddbcc616a6b4ccfbf211db031901dcb9fc22ec32d6bbbe0ccd50b8c1ff807f8"
+        },
+        {
+          "path": "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+          "sha256": "b9202119baf0caa6ea08022ba2e6a322ec8c15e874d7d82d68ad8a4b20b12127"
+        },
+        {
+          "path": "fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx",
+          "sha256": "b3dcd745e057d9e8d350f6623d8a0b697f47b69778af1e29fc95946c0f758463"
+        },
+        {
+          "path": "fusion-studio-client/src/components/chat/sideChatBridge.ts",
+          "sha256": "dba500d3f7e28e3b845bc7b2c05478edd361325fb6c9b86cb7366a0f9834a8af"
+        },
+        {
+          "path": "fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts",
+          "sha256": "2a1205bd426604f805eb7fe2b93ce8f3be65f1a18207bba7653d6534c01d317a"
+        },
+        {
+          "path": "fusion-studio-client/src/lib/chat/side-chat-placements.ts",
+          "sha256": "93878e20774164e6c0e5840caba3ffcb0c135829e08d945500bf8ad72ddad7b9"
+        },
+        {
+          "path": "fusion-studio-client/src/screenshots/chatScreenshotCapture.ts",
+          "sha256": "18eb2caf9261a19d30ad35c5ac36a64c51ee22e08567e8cfb2ac48d84e9b12f1"
+        }
+      ],
+      "newlineOnlyRetention": {
+        "authority": "Root explicitly retained106tests/build on sole EOF trim; canonical runtime later rebuilds",
+        "pretrimSha256": "93878e20774164e6c0e5840caba3ffcb0c135829e08d945500bf8ad72ddad7b9",
+        "currentSha256": "109d5f63baf402c39dddf8cc96a93a95d2108e1988fca5dca99a7ad263b417e1",
+        "beforeEqualsAfterPlusNewline": true,
+        "evidencePath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/eof-trim-readback.json",
+        "evidenceSha256": "315568ef7aaf8c0cdea37976c0b5322f03f963acf6f0194629fe9c75f695e1a6",
+        "tokensStatementsImportsAssertionsUnchanged": true
+      }
+    },
+    {
+      "name": "current-cumulative",
+      "cwd": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/fusion-studio-client",
+      "command": "CHAT_TRANSPORT_TEST_PORT=43794 npx --no-install playwright test --config=playwright.chat-architecture.config.ts e2e/threaded-chat-host.spec.ts e2e/chat-send-transport.spec.ts e2e/prompt-ownership.slice-c.spec.ts e2e/chat-composer-screenshot-menu.spec.ts e2e/side-chat-isolation.spec.ts e2e/side-chat-adapterless-native.spec.ts e2e/side-chat-placement-recovery.spec.ts e2e/chat-component-registration.spec.ts e2e/move-chat-to-side-chat.spec.ts --output='/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/playwright-cumulative-final' > '/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/chat-cumulative-final.log' 2>&1",
+      "port": 43794,
+      "baseURL": "http://127.0.0.1:43794",
+      "config": {
+        "path": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/fusion-studio-client/playwright.chat-architecture.config.ts",
+        "sha256": "cb9e918351eac456daabdf02bd2eb41ead52e7c42824a43a34add4cd0a9c0be6",
+        "project": "fixture-only-chromium",
+        "reuseExistingServer": false,
+        "excludedByConfig": "built client boots the real app on the isolated server without runtime errors"
+      },
+      "server": {
+        "path": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/fusion-studio-client/e2e/chat-transport-test-server.mjs",
+        "sha256": "aa7750c8b8234c978ce457aebecccea47e149497e5ebbe17f941deee3261e0b5",
+        "profilePattern": "os.tmpdir()/fusion-chat-transport-profile-*",
+        "soleWorkspacePattern": "os.tmpdir()/fusion-chat-transport-workspace-*/fixture",
+        "machineIdentity": "RC-MacAir-15",
+        "providerProof": false,
+        "normalProfileOrAlphaAccess": false,
+        "staticDistAppBoot": "excluded; fixture pages use controlled browser dependency setup"
+      },
+      "output": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/playwright-cumulative-final",
+      "rawLog": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/chat-cumulative-final.log",
+      "rawLogSha256": "d85820a329fa8492551a96a59f41ff5303730f8c71e8eebb3d061748a0cd17f0",
+      "exitCode": 0,
+      "rawSummary": [
+        "106 passed (1.4m)"
+      ],
+      "notes": "106 passed. All9 affected suites; configured actual app-boot test excluded. Screenshots use actual rendered caller/controller with controlled Electron capture and save ACK; no real Electron capture/provider replay claimed.",
+      "execSession": 81329,
+      "testedProductionAndTestIdentity": [
+        {
+          "path": "fusion-studio-client/e2e/chat-component-registration.spec.ts",
+          "sha256": "6f944b2dc873e518c8cd10cf8503e0527677f0f119fa0927006cdf63aca5ceb1"
+        },
+        {
+          "path": "fusion-studio-client/e2e/chat-composer-screenshot-menu.spec.ts",
+          "sha256": "93db83a1f751645778b55f4c54b50d5372fbfd4a9acc8e363b8b71bb23a1f03a"
+        },
+        {
+          "path": "fusion-studio-client/e2e/prompt-ownership.slice-c.spec.ts",
+          "sha256": "733f5a7cdc902a68c75c906338a042340209abf34205ab385f89b691e47ad699"
+        },
+        {
+          "path": "fusion-studio-client/e2e/threaded-chat-host.spec.ts",
+          "sha256": "4c2cdef55c38b815cf8d35ed5bcac3c04bf595db5d6126ae6f83f704f17ccb30"
+        },
+        {
+          "path": "fusion-studio-client/src/components/chat/ChatSurface.tsx",
+          "sha256": "eddbcc616a6b4ccfbf211db031901dcb9fc22ec32d6bbbe0ccd50b8c1ff807f8"
+        },
+        {
+          "path": "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+          "sha256": "b9202119baf0caa6ea08022ba2e6a322ec8c15e874d7d82d68ad8a4b20b12127"
+        },
+        {
+          "path": "fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx",
+          "sha256": "b3dcd745e057d9e8d350f6623d8a0b697f47b69778af1e29fc95946c0f758463"
+        },
+        {
+          "path": "fusion-studio-client/src/components/chat/sideChatBridge.ts",
+          "sha256": "dba500d3f7e28e3b845bc7b2c05478edd361325fb6c9b86cb7366a0f9834a8af"
+        },
+        {
+          "path": "fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts",
+          "sha256": "2a1205bd426604f805eb7fe2b93ce8f3be65f1a18207bba7653d6534c01d317a"
+        },
+        {
+          "path": "fusion-studio-client/src/lib/chat/side-chat-placements.ts",
+          "sha256": "93878e20774164e6c0e5840caba3ffcb0c135829e08d945500bf8ad72ddad7b9"
+        },
+        {
+          "path": "fusion-studio-client/src/screenshots/chatScreenshotCapture.ts",
+          "sha256": "18eb2caf9261a19d30ad35c5ac36a64c51ee22e08567e8cfb2ac48d84e9b12f1"
+        }
+      ],
+      "newlineOnlyRetention": {
+        "authority": "Root explicitly retained106tests/build on sole EOF trim; canonical runtime later rebuilds",
+        "pretrimSha256": "93878e20774164e6c0e5840caba3ffcb0c135829e08d945500bf8ad72ddad7b9",
+        "currentSha256": "109d5f63baf402c39dddf8cc96a93a95d2108e1988fca5dca99a7ad263b417e1",
+        "beforeEqualsAfterPlusNewline": true,
+        "evidencePath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/eof-trim-readback.json",
+        "evidenceSha256": "315568ef7aaf8c0cdea37976c0b5322f03f963acf6f0194629fe9c75f695e1a6",
+        "tokensStatementsImportsAssertionsUnchanged": true
+      }
+    },
+    {
+      "name": "tracked-repair-whitespace",
+      "cwd": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "command": "git diff --check -- fusion-studio-client/src/screenshots/chatScreenshotCapture.ts fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx fusion-studio-client/src/components/chat/ChatSurface.tsx fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx fusion-studio-client/src/components/chat/sideChatBridge.ts fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts fusion-studio-client/e2e/prompt-ownership.slice-c.spec.ts fusion-studio-client/e2e/threaded-chat-host.spec.ts fusion-studio-client/e2e/chat-composer-screenshot-menu.spec.ts fusion-studio-client/e2e/chat-component-registration.spec.ts > '/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/repair-diff-check.log' 2>&1",
+      "exitCode": 0,
+      "rawLog": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/repair-diff-check.log",
+      "rawLogSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "new-leaf-whitespace-initial",
+      "cwd": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "command": "git diff --no-index --check /dev/null fusion-studio-client/src/lib/chat/side-chat-placements.ts > '/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/new-leaf-diff-check.log' 2>&1",
+      "exitCode": 3,
+      "rawLog": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/new-leaf-diff-check.log",
+      "rawLogSha256": "f7fe79bd60840e3cb747d646735c86cddbaaf9fe2272d43801f808f179198344",
+      "notes": "Historical EOF blank-line diagnostic preserved; root authorized sole final newline trim after saving exact pretrim bytes. Corrected result recorded separately."
+    },
+    {
+      "name": "new-leaf-whitespace-final",
+      "cwd": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "command": "GIT_OPTIONAL_LOCKS=0 git diff --no-index --check /dev/null fusion-studio-client/src/lib/chat/side-chat-placements.ts > '/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/new-leaf-diff-check-final.log' 2>&1",
+      "exitCode": 1,
+      "checkFailureBit": false,
+      "expectedNewFileDifferenceBit": true,
+      "rawLog": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/new-leaf-diff-check-final.log",
+      "rawLogSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawOutputBytes": 0,
+      "notes": "Exit1 is the new-file difference from /dev/null; whitespace check failure bit2 is absent. Original exit3 EOF warning preserved in prior raw log."
+    },
+    {
+      "name": "test-owned-port-listeners-final",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "command": "lsof -nP -iTCP:43791 -iTCP:43792 -iTCP:43793 -iTCP:43794 -sTCP:LISTEN > '/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/test-port-listeners-final.log' 2>&1",
+      "exitCode": 1,
+      "rawLog": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/test-port-listeners-final.log",
+      "rawLogSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "notes": "No LISTEN sockets on any assigned test port; expected lsof no-match exit1, empty output."
+    }
+  ],
+  "runtimeLimits": "Test-owned backend only; isolated profile/sole workspace outside both checkouts. Electron PNG capture and ACK delivery are controlled dependencies in screenshot fixtures. No live app/user profile/Alpha/provider action. Existing skip/config exclusion and warnings retained.",
+  "warnings": [
+    "Existing gray-matter eval warning",
+    "Existing CaptureTiles dynamic/static import warning",
+    "Existing renderer chunk >500k warning",
+    "NO_COLOR ignored because FORCE_COLOR is set",
+    "Test-owned backend emits diagnostic_error/diagnostic_warning markers; these raw markers were not relabeled as a successful native app/provider smoke"
+  ],
+  "unchangedCumulativeOracleDependencies": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/cumulative-oracle-dependencies.json",
+    "sha256": "fab9460f83e2ba7e33fe71aa525119f95bd2332b7ce142d14f42dda7e552e125",
+    "authority": "Root immutable-before/current proof; all4 match initial main recovery worktree hashes, source and candidate; no product change or rerun"
+  }
+}

@@ -1,0 +1,164 @@
+{
+  "caseId": "R4-LATE-DRAFT-RECOVERY",
+  "status": "executed",
+  "authenticatedShell": true,
+  "startupPanelReadiness": "exact-rail-before-activation",
+  "fixture": "F4",
+  "owner": "SPEC-02/02C",
+  "missingContracts": [],
+  "assertionsEvaluated": true,
+  "statusEndpointFabricated": false,
+  "promptContentRecorded": false,
+  "originalSnapshotSha256": "4ce9002c84fcc3f08590016e4f22ae3de343a84330390c0e552bd3d4eef1c702",
+  "revisedDraftSha256": "e5ef498008cb23ddf9fb48dc036369ee68bd571f186b67ec5e13818780a8bb9e",
+  "transport": {
+    "beforeRestart": {
+      "sentTypes": {
+        "shell-auth:proof": 1,
+        "office:palette_get": 1,
+        "state:get": 1,
+        "screenshot:list": 1,
+        "file_content_request": 53,
+        "set_panel": 3,
+        "file_tree_request": 64,
+        "thread:list": 2,
+        "state:set": 5,
+        "thread:open-assistant": 1,
+        "thread:open": 1,
+        "state:worksurface_get": 1,
+        "thread:warm": 1,
+        "prompt": 1,
+        "screenshot:capture": 1,
+        "screenshot:request": 1,
+        "thread:action": 1,
+        "state:worksurface_put": 1,
+        "workspace:state_push": 2
+      },
+      "receivedTypes": {
+        "shell-auth:challenge": 1,
+        "connected": 1,
+        "workspace:init": 1,
+        "panel_config": 1,
+        "shell-auth:authenticated": 1,
+        "thread:list": 7,
+        "screenshot:list": 1,
+        "panel_changed": 3,
+        "file_content_response": 53,
+        "file_tree_response": 64,
+        "office:palette_state": 1,
+        "state:result": 6,
+        "thread:created": 1,
+        "thread:opened": 2,
+        "wire_ready": 1,
+        "state:worksurface_result": 2,
+        "screenshot:updated": 1,
+        "screenshot:data": 1,
+        "message:sent": 1,
+        "turn_begin": 1,
+        "thread:state_changed": 2,
+        "step_begin": 1,
+        "thinking": 1,
+        "tool_call": 1,
+        "tool_call_args": 1,
+        "tool_result": 1,
+        "status_update": 1,
+        "content": 3,
+        "thread:action:completed": 1,
+        "turn_end": 1,
+        "exchange_metadata": 1,
+        "chat-turn:saved": 1
+      },
+      "promptRequestIds": [
+        "d1eaa1f9d7c92a4cdb5fb829cb936460"
+      ],
+      "acceptanceRequestIds": [
+        "d1eaa1f9d7c92a4cdb5fb829cb936460"
+      ],
+      "statusRequests": [
+        {
+          "requestId": "d1eaa1f9d7c92a4cdb5fb829cb936460",
+          "action": "prompt_receipt_status"
+        }
+      ]
+    },
+    "afterRestart": {
+      "sentTypes": {
+        "shell-auth:proof": 1,
+        "office:palette_get": 1,
+        "state:get": 1,
+        "screenshot:list": 1,
+        "file_content_request": 51,
+        "set_panel": 2,
+        "screenshot:request": 1,
+        "file_tree_request": 63,
+        "state:set": 2,
+        "thread:list": 1,
+        "workspace:state_push": 1,
+        "state:worksurface_get": 1,
+        "thread:open": 1
+      },
+      "receivedTypes": {
+        "shell-auth:challenge": 1,
+        "connected": 1,
+        "workspace:init": 1,
+        "panel_config": 1,
+        "shell-auth:authenticated": 1,
+        "screenshot:list": 1,
+        "thread:list": 3,
+        "screenshot:data": 1,
+        "panel_changed": 2,
+        "file_content_response": 51,
+        "file_tree_response": 63,
+        "state:result": 3,
+        "office:palette_state": 1,
+        "state:worksurface_result": 1,
+        "error": 1
+      },
+      "promptRequestIds": [],
+      "acceptanceRequestIds": [],
+      "statusRequests": []
+    }
+  },
+  "observations": {
+    "exactDuplicateReplayed": false,
+    "mismatchedFingerprintReplayed": false,
+    "idempotentAcceptanceCount": 1,
+    "acceptanceBeforeEdit": 0,
+    "resendGatedBeforeEdit": true,
+    "visibleRecoveryStatusBeforeEdit": true,
+    "switchedViewAndRemounted": true,
+    "restarted": true,
+    "preRestartDraftRetained": true,
+    "persistence": {
+      "exchangeCount": 1,
+      "activityCount": 1,
+      "activityTurnIds": [
+        "aeeeaf72-d611-4027-b44f-3f27edab38e6"
+      ],
+      "receiptTables": [
+        {
+          "table": "prompt_submission_receipts",
+          "requestColumn": "request_id",
+          "matchingRows": 1
+        }
+      ],
+      "receiptRows": 1
+    },
+    "providerDispatchCount": 1,
+    "userBubbleCount": 0
+  },
+  "violations": [
+    "duplicate-request-user-bubble-count-not-one"
+  ],
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": {
+    "name": "AssertionError",
+    "message": "R4-LATE-DRAFT-RECOVERY invariant violations: duplicate-request-user-bubble-count-not-one\n+ actual - expected\n\n+ [\n+   'duplicate-request-user-bubble-count-not-one'\n+ ]\n- []\n",
+    "stack": "AssertionError [ERR_ASSERTION]: R4-LATE-DRAFT-RECOVERY invariant violations: duplicate-request-user-bubble-count-not-one\n+ actual - expected\n\n+ [\n+   'duplicate-request-user-bubble-count-not-one'\n+ ]\n- []\n\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/future-submit-electron.mjs:391:14"
+  }
+}

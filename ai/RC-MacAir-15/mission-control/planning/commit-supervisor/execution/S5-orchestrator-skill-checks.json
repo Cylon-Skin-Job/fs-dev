@@ -1,0 +1,97 @@
+{
+  "command_prefix": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/Users/rccurtrightjr./.cache/uv/archive-v0/1UkvUmdhPW76cwEoYNqku /opt/homebrew/bin/python3.12 -B /Users/rccurtrightjr./.codex/skills/.system/skill-creator/scripts/quick_validate.py .agents/skills/",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "checks": [
+    {
+      "name": "mc-commit-supervisor",
+      "result": {
+        "status": "fulfilled",
+        "value": {
+          "chunk_id": "85f05f",
+          "wall_time_seconds": 0.00000625,
+          "exit_code": 0,
+          "original_token_count": 4,
+          "output": "Skill is valid!\n"
+        }
+      }
+    },
+    {
+      "name": "mc-code-review-orchestrator",
+      "result": {
+        "status": "fulfilled",
+        "value": {
+          "chunk_id": "81f701",
+          "wall_time_seconds": 0.000006708,
+          "exit_code": 0,
+          "original_token_count": 4,
+          "output": "Skill is valid!\n"
+        }
+      }
+    },
+    {
+      "name": "mc-commit-repair-worker",
+      "result": {
+        "status": "fulfilled",
+        "value": {
+          "chunk_id": "addac3",
+          "wall_time_seconds": 0.000006166,
+          "exit_code": 0,
+          "original_token_count": 4,
+          "output": "Skill is valid!\n"
+        }
+      }
+    },
+    {
+      "name": "mission-control",
+      "result": {
+        "status": "fulfilled",
+        "value": {
+          "chunk_id": "144581",
+          "wall_time_seconds": 0.000004375,
+          "exit_code": 0,
+          "original_token_count": 4,
+          "output": "Skill is valid!\n"
+        }
+      }
+    },
+    {
+      "name": "monitor",
+      "result": {
+        "status": "fulfilled",
+        "value": {
+          "chunk_id": "d20701",
+          "wall_time_seconds": 0.000004625,
+          "exit_code": 0,
+          "original_token_count": 4,
+          "output": "Skill is valid!\n"
+        }
+      }
+    },
+    {
+      "name": "status",
+      "result": {
+        "status": "fulfilled",
+        "value": {
+          "chunk_id": "544d85",
+          "wall_time_seconds": 0.000004333,
+          "exit_code": 0,
+          "original_token_count": 4,
+          "output": "Skill is valid!\n"
+        }
+      }
+    },
+    {
+      "name": "mc-roadmap-implementation-supervisor",
+      "result": {
+        "status": "fulfilled",
+        "value": {
+          "chunk_id": "892282",
+          "wall_time_seconds": 0.000007,
+          "exit_code": 0,
+          "original_token_count": 4,
+          "output": "Skill is valid!\n"
+        }
+      }
+    }
+  ]
+}

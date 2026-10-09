@@ -1,0 +1,18 @@
+{
+  "gate": "builder-owned 05A",
+  "reviewers": [
+    {
+      "identity": "/root/builder05a/review05a",
+      "role": "clean-room-reviewer",
+      "fresh": true,
+      "forkTurns": "none",
+      "modelOverride": null,
+      "effortOverride": null,
+      "priorChildrenCheck": "list_agents returned only root and builder; no prior reviewer",
+      "status": "completed",
+      "closure": "Terminal disposition confirmed with list_agents. close_agent discovery returned no available tool; closure unavailable, nonblocking lifecycle evidence.",
+      "result": "CLEAN",
+      "evidence": "BUILDER-REVIEW-01.md"
+    }
+  ]
+}

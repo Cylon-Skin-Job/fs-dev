@@ -1,0 +1,4 @@
+interface:
+  display_name: "MC Roadmap Creation Supervisor"
+  short_description: "Supervise staged planning and independent validation"
+  default_prompt: "Use $mc-roadmap-creator to supervise this authorized planning job from its existing draft or conversation/documents through stage validation, independent release validation and owner approval."

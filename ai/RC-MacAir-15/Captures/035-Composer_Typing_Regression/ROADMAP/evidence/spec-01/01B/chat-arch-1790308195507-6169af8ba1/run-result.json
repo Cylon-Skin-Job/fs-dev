@@ -1,0 +1,18 @@
+{
+  "runId": "chat-arch-1790308195507-6169af8ba1",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R9-INDICATOR-DISTINCTION",
+      "code": 0,
+      "signal": null,
+      "pid": 16423,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 11540
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

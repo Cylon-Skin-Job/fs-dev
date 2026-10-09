@@ -1,0 +1,18 @@
+{
+  "runId": "chat-arch-1790043165049-343daa929f",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R5-CURRENT-OWNER",
+      "code": 0,
+      "signal": null,
+      "pid": 79515,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 2561
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

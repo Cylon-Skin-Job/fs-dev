@@ -1,0 +1,151 @@
+{
+  "at": "2026-10-04T15:00:25.881638+00:00",
+  "actor": "/root/s6_supervisor_candidate_1",
+  "scope": "current-state original entire three-page fixture Wiki and original completion/reversal/count/reload/fullrestart/navigation claims; no fabricated commit range",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "source_root": "/Users/rccurtrightjr./projects/fs-dev",
+  "candidate": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "wiki_home": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki",
+  "procedure_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki",
+  "target": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "sources": [
+    {
+      "repo": "/Users/rccurtrightjr./projects/fs-dev",
+      "ref": "HEAD",
+      "commit": "d15792920731f85e45b743519d4af2b807d95a9c"
+    }
+  ],
+  "source_dependencies": {
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js": {
+      "exists": true,
+      "sha256": "7a325bf81452d0d785c22fb4bc7cc4950c4abd2c4e6a68604ff683c1d4990b0d",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js": {
+      "exists": true,
+      "sha256": "fc3c3da3961bbd8ba1d9f0d1a320dd8f8baf514e0fc0a7d158d5c474ddfe36a5",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html": {
+      "exists": true,
+      "sha256": "c2ba834be53b0d84b17f2e2bbcde7e3b468ae05903c3b5179ef7070f342428d2",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css": {
+      "exists": true,
+      "sha256": "6e3d4171ec9dd14bff1d521f6d9df9b6afa25bfef0b336dba791e1f7fdfc3184",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "scripts/fusion-restart-target.mjs": {
+      "exists": true,
+      "sha256": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "scripts/fusion-restart.mjs": {
+      "exists": true,
+      "sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "fusion-studio-client/src/components/ContentArea.tsx": {
+      "exists": true,
+      "sha256": "f3b02f929a2baf1ba18025b41883bf351759815c2204537ccf61454e66ef1327",
+      "mode": "0o100644",
+      "kind": "file"
+    }
+  },
+  "all_original_article_dependencies": {
+    "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md": {
+      "exists": true,
+      "sha256": "e2877b2a21a23cce18a7b079d1532a8c7a5a8f30467e369248d75e9750ce527c",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/002-Navigation_Guide/PAGE.md": {
+      "exists": true,
+      "sha256": "7a3058e3ca2a0b793e6c4831487b53098a49c4c80f2f3d91f8a2dbe6463b28ed",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "rehearsal-workspace/ai/MC-S6/Wiki/PAGE.md": {
+      "exists": true,
+      "sha256": "09d0c7fd6ad2882d50c137412194c6060f2e6d9668d7d3a3e1569f3274ea3a6c",
+      "mode": "0o100644",
+      "kind": "file"
+    }
+  },
+  "instruction_absences": [
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/AGENTS.md",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/.agents/wiki-session-contract.md",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/.agents/skills/wiki-repair/SKILL.md"
+  ],
+  "claims": [
+    {
+      "subject": "Stable task identities/labels; checking and unchecking; all rows remain visible",
+      "source_owners": [
+        "checklist-controller.js",
+        "checklist-view.js"
+      ],
+      "canonical_article": "001-Checklist/001-Checklist_Guide/PAGE.md",
+      "status": "current implemented source; actual app proof later",
+      "disposition": "repair",
+      "original_criterion": "released original draft/Draft report, review/Review sources, send/Send summary; completion reversible and all three rows visible"
+    },
+    {
+      "subject": "Remaining summary exact N remaining of 3 / incomplete count / 3\u21922\u21921\u21922 / zero and all three",
+      "source_owners": [
+        "checklist-controller.js",
+        "checklist-view.js"
+      ],
+      "canonical_article": "001-Checklist/001-Checklist_Guide/PAGE.md",
+      "status": "current source with exact-source raw scenario receipt, actual app proof later",
+      "disposition": "repair",
+      "original_criterion": "original count/reversal and root-released exact wording"
+    },
+    {
+      "subject": "Ordinary reload retains completion; full canonical restart clears browser storage and starts all incomplete",
+      "source_owners": [
+        "checklist-controller.js",
+        "scripts/fusion-restart-target.mjs",
+        "scripts/fusion-restart.mjs"
+      ],
+      "canonical_article": "001-Checklist/001-Checklist_Guide/PAGE.md",
+      "status": "current source; ordinary VM hydration checked; actual full reset later",
+      "disposition": "repair",
+      "original_criterion": "original separate reload retention and full canonical reset requirements"
+    },
+    {
+      "subject": "Rail chooses Checklist custom iframe and built-in Wiki; neither removes other view; mutual article links",
+      "source_owners": [
+        "fusion-studio-client/src/components/ContentArea.tsx",
+        "custom capsule manifest/content wiring"
+      ],
+      "canonical_article": "001-Checklist/002-Navigation_Guide/PAGE.md",
+      "status": "current source unchanged, historical raw navigation evidence only; current app proof later",
+      "disposition": "retain unchanged",
+      "original_criterion": "existing useful navigation guidance and exact bytes/timestamp retention"
+    },
+    {
+      "subject": "Fixture root overview and Checklist section entry",
+      "source_owners": [
+        "existing original three-article hierarchy"
+      ],
+      "canonical_article": "PAGE.md",
+      "status": "accurate existing overview, no direct code subject required",
+      "disposition": "retain unchanged",
+      "original_criterion": "original all-three article coverage beyond metadata"
+    }
+  ],
+  "accepted_code_gate": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-code-handoff-acceptance.json",
+  "new_articles": "none required; all original missing behavior facts fit existing Checklist Guide",
+  "moves_renames_deletes": "NONE",
+  "navigation_generation": "No structure/marker change; no generation or Sync Wiki Context required",
+  "current_future_open": "Only current implemented source and released original intent; future fix-X/Y UNISSUED; no open fixture wording",
+  "capture_policy": "Exact local-time version filename selected only after code settles; new immutable UNION absent/jobcreated capture and verify before leaf creates version",
+  "accepted_code_current_readback": "2026-10-04T15:09:36.581641+00:00"
+}

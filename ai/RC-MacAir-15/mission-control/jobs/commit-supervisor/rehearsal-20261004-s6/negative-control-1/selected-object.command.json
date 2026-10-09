@@ -1,0 +1,31 @@
+{
+  "command": [
+    "git",
+    "-C",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+    "cat-file",
+    "-p",
+    "551a74313d099724cdb3d76ead04e940ae88f223"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "GIT_LITERAL_PATHSPECS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "started": "2026-10-04T19:50:33.683824+00:00",
+  "finished": "2026-10-04T19:50:33.687963+00:00",
+  "exit_code": 0,
+  "stdout": "tree a94d7ede20af17ada1b1b2fdd95deaf4ff07216a\nparent a2aa33fa57bc370bb4a24f2428fe0ad73c5c1332\nauthor Cylon-Skin-Job <105960223+Cylon-Skin-Job@users.noreply.github.com> 1790823032 -0700\ncommitter Cylon-Skin-Job <105960223+Cylon-Skin-Job@users.noreply.github.com> 1790823032 -0700\n\nIntegrate accepted chat architecture and transport simplification\n",
+  "stderr": "",
+  "stdout_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/selected-object.stdout",
+    "sha256": "06788c50b4c7afaa404b6028be99c8135e83d3ee2b2aa3d6acace94c0214ab39",
+    "size": 346
+  },
+  "stderr_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/selected-object.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  }
+}

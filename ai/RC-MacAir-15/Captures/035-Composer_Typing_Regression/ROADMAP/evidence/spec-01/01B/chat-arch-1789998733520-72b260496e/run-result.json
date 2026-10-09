@@ -1,0 +1,52 @@
+{
+  "runId": "chat-arch-1789998733520-72b260496e",
+  "status": "failed",
+  "results": [
+    {
+      "id": "R2-NO-ENQUEUE",
+      "code": 0,
+      "signal": null,
+      "pid": 33859,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 6580
+    },
+    {
+      "id": "R3-LOST-ACK-STATUS",
+      "code": 0,
+      "signal": null,
+      "pid": 34871,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 6883
+    },
+    {
+      "id": "R3-RECONNECT-UI",
+      "code": 0,
+      "signal": null,
+      "pid": 35786,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 10381
+    },
+    {
+      "id": "R4-DISTINCT-ATTEMPTS",
+      "code": 1,
+      "signal": null,
+      "pid": 37079,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 39974
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "R4-DISTINCT-ATTEMPTS exited 1",
+    "stack": "Error: R4-DISTINCT-ATTEMPTS exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:368:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

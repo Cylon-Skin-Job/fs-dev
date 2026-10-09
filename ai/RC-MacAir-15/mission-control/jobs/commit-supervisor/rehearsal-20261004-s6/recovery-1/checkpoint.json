@@ -1,0 +1,385 @@
+{
+  "schema": 1,
+  "checkpoint_id": "S6-SECOND-RECOVERY-COMPLETE-01",
+  "at": "2026-10-04T20:51:15.208783+00:00",
+  "actor": "/root/s6_supervisor_recovery_1",
+  "manager": "/root",
+  "signature": "Codex side chat (ephemeral)",
+  "actual_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "source_repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "candidate_location": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "role": "Commit Supervisor SECOND recovery only",
+  "scope": "REHEARSAL_ONLY",
+  "phase": "unmet-gate",
+  "test_result": "REHEARSAL_RECOVERY_COMPLETE",
+  "return": "REHEARSAL_RECOVERY_COMPLETE",
+  "return_qualification": "Test result only, not a new installed production return-state contract",
+  "current_ready": false,
+  "preview": "Stopped and abandoned; original seeded inputs restored",
+  "assignment": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-supervisor-recovery-1-assignment.md",
+    "sha256": "66fe3046ad52385dc7824e473061a3acb087848fa0784814c0a40938b3447a70"
+  },
+  "original_SPEC": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/SPEC.md",
+    "sha256": "6d7b351db87e535b0950f94c42c61d503a3ac3fef6587299dfc024c7887df664"
+  },
+  "source_current": {
+    "/Users/rccurtrightjr./projects/fs-dev": {
+      "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+      "branch": "refs/heads/agent/exact-workspace-paths",
+      "refs_sha256": "2137fda44918eee605a707a4931a0f12f57125dbab104179ca490556d5e74976",
+      "config_sha256": "15b4867e1facba02e3e54d699d8e9133c336ff6bd3beb6aab997538d77efbcb3",
+      "index_file_sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966"
+    }
+  },
+  "candidate_current_refs": {
+    "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+    "branch": null,
+    "refs_sha256": "9d16de57b401c2857b4e01e956037365f3ca9669a716562248c6be8faf58472d",
+    "config_sha256": "0a84192202948bd789d2bd8bbb405668470eb300a3539fcdd609677fb2af310e",
+    "index_file_sha256": "f60a305e9691ad6ecac0d696c78dfc5bc779a73004fce64b0e5f955b76eaecbb"
+  },
+  "original_recovery": {
+    "job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6",
+    "manifest_sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb",
+    "owned128_full4353_exact": true
+  },
+  "fixed_recovery_retained": {
+    "job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/fixed-checkpoint",
+    "manifest_sha256": "a885cde0f24e25d9cea6437edad6b9258f365d3a2db08bcb426d690195e4291a",
+    "payload_count": 119,
+    "historical_exact_fixed_restore_proved": true
+  },
+  "restore_order": {
+    "at": "2026-10-04T20:42:27.143537+00:00",
+    "actor": "/root/s6_supervisor_recovery_1",
+    "fixed_first": {
+      "at": "2026-10-04T20:40:25.328351+00:00",
+      "actor": "/root/s6_supervisor_recovery_1",
+      "result": "SAVED_INTERRUPTED_TURN_RECOVERED",
+      "actual_restore": {
+        "result": "RESTORED",
+        "index_worktree_equal": true,
+        "status_equal": true,
+        "restored_sha256": "5721be9a2e16d19b5f04e91c9aefba5c0a3ddcd0cf4e5e8b8e57e871d1e48c2d",
+        "manifest_sha256": "a885cde0f24e25d9cea6437edad6b9258f365d3a2db08bcb426d690195e4291a"
+      },
+      "owned130_full4355_exact": true,
+      "unrelated4225_exact": true,
+      "original_guard_retained_in_place": true,
+      "actual_original_namespace_public_verify": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/fixed-original-namespace-verify.command.json",
+      "complete_readback": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/fixed-full-exact-readback.json",
+      "current_ready": false,
+      "runtime": "Private preview remains stopped; this restores code/index/worktree only"
+    },
+    "original_scope_refusal": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/original-scope-refusal-nonmutation-proof.json",
+    "reverse_unions_then_original_last": [
+      {
+        "at": "2026-10-04T20:42:10.996330+00:00",
+        "actor": "/root/s6_supervisor_recovery_1",
+        "label": "fix-xy-wiki",
+        "original_job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/fix-xy-wiki-1",
+        "control_job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/public-controls/fix-xy-wiki",
+        "manifest_sha256": "5227a7a7d38dddec138aff13c16f2ee8a22bda1a53657f203a47d80857827617",
+        "historical_owner": "/root/s6_supervisor_fix_xy_1",
+        "active_actor": "/root/s6_supervisor_recovery_1",
+        "guard": {
+          "result": "GUARDED",
+          "expected_sha256": "b09ccfdfea23309603f462fefc5e4e1f2956a9541fb99e2a19fb741fd05adf01"
+        },
+        "actual_restore": {
+          "result": "RESTORED",
+          "index_worktree_equal": true,
+          "status_equal": true,
+          "restored_sha256": "71469a9caa19cd4dced4a0e3e0b766b8178930ae654a6ab7f242f12e38e16686",
+          "manifest_sha256": "5227a7a7d38dddec138aff13c16f2ee8a22bda1a53657f203a47d80857827617"
+        },
+        "removed_only_manifest_declared_job_created_absent_leaves": [
+          "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-095624.md",
+          "rehearsal-workspace/ai/MC-S6/watcher-proof-runtime-2.md"
+        ],
+        "owned_count": 130,
+        "full_inventory_count": 4355,
+        "full_readback": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/fix-xy-wiki-full-exact-readback.json",
+        "current_ready": false,
+        "original_namespace_public_verify": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/fix-xy-wiki-original-namespace-verify.command.json",
+        "all_source_refs_config_physical_index_history_archives_protected_preserved": true
+      },
+      {
+        "at": "2026-10-04T20:42:19.011401+00:00",
+        "actor": "/root/s6_supervisor_recovery_1",
+        "label": "first-wiki",
+        "original_job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/first-wiki-1",
+        "control_job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/public-controls/first-wiki",
+        "manifest_sha256": "36c99f10ccdc4eed268e2859d2f737eac282181784ea0385572e64d3221c7e75",
+        "historical_owner": "/root/s6_supervisor_candidate_1",
+        "active_actor": "/root/s6_supervisor_recovery_1",
+        "guard": {
+          "result": "GUARDED",
+          "expected_sha256": "554c339d1731bef8485e6e0ea546e14e08d6148347d9245f489616170b365043"
+        },
+        "actual_restore": {
+          "result": "RESTORED",
+          "index_worktree_equal": true,
+          "status_equal": true,
+          "restored_sha256": "929aef982960a4376b6d8b1beeaffca1856062bf3c9007b607d822a93b8226b4",
+          "manifest_sha256": "36c99f10ccdc4eed268e2859d2f737eac282181784ea0385572e64d3221c7e75"
+        },
+        "removed_only_manifest_declared_job_created_absent_leaves": [
+          "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-080936.md",
+          "rehearsal-workspace/ai/MC-S6/watcher-proof-runtime-1.md"
+        ],
+        "owned_count": 129,
+        "full_inventory_count": 4354,
+        "full_readback": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/first-wiki-full-exact-readback.json",
+        "current_ready": false,
+        "original_namespace_public_verify": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/first-wiki-original-namespace-verify.command.json",
+        "all_source_refs_config_physical_index_history_archives_protected_preserved": true
+      },
+      {
+        "at": "2026-10-04T20:42:27.142784+00:00",
+        "actor": "/root/s6_supervisor_recovery_1",
+        "label": "original",
+        "original_job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6",
+        "control_job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/public-controls/original",
+        "manifest_sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb",
+        "historical_owner": "/root/s6_supervisor_provider_1",
+        "active_actor": "/root/s6_supervisor_recovery_1",
+        "guard": {
+          "result": "GUARDED",
+          "expected_sha256": "6dcbeaab263a3afccab588dbffb7e884e96a87dc1f001bdbacf0ad2f2086fda2"
+        },
+        "actual_restore": {
+          "result": "RESTORED",
+          "index_worktree_equal": true,
+          "status_equal": true,
+          "restored_sha256": "88fced4a620d17d82ea965c8620be303f571385b914fc4972f160ac098edbb77",
+          "manifest_sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb"
+        },
+        "removed_only_manifest_declared_job_created_absent_leaves": [],
+        "owned_count": 128,
+        "full_inventory_count": 4353,
+        "full_readback": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/original-full-exact-readback.json",
+        "current_ready": false,
+        "original_namespace_public_verify": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/original-original-namespace-verify.command.json",
+        "all_source_refs_config_physical_index_history_archives_protected_preserved": true
+      }
+    ],
+    "current_ready": false,
+    "result": "REHEARSAL_RECOVERY_PATHS_PROVED"
+  },
+  "raw_evidence": {
+    "activation.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/activation.json",
+      "sha256": "a82f500a8114e3e07268c5996e3c5bf512c8dda5723adbf16c0ef9a08130fb7d"
+    },
+    "independent-entry-inspection.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/independent-entry-inspection.json",
+      "sha256": "d8fa2927260991fe5def24fe625eb6140d5881c1a8c5eb693491b56094e9db49"
+    },
+    "public-control-copy-equality.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/public-control-copy-equality.json",
+      "sha256": "f33b3f28b122b06b70838a4c3998d5d4be58ec5e79c7eea94227a8d49e9840d3"
+    },
+    "saved-fixed-fresh-guard.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/saved-fixed-fresh-guard.json",
+      "sha256": "43472fa8b44aaefd73a165019ca44b0282ad2978de68d752b40297fa4a437447"
+    },
+    "collision-plan.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/collision-plan.json",
+      "sha256": "f227470af11ecbb5bb924d0fe039e5fd34ce5d6afadb14da0a0368d1c60eefed"
+    },
+    "collision-nonmutation-proof.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/collision-nonmutation-proof.json",
+      "sha256": "90fb549af541024cd5e202c883aa94f20e6deb585695897c4a770a658f5a6a60"
+    },
+    "collision-control-undone.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/collision-control-undone.json",
+      "sha256": "bac31edfda7c590ddba2966925ba00fb71fb86e72d7b733b671736fb5d751420"
+    },
+    "fixed-recovery-result.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/fixed-recovery-result.json",
+      "sha256": "646498ac1e1c90179ba8e90f710f6a7d18908b4fb3ae6eeb6ce663f0f19645e5"
+    },
+    "fixed-full-exact-readback.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/fixed-full-exact-readback.json",
+      "sha256": "2105172842fc57fc16e93f8114af72fb937f42e9fe617168cab27b8165485317"
+    },
+    "original-scope-refusal-nonmutation-proof.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/original-scope-refusal-nonmutation-proof.json",
+      "sha256": "0d93a1337afe622431b3c5465f3791487a76712229c819c3dafdcee001b26645"
+    },
+    "fix-xy-wiki-recovery-result.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/fix-xy-wiki-recovery-result.json",
+      "sha256": "a4d6df13f2ef243477d8cb4ce8db30d00bb62f790e7dd3cb645edc98366cc7f2"
+    },
+    "first-wiki-recovery-result.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/first-wiki-recovery-result.json",
+      "sha256": "96b19e2be16b0b78a742658825e32f64b5c1fb4fe6d8d8faf5a3afd2ca5eefef"
+    },
+    "original-recovery-result.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/original-recovery-result.json",
+      "sha256": "8f349568c5f56fe82bcaf0a958a562b55ad58009d6d1e4139e1947930762b54e"
+    },
+    "actual-restore-order.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/actual-restore-order.json",
+      "sha256": "be79073d2b2f077c5a920f658a1f732f3efe7c6bac60a61ae7c82ba3adc9f2b0"
+    },
+    "original-full-exact-readback.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/original-full-exact-readback.json",
+      "sha256": "bc86805675fd1f5494ce1ffee1266e489726594ae0438c2a84f1afedfd383b57"
+    },
+    "original-base-full-readback.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/original-base-full-readback.json",
+      "sha256": "2a2dba5ee532457b419a27372bf4f3626483d4b105c24ad88b8e6859d694dff5"
+    },
+    "final-preservation-proof.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/final-preservation-proof.json",
+      "sha256": "6e1ee94dd4d3ca53f783aa1791ccd6ee814b5ce858c1f3ccc370c52269f3cd30"
+    },
+    "saved-interrupted-raw-bytes-validation.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/saved-interrupted-raw-bytes-validation.json",
+      "sha256": "a07ca65b3c2e19eb220b83e7cc3a4e0f498c66fe60391ddc590525d873c12331"
+    },
+    "initial.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/initial.json",
+      "sha256": "f6857eb2a606150ac3aee20be5fdf32b5705399e81d83ca06e7fab01ce2547f4"
+    },
+    "collision-before-refusal.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/collision-before-refusal.json",
+      "sha256": "fa877522e653b91ea3fa7eb40aad3f90f5bfff5badc17b21fe715b60c3a07e22"
+    },
+    "collision-after-refusal.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/collision-after-refusal.json",
+      "sha256": "8606cff8979a3cee8a044f14fa63fe60e3e130c57ee0658a92949f72bbb2291d"
+    },
+    "after-fixed.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/after-fixed.json",
+      "sha256": "0db7d7f2a53efdf3af265081427abdb545c3dd3c45f2d18d11fd90f8afcacacf"
+    },
+    "original-premature-before.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/original-premature-before.json",
+      "sha256": "938ac41400a066bb77023cc53a556651f69a6c54490ad1cecab9da1c2fb3f740"
+    },
+    "original-premature-after.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/original-premature-after.json",
+      "sha256": "748d01c14e3f47f68729b71b99ba61b716c01628243521fa751da29efe2263e6"
+    },
+    "after-fix-xy-wiki.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/after-fix-xy-wiki.json",
+      "sha256": "ee88e93735413e57911e6d800868d0b846b5758257c1020583733a7a578882d3"
+    },
+    "after-first-wiki.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/after-first-wiki.json",
+      "sha256": "de9112c59bba51a629eb64ad7f2405a36e2fdf43451e3ae2fb5d3bce14e09c2b"
+    },
+    "after-original.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/after-original.json",
+      "sha256": "257bc95213bf99c18455e4cb3123400014fe23f0437dd9e345e79537194818ba"
+    }
+  },
+  "raw_command_receipts": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/all-raw-command-receipts.json",
+    "count": 191
+  },
+  "criterion_map": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/criterion-map.json",
+  "deviations": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/deviations.json",
+  "lifecycle": {
+    "at": "2026-10-04T20:51:15.208783+00:00",
+    "actual_actor": "/root/s6_supervisor_recovery_1",
+    "manager": "/root",
+    "effective_host": "danger-full-access/never",
+    "root_model_effort": "Inherited without overrides; concrete values/native role loader metadata unexposed",
+    "actual_predecessor_native": "Exact collaboration.list_agents subtree independently completed unmet-gate/native END, no children at entry and final",
+    "actual_self_native_at_save": {
+      "tool": "collaboration.list_agents",
+      "path_prefix": "/root/s6_supervisor_recovery_1",
+      "result": {
+        "agents": [
+          {
+            "agent_name": "/root/s6_supervisor_recovery_1",
+            "agent_status": "running"
+          }
+        ]
+      }
+    },
+    "children": [],
+    "conflicting_writers": [],
+    "matching_schedules": [
+      {
+        "path": "/Users/rccurtrightjr./.codex/automations/chat-ar-orchestrator-hourly-check-in/automation.toml",
+        "sha256": "ec7257312e7c4d5393449d5477dda758932315a3461123d6111baad10353403f",
+        "status": "PAUSED",
+        "matching": false
+      },
+      {
+        "path": "/Users/rccurtrightjr./.codex/automations/check-chat-wiki-orchestrator/automation.toml",
+        "sha256": "04db689d5c84a756b2bbcc51c7201385f564ea44baee342448d152ab4c5d1178",
+        "status": "PAUSED",
+        "matching": false
+      },
+      {
+        "path": "/Users/rccurtrightjr./.codex/automations/check-provenance-wiki-reconciliation/automation.toml",
+        "sha256": "33e85b9b6843a72c82b2ea8f795aa0127c8f5bf14af508f5172c1b0e621ea794",
+        "status": "PAUSED",
+        "matching": false
+      },
+      {
+        "path": "/Users/rccurtrightjr./.codex/automations/check-workspaces-and-views-wiki-orchestrator/automation.toml",
+        "sha256": "1d1fb54ac2a80a20cdc82d75694b2e71e82c66abcf01539b83e4dbb43de0a5b4",
+        "status": "PAUSED",
+        "matching": false
+      },
+      {
+        "path": "/Users/rccurtrightjr./.codex/automations/monitor-chokidar-first-draft/automation.toml",
+        "sha256": "7af0ff68f3557f9a4bbf1a79a9574081a33e2d0ee13ed11bd4075f5d698d2cbe",
+        "status": "PAUSED",
+        "matching": false
+      }
+    ],
+    "root_writer": "Root owns disjoint E and explicitly transferred SECOND private recovery only",
+    "private_stop": "Retained real predecessor completed stop; never signaled any old/private/protected PID in this turn",
+    "closure_capability": "close_agent unavailable; no closure fabricated",
+    "next_native_action": "Return saved REHEARSAL_RECOVERY_COMPLETE test result and intentionally END",
+    "actual_own_END_observation": "Not yet available inside this running turn; root must independently observe native terminal after final response"
+  },
+  "owner_packets": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/owner-packet-first.md",
+      "sha256": "be1b988ced2b88b6e309e03f2831e2c8938034a1c79aeb3c8d0a75f50eb5fde9",
+      "status": "Historical actual time-qualified waiting-owner event; current readiness withheld"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/owner-packet-fix-xy.md",
+      "sha256": "4262b884dccc10a10b53a43e1a96e00167a5557b85f88802c324414410c29870",
+      "status": "Historical actual time-qualified waiting-owner event; current readiness withheld"
+    }
+  ],
+  "historical_gates": "Raw actual earlier role/check/UI/runtime evidence retained unchanged; not relabeled current clean",
+  "profile_recovery_limit": "No protected profile or live server-data DB copies/restoration. Only manifest-owned candidate fixture leaves are reconstructed; any fixture workspace-db template file remains within that exact inventory. Browser/profile/runtime DB effects were excluded and retained.",
+  "actual_commit_ids": [],
+  "actual_publication_operations": [],
+  "runtime_build_UI_suites_task_MC_schedule_actions_this_turn": [],
+  "accepted_progress": [
+    "Actual collision refused without mutation",
+    "Known work control undone; saved interrupted fixed130 state restored/publicly verified",
+    "Actual premature original-scope guard refused without mutation",
+    "Both actual Wiki supplements reversed; original128 restored LAST",
+    "Full exact original mixed/index/work/base/status readback; source/private unrelated/protected evidence preserved"
+  ],
+  "next_unfinished_authorized_action": "None for this actor after END. Root independently observes native terminal and inspects raw recovery, then assigns responsible S6 factual documentation closeout and fresh FULL-S6/whole-SPEC gates. No automatic resumption.",
+  "holds": [
+    {
+      "kind": "unmet-gate",
+      "affected": "Any current production candidate/runtime/owner/publication readiness",
+      "reason": "Rehearsal deliberately stopped/abandoned and original seeded defective fixture inputs restored",
+      "resolver": "A separately authorized future candidate workflow; not this recovery assignment",
+      "publication_authority": "NONE"
+    }
+  ],
+  "last_check_utc": "2026-10-04T20:51:15.208783+00:00",
+  "last_progress_utc": "2026-10-04T20:51:15.208783+00:00",
+  "native_END": "Not yet observed at save; immediate final response intentionally ends turn"
+}

@@ -1,0 +1,140 @@
+{
+  "at": "2026-10-07T20:58:31.024763+00:00",
+  "scope": "Fresh independent frozen-byte M3 nonnative checks; source hash drift limited to separately authorized native helper repair and generated preload adapter; no native/builder/acceptance/final CLEAN inferred",
+  "checks": [
+    {
+      "label": "build-01",
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/orchestrator-checks/build-01.json",
+      "receipt_sha256": "918ec82b791a2854247bb4bedeb37dbb15bc5c0f87d3a80ff9826e960d0b9e4b",
+      "exit_code": 0,
+      "raw_log_sha256": "b3726bd2a4337421c10a43907c56542f4d5f9065409bc9f352f31e3823915b3d",
+      "before_after_changed_paths": [],
+      "dependencies_equal": true,
+      "started": "2026-10-07T20:53:56.030288+00:00",
+      "ended": "2026-10-07T20:54:03.244154+00:00"
+    },
+    {
+      "label": "server-full-01",
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/orchestrator-checks/server-full-01.json",
+      "receipt_sha256": "b3458cbe0ee60fbc9508da3e357f2b9b5962837209a43adb6e5a25ba2f64a0f6",
+      "exit_code": 0,
+      "raw_log_sha256": "f634d68cf5be5f41c27c67c2449e67db765a05939a1e2dd72842ed235d5e7f89",
+      "before_after_changed_paths": [],
+      "dependencies_equal": true,
+      "started": "2026-10-07T20:53:56.030292+00:00",
+      "ended": "2026-10-07T20:55:50.854342+00:00"
+    },
+    {
+      "label": "server-focused-01",
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/orchestrator-checks/server-focused-01.json",
+      "receipt_sha256": "64fdf1e8b07697ea687f7f62792d6257ed548fa2df18a44d7cf4ebf52f57aa8a",
+      "exit_code": 0,
+      "raw_log_sha256": "4e3d3ea6a22cb50e695c10c67111f2dc6ed48d14d4c8c294a62128d5d0fff273",
+      "before_after_changed_paths": [],
+      "dependencies_equal": true,
+      "started": "2026-10-07T20:56:16.522920+00:00",
+      "ended": "2026-10-07T20:56:17.573747+00:00"
+    },
+    {
+      "label": "renderer-01",
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/orchestrator-checks/renderer-01.json",
+      "receipt_sha256": "8cde2c41a1b1a44460bf716cdb77bebff688281ad39bfef72fd7188a4cd5fed0",
+      "exit_code": 0,
+      "raw_log_sha256": "9e58d28bfad7152e4653e161f07dbac5a4f2e6dcafe2b93c86125cf476bcd2b8",
+      "before_after_changed_paths": [],
+      "dependencies_equal": true,
+      "started": "2026-10-07T20:55:17.076778+00:00",
+      "ended": "2026-10-07T20:57:28.458774+00:00"
+    },
+    {
+      "label": "wiki-01",
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/orchestrator-checks/wiki-01.json",
+      "receipt_sha256": "93889bea8c4509154caf10783236a68df0b55f071026b73620c737f1f1b13772",
+      "exit_code": 0,
+      "raw_log_sha256": "18769bd1cac4b532b4e1b1938d5d66cdaf1892251b78e6b60b48f7d0b5ff5375",
+      "before_after_changed_paths": [],
+      "dependencies_equal": true,
+      "started": "2026-10-07T20:55:27.741386+00:00",
+      "ended": "2026-10-07T20:55:34.816544+00:00"
+    }
+  ],
+  "dist_count": 191,
+  "dist_mismatches": [],
+  "retired_ports": [
+    {
+      "label": "renderer-01",
+      "port": 50711,
+      "state": "free after terminal owned lane"
+    },
+    {
+      "label": "wiki-01",
+      "port": 50744,
+      "state": "free after terminal owned lane"
+    }
+  ],
+  "wiki_readback": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/orchestrator-checks/wiki-01-output/chat-material-wiki-changed-5ede7-iewer-and-link-source-paths-fixture-only-chromium/wiki-readback.json",
+  "wiki_readback_sha256": "19cc99eedbb3b72879757b74935ec33e3f1714e947996c33bcc7d8ad5687105b",
+  "wiki_articles": [
+    {
+      "relative": "007-Chat_System/004-Chat_UI/001-Composer/PAGE.md",
+      "source_sha256": "db5cf6e804b9b100142b0caf9f22d2039ab97eab6e17d87fca24ef835f5f6a10",
+      "heading_count": 11,
+      "metadata_source_count": 24,
+      "rendered_text_bytes": 7251
+    },
+    {
+      "relative": "004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+      "source_sha256": "2ca9937fd14648f9af85e6b3effd151c0107811b4eadacb551a7938ef00b4ceb",
+      "heading_count": 9,
+      "metadata_source_count": 22,
+      "rendered_text_bytes": 5576
+    },
+    {
+      "relative": "007-Chat_System/007-Structure/PAGE.md",
+      "source_sha256": "71585cb63d185136da2dec2379630718be91283b0a69938115cf76251db9a821",
+      "heading_count": 12,
+      "metadata_source_count": 46,
+      "rendered_text_bytes": 33291
+    },
+    {
+      "relative": "007-Chat_System/005-Testing_And_Operations/PAGE.md",
+      "source_sha256": "c7fb7b31252fe7fa3fd4ac990c03831ebe075867f912c6244694a637a0f1a55f",
+      "heading_count": 8,
+      "metadata_source_count": 48,
+      "rendered_text_bytes": 21612
+    },
+    {
+      "relative": "010-Events_And_Ledger/011-UI_Action_Provenance_Module/PAGE.md",
+      "source_sha256": "955d09f7f9aba6928e7c41d9b462912705aad70d39b869ca3d24d062435610b6",
+      "heading_count": 10,
+      "metadata_source_count": 17,
+      "rendered_text_bytes": 7457
+    },
+    {
+      "relative": "010-Events_And_Ledger/011-UI_Action_Provenance_Module/001-Wiki_Viewer_UI_Context/PAGE.md",
+      "source_sha256": "b4ba96fbe02a02b9c343f34bcb7de6e8cb2362cdda20dfcd9896fc9eb0235ac9",
+      "heading_count": 8,
+      "metadata_source_count": 13,
+      "rendered_text_bytes": 5252
+    },
+    {
+      "relative": "010-Events_And_Ledger/011-UI_Action_Provenance_Module/002-File_Viewer_UI_Context/PAGE.md",
+      "source_sha256": "fa1cbc58c49cc09fe505a3c4fd4df4b9c358d7a9bd0b77437faf091c77d7e102",
+      "heading_count": 8,
+      "metadata_source_count": 14,
+      "rendered_text_bytes": 5669
+    }
+  ],
+  "counts": {
+    "renderer": "269 passed",
+    "server_full": "221 suites passed;3265 tests passed;1 skipped",
+    "server_focused": "3 suites;10 passed",
+    "wiki": "1 test reads7 actual production PageViewer articles"
+  },
+  "limits": [
+    "Direct Jest excludes npm native pretest; local observer compiled dependency separately bound",
+    "Controlled renderer sources/protocol do not substitute for actual native capture/save/SQLite proof",
+    "No live provider or Alpha certification",
+    "Native suite incomplete; desktop unlock needed; M3 builder and later acceptance/final gates pending"
+  ]
+}

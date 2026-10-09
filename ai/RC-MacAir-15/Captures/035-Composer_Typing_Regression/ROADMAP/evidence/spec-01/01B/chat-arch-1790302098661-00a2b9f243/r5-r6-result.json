@@ -1,0 +1,175 @@
+{
+  "systemSetupReadiness": {
+    "id": "R5-SYSTEM-FIXTURE-READINESS",
+    "sourceCapsuleVerified": true,
+    "boundedRebind": false,
+    "initial": null,
+    "final": {
+      "workspaceLabel": "R5 System Fixture",
+      "chatWorkspaceId": "system-files",
+      "connected": true,
+      "projectionFrames": [
+        {
+          "workspaceId": "system-files",
+          "unavailable": false,
+          "viewIds": [
+            "capture-viewer",
+            "file-viewer",
+            "wiki-viewer",
+            "issues-viewer",
+            "agents-viewer",
+            "system-viewer"
+          ]
+        }
+      ],
+      "railTitles": [
+        "Captures",
+        "Files",
+        "Wiki",
+        "Issues",
+        "Agents",
+        "System"
+      ]
+    }
+  },
+  "systemAttemptSnapshot": {
+    "afterClick": {
+      "phase": "after-create-click",
+      "radio": [
+        {
+          "value": "New Folder",
+          "checked": true
+        },
+        {
+          "value": "Choose Existing Folder",
+          "checked": false
+        }
+      ],
+      "name": "R5 Synthetic Workspace ",
+      "selectedFolder": null,
+      "overlay": true,
+      "actionEvents": [
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "workspace-manager.workspace-creation",
+          "target": "new",
+          "delivery": "insert"
+        }
+      ],
+      "sentFrames": [
+        {
+          "type": "prompt:resolve",
+          "requestId": "chat-action-mugbr694-1"
+        }
+      ],
+      "sentDelta": {
+        "file_content_request": 1,
+        "prompt:resolve": 1
+      },
+      "receivedDelta": {
+        "thread:list": 1,
+        "panel_changed": 1,
+        "file_content_response": 1,
+        "file_tree_response": 16
+      },
+      "errorFrames": [
+        {
+          "requestId": null,
+          "code": null,
+          "message": "No active workspace",
+          "workspaceEpoch": null
+        }
+      ],
+      "toast": null,
+      "activeThreadId": null,
+      "chatWorkspaceId": "system-files",
+      "workspaceLabel": "R5 System Fixture",
+      "resolvedCommandObserved": false
+    },
+    "atFailure": {
+      "phase": "failure",
+      "radio": [],
+      "name": null,
+      "selectedFolder": null,
+      "overlay": false,
+      "actionEvents": [
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "workspace-manager.workspace-creation",
+          "target": "new",
+          "delivery": "insert"
+        },
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "workspace-manager.workspace-creation",
+          "target": "new",
+          "delivery": "insert"
+        }
+      ],
+      "sentFrames": [
+        {
+          "type": "prompt:resolve",
+          "requestId": "chat-action-mugbr694-1"
+        },
+        {
+          "type": "thread:open-assistant",
+          "requestId": "chat-action-mugbr694-1"
+        },
+        {
+          "type": "thread:open",
+          "requestId": null
+        },
+        {
+          "type": "prompt:resolve",
+          "requestId": "chat-action-mugbr6m1-2"
+        }
+      ],
+      "sentDelta": {
+        "file_content_request": 1,
+        "set_panel": 1,
+        "file_tree_request": 1,
+        "workspace:state_push": 1,
+        "prompt:resolve": 2,
+        "thread:open-assistant": 1,
+        "thread:open": 1
+      },
+      "receivedDelta": {
+        "thread:list": 3,
+        "panel_changed": 2,
+        "file_content_response": 1,
+        "file_tree_response": 17,
+        "prompt:resolved": 2,
+        "thread:created": 1,
+        "thread:opened": 2,
+        "wire_ready": 1
+      },
+      "errorFrames": [
+        {
+          "requestId": null,
+          "code": null,
+          "message": "No active workspace",
+          "workspaceEpoch": null
+        }
+      ],
+      "toast": null,
+      "activeThreadId": "2026-09-24T19-11-22-614",
+      "chatWorkspaceId": "system-files",
+      "workspaceLabel": "R5 System Fixture",
+      "resolvedCommandObserved": true
+    }
+  },
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": {
+    "name": "Error",
+    "message": "electronApplication.evaluate: Error: workspace menu item unavailable: R5 R6 a2b9f243\n    at eval (eval at evaluate (:290:30), <anonymous>:4:22)\n    at UtilityScript.evaluate (<anonymous>:292:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+    "stack": "electronApplication.evaluate: Error: workspace menu item unavailable: R5 R6 a2b9f243\n    at eval (eval at evaluate (:290:30), <anonymous>:4:22)\n    at UtilityScript.evaluate (<anonymous>:292:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at switchWorkspaceMenu (/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r5-r6-electron.mjs:332:52)\n    at reconnectAndRelease (/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r5-r6-electron.mjs:363:11)\n    at async exerciseProductionR6 (/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r5-r6-electron.mjs:407:23)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r5-r6-electron.mjs:979:7"
+  }
+}

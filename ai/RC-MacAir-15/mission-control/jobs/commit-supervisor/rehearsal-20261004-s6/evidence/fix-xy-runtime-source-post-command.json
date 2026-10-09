@@ -1,0 +1,17 @@
+{
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "started": "2026-10-04T19:27:24.263530+00:00",
+  "finished": "2026-10-04T19:27:25.053693+00:00",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "command": [
+    "python3.12",
+    "-B",
+    "jobs/commit-supervisor/rehearsal-20261004-s6/fix_xy_runtime_integrity.py",
+    "post",
+    "jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-runtime-source-post.json",
+    "jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-runtime-source-pre.json"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"path\": \"jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-runtime-source-post.json\", \"sha256\": \"b186b06fedba8a0dac0dbbd342a5a291e164ac0ecf4a361c6a6232551278bb8d\", \"owned\": 130, \"authority\": 77, \"55deps\": 3808, \"17deps\": 11, \"whole_tests\": 20, \"expected_runtime_only_deltas\": [\"rehearsal-workspace/ai/MC-S6/watcher-proof-runtime-2.md\"]}\n",
+  "stderr": ""
+}

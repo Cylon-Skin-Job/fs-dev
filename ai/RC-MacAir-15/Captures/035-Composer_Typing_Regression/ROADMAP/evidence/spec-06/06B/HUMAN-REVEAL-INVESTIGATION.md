@@ -1,0 +1,29 @@
+# Human output pause — three-agent read-only investigation
+
+Date: 2026-09-27. Owner explicitly requested subagent investigation. No product edits, live input, restart, provider request or permission change authorized or performed by these investigators.
+
+## Established findings
+
+Composer investigator `/root/investigate_composer_disabled` traced and compared ten relevant client files to the actual live staged copy; they are byte-identical. Normal terminal handling sets `pendingTurnEnd` (turn-lifecycle.ts:247). ConnectedChatComposer.tsx:65 includes this and pending save in finalizing; ChatAreaFooter.tsx:102 disables the textarea and line128 shows noninteractive Completing. Saved acknowledgment (stream-handlers.ts:395, chatSlice.ts:279) clears pending save only. MessageList.tsx:266 supplies the reveal-complete callback; chatSlice.ts:238–270 clears pendingTurnEnd only after that callback. Paths are under `fusion-studio-client/src/` in the repository.
+
+This is intentional existing behavior, not a newly introduced adapter defect. ARCHITECTURE.md:14 and SPEC-04.md:45 preserve the reveal/finalization handshake; VALIDATION.md R9 requires distinguishing a disabled textarea from a blocked renderer. No fixed57/60-second timer exists in the composer gates. The open question is accumulated visual backlog versus an additional reveal scheduling defect, not whether the todo tool actually took57seconds.
+
+Timeline investigator `/root/investigate_pause_timeline` independently confirmed the prior observation note from raw provider/Fusion SQLite and passive journal. Both todowrite calls took2ms, provider finished normally at08:27:06.048UTC, final text arrived.057, terminal.064, idle.065 and saved.076. Actual chat composer disabled first sampled08:27:06.787, enabled08:28:03.786. During the target interval:60 renderer heartbeats, maxgap1004.7ms, unchanged documenttimeOrigin, zero recorded drops/longtasks/socket reconnects/input/Stop. Focus returned approximately25seconds before composer recovery, so focus return alone does not explain it.
+
+The turn delivered30,137thinking characters plus1,124answer characters, including a21,520-character thinking chunk at08:26:20.620. Every11sampled normal/other terminals had a post-terminal disabled interval. Examples (thinking+answer counts, excluding tool payloads): smoke0+19→1second;1487+142→20seconds;7669+380→30seconds;19763+607→53seconds;21226+1119→36seconds; target30137+1124→57seconds. These are correlations, not a fitted deterministic timing formula.
+
+Renderer investigator `/root/investigate_output_rendering` found sequential reveal: only the next segment is mounted, and it must finish typing/collapse before later text appears. Per-tool default stages include400ms shimmer,500ms post-type hold,300ms collapse and100ms gap plus character/line reveal. Terminal arrival does not immediately skip the backlog. The todo display is summarized as “Updated4tasks”, so its own text volume cannot explain57seconds; preceding thinking and other tool output can delay the queue.
+
+## Diagnosis and limits
+
+Final renderer findings: collapsed thinking does not bypass animation. `LiveSegmentRenderer.tsx:336` keeps expansion separate from animation and line449 changes presentation only; line215 mounts only revealed segments plus the current one. Default timing at line183 does not accelerate on provider completion. `lib/timing.ts:35` and `lib/reveal/orchestrator.ts:95–145` supply paced characters, line pauses and completion catch-up rather than immediate flush. Read-only arithmetic for all11thinking parts estimates61.187seconds total scheduled reveal across the whole turn (47.287seconds typing/line pauses plus13.9seconds phase overhead); the largest block alone estimates35.010seconds plus1.3seconds phases. This is not a replay or an exact57second postterminal attribution. Todo's15-character summary still incurs about1.38seconds of animation despite its body renderer being empty, not a todo-specific57second wait.
+
+All three investigators are terminal. Owner then explicitly said “Pause when your investigation is done.” Investigation complete; supervisor pauses further work pending owner thoughts. No reveal fix or live-session restart was performed.
+
+Strongest supported explanation: server/provider completion and client presentation completion intentionally use different clocks. A backlog of paced reveal can look like stopped output and keeps the composer locked after the response has actually completed and been saved. This is independent of permission rejection and the TO-01 false-complete repair; fullauto does not remove this display wait.
+
+The logs do not capture every segment's visible paint/reveal cursor or the client pending-save/pending-reveal flags. Therefore the precise57seconds is not conclusively attributed to a particular segment or scheduling step. A renderer freeze is not supported by the steady heartbeat; the owner-perceived pause must not be equated automatically to the full postterminal interval.
+
+No change to reveal policy is silently authorized. Potential follow-up decisions are whether visual reveal should accelerate/flush when the provider finishes and whether typing should remain available during presentation-only catch-up while send/finalization ownership stays correct. These are recommendations for an owner decision, not implemented behavior. If finer diagnosis is needed first, capture only exact-thread pendingTurnEnd/pendingExchangeSaveTurnId and reveal cursor/completion timestamps in a separately authorized instrumented candidate; avoid disturbing the current session.
+
+Raw source evidence remains in the current/staged client and original `human-1790494814495-ca038557` journal/profile. Prior HUMAN-TODO-OUTPUT-OBSERVATION.md retains the exact thread/turn/provider identities. Current separate TO-01 implementation continues through its existing chain, with no scope expansion from this investigation.

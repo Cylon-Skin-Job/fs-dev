@@ -1,0 +1,62 @@
+# Owner-selected defaults for Mission Control and descendant Launchpad CWDs.
+# Effective permissions remain subject to trusted-project loading and host policy.
+sandbox_mode = "danger-full-access"
+approval_policy = "never"
+
+# Local roles use distinct names; definitions are maintained alongside this config.
+
+[agents.mc-first-draft]
+description = "Shape a prepared packet into a provisional skeleton and decision gaps."
+config_file = "agents/mc-first-draft.toml"
+
+[agents.mc-roadmap-supervisor]
+description = "Coordinate one approved roadmap and preserve per-SPEC owner acceptance."
+config_file = "agents/mc-roadmap-supervisor.toml"
+
+[agents.mc-spec-orchestrator]
+description = "Execute one approved SPEC through local slice builders and independent gates."
+config_file = "agents/mc-spec-orchestrator.toml"
+
+[agents.mc-spec-slice-builder]
+description = "Implement one assigned SPEC slice and its builder-owned review gate."
+config_file = "agents/mc-spec-slice-builder.toml"
+
+# Local profiles use mc- names; mission-control, status and monitor are shared local skills.
+
+# Read-only conversation retrieval; registration/cursor writes remain explicit CLI operations.
+[mcp_servers.mc-conversation-tools]
+command = "/opt/homebrew/bin/node"
+args = ["/Users/rccurtrightjr./projects/session-hub-codex/bin/codex-session-mcp.js"]
+enabled_tools = ["list_codex_threads", "resolve_codex_main_thread", "search_codex_conversations", "find_codex_thread", "read_codex_history", "get_codex_pair_cursor", "read_codex_pairs"]
+
+[agents.mc-draft-supervisor]
+description = "Supervise drafting and independent validation through a discussion handoff."
+config_file = "agents/mc-draft-supervisor.toml"
+
+[agents.mc-roadmap-creation-supervisor]
+description = "Supervise roadmap creation through bounded stages, independent validation and owner approval."
+config_file = "agents/mc-roadmap-creation-supervisor.toml"
+
+[agents.mc-planning-stage-orchestrator]
+description = "Manage one planning stage, its specialists, author and independent stage validation."
+config_file = "agents/mc-planning-stage-orchestrator.toml"
+
+[agents.mc-roadmap-author]
+description = "Author a source-grounded executable roadmap or single-SPEC candidate."
+config_file = "agents/mc-roadmap-author.toml"
+
+[agents.mc-planning-validator]
+description = "Independently validate a draft, candidate stage or final planning release."
+config_file = "agents/mc-planning-validator.toml"
+
+[agents.mc-commit-supervisor]
+description = "Prepare an accepted integration unit through review and runtime handoff, then wait for owner operation approval."
+config_file = "agents/mc-commit-supervisor.toml"
+
+[agents.mc-code-review-orchestrator]
+description = "Coordinate independent initial/final code review for an assigned integration candidate."
+config_file = "agents/mc-code-review-orchestrator.toml"
+
+[agents.mc-commit-repair-worker]
+description = "Repair bounded validated integration findings and return for independent handoff review."
+config_file = "agents/mc-commit-repair-worker.toml"

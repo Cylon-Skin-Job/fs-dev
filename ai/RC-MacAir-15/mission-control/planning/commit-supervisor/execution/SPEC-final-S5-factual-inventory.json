@@ -1,0 +1,442 @@
+{
+  "at": "2026-10-05T04:17:40.720749+00:00",
+  "kind": "Explicit field-only factual S5 activity inventory",
+  "observed_utc": "2026-10-04 10:58:05 UTC",
+  "source_pins": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/cutover-inventory.json",
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "size": 8428,
+      "sha256": "70ceebb8bb96561a8b64d1eea9eb3a5600103dfb8df83e0d38dacd27e41bd8de"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/thread-inventory.json",
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "size": 18511,
+      "sha256": "d73f90793f7ba9177eacc7c538f356c55444a4e87af73b4dc1c7c1dbc0fded72"
+    }
+  ],
+  "forbidden_sources": "Do not open either original inventory: both contain excluded conversation text",
+  "jobs": [],
+  "jobs_path": "C/jobs absent",
+  "central_registered_controller": "none; registry inspected",
+  "active_legacy_caller_paths": [
+    "AGENTS.md",
+    "session-contract.md",
+    ".agents/skills/mission-control/SKILL.md",
+    ".agents/skills/monitor/SKILL.md",
+    ".agents/skills/status/references/report-format.md",
+    ".agents/skills/mc-roadmap-implementation-supervisor/SKILL.md",
+    "mission-control.md",
+    "deployment.md",
+    "registry.md",
+    "todo.md",
+    "handoff.md"
+  ],
+  "matching_automation_tomls": [],
+  "cycle_records": [],
+  "prior_awaiting_legacy_handoff": false,
+  "pinned_identity_status": [
+    {
+      "id": "01a0cc30-3d70-78d2-9abd-1e80f7f758e7",
+      "kind": "codex",
+      "projectId": "0483a0ba-21f2-4ecc-9b8c-05b82cd306a7",
+      "hostId": "local",
+      "status": "idle",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev",
+      "updatedAt": 1791099943,
+      "pinnedIndex": 1
+    },
+    {
+      "id": "01a0fa4d-c613-7081-b26c-730a20cea165",
+      "kind": "codex",
+      "projectId": null,
+      "hostId": "local",
+      "status": "notLoaded",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "updatedAt": 1790914029,
+      "pinnedIndex": 2
+    }
+  ],
+  "other_identity_status": [
+    {
+      "id": "01a0ea32-f152-77a2-afc2-b73e8976685a",
+      "kind": "codex",
+      "projectId": "06d43426-d4f7-4667-9199-2ca9a73879bf",
+      "hostId": "local",
+      "status": "idle",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement",
+      "updatedAt": 1791100784
+    },
+    {
+      "id": "01a105eb-8add-7e12-a454-a96b64465cca",
+      "kind": "codex",
+      "projectId": null,
+      "hostId": "local",
+      "status": "active",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "updatedAt": 1791111040
+    },
+    {
+      "id": "6ac1114d-d2d4-83e8-b911-466ca88c2378",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1791038229.833
+    },
+    {
+      "id": "01a0ec68-3e37-78f0-8b59-4b2a536befbc",
+      "kind": "codex",
+      "projectId": "a5e42125-1f8a-440a-9f2e-3f4d6a98911f",
+      "hostId": "local",
+      "status": "notLoaded",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/plugin-foundation",
+      "updatedAt": 1791037448
+    },
+    {
+      "id": "6ac0b97a-2f84-83e8-ad32-b5284f419ad4",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1791015398.926
+    },
+    {
+      "id": "6ac0b656-25d8-83e8-9536-6a8838d11c07",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1791014860.504
+    },
+    {
+      "id": "6ac0acba-ce24-83e8-9701-5b1f1ea95a61",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1791013977.844
+    },
+    {
+      "id": "6ac0a8c4-9500-83e8-9c82-f092c1ace126",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1791011054.953
+    },
+    {
+      "id": "6ac0a132-57a4-83e8-ba57-fca1ec62e23b",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1791009142.937
+    },
+    {
+      "id": "01a0ddfd-81fe-7e03-8786-e514d762a797",
+      "kind": "codex",
+      "projectId": "0483a0ba-21f2-4ecc-9b8c-05b82cd306a7",
+      "hostId": "local",
+      "status": "notLoaded",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev",
+      "updatedAt": 1791012025
+    },
+    {
+      "id": "6abfbaae-e62c-83e8-97aa-fd67ae1577be",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1790950230.588
+    },
+    {
+      "id": "6abf7e85-be40-83e8-aa22-99d34645f4d2",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1790944385.264
+    },
+    {
+      "id": "6abed92d-7b54-83e8-ba63-81675169f8a4",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1790924651.092
+    },
+    {
+      "id": "6abf3d95-4630-83e8-9060-5b468ebbcc0e",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1790918091.322
+    },
+    {
+      "id": "01a0f9b4-eb49-7383-b46c-80af64a16b6b",
+      "kind": "codex",
+      "projectId": null,
+      "hostId": "local",
+      "status": "notLoaded",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement",
+      "updatedAt": 1791020998
+    },
+    {
+      "id": "01a0e6c9-e4e0-7872-9268-9a77a76f0c57",
+      "kind": "codex",
+      "projectId": "06d43426-d4f7-4667-9199-2ca9a73879bf",
+      "hostId": "local",
+      "status": "notLoaded",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement",
+      "updatedAt": 1790896736
+    },
+    {
+      "id": "01a0f988-5eda-7f50-af22-1e5eab6e26b9",
+      "kind": "codex",
+      "projectId": null,
+      "hostId": "local",
+      "status": "notLoaded",
+      "cwd": "/Users/rccurtrightjr./Documents/Codex/2026-10-01/check-my-relevant-connected-apps-and",
+      "updatedAt": 1790892869
+    },
+    {
+      "id": "6abe0f7c-0ea8-83e8-9b40-88a0343f2d3c",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1790841368.414
+    },
+    {
+      "id": "6abd8e67-7f98-83e8-8533-c874cf91f4df",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1790807705.271
+    },
+    {
+      "id": "01a0e659-1933-7c30-b7ff-50476ea94d17",
+      "kind": "codex",
+      "projectId": "54fe8ed4-5911-4033-8f65-7d0126a4f29c",
+      "hostId": "local",
+      "status": "notLoaded",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "updatedAt": 1791016815
+    },
+    {
+      "id": "6abb42d1-8e08-83e8-93f3-71305780c42d",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1790657322.77
+    },
+    {
+      "id": "6abb320d-aec0-83e8-8b34-8c2d29b8f6cd",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1790652980.13
+    },
+    {
+      "id": "6abb2976-be64-83e8-b2f0-7b29406a2bb3",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1790651899.205
+    },
+    {
+      "id": "6abad255-4348-83e8-875b-d8873e082e7c",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1790628487.705
+    },
+    {
+      "id": "01a0c1c8-6e85-7f83-8d67-2cb5c1476007",
+      "kind": "codex",
+      "projectId": "0483a0ba-21f2-4ecc-9b8c-05b82cd306a7",
+      "hostId": "local",
+      "status": "notLoaded",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev",
+      "updatedAt": 1790576991
+    },
+    {
+      "id": "01a0b8c0-3a24-7ef3-b63b-7000b11d46e0",
+      "kind": "codex",
+      "projectId": "0483a0ba-21f2-4ecc-9b8c-05b82cd306a7",
+      "hostId": "local",
+      "status": "notLoaded",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev",
+      "updatedAt": 1790572963
+    },
+    {
+      "id": "01a0e629-8d24-75b3-a26a-85c68bb40e3c",
+      "kind": "codex",
+      "projectId": "0483a0ba-21f2-4ecc-9b8c-05b82cd306a7",
+      "hostId": "local",
+      "status": "notLoaded",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev",
+      "updatedAt": 1790570055
+    },
+    {
+      "id": "6ab994d9-31c4-83e8-aac6-9bbc98bb386e",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1790547206.786
+    },
+    {
+      "id": "6ab994b6-36b0-83e8-bff6-79949f942446",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1790547165.873
+    },
+    {
+      "id": "6ab96f44-8f30-83e8-942d-50db57e313bf",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1790537633.741
+    },
+    {
+      "id": "6ab5cd45-66d8-83e8-94de-82bc9e40b360",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1790494605.075
+    },
+    {
+      "id": "6ab8823d-9370-83e8-b3e7-2c0a1a6f10d8",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1790476889.347
+    },
+    {
+      "id": "6ab869e3-dd74-83e8-9d66-dd25afa26800",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1790471369.915
+    },
+    {
+      "id": "6ab86255-aa7c-83e8-8832-7179f26610ac",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1790468737.548
+    },
+    {
+      "id": "6ab857a5-969c-83e8-8e49-fb1205727d5c",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1790466427.646
+    },
+    {
+      "id": "6ab7a97b-1e84-83e8-a2f0-fddade4a4c17",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1790421534.276
+    },
+    {
+      "id": "01a0d761-d42c-7df3-9111-613bcb5b01b9",
+      "kind": "codex",
+      "projectId": "0483a0ba-21f2-4ecc-9b8c-05b82cd306a7",
+      "hostId": "local",
+      "status": "notLoaded",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev",
+      "updatedAt": 1790326391
+    },
+    {
+      "id": "6ab3731a-2998-83e8-889d-518511974842",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1790145731.413
+    },
+    {
+      "id": "6ab35123-d7fc-83e8-be4d-5f84af75a0d2",
+      "kind": "chatgpt",
+      "projectId": "g-p-67e2869a65bc8191bfda6de56ca25797",
+      "status": "idle",
+      "updatedAt": 1790136895.244
+    },
+    {
+      "id": "6aab8142-0128-83e8-afa4-e916b2f6d556",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1790096653.258
+    },
+    {
+      "id": "6ab28d00-0f64-83e8-8d46-096f950c46da",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1790086465.027
+    },
+    {
+      "id": "6ab2220f-7c60-83e8-af60-bfc12f90bd9f",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1790059608.097
+    },
+    {
+      "id": "6ab0941b-3518-83e8-8edc-35bac6f28e9c",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1789957278.555
+    },
+    {
+      "id": "6aae375b-d7c0-83e8-be39-c418c67247a9",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1789803144.097
+    },
+    {
+      "id": "6aadf33c-06e8-83e8-be64-8da04722dd4e",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1789784941.272
+    },
+    {
+      "id": "6aadd96a-74d4-83e8-8e6c-f2ed7be97171",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1789778357.413
+    },
+    {
+      "id": "6aacb648-3da4-83e8-a921-9b73af78daba",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1789705328.607
+    },
+    {
+      "id": "6aacaa11-ce38-83e8-8389-b610e0794f3c",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1789700669.478
+    },
+    {
+      "id": "6aac693b-85c8-83e8-b899-a1fe08db2ce7",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1789684319.515
+    },
+    {
+      "id": "6aabb11b-5290-83e8-958e-5b980a3ab40e",
+      "kind": "chatgpt",
+      "projectId": null,
+      "status": "idle",
+      "updatedAt": 1789639678.619
+    }
+  ],
+  "limits": "Historical bounded native listing (2 pinned / 50 other). Titles, summaries, conversation turns, finals, assessments and conclusions omitted. Current installed caller/profile/preimage files remain independent review inputs."
+}

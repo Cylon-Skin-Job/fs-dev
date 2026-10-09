@@ -1,0 +1,11 @@
+{
+  "test": "borrowed Electron runtime and linked runtime storage refuse without effects",
+  "fixture": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-EWcJ1d",
+  "injected": true,
+  "files": [
+    {
+      "path": "selected profile/fusion-restart",
+      "link": "/tmp"
+    }
+  ]
+}

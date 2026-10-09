@@ -1,0 +1,26 @@
+/*
+ * VIEW-02 Slice 4 — File connected picker reveal overlay.
+ *
+ * While a `file.open` reservation pends on the ACTIVE Empty tab, the accepted
+ * file-tree drawer is hosted beside the generic empty-panel body (the generic
+ * empty body has no view-content slot; this host is File-owned view code, not
+ * shell). The host is a child of the shell body and a flex sibling of the tab
+ * panel inside it, so the drawer sits exactly where the legacy layout places
+ * it, and every value traces back to the established CSS variables.
+ */
+
+.rv-file-connected-picker-layer {
+  position: relative;
+  flex: 0 0 auto;
+  width: var(--file-tree-w, var(--right-col-w, 220px));
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* The accepted drawer's absolute geometry is calibrated for the legacy
+ * `.rv-file-explorer-layout` origin; inside this host the drawer starts at
+ * the host top (the shell body already begins below the tab chrome). */
+.rv-file-connected-picker-layer .rv-file-tree-sidebar {
+  top: 0;
+}

@@ -1,0 +1,64 @@
+{
+  "at": "2026-10-04T12:18:27.898677+00:00",
+  "checks": [
+    {
+      "name": "focused",
+      "argv": [
+        "node",
+        "--test",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "environment": "GIT_OPTIONAL_LOCKS=0, PYTHONDONTWRITEBYTECODE=1, FUSION_RESTART_TEST_EVIDENCE removed",
+      "exit": 0,
+      "seconds": 25.246566208079457,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-orchestrator-focused.log",
+      "log_sha256": "c0bbcc773de9a0a726060de453dc171386e7fdff7ebdab045657b5d9cca29d65"
+    },
+    {
+      "name": "process-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "environment": "GIT_OPTIONAL_LOCKS=0, PYTHONDONTWRITEBYTECODE=1, FUSION_RESTART_TEST_EVIDENCE removed",
+      "exit": 0,
+      "seconds": 0.03658162523061037,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-orchestrator-process-syntax.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "bash-syntax",
+      "argv": [
+        "bash",
+        "-n",
+        "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "environment": "GIT_OPTIONAL_LOCKS=0, PYTHONDONTWRITEBYTECODE=1, FUSION_RESTART_TEST_EVIDENCE removed",
+      "exit": 0,
+      "seconds": 0.002748040948063135,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-orchestrator-bash-syntax.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "default-dry-run",
+      "argv": [
+        "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh",
+        "--repo",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "--machine",
+        "RC-MacAir-15",
+        "--dry-run"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "environment": "GIT_OPTIONAL_LOCKS=0, PYTHONDONTWRITEBYTECODE=1, FUSION_RESTART_TEST_EVIDENCE removed",
+      "exit": 0,
+      "seconds": 0.053965999744832516,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-orchestrator-default-dry-run.log",
+      "log_sha256": "3158bed472a7694a7158766bfd797480ca3134ec51521133ee75047f7937b2ad"
+    }
+  ]
+}

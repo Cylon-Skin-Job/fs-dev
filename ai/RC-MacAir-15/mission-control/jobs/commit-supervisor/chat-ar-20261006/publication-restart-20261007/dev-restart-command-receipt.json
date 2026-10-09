@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-07T08:19:31.475449+00:00",
+  "exit_code": 0,
+  "argv": [
+    "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh",
+    "--repo",
+    "/Users/rccurtrightjr./projects/fs-dev",
+    "--machine",
+    "RC-MacAir-15"
+  ],
+  "log_sha256": "0eace3aa040ab7d76afab531ecccd1eac62a61d3400cb320527b1e58b7273e1f"
+}

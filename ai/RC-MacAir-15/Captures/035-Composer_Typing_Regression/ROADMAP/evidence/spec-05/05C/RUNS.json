@@ -1,0 +1,578 @@
+[
+  {
+    "log": "backend-1.log",
+    "runId": "chat-arch-1790242139093-61790a6873",
+    "rawSource": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790242139093-61790a6873",
+    "receipt": "receipts/chat-arch-1790242139093-61790a6873",
+    "result": {
+      "runId": "chat-arch-1790242139093-61790a6873",
+      "status": "failed",
+      "results": [
+        {
+          "id": "R7-R8-RUNTIME-OWNERSHIP",
+          "code": 1,
+          "signal": null,
+          "pid": 79968,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 767
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": {
+        "name": "Error",
+        "message": "R7-R8-RUNTIME-OWNERSHIP exited 1",
+        "stack": "Error: R7-R8-RUNTIME-OWNERSHIP exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:422:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  },
+  {
+    "log": "backend-10.log",
+    "runId": "chat-arch-1790243283327-eda18ee2a7",
+    "rawSource": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790243283327-eda18ee2a7",
+    "receipt": "receipts/chat-arch-1790243283327-eda18ee2a7",
+    "result": {
+      "runId": "chat-arch-1790243283327-eda18ee2a7",
+      "status": "passed",
+      "results": [
+        {
+          "id": "R7-R8-RUNTIME-OWNERSHIP",
+          "code": 0,
+          "signal": null,
+          "pid": 16401,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 11940
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": null
+    }
+  },
+  {
+    "log": "backend-2.log",
+    "runId": "chat-arch-1790242155326-879ea9c865",
+    "rawSource": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790242155326-879ea9c865",
+    "receipt": "receipts/chat-arch-1790242155326-879ea9c865",
+    "result": {
+      "runId": "chat-arch-1790242155326-879ea9c865",
+      "status": "failed",
+      "results": [
+        {
+          "id": "R7-R8-RUNTIME-OWNERSHIP",
+          "code": 1,
+          "signal": null,
+          "pid": 80132,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 22719
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": {
+        "name": "Error",
+        "message": "R7-R8-RUNTIME-OWNERSHIP exited 1",
+        "stack": "Error: R7-R8-RUNTIME-OWNERSHIP exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:422:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  },
+  {
+    "log": "backend-3.log",
+    "runId": "chat-arch-1790242277199-3012dde31f",
+    "rawSource": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790242277199-3012dde31f",
+    "receipt": "receipts/chat-arch-1790242277199-3012dde31f",
+    "result": {
+      "runId": "chat-arch-1790242277199-3012dde31f",
+      "status": "passed",
+      "results": [
+        {
+          "id": "R7-R8-RUNTIME-OWNERSHIP",
+          "code": 0,
+          "signal": null,
+          "pid": 83216,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 11727
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": null
+    }
+  },
+  {
+    "log": "backend-4.log",
+    "runId": "chat-arch-1790242429453-06613c5d5a",
+    "rawSource": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790242429453-06613c5d5a",
+    "receipt": "receipts/chat-arch-1790242429453-06613c5d5a",
+    "result": {
+      "runId": "chat-arch-1790242429453-06613c5d5a",
+      "status": "passed",
+      "results": [
+        {
+          "id": "R7-R8-RUNTIME-OWNERSHIP",
+          "code": 0,
+          "signal": null,
+          "pid": 85089,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 12065
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": null
+    }
+  },
+  {
+    "log": "backend-5.log",
+    "runId": "chat-arch-1790242558662-4652190d0f",
+    "rawSource": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790242558662-4652190d0f",
+    "receipt": "receipts/chat-arch-1790242558662-4652190d0f",
+    "result": {
+      "runId": "chat-arch-1790242558662-4652190d0f",
+      "status": "passed",
+      "results": [
+        {
+          "id": "R7-R8-RUNTIME-OWNERSHIP",
+          "code": 0,
+          "signal": null,
+          "pid": 86999,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 11806
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": null
+    }
+  },
+  {
+    "log": "backend-6.log",
+    "runId": "chat-arch-1790242729832-0d3149ed38",
+    "rawSource": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790242729832-0d3149ed38",
+    "receipt": "receipts/chat-arch-1790242729832-0d3149ed38",
+    "result": {
+      "runId": "chat-arch-1790242729832-0d3149ed38",
+      "status": "failed",
+      "results": [
+        {
+          "id": "R7-R8-RUNTIME-OWNERSHIP",
+          "code": 1,
+          "signal": null,
+          "pid": 99434,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 2250
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": {
+        "name": "Error",
+        "message": "R7-R8-RUNTIME-OWNERSHIP exited 1",
+        "stack": "Error: R7-R8-RUNTIME-OWNERSHIP exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:422:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  },
+  {
+    "log": "backend-7.log",
+    "runId": "chat-arch-1790242805794-56eeb68d65",
+    "rawSource": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790242805794-56eeb68d65",
+    "receipt": "receipts/chat-arch-1790242805794-56eeb68d65",
+    "result": {
+      "runId": "chat-arch-1790242805794-56eeb68d65",
+      "status": "failed",
+      "results": [
+        {
+          "id": "R7-R8-RUNTIME-OWNERSHIP",
+          "code": 1,
+          "signal": null,
+          "pid": 323,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 11345
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": {
+        "name": "Error",
+        "message": "R7-R8-RUNTIME-OWNERSHIP exited 1",
+        "stack": "Error: R7-R8-RUNTIME-OWNERSHIP exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:422:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  },
+  {
+    "log": "backend-8.log",
+    "runId": "chat-arch-1790242831169-8fc307e7f7",
+    "rawSource": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790242831169-8fc307e7f7",
+    "receipt": "receipts/chat-arch-1790242831169-8fc307e7f7",
+    "result": {
+      "runId": "chat-arch-1790242831169-8fc307e7f7",
+      "status": "passed",
+      "results": [
+        {
+          "id": "R7-R8-RUNTIME-OWNERSHIP",
+          "code": 0,
+          "signal": null,
+          "pid": 2197,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 11344
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": null
+    }
+  },
+  {
+    "log": "backend-9.log",
+    "runId": "chat-arch-1790243230514-3c7a93bc36",
+    "rawSource": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790243230514-3c7a93bc36",
+    "receipt": "receipts/chat-arch-1790243230514-3c7a93bc36",
+    "result": {
+      "runId": "chat-arch-1790243230514-3c7a93bc36",
+      "status": "passed",
+      "results": [
+        {
+          "id": "R7-R8-RUNTIME-OWNERSHIP",
+          "code": 0,
+          "signal": null,
+          "pid": 14490,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 12561
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": null
+    }
+  },
+  {
+    "log": "submit-1.log",
+    "runId": "chat-arch-1790242604412-a0a1d9fd84",
+    "rawSource": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790242604412-a0a1d9fd84",
+    "receipt": "receipts/chat-arch-1790242604412-a0a1d9fd84",
+    "result": {
+      "runId": "chat-arch-1790242604412-a0a1d9fd84",
+      "status": "passed",
+      "results": [
+        {
+          "id": "R2-NO-ENQUEUE",
+          "code": 0,
+          "signal": null,
+          "pid": 88794,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 7550
+        },
+        {
+          "id": "R3-LOST-ACK-STATUS",
+          "code": 0,
+          "signal": null,
+          "pid": 89927,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 7822
+        },
+        {
+          "id": "R3-RECONNECT-UI",
+          "code": 0,
+          "signal": null,
+          "pid": 90939,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 11365
+        },
+        {
+          "id": "R4-DISTINCT-ATTEMPTS",
+          "code": 0,
+          "signal": null,
+          "pid": 92333,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 11663
+        },
+        {
+          "id": "R4-DISTINCT-RECEIPTS",
+          "code": 0,
+          "signal": null,
+          "pid": 93766,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 11500
+        },
+        {
+          "id": "R4-LATE-DRAFT-RECOVERY",
+          "code": 0,
+          "signal": null,
+          "pid": 95186,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 25838
+        },
+        {
+          "id": "R4-DUPLICATE-MISMATCH",
+          "code": 0,
+          "signal": null,
+          "pid": 98323,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 8467
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": null
+    }
+  },
+  {
+    "log": "submit-2.log",
+    "runId": "chat-arch-1790242876104-4826b3d5f6",
+    "rawSource": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790242876104-4826b3d5f6",
+    "receipt": "receipts/chat-arch-1790242876104-4826b3d5f6",
+    "result": {
+      "runId": "chat-arch-1790242876104-4826b3d5f6",
+      "status": "passed",
+      "results": [
+        {
+          "id": "R2-NO-ENQUEUE",
+          "code": 0,
+          "signal": null,
+          "pid": 3995,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 6813
+        },
+        {
+          "id": "R3-LOST-ACK-STATUS",
+          "code": 0,
+          "signal": null,
+          "pid": 5038,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 7827
+        },
+        {
+          "id": "R3-RECONNECT-UI",
+          "code": 0,
+          "signal": null,
+          "pid": 6049,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 11250
+        },
+        {
+          "id": "R4-DISTINCT-ATTEMPTS",
+          "code": 0,
+          "signal": null,
+          "pid": 7434,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 10815
+        },
+        {
+          "id": "R4-DISTINCT-RECEIPTS",
+          "code": 0,
+          "signal": null,
+          "pid": 8797,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 10633
+        },
+        {
+          "id": "R4-LATE-DRAFT-RECOVERY",
+          "code": 0,
+          "signal": null,
+          "pid": 10113,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 25953
+        },
+        {
+          "id": "R4-DUPLICATE-MISMATCH",
+          "code": 0,
+          "signal": null,
+          "pid": 13277,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 7953
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": null
+    }
+  },
+  {
+    "log": "submit-3.log",
+    "runId": "chat-arch-1790243312056-358efb0d3d",
+    "rawSource": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790243312056-358efb0d3d",
+    "receipt": "receipts/chat-arch-1790243312056-358efb0d3d",
+    "result": {
+      "runId": "chat-arch-1790243312056-358efb0d3d",
+      "status": "failed",
+      "results": [
+        {
+          "id": "R2-NO-ENQUEUE",
+          "code": 0,
+          "signal": null,
+          "pid": 18208,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 7423
+        },
+        {
+          "id": "R3-LOST-ACK-STATUS",
+          "code": 0,
+          "signal": null,
+          "pid": 19379,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 7325
+        },
+        {
+          "id": "R3-RECONNECT-UI",
+          "code": 0,
+          "signal": null,
+          "pid": 20346,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 11417
+        },
+        {
+          "id": "R4-DISTINCT-ATTEMPTS",
+          "code": 0,
+          "signal": null,
+          "pid": 21759,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 10715
+        },
+        {
+          "id": "R4-DISTINCT-RECEIPTS",
+          "code": 1,
+          "signal": null,
+          "pid": 23080,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 39665
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": {
+        "name": "Error",
+        "message": "R4-DISTINCT-RECEIPTS exited 1",
+        "stack": "Error: R4-DISTINCT-RECEIPTS exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:422:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  },
+  {
+    "log": "submit-4.log",
+    "runId": "chat-arch-1790243438774-f63e71e54c",
+    "rawSource": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790243438774-f63e71e54c",
+    "receipt": "receipts/chat-arch-1790243438774-f63e71e54c",
+    "result": {
+      "runId": "chat-arch-1790243438774-f63e71e54c",
+      "status": "passed",
+      "results": [
+        {
+          "id": "R2-NO-ENQUEUE",
+          "code": 0,
+          "signal": null,
+          "pid": 27637,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 7132
+        },
+        {
+          "id": "R3-LOST-ACK-STATUS",
+          "code": 0,
+          "signal": null,
+          "pid": 28743,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 7966
+        },
+        {
+          "id": "R3-RECONNECT-UI",
+          "code": 0,
+          "signal": null,
+          "pid": 29775,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 11378
+        },
+        {
+          "id": "R4-DISTINCT-ATTEMPTS",
+          "code": 0,
+          "signal": null,
+          "pid": 31176,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 11608
+        },
+        {
+          "id": "R4-DISTINCT-RECEIPTS",
+          "code": 0,
+          "signal": null,
+          "pid": 32606,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 11267
+        },
+        {
+          "id": "R4-LATE-DRAFT-RECOVERY",
+          "code": 0,
+          "signal": null,
+          "pid": 34008,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 26215
+        },
+        {
+          "id": "R4-DUPLICATE-MISMATCH",
+          "code": 0,
+          "signal": null,
+          "pid": 37169,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 8456
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": null
+    }
+  }
+]

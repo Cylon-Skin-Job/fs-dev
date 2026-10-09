@@ -1,0 +1,9 @@
+# 04C Builder Review Packet
+
+Review SPEC-04 Slice 04C only against current bytes and `SOURCE-SHA256.txt`. Read SPEC-04 plus the accepted 04A/04B reports before judging integration. This is a read-only clean-room review.
+
+Current candidate manifest digest: `21eb00b014cf37b7a710c59a0be97016b91ef55ec9c2b0f8f1e551caadbeaa44` (43 hashed files plus four verified deletions). Pass-1 findings and lifecycle are recorded in `BUILDER-REVIEW-FINDINGS-1.md`; pass 2 was clean before focused fail-forward changed the sustained oracle and its contract test. Review all current bytes from first principles.
+
+Focus on: explicit sibling shell composition; ContentArea observation isolation; exact view-population selection; exactly one active-view startup list with no null/inactive sweep or startup open; inactive host list/open/warm suppression; complete production retirement of LegacyChatHost/useLegacyChatHost/ViewWorksurfaceDock/legacy-main; non-null production component descriptors while preserving persisted null-view read/cleanup; no aggregate owner, duplicate placement, unbounded cache, or orphan listener; one-job/400-line audit and stated cohesive exemptions; preservation of 04A/04B and attempt/action/correlation contracts. Independently inspect the focused fail-forward: unchanged 2,550-ms short threshold, initial isolated 2,567-ms wall-only result and passing authentic repetitions; approved `characters × delay × 1.5` five-minute wall formula; bounded ordered screenshot-bootstrap quiescence before evidence reset; no type-filtering of measured traffic; final full-render and five-minute receipts; exact cleanup and report/deviation accuracy.
+
+Verification receipts are in `VERIFICATION-RESULTS.json`; raw owned-run evidence remains at the listed spec-01/01B run roots. The final report is `SLICE-04C-IMPLEMENTATION-REPORT.md`. Report only material correctness, authority, verification, evidence, or integration findings. If clean, return CLEAN explicitly.

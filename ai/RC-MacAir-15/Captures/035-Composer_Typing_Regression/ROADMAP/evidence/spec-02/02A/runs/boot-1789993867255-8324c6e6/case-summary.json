@@ -1,0 +1,25 @@
+{
+  "runId": "boot-1789993867255-8324c6e6",
+  "mode": "--smoke",
+  "port": 60281,
+  "baseURL": "http://127.0.0.1:60281",
+  "total": 1,
+  "byStatus": {
+    "expected": 1
+  },
+  "setupFailures": [],
+  "cases": [
+    {
+      "id": "prompt-ownership.slice-c.spec.ts > Slice C: composer drafts swap immediately by thread and preserve pending retry ownership",
+      "file": "prompt-ownership.slice-c.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "at": "2026-10-04T11:44:06.119765+00:00",
+  "phase": "after private public-bootstrap only; before canonical restart",
+  "profile_storage": {
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/Preferences": {
+      "exists": true,
+      "sha256": "f0e43cb69a6791e69476c4780858a97f50255a1d253bead0bf03626ff341e7c3",
+      "volatile": true,
+      "dev": 16777230,
+      "ino": 255293576,
+      "size": 1362
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/Local State": {
+      "exists": true,
+      "sha256": "ed99ee7c5881bef2b9895b6df1058728653c22d630d22c6360c10253f21b647f",
+      "volatile": true,
+      "dev": 16777230,
+      "ino": 53858069,
+      "size": 57
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server-data/fusion.db": {
+      "exists": true,
+      "sha256": "29bbcf1eedf39bfc4ec1cab593252166805872c3c1ca424aa43e93f47e725e20",
+      "volatile": true,
+      "dev": 16777230,
+      "ino": 194521586,
+      "size": 348160
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server-data/fusion.db-wal": {
+      "exists": false,
+      "sha256": null,
+      "volatile": true,
+      "dev": null,
+      "ino": null,
+      "size": null
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server.port": {
+      "exists": true,
+      "sha256": "ea7812cfeb7b019a1eb4fa2410ab3f50a49712eb8a1e93f4802b327059bad754",
+      "volatile": true,
+      "dev": 16777230,
+      "ino": 255293315,
+      "size": 5
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/Preferences": {
+      "exists": true,
+      "sha256": "ab913052ab22c0be5eb150029ab5af7f0060ff00bbf7c39688d70b0189618514",
+      "volatile": true,
+      "dev": 16777230,
+      "ino": 195245270,
+      "size": 116
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/Local State": {
+      "exists": true,
+      "sha256": "60f0a642e3b8a1fedad849d4c83cabbd4021f195c778ef5095d607c915a3edf8",
+      "volatile": true,
+      "dev": 16777230,
+      "ino": 194683377,
+      "size": 57
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server-data/fusion.db": {
+      "exists": true,
+      "sha256": "757e33b45efaa3d4b314ac7db9ddf02c47afcbb50c089911a18f352fd8b91192",
+      "volatile": true,
+      "dev": 16777230,
+      "ino": 194683133,
+      "size": 26681344
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server-data/fusion.db-wal": {
+      "exists": false,
+      "sha256": null,
+      "volatile": true,
+      "dev": null,
+      "ino": null,
+      "size": null
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server.port": {
+      "exists": true,
+      "sha256": "5939ac9daf7975b25a1e4a8b48d6f596fb8dd0ac93820c3f1f0d0a8e98f59d44",
+      "volatile": true,
+      "dev": 16777230,
+      "ino": 257489625,
+      "size": 5
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/data/fusion.db": {
+      "exists": true,
+      "sha256": "690364f520ab0f0108797ebc5ac6b32594e8f184e590f9f14f7caf23aaa4f689",
+      "volatile": true,
+      "dev": 16777230,
+      "ino": 39348215,
+      "size": 375078912
+    }
+  },
+  "processes": [
+    {
+      "pid": 48636,
+      "identity": "48636     1 Thu Oct  1 12:36:56 2026     /Applications/Fusion Studio Alpha.app/Contents/MacOS/Fusion Studio",
+      "cwd_executable": "p48636\nfcwd\nn/\nftxt\nn/Applications/Fusion Studio Alpha.app/Contents/MacOS/Fusion Studio\nftxt\nn/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Squirrel.framework/Versions/A/Squirrel\nftxt\nn/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Mantle.framework/Versions/A/Mantle\nftxt\nn/Library/Preferences/Logging/.plist-cache.E4ASMnfG\nftxt\nn/Applications/Fusion Studio Alpha.app/Contents/Frameworks/ReactiveObjC.framework/Versions/A/ReactiveObjC\nftxt\nn/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/v8_context_snapshot.arm64.bin\nftxt\nn/private/var/db/analyticsd/events.allowlist\nftxt\nn/usr/lib/dyld\nftxt\nn/System/Library/CoreServices/SystemVersion.bundle/English.lproj/SystemVersion.strings\nftxt\nn/private/var/db/timezone/tz/2026c.1.0/icutz/icutz44l.dat\nftxt\nn/System/Library/CoreServices/SystemAppearance.bundle/Contents/Resources/SystemAppearance.car\nftxt\nn/System/Library/CoreServices/SystemAppearance.bundle/Contents/Resources/FauxVibrantDark.car\nftxt\nn/System/Library/Frameworks/AppKit.framework/Versions/C/Resources/Common.loctable\nftxt\nn/usr/lib/libobjc-trampolines.dylib\nftxt\nn/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Libraries/libffmpeg.dylib\nftxt\nn/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/chrome_100_percent.pak\nftxt\nn/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/chrome_200_percent.pak\nftxt\nn/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/en.lproj/locale.pak\nftxt\nn/private/var/db/mds/messages/501/se_SecurityMessages\nftxt\nn/System/Library/Frameworks/AppKit.framework/Versions/C/Resources/InputManager.loctable\nftxt\nn/System/Library/Frameworks/AppKit.framework/Versions/C/Resources/MenuCommands.loctable\nftxt\nn/System/Library/Keyboard Layouts/AppleKeyboardLayouts.bundle/Contents/Resources/AppleKeyboardLayouts-L.dat\nftxt\nn/System/Library/Caches/com.apple.IntlDataCache.le.kbdx\nftxt\nn/System/Library/Keyboard Layouts/AppleKeyboardLayouts.bundle/Contents/Resources/InfoPlist.loctable\nftxt\nn/System/Library/Frameworks/AppKit.framework/Versions/C/Resources/DictationManager.loctable\nftxt\nn/System/Library/Frameworks/AppKit.framework/Versions/C/Resources/WritingTools.loctable\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/DIPS\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/GPUCache/data_0\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/GPUCache/data_1\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/GPUCache/data_2\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/GPUCache/data_3\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/DawnWebGPUCache/data_0\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/DawnWebGPUCache/data_1\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/DawnWebGPUCache/data_2\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/DawnWebGPUCache/data_3\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/DawnGraphiteCache/data_0\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/DawnGraphiteCache/data_1\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/DawnGraphiteCache/data_2\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/DawnGraphiteCache/data_3\nftxt\nn/usr/share/icu/icudt76l.dat\nftxt\nn/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/icudtl.dat\nftxt\nn/System/Library/Frameworks/AppKit.framework/Versions/C/Resources/Menus.loctable\nftxt\nn/System/Library/PrivateFrameworks/CoreNLP.framework/Versions/A/Resources/tokruleLE.data\nftxt\nn/System/Library/PrivateFrameworks/DataDetectorsCore.framework/Versions/A/Resources/com.apple.datadetectorscore.cache.urlifier.system\nftxt\nn/System/Library/CoreServices/SystemAppearance.bundle/Contents/Resources/DarkAqua.car\nftxt\nn/System/Library/CoreServices/SystemAppearance.bundle/Contents/Resources/VibrantDark.car\nftxt\nn/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/resources.pak\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/GPUCache/index\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/DawnWebGPUCache/index\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/DawnGraphiteCache/index\nftxt\nn/System/Library/Fonts/Helvetica.ttc\nftxt\nn/Applications/Fusion Studio Alpha.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Electron Framework\nftxt\nn/System/Library/CoreServices/SystemAppearance.bundle/Contents/Resources/Aqua.car\nftxt\nn/System/Library/Fonts/SFNS.ttf\nftxt\nn/System/Library/Extensions/AGXMetalG16G_B0.bundle/Contents/Resources/ds.g16g\nftxt\nn/System/Library/Extensions/AGXMetalG16G_B0.bundle/Contents/MacOS/AGXMetalG16G_B0\nftxt\nn/System/Library/PrivateFrameworks/SFSymbols.framework/Versions/A/Resources/CoreGlyphsPrivate.bundle/Contents/Resources/Assets.car\nftxt\nn/usr/share/langid/langid.inv\nftxt\nn/System/Library/PrivateFrameworks/SFSymbols.framework/Versions/A/Resources/CoreGlyphs.bundle/Contents/Resources/Assets.car\n"
+    },
+    {
+      "pid": 48653,
+      "identity": "48653 48636 Thu Oct  1 12:36:59 2026     /opt/homebrew/bin/node /Applications/Fusion Studio Alpha.app/Contents/Resources/fusion-studio-server/server.js",
+      "cwd_executable": "p48653\nfcwd\nn/\nftxt\nn/opt/homebrew/Cellar/node/25.6.1/bin/node\nftxt\nn/opt/homebrew/Cellar/llhttp/9.3.1/lib/libllhttp.9.3.1.dylib\nftxt\nn/opt/homebrew/Cellar/brotli/1.2.0/lib/libbrotlidec.1.2.0.dylib\nftxt\nn/opt/homebrew/Cellar/hdrhistogram_c/0.11.9/lib/libhdr_histogram.6.2.3.dylib\nftxt\nn/opt/homebrew/Cellar/libuv/1.52.0/lib/libuv.1.0.0.dylib\nftxt\nn/opt/homebrew/Cellar/simdjson/4.2.4/lib/libsimdjson.29.0.0.dylib\nftxt\nn/opt/homebrew/Cellar/uvwasi/0.0.23/lib/libuvwasi.dylib\nftxt\nn/opt/homebrew/Cellar/libnghttp2/1.68.1/lib/libnghttp2.14.dylib\nftxt\nn/opt/homebrew/Cellar/ada-url/3.4.2/lib/libada.3.4.2.dylib\nftxt\nn/opt/homebrew/Cellar/c-ares/1.34.6/lib/libcares.2.19.5.dylib\nftxt\nn/opt/homebrew/Cellar/libnghttp3/1.15.0/lib/libnghttp3.9.6.1.dylib\nftxt\nn/opt/homebrew/Cellar/brotli/1.2.0/lib/libbrotlienc.1.2.0.dylib\nftxt\nn/opt/homebrew/Cellar/brotli/1.2.0/lib/libbrotlicommon.1.2.0.dylib\nftxt\nn/Applications/Fusion Studio Alpha.app/Contents/Resources/fusion-studio-server/native/secure-file-observer/build/Release/secure_file_observer.node\nftxt\nn/opt/homebrew/Cellar/libngtcp2/1.20.0/lib/libngtcp2.16.dylib\nftxt\nn/usr/lib/dyld\nftxt\nn/opt/homebrew/Cellar/zstd/1.5.7_1/lib/libzstd.1.5.7.dylib\nftxt\nn/opt/homebrew/Cellar/sqlite/3.51.2_1/lib/libsqlite3.3.51.2.dylib\nftxt\nn/opt/homebrew/Cellar/openssl@3/3.6.1/lib/libssl.3.dylib\nftxt\nn/opt/homebrew/Cellar/openssl@3/3.6.1/lib/libcrypto.3.dylib\nftxt\nn/opt/homebrew/Cellar/icu4c@78/78.3/lib/libicuuc.78.3.dylib\nftxt\nn/opt/homebrew/Cellar/icu4c@78/78.3/lib/libicui18n.78.3.dylib\nftxt\nn/Applications/Fusion Studio Alpha.app/Contents/Resources/fusion-studio-server/node_modules/better-sqlite3/build/Release/better_sqlite3.node\nftxt\nn/opt/homebrew/Cellar/node/25.6.1/lib/libnode.141.dylib\nftxt\nn/opt/homebrew/Cellar/icu4c@78/78.3/lib/libicudata.78.3.dylib\n"
+    },
+    {
+      "pid": 77002,
+      "identity": "77002     1 Mon Sep 28 01:40:07 2026     /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs",
+      "cwd_executable": "p77002\nfcwd\nn/\nftxt\nn/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron\nftxt\nn/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Squirrel.framework/Versions/A/Squirrel\nftxt\nn/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Mantle.framework/Versions/A/Mantle\nftxt\nn/Library/Preferences/Logging/.plist-cache.E4ASMnfG\nftxt\nn/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/ReactiveObjC.framework/Versions/A/ReactiveObjC\nftxt\nn/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/v8_context_snapshot.arm64.bin\nftxt\nn/private/var/db/analyticsd/events.allowlist\nftxt\nn/System/Library/CoreServices/SystemVersion.bundle/English.lproj/SystemVersion.strings\nftxt\nn/private/var/db/timezone/tz/2026c.1.0/icutz/icutz44l.dat\nftxt\nn/System/Library/CoreServices/SystemAppearance.bundle/Contents/Resources/SystemAppearance.car\nftxt\nn/System/Library/CoreServices/SystemAppearance.bundle/Contents/Resources/FauxVibrantDark.car\nftxt\nn/usr/lib/dyld\nftxt\nn/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Libraries/libffmpeg.dylib\nftxt\nn/System/Library/Frameworks/AppKit.framework/Versions/C/Resources/Common.loctable\nftxt\nn/usr/lib/libobjc-trampolines.dylib\nftxt\nn/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/chrome_100_percent.pak\nftxt\nn/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/chrome_200_percent.pak\nftxt\nn/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/en.lproj/locale.pak\nftxt\nn/private/var/db/mds/messages/501/se_SecurityMessages\nftxt\nn/System/Library/Frameworks/AppKit.framework/Versions/C/Resources/InputManager.loctable\nftxt\nn/System/Library/Frameworks/AppKit.framework/Versions/C/Resources/MenuCommands.loctable\nftxt\nn/System/Library/Caches/com.apple.IntlDataCache.le.kbdx\nftxt\nn/System/Library/Keyboard Layouts/AppleKeyboardLayouts.bundle/Contents/Resources/InfoPlist.loctable\nftxt\nn/System/Library/Frameworks/AppKit.framework/Versions/C/Resources/DictationManager.loctable\nftxt\nn/System/Library/Frameworks/AppKit.framework/Versions/C/Resources/WritingTools.loctable\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio/DIPS\nftxt\nn/usr/share/icu/icudt76l.dat\nftxt\nn/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/icudtl.dat\nftxt\nn/System/Library/CoreServices/SystemAppearance.bundle/Contents/Resources/DarkAqua.car\nftxt\nn/System/Library/CoreServices/SystemAppearance.bundle/Contents/Resources/VibrantDark.car\nftxt\nn/usr/share/germantok/german.index\nftxt\nn/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/HIServices.framework/Versions/A/Resources/RoleDescriptions-BBBAA77A32-C4EBFEA440.strings\nftxt\nn/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app/Contents/Resources/en.lproj/ServicesMenu.strings\nftxt\nn/System/Library/Frameworks/AppKit.framework/Versions/C/Resources/Services.loctable\nftxt\nn/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/HIServices.framework/Versions/A/Resources/RoleDescriptions.loctable\nftxt\nn/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources/resources.pak\nftxt\nn/System/Library/CoreServices/SystemAppearance.bundle/Contents/Resources/Aqua.car\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio/GPUCache/data_0\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio/GPUCache/data_1\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio/GPUCache/data_2\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio/GPUCache/data_3\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio/DawnWebGPUCache/data_0\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio/DawnWebGPUCache/data_1\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio/DawnWebGPUCache/data_2\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio/DawnWebGPUCache/data_3\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio/DawnGraphiteCache/data_0\nftxt\nn/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Electron Framework\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio/GPUCache/index\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio/DawnGraphiteCache/data_1\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio/DawnGraphiteCache/data_2\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio/DawnGraphiteCache/data_3\nftxt\nn/System/Library/Keyboard Layouts/AppleKeyboardLayouts.bundle/Contents/Resources/AppleKeyboardLayouts-L.dat\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio/DawnWebGPUCache/index\nftxt\nn/Users/rccurtrightjr./Library/Application Support/Fusion Studio/DawnGraphiteCache/index\nftxt\nn/System/Library/Extensions/AGXMetalG16G_B0.bundle/Contents/Resources/ds.g16g\nftxt\nn/System/Library/Fonts/Helvetica.ttc\nftxt\nn/System/Library/PrivateFrameworks/Shortcut.framework/Versions/A/Resources/Localizable.loctable\nftxt\nn/System/Library/PrivateFrameworks/Shortcut.framework/Versions/A/Resources/SearchManager2.loctable\nftxt\nn/System/Library/Frameworks/AppKit.framework/Versions/C/Resources/Menus.loctable\nftxt\nn/System/Library/PrivateFrameworks/CoreNLP.framework/Versions/A/Resources/tokruleLE.data\nftxt\nn/System/Library/LinguisticData/Latn/Dict2.dat\nftxt\nn/System/Library/Fonts/Keyboard.ttf\nftxt\nn/System/Library/Extensions/AGXMetalG16G_B0.bundle/Contents/MacOS/AGXMetalG16G_B0\nftxt\nn/System/Library/Fonts/SFNS.ttf\nftxt\nn/System/Library/Frameworks/AppKit.framework/Versions/C/Resources/Accessibility.loctable\nftxt\nn/System/Library/PrivateFrameworks/SFSymbols.framework/Versions/A/Resources/CoreGlyphsPrivate.bundle/Contents/Resources/Assets.car\nftxt\nn/System/Library/CoreServices/SystemAppearance.bundle/Contents/Resources/FauxVibrantLight.car\nftxt\nn/System/Library/PrivateFrameworks/DataDetectorsCore.framework/Versions/A/Resources/com.apple.datadetectorscore.cache.urlifier.system\nftxt\nn/System/Library/LinguisticData/Latn/Dict1.dat\nftxt\nn/System/Library/PrivateFrameworks/SFSymbols.framework/Versions/A/Resources/CoreGlyphs.bundle/Contents/Resources/Assets.car\nftxt\nn/System/Library/CoreServices/SystemAppearance.bundle/Contents/Resources/VibrantLight.car\nftxt\nn/usr/share/langid/langid.inv\n"
+    },
+    {
+      "pid": 77007,
+      "identity": "77007 77002 Mon Sep 28 01:40:07 2026     /opt/homebrew/bin/node /Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+      "cwd_executable": "p77007\nfcwd\nn/\nftxt\nn/opt/homebrew/Cellar/node/25.6.1/bin/node\nftxt\nn/opt/homebrew/Cellar/llhttp/9.3.1/lib/libllhttp.9.3.1.dylib\nftxt\nn/opt/homebrew/Cellar/brotli/1.2.0/lib/libbrotlidec.1.2.0.dylib\nftxt\nn/opt/homebrew/Cellar/hdrhistogram_c/0.11.9/lib/libhdr_histogram.6.2.3.dylib\nftxt\nn/opt/homebrew/Cellar/libuv/1.52.0/lib/libuv.1.0.0.dylib\nftxt\nn/opt/homebrew/Cellar/simdjson/4.2.4/lib/libsimdjson.29.0.0.dylib\nftxt\nn/opt/homebrew/Cellar/uvwasi/0.0.23/lib/libuvwasi.dylib\nftxt\nn/opt/homebrew/Cellar/libnghttp2/1.68.1/lib/libnghttp2.14.dylib\nftxt\nn/opt/homebrew/Cellar/ada-url/3.4.2/lib/libada.3.4.2.dylib\nftxt\nn/opt/homebrew/Cellar/c-ares/1.34.6/lib/libcares.2.19.5.dylib\nftxt\nn/opt/homebrew/Cellar/libnghttp3/1.15.0/lib/libnghttp3.9.6.1.dylib\nftxt\nn/opt/homebrew/Cellar/brotli/1.2.0/lib/libbrotlienc.1.2.0.dylib\nftxt\nn/opt/homebrew/Cellar/brotli/1.2.0/lib/libbrotlicommon.1.2.0.dylib\nftxt\nn/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/native/secure-file-observer/build/Release/secure_file_observer.node\nftxt\nn/opt/homebrew/Cellar/libngtcp2/1.20.0/lib/libngtcp2.16.dylib\nftxt\nn/usr/lib/dyld\nftxt\nn/opt/homebrew/Cellar/zstd/1.5.7_1/lib/libzstd.1.5.7.dylib\nftxt\nn/opt/homebrew/Cellar/sqlite/3.51.2_1/lib/libsqlite3.3.51.2.dylib\nftxt\nn/opt/homebrew/Cellar/openssl@3/3.6.1/lib/libssl.3.dylib\nftxt\nn/opt/homebrew/Cellar/icu4c@78/78.3/lib/libicuuc.78.3.dylib\nftxt\nn/opt/homebrew/Cellar/openssl@3/3.6.1/lib/libcrypto.3.dylib\nftxt\nn/opt/homebrew/Cellar/icu4c@78/78.3/lib/libicui18n.78.3.dylib\nftxt\nn/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules/better-sqlite3/build/Release/better_sqlite3.node\nftxt\nn/opt/homebrew/Cellar/node/25.6.1/lib/libnode.141.dylib\nftxt\nn/opt/homebrew/Cellar/icu4c@78/78.3/lib/libicudata.78.3.dylib\n"
+    }
+  ],
+  "limit": "Initial hash observation preceded bootstrap; inode/executable detail first recorded after requested supplemental detail, before canonical profile cache/process effects. Bootstrap only selected its fresh private app."
+}

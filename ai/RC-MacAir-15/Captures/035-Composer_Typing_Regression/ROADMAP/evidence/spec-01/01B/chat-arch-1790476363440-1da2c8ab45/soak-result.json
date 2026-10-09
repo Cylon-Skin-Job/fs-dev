@@ -1,0 +1,1793 @@
+{
+  "status": "failed",
+  "windows": [
+    {
+      "label": "short-idle-1",
+      "streaming": false,
+      "short": true,
+      "at": 1790476482897,
+      "wallMs": 2104,
+      "characters": 68,
+      "delay": 25,
+      "exactRetention": true,
+      "sha256": "5c6133e4472cb6fb826e075bc7f76f7f0882ab42f7f31d2401e5c11abe93bb32",
+      "metrics": {
+        "inputCount": 68,
+        "inputP95Ms": 0.5,
+        "inputMaxMs": 35.299999713897705,
+        "nextRafCount": 68,
+        "nextRafP95Ms": 17,
+        "nextRafMaxMs": 50.89999961853027,
+        "longTaskObserverSupported": true,
+        "longTaskCount": 0,
+        "longTaskMaxMs": 0,
+        "reactCommitCount": 204,
+        "domMutations": 204,
+        "wsSent": 0,
+        "outboundEvidence": [],
+        "outboundEvidenceOverflow": 0
+      },
+      "coverage": {
+        "counts": {
+          "renderTextInstant": 0,
+          "MessageList": 0,
+          "InstantSegmentRenderer": 0,
+          "ChatAreaHeader": 0,
+          "ThreadRail": 0,
+          "ContentArea": 0,
+          "ChatAreaFooter": 68,
+          "chatArchRecordMessageList": 0
+        },
+        "discovered": [
+          "ChatAreaFooter"
+        ]
+      },
+      "messageListAttribution": {
+        "enabled": false,
+        "counts": {},
+        "overflow": 0,
+        "startedAt": 1790476482924,
+        "endedAt": 1790476484891,
+        "total": 0,
+        "liveThreadId": null,
+        "composerThreadId": "2026-09-26T19-32-49-980"
+      },
+      "focus": {
+        "before": {
+          "available": true,
+          "focused": true,
+          "visible": true,
+          "minimized": false,
+          "windowId": 1,
+          "url": "fusion-shell://app/"
+        },
+        "after": {
+          "available": true,
+          "focused": true,
+          "visible": true,
+          "minimized": false,
+          "windowId": 1,
+          "url": "fusion-shell://app/"
+        },
+        "interval": {
+          "startedAt": 1790476482897,
+          "endedAt": 1790476485001,
+          "available": true,
+          "events": [],
+          "overflow": 0,
+          "valid": true,
+          "interruptions": []
+        }
+      },
+      "stream": null,
+      "violations": [
+        "rAF latency"
+      ]
+    }
+  ],
+  "cycles": [],
+  "samples": [
+    {
+      "label": "warmed-baseline",
+      "at": 1790476482339,
+      "heap": {
+        "usedSize": 25439420,
+        "totalSize": 26607616,
+        "embedderHeapUsedSize": 70646936,
+        "backingStorageSize": 5892476
+      },
+      "dom": {
+        "documents": 2,
+        "nodes": 27287,
+        "jsEventListeners": 937
+      },
+      "listeners": {
+        "window": [
+          {
+            "type": "mousemove",
+            "useCapture": true,
+            "passive": false,
+            "once": false,
+            "scriptId": "11",
+            "lineNumber": 7728,
+            "columnNumber": 21
+          },
+          {
+            "type": "pointerdown",
+            "useCapture": true,
+            "passive": false,
+            "once": false,
+            "scriptId": "11",
+            "lineNumber": 7728,
+            "columnNumber": 21
+          },
+          {
+            "type": "pointerup",
+            "useCapture": true,
+            "passive": false,
+            "once": false,
+            "scriptId": "11",
+            "lineNumber": 7728,
+            "columnNumber": 21
+          },
+          {
+            "type": "touchstart",
+            "useCapture": true,
+            "passive": false,
+            "once": false,
+            "scriptId": "11",
+            "lineNumber": 7728,
+            "columnNumber": 21
+          },
+          {
+            "type": "touchend",
+            "useCapture": true,
+            "passive": false,
+            "once": false,
+            "scriptId": "11",
+            "lineNumber": 7728,
+            "columnNumber": 21
+          },
+          {
+            "type": "touchcancel",
+            "useCapture": true,
+            "passive": false,
+            "once": false,
+            "scriptId": "11",
+            "lineNumber": 7728,
+            "columnNumber": 21
+          },
+          {
+            "type": "mousedown",
+            "useCapture": true,
+            "passive": false,
+            "once": false,
+            "scriptId": "11",
+            "lineNumber": 7728,
+            "columnNumber": 21
+          },
+          {
+            "type": "mouseup",
+            "useCapture": true,
+            "passive": false,
+            "once": false,
+            "scriptId": "11",
+            "lineNumber": 7728,
+            "columnNumber": 21
+          },
+          {
+            "type": "click",
+            "useCapture": true,
+            "passive": false,
+            "once": false,
+            "scriptId": "11",
+            "lineNumber": 7728,
+            "columnNumber": 21
+          },
+          {
+            "type": "auxclick",
+            "useCapture": true,
+            "passive": false,
+            "once": false,
+            "scriptId": "11",
+            "lineNumber": 7728,
+            "columnNumber": 21
+          },
+          {
+            "type": "dblclick",
+            "useCapture": true,
+            "passive": false,
+            "once": false,
+            "scriptId": "11",
+            "lineNumber": 7728,
+            "columnNumber": 21
+          },
+          {
+            "type": "contextmenu",
+            "useCapture": true,
+            "passive": false,
+            "once": false,
+            "scriptId": "11",
+            "lineNumber": 7728,
+            "columnNumber": 21
+          },
+          {
+            "type": "fusion:chat-action",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 133,
+            "columnNumber": 2036
+          },
+          {
+            "type": "fusion:chat-insert",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 135,
+            "columnNumber": 1197
+          },
+          {
+            "type": "blur",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 131,
+            "columnNumber": 144077
+          },
+          {
+            "type": "blur",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 86867
+          },
+          {
+            "type": "blur",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 86867
+          },
+          {
+            "type": "pagehide",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1175,
+            "columnNumber": 106357
+          },
+          {
+            "type": "fusion:screenshot-flash",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1175,
+            "columnNumber": 106589
+          },
+          {
+            "type": "__playwright_global_listeners_check__",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "11",
+            "lineNumber": 7712,
+            "columnNumber": 30
+          },
+          {
+            "type": "fusion:prompt-accepted",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139001
+          },
+          {
+            "type": "fusion:prompt-accepted",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139001
+          },
+          {
+            "type": "fusion:prompt-accepted",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139001
+          },
+          {
+            "type": "fusion:prompt-accepted",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139001
+          },
+          {
+            "type": "fusion:prompt-accepted",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139001
+          },
+          {
+            "type": "fusion:prompt-accepted",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139001
+          },
+          {
+            "type": "fusion:prompt-accepted",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139001
+          },
+          {
+            "type": "fusion:prompt-acceptance-failed",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139317
+          },
+          {
+            "type": "fusion:prompt-acceptance-failed",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139317
+          },
+          {
+            "type": "fusion:prompt-acceptance-failed",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139317
+          },
+          {
+            "type": "fusion:prompt-acceptance-failed",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139317
+          },
+          {
+            "type": "fusion:prompt-acceptance-failed",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139317
+          },
+          {
+            "type": "fusion:prompt-acceptance-failed",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139317
+          },
+          {
+            "type": "fusion:prompt-acceptance-failed",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139317
+          },
+          {
+            "type": "fusion:prompt-execution-failed",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139467
+          },
+          {
+            "type": "fusion:prompt-execution-failed",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139467
+          },
+          {
+            "type": "fusion:prompt-execution-failed",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139467
+          },
+          {
+            "type": "fusion:prompt-execution-failed",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139467
+          },
+          {
+            "type": "fusion:prompt-execution-failed",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139467
+          },
+          {
+            "type": "fusion:prompt-execution-failed",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139467
+          },
+          {
+            "type": "fusion:prompt-execution-failed",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139467
+          },
+          {
+            "type": "fusion:prompt-execution-unknown",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139467
+          },
+          {
+            "type": "fusion:prompt-execution-unknown",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139467
+          },
+          {
+            "type": "fusion:prompt-execution-unknown",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139467
+          },
+          {
+            "type": "fusion:prompt-execution-unknown",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139467
+          },
+          {
+            "type": "fusion:prompt-execution-unknown",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139467
+          },
+          {
+            "type": "fusion:prompt-execution-unknown",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139467
+          },
+          {
+            "type": "fusion:prompt-execution-unknown",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139467
+          },
+          {
+            "type": "fusion:turn-ended",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139425
+          },
+          {
+            "type": "fusion:turn-ended",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139425
+          },
+          {
+            "type": "fusion:turn-ended",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139425
+          },
+          {
+            "type": "fusion:turn-ended",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139425
+          },
+          {
+            "type": "fusion:turn-ended",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139425
+          },
+          {
+            "type": "fusion:turn-ended",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139425
+          },
+          {
+            "type": "fusion:turn-ended",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 139425
+          }
+        ],
+        "document": [
+          {
+            "type": "pointerdown",
+            "useCapture": true,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 86781
+          },
+          {
+            "type": "pointerdown",
+            "useCapture": true,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1171,
+            "columnNumber": 86781
+          },
+          {
+            "type": "selectionchange",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 17,
+            "columnNumber": 29735
+          },
+          {
+            "type": "visibilitychange",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1175,
+            "columnNumber": 113178
+          },
+          {
+            "type": "keydown",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 131,
+            "columnNumber": 143607
+          },
+          {
+            "type": "keydown",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 1175,
+            "columnNumber": 106903
+          },
+          {
+            "type": "keyup",
+            "useCapture": false,
+            "passive": false,
+            "once": false,
+            "scriptId": "10",
+            "lineNumber": 131,
+            "columnNumber": 143859
+          }
+        ],
+        "WebSocket": [
+          [
+            {
+              "type": "close",
+              "useCapture": false,
+              "passive": false,
+              "once": false,
+              "scriptId": "8",
+              "lineNumber": 55,
+              "columnNumber": 37
+            },
+            {
+              "type": "close",
+              "useCapture": false,
+              "passive": false,
+              "once": true,
+              "scriptId": "10",
+              "lineNumber": 131,
+              "columnNumber": 77726
+            },
+            {
+              "type": "close",
+              "useCapture": false,
+              "passive": false,
+              "once": true,
+              "scriptId": "10",
+              "lineNumber": 131,
+              "columnNumber": 77218
+            },
+            {
+              "type": "close",
+              "useCapture": false,
+              "passive": false,
+              "once": false,
+              "scriptId": "10",
+              "lineNumber": 131,
+              "columnNumber": 77572
+            },
+            {
+              "type": "message",
+              "useCapture": false,
+              "passive": false,
+              "once": false,
+              "scriptId": "8",
+              "lineNumber": 56,
+              "columnNumber": 39
+            },
+            {
+              "type": "message",
+              "useCapture": false,
+              "passive": false,
+              "once": false,
+              "scriptId": "10",
+              "lineNumber": 131,
+              "columnNumber": 77572
+            },
+            {
+              "type": "message",
+              "useCapture": false,
+              "passive": false,
+              "once": false,
+              "scriptId": "10",
+              "lineNumber": 131,
+              "columnNumber": 77218
+            },
+            {
+              "type": "message",
+              "useCapture": false,
+              "passive": false,
+              "once": false,
+              "scriptId": "10",
+              "lineNumber": 131,
+              "columnNumber": 77218
+            },
+            {
+              "type": "message",
+              "useCapture": false,
+              "passive": false,
+              "once": false,
+              "scriptId": "10",
+              "lineNumber": 131,
+              "columnNumber": 77218
+            },
+            {
+              "type": "open",
+              "useCapture": false,
+              "passive": false,
+              "once": false,
+              "scriptId": "10",
+              "lineNumber": 131,
+              "columnNumber": 77572
+            },
+            {
+              "type": "open",
+              "useCapture": false,
+              "passive": false,
+              "once": false,
+              "scriptId": "10",
+              "lineNumber": 131,
+              "columnNumber": 77218
+            },
+            {
+              "type": "open",
+              "useCapture": false,
+              "passive": false,
+              "once": false,
+              "scriptId": "10",
+              "lineNumber": 131,
+              "columnNumber": 77218
+            },
+            {
+              "type": "error",
+              "useCapture": false,
+              "passive": false,
+              "once": false,
+              "scriptId": "10",
+              "lineNumber": 131,
+              "columnNumber": 77572
+            }
+          ]
+        ],
+        "AbortSignal": [
+          [
+            {
+              "type": "abort",
+              "useCapture": false,
+              "passive": false,
+              "once": true,
+              "scriptId": "10",
+              "lineNumber": 131,
+              "columnNumber": 77636
+            }
+          ]
+        ]
+      },
+      "fetches": [
+        {
+          "url": "http://127.0.0.1:61852/material-symbols/outlined/open_run.svg",
+          "status": 404,
+          "at": 66.59999990463257,
+          "caller": "Error\n    at window.fetch (<anonymous>:16:18)\n    at Object.fetch (fusion-shell://app/assets/index-Bvce9TIn.js:132:80284)\n    at Object.fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80024)\n    at fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80629)\n    at fetchSvg (fusion-shell://app/assets/index-Bvce9TIn.js:132:80989)\n    at loadIcon (fusion-shell://app/assets/index-Bvce9TIn.js:132:81277)\n    at fusion-shell://app/assets/index-Bvce9TIn.js:132:81426\n    at Array.map (<anonymous>)\n    at preloadIcons (fusion-shell://app/assets/index-Bvce9TIn.js:132:81419)\n    at handleWorkspaceMessage (fusion-shell://app/assets/index-Bvce9TIn.js:132:120045)"
+        },
+        {
+          "url": "http://127.0.0.1:61852/api/harnesses",
+          "status": 200,
+          "at": 128.30000019073486,
+          "caller": "Error\n    at window.fetch (<anonymous>:16:18)\n    at Object.fetch (fusion-shell://app/assets/index-Bvce9TIn.js:132:80284)\n    at Object.fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80024)\n    at fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80629)\n    at fusion-shell://app/assets/index-Bvce9TIn.js:1172:134877\n    at seedOnce (fusion-shell://app/assets/index-Bvce9TIn.js:1172:135068)\n    at fusion-shell://app/assets/index-Bvce9TIn.js:1172:135190\n    at Vo (fusion-shell://app/assets/index-Bvce9TIn.js:17:96786)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:112858)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)"
+        },
+        {
+          "url": "http://127.0.0.1:61852/api/view-config?panel=issues-viewer",
+          "status": 200,
+          "at": 141.69999980926514,
+          "caller": "Error\n    at window.fetch (<anonymous>:16:18)\n    at Object.fetch (fusion-shell://app/assets/index-Bvce9TIn.js:132:80284)\n    at Object.fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80024)\n    at fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80629)\n    at fusion-shell://app/assets/index-Bvce9TIn.js:132:89481\n    at Vo (fusion-shell://app/assets/index-Bvce9TIn.js:17:96786)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:112858)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:112835)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)"
+        },
+        {
+          "url": "http://127.0.0.1:61852/api/view-config?panel=office-viewer",
+          "status": 200,
+          "at": 141.80000019073486,
+          "caller": "Error\n    at window.fetch (<anonymous>:16:18)\n    at Object.fetch (fusion-shell://app/assets/index-Bvce9TIn.js:132:80284)\n    at Object.fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80024)\n    at fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80629)\n    at fusion-shell://app/assets/index-Bvce9TIn.js:132:89481\n    at Vo (fusion-shell://app/assets/index-Bvce9TIn.js:17:96786)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:112858)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:112835)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)"
+        },
+        {
+          "url": "http://127.0.0.1:61852/api/view-config?panel=file-viewer",
+          "status": 200,
+          "at": 141.90000009536743,
+          "caller": "Error\n    at window.fetch (<anonymous>:16:18)\n    at Object.fetch (fusion-shell://app/assets/index-Bvce9TIn.js:132:80284)\n    at Object.fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80024)\n    at fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80629)\n    at fusion-shell://app/assets/index-Bvce9TIn.js:132:89481\n    at Vo (fusion-shell://app/assets/index-Bvce9TIn.js:17:96786)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:112858)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:112835)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)"
+        },
+        {
+          "url": "http://127.0.0.1:61852/api/view-config?panel=agents-viewer",
+          "status": 200,
+          "at": 141.90000009536743,
+          "caller": "Error\n    at window.fetch (<anonymous>:16:18)\n    at Object.fetch (fusion-shell://app/assets/index-Bvce9TIn.js:132:80284)\n    at Object.fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80024)\n    at fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80629)\n    at fusion-shell://app/assets/index-Bvce9TIn.js:132:89481\n    at Vo (fusion-shell://app/assets/index-Bvce9TIn.js:17:96786)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:112858)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:112835)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)"
+        },
+        {
+          "url": "http://127.0.0.1:61852/api/view-config?panel=capture-viewer",
+          "status": 200,
+          "at": 142,
+          "caller": "Error\n    at window.fetch (<anonymous>:16:18)\n    at Object.fetch (fusion-shell://app/assets/index-Bvce9TIn.js:132:80284)\n    at Object.fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80024)\n    at fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80629)\n    at fusion-shell://app/assets/index-Bvce9TIn.js:132:89481\n    at Vo (fusion-shell://app/assets/index-Bvce9TIn.js:17:96786)\n    at Ec (fusion-shell://app/assets/index-Bvce9TIn.js:17:113865)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:113531)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:113347)"
+        },
+        {
+          "url": "http://127.0.0.1:61852/api/view-config?panel=wiki-viewer",
+          "status": 200,
+          "at": 143.40000009536743,
+          "caller": "Error\n    at window.fetch (<anonymous>:16:18)\n    at Object.fetch (fusion-shell://app/assets/index-Bvce9TIn.js:132:80284)\n    at Object.fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80024)\n    at fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80629)\n    at fusion-shell://app/assets/index-Bvce9TIn.js:132:89481\n    at Vo (fusion-shell://app/assets/index-Bvce9TIn.js:17:96786)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:112858)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:112835)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)"
+        },
+        {
+          "url": "http://127.0.0.1:61852/material-symbols/outlined/folder-fill.svg",
+          "status": 404,
+          "at": 197.59999990463257,
+          "caller": "Error\n    at window.fetch (<anonymous>:16:18)\n    at Object.fetch (fusion-shell://app/assets/index-Bvce9TIn.js:132:80284)\n    at Object.fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80024)\n    at fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80629)\n    at fetchSvg (fusion-shell://app/assets/index-Bvce9TIn.js:132:80989)\n    at loadIcon (fusion-shell://app/assets/index-Bvce9TIn.js:132:81277)\n    at fusion-shell://app/assets/index-Bvce9TIn.js:1160:36138\n    at Vo (fusion-shell://app/assets/index-Bvce9TIn.js:17:96786)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:112858)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)"
+        },
+        {
+          "url": "http://127.0.0.1:61852/api/view-config?panel=capture-viewer",
+          "status": 200,
+          "at": 10004.099999904633,
+          "caller": "Error\n    at window.fetch (<anonymous>:16:18)\n    at Object.fetch (fusion-shell://app/assets/index-Bvce9TIn.js:132:80284)\n    at Object.fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80024)\n    at fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80629)\n    at fusion-shell://app/assets/index-Bvce9TIn.js:132:89481\n    at Vo (fusion-shell://app/assets/index-Bvce9TIn.js:17:96786)\n    at Ec (fusion-shell://app/assets/index-Bvce9TIn.js:17:113865)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:113531)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:113347)"
+        },
+        {
+          "url": "http://127.0.0.1:61852/material-symbols/outlined/open_run.svg",
+          "status": 404,
+          "at": 13469.099999904633,
+          "caller": "Error\n    at window.fetch (<anonymous>:16:18)\n    at Object.fetch (fusion-shell://app/assets/index-Bvce9TIn.js:132:80284)\n    at Object.fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80024)\n    at fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80629)\n    at fetchSvg (fusion-shell://app/assets/index-Bvce9TIn.js:132:80989)\n    at loadIcon (fusion-shell://app/assets/index-Bvce9TIn.js:132:81277)\n    at fusion-shell://app/assets/index-Bvce9TIn.js:132:81426\n    at Array.map (<anonymous>)\n    at preloadIcons (fusion-shell://app/assets/index-Bvce9TIn.js:132:81419)\n    at handleWorkspaceMessage (fusion-shell://app/assets/index-Bvce9TIn.js:132:120045)"
+        },
+        {
+          "url": "http://127.0.0.1:61852/material-symbols/outlined/folder-fill.svg",
+          "status": 404,
+          "at": 13643.699999809265,
+          "caller": "Error\n    at window.fetch (<anonymous>:16:18)\n    at Object.fetch (fusion-shell://app/assets/index-Bvce9TIn.js:132:80284)\n    at Object.fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80024)\n    at fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80629)\n    at fetchSvg (fusion-shell://app/assets/index-Bvce9TIn.js:132:80989)\n    at loadIcon (fusion-shell://app/assets/index-Bvce9TIn.js:132:81277)\n    at fusion-shell://app/assets/index-Bvce9TIn.js:1160:36138\n    at Vo (fusion-shell://app/assets/index-Bvce9TIn.js:17:96786)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:112858)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)"
+        },
+        {
+          "url": "http://127.0.0.1:61852/api/view-config?panel=issues-viewer",
+          "status": 200,
+          "at": 13653.400000095367,
+          "caller": "Error\n    at window.fetch (<anonymous>:16:18)\n    at Object.fetch (fusion-shell://app/assets/index-Bvce9TIn.js:132:80284)\n    at Object.fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80024)\n    at fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80629)\n    at fusion-shell://app/assets/index-Bvce9TIn.js:132:89481\n    at Vo (fusion-shell://app/assets/index-Bvce9TIn.js:17:96786)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:112858)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:112835)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)"
+        },
+        {
+          "url": "http://127.0.0.1:61852/api/view-config?panel=wiki-viewer",
+          "status": 200,
+          "at": 13653.699999809265,
+          "caller": "Error\n    at window.fetch (<anonymous>:16:18)\n    at Object.fetch (fusion-shell://app/assets/index-Bvce9TIn.js:132:80284)\n    at Object.fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80024)\n    at fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80629)\n    at fusion-shell://app/assets/index-Bvce9TIn.js:132:89481\n    at Vo (fusion-shell://app/assets/index-Bvce9TIn.js:17:96786)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:112858)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:112835)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)"
+        },
+        {
+          "url": "http://127.0.0.1:61852/api/view-config?panel=agents-viewer",
+          "status": 200,
+          "at": 13654.099999904633,
+          "caller": "Error\n    at window.fetch (<anonymous>:16:18)\n    at Object.fetch (fusion-shell://app/assets/index-Bvce9TIn.js:132:80284)\n    at Object.fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80024)\n    at fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80629)\n    at fusion-shell://app/assets/index-Bvce9TIn.js:132:89481\n    at Vo (fusion-shell://app/assets/index-Bvce9TIn.js:17:96786)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:112858)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:112835)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)"
+        },
+        {
+          "url": "http://127.0.0.1:61852/api/view-config?panel=office-viewer",
+          "status": 200,
+          "at": 13654.5,
+          "caller": "Error\n    at window.fetch (<anonymous>:16:18)\n    at Object.fetch (fusion-shell://app/assets/index-Bvce9TIn.js:132:80284)\n    at Object.fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80024)\n    at fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80629)\n    at fusion-shell://app/assets/index-Bvce9TIn.js:132:89481\n    at Vo (fusion-shell://app/assets/index-Bvce9TIn.js:17:96786)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:112858)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:112835)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)"
+        },
+        {
+          "url": "http://127.0.0.1:61852/api/view-config?panel=capture-viewer",
+          "status": 200,
+          "at": 15457.400000095367,
+          "caller": "Error\n    at window.fetch (<anonymous>:16:18)\n    at Object.fetch (fusion-shell://app/assets/index-Bvce9TIn.js:132:80284)\n    at Object.fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80024)\n    at fetchServer (fusion-shell://app/assets/index-Bvce9TIn.js:132:80629)\n    at fusion-shell://app/assets/index-Bvce9TIn.js:132:89481\n    at Vo (fusion-shell://app/assets/index-Bvce9TIn.js:17:96786)\n    at Ec (fusion-shell://app/assets/index-Bvce9TIn.js:17:113865)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:113531)\n    at to (fusion-shell://app/assets/index-Bvce9TIn.js:17:112734)\n    at Wm (fusion-shell://app/assets/index-Bvce9TIn.js:17:113347)"
+        }
+      ],
+      "caches": {
+        "worksurfaceEntries": 2,
+        "remoteRevisions": 0,
+        "members": 0,
+        "chats": 2,
+        "usage": 2,
+        "tokens": 2,
+        "wire": 1,
+        "selection": 2,
+        "drafts": 1,
+        "revisions": 1,
+        "attachments": 0,
+        "attachmentGenerations": 0,
+        "attempts": 0,
+        "feedback": 0
+      },
+      "processMemory": {
+        "metrics": [
+          {
+            "pid": 47255,
+            "type": "Browser",
+            "memory": {
+              "workingSetSize": 66896,
+              "peakWorkingSetSize": 413312
+            }
+          },
+          {
+            "pid": 47280,
+            "type": "GPU",
+            "memory": {
+              "workingSetSize": 39408,
+              "peakWorkingSetSize": 168720
+            }
+          },
+          {
+            "pid": 47281,
+            "type": "Utility",
+            "memory": {
+              "workingSetSize": 21104,
+              "peakWorkingSetSize": 42288
+            }
+          },
+          {
+            "pid": 47378,
+            "type": "Tab",
+            "memory": {
+              "workingSetSize": 251584,
+              "peakWorkingSetSize": 926528
+            }
+          }
+        ],
+        "main": {
+          "private": 165281,
+          "shared": 64
+        }
+      },
+      "server": {
+        "at": 1790476482216,
+        "pid": 47293,
+        "adapterSessions": 1,
+        "runtimes": 1,
+        "drains": 0,
+        "sessions": 1,
+        "timeouts": 1,
+        "listeners": 43,
+        "memory": {
+          "rss": 24018944,
+          "heapTotal": 221806592,
+          "heapUsed": 132483968,
+          "external": 3385649,
+          "arrayBuffers": 756700
+        }
+      }
+    }
+  ],
+  "durationMs": 2700000,
+  "errors": [],
+  "observationAdapter": {
+    "excludedRuntimeLogs": {
+      "server-live.log": true,
+      "server.log": true,
+      "wire-debug.log": true,
+      "wire-debug.log.old": true
+    },
+    "renderer": "index-Bvce9TIn.js",
+    "originalRendererSha256": "4ade8c83785a8c708b4f6317b45eb158a9df8b7888530cb835c8131404e02777",
+    "observedRendererSha256": "76d452dcd82621916ee402f59d5f3790686b17a9645b6f3948d067b459e5dc50",
+    "server": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790476363440-1da2c8ab45/soak-server-resources.ndjson",
+    "mode": "read-only counts; fixture-only stage observation, bounded 16 thread IDs"
+  },
+  "fixtures": {
+    "f2": {
+      "id": "F2-DETERMINISTIC-HISTORY-V1",
+      "exchanges": 30,
+      "renderedMessages": 60,
+      "includes": [
+        "text",
+        "code",
+        "lists",
+        "tables",
+        "collapsed-tool-results",
+        "reply-metadata"
+      ],
+      "dense": {
+        "exchanges": 2,
+        "assistantPayloadBytes": 534528,
+        "sha256": "9b06d21b677d93e4479544db39cf56f86eb4d3cd25fb603740407f263e7420dc"
+      }
+    },
+    "f3": {
+      "id": "F3-DETERMINISTIC-WORKSPACE-V1",
+      "algorithm": "label-repeated-to-fixed-byte-count",
+      "counts": {
+        "smallFiles": 1000,
+        "captureFolders": 100,
+        "wikiPages": 100,
+        "officeDocuments": 20
+      },
+      "totalFiles": 1220,
+      "totalContentBytes": 11059200,
+      "root": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790476363440-1da2c8ab45-vU5GsR/soak-workspace/sustained-project",
+      "everyPathFixtureContained": true,
+      "manifestHash": "421c0ef8f5e255bb333a82a9f26d28c74eb2c8d55e95fc262ad241ed45740079"
+    },
+    "f5": {
+      "frameIntervalMs": 50,
+      "textFrames": 10000,
+      "maxCharacters": 200
+    }
+  },
+  "identity": {
+    "baseThreadId": "2026-09-26T19-32-49-980",
+    "baseGroupId": "tg-76897fa6-63b8-4025-8bca-4175c0da679a",
+    "denseThreadId": "2026-09-26T19-32-50-224",
+    "project": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790476363440-1da2c8ab45-vU5GsR/soak-workspace/sustained-project"
+  },
+  "routes": {
+    "sequence": 37,
+    "frames": [
+      {
+        "sequence": 1,
+        "at": 1790476375034,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj7ektg-0",
+        "groupId": "tg-cbdf445f-7f5f-417f-96b1-b729a7ffc561",
+        "lane": "content",
+        "contentRevision": "wsr_ed02178b73cc86fae796c23f66393da7",
+        "placementRevision": "wsr_af1f735f1ffe4bc8807f5f974046c892"
+      },
+      {
+        "sequence": 2,
+        "at": 1790476375295,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-switch-muj7el01-1",
+        "groupId": "tg-cbdf445f-7f5f-417f-96b1-b729a7ffc561",
+        "lane": "content",
+        "contentRevision": "wsr_7499002184657b8c14e6e7f7ab4d6d02",
+        "placementRevision": "wsr_af1f735f1ffe4bc8807f5f974046c892"
+      },
+      {
+        "sequence": 3,
+        "at": 1790476375331,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj7el1b-2",
+        "groupId": "tg-76897fa6-63b8-4025-8bca-4175c0da679a",
+        "lane": "content",
+        "contentRevision": "wsr_3b26780608cfc6ad3f3933d250d2a84e",
+        "placementRevision": "wsr_6a31d18cfe1b72acbb31197419747520"
+      },
+      {
+        "sequence": 4,
+        "at": 1790476377402,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-switch-muj7emn4-3",
+        "groupId": "tg-76897fa6-63b8-4025-8bca-4175c0da679a",
+        "lane": "content",
+        "contentRevision": "wsr_6a62ac9a6ae521772fa4e5c2c232e32f",
+        "placementRevision": "wsr_6a31d18cfe1b72acbb31197419747520"
+      },
+      {
+        "sequence": 5,
+        "at": 1790476377576,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj7emnu-4",
+        "groupId": "tg-cbdf445f-7f5f-417f-96b1-b729a7ffc561",
+        "lane": "content",
+        "contentRevision": "wsr_7499002184657b8c14e6e7f7ab4d6d02",
+        "placementRevision": "wsr_af1f735f1ffe4bc8807f5f974046c892"
+      },
+      {
+        "sequence": 6,
+        "at": 1790476377737,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-switch-muj7emwf-5",
+        "groupId": "tg-cbdf445f-7f5f-417f-96b1-b729a7ffc561",
+        "lane": "content",
+        "contentRevision": "wsr_82d2a0676d820312d8952a610ee0840d",
+        "placementRevision": "wsr_af1f735f1ffe4bc8807f5f974046c892"
+      },
+      {
+        "sequence": 7,
+        "at": 1790476377837,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj7emx5-6",
+        "groupId": "tg-76897fa6-63b8-4025-8bca-4175c0da679a",
+        "lane": "content",
+        "contentRevision": "wsr_6a62ac9a6ae521772fa4e5c2c232e32f",
+        "placementRevision": "wsr_6a31d18cfe1b72acbb31197419747520"
+      },
+      {
+        "sequence": 8,
+        "at": 1790476378137,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj7en6l-7",
+        "groupId": "tg-375cda51-2209-47c4-a860-ca8dae455fa4",
+        "lane": "content",
+        "contentRevision": null,
+        "placementRevision": null
+      },
+      {
+        "sequence": 9,
+        "at": 1790476378334,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-switch-muj7en7j-8",
+        "groupId": "tg-76897fa6-63b8-4025-8bca-4175c0da679a",
+        "lane": "content",
+        "contentRevision": "wsr_25a968225ce594edfefa11009b9e67c4",
+        "placementRevision": "wsr_6a31d18cfe1b72acbb31197419747520"
+      },
+      {
+        "sequence": 10,
+        "at": 1790476378443,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj7endr-9",
+        "groupId": "tg-375cda51-2209-47c4-a860-ca8dae455fa4",
+        "lane": "content",
+        "contentRevision": null,
+        "placementRevision": null
+      },
+      {
+        "sequence": 11,
+        "at": 1790476378656,
+        "direction": "inbound",
+        "type": "thread:action:completed",
+        "action": "move_chat_to_side",
+        "requestId": "244a6d34-e32b-4534-9c13-274c294f2df4",
+        "threadId": "2026-09-26T19-32-57-973",
+        "groupId": "tg-375cda51-2209-47c4-a860-ca8dae455fa4"
+      },
+      {
+        "sequence": 12,
+        "at": 1790476378658,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj7enmo-a",
+        "groupId": "tg-375cda51-2209-47c4-a860-ca8dae455fa4",
+        "lane": "content",
+        "contentRevision": "wsr_2d2f746c3fd9cee81d4b32d79e14bf34",
+        "placementRevision": "wsr_4518067a986f9c520d4746dfd5e62e82"
+      },
+      {
+        "sequence": 13,
+        "at": 1790476379623,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "a4132661f6083a82a15d1a232460bf73",
+        "threadId": "2026-09-26T19-32-57-973"
+      },
+      {
+        "sequence": 14,
+        "at": 1790476380028,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "a4132661f6083a82a15d1a232460bf73",
+        "threadId": "2026-09-26T19-32-57-973",
+        "turnId": "880704f6-423f-4a63-bd61-53fc90962e22"
+      },
+      {
+        "sequence": 15,
+        "at": 1790476380031,
+        "direction": "inbound",
+        "type": "turn_begin",
+        "threadId": "2026-09-26T19-32-57-973",
+        "turnId": "880704f6-423f-4a63-bd61-53fc90962e22"
+      },
+      {
+        "sequence": 16,
+        "at": 1790476380090,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "a75c1122776baf6c1d42f676d256d48d",
+        "threadId": "th-1943e590-a7a4-48a9-a1ed-70b74e77cf21"
+      },
+      {
+        "sequence": 17,
+        "at": 1790476380494,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "a75c1122776baf6c1d42f676d256d48d",
+        "threadId": "th-1943e590-a7a4-48a9-a1ed-70b74e77cf21",
+        "turnId": "05457390-c94a-4bab-b67c-ad25d8a77b23"
+      },
+      {
+        "sequence": 18,
+        "at": 1790476380495,
+        "direction": "inbound",
+        "type": "turn_begin",
+        "threadId": "th-1943e590-a7a4-48a9-a1ed-70b74e77cf21",
+        "turnId": "05457390-c94a-4bab-b67c-ad25d8a77b23"
+      },
+      {
+        "sequence": 19,
+        "at": 1790476381841,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-flush-muj7eq2m-b",
+        "groupId": "tg-375cda51-2209-47c4-a860-ca8dae455fa4",
+        "lane": "content",
+        "contentRevision": "wsr_ba992ccc1ac61062f5b440ad502d7055",
+        "placementRevision": "wsr_4518067a986f9c520d4746dfd5e62e82"
+      },
+      {
+        "sequence": 20,
+        "at": 1790476381955,
+        "direction": "inbound",
+        "type": "turn_end",
+        "threadId": "2026-09-26T19-32-57-973",
+        "turnId": "880704f6-423f-4a63-bd61-53fc90962e22"
+      },
+      {
+        "sequence": 21,
+        "at": 1790476382196,
+        "direction": "inbound",
+        "type": "chat-turn:saved",
+        "threadId": "2026-09-26T19-32-57-973",
+        "turnId": "880704f6-423f-4a63-bd61-53fc90962e22"
+      },
+      {
+        "sequence": 22,
+        "at": 1790476382890,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "02ffbff23f916b9a20a9930113d91589",
+        "threadId": "2026-09-26T19-32-57-973"
+      },
+      {
+        "sequence": 23,
+        "at": 1790476383295,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "02ffbff23f916b9a20a9930113d91589",
+        "threadId": "2026-09-26T19-32-57-973",
+        "turnId": "5a63f8f1-8fe0-4818-b42c-dd8a1b00ed54"
+      },
+      {
+        "sequence": 24,
+        "at": 1790476383296,
+        "direction": "inbound",
+        "type": "turn_begin",
+        "threadId": "2026-09-26T19-32-57-973",
+        "turnId": "5a63f8f1-8fe0-4818-b42c-dd8a1b00ed54"
+      },
+      {
+        "sequence": 25,
+        "at": 1790476383438,
+        "direction": "inbound",
+        "type": "turn_end",
+        "threadId": "th-1943e590-a7a4-48a9-a1ed-70b74e77cf21",
+        "turnId": "05457390-c94a-4bab-b67c-ad25d8a77b23"
+      },
+      {
+        "sequence": 26,
+        "at": 1790476383676,
+        "direction": "inbound",
+        "type": "chat-turn:saved",
+        "threadId": "th-1943e590-a7a4-48a9-a1ed-70b74e77cf21",
+        "turnId": "05457390-c94a-4bab-b67c-ad25d8a77b23"
+      },
+      {
+        "sequence": 27,
+        "at": 1790476384387,
+        "direction": "inbound",
+        "type": "turn_end",
+        "threadId": "2026-09-26T19-32-57-973",
+        "turnId": "5a63f8f1-8fe0-4818-b42c-dd8a1b00ed54"
+      },
+      {
+        "sequence": 28,
+        "at": 1790476384626,
+        "direction": "inbound",
+        "type": "chat-turn:saved",
+        "threadId": "2026-09-26T19-32-57-973",
+        "turnId": "5a63f8f1-8fe0-4818-b42c-dd8a1b00ed54"
+      },
+      {
+        "sequence": 29,
+        "at": 1790476384755,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-placement-close-muj7esbm-c",
+        "groupId": "tg-375cda51-2209-47c4-a860-ca8dae455fa4",
+        "lane": "placement",
+        "contentRevision": "wsr_ba992ccc1ac61062f5b440ad502d7055",
+        "placementRevision": "wsr_3eab6c297618fa0df4dbc5e49c8f7f71"
+      },
+      {
+        "sequence": 30,
+        "at": 1790476385154,
+        "direction": "inbound",
+        "type": "thread:action:completed",
+        "action": "open_member_in_side",
+        "requestId": "8922a80a-ff9c-49d8-a8bc-a8d31129615c",
+        "threadId": "2026-09-26T19-32-57-973",
+        "groupId": "tg-375cda51-2209-47c4-a860-ca8dae455fa4"
+      },
+      {
+        "sequence": 31,
+        "at": 1790476385155,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj7esn6-d",
+        "groupId": "tg-375cda51-2209-47c4-a860-ca8dae455fa4",
+        "lane": "content",
+        "contentRevision": "wsr_ba992ccc1ac61062f5b440ad502d7055",
+        "placementRevision": "wsr_7ac68c1617839fec512e8d6d20c90182"
+      },
+      {
+        "sequence": 32,
+        "at": 1790476388385,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj7euzs-e",
+        "groupId": "tg-375cda51-2209-47c4-a860-ca8dae455fa4",
+        "lane": "content",
+        "contentRevision": "wsr_ba992ccc1ac61062f5b440ad502d7055",
+        "placementRevision": "wsr_7ac68c1617839fec512e8d6d20c90182"
+      },
+      {
+        "sequence": 33,
+        "at": 1790476388541,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj7ev8y-f",
+        "groupId": "tg-375cda51-2209-47c4-a860-ca8dae455fa4",
+        "lane": "content",
+        "contentRevision": "wsr_ba992ccc1ac61062f5b440ad502d7055",
+        "placementRevision": "wsr_7ac68c1617839fec512e8d6d20c90182"
+      },
+      {
+        "sequence": 34,
+        "at": 1790476390038,
+        "direction": "inbound",
+        "type": "thread:action:completed",
+        "action": "delete",
+        "requestId": "0f296bad-e559-45f4-89a1-685b7fc3afbe",
+        "threadId": "th-1943e590-a7a4-48a9-a1ed-70b74e77cf21",
+        "groupId": "tg-375cda51-2209-47c4-a860-ca8dae455fa4"
+      },
+      {
+        "sequence": 35,
+        "at": 1790476390348,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj7ewih-g",
+        "groupId": "tg-cbdf445f-7f5f-417f-96b1-b729a7ffc561",
+        "lane": "content",
+        "contentRevision": "wsr_82d2a0676d820312d8952a610ee0840d",
+        "placementRevision": "wsr_af1f735f1ffe4bc8807f5f974046c892"
+      },
+      {
+        "sequence": 36,
+        "at": 1790476390803,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-switch-muj7ewyx-h",
+        "groupId": "tg-cbdf445f-7f5f-417f-96b1-b729a7ffc561",
+        "lane": "content",
+        "contentRevision": "wsr_18e27d86be0099076b8ee80acbf0b7fa",
+        "placementRevision": "wsr_af1f735f1ffe4bc8807f5f974046c892"
+      },
+      {
+        "sequence": 37,
+        "at": 1790476390900,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj7ex02-i",
+        "groupId": "tg-76897fa6-63b8-4025-8bca-4175c0da679a",
+        "lane": "content",
+        "contentRevision": "wsr_25a968225ce594edfefa11009b9e67c4",
+        "placementRevision": "wsr_6a31d18cfe1b72acbb31197419747520"
+      }
+    ],
+    "content": {
+      "2026-09-26T19-32-57-973": {
+        "count": 60,
+        "firstAt": 1790476380036,
+        "maxCharacters": 28,
+        "lastAt": 1790476384370
+      },
+      "th-1943e590-a7a4-48a9-a1ed-70b74e77cf21": {
+        "count": 58,
+        "firstAt": 1790476380497,
+        "maxCharacters": 28,
+        "lastAt": 1790476383399
+      }
+    },
+    "errors": [],
+    "worksurfaces": [
+      {
+        "cycle": "warmup",
+        "label": "before-reconnect",
+        "bindings": {
+          "sustained-project::capture-viewer": {
+            "workspaceId": "sustained-project",
+            "viewId": "capture-viewer",
+            "threadGroupId": "tg-375cda51-2209-47c4-a860-ca8dae455fa4",
+            "adapterId": "capture-viewer",
+            "adapterVersion": 1,
+            "contentRevision": "wsr_ba992ccc1ac61062f5b440ad502d7055",
+            "placementRevision": "wsr_7ac68c1617839fec512e8d6d20c90182"
+          }
+        },
+        "pending": {},
+        "conflicts": {},
+        "entries": [
+          "sustained-project::capture-viewer::tg-cbdf445f-7f5f-417f-96b1-b729a7ffc561",
+          "sustained-project::capture-viewer::tg-76897fa6-63b8-4025-8bca-4175c0da679a",
+          "sustained-project::capture-viewer::tg-375cda51-2209-47c4-a860-ca8dae455fa4"
+        ],
+        "remote": {}
+      },
+      {
+        "cycle": "warmup",
+        "label": "after-reconnect",
+        "bindings": {
+          "sustained-project::capture-viewer": {
+            "workspaceId": "sustained-project",
+            "viewId": "capture-viewer",
+            "threadGroupId": "tg-375cda51-2209-47c4-a860-ca8dae455fa4",
+            "adapterId": "capture-viewer",
+            "adapterVersion": 1,
+            "contentRevision": "wsr_ba992ccc1ac61062f5b440ad502d7055",
+            "placementRevision": "wsr_7ac68c1617839fec512e8d6d20c90182"
+          }
+        },
+        "pending": {},
+        "conflicts": {},
+        "entries": [
+          "sustained-project::capture-viewer::tg-cbdf445f-7f5f-417f-96b1-b729a7ffc561",
+          "sustained-project::capture-viewer::tg-76897fa6-63b8-4025-8bca-4175c0da679a",
+          "sustained-project::capture-viewer::tg-375cda51-2209-47c4-a860-ca8dae455fa4"
+        ],
+        "remote": {}
+      },
+      {
+        "cycle": "warmup",
+        "label": "after-delete",
+        "bindings": {
+          "sustained-project::capture-viewer": {
+            "workspaceId": "sustained-project",
+            "viewId": "capture-viewer",
+            "threadGroupId": "tg-cbdf445f-7f5f-417f-96b1-b729a7ffc561",
+            "adapterId": "capture-viewer",
+            "adapterVersion": 1,
+            "contentRevision": "wsr_82d2a0676d820312d8952a610ee0840d",
+            "placementRevision": "wsr_af1f735f1ffe4bc8807f5f974046c892"
+          }
+        },
+        "pending": {},
+        "conflicts": {},
+        "entries": [
+          "sustained-project::capture-viewer::tg-cbdf445f-7f5f-417f-96b1-b729a7ffc561",
+          "sustained-project::capture-viewer::tg-76897fa6-63b8-4025-8bca-4175c0da679a"
+        ],
+        "remote": {}
+      }
+    ]
+  },
+  "calibration": {
+    "counts": {
+      "renderTextInstant": 32,
+      "MessageList": 2,
+      "InstantSegmentRenderer": 32,
+      "ChatAreaHeader": 18,
+      "ThreadRail": 19,
+      "ContentArea": 9,
+      "ChatAreaFooter": 16
+    },
+    "discovered": [
+      "ChatAreaFooter",
+      "ChatAreaHeader",
+      "ContentArea",
+      "InstantSegmentRenderer",
+      "MessageList",
+      "ThreadRail",
+      "renderTextInstant"
+    ]
+  },
+  "attributionCalibration": {
+    "enabled": false,
+    "counts": {
+      "2026-09-26T19-32-50-224": 1,
+      "2026-09-26T19-32-49-980": 1
+    },
+    "overflow": 0
+  },
+  "setupBootstrap": {
+    "requiredLifecycle": [
+      "screenshot:capture",
+      "screenshot:updated",
+      "screenshot:request",
+      "screenshot:data"
+    ],
+    "quietMs": 500,
+    "documentId": "a67fa5eb-94dd-46c1-893c-f036469dff6f",
+    "finalTrafficSequence": 897,
+    "lifecycle": [
+      {
+        "sequence": 894,
+        "atMs": 1625.7,
+        "direction": "outbound",
+        "type": "screenshot:capture"
+      },
+      {
+        "sequence": 895,
+        "atMs": 1633.3,
+        "direction": "inbound",
+        "type": "screenshot:updated"
+      },
+      {
+        "sequence": 896,
+        "atMs": 1633.5,
+        "direction": "outbound",
+        "type": "screenshot:request"
+      },
+      {
+        "sequence": 897,
+        "atMs": 1637.6,
+        "direction": "inbound",
+        "type": "screenshot:data"
+      }
+    ]
+  },
+  "observerCalibration": [
+    75
+  ],
+  "warmup": {
+    "number": "warmup",
+    "groupId": "tg-375cda51-2209-47c4-a860-ca8dae455fa4",
+    "memberIds": [
+      "2026-09-26T19-32-57-973",
+      "th-1943e590-a7a4-48a9-a1ed-70b74e77cf21"
+    ],
+    "sideSend": {
+      "prompt": {
+        "sequence": 13,
+        "at": 1790476379623,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "a4132661f6083a82a15d1a232460bf73",
+        "threadId": "2026-09-26T19-32-57-973"
+      },
+      "ack": {
+        "sequence": 14,
+        "at": 1790476380028,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "a4132661f6083a82a15d1a232460bf73",
+        "threadId": "2026-09-26T19-32-57-973",
+        "turnId": "880704f6-423f-4a63-bd61-53fc90962e22"
+      }
+    },
+    "mainSend": {
+      "prompt": {
+        "sequence": 16,
+        "at": 1790476380090,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "a75c1122776baf6c1d42f676d256d48d",
+        "threadId": "th-1943e590-a7a4-48a9-a1ed-70b74e77cf21"
+      },
+      "ack": {
+        "sequence": 17,
+        "at": 1790476380494,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "a75c1122776baf6c1d42f676d256d48d",
+        "threadId": "th-1943e590-a7a4-48a9-a1ed-70b74e77cf21",
+        "turnId": "05457390-c94a-4bab-b67c-ad25d8a77b23"
+      }
+    },
+    "sideStop": {
+      "receipt": {
+        "request_id": "a4132661f6083a82a15d1a232460bf73",
+        "turn_id": "880704f6-423f-4a63-bd61-53fc90962e22",
+        "outcome": "accepted"
+      },
+      "exchangeId": 33
+    },
+    "mainStop": {
+      "receipt": {
+        "request_id": "a75c1122776baf6c1d42f676d256d48d",
+        "turn_id": "05457390-c94a-4bab-b67c-ad25d8a77b23",
+        "outcome": "accepted"
+      },
+      "exchangeId": 34
+    },
+    "resumedSide": {
+      "prompt": {
+        "sequence": 22,
+        "at": 1790476382890,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "02ffbff23f916b9a20a9930113d91589",
+        "threadId": "2026-09-26T19-32-57-973"
+      },
+      "ack": {
+        "sequence": 23,
+        "at": 1790476383295,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "02ffbff23f916b9a20a9930113d91589",
+        "threadId": "2026-09-26T19-32-57-973",
+        "turnId": "5a63f8f1-8fe0-4818-b42c-dd8a1b00ed54"
+      }
+    },
+    "resumedSideStop": {
+      "receipt": {
+        "request_id": "02ffbff23f916b9a20a9930113d91589",
+        "turn_id": "5a63f8f1-8fe0-4818-b42c-dd8a1b00ed54",
+        "outcome": "accepted"
+      },
+      "exchangeId": 35
+    },
+    "faults": [
+      "authenticated socket close/reconnect"
+    ],
+    "viewSwitches": 2,
+    "move": true,
+    "sideCloseReopen": true,
+    "delete": true
+  },
+  "focusPreparation": {
+    "operator": "agent",
+    "status": "acquired",
+    "runId": "chat-arch-1790476363440-1da2c8ab45",
+    "pid": 47255,
+    "windowId": 1,
+    "title": "ISOLATED SOAK HANDOFF — chat-arch-1790476363440-1da2c8ab45",
+    "profile": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790476363440-1da2c8ab45-vU5GsR/soak-profile",
+    "workspace": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790476363440-1da2c8ab45-vU5GsR/soak-workspace",
+    "startedAt": 1790476393045,
+    "deadlineAt": 1790476513045,
+    "clickEvidence": "separate agent action receipt; not inferred from native focus",
+    "ownerAcceptance": false,
+    "acquisition": {
+      "startedAt": 1790476393045,
+      "deadlineAt": 1790476513045,
+      "endedAt": 1790476436190,
+      "last": {
+        "windowId": 1,
+        "appActive": true,
+        "focused": true,
+        "visible": true,
+        "minimized": false,
+        "appHidden": false
+      },
+      "lastObservedAt": 1790476436190,
+      "observations": 418,
+      "stableMs": 2000
+    }
+  },
+  "bootstrap": {
+    "requiredLifecycle": [
+      "screenshot:capture",
+      "screenshot:updated",
+      "screenshot:request",
+      "screenshot:data"
+    ],
+    "quietMs": 500,
+    "documentId": "a67fa5eb-94dd-46c1-893c-f036469dff6f",
+    "finalTrafficSequence": 1624,
+    "lifecycle": [
+      {
+        "sequence": 894,
+        "atMs": 1625.7,
+        "direction": "outbound",
+        "type": "screenshot:capture"
+      },
+      {
+        "sequence": 895,
+        "atMs": 1633.3,
+        "direction": "inbound",
+        "type": "screenshot:updated"
+      },
+      {
+        "sequence": 896,
+        "atMs": 1633.5,
+        "direction": "outbound",
+        "type": "screenshot:request"
+      },
+      {
+        "sequence": 897,
+        "atMs": 1637.6,
+        "direction": "inbound",
+        "type": "screenshot:data"
+      }
+    ]
+  },
+  "settleMs": 45000,
+  "lifecycleScope": "existing ordered current-document lifecycle; fresh final 500ms quiet after warmup",
+  "failure": {
+    "message": "short-idle-1: rAF latency\n+ actual - expected\n\n+ [\n+   'rAF latency'\n+ ]\n- []\n",
+    "stack": "AssertionError [ERR_ASSERTION]: short-idle-1: rAF latency\n+ actual - expected\n\n+ [\n+   'rAF latency'\n+ ]\n- []\n\n    at measure (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/soak-electron.mjs:90:47)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/soak-electron.mjs:144:24",
+    "dom": {
+      "body": "AI source\nLocal: RC-MacAir-15\narrow_drop_down\nConnected\nchevron_left\nSustained Input Fixture\nchevron_right\ncontrol_camera\nfirst_page\nlast_page\ndiscover_tune\nhub\nmacOS Connectors\nmail\nApple Mail\ncalendar_month\nApple Calendar\nnote_stack\nApple Notes\ntask_alt\nApple Reminders\nClose\nopen_run\ncode_blocks\nfull_coverage\nbusiness_messages\nrobot_2\ndescription\nsettings\ndock_to_right\nActive Threads\nArchive\nedit_square\nNew chat\n2026-09-26T19-32-50\nmore_vert\n0 msgs · just now\n2026-09-26T19-32-49\nmore_vert\n0 msgs · just now\nevent_list\nSynthetic user request 1\nDeterministic exchange 1\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t1\nconst exchange = 1;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 1\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 2\nDeterministic exchange 2\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t2\nconst exchange = 2;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 2\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 3\nDeterministic exchange 3\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t3\nconst exchange = 3;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 3\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 4\nDeterministic exchange 4\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t4\nconst exchange = 4;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 4\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 5\nDeterministic exchange 5\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t5\nconst exchange = 5;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 5\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 6\nDeterministic exchange 6\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t6\nconst exchange = 6;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 6\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 7\nDeterministic exchange 7\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t7\nconst exchange = 7;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 7\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 8\nDeterministic exchange 8\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t8\nconst exchange = 8;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 8\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 9\nDeterministic exchange 9\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t9\nconst exchange = 9;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 9\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 10\nDeterministic exchange 10\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t10\nconst exchange = 10;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 10\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 11\nDeterministic exchange 11\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t11\nconst exchange = 11;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 11\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 12\nDeterministic exchange 12\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t12\nconst exchange = 12;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 12\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 13\nDeterministic exchange 13\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t13\nconst exchange = 13;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 13\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 14\nDeterministic exchange 14\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t14\nconst exchange = 14;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 14\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 15\nDeterministic exchange 15\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t15\nconst exchange = 15;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 15\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 16\nDeterministic exchange 16\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t16\nconst exchange = 16;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 16\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 17\nDeterministic exchange 17\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t17\nconst exchange = 17;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 17\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 18\nDeterministic exchange 18\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t18\nconst exchange = 18;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 18\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 19\nDeterministic exchange 19\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t19\nconst exchange = 19;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 19\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 20\nDeterministic exchange 20\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t20\nconst exchange = 20;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 20\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 21\nDeterministic exchange 21\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t21\nconst exchange = 21;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 21\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 22\nDeterministic exchange 22\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t22\nconst exchange = 22;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 22\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 23\nDeterministic exchange 23\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t23\nconst exchange = 23;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 23\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 24\nDeterministic exchange 24\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t24\nconst exchange = 24;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 24\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 25\nDeterministic exchange 25\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t25\nconst exchange = 25;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 25\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 26\nDeterministic exchange 26\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t26\nconst exchange = 26;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 26\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 27\nDeterministic exchange 27\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t27\nconst exchange = 27;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 27\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 28\nDeterministic exchange 28\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t28\nconst exchange = 28;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 28\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 29\nDeterministic exchange 29\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t29\nconst exchange = 29;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 29\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 30\nDeterministic exchange 30\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t30\nconst exchange = 30;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 30\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nadd\nshield_lock\nDeepSeek V4 Flash\nkeyboard_arrow_down\nmic\narrow_upward\nopen_run\nCAPTURE\nclose\nadd\nCapture\nchevron_right\nDocuments and Artifacts\nsearch\nDocument and Artifact Capture\nHome\nRecent\nStarred\nArchive\nFIXTURE\n1\nkid_star\n\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat arch",
+      "surfaces": [
+        {
+          "thread": "2026-09-26T19-32-49-980",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        }
+      ]
+    }
+  },
+  "ownedFocus": {
+    "pid": 47255,
+    "windowId": 1,
+    "events": [
+      {
+        "type": "installed",
+        "at": 1790476372725,
+        "focused": true,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      },
+      {
+        "type": "show",
+        "at": 1790476372781,
+        "focused": true,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      }
+    ],
+    "overflow": 0
+  },
+  "lingeringOwnedPids": [],
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  }
+}

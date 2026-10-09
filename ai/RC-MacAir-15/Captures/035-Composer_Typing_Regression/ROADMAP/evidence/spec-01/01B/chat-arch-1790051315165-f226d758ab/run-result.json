@@ -1,0 +1,18 @@
+{
+  "runId": "chat-arch-1790051315165-f226d758ab",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R5-R6-PUBLIC-ACTIONS",
+      "code": 0,
+      "signal": null,
+      "pid": 68494,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 44463
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

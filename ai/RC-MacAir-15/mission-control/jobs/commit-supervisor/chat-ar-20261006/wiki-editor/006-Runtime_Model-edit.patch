@@ -1,0 +1,19 @@
+--- ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md before
++++ ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md after
+@@ -2,7 +2,7 @@
+ name: Chat Runtime Model
+ description: Explains how chat threads are opened, warmed, streamed, stopped, persisted, and resumed. Use this page when changing runtime state or thread lifecycle behavior.
+ metadata:
+-  last-modified: "2026-09-29T07:12:08Z"
++  last-modified: "2026-10-06T22:14:26Z"
+   source-files:
+     - fusion-studio-client/src/components/WorkspacePanel.tsx
+     - fusion-studio-client/src/components/chat/useChatSessionActions.ts
+@@ -52,7 +52,6 @@
+     - fusion-studio-server/lib/thread-groups/chat-capable-views.js
+     - fusion-studio-server/lib/thread/session-manager.js
+     - fusion-studio-server/lib/thread/thread-lifecycle-controller.js
+-  last-modified: "2026-09-28T04:56:08Z"
+ ---
+ 
+ Cleanup review: current renderer host composition and replaced source owners were rechecked against development source. Older verification dates and unrelated runtime claims retain their stated scope; no runtime or Alpha validation was performed in this pass.

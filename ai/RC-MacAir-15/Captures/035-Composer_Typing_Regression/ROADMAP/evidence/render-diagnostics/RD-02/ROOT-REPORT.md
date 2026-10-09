@@ -1,0 +1,13 @@
+# RD-02 accepted source-ready
+
+Direct-owner approved Diagnostics tab/native observation/per-turn disposal implementation is complete. Both fresh gates are terminal CLEAN: /root/builder_diagnostics/review_rd02_1 and /root/review_diagnostics. No material findings or required repairs remain. Sole builder terminal READY_FOR_ORCHESTRATOR_REVIEW; root accepted this bounded slice after independent inspection/checks and fresh review.
+
+The chat event_list menu opens a closable Diagnostics tab right of native/Side Chat tabs. One original native event copy from the existing subprocess is displayed as plain text, with separately labelled incoming/canonical/actual reveal measurements. No second model request or translation. Each new addressed turn clears previous text, counters, notices and buffers; old turn and connection frames are fenced. Capture is ephemeral, bounded, nonblocking, redacted and not persisted. Existing reveal pacing/finalization remains unchanged. RD-01's two-second Working clock remains accepted on current checks.
+
+Root independent validation:95 browser PASS55.0s;369 backend tests/10 suites PASS4.016s;client build PASS4.53s. Builder also95/369/build pass. Raw receipts and bounded fixture screenshot inspected. Existing lint predecessor failures use documented command-only exclusions; baseline hook warning/Vite chunk warning retained.
+
+Identity:1997 source entries SHA2560a7dc263147fac3a29de1bd528cc940bf6cb44e720e147086a39b7e14d1c0ad7;200 build entries SHA256d66e0386a57a084f896d515a63a48f87e8318c0b983433fbb47f753024d40d4e. Exact30 product/test delta,16 predecessor copies and9 native entries verified. Eleven unchanged preexisting resource paths expand the prior root inventory, not the implementation delta; explicit record retained.
+
+Fresh root reviewer independently verified all30/1997/200 hashes and inspected actual production changes/immediate dependencies and raw evidence. Result CLEAN: ownership/passive native capture/tab composition/per-turn disposal/redaction/buffering/labelled measurements satisfy contract. D0–D5 classifications supported; D6 retains validation boundary. Root owning classifications are in ../DEVIATION-DECISIONS.md and ROOT-INSPECTION.md. No additional deviations identified.
+
+Lifecycle: both independent reviewers terminal; root reviewer completion independently confirmed via list_agents. close_agent unavailable. No active product writer/reviewer work remains for RD-02. Full installed Electron/auth handshake/provider-network/performance soak are unverified by this slice. Protected human runtime, Alpha, native dependencies and Git publication untouched; no restart or deployment performed. Full SPEC06/06B/06C acceptance remains separate and pending.

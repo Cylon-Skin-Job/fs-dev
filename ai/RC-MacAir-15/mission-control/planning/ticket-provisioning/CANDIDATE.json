@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "root": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/ticket-provisioning",
+  "candidateId": "sha256:c5d34183d52788beff297c7bd9928a9d2e993478f42e74c25c8c66a2371be933",
+  "artifacts": [
+    {
+      "path": "INPUTS.json",
+      "sha256": "cf2c6e471b1da5eba76907e4fad9f3c872843e4f3ce1ac6f35ba28376bf272b1"
+    },
+    {
+      "path": "SPEC.md",
+      "sha256": "65df52b3c090385c00c18ca3e955a6261d923a36d8d6ebc96abc6206349f9f78"
+    }
+  ]
+}

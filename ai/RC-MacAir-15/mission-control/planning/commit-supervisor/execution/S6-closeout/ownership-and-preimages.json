@@ -1,0 +1,141 @@
+{
+  "at": "2026-10-04T21:14:58.171759+00:00",
+  "actor": "/root/s6_builder",
+  "manager": "/root",
+  "signature": "Codex side chat (ephemeral)",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "effective_permissions": "danger-full-access/never",
+  "root_inherited_no_overrides": true,
+  "concrete_loader_model_effort": "Unexposed; exact skill/profile manually loaded; launch request separate from loader proof",
+  "owned_docs": [
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md",
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 253884811,
+        "size": 11356,
+        "mtime_ns": 1791111485868378901,
+        "sha256": "54cb3ff16f0fae8847341ba38f53af6afd6aa6d84ac4ddb7df9e20faf13888dc"
+      },
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/preimages/AGENTS.md",
+      "preimage_sha256": "54cb3ff16f0fae8847341ba38f53af6afd6aa6d84ac4ddb7df9e20faf13888dc"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 253884813,
+        "size": 22422,
+        "mtime_ns": 1791111485873466127,
+        "sha256": "aca67f27b5c1cd4c75e5e8ebfc388c446ff505a9581719e239d6ed40087a49b1"
+      },
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/preimages/todo.md",
+      "preimage_sha256": "aca67f27b5c1cd4c75e5e8ebfc388c446ff505a9581719e239d6ed40087a49b1"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 253884814,
+        "size": 13674,
+        "mtime_ns": 1791111485877090734,
+        "sha256": "e3ffc6d20ff9d31dfe1b0a7f5bbbeabe3351cee9a3c4ec9bc8f990c080dd08ea"
+      },
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/preimages/registry.md",
+      "preimage_sha256": "e3ffc6d20ff9d31dfe1b0a7f5bbbeabe3351cee9a3c4ec9bc8f990c080dd08ea"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 253884817,
+        "size": 35271,
+        "mtime_ns": 1791111485873158753,
+        "sha256": "52ed4a92ffef4a3f6ecd2f128f5e5886a2d1ed496d841e9f83a38481360da937"
+      },
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/preimages/handoff.md",
+      "preimage_sha256": "52ed4a92ffef4a3f6ecd2f128f5e5886a2d1ed496d841e9f83a38481360da937"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 254286643,
+        "size": 21875,
+        "mtime_ns": 1791111485872135883,
+        "sha256": "7c5c447fc48805dcbea283e1bd7c5e4290b3443496abdb2876c6ccf460fe41b1"
+      },
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/preimages/deployment.md",
+      "preimage_sha256": "7c5c447fc48805dcbea283e1bd7c5e4290b3443496abdb2876c6ccf460fe41b1"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 254233150,
+        "size": 17686,
+        "mtime_ns": 1791111485872708797,
+        "sha256": "41fe2c81f6da2ed87e4fd625e60044988fd10c5725da33446ebc360f6ab8cba9"
+      },
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/preimages/skills-and-agents.md",
+      "preimage_sha256": "41fe2c81f6da2ed87e4fd625e60044988fd10c5725da33446ebc360f6ab8cba9"
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md",
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 65627116,
+        "size": 819,
+        "mtime_ns": 1784547060854987021,
+        "sha256": "fa7ecb9041a4d4c9f2f24cba9386b3e844a6dbe98c9af52063b05fe90345a9f0"
+      },
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/preimages/restart-PAGE.md",
+      "preimage_sha256": "fa7ecb9041a4d4c9f2f24cba9386b3e844a6dbe98c9af52063b05fe90345a9f0"
+    }
+  ],
+  "future_exclusive_version": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/.versions/2026-10-04-141458.md",
+  "declared_at_utc": "2026-10-04T21:14:58.171840+00:00",
+  "observed_local_clock": "2026-10-04T14:14:58.171723-07:00",
+  "local_timezone": "PDT",
+  "version_state_before": "absent",
+  "existing_complete_versions": {
+    "2026-08-28-014539.md": {
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 199138004,
+      "size": 819,
+      "mtime_ns": 1784547060854987021,
+      "sha256": "fa7ecb9041a4d4c9f2f24cba9386b3e844a6dbe98c9af52063b05fe90345a9f0"
+    }
+  },
+  "old_PAGE_last_modified": "absent",
+  "unchanged_adjacent": [
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/003-Playwright_Electron/PAGE.md"
+  ],
+  "no_product_runtime_Git_Alpha_effects": true
+}

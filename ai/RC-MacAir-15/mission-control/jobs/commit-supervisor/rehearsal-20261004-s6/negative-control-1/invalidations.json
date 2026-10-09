@@ -1,0 +1,132 @@
+{
+  "at": "2026-10-04T19:57:04.303643+00:00",
+  "actor": "/root/s6_supervisor_refusal_1",
+  "phase": "unmet-gate",
+  "current_ready": false,
+  "controls": [
+    {
+      "id": "NC-SOURCE",
+      "current": "551a74313d099724cdb3d76ead04e940ae88f223",
+      "covered": "d15792920731f85e45b743519d4af2b807d95a9c",
+      "raw": "inspection2-selected-existing.command.json",
+      "invalidated": "Selected-source acceptance/preparation and all whole source-bound handoff/final/runtime/operation readiness. Actual R HEAD unchanged; artificial selected source is another EXISTING private commit, not source-repository advancement."
+    },
+    {
+      "id": "NC-TARGET",
+      "current": "551a74313d099724cdb3d76ead04e940ae88f223",
+      "covered": "d15792920731f85e45b743519d4af2b807d95a9c",
+      "raw": "inspection2-target-current.command.json",
+      "invalidated": "Target baseline/seam/reproduction/recovery-match/current final/runtime and any candidate-bound approval; private CAS only, source/shared target unchanged."
+    },
+    {
+      "id": "NC-CANDIDATE",
+      "current": "95ece1f98d8ff6cd5d420784bc1dc5356a4a05c50df223527bb9164545ae6d10",
+      "covered": "48ae78dfda264edb62fadf5bdd72e1f07c2f5b54b127ddb7296c41188f2d70bf",
+      "raw": "fault-module-check.command.json",
+      "invalidated": "Controller source scenario/syntax/code handoff, source-dependent Wiki factual acceptance, current final/build/runtime owner readiness and any material-byte-bound approval. Exact diagnostic exit1. Historic running app may retain loaded old bytes; no current readiness inferred."
+    },
+    {
+      "id": "NC-OPERATION",
+      "current": "push",
+      "covered": "simulated commit-only receipt/push false",
+      "raw": "inspection.json /operation",
+      "invalidated": "Operation permission independently mismatched; simulated receipt is never real authority. Actual owner Git authority NONE also independently refuses every publication operation."
+    }
+  ],
+  "gate_readback": {
+    "fix-xy-code-handoff-identity": {
+      "sha256": "c3550adee994701e1de95927c8044985ae9c964f5ae1a4523345182512a8f721",
+      "covered_target": "d15792920731f85e45b743519d4af2b807d95a9c",
+      "covered_sources": [
+        {
+          "commit": "d15792920731f85e45b743519d4af2b807d95a9c",
+          "ref": "HEAD",
+          "repo": "/Users/rccurtrightjr./projects/fs-dev"
+        }
+      ],
+      "selected_source_matches": false,
+      "target_matches": false,
+      "owned_differences": [
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js",
+        "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md",
+        "rehearsal-workspace/ai/MC-S6/watcher-proof-runtime-2.md"
+      ],
+      "authority_differences": [],
+      "configuration_differences": []
+    },
+    "fix-xy-wiki-handoff-identity": {
+      "sha256": "397b76ae6571bf6bcb50ed6cbef7a793af9c3e6ea0b36c59033d9a3ea4510586",
+      "covered_target": "d15792920731f85e45b743519d4af2b807d95a9c",
+      "covered_sources": [
+        {
+          "commit": "d15792920731f85e45b743519d4af2b807d95a9c",
+          "ref": "HEAD",
+          "repo": "/Users/rccurtrightjr./projects/fs-dev"
+        }
+      ],
+      "selected_source_matches": false,
+      "target_matches": false,
+      "owned_differences": [
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js",
+        "rehearsal-workspace/ai/MC-S6/watcher-proof-runtime-2.md"
+      ],
+      "authority_differences": [],
+      "configuration_differences": []
+    },
+    "fix-xy-final3-identity": {
+      "sha256": "17becab4ec6c19b79e0efb1c5ec817641da41c6c7dd88d3baaf2a89ded2191a7",
+      "covered_target": "d15792920731f85e45b743519d4af2b807d95a9c",
+      "covered_sources": [
+        {
+          "commit": "d15792920731f85e45b743519d4af2b807d95a9c",
+          "ref": "HEAD",
+          "repo": "/Users/rccurtrightjr./projects/fs-dev"
+        }
+      ],
+      "selected_source_matches": false,
+      "target_matches": false,
+      "owned_differences": [
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js",
+        "rehearsal-workspace/ai/MC-S6/watcher-proof-runtime-2.md"
+      ],
+      "authority_differences": [],
+      "configuration_differences": []
+    },
+    "fix-xy-owner-runtime-identity": {
+      "sha256": "def301f6c8111aee84a6a450eb2e1898dd26dcd6df887a1462cefc0edff38e48",
+      "covered_target": "d15792920731f85e45b743519d4af2b807d95a9c",
+      "covered_sources": [
+        {
+          "commit": "d15792920731f85e45b743519d4af2b807d95a9c",
+          "ref": "HEAD",
+          "repo": "/Users/rccurtrightjr./projects/fs-dev"
+        }
+      ],
+      "selected_source_matches": false,
+      "target_matches": false,
+      "owned_differences": [
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js"
+      ],
+      "authority_differences": [],
+      "configuration_differences": []
+    }
+  },
+  "retained": "All raw history immutable. Original+fixed recovery payloads/both complete version files valid; 129 other owned leaves and all authority/config fingerprints unchanged versus latest owner identity. 3808 Python/11 Node support fingerprints unchanged; no broader suite rerun. Historical watcher2 absent\u2192present and Guide differences in earlier lower identity are preexisting completed-runtime/Wiki transitions, not newly introduced observer drift.",
+  "unchanged_support": {
+    "fix-xy-python-pre2": {
+      "identity_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-python-pre2.json",
+      "identity_sha256": "50bddcd416ac17f65f2be2be8fc095719a7048433f9d8246afa808b5fe3a499e",
+      "count": 3808,
+      "differences": {},
+      "limit": "Dependency readback only; no suite rerun or earlier verdict certification."
+    },
+    "fix-xy-node17-current-bindings": {
+      "identity_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-node17-current-bindings.json",
+      "identity_sha256": "b03274bec394555e2bca6b8f19887646708404f585c24483ba40590cd12cf417",
+      "count": 11,
+      "differences": {},
+      "limit": "Dependency readback only; no suite rerun or earlier verdict certification."
+    }
+  },
+  "certifies_prior_gates": false
+}

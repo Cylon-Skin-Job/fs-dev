@@ -1,0 +1,29 @@
+{
+  "at": "2026-09-27T07:39:34.652586+00:00",
+  "oldRun": "human-1790491451072-fee1354e",
+  "identity": {
+    "source": {
+      "count": 1964,
+      "mismatches": []
+    },
+    "build": {
+      "count": 200,
+      "mismatches": []
+    }
+  },
+  "oldOwnership": {
+    "driver": {
+      "pid": 64110,
+      "alive": true,
+      "expectedIdentity": true
+    },
+    "electron": {
+      "pid": 64115,
+      "alive": true,
+      "expectedIdentity": true
+    }
+  },
+  "sessionStatus": "ready",
+  "oldEvidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-06/06B/human-1790491451072-fee1354e",
+  "oldTempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790491451072-fee1354e-dLMOat"
+}

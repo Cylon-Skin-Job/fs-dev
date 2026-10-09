@@ -1,0 +1,74 @@
+{
+  "runId": "human-1790494814495-ca038557",
+  "token": "chat-architecture-owner-chat-arch-human-1790494814495-ca038557",
+  "driverPid": 68194,
+  "status": "closed",
+  "startedAt": 1790494814496,
+  "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-06/06B/human-1790494814495-ca038557",
+  "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790494814495-ca038557-SYwgRn",
+  "stageRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790494814495-ca038557-SYwgRn/stage",
+  "profileRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790494814495-ca038557-SYwgRn/profile",
+  "workspaceRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790494814495-ca038557-SYwgRn/workspace",
+  "recording": true,
+  "automaticExpiry": false,
+  "humanReady": true,
+  "skippedResourceSamples": 0,
+  "pid": 68197,
+  "port": 64841,
+  "project": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790494814495-ca038557-SYwgRn/workspace/Human-Test",
+  "configuration": {
+    "cli.json": {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/System/config/cli.json",
+      "target": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790494814495-ca038557-SYwgRn/workspace/Human-Test/ai/RC-MacAir-15/System/config/cli.json",
+      "sha256": "8a160b32a5556218ee18a14c0d3553e074286d7d72bdc40ed59b5fd08c8e4c32"
+    },
+    "opencode-models.json": {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/System/config/opencode-models.json",
+      "target": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790494814495-ca038557-SYwgRn/workspace/Human-Test/ai/RC-MacAir-15/System/config/opencode-models.json",
+      "sha256": "0bb94d432cca1d3d011ab14543c9dcaa61ec75fa9aa80cc081775aa96f00007a"
+    }
+  },
+  "requested": {
+    "harness": "opencode",
+    "model": "togetherai/deepseek-ai/DeepSeek-V4.1-Flash",
+    "variant": "high",
+    "thinking": true
+  },
+  "threadId": "2026-09-27T00-40-17-717",
+  "persistedHarness": "opencode",
+  "persistedSelection": {},
+  "providerInvocation": {
+    "pid": 68257,
+    "model": "togetherai/deepseek-ai/DeepSeek-V4.1-Flash",
+    "variant": "high",
+    "thinking": true,
+    "observedAt": 1790494819736
+  },
+  "lastRendererBatchAt": 1790501058616,
+  "smokeTerminal": {
+    "kind": "wire",
+    "at": 1790496603874,
+    "direction": "inbound",
+    "type": "turn_end",
+    "threadId": "2026-09-27T00-40-17-717",
+    "turnId": "995fa6f9-da4d-4880-9be0-0c5c802f4ee0",
+    "streamSeq": 21,
+    "reason": "complete"
+  },
+  "providerSmoke": {
+    "receipt": {
+      "request_id": "1e08f6163a9bc89a97f36f5592ab0352",
+      "turn_id": "b262a658-2a5e-449b-9a77-553ea9ab6ad2",
+      "outcome": "accepted"
+    },
+    "exchangeId": 1,
+    "reply": "HUMAN_SESSION_READY"
+  },
+  "windowId": 1,
+  "title": "HUMAN TEST — human-1790494814495-ca038557",
+  "readyAt": 1790494820665,
+  "closeReason": "owner-window-closed",
+  "lingeringOwnedPids": [],
+  "endedAt": 1790501062022,
+  "retainedForDiagnosis": true
+}

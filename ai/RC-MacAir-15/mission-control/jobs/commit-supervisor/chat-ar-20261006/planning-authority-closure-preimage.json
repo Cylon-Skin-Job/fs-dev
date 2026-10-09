@@ -1,0 +1,37 @@
+[
+  {
+    "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/SOURCES.json",
+    "source_sha256": "d124abc38a76f7e63011184387c6d2c5b6e5778333c4d29c146a8bb9d07cdaff",
+    "bytes": 49808,
+    "mode": 420,
+    "candidate_preimage": "absent"
+  },
+  {
+    "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/INPUT-PACKET.json",
+    "source_sha256": "25390f6649cef10bec4ea9794ec4a087c2d7bcec40e8684cc3b5f283553ada26",
+    "bytes": 6324,
+    "mode": 420,
+    "candidate_preimage": "absent"
+  },
+  {
+    "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/CANDIDATE.json",
+    "source_sha256": "4b783bd332d96bc9e2a39662e1f855a4f4023d54adc6452da1716e1cac7f70a6",
+    "bytes": 572,
+    "mode": 384,
+    "candidate_preimage": "absent"
+  },
+  {
+    "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-ARTIFACT-FINGERPRINTS.json",
+    "source_sha256": "d05eb5ced16f402890a15660df3c58fcd215a46fe4bdbd534ff74d49efa7c40e",
+    "bytes": 356311,
+    "mode": 420,
+    "candidate_preimage": "absent"
+  },
+  {
+    "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/CANDIDATE.json",
+    "source_sha256": "8ef475f5d2a4043ab3e4ae36ebbb97e14dcc549dc9a9282866763ef42c74ce27",
+    "bytes": 482,
+    "mode": 384,
+    "candidate_preimage": "absent"
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-07T23:42:45.452128+00:00",
+  "workId": "CHAT-MATERIAL-SPEC-01",
+  "checkout": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev",
+  "branch": "codex/chat-material-01",
+  "HEAD": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "source_seal_sha256": "35cda972a106468eaa279c60da9ef51fc04ec23333f03de4226269b84e14ad07",
+  "tracked_count": 45,
+  "new_count": 20,
+  "product_count": 65,
+  "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/INTEGRATED-CANDIDATE.patch",
+  "sha256": "fe7fd383abbd816b00fca4d138db9d04257bc7fd1503408233bdc6dba7e0020f",
+  "bytes": 355406,
+  "scope": "Read-only combined Git diff for exactly65 delivered paths, tracked HEAD changes plus newtextfiles/Wiki adjacent preimages; excludes dependencylinks/builddist/runtime/coordination records. No index/ref/commit operation.",
+  "readonly_git_apply_reverse_check": {
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "--reverse",
+      "--",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/INTEGRATED-CANDIDATE.patch"
+    ],
+    "exit_code": 1,
+    "at": "2026-10-07T23:42:56.874540+00:00",
+    "effect": "Validation only failed due newfile headers missing slash after a/b. No file/index/ref changes."
+  },
+  "recording_correction": "Premature unconditional exit0 entry preserved in separate PREMATURE record and corrected to actual exit1. Original patch retained, no product changes."
+}

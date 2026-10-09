@@ -1,0 +1,144 @@
+{
+  "status": "failed",
+  "evidence": {
+    "schema": {
+      "before": [
+        "001_initial.js",
+        "002_system_panel.js",
+        "003_workspace_themes.js",
+        "004_secrets_wiki_update.js",
+        "005_clipboard.js",
+        "006_harness_selector.js",
+        "007_thread_name_nullable.js",
+        "008_project_scoped_threads.js",
+        "009_workspace_registry.js",
+        "010_harness_status.js",
+        "011_harness_theme.js",
+        "012_drop_harness_theme.js",
+        "013_secrets_index.js",
+        "014_drop_secrets_system_tab.js",
+        "015_drop_use_when.js",
+        "016_clipboard_keychain.js",
+        "017_workspace_id_threads.js",
+        "019_workspace_type.js",
+        "020_workspace_screenshots.js",
+        "021_recent_docs.js",
+        "021_screenshot_source_folder.js",
+        "022_calendar_sync.js",
+        "023_bookmarks.js",
+        "024_slack_liaison_foundation.js",
+        "025_workspace_ribbon_membership.js",
+        "026_transcription_history.js",
+        "027_emoji_recents.js",
+        "028_local_machine_identity.js",
+        "029_event_ledger.js",
+        "030_drop_local_machine_identity.js",
+        "031_repair_workspace_themes_fk.js",
+        "032_drop_recent_docs.js",
+        "033_restore_exact_workspace_paths.js",
+        "034_event_registry_authority.js",
+        "034_harness_error_diagnostics.js",
+        "035_file_provenance.js",
+        "036_agent_tool_provenance.js",
+        "037_harness_diagnostic_binding_identity.js",
+        "038_view_capsule_relocation_journal.js",
+        "039_system_wiki_canonical_view_path.js",
+        "040_reported_ui_context.js",
+        "041_thread_group_foundation.js",
+        "042_thread_group_action_recovery.js",
+        "043_thread_group_worksurface_cleanup.js",
+        "044_thread_group_placement_outbox.js"
+      ]
+    },
+    "phases": [],
+    "historicalDigest": "5b0d012075242a108731ce071fb9e3323ca10adaab2e5218ff881e5a84c0bfb6",
+    "lastFrames": [
+      {
+        "type": "shell-auth:challenge"
+      },
+      {
+        "type": "connected",
+        "message": "Thread-enabled connection established"
+      },
+      {
+        "type": "workspace:init"
+      },
+      {
+        "type": "panel_config"
+      },
+      {
+        "type": "shell-auth:authenticated"
+      },
+      {
+        "type": "screenshot:list"
+      },
+      {
+        "type": "file_content_response",
+        "requestId": "panel-file-1",
+        "code": "ENOTPANEL"
+      },
+      {
+        "type": "file_content_response",
+        "requestId": "panel-file-2",
+        "code": "ENOTPANEL"
+      },
+      {
+        "type": "file_content_response",
+        "requestId": "panel-file-3",
+        "code": "ENOTPANEL"
+      },
+      {
+        "type": "file_content_response",
+        "requestId": "panel-file-4",
+        "code": "ENOTPANEL"
+      },
+      {
+        "type": "file_content_response",
+        "requestId": "panel-file-5",
+        "code": "ENOTPANEL"
+      },
+      {
+        "type": "file_content_response",
+        "requestId": "panel-file-6",
+        "code": "ENOTPANEL"
+      },
+      {
+        "type": "file_content_response",
+        "requestId": "panel-file-7",
+        "code": "ENOTPANEL"
+      },
+      {
+        "type": "error",
+        "message": "No active workspace"
+      },
+      {
+        "type": "error",
+        "message": "Message handling failed"
+      },
+      {
+        "type": "workspace:registry_changed"
+      },
+      {
+        "type": "workspace:ribbon_removed"
+      },
+      {
+        "type": "file_tree_response",
+        "code": "ENOTPANEL"
+      },
+      {
+        "type": "error",
+        "message": "Message handling failed"
+      }
+    ]
+  },
+  "failure": {
+    "message": "page.waitForFunction: Timeout 30000ms exceeded.",
+    "stack": "page.waitForFunction: Timeout 30000ms exceeded.\n    at /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r8-upgrade-electron.mjs:76:22"
+  },
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "lingering": []
+}

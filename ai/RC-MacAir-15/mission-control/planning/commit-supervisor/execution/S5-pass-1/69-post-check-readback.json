@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-04T11:02:42.449580+00:00",
+  "owned_current_bytes_match": true,
+  "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "index_sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+  "checks": "current manifest/modes and source HEAD/index readback after all cumulative tests",
+  "close_agent": "tool unavailable; no invented closure"
+}

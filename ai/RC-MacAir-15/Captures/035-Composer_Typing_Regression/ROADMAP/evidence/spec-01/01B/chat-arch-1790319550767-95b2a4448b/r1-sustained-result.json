@@ -1,0 +1,38 @@
+{
+  "status": "focus-unavailable",
+  "measurementStarted": false,
+  "failure": {
+    "name": "Error",
+    "message": "R1 staged Electron focus unavailable after 48 attempts: {\"available\":true,\"focused\":false,\"visible\":true,\"minimized\":false,\"windowId\":1,\"title\":\"Fusion Studio\",\"url\":\"fusion-shell://app/\"}",
+    "code": "R1_FOCUS_UNAVAILABLE",
+    "observation": {
+      "available": true,
+      "focused": false,
+      "visible": true,
+      "minimized": false,
+      "windowId": 1,
+      "title": "Fusion Studio",
+      "url": "fusion-shell://app/"
+    }
+  },
+  "ownedFocus": {
+    "pid": 81605,
+    "windowId": 1,
+    "events": [
+      {
+        "type": "installed",
+        "at": 1790319557574,
+        "focused": false,
+        "visible": true,
+        "minimized": false
+      }
+    ],
+    "overflow": 0
+  },
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "lingeringOwnedPids": []
+}

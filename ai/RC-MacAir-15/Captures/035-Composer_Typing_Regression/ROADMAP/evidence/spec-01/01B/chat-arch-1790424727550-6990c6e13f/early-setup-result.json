@@ -1,0 +1,48 @@
+{
+  "status": "early-observation-completed-no-acceptance",
+  "measurementStarted": false,
+  "scope": "early-lifecycle-only; no acceptance credit",
+  "observation": {
+    "identity": {
+      "runId": "chat-arch-1790424727550-6990c6e13f",
+      "pid": 21006,
+      "windowId": 1,
+      "profile": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790424727550-6990c6e13f-fJ8zNo/r1-sustained-profile",
+      "workspace": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790424727550-6990c6e13f-fJ8zNo/r1-sustained-workspace",
+      "clickRequired": false
+    },
+    "startedAt": 1790424733031,
+    "endedAt": 1790424748031,
+    "durationMs": 15000
+  },
+  "earlyLifecycle": {
+    "scope": "second-launch early lifecycle only; no acceptance credit",
+    "main": {
+      "records": 48,
+      "overflow": 0,
+      "writeErrors": 0,
+      "unexpectedWindows": 0,
+      "windowId": 1,
+      "stopped": true
+    },
+    "summaryStatus": "observed",
+    "driverWriteErrors": 0,
+    "driverOverflow": 0,
+    "failedLaunchCloseUnavailable": false,
+    "cleanup": {
+      "dbQuickCheck": "ok",
+      "portFileRemoved": true,
+      "fixtureRootsRemoved": true
+    },
+    "lingeringOwnedPids": [],
+    "complete": true
+  },
+  "diagnosticTrace": null,
+  "ownedFocus": null,
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "lingeringOwnedPids": []
+}

@@ -1,0 +1,16 @@
+{
+  "checkedAt": "2026-09-26T11:53:46.953141+00:00",
+  "IOConsoleLocked": [
+    "No"
+  ],
+  "source": {
+    "count": 1946,
+    "manifestSha256": "4e34aa20146b52bb43ef776d39e81de9cfd593476adb6daf5711c9c423362aeb",
+    "mismatches": []
+  },
+  "build": {
+    "count": 200,
+    "manifestSha256": "6c06602b58f8dc0e4a9b1ed6588c5670b8e628b21044040a581e9e9d55f05234",
+    "mismatches": []
+  }
+}

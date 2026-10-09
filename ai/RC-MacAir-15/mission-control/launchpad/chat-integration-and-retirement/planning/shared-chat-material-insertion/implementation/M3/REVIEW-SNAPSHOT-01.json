@@ -1,0 +1,108 @@
+{
+  "at": "2026-10-07T22:49:20.464056+00:00",
+  "scope": "Exact report bytes supplied to fresh builder reviewer, preserved before terminal lifecycle/status additions. Product65 source bytes remain unchanged.",
+  "reviewer": "/root/m3_builder/builder_review_01",
+  "inputSha256": "94d356c8a67a982432e1cc2a506fe49fe6b149c2b8caa1fff22713f8ac091d9e",
+  "rows": [
+    {
+      "original": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/BUILDER-REPORT.md",
+      "snapshot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/review-snapshot-01/BUILDER-REPORT.md",
+      "sha256": "85d6ae1736dfb1a0eb0725501e64191978cf2ed1df4338727dc1a0ecf16613b3"
+    },
+    {
+      "original": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/CRITERIA.md",
+      "snapshot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/review-snapshot-01/CRITERIA.md",
+      "sha256": "6414289961339ed8c1ee35a13158b6555ebd615cab70b8072d3da789c9f232a7"
+    },
+    {
+      "original": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/CALLER-INVENTORY.md",
+      "snapshot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/review-snapshot-01/CALLER-INVENTORY.md",
+      "sha256": "ebffd266d3c5c8286d3df98ea4484988c5b9f82e32666ba16cf7e8184d38a990"
+    },
+    {
+      "original": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/CALLER-SWEEP.json",
+      "snapshot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/review-snapshot-01/CALLER-SWEEP.json",
+      "sha256": "92698c32cbce92ba1fd085dc71315394f792e4fd83eecddab352af53078884ae"
+    },
+    {
+      "original": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/caller-sweep.raw.txt",
+      "snapshot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/review-snapshot-01/caller-sweep.raw.txt",
+      "sha256": "787d9f8805d476c868920b8106867f25ce8faab7878e6daaf662b2b5cc8fa553"
+    },
+    {
+      "original": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/DEVIATIONS.md",
+      "snapshot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/review-snapshot-01/DEVIATIONS.md",
+      "sha256": "118971edb3d08647c91c5b6d24ffd7b1cbfc5ccd3d64ef27468fc06bb857cd65"
+    },
+    {
+      "original": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/SELF-REVIEW.md",
+      "snapshot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/review-snapshot-01/SELF-REVIEW.md",
+      "sha256": "d82b015b5d121e07d956e8382e659f614ecbad6f8f28871efeb77bb8c1173434"
+    },
+    {
+      "original": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/CHECKS.json",
+      "snapshot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/review-snapshot-01/CHECKS.json",
+      "sha256": "8902846a91f9b542cb7a97f6748da212cbd0e9eddd4dfc6cc64ea83b9e280ec0"
+    },
+    {
+      "original": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/LIFECYCLE.json",
+      "snapshot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/review-snapshot-01/LIFECYCLE.json",
+      "sha256": "d4543f319a7d3ca5f140774041c41b067152a63bf01a62e98579e4f792df2126"
+    },
+    {
+      "original": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/SOURCE-SEAL.json",
+      "snapshot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/review-snapshot-01/SOURCE-SEAL.json",
+      "sha256": "35cda972a106468eaa279c60da9ef51fc04ec23333f03de4226269b84e14ad07"
+    },
+    {
+      "original": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/SOURCE-SEAL-01.json",
+      "snapshot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/review-snapshot-01/SOURCE-SEAL-01.json",
+      "sha256": "6fcef6edfdf2439a45eec626a1d854ed67db209b7c78988a6aeaa48a713fd316"
+    },
+    {
+      "original": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/SOURCE-SEAL-02.json",
+      "snapshot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/review-snapshot-01/SOURCE-SEAL-02.json",
+      "sha256": "2d8d3778f5dda29d54fa3f08e4de5fe52e6a0c261d5e103e3b62f3599198d13c"
+    },
+    {
+      "original": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/SOURCE-SEAL-03.json",
+      "snapshot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/review-snapshot-01/SOURCE-SEAL-03.json",
+      "sha256": "47e9fe2792bd347d4bf53f5ef04af2bbb50487294a08f2fa9e69c83f9e62cc11"
+    },
+    {
+      "original": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/M3-slice.patch",
+      "snapshot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/review-snapshot-01/M3-slice.patch",
+      "sha256": "45a9e7bc4ecd9a8ef9341bbd81d26352592ac4f18f116fc2976cf525dd599f9c"
+    },
+    {
+      "original": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/NATIVE-SUMMARY.json",
+      "snapshot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/review-snapshot-01/NATIVE-SUMMARY.json",
+      "sha256": "804e6540874255d3f1f215b52fd5cad62c292eddd26db14c06c1977237e9bd9a"
+    },
+    {
+      "original": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/NONNATIVE-RETENTION-01.json",
+      "snapshot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/review-snapshot-01/NONNATIVE-RETENTION-01.json",
+      "sha256": "9e5696a0306ef19f26ec4b5b53b9abbefc82820384688396252d98106580fffe"
+    },
+    {
+      "original": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/SEAL-PRESERVATION.json",
+      "snapshot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/review-snapshot-01/SEAL-PRESERVATION.json",
+      "sha256": "0a9bf8bab61a56c3ad29d5dcb8d8f9de32ee2db2a517c6a441dc9a84f8bdce77"
+    },
+    {
+      "original": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/START.json",
+      "snapshot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/review-snapshot-01/START.json",
+      "sha256": "2801b2f6b6a556b7ba40600bd0d275db394da1aa2ce41d32a01dc95e66c52250"
+    },
+    {
+      "original": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/UNCHANGED-DEPENDENCIES.json",
+      "snapshot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/review-snapshot-01/UNCHANGED-DEPENDENCIES.json",
+      "sha256": "08c88f63e1ceb451f842231b180c04ab60858c8a6d0e99ddd95d3336492c0a32"
+    },
+    {
+      "original": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/HANDOFF.json",
+      "snapshot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/review-snapshot-01/HANDOFF.json",
+      "sha256": "2f8088f28a4682b3d8618e11c6ff491fca064ecf933e8775ef0347839a862e04"
+    }
+  ]
+}

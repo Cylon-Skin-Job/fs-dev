@@ -1,0 +1,46 @@
+{
+  "checkedAt": "2026-09-26T02:45:36.781543+00:00",
+  "scope": "Current read-only launch audit, not a historical child environment or runtime policy snapshot",
+  "files": {
+    "fusion-studio-client/e2e/chat-architecture/run.mjs": "a8fd99b7e2004de5d31c1bf300cff8a34f6f0a8577fdaf5a13cb97c961a06933",
+    "fusion-studio-client/e2e/chat-architecture/owned-case-supervisor.mjs": "7adf3918a86b8ee4c76cf4c4818f90d06678d81e1834dffccbd8b1f9e2e9250d",
+    "fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs": "3b877aaa7abb2540f8a4d4d90b45b9e58ddf886f10ea4eb139b4bd663fd27ca5",
+    "fusion-studio-client/e2e/chat-architecture/stage-fixture.mjs": "8efe08f2486f1f67edc09e57e4afacf4db6f8e880e3bc98ff9f45807cf3f48a9",
+    "fusion-studio-client/e2e/chat-architecture/r1-sustained-electron.mjs": "adb079d17476c235b48e26380ada5c9a13cfbeb66cc5936f21b5cd33c08220fb",
+    "fusion-studio-client/electron/main.cjs": "22d254036040a367782656c3d29730e719dae3056d6d54f4ada94f2ed1bca260",
+    "fusion-studio-client/node_modules/playwright-core/lib/server/electron/electron.js": "d230157151a460582734ae2ecac319b86f1b2b466864a083adfca71d4f80203c",
+    "fusion-studio-client/node_modules/playwright-core/lib/server/electron/loader.js": "f92981c101d9d2b137f545e8aff1fbfedad7f65bbf69747ed6087c691b18898d",
+    "fusion-studio-client/node_modules/playwright-core/lib/server/utils/processLauncher.js": "da9cb41cc1605fca1e26c6a6212f01ef0af0125a9e97eecb70671bb3a8f1fd07",
+    "fusion-studio-client/node_modules/playwright-core/lib/server/chromium/chromiumSwitches.js": "37d1a75c1c4e0cbc02b31d65f3b80d21b1bdf227a09146603e181a6ec54f293a",
+    "fusion-studio-client/node_modules/electron/index.js": "331e1e14d5f00ccbc61af0df6af6767ebabd48cf2f05d38d3d3345b20f8ce3f9",
+    "fusion-studio-client/node_modules/electron/path.txt": "3e0e50495f130af5c4349169f9a109d7a1543b8eca72ec2b5c9b3e8028b7a596",
+    "fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Info.plist": "24695cf93c93bc0e14d73ce3fdbb864becbad0319c5f28b553e7f334962eefc6"
+  },
+  "bundlePlist": {
+    "CFBundleIdentifier": "com.github.Electron",
+    "CFBundleExecutable": "Electron",
+    "CFBundleName": "Electron",
+    "CFBundleShortVersionString": "42.0.1",
+    "CFBundlePackageType": "APPL",
+    "NSPrincipalClass": "AtomApplication",
+    "NSMainNibFile": "MainMenu",
+    "LSMinimumSystemVersion": "12.0",
+    "LSUIElement": null,
+    "LSBackgroundOnly": null,
+    "LSMultipleInstancesProhibited": null,
+    "LSEnvironment": {
+      "MallocNanoZone": "0"
+    }
+  },
+  "currentOS": "15.7.3",
+  "currentShellEnvironmentPresenceOnly": {
+    "ELECTRON_RUN_AS_NODE": false,
+    "ELECTRON_OVERRIDE_DIST_PATH": false,
+    "NODE_OPTIONS": false,
+    "DEBUG": false,
+    "CI": false,
+    "FUSION_APP_USER_DATA": false,
+    "FUSION_LOCAL_MACHINE": false,
+    "PLAYWRIGHT_LEGACY_SCREENSHOT": false
+  }
+}

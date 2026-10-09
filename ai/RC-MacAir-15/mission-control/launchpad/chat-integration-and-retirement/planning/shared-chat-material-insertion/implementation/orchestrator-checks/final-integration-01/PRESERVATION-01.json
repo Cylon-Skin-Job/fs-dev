@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-07T23:37:22.049150+00:00",
+  "product_count": 65,
+  "current_source_matches": true,
+  "checkpoint_sha256": "67dd4dc6fbba88712a0b61f95e79d6656f2fd5e34d65425d5f7f7e689f90a897",
+  "checkpoint_unchanged": true,
+  "primary_tracked_product_diff_unchanged": true,
+  "execution_dependency_links": {
+    "fusion-studio-client/node_modules": {
+      "is_symlink": true,
+      "target": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules"
+    },
+    "fusion-studio-server/node_modules": {
+      "is_symlink": true,
+      "target": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules",
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules"
+    }
+  },
+  "publication": "No commit-producing commands/push/merge/Alpha operations",
+  "state": "Read-only final review active; dependencylink retained until terminal clean gate"
+}

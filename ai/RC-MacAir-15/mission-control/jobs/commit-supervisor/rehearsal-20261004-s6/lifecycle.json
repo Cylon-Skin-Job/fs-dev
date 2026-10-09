@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-04T13:40:03.091709+00:00",
+  "actor": "/root/s6_supervisor_provider_1",
+  "parent": "/root",
+  "role": "mc-commit-supervisor supported default fallback",
+  "root_settings_inherited": true,
+  "overrides": false,
+  "children": [],
+  "state": "waiting-dependency",
+  "terminal_return": "waiting-dependency",
+  "turn_disposition": "Intentional saved terminal return delivered via final; end immediately without polling or successor dispatch.",
+  "host_completed_observation": "Parent must independently observe after final; not falsely claimed before delivery.",
+  "close_agent": "unavailable; no unsupported API invented",
+  "next_safe_action": "End intentionally in waiting-dependency. Do not poll, auto-resume, dispatch, schedule or release own hold. Root may assign replacement only after actual terminal and observable labeled release."
+}

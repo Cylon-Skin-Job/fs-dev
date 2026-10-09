@@ -1,0 +1,39 @@
+fusion-studio-client/src/components/tickets/TicketBoard.tsx:16:import { FloatingPathActions } from '../FloatingPathActions';
+fusion-studio-client/src/components/tickets/TicketBoard.tsx:331:      <FloatingPathActions
+fusion-studio-client/src/components/SendToChatButton.tsx:2: * @module SendToChatButton
+fusion-studio-client/src/components/SendToChatButton.tsx:15:interface SendToChatButtonProps {
+fusion-studio-client/src/components/SendToChatButton.tsx:22:export function SendToChatButton({
+fusion-studio-client/src/components/SendToChatButton.tsx:27:}: SendToChatButtonProps) {
+fusion-studio-client/src/components/capture/FilePageView.tsx:13:import { FloatingPathActions } from '../FloatingPathActions';
+fusion-studio-client/src/components/capture/FilePageView.tsx:218:      <FloatingPathActions
+fusion-studio-client/src/components/office/OfficeDocumentTopbar.tsx:8:import { FloatingPathActions } from '../FloatingPathActions';
+fusion-studio-client/src/components/office/OfficeDocumentTopbar.tsx:76:      <FloatingPathActions panel={PANEL} relativePath={file.path} ariaLabel="Office document actions" />
+fusion-studio-client/src/components/email/EmailGrid.tsx:31:import { FloatingPathActions } from '../FloatingPathActions';
+fusion-studio-client/src/components/email/EmailGrid.tsx:1111:    <FloatingPathActions
+fusion-studio-client/src/components/FloatingPathActions.tsx:2:import { SendToChatButton } from './SendToChatButton';
+fusion-studio-client/src/components/FloatingPathActions.tsx:3:import './FloatingPathActions.css';
+fusion-studio-client/src/components/FloatingPathActions.tsx:5:interface FloatingPathActionsProps {
+fusion-studio-client/src/components/FloatingPathActions.tsx:14:export function FloatingPathActions({
+fusion-studio-client/src/components/FloatingPathActions.tsx:21:}: FloatingPathActionsProps) {
+fusion-studio-client/src/components/FloatingPathActions.tsx:34:      <SendToChatButton
+fusion-studio-client/src/components/wiki/EdgePanel.tsx:14:import { FloatingPathActions } from '../FloatingPathActions';
+fusion-studio-client/src/components/wiki/EdgePanel.tsx:96:        <FloatingPathActions
+fusion-studio-client/src/components/office/OfficeGrid.tsx:27:import { FloatingPathActions } from '../FloatingPathActions';
+fusion-studio-client/src/components/office/OfficeGrid.tsx:654:      <FloatingPathActions
+fusion-studio-client/src/components/wiki/PageViewer.tsx:13:import { FloatingPathActions } from '../FloatingPathActions';
+fusion-studio-client/src/components/wiki/PageViewer.tsx:138:        <FloatingPathActions
+fusion-studio-client/src/components/wiki/TopicList.tsx:10:import { SendToChatButton } from '../SendToChatButton';
+fusion-studio-client/src/components/wiki/TopicList.tsx:42:                <SendToChatButton
+fusion-studio-client/src/components/wiki/TopicList.tsx:85:                      <SendToChatButton
+fusion-studio-client/src/components/email/EmailDocumentTopbar.tsx:8:import { FloatingPathActions } from '../FloatingPathActions';
+fusion-studio-client/src/components/email/EmailDocumentTopbar.tsx:149:      <FloatingPathActions panel={PANEL} relativePath={file.path} ariaLabel="Email document actions" />
+fusion-studio-client/src/components/agents/AgentTiles.tsx:16:import { FloatingPathActions } from '../FloatingPathActions';
+fusion-studio-client/src/components/agents/AgentTiles.tsx:218:      <FloatingPathActions
+fusion-studio-client/src/components/file-explorer/FileViewer.tsx:4:import { FloatingPathActions } from '../FloatingPathActions';
+fusion-studio-client/src/components/file-explorer/FileViewer.tsx:95:        <FloatingPathActions
+fusion-studio-client/src/components/file-explorer/FileDocumentPresenter.tsx:18:import { FloatingPathActions } from '../FloatingPathActions';
+fusion-studio-client/src/components/file-explorer/FileDocumentPresenter.tsx:75:        <FloatingPathActions
+fusion-studio-client/src/components/file-explorer/FolderNode.tsx:9:import { SendToChatButton } from '../SendToChatButton';
+fusion-studio-client/src/components/file-explorer/FolderNode.tsx:85:          <SendToChatButton
+fusion-studio-client/src/components/file-explorer/FileNode.tsx:6:import { SendToChatButton } from '../SendToChatButton';
+fusion-studio-client/src/components/file-explorer/FileNode.tsx:48:        <SendToChatButton

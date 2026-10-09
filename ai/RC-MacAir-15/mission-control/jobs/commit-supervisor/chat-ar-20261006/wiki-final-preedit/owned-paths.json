@@ -1,0 +1,71 @@
+{
+  "owner": "/root (Wiki manager, leaf editor assigned after code handoff)",
+  "conflicting_writers": [],
+  "source_repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "paths": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md",
+      "job_created": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+      "job_created": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md",
+      "job_created": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md",
+      "job_created": false
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-10-06-145212.md",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/.versions/2026-10-06-145212.md",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/.versions/2026-10-06-145212.md",
+      "job_created": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-10-06-145212.md",
+      "job_created": true
+    }
+  ],
+  "shared_repos": [
+    "/Users/rccurtrightjr./projects/fs-dev"
+  ],
+  "source_refs": [
+    {
+      "repo": "/Users/rccurtrightjr./projects/fs-dev",
+      "ref": "refs/heads/agent/exact-workspace-paths"
+    },
+    {
+      "repo": "/Users/rccurtrightjr./projects/fs-dev",
+      "ref": "refs/remotes/origin/main"
+    },
+    {
+      "repo": "/Users/rccurtrightjr./projects/fs-dev",
+      "ref": "refs/heads/main"
+    }
+  ],
+  "target_ref": "HEAD",
+  "authority_paths": [
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/assignment.md",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/COMPLETED-WORK-OWNER-ACCEPTANCE.md",
+    "/Users/rccurtrightjr./projects/fs-dev/AGENTS.md",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md"
+  ],
+  "preparation": "Exact4article/header/generated-block preimages and4declared absent adjacent versions, code worker edits settled/read-only verification, no overlapping Wiki writer.",
+  "runtime": {
+    "boundary": "disposable profile and sole disposable workspace outside both checkouts",
+    "deps": "APFS private file copies of existing client/server node_modules; no borrowed Electron executable",
+    "normal_and_alpha": "read-only protection identity; no DB copy/restore",
+    "recovery_limits": "snapshot recovers candidate files/index only, not profile/database/runtime effects"
+  },
+  "ignored_runtime_paths": []
+}

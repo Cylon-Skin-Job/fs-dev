@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-09-26T11:58:48.783253+00:00",
+  "ownedRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790423682032-5dffb37aad-LxWgW6",
+  "rootExists": false,
+  "exactRecordedPids": [
+    {
+      "pid": 97732,
+      "present": false
+    },
+    {
+      "pid": 97744,
+      "present": false
+    },
+    {
+      "pid": 97756,
+      "present": false
+    },
+    {
+      "pid": 98497,
+      "present": false
+    }
+  ]
+}

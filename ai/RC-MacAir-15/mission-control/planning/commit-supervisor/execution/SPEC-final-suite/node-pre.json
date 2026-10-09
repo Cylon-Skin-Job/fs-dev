@@ -1,0 +1,90 @@
+{
+  "at": "2026-10-05T03:21:37.069598+00:00",
+  "dependencies": {
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "9b4bb189ebff26ceaf9b899abafa75400ebbd5e9157f0a45468640d87459ad85"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100755",
+      "sha256": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e"
+    },
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/restart-fusion.sh": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100755",
+      "sha256": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952"
+    },
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart.mjs": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4"
+    },
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart-target.mjs": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d"
+    },
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart-processes.mjs": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181"
+    },
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart-probe.mjs": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e"
+    },
+    "/opt/homebrew/bin/node": {
+      "exists": true,
+      "kind": "symlink",
+      "mode": "0o120755",
+      "sha256": "344397e6aa48976f46b3748aef30b8536f2fc05ba5888826b69923c84ca6d4c3"
+    },
+    "/opt/homebrew/Cellar/node/25.6.1/bin/node": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100555",
+      "sha256": "8b6a6d43e16ddc3cddaf1217fb75dbe7151e342e36317491bf3ef4a1ec5d4202"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite-runner.py": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "8a15996c3d1e4093f5b1db61df94087385520cb1948784edba8f97fd46d5a079"
+    }
+  },
+  "version": "v25.6.1"
+}

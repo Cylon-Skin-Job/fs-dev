@@ -1,0 +1,41 @@
+{
+  "at": "2026-09-27T03:46:33.642043+00:00",
+  "runId": "chat-arch-1790480161136-42069438e6",
+  "exitCode": 0,
+  "rootAbsent": true,
+  "ownedPidsAlive": {
+    "2430": false,
+    "2442": false,
+    "3153": false
+  },
+  "persistent55084Alive": true,
+  "sourceCount": 1957,
+  "buildCount": 200,
+  "mismatches": [],
+  "runCleanup": {
+    "ownedRunRootRemoved": true,
+    "results": [
+      {
+        "id": "R9-NATIVE-COMPOSITION-CONTROL",
+        "code": 0,
+        "signal": null,
+        "pid": 2442,
+        "timedOut": false,
+        "interrupted": false,
+        "leakedOwnedPids": [],
+        "elapsedMs": 608302
+      }
+    ],
+    "failure": null
+  },
+  "nativeCleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "observationStatus": "diagnostic-complete",
+  "observerRemoved": true,
+  "events": 443,
+  "overflow": 0,
+  "truncated": 0
+}

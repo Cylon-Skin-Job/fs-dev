@@ -1,0 +1,643 @@
+{
+  "at": "2026-10-04T20:20:37.020729+00:00",
+  "actor": "/root/s6_supervisor_interruption_1",
+  "actual_native_current_actor": "running at latest bounded collaboration.list_agents; no descendants",
+  "changed_paths": [
+    "rehearsal-inputs/checkpoint.bin",
+    "rehearsal-inputs/future-addition.txt"
+  ],
+  "owned_other128_exact": true,
+  "unrelated4225_exact": true,
+  "whole_candidate_paths": 4355,
+  "source_unowned11977_exact": true,
+  "source_cache193_exact": true,
+  "original_job_files1224_exact": true,
+  "source_refs_config_head_branch_physical_index_exact": true,
+  "candidate_head_branch_config_refs_reflogs_exact": true,
+  "candidate_index_stage_deltas_only_binary": true,
+  "protected_four_root_identity_fields": [
+    "pid",
+    "ppid",
+    "uid",
+    "start",
+    "command",
+    "cwd",
+    "executables",
+    "env"
+  ],
+  "protected_four_root_and_all13_tree_identities_exact": true,
+  "stopped_six_original_identities_absent": [
+    31000,
+    31005,
+    31006,
+    31008,
+    31036,
+    31138
+  ],
+  "owned_checkout_profile_tree_absent": true,
+  "private_server_and_probe_listener_absent": true,
+  "profile11_storage_identity_exact": true,
+  "protected_profile_observed_deltas": {
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server-data/fusion.db": {
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 194683133,
+        "size": 38903808,
+        "mtime_ns": 1791144842140673455,
+        "sha256": "6f836c01b15b5136f53662f07716dbc73215d2d7823c64ee81218af694337342"
+      },
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 194683133,
+        "size": 40980480,
+        "mtime_ns": 1791145112996245334,
+        "sha256": "19c5b60a6ab94bc1c808600fa8233782b4edb8d3188c53a0d2020ee5d1007f16"
+      }
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/data/fusion.db": {
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 39348215,
+        "size": 387395584,
+        "mtime_ns": 1791144842129214934,
+        "sha256": "e1278b540bada2410beaefcc0dfbce2203f011809a7f6cc2f3af737616e89ad8"
+      },
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 39348215,
+        "size": 389480448,
+        "mtime_ns": 1791145112771277754,
+        "sha256": "12d12941a7ac03ffb52a0aa2dbf2a84f26b3bdf0ebea78ed431298ba9681adfe"
+      }
+    }
+  },
+  "private_profile_shutdown_observed_deltas": {
+    "DIPS": {
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 258882313,
+        "size": 36864,
+        "mtime_ns": 1791141912989415626,
+        "sha256": "b66c6376f8a9a8c668b2804223a57cfff3829a12ab8e02343d954b93cbbd5438"
+      },
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 258882313,
+        "size": 36864,
+        "mtime_ns": 1791144923671593698,
+        "sha256": "d1fd000c7b724de6dee3719990eda4d2994ee2ab4bd811757ab02b835230d230"
+      }
+    },
+    "DawnGraphiteCache/data_1": {
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 258882331,
+        "size": 270336,
+        "mtime_ns": 1791144826249473161,
+        "sha256": "56fe2a5e2de22e2fc536a379012905f8603bfd055390c33530bb408fa5228e02"
+      },
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 258882331,
+        "size": 270336,
+        "mtime_ns": 1791144923635881632,
+        "sha256": "40440bff21039cd23453fa14a9a2162618c062d7d1833f7d6b0620f7e9f3e609"
+      }
+    },
+    "DawnGraphiteCache/index": {
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 258882329,
+        "size": 262512,
+        "mtime_ns": 1791143419480469274,
+        "sha256": "a9cf2cdca336e9e4e93086d58398aff793a87d04fe49c4282d1ffea8f4187426"
+      },
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 258882329,
+        "size": 262512,
+        "mtime_ns": 1791143419480469274,
+        "sha256": "6067168497145feecfce5a0df3be581d72cce7808648c8b9143e34bd0ebaff6f"
+      }
+    },
+    "DawnWebGPUCache/data_1": {
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 258882325,
+        "size": 270336,
+        "mtime_ns": 1791144826249312744,
+        "sha256": "4247c670b86e54910724a50ff7a0032e3828b800255ff74c64c7321fe6c88b7e"
+      },
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 258882325,
+        "size": 270336,
+        "mtime_ns": 1791144923635799090,
+        "sha256": "6dbc91242b69e081b81f2ae9db71dc8a366f60380e7a5f75133160125d09bb54"
+      }
+    },
+    "DawnWebGPUCache/index": {
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 258882323,
+        "size": 262512,
+        "mtime_ns": 1791143419475179234,
+        "sha256": "e13fc8df592aa3698422b57874c3c30d7fcd6fac85cc4d49ca6c4d0e4db88bf3"
+      },
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 258882323,
+        "size": 262512,
+        "mtime_ns": 1791143419475179234,
+        "sha256": "32ea5ae6ebe43165d7f287790e785d31c944b6d1dbee835ed67d4ed896290a2d"
+      }
+    },
+    "GPUCache/data_1": {
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 259002617,
+        "size": 270336,
+        "mtime_ns": 1791144616202015819,
+        "sha256": "7dc1b53d9ec026e64b1553bf84944eb2c90662062c2e71e3c580e0fb0caf9793"
+      },
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 259002617,
+        "size": 270336,
+        "mtime_ns": 1791144923635502381,
+        "sha256": "249852497c588add3c833131f1e017332330b302be1d80ad29e51f95aaf69422"
+      }
+    },
+    "GPUCache/index": {
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 259002615,
+        "size": 262512,
+        "mtime_ns": 1791141915572360521,
+        "sha256": "1e5b5a1da52ef40194e32ff6de9982fb3f33c20343ea2c69dabbfa5374b7fd53"
+      },
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 259002615,
+        "size": 262512,
+        "mtime_ns": 1791141915572360521,
+        "sha256": "69cd4b73b4a1be27298d1e51c765db54dc21b97040f8e259fda3ea2a570fce69"
+      }
+    },
+    "Session Storage/000003.log": {
+      "before": null,
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 259017928,
+        "size": 49,
+        "mtime_ns": 1791144923621975231,
+        "sha256": "ffd700cf04be6fe8d51e2ffb8a2e37bc3fa95a6679a4102fa35e8494c2350eae"
+      }
+    },
+    "Session Storage/CURRENT": {
+      "before": null,
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 259017927,
+        "size": 16,
+        "mtime_ns": 1791144923615665928,
+        "sha256": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443"
+      }
+    },
+    "Session Storage/LOCK": {
+      "before": null,
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 259017925,
+        "size": 0,
+        "mtime_ns": 1791144923610604336,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "Session Storage/LOG": {
+      "before": null,
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 259017924,
+        "size": 271,
+        "mtime_ns": 1791144923618660309,
+        "sha256": "f6caad6807fc947b6f1c2b1f241c9384238d634a62da4b223cdd387e5e85b151"
+      }
+    },
+    "Session Storage/MANIFEST-000001": {
+      "before": null,
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33152,
+        "dev": 16777230,
+        "ino": 259017926,
+        "size": 41,
+        "mtime_ns": 1791144923612483506,
+        "sha256": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4"
+      }
+    },
+    "fusion-restart/run-DlzcE3/launch.log": {
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 259002487,
+        "size": 21985,
+        "mtime_ns": 1791144021907521781,
+        "sha256": "a947dec1125d0c47de1697d72991dbfe44200087520f18a244fa278b2d44e3f7"
+      },
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 259002487,
+        "size": 22282,
+        "mtime_ns": 1791144923518940584,
+        "sha256": "6f1798b31d9bba302bdffde1fa27e295a87a16bd88c879f490d554b629ced5df"
+      }
+    },
+    "fusion-restart/run-DlzcE3/tmp/electron-renderer.log": {
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 259002488,
+        "size": 13144,
+        "mtime_ns": 1791142012368917583,
+        "sha256": "ca2d549cc6e2a71bc6a8c10aefe48522a7326209fa5a035f27802e255f666e69"
+      },
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 259002488,
+        "size": 13179,
+        "mtime_ns": 1791144923518881125,
+        "sha256": "0943bd527e42c9c0d5fca766938faed32c294e3446c0aa98a3d4db1cbddf0adf"
+      }
+    },
+    "fusion-restart/run-DlzcE3/tmp/fusion-electron.log": {
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 259002588,
+        "size": 876,
+        "mtime_ns": 1791141974000591976,
+        "sha256": "25f21b90e34c48b180bf05499c97b56139e5024958725cf7f354f161e59cd7bb"
+      },
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 259002588,
+        "size": 946,
+        "mtime_ns": 1791144923387071674,
+        "sha256": "247aa58eefb59708f326ab50d20da69202d285d8609756ef9025a03408058666"
+      }
+    },
+    "server-live.log": {
+      "before": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 258882193,
+        "size": 164220,
+        "mtime_ns": 1791144021894332160,
+        "sha256": "24628fcfbbacd361a07215c95a4f4fa03bfa6a23c146a9929b7503d4df566f9c"
+      },
+      "after": {
+        "exists": true,
+        "kind": "file",
+        "mode": 33188,
+        "dev": 16777230,
+        "ino": 258882193,
+        "size": 164825,
+        "mtime_ns": 1791144923372050980,
+        "sha256": "c815b7f4b187f6843d6fa6b60fd6f43c3c008d101e9cdd05a5df484b358bdb2d"
+      }
+    }
+  },
+  "code_wiki_allversion_watch_fixture_leaves_unchanged": true,
+  "immutable_original_five_archives_payloads_manifest_modes_valid": [
+    {
+      "job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6",
+      "manifest_sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb",
+      "owner": "/root/s6_supervisor_provider_1",
+      "owned": 128,
+      "payload_count": 117,
+      "public_verify": {
+        "result": "VERIFIED",
+        "payloads_valid": true,
+        "matches_checkpoint": false,
+        "status_equal": false,
+        "current_sha256": "6dbdf53b8ac8c64554ec194365b18410bea163af27d97024af5b5d43a42e4a8c",
+        "manifest_sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb"
+      },
+      "receipt": {
+        "command": [
+          "python3.12",
+          "-B",
+          "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+          "verify",
+          "--job",
+          "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6"
+        ],
+        "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+        "actor": "/root/s6_supervisor_interruption_1",
+        "started": "2026-10-04T20:18:34.072634+00:00",
+        "finished": "2026-10-04T20:18:34.858890+00:00",
+        "exit_code": 0,
+        "environment_overrides": {
+          "GIT_OPTIONAL_LOCKS": "0",
+          "GIT_LITERAL_PATHSPECS": "1",
+          "PYTHONDONTWRITEBYTECODE": "1"
+        },
+        "inherited_git_variables_removed": "ALL GIT_* repository/index/object/alternate variables",
+        "stdout_raw": {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-0.stdout",
+          "sha256": "0f6b8474f2acf3fb88aceae64bbf2d53c7f1ef1c4f1a16e32688208e41b4b852",
+          "size": 272
+        },
+        "stderr_raw": {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-0.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "stdout": "{\"result\": \"VERIFIED\", \"payloads_valid\": true, \"matches_checkpoint\": false, \"status_equal\": false, \"current_sha256\": \"6dbdf53b8ac8c64554ec194365b18410bea163af27d97024af5b5d43a42e4a8c\", \"manifest_sha256\": \"f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb\"}\n",
+        "stderr": ""
+      }
+    },
+    {
+      "job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/first-wiki-1",
+      "manifest_sha256": "36c99f10ccdc4eed268e2859d2f737eac282181784ea0385572e64d3221c7e75",
+      "owner": "/root/s6_supervisor_candidate_1",
+      "owned": 129,
+      "payload_count": 117,
+      "public_verify": {
+        "result": "VERIFIED",
+        "payloads_valid": true,
+        "matches_checkpoint": false,
+        "status_equal": false,
+        "current_sha256": "6dbdf53b8ac8c64554ec194365b18410bea163af27d97024af5b5d43a42e4a8c",
+        "manifest_sha256": "36c99f10ccdc4eed268e2859d2f737eac282181784ea0385572e64d3221c7e75"
+      },
+      "receipt": {
+        "command": [
+          "python3.12",
+          "-B",
+          "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+          "verify",
+          "--job",
+          "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/first-wiki-1"
+        ],
+        "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+        "actor": "/root/s6_supervisor_interruption_1",
+        "started": "2026-10-04T20:18:34.869407+00:00",
+        "finished": "2026-10-04T20:18:35.337982+00:00",
+        "exit_code": 0,
+        "environment_overrides": {
+          "GIT_OPTIONAL_LOCKS": "0",
+          "GIT_LITERAL_PATHSPECS": "1",
+          "PYTHONDONTWRITEBYTECODE": "1"
+        },
+        "inherited_git_variables_removed": "ALL GIT_* repository/index/object/alternate variables",
+        "stdout_raw": {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-1.stdout",
+          "sha256": "288f8a5a0788f9cc0c0eb416632b0e80bc91e9879c62bd272b0b7ae2ad9f7c6d",
+          "size": 272
+        },
+        "stderr_raw": {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-1.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "stdout": "{\"result\": \"VERIFIED\", \"payloads_valid\": true, \"matches_checkpoint\": false, \"status_equal\": false, \"current_sha256\": \"6dbdf53b8ac8c64554ec194365b18410bea163af27d97024af5b5d43a42e4a8c\", \"manifest_sha256\": \"36c99f10ccdc4eed268e2859d2f737eac282181784ea0385572e64d3221c7e75\"}\n",
+        "stderr": ""
+      }
+    },
+    {
+      "job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/first",
+      "manifest_sha256": "5bf3fb69c13aacfd60afcb384de2c9975fc917ad3f1f7a49b9176073b7b34d96",
+      "owner": "/root/s6_supervisor_candidate_1",
+      "owned": 129,
+      "payload_count": 118,
+      "public_verify": {
+        "result": "VERIFIED",
+        "payloads_valid": true,
+        "matches_checkpoint": false,
+        "status_equal": false,
+        "current_sha256": "6dbdf53b8ac8c64554ec194365b18410bea163af27d97024af5b5d43a42e4a8c",
+        "manifest_sha256": "5bf3fb69c13aacfd60afcb384de2c9975fc917ad3f1f7a49b9176073b7b34d96"
+      },
+      "receipt": {
+        "command": [
+          "python3.12",
+          "-B",
+          "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+          "verify",
+          "--job",
+          "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/first"
+        ],
+        "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+        "actor": "/root/s6_supervisor_interruption_1",
+        "started": "2026-10-04T20:18:35.348254+00:00",
+        "finished": "2026-10-04T20:18:35.809595+00:00",
+        "exit_code": 0,
+        "environment_overrides": {
+          "GIT_OPTIONAL_LOCKS": "0",
+          "GIT_LITERAL_PATHSPECS": "1",
+          "PYTHONDONTWRITEBYTECODE": "1"
+        },
+        "inherited_git_variables_removed": "ALL GIT_* repository/index/object/alternate variables",
+        "stdout_raw": {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-2.stdout",
+          "sha256": "074809ef6417f357520f840c8e9689bc0c382dbf72f0d7b6e50a9afde01a8da6",
+          "size": 272
+        },
+        "stderr_raw": {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-2.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "stdout": "{\"result\": \"VERIFIED\", \"payloads_valid\": true, \"matches_checkpoint\": false, \"status_equal\": false, \"current_sha256\": \"6dbdf53b8ac8c64554ec194365b18410bea163af27d97024af5b5d43a42e4a8c\", \"manifest_sha256\": \"5bf3fb69c13aacfd60afcb384de2c9975fc917ad3f1f7a49b9176073b7b34d96\"}\n",
+        "stderr": ""
+      }
+    },
+    {
+      "job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/fix-xy-wiki-1",
+      "manifest_sha256": "5227a7a7d38dddec138aff13c16f2ee8a22bda1a53657f203a47d80857827617",
+      "owner": "/root/s6_supervisor_fix_xy_1",
+      "owned": 130,
+      "payload_count": 118,
+      "public_verify": {
+        "result": "VERIFIED",
+        "payloads_valid": true,
+        "matches_checkpoint": false,
+        "status_equal": false,
+        "current_sha256": "6dbdf53b8ac8c64554ec194365b18410bea163af27d97024af5b5d43a42e4a8c",
+        "manifest_sha256": "5227a7a7d38dddec138aff13c16f2ee8a22bda1a53657f203a47d80857827617"
+      },
+      "receipt": {
+        "command": [
+          "python3.12",
+          "-B",
+          "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+          "verify",
+          "--job",
+          "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/fix-xy-wiki-1"
+        ],
+        "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+        "actor": "/root/s6_supervisor_interruption_1",
+        "started": "2026-10-04T20:18:35.819665+00:00",
+        "finished": "2026-10-04T20:18:36.296909+00:00",
+        "exit_code": 0,
+        "environment_overrides": {
+          "GIT_OPTIONAL_LOCKS": "0",
+          "GIT_LITERAL_PATHSPECS": "1",
+          "PYTHONDONTWRITEBYTECODE": "1"
+        },
+        "inherited_git_variables_removed": "ALL GIT_* repository/index/object/alternate variables",
+        "stdout_raw": {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-3.stdout",
+          "sha256": "ebf5e824b9cc47ab64e8a5b764b187d99f2f2b0a1905ba428bb6c7fbcf5818d0",
+          "size": 272
+        },
+        "stderr_raw": {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-3.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "stdout": "{\"result\": \"VERIFIED\", \"payloads_valid\": true, \"matches_checkpoint\": false, \"status_equal\": false, \"current_sha256\": \"6dbdf53b8ac8c64554ec194365b18410bea163af27d97024af5b5d43a42e4a8c\", \"manifest_sha256\": \"5227a7a7d38dddec138aff13c16f2ee8a22bda1a53657f203a47d80857827617\"}\n",
+        "stderr": ""
+      }
+    },
+    {
+      "job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/fix-xy",
+      "manifest_sha256": "fd15619a9ebd65f9600e6867054ddd15dbaef589a607d2177c9f3528e33f5e9e",
+      "owner": "/root/s6_supervisor_fix_xy_1",
+      "owned": 130,
+      "payload_count": 119,
+      "public_verify": {
+        "result": "VERIFIED",
+        "payloads_valid": true,
+        "matches_checkpoint": false,
+        "status_equal": false,
+        "current_sha256": "6dbdf53b8ac8c64554ec194365b18410bea163af27d97024af5b5d43a42e4a8c",
+        "manifest_sha256": "fd15619a9ebd65f9600e6867054ddd15dbaef589a607d2177c9f3528e33f5e9e"
+      },
+      "receipt": {
+        "command": [
+          "python3.12",
+          "-B",
+          "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+          "verify",
+          "--job",
+          "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/fix-xy"
+        ],
+        "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+        "actor": "/root/s6_supervisor_interruption_1",
+        "started": "2026-10-04T20:18:36.307294+00:00",
+        "finished": "2026-10-04T20:18:36.767855+00:00",
+        "exit_code": 0,
+        "environment_overrides": {
+          "GIT_OPTIONAL_LOCKS": "0",
+          "GIT_LITERAL_PATHSPECS": "1",
+          "PYTHONDONTWRITEBYTECODE": "1"
+        },
+        "inherited_git_variables_removed": "ALL GIT_* repository/index/object/alternate variables",
+        "stdout_raw": {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-4.stdout",
+          "sha256": "cfe6c45ad9d19956446549ef3513629298f13988c8f381672db15d47d1d372ba",
+          "size": 272
+        },
+        "stderr_raw": {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/after-interruption-verify-4.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "stdout": "{\"result\": \"VERIFIED\", \"payloads_valid\": true, \"matches_checkpoint\": false, \"status_equal\": false, \"current_sha256\": \"6dbdf53b8ac8c64554ec194365b18410bea163af27d97024af5b5d43a42e4a8c\", \"manifest_sha256\": \"fd15619a9ebd65f9600e6867054ddd15dbaef589a607d2177c9f3528e33f5e9e\"}\n",
+        "stderr": ""
+      }
+    }
+  ],
+  "new_full_fixed_manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/fixed-checkpoint/recovery/manifest.json",
+  "new_full_fixed_sha256": "a885cde0f24e25d9cea6437edad6b9258f365d3a2db08bcb426d690195e4291a",
+  "active_guard_sha256": "1055f07580fde5b8be0fdb7754d5d584c6167442225eb79acb9e62c16be59a7e",
+  "current_guard_relevant_state_sha256": "6dbdf53b8ac8c64554ec194365b18410bea163af27d97024af5b5d43a42e4a8c",
+  "limits": "Live protected database/hash/size/mtime may vary naturally; preservation is exact identity plus zero unauthorized effects, no byte-equality assertion for volatile live storage. No DB/profile contents copied. N/E are exact intentional source-record exclusions; original J files are separately exact."
+}

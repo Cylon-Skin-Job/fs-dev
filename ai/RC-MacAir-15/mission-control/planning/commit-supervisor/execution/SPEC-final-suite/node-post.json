@@ -1,0 +1,182 @@
+{
+  "at": "2026-10-05T03:23:27.116818+00:00",
+  "dependencies": {
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "9b4bb189ebff26ceaf9b899abafa75400ebbd5e9157f0a45468640d87459ad85"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100755",
+      "sha256": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e"
+    },
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/restart-fusion.sh": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100755",
+      "sha256": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952"
+    },
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart.mjs": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4"
+    },
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart-target.mjs": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d"
+    },
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart-processes.mjs": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181"
+    },
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart-probe.mjs": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e"
+    },
+    "/opt/homebrew/bin/node": {
+      "exists": true,
+      "kind": "symlink",
+      "mode": "0o120755",
+      "sha256": "344397e6aa48976f46b3748aef30b8536f2fc05ba5888826b69923c84ca6d4c3"
+    },
+    "/opt/homebrew/Cellar/node/25.6.1/bin/node": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100555",
+      "sha256": "8b6a6d43e16ddc3cddaf1217fb75dbe7151e342e36317491bf3ef4a1ec5d4202"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite-runner.py": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "8a15996c3d1e4093f5b1db61df94087385520cb1948784edba8f97fd46d5a079"
+    }
+  },
+  "all_equal": true,
+  "pass": 17,
+  "fail": 0,
+  "skipped": 0,
+  "cancelled": 0,
+  "command": {
+    "exists": true,
+    "kind": "file",
+    "mode": "0o100444",
+    "sha256": "0dffb5fd37fe64a4303058700ac2965ad610843b3e3586eaee127db9cc45d980"
+  },
+  "pre": {
+    "exists": true,
+    "kind": "file",
+    "mode": "0o100444",
+    "sha256": "67a7e5fc44a997904e97822df9d026bec11b359c3fe4117814ec185f31f3ca3c"
+  },
+  "fixture_receipts": {
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite/node-fixtures/CLI_rejects_unsafe_Alpha_ambiguous_arguments_without_profile_changes.json": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "4cc39581f6150e74b24e6ae62710306224d7a050cfc1f58c9bdde1b0469f29ec"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite/node-fixtures/actual_disposable_Node_tree_ownership_termination_preserves_another_live_profile.json": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "03e61681f7dbfa561b0afaef89a342200cf3cc775ea52736c9ed338b09283dd9"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite/node-fixtures/actual_disposable_exit_races_at_lsof_env_and_after_SIGTERM_complete_cleanup_and_preserve_another_profile.json": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "2b73055550823360f8fb580635a84dbc8ad0d2dd78e50b00b8225e76d1de4846"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite/node-fixtures/borrowed_Electron_runtime_and_linked_runtime_storage_refuse_without_effects.json": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "bb7ff780d94e471f41f114584ed6f0396813e8fe5d44c5c3f7bc856efb883903"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite/node-fixtures/canonical_CLI_preserves_default_DB_explicit_and_inherited_profiles_select_server-data.json": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "eb18d7f09e6cdeab9ce405cdc2ebe34be595bd0837c974aa4f6ca87fe8daefda"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite/node-fixtures/exact_renderer_profile_avoids_Alpha_prefix_collision_and_CLI_profile_overrides_absent_environment.json": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "2e841d0de1c1dcba53603323070e2d52d718ea32329490504d7a52c43e42ca0e"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite/node-fixtures/foreign_checkout_shared_profile_wrong_machine_orphan_renderer_mode_collision_refuse_before_effects.json": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "984c46c09b27aa1e9d14a29e478397399e2e5f3d2e970bb8d7ddbd8acf131618"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite/node-fixtures/injected_post-launch_failures_withhold_readiness_preserve_DBs_unrelated_caches_release_lock.json": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "a966cdec232d59bd6bc4b7be0633120e1438663d6c26a647a77566315c355762"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite/node-fixtures/launch_environment_preserves_default_DB_mode_and_resolves_selected_profile_machine_TMPDIR.json": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "ae32d4ad98772e1b1f90fe0ec8cffa935f86a6dcb1524b9d97e4b35f2ccb91af"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite/node-fixtures/linked_profile_database_storage_refuses_before_build_profile_cache_mutation.json": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "05aa63d3c52e290555ba7249c8006a727a5e36969e493a59901ff95106beb0f1"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite/node-fixtures/runtime_identity_rejects_wrong-path_profile_server_renderer_instead_of_certifying_a_port.json": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "8fb236f14287061becb42daf6c93be6057a07cb0f8dc5f64777d8c34ef9cdb87"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite/node-fixtures/selected-only_tree_includes_children_and_preserves_same-checkout_other_profile_and_Alpha.json": {
+      "exists": true,
+      "kind": "file",
+      "mode": "0o100644",
+      "sha256": "878614a8bd81bfa91b575dcc3d2a5487160d9218da635e7e2f07ac9687272d64"
+    }
+  },
+  "format": "Actual Node default spec reporter; all17 named passes and summary independently checked",
+  "post_interval_limit": "Original runner immediately compared post/pre equal before its TAP-only summary assertion. This saved current comparison is later; unchanged selected source/executables/runner confirm the same dependency state. No historical raw immediate post object reconstructed."
+}

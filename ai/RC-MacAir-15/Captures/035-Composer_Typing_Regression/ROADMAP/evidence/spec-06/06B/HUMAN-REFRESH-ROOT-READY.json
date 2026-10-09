@@ -1,0 +1,79 @@
+{
+  "at": "2026-09-27T07:41:17.925947+00:00",
+  "status": "ready",
+  "runId": "human-1790494814495-ca038557",
+  "pid": 68197,
+  "driverPid": 68194,
+  "title": "HUMAN TEST \u2014 human-1790494814495-ca038557",
+  "port": 64841,
+  "requested": {
+    "harness": "opencode",
+    "model": "togetherai/deepseek-ai/DeepSeek-V4.1-Flash",
+    "variant": "high",
+    "thinking": true
+  },
+  "observedProvider": {
+    "pid": 68257,
+    "model": "togetherai/deepseek-ai/DeepSeek-V4.1-Flash",
+    "variant": "high",
+    "thinking": true,
+    "observedAt": 1790494819736
+  },
+  "smoke": {
+    "receipt": {
+      "request_id": "1e08f6163a9bc89a97f36f5592ab0352",
+      "turn_id": "b262a658-2a5e-449b-9a77-553ea9ab6ad2",
+      "outcome": "accepted"
+    },
+    "exchangeId": 1,
+    "reply": "HUMAN_SESSION_READY"
+  },
+  "eventBytes": 179177,
+  "lastDriverHeartbeat": {
+    "at": 1790494877581,
+    "kind": "driver-heartbeat",
+    "gapMs": 1001,
+    "lastRendererBatchAt": 1790494877362
+  },
+  "lastRendererBatchAt": 1790494877360,
+  "resourceSamples": 5,
+  "lastNativeWindows": [
+    {
+      "windowId": 1,
+      "focused": false,
+      "visible": true,
+      "minimized": false
+    }
+  ],
+  "lastResourceAt": 1790494870672,
+  "socketClosesAfterReady": [],
+  "liveness": {
+    "driver": {
+      "alive": true,
+      "expectedIdentity": true
+    },
+    "electron": {
+      "alive": true,
+      "expectedIdentity": true
+    }
+  },
+  "stagedPolicy": {
+    "sha256": "a60e49cefa91b3d72a5a0cdc1df659f001b0e74038c664445f7c9f1d86701e66",
+    "equalsCurrentReviewedSource": true,
+    "containsForcedFlag": true
+  },
+  "newProviderSessionId": "ses_f1e313f4bffek7X1JnL2BR6gM9",
+  "savedAssistantText": "HUMAN_SESSION_READY",
+  "receipt": [
+    "accepted",
+    "b262a658-2a5e-449b-9a77-553ea9ab6ad2"
+  ],
+  "oldProviderSessionId": "ses_f1e648f7effeNiEgvWfA8K5N7p",
+  "freshProviderConversation": true,
+  "growthCheck": {
+    "at": "2026-09-27T07:41:43.496793+00:00",
+    "beforeBytes": 179177,
+    "afterBytes": 205125,
+    "grew": true
+  }
+}

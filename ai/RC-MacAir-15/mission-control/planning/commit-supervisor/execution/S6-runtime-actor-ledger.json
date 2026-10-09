@@ -1,0 +1,241 @@
+{
+  "work_id": "SPEC-COMMIT-SUPERVISOR-01/S6",
+  "at": "2026-10-04T21:06:23.190513+00:00",
+  "controller": "/root",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "actual_chain_state": "All actual rehearsal Supervisor actors native terminal; exact original restored, preview stopped, root raw recovery inspected; bounded factual closeout next",
+  "runtime_role_fallback": "supported default with exact local skill/profile developer instructions acknowledged; static catalog has no new three integration roles",
+  "root_settings": "inherited model/effort without overrides",
+  "permission": "danger-full-access/never",
+  "configured_max_depth": 3,
+  "offered_concurrency_slots": 12,
+  "persistent_threads": false,
+  "schedules": false,
+  "publication_authority": "none",
+  "actors": [
+    {
+      "identity": "/root/s6_supervisor_provider_1",
+      "requested_type": "default",
+      "role": "mc-commit-supervisor exact installed instructions fallback",
+      "phase": "provider_hold_intake",
+      "fork_turns": "none",
+      "settings": "inherited root model/effort nooverride",
+      "state": "completed",
+      "dispatched_at": "2026-10-04T13:28:03.017129+00:00",
+      "assignment": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-supervisor-provider-assignment.md",
+      "close_agent": "unavailable",
+      "acknowledged_at": "2026-10-04T13:30:22.838642+00:00",
+      "acknowledgment": "Loaded exact executable packet SHA fc32e46aee5eecf9761228df9053f5090af4c6c398fec453ed2e17c08142b13b and installed mc-commit-supervisor skill SHA b4ec0266a8d72f573dd4f3670c671a856ee5cc98b6942aad48683fa22fb14d68/profile 01887fdc12c962be5a7438b513836e6269cff1f9683b7a17c2edfbf2aa961044. Actual child /root/s6_supervisor_provider_1, actual CWD C, Git root R verified. Effective danger-full-access/never confirmed by host instructions. Supported default fallback, inherited invoking root model/effort without overrides; numeric model/effort metadata is not exposed in tools. Reading complete required authority; before writes, ownership remains substantive job intake/current recovery and waiting-dependency only, no child dispatch/runtime/repair/Git or central edits. All listed prior S4\u2013S6 writers/reviewers are terminal.",
+      "terminal_return": "waiting-dependency",
+      "terminal_observed_at": "2026-10-04T13:42:39.214964+00:00",
+      "raw_terminal": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-provider-terminal.md",
+      "report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/provider-hold-report.md"
+    },
+    {
+      "identity": "/root/s6_supervisor_intent_1",
+      "requested_type": "default",
+      "role": "mc-commit-supervisor exact installed fallback",
+      "phase": "provider_release_then_intent_hold",
+      "fork_turns": "none",
+      "settings": "rootinherited nooverride",
+      "state": "completed",
+      "dispatched_at": "2026-10-04T13:43:20.749942+00:00",
+      "assignment": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-supervisor-intent-assignment.md",
+      "close_agent": "unavailable",
+      "acknowledged_at": "2026-10-04T13:46:07.613408+00:00",
+      "acknowledgment": "Actual child /root/s6_supervisor_intent_1, CWD/controller_home C and Git root R verified; exact skill b4ec0266a8d72f573dd4f3670c671a856ee5cc98b6942aad48683fa22fb14d68/profile01887fdc12c962be5a7438b513836e6269cff1f9683b7a17c2edfbf2aa961044 and full new/provider packets plus workflow/template/owner/Wiki/runtime read. Supported default fallback; danger-full-access/never; root settings inherited with values unexposed. Own J release/intent-hold only; root E disjoint. Inventory confirms predecessor/prior writers terminal, no matching schedule; public original verify payloads_valid/matches_checkpoint/status_equal true, completed intake retained.",
+      "terminal_return": "needs-owner",
+      "terminal_observed_at": "2026-10-04T13:56:41.350349+00:00",
+      "host_evidence": "Native FINAL_ANSWER notification establishes completed actor",
+      "raw_terminal": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-intent-terminal.md",
+      "report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/intent-hold-report.md"
+    },
+    {
+      "identity": "/root/s6_supervisor_candidate_1",
+      "requested_type": "default",
+      "role": "mc-commit-supervisor exact installed fallback",
+      "phase": "initial_repair_handoff_wiki_final_runtime_firstownerwait",
+      "fork_turns": "none",
+      "settings": "rootinherited nooverride",
+      "state": "completed",
+      "dispatched_at": "2026-10-04T13:57:31.505671+00:00",
+      "assignment": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-supervisor-first-candidate-assignment.md",
+      "close_agent": "unavailable",
+      "acknowledged_at": "2026-10-04T14:00:50.314172+00:00",
+      "acknowledgment": "Actual /root/s6_supervisor_candidate_1 loaded exact installed supervisor skill/TOML developer instructions through supported default fallback; CWD/controller_home C/R separate/private detached baseline verified; danger-full-access/never/root inherited nooverride, values unexposed. list_agents confirms both hold predecessors completed; matching automation absent; public original verify alltrue f827e476 manifest128/current ee63a5c. No writes at ack; then authorized history/release/initialfreshmanager\u2192reviewer; firstwaitingowner only.",
+      "actual_terminal": "Native FINAL_ANSWER COMMIT_READY_WAITING_OWNER observed by root; complete concrete evidence index34matches and first packet/raw live/source/recovery/protection inspected.",
+      "terminal_return": "COMMIT_READY_WAITING_OWNER",
+      "terminal_receipt": "S6-first-owner-terminal.json",
+      "state_correction_at": "2026-10-04T18:20:49.253036+00:00"
+    },
+    {
+      "identity": "/root/s6_supervisor_fix_xy_1",
+      "role": "Actual mc-commit-supervisor revised private fixture successor",
+      "runtime_agent_type": "default supported exact installed skill/TOML fallback",
+      "fork_turns": "none",
+      "settings": "Inherited root; no overrides; concrete numeric/loader metadata unexposed",
+      "actual_state": "running; renewed current55 fully bound; different final manager2/fresh all5 active; revised runtime/second wait pending",
+      "assignment": "S6-supervisor-fix-xy-assignment.md",
+      "assignment_sha256": "cec6866ce61cec0238e4006c2bc9a848b43eb4af730364ec04c2ac23e154f382",
+      "event": "S6-fix-xy-event.json",
+      "event_sha256": "a45a33baf89912cac89b46f05b4f18f5e30486932368f56d61d850e4fb156ec3",
+      "allowed": "Unique J records, bounded private leaf work/reviews/current runtime then second intentionalwait",
+      "actual_Git_Alpha_authority": "NONE",
+      "at": "2026-10-04T16:24:46.534443+00:00",
+      "acknowledgment": {
+        "at": "2026-10-04T16:26:14.808234+00:00",
+        "skill_sha256": "b4ec0266a8d72f573dd4f3670c671a856ee5cc98b6942aad48683fa22fb14d68",
+        "toml_developer_instructions_sha256": "01887fdc12c962be5a7438b513836e6269cff1f9683b7a17c2edfbf2aa961044",
+        "actual_CWD": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+        "repository_root": "/Users/rccurtrightjr./projects/fs-dev",
+        "permissions": "danger-full-access/never host applied",
+        "settings": "root inherited without overrides; concrete/native metadata unexposed",
+        "predecessor_and_children_terminal": "Actual own list_agents per acknowledgment; root direct native FINAL already observed"
+      },
+      "state": "completed",
+      "terminal_return": "COMMIT_READY_WAITING_OWNER",
+      "terminal_observed_at": "2026-10-04T19:42:11.252691+00:00",
+      "raw_terminal": "S6-second-owner-terminal.json",
+      "report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/supervisor-fix-xy-report.md"
+    },
+    {
+      "identity": "/root/s6_supervisor_refusal_1",
+      "requested_type": "default",
+      "role": "actual installed Commit Supervisor via explicit supported fallback",
+      "phase": "bounded current four-way stale-authority read-only refusal",
+      "fork_turns": "none",
+      "settings": "root model/effort inherited, no overrides; concrete/native loader unexposed",
+      "state": "completed",
+      "dispatch_observed_at": "2026-10-04T19:44:33.017057+00:00",
+      "assignment": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-supervisor-negative-controls-assignment.md",
+      "close_agent": "unavailable",
+      "ownership": "unique J/negative-control-1 records only; no candidate/process mutations",
+      "acknowledgment": "Actual native actor message: exact role/TOML/contracts/originalS6/approval/session/standards/Wiki loaded; CWD C/R/P verified, host FullAccess-never/root inherited/no overrides; concrete loader metadata unexposed, exact prior tree completed. Initial pure Git root read flag omission disclosed for later materiality classification. No writes yet.",
+      "acknowledged_at": "2026-10-04T19:47:24.201112+00:00",
+      "terminal_return": "unmet-gate/currentreadyfalse",
+      "terminal_observed_at": "2026-10-04T20:00:05.589589+00:00",
+      "report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/report.md",
+      "raw_terminal": "S6-root-refusal-inspection.json"
+    },
+    {
+      "identity": "/root/s6_supervisor_interruption_1",
+      "requested_type": "default",
+      "role": "actual installed Commit Supervisor through exact local skill/profile fallback",
+      "phase": "FIRST ownedstop/newfixed/actual private interrupted binary staging and absence control only",
+      "fork_turns": "none",
+      "settings": "inherited root no overrides; concrete/native loader unexposed",
+      "state": "completed",
+      "dispatch_observed_at": "2026-10-04T20:08:14.792068+00:00",
+      "assignment": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-supervisor-interruption-1-assignment.md",
+      "assignment_sha256": "f3d7b3687257fe1ab017ad74dff34268190556a1036c554398c64093193c215b",
+      "close_agent": "unavailable",
+      "ownership": "unique J/interruption-1 records/archive, exact owned private runtime stop and exactly two assigned fixture leaves; no restoration/children",
+      "acknowledged_at": "2026-10-04T20:14:41.838235+00:00",
+      "acknowledgment": "Actual native message verified exact role/profile/assignment/CWD/separate roots/base/host FullAccess-never/rootinheritance/no overrides and pre-stop raw preservation; previous private writers native completed, no matching schedule; restoration inactive.",
+      "activation": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/activation.json",
+      "activation_sha256": "bc790f160fe692c8d57b2516a959db56da1dca4fcdcbda57bca3ccfe5abccbc7",
+      "terminal_return": "unmet-gate/currentreadyfalse intentional unfinished END",
+      "terminal_observed_at": "2026-10-04T20:26:36.986171+00:00",
+      "raw_terminal": "S6-root-first-interruption-inspection.json",
+      "report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/report.md"
+    },
+    {
+      "identity": "/root/s6_supervisor_recovery_1",
+      "requested_type": "default",
+      "role": "actual installed Commit Supervisor exact explicit supported fallback",
+      "phase": "SECOND collision/fixed/reverseunion/original recovery only",
+      "fork_turns": "none",
+      "settings": "inherited root no overrides; concrete/native loader metadata unexposed",
+      "state": "completed",
+      "dispatch_observed_at": "2026-10-04T20:27:30.236108+00:00",
+      "assignment": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-supervisor-recovery-1-assignment.md",
+      "assignment_sha256": "66fe3046ad52385dc7824e473061a3acb087848fa0784814c0a40938b3447a70",
+      "close_agent": "unavailable",
+      "ownership": "unique J/recovery-1 records; exact public checkpoint guard/recovery/private control scope only; no stop replay/children",
+      "acknowledged_at": "2026-10-04T20:31:00.686681+00:00",
+      "acknowledgment": "Actual native successor message: exact role/profile/full original contracts/standards/actual CWD and separate roots/host FullAccess-never/inherited nooverrides/unexposed metadata; native predecessor completed/nochildren; exact current 4355 guard/checkpoint and all78 raw predecessor receipts independently verified; no completed stop/capture replay.",
+      "terminal_observed_at": "2026-10-04T21:06:23.190513+00:00",
+      "native_terminal": "Actual FINAL and exact-subtree list_agents completed/no children",
+      "root_inspection": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-root-recovery-inspection.json",
+      "deviation_classifications": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-recovery-deviation-classifications.json"
+    }
+  ],
+  "native_tree_observations": [
+    {
+      "at": "2026-10-04T14:03:58.522616+00:00",
+      "source": "collaboration.list_agents path_prefix /root/s6_supervisor_candidate_1",
+      "actors": [
+        {
+          "identity": "/root/s6_supervisor_candidate_1",
+          "status": "running"
+        },
+        {
+          "identity": "/root/s6_supervisor_candidate_1/initial_review_manager_1",
+          "status": "running"
+        }
+      ],
+      "depth3_reviewer_spawn": "not_yet_observed"
+    },
+    {
+      "at": "2026-10-04T14:09:35.212146+00:00",
+      "source": "collaboration.list_agents exact candidateprefix",
+      "actors": [
+        {
+          "identity": "/root/s6_supervisor_candidate_1",
+          "status": "running",
+          "depth": 1
+        },
+        {
+          "identity": "/root/s6_supervisor_candidate_1/initial_review_manager_1",
+          "status": "running",
+          "depth": 2
+        },
+        {
+          "identity": "/root/s6_supervisor_candidate_1/initial_review_manager_1/all_lenses_reviewer_1",
+          "status": "running",
+          "depth": 3
+        }
+      ],
+      "actual_depth3_spawn_supported": true,
+      "global_configuration_mutation": false
+    },
+    {
+      "at": "2026-10-04T14:52:53.357341+00:00",
+      "method": "actual collaboration.list_agents /root/s6_supervisor_candidate_1",
+      "observed": [
+        {
+          "identity": "/root/s6_supervisor_candidate_1/code_repair_worker_1",
+          "state": "completed",
+          "return": "READY_FOR_HANDOFF_REVIEW",
+          "report": "jobs/commit-supervisor/rehearsal-20261004-s6/workers/code-repair-1.md",
+          "sha256": "0c572b166732ec81824976d0558390792ddc03ffc1e9281f1cb0d49513f5e94a"
+        },
+        {
+          "identity": "/root/s6_supervisor_candidate_1/code_handoff_review_1",
+          "state": "errored",
+          "raw_error": "Selected model is at capacity. Please try a different model.",
+          "acceptance": false
+        },
+        {
+          "identity": "/root/s6_supervisor_candidate_1/code_handoff_review_2",
+          "state": "running",
+          "settings": "same inherited root/no overrides/fresh fork none"
+        }
+      ],
+      "closure": "close_agent unavailable; terminal observation only",
+      "actual_gate": "separate fresh second handoff pending"
+    },
+    {
+      "at": "2026-10-04T14:59:57.307788+00:00",
+      "method": "actual collaboration.list_agents exact code_handoff_review_2 prefix",
+      "identity": "/root/s6_supervisor_candidate_1/code_handoff_review_2",
+      "state": "completed",
+      "result": "insufficient-evidence",
+      "finding": "S6-CH2-GATE-01 assessment exposure",
+      "current_code_defect": false,
+      "independent_handoff_acceptance": false,
+      "closure": "close_agent unavailable",
+      "next_safe_action": "Different fresh corrected raw-only handoff review after terminal"
+    }
+  ]
+}

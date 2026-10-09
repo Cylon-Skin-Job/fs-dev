@@ -1,0 +1,31 @@
+# RD-02 — diagnostics tab and incoming/reveal comparison (draft)
+
+Dependency: accepted RD-01 passive observations/current build. Product request is direct OWNER-DIRECTION.md, not a supervisor approval. Exact incoming feed selection remains subject to optional owner clarification; recommended default is Fusion canonical incoming content/tool events before formatting, since that is the queue being diagnosed. This draft is not builder dispatch.
+
+## Tab and identity
+
+Add Diagnostics action to existing event_list Chat options shared menu. Existing chat session action bridge receives explicit workspace/view/threadGroup/thread/surface identities. Open a closable Diagnostics tab in the originating view's content tab rail, appended right of all native and Side Chat tabs. Activate/reveal it; preserve other tab order/content and selected chat. Reopening same diagnostics target focuses existing tab instead of duplicates. Primary and Side Chat invocation must address their own session; switching other chats must never redirect a diagnostic subscription. Runtime-only diagnostics content is appropriate; do not persist stream payload/transient surface IDs in view capsules or SQLite. Reuse Generic Host/connected adapter composition owners; no bespoke popup/nested rail. Adapterless views need existing-child root preserved. Closing diagnostics restores another valid tab and disposes owned observers; no chat/provider Stop or transcript deletion.
+
+## Incoming dump
+
+Capture from the selected addressed canonical stream's accepted application boundary (after route/turn/sequence validation, before formatting/grouping), while diagnostics is open. Feed plain text through safe textContent/pre, no Markdown renderer, sanitizer that strips literal tags, or syntax beautifier. Preserve text/thinking content literally; structured tool/args/result/subagent/terminal records can be plain serialized records with explicit event separators. Canonical typed thinking is not a literal native <thinking> byte sequence; if labels/delimiters are generated, identify them as diagnostic framing. Do not claim native-provider fidelity. Do not expose provider raw errors by bypassing the existing safe terminal/error/explicit-details contract. This is a stream inspector for content/tools, not a credential/environment dump.
+
+Capture begins at open, with a clear capture-start marker; no historical reconstruction pretended as exact live arrival. Display retained current-turn source baseline separately if useful, marked snapshot. Duplicates/reordered/wrongthread/stale frames must not inflate counters; snapshot/reconnect replace/baseline semantics explicit. Incoming rate measures observed client arrival; cannot distinguish provider delay from network/transport. Terminal stops waiting metrics but retains last readable dump until next addressed turn/close. Nextturnclear or explicitseparator must keep counters turn-scoped.
+
+Use terminal-like monospace wrapping/scroll, tail follow while atbottom; users may scrollback without forced jumps. Batchappend/metrics to a bounded display cadence rather than rerendering whole chat per fragment. Retain bounded visible scrollback with an explicit truncation marker and cumulative counters unaffected; no silent missing-data claim. No observer work should mutate or await the reveal loop.
+
+## Counters and timing
+
+Header shows received source units, rendered visible units, current chunk progress, ready chunks/segments, source not yet committed to completed reveal, arrival/reveal rates, last incoming age, current visible-wait elapsed and current phase. All units/source boundaries explicit; do not subtract raw Markdown chars from HTML/displayedchars. Source progress at completed block boundaries is not exact current-character source mapping: label it accordingly, with current chunk progress separate. Transformed tool chunks with unknown source mapping say unknown rather than fabricated totals. Toolcalls/args/results are included in feed/counters by explicitly separated categories, not assumed human-visible prose.
+
+Known queued reveal time is a labelled estimate/nominal schedule for already-received renderable work, using actual current speed/batch/pauses and relevantcollapsepolicy; do not duplicate independent speed policy. Future provider output, incomplete chunk boundaries, unknown tool completion and eventloopdelays are explicitly excluded/unknown. If no reliable total schedule is available, expose current-chunk nominalremaining plus measured backlog/rates rather than invented totalETA. Openingdiagnostics must notchange speeds/flushboundaries/revealorder.
+
+Surface unmount/hidden Side Chat: retain last-known observation with unavailable/unmounted label, never spawn hidden renderer/second completionowner to fakecontinuity. MainChat visiblealongside remainsnormalobserver.
+
+## Expected integration
+
+ChatAreaHeader,ConnectedChatHeader,chatSurfaceContract,useChatSessionActions, existingviewTabAdapters after Side Chat composition, code-owned firstpartyregistration and focused diagnosticsdomain/connectedhost/presentation modules. Canonical streamdispatcher/frontier acceptedapplypoint for incoming capture; no rawproviderprotocol onUEB and no frontendproviderchecks. Existing chat-diagnostic errorreports remain separate named feature. Read applicable standards before additions; document why anynewroute isnecessary.
+
+## Required public-route checks
+
+Realmenu click→rightmost activeDiagnostics tab with existingnative+SideChattabs preserved; existingtabfocus/closecleanup; adapterlessviewroot; primary/SideChatexactsession; plaintextliteralmarkdown/tags andstructuredtools; snapshotbaseline/capturestart; canonicalwrongthread/duplicate/stale/sequence/reconnectcontrols; arrivalduring reveal provesdumpahead+observedprogressgap;2000msclock remainscorrect; frozen output drains afterterminal withoutfabricatedproviderETA; transformed/held/unmountedunknownlabels; rawDOMsafe; boundedscrollbacknotice/counters; subscriptions closecleanup; coalescednotifications andobserveron/offidenticalrender timeline/output. Run applicableexistingmenu/tab/surface/instantcollapse/RD01cases,clientbuild,focusedlint andbothfreshreviews. All evidence ondisposablebrowserfixtures, neverhumanruntime.

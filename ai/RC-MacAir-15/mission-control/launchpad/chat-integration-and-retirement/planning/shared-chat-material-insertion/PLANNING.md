@@ -1,0 +1,45 @@
+# Shared chat material insertion — planning coordination
+
+> Owner-directed next ticket and single-SPEC preparation, October 7, 2026. Codex side chat (ephemeral), /root, Creation Supervisor. Initial preparation hold: “Don't build”; superseded for this SPEC by the later owner assignment recorded in OWNER-APPROVAL.md.
+
+## Assignment and authority
+
+Planning ID: CHAT-MATERIAL-PLAN-01 revision 1. Owner-facing recipient: the human owner in this conversation. Controller home: `/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control`. Memory/output folder: this `planning/shared-chat-material-insertion/` folder. Source checkout: `/Users/rccurtrightjr./projects/fs-dev`, `main` at `a4a4262587a7f72f89f5b9b9c2f54878fe5381bb`, read-only for this job. Exact owner authority: [OWNER-REQUEST](OWNER-REQUEST.md).
+
+The completed retirement/startup-repair job remains closed under [the October 7 handoff](../../HANDOFF-COMPLETED-BUILD-2026-10-07.md). This is a new bounded planning assignment; it does not resume its manual gates or adopt broader harness/health work. The existing Launchpad registry and history boundary remain untouched. No operational Mission Control, timer, persistent task or implementation is started.
+
+## Intake and preflight
+
+Route: direct candidate stage for one ticket and one SPEC. The settled owner packet makes a First Draft unnecessary. Preflight status: `READY_WITH_EXPLICIT_GAPS`; useful candidate creation can proceed. Product intent is explicit, sources and current guidance are accessible, the completed-build baseline is known, and built-in chat inventory observed no other active writer in the source project at intake. Existing unrelated dirty/untracked files must be preserved.
+
+Gaps assigned to the candidate stage: inventory all material insertion entry points and current action/store owners; establish active-open-chat resolution for global actions without a Main-only fallback; distinguish composer lifetime/validity from unrelated focus; trace delayed preparation; map affected checks and invalidated prior screenshot evidence; identify exact Wiki claims to change during later implementation. These are executable-detail/source questions, not missing owner product choices. Required current guidance: User Profile/Preferences, Code Standards router and relevant routed pages, Chat Overview/Identity/Composer, and screenshot integration articles. Read the raw current files, not prior completion labels.
+
+This is a new direct planning packet, rather than reuse of the older Launchpad planning package. Its original authority/closeout scope has been reconciled at intake; the assembled ticket/SPEC receives worker-handoff, candidate-stage and fresh release validation. The package-wide source/intent propagation check belongs in those reports; no historical document-sweep baseline is claimed for this new packet.
+
+## Ownership and deliverables
+
+Supervisor owns `PLANNING.md`, `OWNER-REQUEST.md`, and parent routing/decision pointers. Candidate stage owns `reports/STAGE-REPORT.md`, its assignment/lifecycle/evidence reports and coordination under `reports/`. One leaf author owns `TICKET.md`, `SPEC.md`, `CANDIDATE.json`, and bounded source/coverage artifacts assigned by its manager. Validators own their individually assigned reports only. All product, runtime, existing SPEC, acceptance, central MC and checkpoint files are outside write scope.
+
+Candidate content must include intent/authority coverage, existing owners and entry-point inventory, explicit destination/preparation/insertion boundaries, vertical slices with acceptance scenarios, dependency and deferral accounting, proportional invalidation, Wiki updates, verification and downstream handoff. Keep one ticket and one SPEC; maps can be sections or compact supporting files. Do not invent future modes or an additional insertion store/controller beside the existing owner.
+
+## State and next action
+
+Current state: `APPROVED_FOR_IMPLEMENTATION`. [The owner approval receipt](OWNER-APPROVAL.md) records the later instruction “Spawn another session to run as SPEC Orchestrator” on this exact reviewed candidate. The prior preparation-only hold is superseded for this single SPEC; completed-work acceptance, publication and Alpha gates remain separate. The Creation Supervisor accepted the source-grounded assembled stage and separately fresh complete release report on current candidate `sha256:65b324647b7e52f0426f7b2005849d053f4f239420fab07c848170b21ec1d3f3`. All four release perspectives are complete; no unresolved material finding or necessary owner choice remains for planning readiness. The original author-handoff finding CMH-001 was repaired by the sole author and resolved at fresh worker, stage and release gates; original reports/preimage/delta remain preserved. Earlier stage/release readiness did not grant implementation approval. The later owner assignment and separate approval receipt now do; implemented behavior and completed-SPEC acceptance remain to be established.
+
+Exact normative set: `SPEC.md` SHA-256 `063562058007928d07477913a1ba05e43a2d191d6e42a0e9cb1d6a6e5c71659e`; `TICKET.md` SHA-256 `730b6c92efa396eeb3abdc5ee6c522c692c790db9c288346d141ad57817e0074`. [CANDIDATE.json](CANDIDATE.json) binds the full ordered set. Current identity matches the read-only helper and unchanged independent gate inputs. Normative content has not been edited after review.
+
+Evidence: [stage handoff](reports/STAGE-REPORT.md), SHA-256 `7fc9891c31b6ed22939c83dae88f9782ebf4b8cf3a8b64a01ef067b48335a35b`; [current worker handoff](reports/CANDIDATE-HANDOFF-REVIEW-02.md), SHA-256 `2724112444e77f119c0f349c66aa8d636df685d2c6708b7b9e9569c37270e83e`; [separate stage validation](reports/CANDIDATE-STAGE-REVIEW-01.md), SHA-256 `cc8cac13dc8f75a269fd97837c1e5c994dda64bb3215995ad64d04f2d39e0549`; [fresh release validation](reports/RELEASE-VALIDATION-01.md), SHA-256 `de3ae8e92601794105b436a3610949ea7ebd2eabe145ac1be6c808e7e2c35754`. Release reviewer `/root/chat_material_release_review_01` is distinct from stage manager `/root/chat_material_candidate_stage`, the author, investigators, worker reviewers and stage reviewer. All review sessions used `fork_turns=none` without model/effort overrides. Stage manager and its eight children are completed; release reviewer is completed. No normative writer remains active.
+
+The candidate orders M1 global Main/Side destination handling and existing-owner insertion; M2 convergence of prepared composer/diagnostic material; M3 screenshot migration, complete renewed acceptance and Wiki handoff. Future explicit send/create modes and broader harness/health/governance work are separately owned exclusions, with no present insertion requirement deferred. Fresh required server tests/client build and native route checks belong to future implementation, not this planning job.
+
+Product HEAD remains `a4a4262587a7f72f89f5b9b9c2f54878fe5381bb`; tracked client/server diff and staged paths were empty at release review. No product checks ran; all unrelated source/runtime/document dirt was preserved. Mutable lifecycle and parent routing reconciliation postdate the author/manager's dated source snapshots; they change neither original OWNER-REQUEST/D-009 nor normative requirements. The existing main/checkpoint and accepted completed-build evidence remain untouched. Final routing validation and bounded document-sweep receipts live outside candidate identity.
+
+Owner-requested implementation session created: [SPEC Orchestrator](codex://threads/01a11655-f57c-76c1-b12b-b127815efa24), actual thread `01a11655-f57c-76c1-b12b-b127815efa24`, host `local`, existing CHAT-AR project with local environment. The create-thread result supplies this identity; no model/effort override, worktree environment, monitor or persistent-task message was added. Dispatch prompt carries the full candidate/authority/review/source packet, [approval receipt](OWNER-APPROVAL.md), local mc-orchestrator procedure, report ownership and retained gates.
+
+Initial progress verified with built-in wait_threads: actual session active, initial turn inProgress with no error; its commentary acknowledges the exact approval and preserved dirty work and begins source/guidance preflight. [Dispatch receipt](ORCHESTRATOR-DISPATCH.json) records actual task/turn evidence. This proves startup, not accepted slices or a completed SPEC.
+
+Next safe action: let the assigned Orchestrator execute and return its completed-SPEC packet for owner acceptance in that session. The receiving session owns implementation coordination/ledger/evidence under `implementation/`; this Creation Supervisor ends at handoff and does not implement product code or take over the child session. Creation is distinct from verified startup, implementation completion, owner acceptance and publication.
+
+Last checked/progress: 2026-10-07T12:30:27.743689+00:00.
+
+Approval/dispatch updates postdate the completed planning-readiness document sweep; no normative candidate change or new planning gate is claimed. Static routing validation was renewed for this handoff.

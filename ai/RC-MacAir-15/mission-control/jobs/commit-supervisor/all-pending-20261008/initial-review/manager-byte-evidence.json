@@ -1,0 +1,510 @@
+{
+  "at": "2026-10-09T01:04:27.728933+00:00",
+  "reviewer": "/root/all_pending_initial_review",
+  "mode": "initial",
+  "read_only_candidate": true,
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "candidate": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate",
+  "baseline": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "frozen_manifest": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate-identity-01.json",
+  "frozen_sha256": "6e8487a5173edc192f8f3d112b137f1ff0b6e0f6b603ceb94036adc003281762",
+  "current_covered_changed_leaves": 17603,
+  "current_frozen_drift": [],
+  "accepted_product": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/.versions/2026-10-07-131816.md",
+      "sha256": "57b85d4acc3034dbc2a64fec9994effa98386419d41bcd6dcc526fbcd6a96d18",
+      "matches_seal": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+      "sha256": "2ca9937fd14648f9af85e6b3effd151c0107811b4eadacb551a7938ef00b4ceb",
+      "matches_seal": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/.versions/2026-10-07-131816.md",
+      "sha256": "6c5c3847270c0bef52f0e858216f54d602472a9400cddcf2c97a39c5d15e437e",
+      "matches_seal": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md",
+      "sha256": "db5cf6e804b9b100142b0caf9f22d2039ab97eab6e17d87fca24ef835f5f6a10",
+      "matches_seal": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/.versions/2026-10-07-131816.md",
+      "sha256": "15799e9a2e44e64a6cc84c2c22eb5c269748296f7889d43295b665f15fe0a8d1",
+      "matches_seal": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md",
+      "sha256": "c7fb7b31252fe7fa3fd4ac990c03831ebe075867f912c6244694a637a0f1a55f",
+      "matches_seal": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/.versions/2026-10-07-131816.md",
+      "sha256": "7e437183acb807a6c6579ebc834ed2f8df1e1f94b39a027d034c0e6db0ac9966",
+      "matches_seal": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md",
+      "sha256": "71585cb63d185136da2dec2379630718be91283b0a69938115cf76251db9a821",
+      "matches_seal": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/.versions/2026-10-07-131816.md",
+      "sha256": "d036f9470ee0e4a2a1fe5bc38fa4d156e9e67f2bf88e05fda522cfc5d95c43da",
+      "matches_seal": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/001-Wiki_Viewer_UI_Context/.versions/2026-10-07-131816.md",
+      "sha256": "6e80d5d97934d1c20ce1275da416737c96753d6cab1b3da2f5a83ab86855ad75",
+      "matches_seal": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/001-Wiki_Viewer_UI_Context/PAGE.md",
+      "sha256": "b4ba96fbe02a02b9c343f34bcb7de6e8cb2362cdda20dfcd9896fc9eb0235ac9",
+      "matches_seal": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/002-File_Viewer_UI_Context/.versions/2026-10-07-131816.md",
+      "sha256": "cc8ecf54353331709f5ecc2dac0b21dd4fe6a2b42c589b3fcfb5459c720d7c8e",
+      "matches_seal": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/002-File_Viewer_UI_Context/PAGE.md",
+      "sha256": "fa1cbc58c49cc09fe505a3c4fd4df4b9c358d7a9bd0b77437faf091c77d7e102",
+      "matches_seal": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/PAGE.md",
+      "sha256": "955d09f7f9aba6928e7c41d9b462912705aad70d39b869ca3d24d062435610b6",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-architecture/observation-boundaries.spec.ts",
+      "sha256": "0a28ed231dc357f2dd783b709e90a69af458d6a8c5b3e393b10dca5c50a9d53d",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-composer-screenshot-menu.spec.ts",
+      "sha256": "2ecbbe3513bbdd6f8604e7966a3c32a6aba3a5fd498a79189512b94df0ea6af9",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-diagnostic-actions.slice-c.spec.ts",
+      "sha256": "81ab28b1758b7531f9c8bf9fe023f9edc1bb13afa641bfe6afcd09d35d662c44",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-material-insertion.spec.ts",
+      "sha256": "300459ad3ad4b96af3cea5fb06db45d3beadb09b569d3f9205f3cf2060cd30be",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-material-native-scenario.mjs",
+      "sha256": "4ab717d3a9e848a0e33fdc664e9e5455b063ec55b26d3dc69ab05a81d550308d",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-material-wiki.spec.ts",
+      "sha256": "901f513af5c3a3e3d3df4149e00b76ce2232752c543346a05f8b9cd4f0ed0806",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-send-transport.spec.ts",
+      "sha256": "d87ae7b1394036bea8155ffb3b20bf0f034552fe45eede325270181d90b53a16",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-surface-identity.spec.ts",
+      "sha256": "62677ea808ac57ff4b446e449e5078b5e159f2ddf42706306677606e2e0ebfa2",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-surface-isolation.spec.ts",
+      "sha256": "068fc92d53e295594b2485db3026a408e41e7ba936940831c18f75501c34c7cf",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/prompt-ownership.slice-c.spec.ts",
+      "sha256": "ed20ebf2c83121b5d2cda9dd33e86c310713fc0ea995dda1e47cb74555879d8d",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/support/chat-material-fixture.tsx",
+      "sha256": "15df63f3cca60673e6ac8e9087ad9b96975a086288670d24d700bcb45feecced",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/support/chat-material-screenshot-cases.ts",
+      "sha256": "29fe664ed3dc2e5d7a26934d5af0d3d1f7562922a6fac777bf3409ec82e9cd41",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/support/chat-material-source-cases.ts",
+      "sha256": "8b53c4fa34d63c28b5b68cacd1d297dc216096f2b2f19f9c8082ed354638d3f4",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/support/chat-material-source-fixture.ts",
+      "sha256": "f943754af174b19bc3ee4a12f1971d842f2c1da158b476f659816023f2e79435",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/threaded-chat-host.spec.ts",
+      "sha256": "6df2877b40e33bb4a986711738167e99c954527147c9e97f425fbdb417ee39ec",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/clipboard/ClipboardTrigger.tsx",
+      "sha256": "0d9bd2e83fc3d898c74311fff87074c21f3098391c967c81d6ac1ffd3a41164f",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/ChatInput.tsx",
+      "sha256": "a980e99c197b239da795fac4d764b4d54e85bff5c1d0c2039e326206ab415990",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/MessageList.tsx",
+      "sha256": "822d2743061fb616e855c6b5d6ecf6eb03aa025aa9a3b0b03f9a7acd51b31303",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/SendToChatButton.tsx",
+      "sha256": "26e5008817f8fb841a8b14d9d783a2b3411cb395678cc5e9bf247a6071679302",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatAreaFooter.tsx",
+      "sha256": "5a93c1b349d53b8cb773a7062d8e3373a23b68684cdb910c9af05ec0660fb380",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx",
+      "sha256": "a061f65a25fe75458838cc7c7d1a9aff47fe05189bc1a30aacfb2bf230c01488",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatDiagnosticDetails.tsx",
+      "sha256": "d2c157d1ba1cf1c537ef980d95ca85cdb83cf3464806e2cfcb987edaf685aa9f",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatSurface.tsx",
+      "sha256": "4b795b878034c03634f29a50a28c3ada6a83bf84422e011f311517d8370d1d56",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+      "sha256": "b32b696609b0b42f8e88c9bd08c346bd48903f31f351e41479b10d1d7513ceb3",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx",
+      "sha256": "5432630c2dd0876bc69ec2952aa66a985cfea3f4614f2e06563545744747b56e",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/chatSurfaceContract.ts",
+      "sha256": "990717911e5eabc22df83d4a6738b2ecbf9851d88b8ce9b26ca439d482cb9f5b",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useChatMountInteractions.ts",
+      "sha256": "3febde36c48ee58131506b51d3a3b9cbf490c87b92a2965dbdd3e2137c1d0814",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useChatSessionActions.ts",
+      "sha256": "dd293ba33e12e891d112aff9153989901f8b7256164cc407f34f20ec53632734",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useChatSessionHost.ts",
+      "sha256": "67060e0790a1052b78ef27aadf24a1029c2753ac481628c8f0973684bdce61bc",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useComposerMaterialSource.ts",
+      "sha256": "03a973bf7b957c791820ce4fc3103f1164066eec62588ca5ef2e5f31fa3c58b8",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useMountedChatBinding.ts",
+      "sha256": "2db870162c34ae974ca8330f971fa9452f9ef07e000f096e1114a6dd6a13f9be",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts",
+      "sha256": "6e7793ad865bb3fbea8ea1b1a179204b330c98477af5c2d5d679d33d9b81a49c",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useViewChatHost.ts",
+      "sha256": "9763ce0d749a063236fa94c6a5e7162f5bcc68dc01402141592533bc2436861b",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/hover-icon-modal/useHoverIconModal.ts",
+      "sha256": "6d8e7d291198f92a1d72d330ea864e45bc603dae2eaf032c02e8bf5335cd2942",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-action-controller.ts",
+      "sha256": "ca5c4baceba6d432ee2ea296ae5d5c2ff2b124acb9b16a478b62711191012133",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-action-creation.ts",
+      "sha256": "5b476d81e138e470e4644a452e68d39619ad87483aa3b3759a4e37b9bf2ff913",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-action.ts",
+      "sha256": "aa4208dc0d875399b0e5c396714cdd9e0aabbd484563ef72d9eaef71320548db",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-material-commit.ts",
+      "sha256": "9ca48a31e7e1acb3a1a98d452ccf4b0480101a2d36d94b076a8107f1a3d67a37",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-material-source.ts",
+      "sha256": "13600decc8bea3101925522b1dfe25bbe9a4eb191046c53d6dc1d8f7a034d4fc",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-material-target.ts",
+      "sha256": "79020c5de3b860ba72486eacf434f8ec04341e0a4417e62c045afd1bf62009ad",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/thread-handlers.ts",
+      "sha256": "5b63d2f06074b2dad8d43ea7acf8f38769ddf9081868178a407203a95e92a390",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/mic/MicTrigger.tsx",
+      "sha256": "40b63def35f6fbb8ae95a6161a623d11be5e21ab5566f82a409edbb6ca46499a",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/mic/VoiceRecorder.tsx",
+      "sha256": "c2b39311791d3a20b247f771c9f385565bb4fe1405fbb8f4667d610746cbc981",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/mic/useAudioCapture.ts",
+      "sha256": "dae950577ccdcb4f9e13335edb3502386dc6316cc80154665a0e21c2a9f58046",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/recent-files/RecentFilesTrigger.tsx",
+      "sha256": "5956cf2d5846a916233b45e5b2d1a45124d538016e0b5598986cd26ea9ecb0f6",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/screenshots/ScreenshotsTrigger.tsx",
+      "sha256": "6a51901241fee836d19f4adfa1dcde572f10763d590372596da357ced422613f",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/screenshots/chatScreenshotCapture.ts",
+      "sha256": "5e1018214c45a16ff1f40391e2749fa6cc2ed34a20f3291f7f8ebd52fa585712",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/state/panelStore.ts",
+      "sha256": "7b9ecb8386524a89c7b235bcce70ca94613ae611370871d569343f329768b609",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/state/panelStoreTypes.ts",
+      "sha256": "762c7fa2b26923fabb0e2d4585d625417d17e333709b9fd9bdb3c9e8ca97b8bb",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/state/slices/chatSurfaceSlice.ts",
+      "sha256": "0ee04ae43e3e68b88f29b548bb6ad5fe25b0e1a3c5e091e9d40a2af14971a854",
+      "matches_seal": true
+    },
+    {
+      "path": "fusion-studio-client/src/state/slices/mountedChatState.ts",
+      "sha256": "9302850d0488b37740a4a1ec989da370d8e06073362bdd7e6f549f3bd8767a8a",
+      "matches_seal": true
+    }
+  ],
+  "historical_raw_checks": [
+    {
+      "label": "server-full-01",
+      "receipt": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/server-full-01.json",
+      "command": [
+        "npx",
+        "--no-install",
+        "jest",
+        "--runInBand"
+      ],
+      "started": "2026-10-07T23:16:02.888730+00:00",
+      "ended": "2026-10-07T23:17:53.367140+00:00",
+      "exit_code": 0,
+      "original_log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/server-full-01.log",
+      "original_log_sha256": "762f2f8cfd503db39122b007ac2436230de6391337cc61fc8c79fa9db887c264",
+      "matches_recorded_log": true,
+      "copied_log_exists": false,
+      "tail": [
+        "STARTUP_CANARY_RECEIPT {\"mode\":\"normal\",\"root\":\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-DCYPqi\",\"port\":51905,\"cleaned\":true,\"guardsRestored\":true,\"listenersRestored\":true,\"exitCodes\":[],\"readiness\":{\"context\":{\"projectRoot\":\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-DCYPqi/workspace-A\",\"workspaceId\":\"A\"},\"registeredStatus\":{\"status\":\"ready\",\"verified\":true,\"phase\":\"journal_verified\",\"errorCode\":null,\"leases\":0},\"operationRequests\":0,\"acquired\":0,\"released\":0,\"stages\":[]},\"cleanupErrors\":[\"[Shutdown] owner drain exceeded its phase deadline\"]}",
+        "STARTUP_CANARY_RECEIPT {\"mode\":\"isolated-v1\",\"root\":\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-wjZglU\",\"port\":51906,\"cleaned\":true,\"guardsRestored\":true,\"listenersRestored\":true,\"exitCodes\":[],\"readiness\":{\"context\":{\"projectRoot\":\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-wjZglU/workspace-A\",\"workspaceId\":\"A\"},\"operationRequests\":0,\"acquired\":0,\"released\":0,\"stages\":[]},\"cleanupErrors\":[]}",
+        "STARTUP_CANARY_RECEIPT {\"mode\":\"isolated-v1\",\"root\":\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-wXT8Zy\",\"port\":51907,\"cleaned\":true,\"guardsRestored\":true,\"listenersRestored\":true,\"exitCodes\":[0],\"readiness\":{\"context\":{\"projectRoot\":\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-startup-canary-wXT8Zy/workspace-A\",\"workspaceId\":\"A\"},\"registeredStatus\":{\"status\":\"ready\",\"verified\":true,\"phase\":\"journal_verified\",\"errorCode\":null,\"leases\":0},\"operationRequests\":0,\"acquired\":0,\"released\":0,\"stages\":[]},\"cleanupErrors\":[]}",
+        "(node:21455) Warning: `--localstorage-file` was provided without a valid path",
+        "(Use `node --trace-warnings ...` to show where the warning was created)",
+        "(node:21455) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.",
+        "",
+        "Test Suites: 221 passed, 221 total",
+        "Tests:       1 skipped, 3265 passed, 3266 total",
+        "Snapshots:   0 total",
+        "Time:        109.737 s, estimated 114 s",
+        "Ran all test suites."
+      ]
+    },
+    {
+      "label": "build-01",
+      "receipt": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/build-01.json",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "started": "2026-10-07T23:15:01.843444+00:00",
+      "ended": "2026-10-07T23:15:09.293605+00:00",
+      "exit_code": 0,
+      "original_log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/build-01.log",
+      "original_log_sha256": "7c3986c1d7581e8367ccdc6852578afda9453fe31e5a459c8c3df4bb0daa5788",
+      "matches_recorded_log": true,
+      "copied_log_exists": false,
+      "tail": [
+        "dist/assets/index-D24b1efO.js                            45.10 kB \u2502 gzip:    18.65 kB",
+        "dist/assets/index-BbyxhuB-.js                            70.81 kB \u2502 gzip:    25.08 kB",
+        "dist/assets/index-CJTOmigp.js                            86.92 kB \u2502 gzip:    33.64 kB",
+        "dist/assets/index-CAmukpoZ.js                            97.86 kB \u2502 gzip:    27.96 kB",
+        "dist/assets/index-BsqEsEo7.js                           100.55 kB \u2502 gzip:    32.54 kB",
+        "dist/assets/index-DhQ0m7yX.js                         4,461.43 kB \u2502 gzip: 1,273.58 kB",
+        "",
+        "(!) Some chunks are larger than 500 kB after minification. Consider:",
+        "- Using dynamic import() to code-split the application",
+        "- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks",
+        "- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.",
+        "\u2713 built in 3.83s"
+      ]
+    },
+    {
+      "label": "renderer-02",
+      "receipt": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-02.json",
+      "command": [
+        "npx",
+        "--no-install",
+        "playwright",
+        "test",
+        "--config=playwright.chat-architecture.config.ts",
+        "e2e/chat-material-insertion.spec.ts",
+        "e2e/threaded-chat-host.spec.ts",
+        "e2e/chat-composer-screenshot-menu.spec.ts",
+        "e2e/chat-surface-identity.spec.ts",
+        "e2e/chat-surface-isolation.spec.ts",
+        "e2e/chat-component-registration.spec.ts",
+        "e2e/side-chat-isolation.spec.ts",
+        "e2e/side-chat-adapterless-native.spec.ts",
+        "e2e/side-chat-placement-recovery.spec.ts",
+        "e2e/move-chat-to-side-chat.spec.ts",
+        "e2e/prompt-ownership.slice-c.spec.ts",
+        "e2e/prompt-submission-recovery.spec.ts",
+        "e2e/chat-send-transport.spec.ts",
+        "e2e/chat-diagnostic-actions.slice-c.spec.ts",
+        "e2e/system-viewer-action-outcome.spec.ts",
+        "e2e/chat-architecture/observation-boundaries.spec.ts",
+        "--workers=1",
+        "--output=/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-02-output"
+      ],
+      "started": "2026-10-07T23:26:24.823322+00:00",
+      "ended": "2026-10-07T23:28:36.693423+00:00",
+      "exit_code": 0,
+      "original_log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-02.log",
+      "original_log_sha256": "1487d41fc6151ab3346645d0cc2823964ee98eb872aa9c8bb7d8b6f6cdbe8834",
+      "matches_recorded_log": true,
+      "copied_log_exists": false,
+      "tail": [
+        "  \u2713  260 [fixture-only-chromium] \u203a e2e/threaded-chat-host.spec.ts:1312:5 \u203a Side composer screenshot cancels unmount during save (1.0s)",
+        "  \u2713  261 [fixture-only-chromium] \u203a e2e/threaded-chat-host.spec.ts:1329:1 \u203a an explicit Main component screenshot uses its hydrated session independently of the rail (998ms)",
+        "  \u2713  262 [fixture-only-chromium] \u203a e2e/threaded-chat-host.spec.ts:1342:7 \u203a retained main component screenshot survives retained active panel switch during capture (1.3s)",
+        "  \u2713  263 [fixture-only-chromium] \u203a e2e/threaded-chat-host.spec.ts:1342:7 \u203a retained main component screenshot survives retained active panel switch during capture after return (1.3s)",
+        "  \u2713  264 [fixture-only-chromium] \u203a e2e/threaded-chat-host.spec.ts:1342:7 \u203a retained main component screenshot survives retained active panel switch during save (1.3s)",
+        "  \u2713  265 [fixture-only-chromium] \u203a e2e/threaded-chat-host.spec.ts:1342:7 \u203a retained main component screenshot survives retained active panel switch during save after return (1.3s)",
+        "  \u2713  266 [fixture-only-chromium] \u203a e2e/threaded-chat-host.spec.ts:1342:7 \u203a retained side-tab component screenshot survives retained active panel switch during capture (1.3s)",
+        "  \u2713  267 [fixture-only-chromium] \u203a e2e/threaded-chat-host.spec.ts:1342:7 \u203a retained side-tab component screenshot survives retained active panel switch during capture after return (1.3s)",
+        "  \u2713  268 [fixture-only-chromium] \u203a e2e/threaded-chat-host.spec.ts:1342:7 \u203a retained side-tab component screenshot survives retained active panel switch during save (1.3s)",
+        "  \u2713  269 [fixture-only-chromium] \u203a e2e/threaded-chat-host.spec.ts:1342:7 \u203a retained side-tab component screenshot survives retained active panel switch during save after return (1.3s)",
+        "",
+        "  269 passed (2.2m)"
+      ]
+    },
+    {
+      "label": "native-01",
+      "receipt": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/native-01.json",
+      "command": [
+        "node",
+        "e2e/chat-material-native-scenario.mjs"
+      ],
+      "started": "2026-10-07T23:20:01.135930+00:00",
+      "ended": "2026-10-07T23:20:16.637991+00:00",
+      "exit_code": 0,
+      "original_log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/native-01.log",
+      "original_log_sha256": "2e43b0cbbd5ccf5bfa812ec402b13c8f47900ed43f8094d4b7c2f8c874472500",
+      "matches_recorded_log": true,
+      "copied_log_exists": false,
+      "tail": [
+        "[Migration 019] Added workspaces.type (default: code)",
+        "{\"status\":\"PASS\",\"captures\":8,\"sends\":4,\"receipt\":\"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/native-01/native-receipt.json\"}"
+      ]
+    },
+    {
+      "label": "wiki-01",
+      "receipt": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/wiki-01.json",
+      "command": [
+        "npx",
+        "--no-install",
+        "playwright",
+        "test",
+        "--config=playwright.chat-architecture.config.ts",
+        "e2e/chat-material-wiki.spec.ts",
+        "--workers=1",
+        "--output=/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/wiki-01-output"
+      ],
+      "started": "2026-10-07T23:20:01.135926+00:00",
+      "ended": "2026-10-07T23:20:07.784943+00:00",
+      "exit_code": 0,
+      "original_log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/wiki-01.log",
+      "original_log_sha256": "bf44385bf2c466bd77b9faba9ab2dc234fe82420ae13e0e3901416fde7d222da",
+      "matches_recorded_log": true,
+      "copied_log_exists": false,
+      "tail": [
+        "\u001b[2m[WebServer] \u001b[22m[Server] diagnostic_warning",
+        "\u001b[2m[WebServer] \u001b[22m[Server] diagnostic_warning",
+        "",
+        "Running 1 test using 1 worker",
+        "",
+        "(node:23342) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.",
+        "(Use `node --trace-warnings ...` to show where the warning was created)",
+        "(node:23342) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.",
+        "(Use `node --trace-warnings ...` to show where the warning was created)",
+        "  \u2713  1 [fixture-only-chromium] \u203a e2e/chat-material-wiki.spec.ts:17:1 \u203a changed Wiki articles parse, render/read back through actual production viewer and link source paths (2.2s)",
+        "",
+        "  1 passed (5.7s)"
+      ]
+    }
+  ],
+  "limitations": [
+    "Only raw logs are used as evidence; prior reviewer verdicts do not grant acceptance. Historical checks apply within original dependencies; fresh consolidation checks belong to assigning Supervisor. Existing ignore excludes .log archive payloads; original raw files remain local and hashes validate. No runtime or publication approval."
+  ]
+}

@@ -1,0 +1,2368 @@
+{
+  "at": "2026-10-04T13:35:42.185460+00:00",
+  "profile": "/private/tmp/mc-s6-commit-supervisor-20261004/profile",
+  "effects_this_turn": "NONE",
+  "recovery_boundary": "dispose/abandon only after owned stop and retained evidence; not captured/restored by code helper",
+  "leaves": {
+    "Cache/Cache_Data/0f626baeffcc9b62_0": {
+      "kind": "file",
+      "sha256": "da57026afbb3eabdf7dd824b1ce07c5432640a4a7d3c181e206bc1b80d2d0a1b",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258908594,
+      "size": 734
+    },
+    "Cache/Cache_Data/46e39a3b95a2f9f0_0": {
+      "kind": "file",
+      "sha256": "fa0af92c9daa97d5acde7b578b315a7fe635d27c50e579e98eae6db0e30ce66c",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904797,
+      "size": 5808
+    },
+    "Cache/Cache_Data/55d95af25c2e5949_0": {
+      "kind": "file",
+      "sha256": "71bc829bc5131a99fe6631b61106cf7cc2c0949f1d85983f0d065dea1ea4b5a8",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904799,
+      "size": 5809
+    },
+    "Cache/Cache_Data/80d7333a8feeaa01_0": {
+      "kind": "file",
+      "sha256": "4f311800b65a1aa13d14b1dd3600f5f8b8fe9c2900838110678740ffb4f5bda3",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904796,
+      "size": 6215
+    },
+    "Cache/Cache_Data/9262f370f7519d6a_0": {
+      "kind": "file",
+      "sha256": "547d02d7a58947e6c7adade116d0c3efd150ac818131b12acbfd55151bf6b3a1",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904800,
+      "size": 5818
+    },
+    "Cache/Cache_Data/ab2d6456ee4997d3_0": {
+      "kind": "file",
+      "sha256": "f8de70b323d6142cef5f61d95559f0be9a7aaf96a1ca8383446fd1f174878ad7",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904798,
+      "size": 6763
+    },
+    "Cache/Cache_Data/f2c2bc79ad979124_0": {
+      "kind": "file",
+      "sha256": "47f6a070aabdfdbf03630c88121e7d074ca81ec5f25ee0c231b09e118946d48c",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904795,
+      "size": 1663
+    },
+    "Cache/Cache_Data/index": {
+      "kind": "file",
+      "sha256": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904787,
+      "size": 24
+    },
+    "Cache/Cache_Data/index-dir/the-real-index": {
+      "kind": "file",
+      "sha256": "6d5e9a478c59f193f69ca475da99dcf0c0fd58d9f7ef98565e0018ae1e1ee161",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258908630,
+      "size": 216
+    },
+    "Cache/No_Vary_Search/journal.baj": {
+      "kind": "file",
+      "sha256": "9c169428d852e25bd59b27652ed533d2a1f09f96e4c329fa5e06f47e16731543",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904789,
+      "size": 4
+    },
+    "Cache/No_Vary_Search/snapshot.baf": {
+      "kind": "file",
+      "sha256": "0c2dd377ed0cc66161e9db8f89f7d8bcb3ad8c06c4a054bdcba214ab05f58c9a",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904788,
+      "size": 20
+    },
+    "Code Cache/js/57603994410153aa_0": {
+      "kind": "file",
+      "sha256": "4cacdc679953e2cbdd21272a68ca911f6f940ee714f9e381f635020101785eed",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258908576,
+      "size": 4311072
+    },
+    "Code Cache/js/96924129cd4564c1_0": {
+      "kind": "file",
+      "sha256": "c2a6e25dfd3ee2b5eb77b4ceda7175380962d35ef584c876e62727e99ab78a02",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904786,
+      "size": 248
+    },
+    "Code Cache/js/index": {
+      "kind": "file",
+      "sha256": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904765,
+      "size": 24
+    },
+    "Code Cache/js/index-dir/the-real-index": {
+      "kind": "file",
+      "sha256": "91634702a28db08332b5ba4c093151a623afae951a1c9f0caa4f2660c7764c9b",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258908629,
+      "size": 96
+    },
+    "Code Cache/wasm/index": {
+      "kind": "file",
+      "sha256": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904763,
+      "size": 24
+    },
+    "Code Cache/wasm/index-dir/the-real-index": {
+      "kind": "file",
+      "sha256": "3ed19b74c3c0322eef632ee66aa9c9c3a2f916f294becd9c044f3600fcd4e0e9",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904769,
+      "size": 48
+    },
+    "Cookies": {
+      "kind": "file",
+      "sha256": "607f556df6c7d228e021043978a12ca7c753339d4a954951dcd9a24c16733ee7",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882349,
+      "size": 20480
+    },
+    "Cookies-journal": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882350,
+      "size": 0
+    },
+    "DIPS": {
+      "kind": "file",
+      "sha256": "a76ddca72a3f7516a278ebb2c9ff15fc9ca28944074e756a20252b7a0d0e397b",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882313,
+      "size": 36864
+    },
+    "DawnGraphiteCache/data_0": {
+      "kind": "file",
+      "sha256": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882330,
+      "size": 8192
+    },
+    "DawnGraphiteCache/data_1": {
+      "kind": "file",
+      "sha256": "6ee544aef4b0135af61be539f6eb0f4fd9538d95f2137465a26f145d9ab6e1bd",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882331,
+      "size": 270336
+    },
+    "DawnGraphiteCache/data_2": {
+      "kind": "file",
+      "sha256": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882332,
+      "size": 8192
+    },
+    "DawnGraphiteCache/data_3": {
+      "kind": "file",
+      "sha256": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882333,
+      "size": 8192
+    },
+    "DawnGraphiteCache/index": {
+      "kind": "file",
+      "sha256": "bcfe7dbbc6f6227559fdd20b2f1fcc122ee86d26939ff03ca3e6bd73cb10619d",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882329,
+      "size": 262512
+    },
+    "DawnWebGPUCache/data_0": {
+      "kind": "file",
+      "sha256": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882324,
+      "size": 8192
+    },
+    "DawnWebGPUCache/data_1": {
+      "kind": "file",
+      "sha256": "4114cae87b40435023fcfacce383f12c7f21c54c710823d5208dd75ee6f53f38",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882325,
+      "size": 270336
+    },
+    "DawnWebGPUCache/data_2": {
+      "kind": "file",
+      "sha256": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882326,
+      "size": 8192
+    },
+    "DawnWebGPUCache/data_3": {
+      "kind": "file",
+      "sha256": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882327,
+      "size": 8192
+    },
+    "DawnWebGPUCache/index": {
+      "kind": "file",
+      "sha256": "0a4ef71caf48937909bb3f255398fd66ae9362e5af4bd942b891fb5af0020c6c",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882323,
+      "size": 262512
+    },
+    "DevToolsActivePort": {
+      "kind": "file",
+      "sha256": "c1ab831b06467e0925fb2e7b49b95b5d31d6e18e831f5589b1d9c671b48f6a58",
+      "mode": "0o100644",
+      "dev": 16777230,
+      "ino": 258882185,
+      "size": 60
+    },
+    "GPUCache/data_0": {
+      "kind": "file",
+      "sha256": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904780,
+      "size": 8192
+    },
+    "GPUCache/data_1": {
+      "kind": "file",
+      "sha256": "f4c3491590bde1bc33406584df630da757ce650bdd48bd5005ee74d27695448b",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904781,
+      "size": 270336
+    },
+    "GPUCache/data_2": {
+      "kind": "file",
+      "sha256": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904782,
+      "size": 8192
+    },
+    "GPUCache/data_3": {
+      "kind": "file",
+      "sha256": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904783,
+      "size": 8192
+    },
+    "GPUCache/index": {
+      "kind": "file",
+      "sha256": "776804067389399e301971ac15cca1b3391472e6ae52f7a0417736ca4e287c20",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904779,
+      "size": 262512
+    },
+    "Local State": {
+      "kind": "file",
+      "sha256": "b83848fe2aa6ff63ff9265510a4774ee525ec339b32b7596d2ec5624a318aab0",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882755,
+      "size": 57
+    },
+    "Local Storage/leveldb/000003.log": {
+      "kind": "file",
+      "sha256": "e1d68d0f671d610febf6451d7cc08c33d64c15fff48898c7c0ecf5566b15c169",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904773,
+      "size": 461
+    },
+    "Local Storage/leveldb/CURRENT": {
+      "kind": "file",
+      "sha256": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904772,
+      "size": 16
+    },
+    "Local Storage/leveldb/LOCK": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904759,
+      "size": 0
+    },
+    "Local Storage/leveldb/LOG": {
+      "kind": "file",
+      "sha256": "652c75b664d0c166c5a8eb6a158f17e09db1fd958364ef7da9628f7aecac2366",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904758,
+      "size": 283
+    },
+    "Local Storage/leveldb/MANIFEST-000001": {
+      "kind": "file",
+      "sha256": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904770,
+      "size": 41
+    },
+    "Network Persistent State": {
+      "kind": "file",
+      "sha256": "f5e224a52f6ad7e0c235d238c3e2983c5c0b314c552f20ff2affb4472ac866f5",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882757,
+      "size": 111
+    },
+    "Preferences": {
+      "kind": "file",
+      "sha256": "b583e3a395f6bc29019a01994cadf43da0c25a617d7817b9d25d4c0a564ae861",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882754,
+      "size": 41
+    },
+    "Session Storage/000003.log": {
+      "kind": "file",
+      "sha256": "ffd700cf04be6fe8d51e2ffb8a2e37bc3fa95a6679a4102fa35e8494c2350eae",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258908667,
+      "size": 49
+    },
+    "Session Storage/CURRENT": {
+      "kind": "file",
+      "sha256": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258908666,
+      "size": 16
+    },
+    "Session Storage/LOCK": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258908664,
+      "size": 0
+    },
+    "Session Storage/LOG": {
+      "kind": "file",
+      "sha256": "17365fcca0ef276df1865a074088c26ae731e9dac6305b5157f8260d33add431",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258908663,
+      "size": 271
+    },
+    "Session Storage/MANIFEST-000001": {
+      "kind": "file",
+      "sha256": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258908665,
+      "size": 41
+    },
+    "Shared Dictionary/cache/index": {
+      "kind": "file",
+      "sha256": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882335,
+      "size": 24
+    },
+    "Shared Dictionary/cache/index-dir/the-real-index": {
+      "kind": "file",
+      "sha256": "dcc244600eb7160d7a4bf12a53fa6295c769c5b1e29bf73953957c5020dcf258",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882339,
+      "size": 48
+    },
+    "Shared Dictionary/db": {
+      "kind": "file",
+      "sha256": "b87da9786c3fb75b92ca41e78f7a8cacba24040a26ad85674782ad2cbf5ad814",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882336,
+      "size": 45056
+    },
+    "Shared Dictionary/db-journal": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882341,
+      "size": 0
+    },
+    "SharedStorage": {
+      "kind": "file",
+      "sha256": "f1c1d714b195aa1795c50ed2db1795613d868a07340cbf0b1a563384fdfebdcf",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883424,
+      "size": 4096
+    },
+    "Trust Tokens": {
+      "kind": "file",
+      "sha256": "96c6bb59ca9c0e33bc09bf2d28b682e1785ee5c6d4f6d15cee322833cc643143",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882337,
+      "size": 36864
+    },
+    "Trust Tokens-journal": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882340,
+      "size": 0
+    },
+    "bootstrap-tmp/electron-renderer.log": {
+      "kind": "file",
+      "sha256": "7a751d47dfd4f4fe19b1ba85463c8496a3be8043aaccd37dff388a57944c62c3",
+      "mode": "0o100644",
+      "dev": 16777230,
+      "ino": 258882176,
+      "size": 12904
+    },
+    "bootstrap-tmp/fusion-electron.log": {
+      "kind": "file",
+      "sha256": "619be1d8170162da38c617c78c38188e95223b22a24aaa640d2f16eaa9b209bd",
+      "mode": "0o100644",
+      "dev": 16777230,
+      "ino": 258882286,
+      "size": 447
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/0655ecda": {
+      "kind": "file",
+      "sha256": "81bd2f1dbec08a12c0b94d9c3e7e9e0b8a4518daa2b09990ebbb22337111f6aa",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882256,
+      "size": 1132
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/077122c4": {
+      "kind": "file",
+      "sha256": "bd1836a5bdf79c3cdf54c76113e9d98ed6890003023599746f1f2600b79afdea",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882266,
+      "size": 1428
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/0dfc1d4d": {
+      "kind": "file",
+      "sha256": "0288ad6d046a1cee5bdc03e30e2041acb1a6422dd7dd8741b2999b9c23f0fb6b",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882233,
+      "size": 2292
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/0f88073a": {
+      "kind": "file",
+      "sha256": "e4886a3afd54366a8f79dc44cb49103fd9af03796979beb9df883c556270703e",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882212,
+      "size": 2292
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/150f4755": {
+      "kind": "file",
+      "sha256": "6029ef3706edb6eb2d42b078fd2b49909222526720289bf1b0f7f85ccabdeb70",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882205,
+      "size": 1820
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/1640165a": {
+      "kind": "file",
+      "sha256": "31742d5b1fc87fcea8e108c3ec5bbb5bb6e13ddba92264cdc3a4802b2e9a9392",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882245,
+      "size": 1052
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/19f11bee": {
+      "kind": "file",
+      "sha256": "92d4a4bab050db2a4194750f03e2fefbdbef7d55d5551566d814be623536146a",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882246,
+      "size": 3484
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/1b6c267b": {
+      "kind": "file",
+      "sha256": "dceb7244e8a62dd6d4034a4182632ff83cf8b1dedb7c93390b38e5f0ab9a4e8a",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882254,
+      "size": 2196
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/1b6cfceb": {
+      "kind": "file",
+      "sha256": "017695bbcd399692e2ae6f8be48d6538c9c71e19a3b11273cdfcf2f72d813335",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882231,
+      "size": 1420
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/1c192005": {
+      "kind": "file",
+      "sha256": "2fc4eccce01cfd1d3c47366b7a6cba6e7f434b83df9026475e241afcf9835677",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882269,
+      "size": 916
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/21720fbc": {
+      "kind": "file",
+      "sha256": "e8ec56d8f13285d4fa5341ed9bbe6d26bf3a34e056216a047ea4d55f72982ff0",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882251,
+      "size": 884
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/223fc457": {
+      "kind": "file",
+      "sha256": "fbf52445ff37e0580641a4b96a266e6b1013bb01b245c0c675529c8072a5c673",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882214,
+      "size": 7172
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/2411af24": {
+      "kind": "file",
+      "sha256": "4d42578d9d3d795718e8ecd3718ebb86d94b1b109ef901983b1c79cd3a421c84",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882226,
+      "size": 916
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/246a8652": {
+      "kind": "file",
+      "sha256": "2e478fd7e00ce5528a5829b317826fa60d931b1f3062e1cdca5050b03f224f25",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882215,
+      "size": 3524
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/248ff18b": {
+      "kind": "file",
+      "sha256": "7f7724344b75043fc81efbd395dfdbeac3685bae66ced319ba7f3f156355e60d",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882237,
+      "size": 3772
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/26d7b246": {
+      "kind": "file",
+      "sha256": "ef858586f6ac5fdd0e3fef307d3d9c61107b66b19dd39f9d1dee4f9d40616a54",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882249,
+      "size": 916
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/29598173": {
+      "kind": "file",
+      "sha256": "a071d478267224e53df55b9f08672f2f6a87a394e40ca7c21fcaa44d726931c1",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882207,
+      "size": 876
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/306554cb": {
+      "kind": "file",
+      "sha256": "51beda5171f2c720d861aed1f8abbcf66108a328e9dd4fac4936ec5ce106c3a6",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882272,
+      "size": 1116
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/31bc4b51": {
+      "kind": "file",
+      "sha256": "09a7e8087a03121525b389bb5e70f652a7e1b523e43bb99e38385def17112a4a",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882228,
+      "size": 916
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/398eb1ef": {
+      "kind": "file",
+      "sha256": "cdc5a1cce2a815f9d715bcb215c16389adf2e5cabc53a924d721e174e19c3874",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882247,
+      "size": 1212
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/3998ea18": {
+      "kind": "file",
+      "sha256": "d32e78ee6d68682640a0a055b47d157295cab264cec1beedc4fc78588c06ebee",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882235,
+      "size": 9620
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/454c08be": {
+      "kind": "file",
+      "sha256": "0fb65db3678f04cc0f24534fde85ffb486270342e61a89e4c0e541147b7cd38f",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882211,
+      "size": 13012
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/47041e08": {
+      "kind": "file",
+      "sha256": "a58904b0ebb5e9067e7e6b07343c2ec1eb9068d360e4de912903beff15fc8501",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882240,
+      "size": 4420
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/48b9a2e3": {
+      "kind": "file",
+      "sha256": "53ba243e795b5ec415663477a3bd135c0c1d85e646907830c06abfb0137d5937",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882257,
+      "size": 2580
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/49a62087": {
+      "kind": "file",
+      "sha256": "352a37b40a99e61d045e13c4d2e8346acc4faa2805377c6728a8a9a46267a37d",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882258,
+      "size": 2324
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/4dbcb496": {
+      "kind": "file",
+      "sha256": "b811ebb775c3fb9a6c228e709370b7ebeef13b2d3ba34bfc9ecc3083ed954238",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882238,
+      "size": 1092
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/4de8c1bf": {
+      "kind": "file",
+      "sha256": "051e80991beeea0827347c9e364ec5aaec020e402d0a14aa6a7280ec6f70aa1b",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882271,
+      "size": 948
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/4ed65fe7": {
+      "kind": "file",
+      "sha256": "3a37ef977228edb8abaacfa09a30e65a3fdbac8b503f41cc5a7f9b9186d83af8",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882252,
+      "size": 916
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/51078357": {
+      "kind": "file",
+      "sha256": "3aa276ef51681e1735f9d02a99aa9899c553da45ab1101569169e1e32a449b3d",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882255,
+      "size": 916
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/5c9623a4": {
+      "kind": "file",
+      "sha256": "903e40a8d304727f20978e419237f5d0306ec9fa27470a56143cf0a29b2786fe",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882213,
+      "size": 2316
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/5ce3c97b": {
+      "kind": "file",
+      "sha256": "65435610119e0aae5db0224317b116dc3b7e7f378988f3306801a85049f45e76",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882227,
+      "size": 940
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/5db4d748": {
+      "kind": "file",
+      "sha256": "6acb7ef07790e9f5b4b021551ec0f1424e36b8f042c97b3777f2bd9978123c1b",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882243,
+      "size": 1388
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/6ce020bb": {
+      "kind": "file",
+      "sha256": "239c6011a0c6eaf0d345b5a47bd97834d6077e67eabea99b3316888737ea1386",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882232,
+      "size": 2364
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/718e1354": {
+      "kind": "file",
+      "sha256": "88e29e4566326eed8d2e13436974f51e4739cd79d3a6dfb6a790d5983add34de",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882236,
+      "size": 8756
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/7492db49": {
+      "kind": "file",
+      "sha256": "c38e00d1c965e35ce6aac78c0aee3f91f603683abd5e08d7863d6c0b788b81f1",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882279,
+      "size": 2604
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/75407596": {
+      "kind": "file",
+      "sha256": "1d6e2302ab5253cec0976b1adeff32dd6811427d7da33883cba46dc2efefa978",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882209,
+      "size": 2564
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/847afa15": {
+      "kind": "file",
+      "sha256": "5b2b9d46a08e143347c4de7effa2e6db8077da1f46fb0b3b03e2d14444a4ebc5",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882210,
+      "size": 2500
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/84d4083b": {
+      "kind": "file",
+      "sha256": "3b0cd24c03dd9a5149b60803562eb172d795130bba82f01d76e52cc266ff65c0",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882250,
+      "size": 2380
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/88b50e90": {
+      "kind": "file",
+      "sha256": "22c8e86cb82c8ccb8d16c94e3baee41637e9604b92978c82b67b2069c907c890",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882221,
+      "size": 1484
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/8b37215e": {
+      "kind": "file",
+      "sha256": "4dc286ba0884f8fcafe329627e875091f7cd4d44e865802736bd8c76100720b9",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882225,
+      "size": 988
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/8e31f510": {
+      "kind": "file",
+      "sha256": "3bd13bd8e6f884c182f9614e6eaa8c5fcec089bab61e3aa4e854d82de4175eff",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882224,
+      "size": 1220
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/8fe23731": {
+      "kind": "file",
+      "sha256": "fe42eea3cf8af5690668786657f903d53f9a1017cfe9f0225315b8a839bf3117",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882248,
+      "size": 1012
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/949b5c94": {
+      "kind": "file",
+      "sha256": "ff7c1ca302f9908f135136da04bbd92fbc980e042e2ccd86b6f656c5af30b2a1",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882259,
+      "size": 8452
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/959a3c83": {
+      "kind": "file",
+      "sha256": "ee889b81f6bdad10a3a5c255e98903e14e2a6374006011b23910f2ecf6640736",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882244,
+      "size": 4788
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/9615f006": {
+      "kind": "file",
+      "sha256": "c22f2a0996a8e9e04dc421504de37c586aa71895a803f7fd88c2d1c9b1a640ee",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882222,
+      "size": 2940
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/980f2fcd": {
+      "kind": "file",
+      "sha256": "dcca6355ca229f0daff997ab4434da53a485f5bfe2a1d18ad2bc4a311869f419",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882229,
+      "size": 948
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/9c16d617": {
+      "kind": "file",
+      "sha256": "2da78a4cbe57738a56bb7a2fd0e17034c34b73a59a7343261c9fbd76623772e4",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882206,
+      "size": 1636
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/9dbc92c2": {
+      "kind": "file",
+      "sha256": "1f2c1780f204f080885f469cc182d31d20d5cb1850517f3f4c4e1fee5b6e9998",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882277,
+      "size": 1388
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/9edc30e0": {
+      "kind": "file",
+      "sha256": "258d9703c162ad19cd313b6c08fb61304c67d56939df8d3fc61914357566f39c",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882275,
+      "size": 3572
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/aae01ffb": {
+      "kind": "file",
+      "sha256": "fbe29c9fe3f2376d8e099f9cc472ae373b087506e71990b158c7fb4c148d4072",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882217,
+      "size": 1956
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/ab6c4841": {
+      "kind": "file",
+      "sha256": "41493457fe760ccdec54d3578269e62de9fd80ee0ff99a05eb7df49fe000d7f3",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882219,
+      "size": 2988
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/afc3f028": {
+      "kind": "file",
+      "sha256": "eb57696a68d1b3beb57acd22f27c146eea043fb614c762a317d72344d15ec64c",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882262,
+      "size": 1076
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/b49b5c7f": {
+      "kind": "file",
+      "sha256": "2c709a6b5832e93a6d42f3c2de703772c923b12d9af1aa36ffee644ef234f07c",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882223,
+      "size": 1996
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/b624a7b7": {
+      "kind": "file",
+      "sha256": "f7290705b12d9265d923031ba0f3e85f26e59c830677a66414abf47ee1825912",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882278,
+      "size": 4316
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/b6d0e37a": {
+      "kind": "file",
+      "sha256": "16844fd9c93b239fed3191a8da5e20990c206eec0e5f32bfbd74d3961692400b",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882260,
+      "size": 7444
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/c3891229": {
+      "kind": "file",
+      "sha256": "ea3438ab66f0080c4fba7d82626e37665e99807aaa4e9e95bb69f955476b9abd",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882274,
+      "size": 876
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/c889005c": {
+      "kind": "file",
+      "sha256": "e41b8adf61b3337203e60c02f1c0d1470a7072cc41602342e18e4d7c86ce9cb6",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882241,
+      "size": 1516
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/ceefbcb8": {
+      "kind": "file",
+      "sha256": "90070f6e5d672381ef2765de68543aa677b5b780b1af0fe8dc26260a2680b855",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882265,
+      "size": 1076
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/d1367827": {
+      "kind": "file",
+      "sha256": "b184fc2814c0cfd8f0049d99af8162237611fbb266e5ca1e165d3a25112f7c43",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882242,
+      "size": 4708
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/d381c602": {
+      "kind": "file",
+      "sha256": "8fe247879f99f268cc0bacfb96bccad3a49a8a7d7a2a09e8d31bb911c01613f7",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882239,
+      "size": 3092
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/d68d97f0": {
+      "kind": "file",
+      "sha256": "01d862afc6c96b6297743ae83b9fcdb9401d4feb181159f1cb71f5baba78ce29",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882273,
+      "size": 1060
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/d7988491": {
+      "kind": "file",
+      "sha256": "3afb870751e4fdee8734e6b6534ead0703e7a5050f789b367e070eb7c77b9809",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882264,
+      "size": 988
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/d8e24cc5": {
+      "kind": "file",
+      "sha256": "7c9d03d4c2fa949027fb5457d4cb3fad233c9ce90e5834a4efd91c3a414f8474",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882220,
+      "size": 1484
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/dea5df01": {
+      "kind": "file",
+      "sha256": "18faf936538cd2e24f83833e8d33ec8c31f982f3601b5f150ea92aac47bbf017",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882230,
+      "size": 1036
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/df704faf": {
+      "kind": "file",
+      "sha256": "8dbf1e97e88ff7acfce9068cbcdd6b55d97f94f6a3a2eee4844f2351dcfdd658",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882270,
+      "size": 1268
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/e21e283a": {
+      "kind": "file",
+      "sha256": "473ea60a0ceb1497122407be7569879e72792be464d212a8097c707535e75324",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882263,
+      "size": 1548
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/e71300ea": {
+      "kind": "file",
+      "sha256": "8fbc10c93345e2306f2c3ffd4837d9a6637b4ed305183524dc661ffa340d9ca7",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882208,
+      "size": 1716
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/eb2270d5": {
+      "kind": "file",
+      "sha256": "92ea46e2c8bc6fa7652229b840969d27b19da13ab0b1055c582d79261ec10c82",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882267,
+      "size": 916
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/eea756eb": {
+      "kind": "file",
+      "sha256": "3b4f597324d436aa14ce3c24ab8f3feecd45f4324f6f30f7929d3b966ef67b49",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882253,
+      "size": 948
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/eec35fdd": {
+      "kind": "file",
+      "sha256": "0fbe84904646c1a6cfe4329783ad0caf5d58becaecc07b3217612bee2b1b7169",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882234,
+      "size": 1140
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/f015c2c7": {
+      "kind": "file",
+      "sha256": "e784b9ba7f59535a4179087df5ae8d4aab106d5e2fd39fe0bc2ec0368dafeb3a",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882216,
+      "size": 1532
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/f207c936": {
+      "kind": "file",
+      "sha256": "81b5d5e846983b286e258e77ba5009b53d0ca5e011a1b0349fff87bae470fa98",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882268,
+      "size": 5756
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/f3e92294": {
+      "kind": "file",
+      "sha256": "169c9fe0e080e0aacd54eb8ff3ff7669a9bcfcbc485dc2e3a34ecce9ec37dc58",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882261,
+      "size": 932
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/f7b19e10": {
+      "kind": "file",
+      "sha256": "00e5b180c3942dfb505d68cd164191261ad78bb016f4e9a8d773a88a3e4d1080",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882218,
+      "size": 79692
+    },
+    "bootstrap-tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/fa64bb03": {
+      "kind": "file",
+      "sha256": "7214798e0a3207057cac7d1683f535761773e2f927c5448a4b2ac3e4f4aec556",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258882276,
+      "size": 1300
+    },
+    "fusion-restart/run-3RgF92/launch.log": {
+      "kind": "file",
+      "sha256": "6ae6024ad0040267aeb730f309d59f52f4b3cec2b7af0451c6f80518150b96bb",
+      "mode": "0o100644",
+      "dev": 16777230,
+      "ino": 258904653,
+      "size": 16920
+    },
+    "fusion-restart/run-3RgF92/target.json": {
+      "kind": "file",
+      "sha256": "8a34dbed36c02d46454bfd3afb5d9180d0985c0f48d3cfcaba6181bed654f664",
+      "mode": "0o100644",
+      "dev": 16777230,
+      "ino": 258904450,
+      "size": 1103
+    },
+    "fusion-restart/run-3RgF92/tmp/electron-renderer.log": {
+      "kind": "file",
+      "sha256": "e722af0eac734930e6ba8d9c29a62155b682d4b16c83d9b4dd43859696ae3ad3",
+      "mode": "0o100644",
+      "dev": 16777230,
+      "ino": 258904654,
+      "size": 9924
+    },
+    "fusion-restart/run-3RgF92/tmp/fusion-electron.log": {
+      "kind": "file",
+      "sha256": "55b62cbcee78c79ee08f27ffe2b8c84877753b173bbd95f81fa67f9aa74e0350",
+      "mode": "0o100644",
+      "dev": 16777230,
+      "ino": 258904752,
+      "size": 759
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/0655ecda": {
+      "kind": "file",
+      "sha256": "7c80663787d3bc204616b80684b0722ed27dda4873858fdef4ff6a1c6cdc1141",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904723,
+      "size": 1132
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/077122c4": {
+      "kind": "file",
+      "sha256": "4bbad7dc17aa6521c1e82b78020ea26f519cf7d7048f0e69e0dc1d6df318939f",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904733,
+      "size": 1428
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/0dfc1d4d": {
+      "kind": "file",
+      "sha256": "b72f125b7c33cb3213628ddbc0b58510a43409447d9cfed8bb5f085042410e75",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904700,
+      "size": 2292
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/0f88073a": {
+      "kind": "file",
+      "sha256": "cd91e9a18d20903f80d54ed7600dcadcf7c8d7adbe4daa1de903d21244e67f73",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904679,
+      "size": 2292
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/150f4755": {
+      "kind": "file",
+      "sha256": "e55cc0c312493061801d3472057b6d95e8945baa35c7844e4230965f5a334478",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904672,
+      "size": 1820
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/1640165a": {
+      "kind": "file",
+      "sha256": "9938b486e142b5656deae07f90bae5ab46d676334bdbbd3a13c44eb09fa7be0d",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904712,
+      "size": 1052
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/19f11bee": {
+      "kind": "file",
+      "sha256": "058be4ea47805a2471ac126ce1c3a9d770a422d1d11aa6ba44143c02d3de9d42",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904713,
+      "size": 3484
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/1b6c267b": {
+      "kind": "file",
+      "sha256": "c018c1476691754902172771d8ff26664320df2b459ba2bafae0d65467d0d682",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904721,
+      "size": 2196
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/1b6cfceb": {
+      "kind": "file",
+      "sha256": "f113a4b2fe82ff02e2c2d65947bb6c74ac7c79a1a37002fcd73180fdc0ddef66",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904698,
+      "size": 1420
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/1c192005": {
+      "kind": "file",
+      "sha256": "44e41061e87a77e7a45de80cc7405b3050411e81445298992c90e4e98c294bad",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904736,
+      "size": 916
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/21720fbc": {
+      "kind": "file",
+      "sha256": "ffd4faede50c10bfa46349f9e6f156a6e29624b9d9c4b7f82b37c35efc7a0fbe",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904718,
+      "size": 884
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/223fc457": {
+      "kind": "file",
+      "sha256": "f092b91738a7154aecc6359a7902df148b926dd37465472a81999e09d70c0367",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904681,
+      "size": 7180
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/2411af24": {
+      "kind": "file",
+      "sha256": "fbbf97e44f44b863496456b94b38d036ca5e0bc526ec355fc2ee3b508ee66b6c",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904693,
+      "size": 916
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/246a8652": {
+      "kind": "file",
+      "sha256": "fca9157924ef2db2f7a043131cbb9bd547ba1ff35a73e2275d6fd895e95be0e6",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904682,
+      "size": 3524
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/248ff18b": {
+      "kind": "file",
+      "sha256": "8870b2ed8222bb40b0ebaa60919bfd152fcbc2b5cf14d9900882692cf2676299",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904704,
+      "size": 3772
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/26d7b246": {
+      "kind": "file",
+      "sha256": "0cf4ba050339915601cd0042978913348281fb18aaf87f773cb6b46693bcd4d4",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904716,
+      "size": 916
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/29598173": {
+      "kind": "file",
+      "sha256": "45a6dc21829682085f225ffc8b67c594eb953e1bff48baf320a26a2d3b41c9c0",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904674,
+      "size": 876
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/306554cb": {
+      "kind": "file",
+      "sha256": "49b1acfc405b686efc02300ab2bb627aaaef6b5150cf3778d6cbf3e3670b7954",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904739,
+      "size": 1116
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/31bc4b51": {
+      "kind": "file",
+      "sha256": "fbf1f7c433e265133cdff033eece609679fb2f47efe94f6b1368d3647e2b3267",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904695,
+      "size": 916
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/398eb1ef": {
+      "kind": "file",
+      "sha256": "bf17eca39270aaee9fcd9d39fbaf3e8298b767c5bf98132631f2f67597ebae6c",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904714,
+      "size": 1212
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/3998ea18": {
+      "kind": "file",
+      "sha256": "c650989892cb2c24a53368ff56a76d788d61f94a0139b77cfcaeb8b14be216d6",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904702,
+      "size": 9620
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/454c08be": {
+      "kind": "file",
+      "sha256": "e1c0c7d053443f4440a0af46d0f41c95d2d5d037a43e4b8f864f5ef6ba090237",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904678,
+      "size": 13012
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/47041e08": {
+      "kind": "file",
+      "sha256": "4630b1150e9336e40823bdfe181f0b647b1abc463b5b66204c41949e65c2fe0e",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904707,
+      "size": 4420
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/48b9a2e3": {
+      "kind": "file",
+      "sha256": "b52559b43df9ab25fb03108f932a4d60aca604d271b15d223da902f3a1b108e3",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904724,
+      "size": 2580
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/49a62087": {
+      "kind": "file",
+      "sha256": "99b271369be83ab160a9dc60773baf364963f21a97d09ffdd12d1247af5b65e5",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904725,
+      "size": 2324
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/4dbcb496": {
+      "kind": "file",
+      "sha256": "1d893a72464f46f2cdad058e75bf8383e8ea33eae9926ed33d87b9eb85f88236",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904705,
+      "size": 1092
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/4de8c1bf": {
+      "kind": "file",
+      "sha256": "b5491bac9919a8ca4d02b27a0820ec6523a8fe601b7d228833d968793b633c81",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904738,
+      "size": 948
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/4ed65fe7": {
+      "kind": "file",
+      "sha256": "4470ad12e01238e4e3c29b33bf6ea1aced45050c1707412f44e12e22f0bc6a59",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904719,
+      "size": 916
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/51078357": {
+      "kind": "file",
+      "sha256": "44f08197554da1e7f6046bc7a7b1772d13e4f64d5bae73a5d1e1afbc5225412e",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904722,
+      "size": 916
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/5c9623a4": {
+      "kind": "file",
+      "sha256": "7c0592069732a36c7abca56da26dec97269a11e5848c1c49cfd92a80e2d225e0",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904680,
+      "size": 2316
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/5ce3c97b": {
+      "kind": "file",
+      "sha256": "f1b56cf91157abaf167779e8fc65e1cfc4d7a00d88ff6564ad4d7e30a394d2e3",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904694,
+      "size": 940
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/5db4d748": {
+      "kind": "file",
+      "sha256": "4f1367579494104098896b7f26b3bb306e2de0d120db68c83d31050d6b4f5e23",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904710,
+      "size": 1388
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/6ce020bb": {
+      "kind": "file",
+      "sha256": "182e53efe59313abbdaad9f7443bcc351d779ae45b6bdbf16a61d8b6e122b866",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904699,
+      "size": 2364
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/718e1354": {
+      "kind": "file",
+      "sha256": "46699b1021e1c619ae2669c06df5763523d73ba57e0c16df97fdc21cd0097006",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904703,
+      "size": 8756
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/7492db49": {
+      "kind": "file",
+      "sha256": "9f7f35f6696643aa97d59b5a98a022a9964525bc7d8235973be4be3771032c33",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904746,
+      "size": 2604
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/75407596": {
+      "kind": "file",
+      "sha256": "8fc76eb30124e46cec3ef4c3b16d0ea5aef5bf25bf8c371316c56ea0e03e1a91",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904676,
+      "size": 2564
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/847afa15": {
+      "kind": "file",
+      "sha256": "5b1b0dd89b0c685cb196514abcd50c311a3fae1d5bde1772f2104f96acd51c9a",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904677,
+      "size": 2500
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/84d4083b": {
+      "kind": "file",
+      "sha256": "39ac148ed0edf10b0fc42e709902bc454a83747bfeb86e83d170b3f3e53f47e9",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904717,
+      "size": 2380
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/88b50e90": {
+      "kind": "file",
+      "sha256": "890248159282d47ed88c33c8279499f9afe91f03a892d0de714cf1de99c4a096",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904688,
+      "size": 1484
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/8b37215e": {
+      "kind": "file",
+      "sha256": "b08afe66cec9f20b4a00b78f49d5c7c6ea2bae953fc34295042e4180f20869ea",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904692,
+      "size": 988
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/8e31f510": {
+      "kind": "file",
+      "sha256": "d17a5138f82b3f9573970d5fd5b4bcbd39d2549cb653e1b119cc94014c7a8291",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904691,
+      "size": 1220
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/8fe23731": {
+      "kind": "file",
+      "sha256": "ca10d9422529940ec9ea98cad22b09c37f9d9eb33238c67497b10e7ea639bb9d",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904715,
+      "size": 1012
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/949b5c94": {
+      "kind": "file",
+      "sha256": "e4d8041bdfad89b80a4b8e797fbd19f0823c2fedb89ee83092a296a1c9ef6564",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904726,
+      "size": 8452
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/959a3c83": {
+      "kind": "file",
+      "sha256": "e14a2bcf7a3069298a0ee80f3d0cf4d59af6773fab7d5a1c078387d7fef89267",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904711,
+      "size": 4788
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/9615f006": {
+      "kind": "file",
+      "sha256": "7a1f3c6ee666c72fe177e423465d61d21396a673d485a450e02b70d8b0af3d51",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904689,
+      "size": 2940
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/980f2fcd": {
+      "kind": "file",
+      "sha256": "f9dd62379e6080ae23376b88b098585a66520d37426bede57c9ef5dd2fd16d9b",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904696,
+      "size": 948
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/9c16d617": {
+      "kind": "file",
+      "sha256": "d3ae9188d8fc6799413ee88d96de8891678121d8beabcb38906fd0d7301c2927",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904673,
+      "size": 1636
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/9dbc92c2": {
+      "kind": "file",
+      "sha256": "1217a2ee0bbfbda72641ae7649b18ddd07be2cf77f2c9ea547901c0fca506bfb",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904744,
+      "size": 1388
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/9edc30e0": {
+      "kind": "file",
+      "sha256": "1a22abfdbe7f9d623af4acc1e09d39c942e79826e322da7113728a465230f946",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904742,
+      "size": 3572
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/aae01ffb": {
+      "kind": "file",
+      "sha256": "fba10ff23cba641f4413ea77ccc230ce3b70a09617343ca024a69c3fc3b1a4f1",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904684,
+      "size": 1956
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/ab6c4841": {
+      "kind": "file",
+      "sha256": "e68c0ef887ece7edbc166181bbbc86d857d163f7b26729e5f0f7685319ce0c11",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904686,
+      "size": 2988
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/afc3f028": {
+      "kind": "file",
+      "sha256": "409c7622ddc17886cea20a3c04e3af2d81086d85573cc9184b7f7ff99e732171",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904729,
+      "size": 1076
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/b49b5c7f": {
+      "kind": "file",
+      "sha256": "b6e75fb1e6e7458c385351ff3292d419d740724082155d575a0830f3da0381f6",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904690,
+      "size": 1996
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/b624a7b7": {
+      "kind": "file",
+      "sha256": "5b343fa55dc34eadffa1bf95120bd75b57b8cac9484145ba1613cf1c684e7007",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904745,
+      "size": 4316
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/b6d0e37a": {
+      "kind": "file",
+      "sha256": "35028c619717e35c770441bdb884715aecf4edff4994519f47066ec9ab33a221",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904727,
+      "size": 7444
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/c3891229": {
+      "kind": "file",
+      "sha256": "767c90e5a779ad15b19825d0d2310038ddd97bb8bafe55b8fe26f2bd21b8825b",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904741,
+      "size": 876
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/c889005c": {
+      "kind": "file",
+      "sha256": "4e4d33213c36696b255a42068ddfaed8fa85f0a0b047ecf791a9aa8d489331dd",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904708,
+      "size": 1516
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/ceefbcb8": {
+      "kind": "file",
+      "sha256": "72b11cf4bb244c0b9ba240450ca6495627229f8be8235e4e89d5e5185162ef5d",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904732,
+      "size": 1076
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/d1367827": {
+      "kind": "file",
+      "sha256": "138ada2f4e48484ccf238349ade37acebb6289f89092ff3b4993a33a43dd5da5",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904709,
+      "size": 4708
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/d381c602": {
+      "kind": "file",
+      "sha256": "62bd11c97bee26c11e0df16d420138ad82b831404f2436ad0333bf7f70f0994e",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904706,
+      "size": 3092
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/d68d97f0": {
+      "kind": "file",
+      "sha256": "e4db29546454b94a304f0a17d414b9c968135f842095ee131e6d74beeb42de48",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904740,
+      "size": 1060
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/d7988491": {
+      "kind": "file",
+      "sha256": "c1f1e7d613d9deea0703fef79e993bbcb4da94a201495b3c98c9f8786390f66c",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904731,
+      "size": 988
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/d8e24cc5": {
+      "kind": "file",
+      "sha256": "292e111ebf775e61046ce9a0a0b6c672eec23c6103dc59aa7263e579505c29f5",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904687,
+      "size": 1484
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/dea5df01": {
+      "kind": "file",
+      "sha256": "ffc4b0e300ab5e7f6ac88f6e0133b43307a3482b7e5d176fde88d1d34f26d7db",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904697,
+      "size": 1036
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/df704faf": {
+      "kind": "file",
+      "sha256": "eedf7ff6ac7e95f463d2d0116f36c4d0582a702bf7aca9bdf837bbbcad7adcb4",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904737,
+      "size": 1268
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/e21e283a": {
+      "kind": "file",
+      "sha256": "16eb1707e572435486e6aa62b72f04abd0efdb93d816df6b3f537e41eea5a7f5",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904730,
+      "size": 1548
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/e71300ea": {
+      "kind": "file",
+      "sha256": "8f4948523705908773c932646b971e17c582bdcc3f7064bebb17f91e5a5a8d98",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904675,
+      "size": 1716
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/eb2270d5": {
+      "kind": "file",
+      "sha256": "88b8e0c8a194aaf06585b82fa9f793e04a97da9793a0ec3f982eccb0a878e18f",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904734,
+      "size": 916
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/eea756eb": {
+      "kind": "file",
+      "sha256": "37d14e6723d1edda22d0c0f5a69aa7de226664c268bde006d2cfc4fc9c3181e3",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904720,
+      "size": 948
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/eec35fdd": {
+      "kind": "file",
+      "sha256": "a6e2b3ec7d84ce92df1bc52a3d44db9c4f826e5987092ae8ea0d4958f9902f01",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904701,
+      "size": 1140
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/f015c2c7": {
+      "kind": "file",
+      "sha256": "1112d3204a816af06047194d818af6a5d054f044d7d558c92a6f106da34e407b",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904683,
+      "size": 1532
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/f207c936": {
+      "kind": "file",
+      "sha256": "3a10d9d751d20e9b74f7ba7dbcffdf3ad47cf71c78f0e53d0eb26417702b4bb8",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904735,
+      "size": 5756
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/f3e92294": {
+      "kind": "file",
+      "sha256": "d4bb83fb63bed1138c0d99015892c7e24bb08c36301b26b5ed57bd8e2f8bd191",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904728,
+      "size": 932
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/f7b19e10": {
+      "kind": "file",
+      "sha256": "2b434e89dc0b89fa31f68ed97d85c7adc5cf046deb99d68abe6a8096c2f40916",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904685,
+      "size": 79692
+    },
+    "fusion-restart/run-3RgF92/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/fa64bb03": {
+      "kind": "file",
+      "sha256": "290204431232f927faac7701f34655f522b85de38406c6eca5522891ba679a05",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258904743,
+      "size": 1300
+    },
+    "fusion-restart/run-3RgF92/verified.json": {
+      "kind": "file",
+      "sha256": "b8f694ee4352040ae864ac3eeade91616d3600f97eeed71ba4a94b8e2d14027d",
+      "mode": "0o100644",
+      "dev": 16777230,
+      "ino": 258905095,
+      "size": 3016
+    },
+    "fusion-restart/run-JgJIlL/launch.log": {
+      "kind": "file",
+      "sha256": "6f606ddccc3013e32eebb51c29a04b855edad77422e3fe2bac85ef7ff1ef9851",
+      "mode": "0o100644",
+      "dev": 16777230,
+      "ino": 258883126,
+      "size": 33093
+    },
+    "fusion-restart/run-JgJIlL/target.json": {
+      "kind": "file",
+      "sha256": "8a34dbed36c02d46454bfd3afb5d9180d0985c0f48d3cfcaba6181bed654f664",
+      "mode": "0o100644",
+      "dev": 16777230,
+      "ino": 258882915,
+      "size": 1103
+    },
+    "fusion-restart/run-JgJIlL/tmp/electron-renderer.log": {
+      "kind": "file",
+      "sha256": "20b56fa1642397b4c1b11afe666904de4317969619c735bdf57cd40d2163b116",
+      "mode": "0o100644",
+      "dev": 16777230,
+      "ino": 258883128,
+      "size": 20144
+    },
+    "fusion-restart/run-JgJIlL/tmp/fusion-electron.log": {
+      "kind": "file",
+      "sha256": "21ed11378b4dbcb455cef7209bc3c4f5912c6083444a93a70f455ffbce28dab0",
+      "mode": "0o100644",
+      "dev": 16777230,
+      "ino": 258883223,
+      "size": 1320
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/0655ecda": {
+      "kind": "file",
+      "sha256": "c23c76becf3260b378b1034bbad103d6522bceb6882118749e77409afb46fb20",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883194,
+      "size": 1132
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/077122c4": {
+      "kind": "file",
+      "sha256": "cdabe3396a8c495f9b19efb18566a0a297d1ee3d5ec3149ef40fdba470debe7d",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883204,
+      "size": 1428
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/0dfc1d4d": {
+      "kind": "file",
+      "sha256": "d603ae06e7e1ac473b276da0bfbea955c8df4b5b72815e439a52b438925e5d9a",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883171,
+      "size": 2292
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/0f88073a": {
+      "kind": "file",
+      "sha256": "363850ff05447743d022b1947e0ac90ea0ea2266c3753a205f5c6063080b1a87",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883150,
+      "size": 2292
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/150f4755": {
+      "kind": "file",
+      "sha256": "1a4c2c505daeefe9784d1659fca38ccc4e6d581fe446f4c6b8bfd6e6d27b1461",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883143,
+      "size": 1820
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/1640165a": {
+      "kind": "file",
+      "sha256": "5a9986d6c199af0c2fe9aaeb2bc61cbb9a5751fd3b83d68a01f463d01c707795",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883183,
+      "size": 1052
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/19f11bee": {
+      "kind": "file",
+      "sha256": "8c86a600cf436e802cfabd6f4aa2d80a4f0cb77ddae11d0353bb29ac92e4c154",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883184,
+      "size": 3484
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/1b6c267b": {
+      "kind": "file",
+      "sha256": "f415e55f41591572233cdbf13c05e3acfd4f2965b2a5b690df33385e69192138",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883192,
+      "size": 2196
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/1b6cfceb": {
+      "kind": "file",
+      "sha256": "7323f0d043998a9cce5cf6b3e3141ffc6929c64f6e64e821a3c81ac5ce41c083",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883169,
+      "size": 1420
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/1c192005": {
+      "kind": "file",
+      "sha256": "13eabda012a133bd3ed943b6f9d02592d19a4b8e507175abcf8f6a13f74875be",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883207,
+      "size": 916
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/21720fbc": {
+      "kind": "file",
+      "sha256": "1cf5c6340b14dec6fa6828b030b37788c19a233336b16f49c180ee2ccb271430",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883189,
+      "size": 884
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/223fc457": {
+      "kind": "file",
+      "sha256": "08cd4ba3344c095a86d829bb074a0ca92ef12ccbaf6106f6ff5e9b4038b7e1cf",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883152,
+      "size": 7172
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/2411af24": {
+      "kind": "file",
+      "sha256": "c4b672f819f40490cca805011704722c8f92a26ad176684b3e18d777d17e178e",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883164,
+      "size": 916
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/246a8652": {
+      "kind": "file",
+      "sha256": "cbea57c3b7855417cafb0df29ff6b2717f154e6c0408235a854751d4e988ad12",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883153,
+      "size": 3524
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/248ff18b": {
+      "kind": "file",
+      "sha256": "0a6801e9d25dad2767697cd9557b58ba3a005161a2f4c6c601692a1b49b2285d",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883175,
+      "size": 3772
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/26d7b246": {
+      "kind": "file",
+      "sha256": "650f1f103c0dd68a6674421d70ce047395f24d8b709763289d87b93caeaffef2",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883187,
+      "size": 916
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/29598173": {
+      "kind": "file",
+      "sha256": "fe3261e105e483b27c318f2fbc867a6bc5d4eac2c81cfd7398c93b6394d8a7f0",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883145,
+      "size": 876
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/306554cb": {
+      "kind": "file",
+      "sha256": "1826dbb3b2bd017c37a8599824077ba56ff8ff035bb3212f0f201dd83a78a3e8",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883210,
+      "size": 1116
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/31bc4b51": {
+      "kind": "file",
+      "sha256": "d3c6b1d0e6c156f84b898cf1bfb55049f9cce2b0069a2947519c19e4acaaff2f",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883166,
+      "size": 916
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/398eb1ef": {
+      "kind": "file",
+      "sha256": "60793259ef18f5376d2cb23a87f0189755a8a727ac9707bd9f25dc9723156fd9",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883185,
+      "size": 1212
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/3998ea18": {
+      "kind": "file",
+      "sha256": "a3a9420b61390fc02512d8a1ac4992e683072c369a3b98a3138435d4bf1adc30",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883173,
+      "size": 9620
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/454c08be": {
+      "kind": "file",
+      "sha256": "0281e2fc70c8c401d497b50ad1d97fe547558961a9f31ed29a146813f3808915",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883149,
+      "size": 13012
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/47041e08": {
+      "kind": "file",
+      "sha256": "02a445c229f5be33f9eb1642b1a0619f029cf2d42b0c20a02aab53e414710131",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883178,
+      "size": 4420
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/48b9a2e3": {
+      "kind": "file",
+      "sha256": "da738ddd00b881dfedb0a9ca80b98a29478510f9fca434484780c5bda7b56adf",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883195,
+      "size": 2580
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/49a62087": {
+      "kind": "file",
+      "sha256": "d55746871542f2e142b0815454d2fb545383e3ecb51405043f1365bc2487e05d",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883196,
+      "size": 2324
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/4dbcb496": {
+      "kind": "file",
+      "sha256": "bc562c3fe3bb2c0ef75116b7e3832d4eba8f782e7aed063dccaf39db7093c772",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883176,
+      "size": 1092
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/4de8c1bf": {
+      "kind": "file",
+      "sha256": "59f3f424746d1d49d4a14a6fe728d8cde1fb3f5515d375fcc89761125f5c4117",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883209,
+      "size": 948
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/4ed65fe7": {
+      "kind": "file",
+      "sha256": "5678398e7186fcfbfa191ade35021ebfb1260ae19513a597667e48935af14b62",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883190,
+      "size": 916
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/51078357": {
+      "kind": "file",
+      "sha256": "1df7fbbe06f492ceeff7f850faa8af1f59bfaaf4ed8300254d6170f9eb918c09",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883193,
+      "size": 916
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/5c9623a4": {
+      "kind": "file",
+      "sha256": "01dde648f0d92280f2dc45ade2f8991196690bceb44a0496556ceea7dcaf0dd8",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883151,
+      "size": 2316
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/5ce3c97b": {
+      "kind": "file",
+      "sha256": "6a807a4fc465279ad2fa4d553155a33a16bf90e0bc900e0877a3b03688971ffe",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883165,
+      "size": 940
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/5db4d748": {
+      "kind": "file",
+      "sha256": "7f041f359589df5fe8d78068eeec028d87cc319c4ee59f699f5505c56e9cc9d8",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883181,
+      "size": 1388
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/6ce020bb": {
+      "kind": "file",
+      "sha256": "e1f488cd84021299929c0967dd53cbd1da56d35b1bdac5d5540f6b03b026dd40",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883170,
+      "size": 2364
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/718e1354": {
+      "kind": "file",
+      "sha256": "a9d50550b18dd22a06ba0fa3532c093720f62e02ca864ad4763f70f529f9cbc5",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883174,
+      "size": 8756
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/7492db49": {
+      "kind": "file",
+      "sha256": "ae2a33f53ea41981e096df7fe32be3e57578cd86f6a3f78dab2f2c773aff62bf",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883217,
+      "size": 2604
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/75407596": {
+      "kind": "file",
+      "sha256": "aa049006a0ef54581003eb319dfc756ab2280b0523be880b95cff50118c6b4fe",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883147,
+      "size": 2564
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/847afa15": {
+      "kind": "file",
+      "sha256": "a9700b95c0a68a41f67b3fc38b5b718c5c32852e67383dc765d56d216c640865",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883148,
+      "size": 2500
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/84d4083b": {
+      "kind": "file",
+      "sha256": "fff9d77b55a3bc273fb91fe47b014d1a2ff125d8ff0217ecc6637545e4feb839",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883188,
+      "size": 2380
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/88b50e90": {
+      "kind": "file",
+      "sha256": "b011f06e07032af9dcb3d472ccde71adb6349dfce62039d8520fba92acca01c9",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883159,
+      "size": 1484
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/8b37215e": {
+      "kind": "file",
+      "sha256": "916950227d59f0c621cbf1648610c7f5af6e93496fa012d96503a75b1cca9110",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883163,
+      "size": 988
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/8e31f510": {
+      "kind": "file",
+      "sha256": "7205b80e81f4abe0b861012b084f2e6be39712e3cdd616b65f0dcb606373a70e",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883162,
+      "size": 1220
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/8fe23731": {
+      "kind": "file",
+      "sha256": "ef040c4e78d423ecbfa1196368da1f399b2d58f98a5f455920a9b495285555a3",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883186,
+      "size": 1012
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/949b5c94": {
+      "kind": "file",
+      "sha256": "756d8fa2c6a8f2df755a676e969520044623775411564b7251d1c90184c67d19",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883197,
+      "size": 8452
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/959a3c83": {
+      "kind": "file",
+      "sha256": "7f29d3ca2293d3bec9eaefcdb75983dd3397e5bba48b9432c1e76a829c66bd02",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883182,
+      "size": 4788
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/9615f006": {
+      "kind": "file",
+      "sha256": "94005763e7b75edeadfc9b31fde93da433195ffba61a59c2ca01c29027c047e6",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883160,
+      "size": 2940
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/980f2fcd": {
+      "kind": "file",
+      "sha256": "0bba4e34027ad4beccc2f4e8b6ca28d8174bcb118d417f5266660648119d36ee",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883167,
+      "size": 948
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/9c16d617": {
+      "kind": "file",
+      "sha256": "b51b890d1fb738ab541ffecf7930a6610a6fee648213a2c7d62bd0d0b4e1f975",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883144,
+      "size": 1636
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/9dbc92c2": {
+      "kind": "file",
+      "sha256": "48153a6e21a0bd047ff92bdc606d4c22873f16e722a0bced1dc2384386f77d21",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883215,
+      "size": 1388
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/9edc30e0": {
+      "kind": "file",
+      "sha256": "7b31cfd587d5ba0cb590df440eab2bb94b5b059e7ce2a96b2526d1fc4212a4fd",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883213,
+      "size": 3572
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/aae01ffb": {
+      "kind": "file",
+      "sha256": "322badb501aba69ceeec791533836afa09b8092d41d4d8b1453b6ad88e967d69",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883155,
+      "size": 1956
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/ab6c4841": {
+      "kind": "file",
+      "sha256": "c29dd0fecd0eeaf926ac631a358ee4c25be99016bb61edd50668fc81468c917b",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883157,
+      "size": 2988
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/afc3f028": {
+      "kind": "file",
+      "sha256": "a09919e226f586b35d10e68ac304be524f4f1f8894ba39bbfaac826eca4a1b5b",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883200,
+      "size": 1076
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/b49b5c7f": {
+      "kind": "file",
+      "sha256": "dd6570a4c433178a10d30501350841e19e1a17fd87adcb3db7fb07aca27f5031",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883161,
+      "size": 1996
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/b624a7b7": {
+      "kind": "file",
+      "sha256": "3c5cdd64b8fc7e682b6f5ef58b68a1dad7263d246fa8668e2a0c32447bcb379c",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883216,
+      "size": 4316
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/b6d0e37a": {
+      "kind": "file",
+      "sha256": "825e4eb354c7142192f000c13b519b97d37e4453b179e00ff24cfd3f39f475b8",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883198,
+      "size": 7444
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/c3891229": {
+      "kind": "file",
+      "sha256": "0d494bd7547c43b1dfd2e90b908ba845231e90d225aae73ae10eaa9c106f7d75",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883212,
+      "size": 876
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/c889005c": {
+      "kind": "file",
+      "sha256": "b0a0240558242699388db42040d1bc402c25dc4d3568ae7aa9852393b39179ea",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883179,
+      "size": 1516
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/ceefbcb8": {
+      "kind": "file",
+      "sha256": "783ae46678a56f14de0ad1fda0c42451fe85aa0d18009419705b8808779c9327",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883203,
+      "size": 1076
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/d1367827": {
+      "kind": "file",
+      "sha256": "8ecd6ad2e49642ec07f5fc28d01e83af0566905429469c97be7a74c78cce41e0",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883180,
+      "size": 4708
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/d381c602": {
+      "kind": "file",
+      "sha256": "781b543cb69a7fd7e050a26883655bbc732574ff5287f8d9b67151bda84a75e8",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883177,
+      "size": 3092
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/d68d97f0": {
+      "kind": "file",
+      "sha256": "288e0c0c476e6c83628a05e9a74188563f1ba631962697af3848c9040c921a89",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883211,
+      "size": 1060
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/d7988491": {
+      "kind": "file",
+      "sha256": "09509f33713bcc1de4350f5051fed2ba588e08d53cd2879bbd51b620953f4667",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883202,
+      "size": 988
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/d8e24cc5": {
+      "kind": "file",
+      "sha256": "737a017c98944040b4d602572e516f15e78d9ae48c7ecd1299bbf35989bf18af",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883158,
+      "size": 1484
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/dea5df01": {
+      "kind": "file",
+      "sha256": "f6b33881eb416153051114a4de322c3ca9f508baac18414d0d9de7ab52169ee0",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883168,
+      "size": 1036
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/df704faf": {
+      "kind": "file",
+      "sha256": "1b2ae36091882f78a1082260eebb2fcb93e48d34635dd1cc46d7c58029a40ea8",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883208,
+      "size": 1268
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/e21e283a": {
+      "kind": "file",
+      "sha256": "0efe5905f7aad828506cea9937bdb4a5b8e93e3f7dfb765a03ed1a815acfb9df",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883201,
+      "size": 1548
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/e71300ea": {
+      "kind": "file",
+      "sha256": "7f7556601f5e65fc63f9a17c05dbb29870c577e2f5d7579b8313d46403bb1a07",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883146,
+      "size": 1716
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/eb2270d5": {
+      "kind": "file",
+      "sha256": "4843c6f81e23f0880be8f40559fcc7210d0f1cae32fa2bb55567c88cded3f307",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883205,
+      "size": 916
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/eea756eb": {
+      "kind": "file",
+      "sha256": "2c50d33ad4cc82a2f4a8a8d20b1a83c1c7842b6531c291a45c3d98273f10011e",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883191,
+      "size": 948
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/eec35fdd": {
+      "kind": "file",
+      "sha256": "c5a4159883c4dec98a5de714fb31a723398e990f81fe342f9fe05c083caa6ae7",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883172,
+      "size": 1140
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/f015c2c7": {
+      "kind": "file",
+      "sha256": "47b8dd0e41380770d28c0d71dc21c017d533ca44344b8693ec9aebdb5810972c",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883154,
+      "size": 1532
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/f207c936": {
+      "kind": "file",
+      "sha256": "198592201533f675fb22a8eb51dcef0125050e96ee499c53f4164d22eea5b3f6",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883206,
+      "size": 5756
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/f3e92294": {
+      "kind": "file",
+      "sha256": "8555092727d98efa4e85286bd970a071ce91a765d7fe235b1e2ce616c14dff11",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883199,
+      "size": 932
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/f7b19e10": {
+      "kind": "file",
+      "sha256": "b5efab6bef23a6575dc7799141c0ed195e1ec98de2f4b320c9915a28982eea59",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883156,
+      "size": 79692
+    },
+    "fusion-restart/run-JgJIlL/tmp/node-compile-cache/v25.6.1-arm64-392347a2-501/fa64bb03": {
+      "kind": "file",
+      "sha256": "5c6d25e9aebc79eabe0ef5f38d57b0cff254d9fa9ee81d5865d6c555199ffe61",
+      "mode": "0o100600",
+      "dev": 16777230,
+      "ino": 258883214,
+      "size": 1300
+    },
+    "fusion-restart/run-JgJIlL/verified.json": {
+      "kind": "file",
+      "sha256": "fd4d017820dcf49957fb4277a6065509f46792b37abde90cc1dba00d9ccbee26",
+      "mode": "0o100644",
+      "dev": 16777230,
+      "ino": 258883282,
+      "size": 3016
+    },
+    "server-data/fusion.db": {
+      "kind": "file",
+      "sha256": "661f95e3e11d564d901d6ec93a305ff341fc06765b3f09b081ad8fd02af267f9",
+      "mode": "0o100644",
+      "dev": 16777230,
+      "ino": 258882030,
+      "size": 1085440
+    },
+    "server-live.log": {
+      "kind": "file",
+      "sha256": "6c3a28bd98b05e3500b8bfa125bd52ae9ba8c0e33d1682e7e9d002822978e142",
+      "mode": "0o100644",
+      "dev": 16777230,
+      "ino": 258882193,
+      "size": 102621
+    }
+  }
+}

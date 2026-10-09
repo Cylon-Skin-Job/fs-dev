@@ -1,0 +1,56 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e5]:
+      - complementary [ref=e6]:
+        - generic [ref=e7]:
+          - button "Hide threads" [ref=e8]: dock_to_right
+          - combobox "Thread view" [ref=e9] [cursor=pointer]:
+            - option "Active Threads" [selected]
+            - option "Archive"
+        - button "edit_squareNew chat" [ref=e10]
+        - separator [ref=e11]
+        - generic [ref=e12]:
+          - generic [ref=e13]:
+            - generic [ref=e14]:
+              - generic "Wiki Alpha" [ref=e15]: Wiki Alpha●
+              - button "More options" [expanded] [ref=e16]: more_vert
+            - generic [ref=e18]: 1 msgs · 12/31/2025
+          - generic [ref=e19]:
+            - generic [ref=e20]:
+              - generic "Wiki Beta" [ref=e21]: Wiki Beta●
+              - button "More options" [ref=e22]: more_vert
+            - generic [ref=e24]: 1 msgs · 12/31/2025
+      - generic [ref=e25]:
+        - button "More options" [ref=e28]: event_list
+        - generic [ref=e32]: WA
+        - generic [ref=e34]:
+          - textbox "Ask about wiki-viewer..." [ref=e38]
+          - generic [ref=e39]:
+            - generic [ref=e40]:
+              - button "Add" [ref=e42] [cursor=pointer]:
+                - generic [ref=e43]: add
+              - button "Mode" [ref=e45]: shield_lockMode
+            - generic [ref=e46]:
+              - 'button "Context usage: 0%" [ref=e48]'
+              - button "DeepSeek V4 Flash" [ref=e50]: DeepSeek V4 Flashkeyboard_arrow_down
+              - button "Voice input (click to open)" [ref=e52] [cursor=pointer]:
+                - generic [ref=e53]: mic
+              - button "Send message" [ref=e55]: arrow_upward
+    - generic [ref=e57]: native wiki-viewer surface
+  - menu "Thread options" [ref=e58]:
+    - menuitem "Rename" [active] [ref=e59] [cursor=pointer]:
+      - generic [ref=e60]: edit
+      - generic [ref=e61]: Rename
+    - menuitem "Copy Link" [ref=e62] [cursor=pointer]:
+      - generic [ref=e63]: link_2
+      - generic [ref=e64]: Copy Link
+    - menuitem "View Markdown" [ref=e65] [cursor=pointer]:
+      - generic [ref=e66]: docs
+      - generic [ref=e67]: View Markdown
+    - menuitem "Delete" [ref=e68] [cursor=pointer]:
+      - generic [ref=e69]: delete
+      - generic [ref=e70]: Delete
+```

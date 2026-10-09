@@ -1,0 +1,23 @@
+{
+  "status": "failed",
+  "windows": [],
+  "cycles": [],
+  "samples": [],
+  "durationMs": 2700000,
+  "errors": [],
+  "observationAdapter": {
+    "renderer": "index-D_35dGzh.js",
+    "server": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790305241082-5dc52f00a6/soak-server-resources.ndjson",
+    "mode": "read-only counts; fixture-only stage append"
+  },
+  "failure": {
+    "message": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.rv-panel[data-panel=\"capture-viewer\"].active').locator('[data-chat-thread-id=\"2026-09-24T20-00-44-245\"] textarea.rv-chat-input') to be visible\u001b[22m\n",
+    "stack": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.rv-panel[data-panel=\"capture-viewer\"].active').locator('[data-chat-thread-id=\"2026-09-24T20-00-44-245\"] textarea.rv-chat-input') to be visible\u001b[22m\n\n    at newGroup (/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/soak-actions.mjs:30:108)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/soak-electron.mjs:87:58"
+  },
+  "lingeringOwnedPids": [],
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  }
+}

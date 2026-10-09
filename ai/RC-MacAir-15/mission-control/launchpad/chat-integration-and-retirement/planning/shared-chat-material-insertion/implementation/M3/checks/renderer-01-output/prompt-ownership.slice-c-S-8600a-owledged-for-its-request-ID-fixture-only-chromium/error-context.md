@@ -1,0 +1,132 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - generic [ref=e7]: AI source
+        - button "AI source" [ref=e8] [cursor=pointer]:
+          - generic [ref=e9]: "Local: RC-MacAir-15"
+          - generic: arrow_drop_down
+      - generic [ref=e10]: Connected
+    - generic [ref=e11]:
+      - button "chevron_left" [ref=e12] [cursor=pointer]:
+        - generic [ref=e13]: chevron_left
+      - button "Chat Transport Fixture" [ref=e14] [cursor=pointer]:
+        - generic [ref=e15]: Chat Transport Fixture
+      - button "chevron_right" [ref=e16] [cursor=pointer]:
+        - generic [ref=e17]: chevron_right
+    - generic [ref=e18]:
+      - button "Take screenshot" [ref=e19] [cursor=pointer]:
+        - generic [ref=e20]: control_camera
+      - button "Expand content" [ref=e21] [cursor=pointer]:
+        - generic [ref=e22]: first_page
+      - button "Reduce content" [ref=e23] [cursor=pointer]:
+        - generic [ref=e24]: last_page
+      - generic [ref=e25]:
+        - button "Open workspace controls" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: discover_tune
+        - menu "macOS Connectors":
+          - generic:
+            - generic: hub
+            - generic: macOS Connectors
+          - menuitem "mail Apple Mail Off Enable Apple Mail":
+            - generic: mail
+            - generic:
+              - generic: Apple Mail
+            - generic:
+              - generic "Off"
+              - button "Enable Apple Mail"
+          - menuitem "calendar_month Apple Calendar Off Enable Apple Calendar":
+            - generic: calendar_month
+            - generic:
+              - generic: Apple Calendar
+            - generic:
+              - generic "Off"
+              - button "Enable Apple Calendar"
+          - menuitem "note_stack Apple Notes Off Enable Apple Notes":
+            - generic: note_stack
+            - generic:
+              - generic: Apple Notes
+            - generic:
+              - generic "Off"
+              - button "Enable Apple Notes"
+          - menuitem "task_alt Apple Reminders Off Enable Apple Reminders":
+            - generic: task_alt
+            - generic:
+              - generic: Apple Reminders
+            - generic:
+              - generic "Off"
+              - button "Enable Apple Reminders"
+          - generic:
+            - button "Close"
+  - navigation [ref=e28]:
+    - button "folder" [ref=e29] [cursor=pointer]:
+      - generic [ref=e30]: folder
+  - generic [ref=e32]:
+    - complementary [ref=e33]:
+      - generic [ref=e34]:
+        - button "Hide threads" [ref=e35] [cursor=pointer]:
+          - generic [ref=e36]: dock_to_right
+        - combobox "Thread view" [ref=e37] [cursor=pointer]:
+          - option "Active Threads" [selected]
+          - option "Archive"
+      - button "edit_square New chat" [ref=e38] [cursor=pointer]:
+        - generic [ref=e39]: edit_square
+        - generic [ref=e40]: New chat
+      - separator [ref=e41]
+      - generic [ref=e42]:
+        - generic [ref=e43] [cursor=pointer]:
+          - generic [ref=e44]:
+            - generic "WA-THREAD-ALPHA" [ref=e45]: WA-THREAD-ALPHA●
+            - button "More options" [ref=e46]:
+              - generic [ref=e47]: more_vert
+          - generic [ref=e49]: 0 msgs · 7/31/2026
+        - generic [ref=e50] [cursor=pointer]:
+          - generic [ref=e51]:
+            - generic "WA-THREAD-BETA" [ref=e52]: WA-THREAD-BETA●
+            - button "More options" [ref=e53]:
+              - generic [ref=e54]: more_vert
+          - generic [ref=e56]: 0 msgs · 7/31/2026
+    - generic [ref=e58]:
+      - button "More options" [ref=e61] [cursor=pointer]:
+        - generic [ref=e62]: event_list
+      - generic [ref=e64]:
+        - generic [ref=e66]: PREBEGIN-A
+        - generic [ref=e68]: PREBEGIN-B
+      - generic [ref=e71]:
+        - status [ref=e72]: Message accepted, but its response could not start. Review the conversation before sending a new message.
+        - textbox "Ask about wa shell view..." [ref=e76]
+        - generic [ref=e77]:
+          - generic [ref=e78]:
+            - button "Add" [ref=e80] [cursor=pointer]:
+              - generic [ref=e81]: add
+            - button "Mode" [ref=e83] [cursor=pointer]:
+              - generic [ref=e84]: shield_lock
+          - generic [ref=e85]:
+            - 'button "Context usage: 10%" [ref=e87] [cursor=pointer]'
+            - button "DeepSeek V4 Flash" [ref=e89] [cursor=pointer]:
+              - generic [ref=e90]: DeepSeek V4 Flash
+              - generic [ref=e91]: keyboard_arrow_down
+            - button "Voice input (click to open)" [ref=e93] [cursor=pointer]:
+              - generic [ref=e94]: mic
+            - button "Send message" [ref=e96] [cursor=pointer]:
+              - generic [ref=e97]: arrow_upward
+    - main [ref=e99]:
+      - generic [ref=e100]:
+        - heading "WA Shell View" [level=3] [ref=e101]
+        - paragraph [ref=e102]: Content area for wa shell view panel.
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - generic: folder
+          - generic: Chat Transport Fixture
+          - button:
+            - generic: cancel
+      - generic:
+        - button:
+          - generic: add
+          - generic: Add
+```

@@ -1,0 +1,94 @@
+{
+  "result": "PASS",
+  "source_current_drift": {
+    "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-wiki-builder-assignment.md": {
+      "before": null,
+      "after": {
+        "exists": true,
+        "sha256": "090d3bdee798af1c018cc082ec25d62abaed80e9140b5ee3054c39bb9304b612",
+        "dev": 16777230,
+        "ino": 258908672,
+        "mode": 33188,
+        "size": 6264
+      }
+    }
+  },
+  "drift_provenance": "root-owned future S4 Wiki correction assignment creation, no product Wiki edit; compare raw fields, not silent unchanged claim",
+  "source_unowned_before_count": 12703,
+  "source_cache_count": 193,
+  "profile_metadata_comparisons": {
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/Preferences": {
+      "same_inode_dev": true,
+      "same_hash": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/Local State": {
+      "same_inode_dev": true,
+      "same_hash": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server-data/fusion.db": {
+      "same_inode_dev": true,
+      "same_hash": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server-data/fusion.db-wal": {
+      "same_inode_dev": true,
+      "same_hash": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server.port": {
+      "same_inode_dev": true,
+      "same_hash": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/Preferences": {
+      "same_inode_dev": true,
+      "same_hash": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/Local State": {
+      "same_inode_dev": true,
+      "same_hash": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server-data/fusion.db": {
+      "same_inode_dev": true,
+      "same_hash": false
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server-data/fusion.db-wal": {
+      "same_inode_dev": true,
+      "same_hash": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server.port": {
+      "same_inode_dev": true,
+      "same_hash": true
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/data/fusion.db": {
+      "same_inode_dev": true,
+      "same_hash": false
+    }
+  },
+  "protected_processes": [
+    {
+      "pid": 48636,
+      "identity_equal_current": true,
+      "identity_equal_initial": true,
+      "exe_cwd_first_lines_equal": true
+    },
+    {
+      "pid": 48653,
+      "identity_equal_current": true,
+      "identity_equal_initial": true,
+      "exe_cwd_first_lines_equal": true
+    },
+    {
+      "pid": 77002,
+      "identity_equal_current": true,
+      "identity_equal_initial": true,
+      "exe_cwd_first_lines_equal": true
+    },
+    {
+      "pid": 77007,
+      "identity_equal_current": true,
+      "identity_equal_initial": true,
+      "exe_cwd_first_lines_equal": true
+    }
+  ],
+  "before": "planning/commit-supervisor/execution/S6-prep/current-protection-before.json",
+  "after": "planning/commit-supervisor/execution/S6-prep/current-protection-after-confirmed.json",
+  "earlier_after_readback": "raw retained; started before cleanup completion confirmation; final uses confirmed readback"
+}

@@ -1,0 +1,8 @@
+{
+  "packet": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-pass-1",
+  "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-pass-1/manifest.json",
+  "manifest_sha256": "3c3fdaee93ff759d93f5d5f2e4c3d65297633a9c7e10313e4f4e3645c7ec6833",
+  "current_packet_identity": "sha256:713a902bbceff5df298a4b8b059ed5292547858f4db41726b72a6292fe96ecaa",
+  "entries": 75,
+  "frozen_at": "2026-10-04T12:12:59.272433+00:00"
+}

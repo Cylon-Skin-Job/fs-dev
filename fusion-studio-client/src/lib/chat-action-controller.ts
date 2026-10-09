@@ -1,13 +1,13 @@
-import { CHAT_ACTION_EVENT, dispatchChatAction, type ChatActionAddress, type ChatActionRequest, type ChatActionResult } from './chat-action';
+import { CHAT_ACTION_EVENT, type ChatActionAddress, type ChatActionRequest, type ChatActionResult } from './chat-action';
+import { useWorkspaceStore } from '../state/workspaceStore';
 import { usePanelStore } from '../state/panelStore';
 import { getThreadGroupPopulation } from '../state/slices/chatSurfaceSlice';
-import { chatComposerDraftOwnerKey, useChatComposerDraftStore } from '../state/chatComposerDraftStore';
-import { chatAttachmentOwnerKey, useChatFileLinkStore } from '../state/chatFileLinkStore';
 import { chatSubmissionOwnerKey, mintChatSubmissionRequestId, useChatSubmissionStore } from '../state/chatSubmissionStore';
 import { trackPromptAttempt } from './chat/prompt-submission-recovery';
 import { acknowledgedHarnessConfigForThread } from '../state/slices/chatSurfaceSlice';
 import { getThreadMembers } from '../state/slices/worksurfaceSlice';
 import { showToast } from './toast';
+import { consumeChatMaterial } from './chat-material-commit';
 import { consumeCreationAction } from './chat-action-creation';
 
 const failure = (reason: Extract<ChatActionResult, { status: 'failed' }>['reason']): ChatActionResult => ({ status: 'failed', reason });
@@ -26,7 +26,9 @@ function validCurrentAddress(address: ChatActionAddress | null): address is Chat
 
 /** One command consumer; no mounted surface owns this listener or its result. */
 function consumeAction(event: Event): void {
-  const request = (event as CustomEvent<ChatActionRequest>).detail;
+  const detail = (event as CustomEvent).detail;
+  if (detail?.kind === 'material') { consumeChatMaterial(detail); return; }
+  const request = detail as ChatActionRequest;
   if (!request || typeof request.complete !== 'function' || typeof request.claim !== 'function') return;
   request.claim();
   if (request.target === 'new') {
@@ -56,30 +58,13 @@ function consumeAction(event: Event): void {
     return;
   }
 
-  if (request.delivery === 'insert' && request.attachment && !request.content) {
-    const store = useChatFileLinkStore.getState();
-    const key = chatAttachmentOwnerKey(workspaceId, threadId);
-    const before = store.pendingAttachmentsByOwner[key]?.attachments.length ?? 0;
-    store.addPendingAttachment(workspaceId, threadId, request.attachment);
-    const after = useChatFileLinkStore.getState().pendingAttachmentsByOwner[key]?.attachments.length ?? 0;
-    request.complete(after > before ? { status: 'applied', address } : failure('invalid_action'));
-    return;
-  }
-  if (typeof request.content !== 'string' || !request.content.length || request.attachment) {
-    request.complete(failure('invalid_action'));
-    return;
-  }
-  if (request.delivery === 'insert') {
-    const store = useChatComposerDraftStore.getState();
-    const key = chatComposerDraftOwnerKey(workspaceId, threadId);
-    const previous = store.draftsByOwner[key] ?? '';
-    const next = previous ? `${previous}\n\n${request.content}` : request.content;
-    store.setDraft(workspaceId, threadId, next);
-    request.complete(useChatComposerDraftStore.getState().draftsByOwner[key] === next
-      ? { status: 'applied', address } : failure('invalid_action'));
-    return;
-  }
+  // Current-chat material uses the mounted operation branch above. This older
+  // vocabulary retains insert only for explicit new-chat creation/prefill.
   if (request.delivery !== 'send') {
+    request.complete(failure('unsupported'));
+    return;
+  }
+  if (typeof request.content !== 'string' || !request.content.length || 'attachment' in request) {
     request.complete(failure('invalid_action'));
     return;
   }
@@ -120,13 +105,10 @@ let installed = false;
 export function installChatActionConsumer(): void {
   if (installed) return;
   window.addEventListener(CHAT_ACTION_EVENT, consumeAction);
-  window.addEventListener('fusion:chat-insert', (event: Event) => {
-    const text = (event as CustomEvent<unknown>).detail;
-    if (typeof text === 'string' && text.length) {
-      void dispatchChatAction({ content: text, target: 'current', delivery: 'insert' }).then((result) => {
-        if (result.status === 'failed') showToast('Chat target unavailable');
-      });
-    }
+  useWorkspaceStore.subscribe((state, previous) => {
+    if (state.activeWorkspaceId !== previous.activeWorkspaceId || state.workspaceEpoch !== previous.workspaceEpoch
+      || state.bindingRevision !== previous.bindingRevision || state.bindingSerial !== previous.bindingSerial
+      || state.hasReceivedInit !== previous.hasReceivedInit) usePanelStore.getState().retireMountedChatAuthority();
   });
   installed = true;
 }

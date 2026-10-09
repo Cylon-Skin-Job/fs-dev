@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "R2-NO-ENQUEUE",
+      "name": "R2 authenticated disconnect-before-click and enqueue-throw/race characterization"
+    },
+    {
+      "id": "R3-LOST-ACK-STATUS",
+      "name": "R3 authenticated lost-ACK reconnect/status probe with future receipt assertions"
+    },
+    {
+      "id": "R3-RECONNECT-UI",
+      "name": "R3 same-renderer reconnect automatically recovers the dropped ACK through status"
+    },
+    {
+      "id": "R4-DISTINCT-ATTEMPTS",
+      "name": "R4 authenticated deliberate distinct-attempt probe with future correlation assertions"
+    },
+    {
+      "id": "R4-DISTINCT-RECEIPTS",
+      "name": "R4 two deliberate attempts produce two durable receipts after 02B"
+    },
+    {
+      "id": "R4-LATE-DRAFT-RECOVERY",
+      "name": "R4 delayed original ACK, editable unknown state, remount/restart draft isolation"
+    },
+    {
+      "id": "R4-DUPLICATE-MISMATCH",
+      "name": "R4 authenticated exact duplicate and mismatched fingerprint durable admission probe"
+    }
+  ],
+  "fixture": "fresh disposable profile, migrated fusion.db, fresh empty Capture workspace",
+  "adapter": "canonical deterministic OpenCode iterator at 20 text frames/second",
+  "scenarioInventory": "R1-R9 concrete IDs and later owning contracts in scenario-inventory.mjs",
+  "enforcementGroup": [
+    "R2-DISCONNECT-BEFORE-CLICK",
+    "R2-ENQUEUE-THROW-RACE",
+    "R3-LOST-ACK-STATUS",
+    "R3-RECONNECT-UI",
+    "R4-DISTINCT-ATTEMPTS",
+    "R4-DISTINCT-RECEIPTS",
+    "R4-DUPLICATE-MISMATCH",
+    "R4-LATE-DRAFT-RECOVERY"
+  ]
+}

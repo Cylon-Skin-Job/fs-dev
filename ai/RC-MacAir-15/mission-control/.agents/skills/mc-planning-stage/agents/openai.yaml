@@ -1,0 +1,4 @@
+interface:
+  display_name: "MC Planning Stage"
+  short_description: "Orchestrate one bounded planning stage"
+  default_prompt: "Use $mc-planning-stage for the assigned First Draft or candidate stage, managing bounded specialists, one author, independent worker-handoff review and separate stage validation."

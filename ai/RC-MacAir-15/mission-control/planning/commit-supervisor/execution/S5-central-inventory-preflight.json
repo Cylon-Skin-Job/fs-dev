@@ -1,0 +1,94 @@
+{
+  "scope": "Read-only prospective S5 migration inventory; no cutover or central writer selected",
+  "current_source_hashes": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md",
+      "sha256": "67a88a237b1113daca286791354977f795b3791fd56d80aa192b7bbf0e2784ff",
+      "bytes": 11206
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/session-contract.md",
+      "sha256": "a6190c66ddd6f511b76b7c257c415c39f52aa3466246b324b4db05637bd3482c",
+      "bytes": 6564
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/record-templates.md",
+      "sha256": "e97b95cfeeb9b6bc2b1667781904f87ca459d157eb71f6256f66ae1c8d9ac87c",
+      "bytes": 4082
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+      "sha256": "bfbc5ac1aa30c10ef47deaa9cf6f942877d17b05456843942dbc0f848dd84b92",
+      "bytes": 20300
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+      "sha256": "e1708e4552a0b7df52d41b6bf0e5bd3937f5a75d80d06f7c35e8055f46f54bb3",
+      "bytes": 16945
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+      "sha256": "32aaf7037f0b0944d39722ae0e58915b870cc6812a66af161ff369d9a9a90e2c",
+      "bytes": 33904
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+      "sha256": "2553e8bd9abb3bf0e86577932e2bcae3f43ae0af3d31be4c2b2729fd66e2307b",
+      "bytes": 21858
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+      "sha256": "660ccbf5773b920ee6e15c3b8422105c8090c1eafd79a9e071616770877bd542",
+      "bytes": 13369
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/index.json",
+      "sha256": "2ee83e813649dd06b5b0cd3c9b83b2bdb04c17aa2e67bda8432331cb91e4e889",
+      "bytes": 38725
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/config.toml",
+      "sha256": "755c39322d94bd17c50597ec90c18c743164425734725b97ddf4e5df6dfc78ee",
+      "bytes": 2605
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-review-and-merge.toml",
+      "sha256": "93c097025c51ba233b191bc3a7d5e5461848be4de4b98f587311b9be95428f63",
+      "bytes": 1086
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-review-and-merge/SKILL.md",
+      "sha256": "87cead992de90ce053b9a739640ba2410c0ca2ef875d481483690198f966b43c",
+      "bytes": 5972
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-review-and-merge/agents/openai.yaml",
+      "sha256": "640034388851f2bc1fccb0c761c4c6ab0e8a24bc17918d8561df76981740a704",
+      "bytes": 369
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mission-control/SKILL.md",
+      "sha256": "26715ee00d19611665e54e635f7a344a2c9e6a21a360865379ecf2ffd47d2265",
+      "bytes": 5040
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/monitor/SKILL.md",
+      "sha256": "a749c02ac0422bf3f7a3207fb93e7ff477b966667843c50ae73f36745e2be4e7",
+      "bytes": 5489
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/status/references/report-format.md",
+      "sha256": "e87bffd6dd656bd94334ef9d6365aa0b6e266e4b3d8a7f62b2701bde74e48480",
+      "bytes": 3038
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-implementation-supervisor/SKILL.md",
+      "sha256": "f514a07a4cc3d12eb2a2a1fef76ca76821bc32c13f97ba755f2e090a2cd6f4cd",
+      "bytes": 17124
+    }
+  ],
+  "registry_controller": "No controller task registered by D-023 setup",
+  "thread_inventory": "S5-thread-inventory-preflight.json",
+  "job_schedule_inventory": "S5-job-schedule-preflight.json",
+  "requirement": "Builder rechecks exact current files/jobs/tasks/schedules before each write and cutover; preserve historical decisions/indexed H2/provenance"
+}

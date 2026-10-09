@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-04T16:09:42.563279+00:00",
+  "current_owner_identity_sha256": "fa91eb339a518ebb0cf878f5f15d0df3f2d5e5309cdf0eadab2c030b1f499a58",
+  "final_covered_identity_sha256": "550c9e2547744aba942995dd1a471ed06012d1bd1e05000dd9d337047ae4ec86",
+  "code_dependency_count": 17,
+  "wiki_dependency_count": 21,
+  "authority_count": 50,
+  "suite_dependencies": 35,
+  "dependency_errors": {
+    "code_dependencies": [],
+    "wiki_dependencies": [],
+    "authority": [],
+    "configuration": []
+  },
+  "suite_dependency_errors": [],
+  "final_to_current_owned_deltas": [
+    "rehearsal-workspace/ai/MC-S6/watcher-proof-runtime-1.md"
+  ],
+  "delta_authority": "Original owned absent/job-created ordinary watcher runtime1 under exact first-candidate runtime assignment",
+  "source_wiki_startup_authority_config_index_drift": false,
+  "full_union_baseline_deltas": [
+    "rehearsal-workspace/ai/MC-S6/watcher-proof-runtime-1.md",
+    "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-080936.md",
+    "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md"
+  ],
+  "current_inventory_leaves": 4354,
+  "preservation_limit": "Full129 final covered identity/status remains historical before runtime watcher creation, never relabeled; code17/Wiki21/authority50/config/index and source/dependency bytes still current. Ignored private renderer/session/build/runtime cache effects remain private separately evidenced; no source/protected193 cache changes",
+  "gate_action": "Retain unaffected fresh source/Wiki/final gates and55/17, add actual runtime evidence; no material source/reader/startup drift requires replacement review"
+}

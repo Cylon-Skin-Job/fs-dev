@@ -1,0 +1,28 @@
+{
+  "kind": "ACTUAL_PRIVATE_CHECKLIST_READBACK",
+  "mode": "before-initializer",
+  "started": "2026-10-04T19:25:53.588Z",
+  "profile": "/private/tmp/mc-s6-commit-supervisor-20261004/profile",
+  "candidate": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "machine": "MC-S6",
+  "samples": [
+    {
+      "at": "2026-10-04T19:25:53.659Z",
+      "action": "independent post-canonical-restart BEFORE any smoke unchecking",
+      "summary": "3 remaining of 3",
+      "rows": [
+        "Review report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        false,
+        false,
+        false
+      ]
+    }
+  ],
+  "initializer_invoked": false,
+  "sustainedConnected": true,
+  "finished": "2026-10-04T19:25:55.935Z"
+}

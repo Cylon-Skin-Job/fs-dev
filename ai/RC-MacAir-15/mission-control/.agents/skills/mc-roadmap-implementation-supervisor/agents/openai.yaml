@@ -1,0 +1,4 @@
+interface:
+  display_name: "MC Roadmap Implementation Supervisor"
+  short_description: "Execute roadmaps with owner acceptance per SPEC"
+  default_prompt: "Use $mc-roadmap-implementation-supervisor to finish each approved SPEC through fail-forward delegated execution, assess every deviation, and obtain explicit owner acceptance before starting the next SPEC."

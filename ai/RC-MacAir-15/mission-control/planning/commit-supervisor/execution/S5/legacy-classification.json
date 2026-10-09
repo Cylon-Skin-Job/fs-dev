@@ -1,0 +1,368 @@
+[
+  {
+    "path": "registry.md",
+    "line": 35,
+    "text": "- **Definitions:** [Mission Control](.agents/skills/mission-control/SKILL.md), shared [Status](.agents/skills/status/SKILL.md)/[Monitor](.agents/skills/monitor/SKILL.md) and [Commit Supervisor](.agents/skills/mc-commit-supervisor/SKILL.md) installed under D-024/S5; isolated rehearsal pending. Historical Review and Merge is a searchable alias, not an active entry.",
+    "classification": "explicit searchable historical alias; canonical entry current"
+  },
+  {
+    "path": "mission-control.md",
+    "line": 33,
+    "text": "This earlier hierarchy describes supporting planning/build workflows, not automatic startup roles or authority to launch every branch. D-021/D-023 keep the general assistant default and explicitly establish Mission Control; D-024 names the integration role Commit Supervisor (historical alias: Review and Merge). Roadmap Supervisors and SPEC Orchestrators retain their separately assigned workflow contracts and the current per-SPEC acceptance checkpoint. Earlier test/walkthrough and FFmpeg proposals remain future work.",
+    "classification": "explicit historical alias under D-024"
+  },
+  {
+    "path": "AGENTS.md",
+    "line": 13,
+    "text": "D-024 names the top-level integration role **Commit Supervisor** (historical alias: Review and Merge). The sole current entry/profile is `mc-commit-supervisor`, with `mc-code-review-orchestrator` and `mc-commit-repair-worker` under [the workflow SPEC](planning/commit-supervisor/SPEC.md). S5 installs the routes; isolated behavioral rehearsal remains pending. Installation does not activate a job or approve publication.",
+    "classification": "explicit historical alias under D-024"
+  },
+  {
+    "path": "handoff.md",
+    "line": 7,
+    "text": "Recorded by Codex side chat (ephemeral), 2026-10-04T10:58:05.867587Z. [Owner-approved S1\u2013S5 setup](planning/commit-supervisor/execution/approval-receipt.md) installs the sole [mc-commit-supervisor entry](.agents/skills/mc-commit-supervisor/SKILL.md) and subordinate review/repair routes. Historical Review and Merge names below describe earlier events. [Cutover evidence](planning/commit-supervisor/execution/S5/cutover-inventory.json) found no legacy job/writer/schedule needing transfer; no job IDs or intentional waits were renamed/restarted. [S5 report](planning/commit-supervisor/execution/S5-builder.md) is the setup evidence pointer. MC-T09 remains **installed; isolated rehearsal pending**. No operational MC role/timer, integration job, publication, acceptance cursor or Alpha action is created.",
+    "classification": "earlier dated setup/planning/creation outcome under new current continuation"
+  },
+  {
+    "path": "handoff.md",
+    "line": 12,
+    "text": "`$mission-control` now establishes the dedicated coordination role. `monitor` schedules hourly calls to shared `status`; it no longer selects Alert-Monitor. Status builds on prior reports, retaining valid progress/holds/unknowns with detailed SPEC/slice views and compact MC ticket summaries. MC stops its entire cycle before announcing/performing any next action and on any tracked build completion, including owner report or Review and Merge handoff. Other ongoing tickets remain visible; a new owner monitor directive is required to re-arm MC.",
+    "classification": "earlier dated setup/planning/creation outcome under new current continuation"
+  },
+  {
+    "path": "handoff.md",
+    "line": 14,
+    "text": "Roadmap Supervisors use the same skills for active orchestrators, pause while doing supervisor review/repair routing/next-step work or waiting for the owner, then resume a new cycle after authorized acknowledged child dispatch. Per-SPEC owner acceptance and Review and Merge's commit/push owner gate remain. Cycle records retain prior status and explicit end reasons; no live role, timer, task or Status snapshot was created by this setup. Read D-023 and deployment.md for current definitions and validation limits. D-022 and separate ticket/tools work remain unchanged.",
+    "classification": "earlier dated setup/planning/creation outcome under new current continuation"
+  },
+  {
+    "path": "handoff.md",
+    "line": 18,
+    "text": "AGENTS.md now defaults to the general-purpose Mission Control Assistant. One intentionally selected Alert-Monitor owns monitoring; separate same-folder Review and Merge tasks prepare eligible completed builds and stop for the owner's approval before commit/push. Explicit-only local skills and the thin Review and Merge profile are installed. Registry/TODO/deployment distinguish installed definitions from unexercised runtime behavior. This setup does not start a timer, select a live persona, create a task or register a monitor UUID.",
+    "classification": "earlier dated setup/planning/creation outcome under new current continuation"
+  },
+  {
+    "path": "handoff.md",
+    "line": 58,
+    "text": "The owner renamed the top-level Review and Merge role **Commit Supervisor** and requested [one integrated workflow SPEC](planning/commit-supervisor/SPEC.md), including appropriate clean-room gates. Its [planning record](planning/commit-supervisor/PLANNING.md) owns candidate identity and independent review status. The installed legacy identifiers remain until implementation. This assignment prepares the SPEC; MC-T09 stays open for workflow installation and isolated rehearsal. Use the reviewed candidate and record an owner implementation assignment before dispatching it. Existing commit/push, per-SPEC acceptance and D-023 cycle rules remain.",
+    "classification": "earlier dated setup/planning/creation outcome under new current continuation"
+  },
+  {
+    "path": "handoff.md",
+    "line": 62,
+    "text": "### Review and Merge creation \u2014 separate owner-managed chat",
+    "classification": "earlier dated setup/planning/creation outcome under new current continuation"
+  },
+  {
+    "path": "handoff.md",
+    "line": 66,
+    "text": "Owner-requested continuation: read [review-and-merge-handoff.md](review-and-merge-handoff.md). Recreate its full hierarchy inline first, then refine the existing Review and Merge skill/profile, integration evaluation and job records. The handoff distinguishes installed roles from proposed subordinate responsibilities and preserves D-022/D-023 plus the owner commit/push gate. This is workflow setup, not a live integration/monitor assignment; other continuation packets remain independently scoped. Recorded by Codex side chat (ephemeral), 2026-10-04T06:00:36Z.",
+    "classification": "earlier dated setup/planning/creation outcome under new current continuation"
+  },
+  {
+    "path": "todo.md",
+    "line": 101,
+    "text": "- **Current S5 state:** installed; isolated rehearsal pending. Recorded by Codex side chat (ephemeral), 2026-10-04T10:58:05.867587Z. [Canonical entry/profile and active routes](deployment.md) replace historical `mc-review-and-merge`; [owner assignment](planning/commit-supervisor/execution/approval-receipt.md) authorizes S1\u2013S6 setup/rehearsal. [Current execution evidence](planning/commit-supervisor/execution/S5-builder.md) does not complete MC-T09. S6 owns actual independent role/app/recovery rehearsal and final completion evidence.",
+    "classification": "historical installation or explicit current retirement record"
+  },
+  {
+    "path": "todo.md",
+    "line": 105,
+    "text": "- **Historical D-021/D-023 installation:** `mc-review-and-merge` skill/profile and bounded packet/evaluation/approval procedure installed. Commit/push requires owner go-ahead; Mission Control may dispatch preparation after its cycle stops. Behavioral rehearsal below remains unperformed; installation is not whole-task completion.",
+    "classification": "historical installation or explicit current retirement record"
+  },
+  {
+    "path": "review-and-merge-design.md",
+    "line": 3,
+    "text": "> Current role name: **Commit Supervisor**, under [D-024](decisions.md#d-024--commit-supervisor-and-one-integrated-workflow-spec). Review and Merge below is the historical name used by the original discussion and currently installed identifiers. The executable workflow will be specified in [SPEC-COMMIT-SUPERVISOR-01](planning/commit-supervisor/SPEC.md); writing that SPEC does not install or run it.",
+    "classification": "historical design/hierarchy; new cutover note explicitly routes current entry/profile"
+  },
+  {
+    "path": "review-and-merge-design.md",
+    "line": 11,
+    "text": "Read this alongside [the earlier hierarchy handoff](review-and-merge-handoff.md). That file describes the surrounding planning and implementation hierarchy; this document develops the Review and Merge branch. Where they differ, the newer owner direction recorded here governs this branch. Unrelated planning, per-SPEC acceptance and monitoring rules remain intact.",
+    "classification": "historical design/hierarchy; new cutover note explicitly routes current entry/profile"
+  },
+  {
+    "path": "review-and-merge-design.md",
+    "line": 29,
+    "text": "- [Review and Merge skill](.agents/skills/mc-commit-supervisor/SKILL.md) and [profile](.codex/agents/mc-commit-supervisor.toml): bounded intake, candidate preparation, integration evidence, owner wait before commit/push and publication receipts already exist.",
+    "classification": "historical design/hierarchy; new cutover note explicitly routes current entry/profile"
+  },
+  {
+    "path": "review-and-merge-design.md",
+    "line": 62,
+    "text": "\u2514\u2500\u2500 Review and Merge \u2014 existing mc-review-and-merge",
+    "classification": "historical design/hierarchy; new cutover note explicitly routes current entry/profile"
+  },
+  {
+    "path": "review-and-merge-design.md",
+    "line": 145,
+    "text": "The Code Review Orchestrator returns an evidence-backed findings ledger. Review and Merge reconciles overlapping findings and contradictions against source authority, then assigns a coherent repair packet. Do not give workers competing fixes for the same files.",
+    "classification": "historical design/hierarchy; new cutover note explicitly routes current entry/profile"
+  },
+  {
+    "path": "review-and-merge-design.md",
+    "line": 164,
+    "text": "Use the Wiki Update package as the source for its separately assigned research/repair/audit procedures and article rules. Its full supervisor run remains manually invoked; the Review and Merge design does not add automatic Wiki Update dispatch, timers or a post-commit hook. An integration job's bounded Wiki editing/review can follow those procedures without claiming that the separate full Wiki Update run occurred. Once factual change detection exists, its candidate list can inform Wiki Impact; required integration documentation coverage cannot depend solely on declared source mappings or an unknown scan baseline.",
+    "classification": "historical design/hierarchy; new cutover note explicitly routes current entry/profile"
+  },
+  {
+    "path": "review-and-merge-design.md",
+    "line": 233,
+    "text": "Mission Control's D-023 cycle remains separate: it stops before its next action and on a tracked build completion, including a Review and Merge handoff. This integration workflow does not silently re-arm monitoring or remove a supervisor's per-SPEC owner checkpoint.",
+    "classification": "historical design/hierarchy; new cutover note explicitly routes current entry/profile"
+  },
+  {
+    "path": "review-and-merge-design.md",
+    "line": 237,
+    "text": "Use an owned job folder, for example `jobs/review-and-merge/<job-id>/`, under the assigned controller home. This path is a proposal, not an existing live job. Review and Merge owns its job records; Mission Control owns central monitoring and dispatch summaries.",
+    "classification": "historical design/hierarchy; new cutover note explicitly routes current entry/profile"
+  },
+  {
+    "path": "review-and-merge-design.md",
+    "line": 261,
+    "text": "1. Reconcile this newer design with the existing Review and Merge skill/profile and the earlier hierarchy handoff.",
+    "classification": "historical design/hierarchy; new cutover note explicitly routes current entry/profile"
+  },
+  {
+    "path": "decisions.md",
+    "line": 165,
+    "text": "## D-021 \u2014 General assistant, explicit Alert-Monitor and owner-gated Review and Merge",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": "decisions.md",
+    "line": 167,
+    "text": "Historical activation mapping: D-023 now names the explicit role Mission Control and separates Status/Monitor. D-021's Review and Merge authority and owner commit/push gate remain applicable.",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": "decisions.md",
+    "line": 173,
+    "text": "The selected monitor has standing authority to hand eligible completed builds to separate persistent Review and Merge tasks in this same memory folder. It chooses whether dependencies or the accepted integration unit require a hold, gives a bounded packet and avoids duplicate dispatch. Product checkouts remain separate from memory CWD. Other roadmap/build dispatch authority and existing per-SPEC acceptance gates are unchanged.",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": "decisions.md",
+    "line": 175,
+    "text": "Review and Merge prepares the concrete integration candidate, records issues/checks and satisfies required independent evaluation, then ends its turn waiting for the owner's say-so before commit and push. Commands that create commits indirectly are inside this gate. Monitoring, a green evaluation, build completion and another agent's recommendation do not supply owner approval. PR publication/merge and Alpha operations require their applicable authority; no push or deployment is implied by preparation.",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": "decisions.md",
+    "line": 193,
+    "text": "Owner clarification: Mission Control ends a monitoring cycle whenever it informs the owner of any next action or performs one. It continues only for status-only incremental progress. Any tracked build completion ends the cycle, whether reported for the owner, held or passed to Review and Merge. Roadmap Supervisors monitor their child orchestrators, disable monitoring for their own review/next-step work, and resume after the next authorized child dispatch. Every Status builds on previous Status. The owner approved two shared skills and the separate Mission Control entry by \u201cLet's do it.\u201d",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": "decisions.md",
+    "line": 197,
+    "text": "For Mission Control, one completed tracked build ends the whole cycle even when other tickets are active. Retain them in the report and do not automatically re-arm after the completion report/Review and Merge dispatch. A new owner monitor directive begins another cycle. Constituent slice/SPEC progress stays incremental where its responsible parent owns the next transition and MC need not act.",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": "decisions.md",
+    "line": 203,
+    "text": "This supersedes D-021's Alert-Monitor identity and continuous-after-action behavior while preserving its general-assistant home, same-folder Review and Merge dispatch and explicit owner commit/push gate. D-022 planning review rules and unrelated assignments are unchanged. No live role, Status snapshot, heartbeat, task, product build or agent run is activated by installing these definitions.",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": "decisions.md",
+    "line": 207,
+    "text": "Owner: \u201cLet's rename the review and merge to \u2018Commit Supervisor\u2019 since it is a top level role. It's lower level roles can use Orchestrator or variations on that.\u201d The owner requests one SPEC integrating the recorded workflow into a process Mission Control can assign, producing a commit-ready end product, with the clean-room loop added where it fits.",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": "decisions.md",
+    "line": 209,
+    "text": "**Commit Supervisor** is the current top-level role name. Review and Merge is its historical alias; the installed `mc-review-and-merge` entry/profile retain their existing identifiers until the SPEC's migration is implemented. The requested deliverable here is the SPEC, not execution of a live integration or installation of the replacement roles.",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": "deployment.md",
+    "line": 53,
+    "text": "D-021 (2026-10-03 PDT) changes the home to a general assistant and installs the explicit-only `monitor` persona. `/monitor` is a literal owner command recognized by AGENTS.md; `$monitor` is its explicit skill entry. Selection primes the role; a subsequent intentional monitor directive creates/updates a single hourly thread heartbeat. The role can create same-folder persistent Review and Merge tasks for eligible completed builds. Task creation uses the saved project and an explicit skill prompt; the thin profile is a supported-runtime role definition, not a persistent-task CWD selector. Review and Merge stops before any commit-producing operation or push and awaits owner approval. No persona, heartbeat or review task is started by installation.",
+    "classification": "historical D-021 installation or explicit S5 retirement record"
+  },
+  {
+    "path": "deployment.md",
+    "line": 85,
+    "text": "Recorded by Codex side chat (ephemeral), 2026-10-04T10:58:05.867587Z. S5 installs the sole canonical [Commit Supervisor entry](.agents/skills/mc-commit-supervisor/SKILL.md), twelve profile mappings and active caller routes under the [owner implementation assignment](planning/commit-supervisor/execution/approval-receipt.md). Legacy `mc-review-and-merge` discovery/profile is retired after the [cutover inventory](planning/commit-supervisor/execution/S5/cutover-inventory.json) found no registered/live legacy job or matching schedule. Complete old entry/profile bytes remain in bounded execution preimages outside discovery. MC-T09 is **installed; isolated rehearsal pending**, not complete. Static/current checks and the S5 builder gate are recorded in [the builder packet](planning/commit-supervisor/execution/S5-builder.md); actual runtime role loading, full fresh agent chain, app handoff and recovery behavior are S6 requirements. No operational MC, persistent task, schedule, publication or Alpha action is created by this installation.",
+    "classification": "historical D-021 installation or explicit S5 retirement record"
+  },
+  {
+    "path": "changelog.md",
+    "line": 143,
+    "text": "## 2026-10-03 \u2014 General assistant, Alert-Monitor and Review and Merge",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": "changelog.md",
+    "line": 147,
+    "text": "Changed this home's AGENTS to a general-purpose Mission Control Assistant. Added explicit-only local `monitor` and `mc-review-and-merge` skills, UI definitions and the thin Review and Merge profile/config mapping. `/monitor` selects the persona; a subsequent intentional monitor directive enables one hourly native thread heartbeat. The monitor may dispatch eligible completed builds to persistent same-folder review tasks, preserving dependencies, duplicate prevention, writer ownership and intentional owner waits. Review and Merge prepares/evaluates a candidate and stops before commit-producing operations or push until the owner grants the scoped go-ahead.",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": "changelog.md",
+    "line": 163,
+    "text": "Installed explicit mission-control entry and shared status skill with incremental report guidance; refactored monitor into hourly scheduling that invokes Status. Moved Review and Merge dispatch into the Mission Control role. Progress-only observations keep a cycle enabled; any MC next-action announcement/execution or tracked build completion ends its whole cycle before action. Supervisors pause during review/repair routing/owner checkpoints and resume a new cycle after acknowledged authorized child dispatch. Updated supervisor profile, SPEC Orchestrator status guidance, Review and Merge role names and current continuity records. Preserved per-SPEC owner acceptance, owner commit/push approval and the concurrent D-022 planning-review changes.",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": "changelog.md",
+    "line": 167,
+    "text": "## 2026-10-03 \u2014 Review and Merge creation handoff",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": "changelog.md",
+    "line": 169,
+    "text": "Author: Codex side chat (ephemeral), 2026-10-04T06:00:36Z. Authority: owner's request to prepare a handoff for another chat to create Review and Merge and reproduce the hierarchy inline.",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": "changelog.md",
+    "line": 171,
+    "text": "Created review-and-merge-handoff.md with the installed planning/implementation hierarchy, supervisor final-roadmap review, D-022 worker-review rules, existing Review and Merge definitions, remaining decomposition/evaluation work and D-023 cycle boundaries. Requires the receiving chat to recreate the hierarchy inline before edits. Added a scoped resume pointer and static index entry; preserved other continuation packets. No receiving task, agent, integration candidate or monitoring cycle was launched.",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": "skills-and-agents.md",
+    "line": 11,
+    "text": "Recorded by Codex side chat (ephemeral), 2026-10-04T10:58:05.867587Z. S5 replaces the discoverable historical `mc-review-and-merge` entry/profile with [mc-commit-supervisor](.agents/skills/mc-commit-supervisor/SKILL.md), registering [initial/final review orchestration](.agents/skills/mc-code-review-orchestrator/SKILL.md) and [bounded leaf repair](.agents/skills/mc-commit-repair-worker/SKILL.md). Current installation is twenty-two local skills/twelve profiles; earlier counts below remain dated inventory. The supervisor owns separate fresh worker/Wiki handoff gates and terminal owner wait; runtime rehearsal remains S6. See [deployment](deployment.md) and [shared workflow](.agents/skills/mc-commit-supervisor/references/workflow.md).",
+    "classification": "explicit current retirement record"
+  },
+  {
+    "path": "review-and-merge-handoff.md",
+    "line": 3,
+    "text": "> [D-024](decisions.md#d-024--commit-supervisor-and-one-integrated-workflow-spec) renames the top-level role and requests a single executable workflow SPEC. The older Review and Merge wording/identifiers below retain their historical provenance. Use [SPEC-COMMIT-SUPERVISOR-01](planning/commit-supervisor/SPEC.md) for the current implementation candidate after its independent release review; no replacement roles are installed merely by this handoff.",
+    "classification": "historical design/hierarchy; new cutover note explicitly routes current entry/profile"
+  },
+  {
+    "path": "review-and-merge-handoff.md",
+    "line": 11,
+    "text": "Create/refine Mission Control's Review and Merge workflow, its agent responsibilities, independent evaluation gates and durable job records. Extend the existing local skill/profile; do not treat this as a request to integrate a live build. The owner will manage the new chat.",
+    "classification": "historical design/hierarchy; new cutover note explicitly routes current entry/profile"
+  },
+  {
+    "path": "review-and-merge-handoff.md",
+    "line": 13,
+    "text": "**In your first substantive response, recreate the complete hierarchy below inline in the conversation as a readable tree or Mermaid diagram.** Do not merely link to this file or say that you read it. Explain which review roles belong to managers, where authors remain leaf workers, and which Review and Merge responsibilities still need definition. Include the implementation supervisor's own final-roadmap review. Then proceed within the assigned setup scope, surfacing consequential unspecified intent instead of claiming a finished workflow.",
+    "classification": "historical design/hierarchy; new cutover note explicitly routes current entry/profile"
+  },
+  {
+    "path": "review-and-merge-handoff.md",
+    "line": 21,
+    "text": "> Read review-and-merge-handoff.md in the Mission Control home. Recreate its hierarchy inline for me first. Then create/refine the Review and Merge workflow using our existing definitions, clean-room review principles and owner gates. Keep the work scoped to workflow, skills, profiles and supporting records; do not run a live integration or monitoring cycle.",
+    "classification": "historical design/hierarchy; new cutover note explicitly routes current entry/profile"
+  },
+  {
+    "path": "review-and-merge-handoff.md",
+    "line": 60,
+    "text": "\u2514\u2500\u2500 Review and Merge \u2014 mc-review-and-merge",
+    "classification": "historical design/hierarchy; new cutover note explicitly routes current entry/profile"
+  },
+  {
+    "path": "review-and-merge-handoff.md",
+    "line": 68,
+    "text": "The last branch lists responsibilities of the existing Review and Merge role. Its decomposition into subordinate agents is **not yet installed**. Do not describe those responsibilities as existing child profiles.",
+    "classification": "historical design/hierarchy; new cutover note explicitly routes current entry/profile"
+  },
+  {
+    "path": "review-and-merge-handoff.md",
+    "line": 82,
+    "text": "| Integration evaluation | Does the prepared combined candidate satisfy the accepted integration unit on the exact proposed baseline? | Define this explicitly in Review and Merge; prior planning/build passes do not certify conflict resolutions or the combined candidate. |",
+    "classification": "historical design/hierarchy; new cutover note explicitly routes current entry/profile"
+  },
+  {
+    "path": "review-and-merge-handoff.md",
+    "line": 88,
+    "text": "## Existing Review and Merge and remaining design",
+    "classification": "historical design/hierarchy; new cutover note explicitly routes current entry/profile"
+  },
+  {
+    "path": "review-and-merge-handoff.md",
+    "line": 106,
+    "text": "D-023 is newer than the earlier Alert-Monitor proposal. `$mission-control` selects the coordination role; shared Status observes incremental work and Monitor manages recurrence. MC stops its whole cycle before announcing/performing a next action and on a tracked build completion, including Review and Merge dispatch. It does not automatically re-arm after the handoff. A supervisor's child cycle and mandatory per-SPEC owner checkpoint remain separate.",
+    "classification": "historical design/hierarchy; new cutover note explicitly routes current entry/profile"
+  },
+  {
+    "path": "review-and-merge-handoff.md",
+    "line": 108,
+    "text": "Review and Merge runs as a separate persistent same-memory-folder task when actually assigned. It neither becomes MC nor owns central monitor state. Verify task identity/CWD and existing writers before any actual job. Deduplicate by source work IDs, candidate fingerprint and target revision. An intentionally idle `waiting-owner` task must not be restarted as a failed run.",
+    "classification": "historical design/hierarchy; new cutover note explicitly routes current entry/profile"
+  },
+  {
+    "path": "review-and-merge-handoff.md",
+    "line": 118,
+    "text": "3. Existing Review and Merge skill/profile above, [MC-T09](todo.md#mc-t09--build-the-commit-supervisor), [assignment templates](record-templates.md), [investigation contract](investigation-contract.md), and [deployment status](deployment.md).",
+    "classification": "historical design/hierarchy; new cutover note explicitly routes current entry/profile"
+  },
+  {
+    "path": "review-and-merge-handoff.md",
+    "line": 124,
+    "text": "During this handoff's preparation, D-022 planning definitions had passed structural checks, but live planning reviewers were not exercised. Review and Merge's existing behavior also remained unexercised. No live product candidate is selected by this handoff.",
+    "classification": "historical design/hierarchy; new cutover note explicitly routes current entry/profile"
+  },
+  {
+    "path": "index.json",
+    "line": 160,
+    "text": "          \"heading\": \"D-021 \u2014 General assistant, explicit Alert-Monitor and owner-gated Review and Merge\",",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": "index.json",
+    "line": 161,
+    "text": "          \"description\": \"D-021 \u2014 General assistant, explicit Alert-Monitor and owner-gated Review and Merge\"",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": "index.json",
+    "line": 531,
+    "text": "          \"heading\": \"2026-10-03 \u2014 General assistant, Alert-Monitor and Review and Merge\",",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": "index.json",
+    "line": 532,
+    "text": "          \"description\": \"2026-10-03 \u2014 General assistant, Alert-Monitor and Review and Merge\"",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": "index.json",
+    "line": 546,
+    "text": "          \"heading\": \"2026-10-03 \u2014 Review and Merge creation handoff\",",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": "index.json",
+    "line": 547,
+    "text": "          \"description\": \"Owner-managed Review and Merge creation packet and inline hierarchy requirement.\"",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": "index.json",
+    "line": 844,
+    "text": "          \"heading\": \"Existing Review and Merge and remaining design\",",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": "index.json",
+    "line": 845,
+    "text": "          \"description\": \"Existing Review and Merge and remaining design\"",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": "index.json",
+    "line": 863,
+    "text": "      \"description\": \"Commit Supervisor design under D-024, retaining the original Review and Merge discussion and installed-identifier provenance.\",",
+    "classification": "immutable decision/dated history or static historical heading/provenance route"
+  },
+  {
+    "path": ".agents/skills/mc-commit-supervisor/references/owner-publication.md",
+    "line": 107,
+    "text": "step. Historical Review and Merge jobs retain their IDs/locations with an",
+    "classification": "legacy-job evidence preservation/successor rule; no actual legacy job found"
+  }
+]

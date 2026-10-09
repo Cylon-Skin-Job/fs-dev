@@ -1,0 +1,45 @@
+---
+id: RCC-0094
+title: 'Secrets Manager — evaluate Electron safeStorage backend'
+assignee: rccurtrightjr
+created: 2026-06-09T00:00:00.000Z
+author: rccurtrightjr
+state: open
+priority: medium
+---
+
+Fusion Studio currently has a working Secrets Manager UI, but secret values are still stored through the server's macOS Keychain backend.
+
+Current implementation:
+
+- Tools menu opens the React Secrets Manager modal.
+- UI sends `secrets:api-keys:*` WebSocket messages.
+- Server handlers live under `fusion-studio-server/lib/secrets/api-keys/`.
+- Secret metadata lives in `fusion.db` table `secrets_index`.
+- Secret values live in macOS Keychain under account `fusion-studio` via `/usr/bin/security`.
+
+## Goal
+
+Evaluate and design a migration to an Electron-owned secret storage backend using `safeStorage`, so Fusion Studio can become cross-platform and stop depending directly on macOS-only `security` CLI calls.
+
+## Proposed Direction
+
+- Move encrypt/decrypt responsibility into Electron main process.
+- Store encrypted blobs plus metadata in `fusion.db` or another durable app-owned store.
+- Keep raw secret values out of renderer state, logs, files, and AI-readable surfaces.
+- Preserve the current Secrets Manager UX and WebSocket API where possible.
+- Define a migration path from current macOS Keychain account `fusion-studio`.
+
+## Questions To Resolve
+
+- [ ] Should the server call Electron main over IPC for secret encrypt/decrypt, or should the secrets backend move into Electron main entirely?
+- [ ] Where should encrypted blobs live: `fusion.db`, Electron user data, or a dedicated encrypted store file?
+- [ ] How should non-Electron/server-only dev mode work?
+- [ ] What is the fallback behavior on Linux if `safeStorage` is unavailable or degraded?
+- [ ] Should the old macOS Keychain backend remain as a migration/fallback path?
+- [ ] How do scripts/agents retrieve allowed secrets without exposing raw values to the AI?
+
+## Related Cleanup
+
+- Existing `RCC-0093` assumes the safeStorage switch already happened; confirm whether to close, rewrite, or merge it into this ticket.
+- `fusion-studio-server/scripts/migrate-keychain.sh` migrates old `kimi-ide` Keychain entries into the current `fusion-studio` Keychain account. That is separate from this safeStorage migration.

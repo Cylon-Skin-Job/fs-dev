@@ -1,0 +1,42 @@
+{
+  "at": "2026-10-04T18:17:58.942915+00:00",
+  "actor": "/root",
+  "scope": "READ_ONLY_CURRENT_PYTHON_BINDING_INSPECTION",
+  "binding": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-python-current-2-bindings.json",
+    "sha256": "832947df752412f7eb7974fb0ff0abd354f7319272f2f5963248236a282602db"
+  },
+  "fully_read_helpers": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/python_suite_bindings_v2.py",
+      "sha256": "aa2899f975b58daa844cfa1dade93575deed66477c9cabca647508d8aec952b2"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/python_suite_js_dependencies_v3.mjs",
+      "sha256": "fb94392b612e052c3b7e0fa7589acd1a63da949fa3a8d8316571ee165177c9af"
+    }
+  ],
+  "raw_suite_fully_read": true,
+  "raw_invocation_exit": 0,
+  "unique_dependencies_pre_post_and_now": 3808,
+  "all_discovered_methods_pass": 55,
+  "coverage_receipts_checked": 7,
+  "actual_javascript_files_bound": 82,
+  "unbound_actual_javascript_files": [],
+  "required_previous_omissions_now_bound": [
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_job_snapshot.py",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_review_packet.py",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_wiki_handoff.py",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/snapshot_fixture.py",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/wiki_fixture.py",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/scripts/wiki.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/index.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/esprima/dist/esprima.js"
+  ],
+  "source_git_pre_post_equal": true,
+  "selected_executables_pre_post_equal": true,
+  "current_dependency_changes": [],
+  "historical_qualification": "Original55/35-entry reuse and current-1 pass remain historical successful invocations with incomplete executed dependency coverage. This actual current-2 invocation supplies current55 provenance; no historical drift or test failure is asserted.",
+  "remaining": "Fresh final manager/all5 acceptance and revised real runtime/owner-wait remain required; this record is not their verdict."
+}

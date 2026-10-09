@@ -1,0 +1,42 @@
+{
+  "at": "2026-10-06T21:44:21.153710+00:00",
+  "sourceHead": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "target": "3356e1b73cc5d44028eac5baa02fd542a8bbc385",
+  "sourceIndexSha256": "8c2f62d2d71cc47a2c5ca767375290e860835e7eec19014f13b8f1475a1c26a4",
+  "sourceIndexMatchesIntake": true,
+  "markdownComparisons": 1699,
+  "sourceMarkdownDrift": [],
+  "lifecycle": {
+    "orchestrator": "/root/chat_commit_initial_review",
+    "children": [
+      {
+        "identity": "/root/chat_commit_initial_review/chat_raw_code_review_01",
+        "profile": "clean-room-reviewer",
+        "forkTurns": "none",
+        "modelOverride": null,
+        "effortOverride": null,
+        "terminal": "REVIEW_COMPLETE findings"
+      },
+      {
+        "identity": "/root/chat_commit_initial_review/other_markdown_review_01",
+        "profile": "clean-room-reviewer",
+        "forkTurns": "none",
+        "modelOverride": null,
+        "effortOverride": null,
+        "terminal": "REVIEW_COMPLETE findings"
+      }
+    ],
+    "closeAgentAvailable": false,
+    "closureLimit": "Both children terminal; no close_agent capability."
+  },
+  "rawReports": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/initial-review/chat-code-review-01.raw.md",
+      "sha256": "833b1c192817e44a3a4b4e308053a3ddbff91cce587db18411c9f892095ecb27"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/initial-review/other-markdown-review-01.raw.md",
+      "sha256": "769a0673acaf63e7baa60589e1f2ae0d3d3d5ef7189c7dac3bf35d08dd02cebf"
+    }
+  ]
+}

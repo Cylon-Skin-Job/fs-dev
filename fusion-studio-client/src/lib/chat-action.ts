@@ -3,6 +3,7 @@ import { usePanelStore } from '../state/panelStore';
 import { getCurrentThreadGroupId, getThreadGroupPopulation } from '../state/slices/chatSurfaceSlice';
 
 export type ChatActionTarget = 'current' | 'new';
+/** Insert is reserved for explicit target:new creation/prefill; current actions Send. */
 export type ChatActionDelivery = 'insert' | 'send';
 
 /** Immutable destination selected when the user invokes the action. */
@@ -16,7 +17,6 @@ export interface ChatActionAddress {
 
 export interface ChatActionPayload {
   content?: string;
-  attachment?: ChatLinkAttachment;
   promptId?: string;
   variables?: Record<string, unknown>;
   target: ChatActionTarget;
@@ -68,6 +68,9 @@ export function captureChatActionAddress(viewId?: string): ChatActionAddress | n
 
 /** The event remains the established boundary; its one app consumer owns the result. */
 export function dispatchChatAction(action: ChatActionPayload): Promise<ChatActionResult> {
+  if (action.target === 'current' && action.delivery !== 'send') {
+    return Promise.resolve({ status: 'failed', reason: 'unsupported' });
+  }
   const capturedAddress = action.address ?? captureChatActionAddress(action.sourceViewId);
   return new Promise((resolve) => {
     let claimed = false;
@@ -81,5 +84,46 @@ export function dispatchChatAction(action: ChatActionPayload): Promise<ChatActio
       detail: { ...action, capturedAddress, claim: () => { claimed = true; }, complete },
     }));
     if (!claimed) complete({ status: 'failed', reason: 'no_consumer' });
+  });
+}
+
+// Compose-only prepared material. Explicit Send and System creation keep their separate API above.
+export { beginChatMaterial, validateChatMaterial } from './chat-material-target';
+export type { ChatMaterialOperation, ChatMaterialResult, ChatMaterialBegin } from './chat-material-target';
+import type { ChatMaterialOperation, ChatMaterialResult } from './chat-material-target';
+
+export interface ChatMaterialSelection {
+  surfaceId: string;
+  generation: number;
+  value: string;
+  revision: number;
+  start: number;
+  end: number;
+}
+export type PreparedChatMaterial =
+  | { text: string; selection?: ChatMaterialSelection }
+  | { attachment: ChatLinkAttachment }
+  | { sourceFailure: true };
+export interface ChatMaterialRequest {
+  readonly kind: 'material';
+  readonly operation: ChatMaterialOperation;
+  readonly material: PreparedChatMaterial;
+  readonly complete: (result: ChatMaterialResult) => void;
+  readonly claim: () => void;
+}
+
+/** Dispatch is synchronous through the single installed consumer before this promise returns. */
+export function commitChatMaterial(operation: ChatMaterialOperation, material: PreparedChatMaterial): Promise<ChatMaterialResult> {
+  return new Promise((resolve) => {
+    let claimed = false, completed = false;
+    const complete = (result: ChatMaterialResult) => {
+      if (completed) return;
+      completed = true;
+      resolve(result);
+    };
+    window.dispatchEvent(new CustomEvent<ChatMaterialRequest>(CHAT_ACTION_EVENT, {
+      detail: { kind: 'material', operation, material, claim: () => { claimed = true; }, complete },
+    }));
+    if (!claimed) complete({ status: 'unavailable', reason: 'no_consumer' });
   });
 }

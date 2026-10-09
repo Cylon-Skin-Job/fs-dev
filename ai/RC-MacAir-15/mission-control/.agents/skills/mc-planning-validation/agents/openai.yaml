@@ -1,0 +1,4 @@
+interface:
+  display_name: "MC Planning Validation"
+  short_description: "Review planning handoffs, drafts and releases"
+  default_prompt: "Use $mc-planning-validation in the assigned worker-handoff, draft, candidate-stage or release mode; return independent evidence and findings without repairing or approving the candidate."

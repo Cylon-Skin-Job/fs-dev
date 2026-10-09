@@ -1,0 +1,16 @@
+{
+  "at": "2026-10-07T00:24:43.905246+00:00",
+  "repo": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+  "argv": [
+    "git",
+    "-C",
+    "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+    "commit",
+    "--file",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/commit-message.txt"
+  ],
+  "finished": "2026-10-07T00:24:44.177008+00:00",
+  "exit_code": 0,
+  "stdout_sha256": "b61169b18dd73f79983cb05c1ffd4a10d44c775c1af28fe9ec6b0b68f8aa94d8",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

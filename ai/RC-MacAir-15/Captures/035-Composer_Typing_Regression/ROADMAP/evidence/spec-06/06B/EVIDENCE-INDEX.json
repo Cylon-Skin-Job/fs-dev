@@ -1,0 +1,1408 @@
+{
+  "boot-all-01.log": {
+    "runReceipts": []
+  },
+  "build-01.log": {
+    "runReceipts": []
+  },
+  "build-02.log": {
+    "runReceipts": []
+  },
+  "build-03.log": {
+    "runReceipts": []
+  },
+  "build-04.log": {
+    "runReceipts": []
+  },
+  "delete-cache-02.log": {
+    "runReceipts": []
+  },
+  "delete-cache-green.log": {
+    "runReceipts": []
+  },
+  "delete-cache-red.log": {
+    "runReceipts": []
+  },
+  "fixture-unit-01.log": {
+    "runReceipts": []
+  },
+  "fixture-unit-02.log": {
+    "runReceipts": []
+  },
+  "fixture-unit-03.log": {
+    "runReceipts": []
+  },
+  "fixture-unit-04.log": {
+    "runReceipts": []
+  },
+  "icon-retention-green.log": {
+    "runReceipts": []
+  },
+  "icon-retention-red-02.log": {
+    "runReceipts": []
+  },
+  "icon-retention-red.log": {
+    "runReceipts": []
+  },
+  "lifecycle-01.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790305071884-c5fc984790",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790305071884-c5fc984790",
+        "run-result.json": {
+          "runId": "chat-arch-1790305071884-c5fc984790",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R9-LIFECYCLE-RESOURCES",
+              "code": 1,
+              "signal": null,
+              "pid": 42818,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 969
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R9-LIFECYCLE-RESOURCES exited 1",
+            "stack": "Error: R9-LIFECYCLE-RESOURCES exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:463:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "lifecycle-02.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790305105619-c319dbbd9c",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790305105619-c319dbbd9c",
+        "run-result.json": {
+          "runId": "chat-arch-1790305105619-c319dbbd9c",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R9-LIFECYCLE-RESOURCES",
+              "code": 1,
+              "signal": null,
+              "pid": 43031,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 36958
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R9-LIFECYCLE-RESOURCES exited 1",
+            "stack": "Error: R9-LIFECYCLE-RESOURCES exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:463:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "lifecycle-03.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790305171770-91b133a83b",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790305171770-91b133a83b",
+        "run-result.json": {
+          "runId": "chat-arch-1790305171770-91b133a83b",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R9-LIFECYCLE-RESOURCES",
+              "code": 1,
+              "signal": null,
+              "pid": 47583,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 38134
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R9-LIFECYCLE-RESOURCES exited 1",
+            "stack": "Error: R9-LIFECYCLE-RESOURCES exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:463:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "lifecycle-04.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790305241082-5dc52f00a6",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790305241082-5dc52f00a6",
+        "run-result.json": {
+          "runId": "chat-arch-1790305241082-5dc52f00a6",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R9-LIFECYCLE-RESOURCES",
+              "code": 1,
+              "signal": null,
+              "pid": 52190,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 33862
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R9-LIFECYCLE-RESOURCES exited 1",
+            "stack": "Error: R9-LIFECYCLE-RESOURCES exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:463:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "lifecycle-05.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790305345940-7915459d60",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790305345940-7915459d60",
+        "run-result.json": {
+          "runId": "chat-arch-1790305345940-7915459d60",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R9-LIFECYCLE-RESOURCES",
+              "code": 1,
+              "signal": null,
+              "pid": 56225,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 42295
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R9-LIFECYCLE-RESOURCES exited 1",
+            "stack": "Error: R9-LIFECYCLE-RESOURCES exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:463:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "lifecycle-06.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790305529051-ba2339316e",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790305529051-ba2339316e",
+        "run-result.json": {
+          "runId": "chat-arch-1790305529051-ba2339316e",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R9-LIFECYCLE-RESOURCES",
+              "code": 1,
+              "signal": null,
+              "pid": 61487,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 47588
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R9-LIFECYCLE-RESOURCES exited 1",
+            "stack": "Error: R9-LIFECYCLE-RESOURCES exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:471:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "lifecycle-07.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790306094032-0e3c79fc99",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790306094032-0e3c79fc99",
+        "run-result.json": {
+          "runId": "chat-arch-1790306094032-0e3c79fc99",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R9-LIFECYCLE-RESOURCES",
+              "code": 1,
+              "signal": null,
+              "pid": 6641,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 51743
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R9-LIFECYCLE-RESOURCES exited 1",
+            "stack": "Error: R9-LIFECYCLE-RESOURCES exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:471:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "lifecycle-08.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790306305291-9d5763c717",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790306305291-9d5763c717",
+        "run-result.json": {
+          "runId": "chat-arch-1790306305291-9d5763c717",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R9-LIFECYCLE-RESOURCES",
+              "code": 1,
+              "signal": null,
+              "pid": 13244,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 51774
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R9-LIFECYCLE-RESOURCES exited 1",
+            "stack": "Error: R9-LIFECYCLE-RESOURCES exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:471:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "lifecycle-09.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790306497185-01705c651d",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790306497185-01705c651d",
+        "run-result.json": {
+          "runId": "chat-arch-1790306497185-01705c651d",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R9-LIFECYCLE-RESOURCES",
+              "code": 1,
+              "signal": null,
+              "pid": 19629,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 82967
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R9-LIFECYCLE-RESOURCES exited 1",
+            "stack": "Error: R9-LIFECYCLE-RESOURCES exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:471:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "lifecycle-10.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790307027374-bf2f7279f2",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790307027374-bf2f7279f2",
+        "run-result.json": {
+          "runId": "chat-arch-1790307027374-bf2f7279f2",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R9-LIFECYCLE-RESOURCES",
+              "code": 1,
+              "signal": null,
+              "pid": 40224,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 82189
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R9-LIFECYCLE-RESOURCES exited 1",
+            "stack": "Error: R9-LIFECYCLE-RESOURCES exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:471:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "lifecycle-11.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790307169384-2cdda937fd",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790307169384-2cdda937fd",
+        "run-result.json": {
+          "runId": "chat-arch-1790307169384-2cdda937fd",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R9-LIFECYCLE-RESOURCES",
+              "code": 1,
+              "signal": null,
+              "pid": 49997,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 82639
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R9-LIFECYCLE-RESOURCES exited 1",
+            "stack": "Error: R9-LIFECYCLE-RESOURCES exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:470:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "lifecycle-12.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790307323667-cc425d860e",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790307323667-cc425d860e",
+        "run-result.json": {
+          "runId": "chat-arch-1790307323667-cc425d860e",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R9-LIFECYCLE-RESOURCES",
+              "code": 1,
+              "signal": null,
+              "pid": 59760,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 82684
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R9-LIFECYCLE-RESOURCES exited 1",
+            "stack": "Error: R9-LIFECYCLE-RESOURCES exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:470:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "lifecycle-13.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790307691839-0942b23ff8",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790307691839-0942b23ff8",
+        "run-result.json": {
+          "runId": "chat-arch-1790307691839-0942b23ff8",
+          "status": "passed",
+          "results": [
+            {
+              "id": "R9-LIFECYCLE-RESOURCES",
+              "code": 0,
+              "signal": null,
+              "pid": 70401,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 350822
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": null
+        }
+      }
+    ]
+  },
+  "lifecycle-14.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790315189951-d14a893a4f",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790315189951-d14a893a4f",
+        "run-result.json": {
+          "runId": "chat-arch-1790315189951-d14a893a4f",
+          "status": "passed",
+          "results": [
+            {
+              "id": "R9-LIFECYCLE-RESOURCES",
+              "code": 0,
+              "signal": null,
+              "pid": 92851,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 357190
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": null
+        }
+      }
+    ]
+  },
+  "lifecycle-15.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790315729557-0647a30343",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790315729557-0647a30343",
+        "run-result.json": {
+          "runId": "chat-arch-1790315729557-0647a30343",
+          "status": "passed",
+          "results": [
+            {
+              "id": "R9-LIFECYCLE-RESOURCES",
+              "code": 0,
+              "signal": null,
+              "pid": 36160,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 358908
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": null
+        }
+      }
+    ]
+  },
+  "native-01.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790308214495-7c18a67891",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790308214495-7c18a67891",
+        "run-result.json": {
+          "runId": "chat-arch-1790308214495-7c18a67891",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R9-NATIVE-INPUT",
+              "code": 1,
+              "signal": null,
+              "pid": 18015,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 7813
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R9-NATIVE-INPUT exited 1",
+            "stack": "Error: R9-NATIVE-INPUT exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:470:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "native-02.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790308275229-664034d4d7",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790308275229-664034d4d7",
+        "run-result.json": {
+          "runId": "chat-arch-1790308275229-664034d4d7",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R9-NATIVE-INPUT",
+              "code": 2,
+              "signal": null,
+              "pid": 19362,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 6729
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R9-NATIVE-INPUT exited 2",
+            "stack": "Error: R9-NATIVE-INPUT exited 2\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:470:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "native-03.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790314086497-4bc281c8a1",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790314086497-4bc281c8a1",
+        "run-result.json": {
+          "runId": "chat-arch-1790314086497-4bc281c8a1",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R9-NATIVE-INPUT",
+              "code": 2,
+              "signal": null,
+              "pid": 23100,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 8282
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R9-NATIVE-INPUT exited 2",
+            "stack": "Error: R9-NATIVE-INPUT exited 2\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:472:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "native-04.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790314508698-f9ae8ea741",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790314508698-f9ae8ea741",
+        "run-result.json": {
+          "runId": "chat-arch-1790314508698-f9ae8ea741",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R9-NATIVE-INPUT",
+              "code": 2,
+              "signal": null,
+              "pid": 44970,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 9330
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R9-NATIVE-INPUT exited 2",
+            "stack": "Error: R9-NATIVE-INPUT exited 2\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:472:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "observation-boundary-01.log": {
+    "runReceipts": []
+  },
+  "observation-boundary-02.log": {
+    "runReceipts": []
+  },
+  "provider-retirement-green.log": {
+    "runReceipts": []
+  },
+  "provider-retirement-red.log": {
+    "runReceipts": []
+  },
+  "r9-indicator-01.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790308136323-c20dbc014e",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790308136323-c20dbc014e",
+        "run-result.json": {
+          "runId": "chat-arch-1790308136323-c20dbc014e",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R9-INDICATOR-DISTINCTION",
+              "code": 1,
+              "signal": null,
+              "pid": 13740,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 20743
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R9-INDICATOR-DISTINCTION exited 1",
+            "stack": "Error: R9-INDICATOR-DISTINCTION exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:470:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "r9-indicator-02.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790308195507-6169af8ba1",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790308195507-6169af8ba1",
+        "run-result.json": {
+          "runId": "chat-arch-1790308195507-6169af8ba1",
+          "status": "passed",
+          "results": [
+            {
+              "id": "R9-INDICATOR-DISTINCTION",
+              "code": 0,
+              "signal": null,
+              "pid": 16423,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 11540
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": null
+        }
+      }
+    ]
+  },
+  "renderer-integration-01.log": {
+    "runReceipts": []
+  },
+  "renderer-integration-02.log": {
+    "runReceipts": []
+  },
+  "renderer-integration-03.log": {
+    "runReceipts": []
+  },
+  "resource-oracle-unit.log": {
+    "runReceipts": []
+  },
+  "server-full-01.log": {
+    "runReceipts": []
+  },
+  "server-full-02.log": {
+    "runReceipts": []
+  },
+  "server-full-03.log": {
+    "runReceipts": []
+  },
+  "server-full-04.log": {
+    "runReceipts": []
+  },
+  "socket-retention-red.log": {
+    "runReceipts": []
+  },
+  "sustained-01.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790314548483-2ba31185a3",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790314548483-2ba31185a3",
+        "run-result.json": {
+          "runId": "chat-arch-1790314548483-2ba31185a3",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R1-FIVE-MINUTE-TYPING",
+              "code": 1,
+              "signal": null,
+              "pid": 46334,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 400175
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R1-FIVE-MINUTE-TYPING exited 1",
+            "stack": "Error: R1-FIVE-MINUTE-TYPING exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:472:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "v-all-01.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790308300745-61ea37b62c",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790308300745-61ea37b62c",
+        "run-result.json": {
+          "runId": "chat-arch-1790308300745-61ea37b62c",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R8-PRE-RECEIPT-UPGRADE",
+              "code": 0,
+              "signal": null,
+              "pid": 20474,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 10278
+            },
+            {
+              "id": "R8-OWNER-GRAPH",
+              "code": 0,
+              "signal": null,
+              "pid": 22038,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 128
+            },
+            {
+              "id": "R8-EXACT-MEMBER-HYDRATION",
+              "code": 0,
+              "signal": null,
+              "pid": 22062,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 1412
+            },
+            {
+              "id": "R8-UI-LIFECYCLE",
+              "code": 0,
+              "signal": null,
+              "pid": 22240,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 9102
+            },
+            {
+              "id": "R7-R8-RUNTIME-OWNERSHIP",
+              "code": 0,
+              "signal": null,
+              "pid": 23408,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 13415
+            },
+            {
+              "id": "R8-MIRROR-RECOVERY",
+              "code": 0,
+              "signal": null,
+              "pid": 25361,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 13047
+            },
+            {
+              "id": "R8-SESSION-LIFECYCLE",
+              "code": 0,
+              "signal": null,
+              "pid": 27360,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 10224
+            },
+            {
+              "id": "F1-PUBLIC-ROUTE",
+              "code": 0,
+              "signal": null,
+              "pid": 28966,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 4704
+            },
+            {
+              "id": "FAULT-SERVER-ADMISSION",
+              "code": 0,
+              "signal": null,
+              "pid": 29694,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 4007
+            },
+            {
+              "id": "FAULT-TRANSPORT-ACK",
+              "code": 0,
+              "signal": null,
+              "pid": 30293,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 4889
+            },
+            {
+              "id": "FAULT-SAVE-ACK",
+              "code": 0,
+              "signal": null,
+              "pid": 30990,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 4144
+            },
+            {
+              "id": "R1-F2-F3-COMPOSER",
+              "code": 1,
+              "signal": null,
+              "pid": 31601,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 176446
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R1-F2-F3-COMPOSER exited 1",
+            "stack": "Error: R1-F2-F3-COMPOSER exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:470:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "v-all-02.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790308696612-b061d25225",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790308696612-b061d25225",
+        "run-result.json": {
+          "runId": "chat-arch-1790308696612-b061d25225",
+          "status": "passed",
+          "results": [
+            {
+              "id": "R8-PRE-RECEIPT-UPGRADE",
+              "code": 0,
+              "signal": null,
+              "pid": 51745,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 10771
+            },
+            {
+              "id": "R8-OWNER-GRAPH",
+              "code": 0,
+              "signal": null,
+              "pid": 53371,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 129
+            },
+            {
+              "id": "R8-EXACT-MEMBER-HYDRATION",
+              "code": 0,
+              "signal": null,
+              "pid": 53395,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 1422
+            },
+            {
+              "id": "R8-UI-LIFECYCLE",
+              "code": 0,
+              "signal": null,
+              "pid": 53573,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 8878
+            },
+            {
+              "id": "R7-R8-RUNTIME-OWNERSHIP",
+              "code": 0,
+              "signal": null,
+              "pid": 54740,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 12959
+            },
+            {
+              "id": "R8-MIRROR-RECOVERY",
+              "code": 0,
+              "signal": null,
+              "pid": 56656,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 12331
+            },
+            {
+              "id": "R8-SESSION-LIFECYCLE",
+              "code": 0,
+              "signal": null,
+              "pid": 58529,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 9885
+            },
+            {
+              "id": "F1-PUBLIC-ROUTE",
+              "code": 0,
+              "signal": null,
+              "pid": 60082,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 4269
+            },
+            {
+              "id": "FAULT-SERVER-ADMISSION",
+              "code": 0,
+              "signal": null,
+              "pid": 60761,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 4498
+            },
+            {
+              "id": "FAULT-TRANSPORT-ACK",
+              "code": 0,
+              "signal": null,
+              "pid": 61412,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 4397
+            },
+            {
+              "id": "FAULT-SAVE-ACK",
+              "code": 0,
+              "signal": null,
+              "pid": 62042,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 4738
+            },
+            {
+              "id": "R1-F2-F3-COMPOSER",
+              "code": 0,
+              "signal": null,
+              "pid": 62740,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 186281
+            },
+            {
+              "id": "R1-COMPOSER-CORRECTNESS",
+              "code": 0,
+              "signal": null,
+              "pid": 83644,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 3422
+            },
+            {
+              "id": "R7-HISTORY-LIVE",
+              "code": 0,
+              "signal": null,
+              "pid": 84068,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 3955
+            },
+            {
+              "id": "R2-NO-ENQUEUE",
+              "code": 0,
+              "signal": null,
+              "pid": 84534,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 6659
+            },
+            {
+              "id": "R3-LOST-ACK-STATUS",
+              "code": 0,
+              "signal": null,
+              "pid": 85552,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 7716
+            },
+            {
+              "id": "R3-RECONNECT-UI",
+              "code": 0,
+              "signal": null,
+              "pid": 86553,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 10767
+            },
+            {
+              "id": "R4-DISTINCT-ATTEMPTS",
+              "code": 0,
+              "signal": null,
+              "pid": 87885,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 10660
+            },
+            {
+              "id": "R4-DISTINCT-RECEIPTS",
+              "code": 0,
+              "signal": null,
+              "pid": 89218,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 11174
+            },
+            {
+              "id": "R4-LATE-DRAFT-RECOVERY",
+              "code": 0,
+              "signal": null,
+              "pid": 90660,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 25583
+            },
+            {
+              "id": "R4-DUPLICATE-MISMATCH",
+              "code": 0,
+              "signal": null,
+              "pid": 93848,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 7912
+            },
+            {
+              "id": "R5-R6-PUBLIC-ACTIONS",
+              "code": 0,
+              "signal": null,
+              "pid": 94908,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 44397
+            },
+            {
+              "id": "R5-CURRENT-ACTIONS",
+              "code": 0,
+              "signal": null,
+              "pid": 424,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 14641
+            },
+            {
+              "id": "R6-PRODUCTION-ACTION-OWNER",
+              "code": 0,
+              "signal": null,
+              "pid": 2429,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 44555
+            },
+            {
+              "id": "R5-DIAGNOSTIC-APPEND",
+              "code": 0,
+              "signal": null,
+              "pid": 7805,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 3359
+            },
+            {
+              "id": "R5-CURRENT-OWNER",
+              "code": 0,
+              "signal": null,
+              "pid": 8212,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 2795
+            },
+            {
+              "id": "R6-LIFETIME-BOUNDARIES",
+              "code": 0,
+              "signal": null,
+              "pid": 8563,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 44610
+            },
+            {
+              "id": "R9-INDICATOR-DISTINCTION",
+              "code": 0,
+              "signal": null,
+              "pid": 14162,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 11881
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": null
+        }
+      }
+    ]
+  },
+  "v-render-01.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790314114128-49d17a6362",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790314114128-49d17a6362",
+        "run-result.json": {
+          "runId": "chat-arch-1790314114128-49d17a6362",
+          "status": "failed",
+          "results": [
+            {
+              "id": "F1-PUBLIC-ROUTE",
+              "code": 0,
+              "signal": null,
+              "pid": 24336,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 4597
+            },
+            {
+              "id": "R1-F2-F3-COMPOSER",
+              "code": 1,
+              "signal": null,
+              "pid": 25052,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 69157
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R1-F2-F3-COMPOSER exited 1",
+            "stack": "Error: R1-F2-F3-COMPOSER exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:472:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "sustained-02.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790319550767-95b2a4448b",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790319550767-95b2a4448b",
+        "run-result.json": {
+          "runId": "chat-arch-1790319550767-95b2a4448b",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R1-FIVE-MINUTE-TYPING",
+              "code": 1,
+              "signal": null,
+              "pid": 80955,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 12487
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R1-FIVE-MINUTE-TYPING exited 1",
+            "stack": "Error: R1-FIVE-MINUTE-TYPING exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:473:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "sustained-03.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790383369332-8ec9918abf",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790383369332-8ec9918abf",
+        "run-result.json": {
+          "runId": "chat-arch-1790383369332-8ec9918abf",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R1-FIVE-MINUTE-TYPING",
+              "code": 1,
+              "signal": null,
+              "pid": 6537,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 42911
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R1-FIVE-MINUTE-TYPING exited 1",
+            "stack": "Error: R1-FIVE-MINUTE-TYPING exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:473:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "sustained-04.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790383735254-956fdfd8aa",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790383735254-956fdfd8aa",
+        "run-result.json": {
+          "runId": "chat-arch-1790383735254-956fdfd8aa",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R1-FIVE-MINUTE-TYPING",
+              "code": 1,
+              "signal": null,
+              "pid": 14438,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 57480
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R1-FIVE-MINUTE-TYPING exited 1",
+            "stack": "Error: R1-FIVE-MINUTE-TYPING exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:473:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "watched-setup-01.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790384584000-1d32b89d68",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790384584000-1d32b89d68",
+        "run-result.json": {
+          "runId": "chat-arch-1790384584000-1d32b89d68",
+          "status": "passed",
+          "results": [
+            {
+              "id": "R9-WATCHED-FOREGROUND-SETUP",
+              "code": 0,
+              "signal": null,
+              "pid": 24891,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 65994
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": null
+        }
+      }
+    ]
+  },
+  "watched-correlated-01.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790388395442-4951860497",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790388395442-4951860497",
+        "run-result.json": {
+          "runId": "chat-arch-1790388395442-4951860497",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R9-WATCHED-FOREGROUND-SETUP",
+              "code": 1,
+              "signal": null,
+              "pid": 44886,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 126079
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R9-WATCHED-FOREGROUND-SETUP exited 1",
+            "stack": "Error: R9-WATCHED-FOREGROUND-SETUP exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:480:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  },
+  "native-activation-01.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790390151299-353c7fc4ec",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790390151299-353c7fc4ec",
+        "run-result.json": {
+          "runId": "chat-arch-1790390151299-353c7fc4ec",
+          "status": "passed",
+          "results": [
+            {
+              "id": "R9-NATIVE-ACTIVATION-PROTOCOL",
+              "code": 0,
+              "signal": null,
+              "pid": 65430,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 137268
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": null
+        }
+      }
+    ]
+  },
+  "early-lifecycle-01.log": {
+    "runReceipts": [
+      {
+        "runId": "chat-arch-1790423682032-5dffb37aad",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790423682032-5dffb37aad",
+        "run-result.json": {
+          "runId": "chat-arch-1790423682032-5dffb37aad",
+          "status": "failed",
+          "results": [
+            {
+              "id": "R9-EARLY-LIFECYCLE",
+              "code": 1,
+              "signal": null,
+              "pid": 97744,
+              "timedOut": false,
+              "interrupted": false,
+              "leakedOwnedPids": [],
+              "elapsedMs": 185602
+            }
+          ],
+          "ownedRunRootRemoved": true,
+          "failure": {
+            "name": "Error",
+            "message": "R9-EARLY-LIFECYCLE exited 1",
+            "stack": "Error: R9-EARLY-LIFECYCLE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:492:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        }
+      }
+    ]
+  }
+}

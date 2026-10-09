@@ -1,0 +1,2617 @@
+{
+  "started": "2026-10-07T22:37:52.547Z",
+  "repoRoot": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev",
+  "HEAD": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "token": "chat-architecture-owner-material-16063-1ac8e1b7-124e-4148-9032-7f540fe74c20",
+  "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD",
+  "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/native-17",
+  "protectedProcessesBefore": [
+    "12443 /Users/rccurtrightjr./Applications/SoloBooks-Fusion-Runtime.app/Contents/MacOS/Fusion Studio Alpha",
+    "12448 /Users/rccurtrightjr./Applications/SoloBooks-Fusion-Runtime.app/Contents/Frameworks/Fusion Studio Alpha Helper.app/Contents/MacOS/Fusion Studio Alpha Helper --type=gpu-process --user-data-dir=/Users/rccurtrightjr./Library/Application Support/SoloBooks --gpu-preferences=SAAAAAAAAAAgAQAEAAAAAAAAAAAAAGAAAwAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=1718379636,r,2850300321946220739,13563117833552282474,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,560746908677690620,6632698554225308893,4 --trace-process-track-uuid=3190708988185955192 --seatbelt-client=34",
+    "12449 /Users/rccurtrightjr./Applications/SoloBooks-Fusion-Runtime.app/Contents/Frameworks/Fusion Studio Alpha Helper.app/Contents/MacOS/Fusion Studio Alpha Helper --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --user-data-dir=/Users/rccurtrightjr./Library/Application Support/SoloBooks --standard-schemes=fusion-studio --secure-schemes=fusion-studio --cors-schemes=fusion-studio --fetch-schemes=fusion-studio --shared-files --field-trial-handle=1718379636,r,2850300321946220739,13563117833552282474,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,560746908677690620,6632698554225308893,4 --trace-process-track-uuid=3190708989122997041 --seatbelt-client=33",
+    "12886 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs --user-data-dir=/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated --remote-debugging-address=127.0.0.1 --remote-debugging-port=50699",
+    "12889 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=gpu-process --user-data-dir=/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated --gpu-preferences=SAAAAAAAAAAgAQAEAAAAAAAAAAAAAGAAAwAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=1718379636,r,11852059511766355808,4803331251703815501,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5554488052210331966,1464568878525138357,4 --trace-process-track-uuid=3190708988185955192 --seatbelt-client=34",
+    "12890 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --user-data-dir=/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --shared-files --field-trial-handle=1718379636,r,11852059511766355808,4803331251703815501,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5554488052210331966,1464568878525138357,4 --trace-process-track-uuid=3190708989122997041 --seatbelt-client=35",
+    "12892 /opt/homebrew/bin/node /Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+    "12904 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron --enable-sandbox --remote-debugging-port=50699 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=4 --time-ticks-at-unix-epoch=-1787605995589361 --launch-time-ticks=3609727206617 --shared-files --field-trial-handle=1718379636,r,11852059511766355808,4803331251703815501,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5554488052210331966,1464568878525138357,4 --trace-process-track-uuid=3190708990060038890 --seatbelt-client=60",
+    "35320 node --watch src/server.js",
+    "35321 /opt/homebrew/Cellar/node/25.6.1/bin/node --test-concurrency=0 --heap-prof-interval=524288 --stack-trace-limit=10 --report-signal=SIGUSR2 --max-http-header-size=16384 --heapsnapshot-near-heap-limit=0 --tls-cipher-list=TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:DHE-RSA-AES256-SHA384:ECDHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA256:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!SRP:!CAMELLIA --watch-kill-signal=SIGTERM --inspect-publish-uid=stderr,http --cpu-prof-interval=1000 --test-coverage-functions=0 --test-timeout=0 --test-coverage-lines=0 --inspect-port=127.0.0.1:9229 --test-coverage-branches=0 --test-isolation=process --use-largepages=off --network-family-autoselection-attempt-timeout=500 --secure-heap-min=2 --v8-pool-size=4 --node-snapshot --trace-event-file-pattern=node_trace.${rotation}.log --secure-heap=0 src/server.js",
+    "45006 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron --enable-sandbox --remote-debugging-port=50699 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=23 --time-ticks-at-unix-epoch=-1787605995589361 --launch-time-ticks=3740813219640 --shared-files --field-trial-handle=1718379636,r,11852059511766355808,4803331251703815501,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5554488052210331966,1464568878525138357,4 --trace-process-track-uuid=3190709007863834021 --seatbelt-client=67",
+    "50654 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --remote-debugging-address=127.0.0.1 --remote-debugging-port=60949",
+    "50657 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=gpu-process --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --gpu-preferences=SAAAAAAAAAAgAQAEAAAAAAAAAAAAAGAAAwAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=1718379636,r,4723662950021138952,14092727233831086506,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,13175293216465320847,6022433364601031042,4 --trace-process-track-uuid=3190708988185955192 --seatbelt-client=33",
+    "50658 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --shared-files --field-trial-handle=1718379636,r,4723662950021138952,14092727233831086506,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,13175293216465320847,6022433364601031042,4 --trace-process-track-uuid=3190708989122997041 --seatbelt-client=35",
+    "50659 /opt/homebrew/bin/node /Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+    "50671 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron --enable-sandbox --remote-debugging-port=60949 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=4 --time-ticks-at-unix-epoch=-1787611981705306 --launch-time-ticks=3749185235474 --shared-files --field-trial-handle=1718379636,r,4723662950021138952,14092727233831086506,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,13175293216465320847,6022433364601031042,4 --trace-process-track-uuid=3190708990060038890 --seatbelt-client=61",
+    "52519 /Applications/Fusion Studio Alpha.app/Contents/MacOS/Fusion Studio Alpha --remote-debugging-address=127.0.0.1 --remote-debugging-port=61056",
+    "52543 /Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Alpha Helper.app/Contents/MacOS/Fusion Studio Alpha Helper --type=gpu-process --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --gpu-preferences=SAAAAAAAAAAgAQAEAAAAAAAAAAAAAGAAAwAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=1718379636,r,4802480082851952972,11236632304372599803,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,3697658166456062361,2703053587300973391,4 --trace-process-track-uuid=3190708988185955192 --seatbelt-client=33",
+    "52544 /Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Alpha Helper.app/Contents/MacOS/Fusion Studio Alpha Helper --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --shared-files --field-trial-handle=1718379636,r,4802480082851952972,11236632304372599803,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,3697658166456062361,2703053587300973391,4 --trace-process-track-uuid=3190708989122997041 --seatbelt-client=35",
+    "52545 /opt/homebrew/bin/node /Applications/Fusion Studio Alpha.app/Contents/Resources/fusion-studio-server/server.js",
+    "52557 /Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Alpha Helper (Renderer).app/Contents/MacOS/Fusion Studio Alpha Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Applications/Fusion Studio Alpha.app/Contents/Resources/app.asar --enable-sandbox --remote-debugging-port=61056 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=4 --time-ticks-at-unix-epoch=-1787611981703281 --launch-time-ticks=3749511799719 --shared-files --field-trial-handle=1718379636,r,4802480082851952972,11236632304372599803,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,3697658166456062361,2703053587300973391,4 --trace-process-track-uuid=3190708990060038890 --seatbelt-client=61",
+    "54391 /Applications/Wispr Flow.app/Contents/Frameworks/Electron Framework.framework/Helpers/chrome_crashpad_handler --no-rate-limit --monitor-self-annotation=ptype=crashpad-handler --database=/Users/rccurtrightjr./Library/Application Support/Wispr Flow/Crashpad --url=https://f.a.k/e --annotation=_productName=Wispr Flow --annotation=_version=1.6.1074 --annotation=plat=OS X --annotation=prod=Electron --annotation=ver=42.11.2 --handshake-fd=19",
+    "56849 /Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Alpha Helper (Renderer).app/Contents/MacOS/Fusion Studio Alpha Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Applications/Fusion Studio Alpha.app/Contents/Resources/app.asar --enable-sandbox --remote-debugging-port=61056 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=9 --time-ticks-at-unix-epoch=-1787611981703281 --launch-time-ticks=3752738643649 --shared-files --field-trial-handle=1718379636,r,4802480082851952972,11236632304372599803,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,3697658166456062361,2703053587300973391,4 --trace-process-track-uuid=3190708994745248135 --seatbelt-client=67",
+    "56850 /Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Alpha Helper (Renderer).app/Contents/MacOS/Fusion Studio Alpha Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Applications/Fusion Studio Alpha.app/Contents/Resources/app.asar --enable-sandbox --remote-debugging-port=61056 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=10 --time-ticks-at-unix-epoch=-1787611981703281 --launch-time-ticks=3752738645100 --shared-files --field-trial-handle=1718379636,r,4802480082851952972,11236632304372599803,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,3697658166456062361,2703053587300973391,4 --trace-process-track-uuid=3190708995682289984 --seatbelt-client=67",
+    "82055 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron --enable-sandbox --remote-debugging-port=50699 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=25 --time-ticks-at-unix-epoch=-1787605995589361 --launch-time-ticks=3766454062260 --shared-files --field-trial-handle=1718379636,r,11852059511766355808,4803331251703815501,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5554488052210331966,1464568878525138357,4 --trace-process-track-uuid=3190709009737917719 --seatbelt-client=67"
+  ],
+  "captures": [
+    {
+      "view": "file-viewer",
+      "host": "main",
+      "kind": "global",
+      "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4",
+      "requestId": "screenshot-1791412678014-9h6hfkz1m6o",
+      "workspaceId": "material-project",
+      "savedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-017Z.png",
+      "bytes": 124413,
+      "width": 3200,
+      "height": 1944,
+      "sha256": "9115b2515bbbe4bfde8f8f280972df7e66dc0c7d0fff7287a9a61fc8a1eaf3e0",
+      "renderedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-017Z.png",
+      "nonTargetPreserved": true
+    },
+    {
+      "view": "file-viewer",
+      "host": "side",
+      "kind": "global",
+      "threadId": "2026-10-07T15-37-55-985",
+      "requestId": "screenshot-1791412678262-d29fyxpy96q",
+      "workspaceId": "material-project",
+      "savedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-265Z.png",
+      "bytes": 144412,
+      "width": 3200,
+      "height": 1944,
+      "sha256": "6518699bb349d2ac551d6cdaabe06992aeb0e727e0a1ffe4ce00314ceeb58c22",
+      "renderedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-265Z.png",
+      "nonTargetPreserved": true
+    },
+    {
+      "view": "file-viewer",
+      "host": "main",
+      "kind": "own",
+      "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4",
+      "requestId": "screenshot-1791412678495-0e1k5a2ydfsa",
+      "workspaceId": "material-project",
+      "savedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-497Z.png",
+      "bytes": 154616,
+      "width": 3200,
+      "height": 1944,
+      "sha256": "5d03658cb0bbffeaf4b5434dacf3ae4a711275ceeb020325e620c27aca88f2e5",
+      "renderedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-497Z.png",
+      "nonTargetPreserved": true
+    },
+    {
+      "view": "file-viewer",
+      "host": "side",
+      "kind": "own",
+      "threadId": "2026-10-07T15-37-55-985",
+      "requestId": "screenshot-1791412678731-hf6b6trfew",
+      "workspaceId": "material-project",
+      "savedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-736Z.png",
+      "bytes": 161153,
+      "width": 3200,
+      "height": 1944,
+      "sha256": "b563ecd2896935f40eb7e0fc70152ed9c1348c07f7d26e86c282c038e575ba5e",
+      "renderedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-736Z.png",
+      "nonTargetPreserved": true
+    }
+  ],
+  "sends": [
+    {
+      "view": "file-viewer",
+      "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4",
+      "requestId": "52e9b521b920f929df3fcbffe98ae928",
+      "turnId": "af2e5651-d0f0-432f-9278-ddea5ae15966",
+      "exchangeId": 1,
+      "attachments": [
+        {
+          "kind": "file",
+          "label": "file:fusion-capture-2026-10-07T22-37-58-017Z.png",
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-017Z.png",
+          "sourceName": "fusion-capture-2026-10-07T22-37-58-017Z",
+          "panel": "screenshots",
+          "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-37-58-017Z.png"
+        },
+        {
+          "kind": "file",
+          "label": "file:fusion-capture-2026-10-07T22-37-58-497Z.png",
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-497Z.png",
+          "sourceName": "fusion-capture-2026-10-07T22-37-58-497Z",
+          "panel": "screenshots",
+          "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-37-58-497Z.png"
+        },
+        {
+          "kind": "file",
+          "label": "file:fusion-capture-2026-10-07T22-37-58-265Z.png",
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-265Z.png",
+          "sourceName": "fusion-capture-2026-10-07T22-37-58-265Z",
+          "panel": "screenshots",
+          "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-37-58-265Z.png"
+        },
+        {
+          "kind": "wiki",
+          "label": "wiki:material-native:owned-material",
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Wiki/999-Material_Native/001-Owned_Material/PAGE.md",
+          "sourceName": "Owned Material",
+          "panel": "wiki-viewer",
+          "relativePath": "999-Material_Native/001-Owned_Material/PAGE.md"
+        }
+      ],
+      "noOptimisticBubble": true,
+      "exactACKClear": true,
+      "nonTargetPreserved": true
+    },
+    {
+      "view": "file-viewer",
+      "threadId": "2026-10-07T15-37-55-985",
+      "requestId": "17c1305c6322188fb65dd403603f9fca",
+      "turnId": "6af8b4cc-4bfc-4e5e-817d-c4c6dc4f40dd",
+      "exchangeId": 2,
+      "attachments": [
+        {
+          "kind": "file",
+          "label": "file:fusion-capture-2026-10-07T22-37-58-265Z.png",
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-265Z.png",
+          "sourceName": "fusion-capture-2026-10-07T22-37-58-265Z",
+          "panel": "screenshots",
+          "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-37-58-265Z.png"
+        },
+        {
+          "kind": "file",
+          "label": "file:fusion-capture-2026-10-07T22-37-58-736Z.png",
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-736Z.png",
+          "sourceName": "fusion-capture-2026-10-07T22-37-58-736Z",
+          "panel": "screenshots",
+          "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-37-58-736Z.png"
+        },
+        {
+          "kind": "file",
+          "label": "file:fusion-capture-2026-10-07T22-37-58-017Z.png",
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-017Z.png",
+          "sourceName": "fusion-capture-2026-10-07T22-37-58-017Z",
+          "panel": "screenshots",
+          "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-37-58-017Z.png"
+        },
+        {
+          "kind": "wiki",
+          "label": "wiki:material-native:owned-material",
+          "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Wiki/999-Material_Native/001-Owned_Material/PAGE.md",
+          "sourceName": "Owned Material",
+          "panel": "wiki-viewer",
+          "relativePath": "999-Material_Native/001-Owned_Material/PAGE.md"
+        }
+      ],
+      "noOptimisticBubble": true,
+      "exactACKClear": true,
+      "nonTargetPreserved": true
+    }
+  ],
+  "limits": [
+    "Deterministic staged provider and inherited admission/ACK fault seams; no public provider certification.",
+    "Capture IPC, preload, screenshot save/path protection, production renderer and SQLite persistence remain actual.",
+    "Only bounded synthetic fixture prompts and image hashes/dimensions are retained; no PNG payload copied."
+  ],
+  "diagnostics": [
+    {
+      "kind": "received",
+      "type": "shell-auth:challenge"
+    },
+    {
+      "kind": "received",
+      "type": "connected"
+    },
+    {
+      "kind": "received",
+      "type": "panel_config",
+      "workspaceId": "material-project"
+    },
+    {
+      "kind": "received",
+      "type": "shell-auth:authenticated"
+    },
+    {
+      "kind": "received",
+      "type": "office:palette_state",
+      "workspaceId": "material-project"
+    },
+    {
+      "kind": "received",
+      "type": "screenshot:list"
+    },
+    {
+      "kind": "received",
+      "type": "thread:list",
+      "viewId": null
+    },
+    {
+      "kind": "received",
+      "type": "panel_changed"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "state:result",
+      "workspaceId": "material-project"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response",
+      "workspaceId": "material-project"
+    },
+    {
+      "kind": "received",
+      "type": "thread:list",
+      "viewId": "file-viewer"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response",
+      "workspaceId": "material-project"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "state:result",
+      "workspaceId": "material-project"
+    },
+    {
+      "kind": "received",
+      "type": "state:result",
+      "workspaceId": "material-project"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "state:result",
+      "workspaceId": "material-project"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "state:result",
+      "workspaceId": "material-project"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "thread:created",
+      "workspaceId": "material-project",
+      "viewId": "file-viewer",
+      "threadId": "2026-10-07T15-37-55-985",
+      "threadGroupId": "tg-8bb2561b-3444-4105-9d1e-d1e962d4095b"
+    },
+    {
+      "kind": "received",
+      "type": "thread:list",
+      "viewId": "file-viewer"
+    },
+    {
+      "kind": "received",
+      "type": "thread:opened",
+      "workspaceId": "material-project",
+      "viewId": "file-viewer",
+      "threadId": "2026-10-07T15-37-55-985",
+      "threadGroupId": "tg-8bb2561b-3444-4105-9d1e-d1e962d4095b"
+    },
+    {
+      "kind": "received",
+      "type": "wire_ready",
+      "threadId": "2026-10-07T15-37-55-985"
+    },
+    {
+      "kind": "received",
+      "type": "thread:opened",
+      "workspaceId": "material-project",
+      "viewId": "file-viewer",
+      "threadId": "2026-10-07T15-37-55-985",
+      "threadGroupId": "tg-8bb2561b-3444-4105-9d1e-d1e962d4095b"
+    },
+    {
+      "kind": "received",
+      "type": "state:worksurface_result",
+      "workspaceId": "material-project",
+      "viewId": "file-viewer",
+      "threadGroupId": "tg-8bb2561b-3444-4105-9d1e-d1e962d4095b"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response",
+      "workspaceId": "material-project"
+    },
+    {
+      "kind": "received",
+      "type": "thread:action:completed",
+      "workspaceId": "material-project",
+      "viewId": "file-viewer",
+      "threadId": "2026-10-07T15-37-55-985",
+      "threadGroupId": "tg-8bb2561b-3444-4105-9d1e-d1e962d4095b"
+    },
+    {
+      "kind": "received",
+      "type": "state:worksurface_result",
+      "workspaceId": "material-project",
+      "viewId": "file-viewer",
+      "threadGroupId": "tg-8bb2561b-3444-4105-9d1e-d1e962d4095b"
+    },
+    {
+      "kind": "received",
+      "type": "thread:created",
+      "workspaceId": "material-project",
+      "viewId": "file-viewer",
+      "threadId": "2026-10-07T15-37-56-299",
+      "threadGroupId": "tg-c8dba54e-92a4-4447-a4db-88452a545e5a"
+    },
+    {
+      "kind": "received",
+      "type": "thread:list",
+      "viewId": "file-viewer"
+    },
+    {
+      "kind": "received",
+      "type": "thread:opened",
+      "workspaceId": "material-project",
+      "viewId": "file-viewer",
+      "threadId": "2026-10-07T15-37-56-299",
+      "threadGroupId": "tg-c8dba54e-92a4-4447-a4db-88452a545e5a"
+    },
+    {
+      "kind": "received",
+      "type": "wire_ready",
+      "threadId": "2026-10-07T15-37-56-299"
+    },
+    {
+      "kind": "received",
+      "type": "state:worksurface_result",
+      "workspaceId": "material-project",
+      "viewId": "file-viewer",
+      "threadGroupId": "tg-c8dba54e-92a4-4447-a4db-88452a545e5a"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response",
+      "workspaceId": "material-project"
+    },
+    {
+      "kind": "received",
+      "type": "state:worksurface_result",
+      "workspaceId": "material-project",
+      "viewId": "file-viewer",
+      "threadGroupId": "tg-8bb2561b-3444-4105-9d1e-d1e962d4095b"
+    },
+    {
+      "kind": "received",
+      "type": "thread:opened",
+      "workspaceId": "material-project",
+      "viewId": "file-viewer",
+      "threadId": "2026-10-07T15-37-56-299",
+      "threadGroupId": "tg-c8dba54e-92a4-4447-a4db-88452a545e5a"
+    },
+    {
+      "kind": "received",
+      "type": "state:worksurface_result",
+      "workspaceId": "material-project",
+      "viewId": "file-viewer",
+      "threadGroupId": "tg-c8dba54e-92a4-4447-a4db-88452a545e5a"
+    },
+    {
+      "kind": "received",
+      "type": "state:worksurface_result",
+      "workspaceId": "material-project",
+      "viewId": "file-viewer",
+      "threadGroupId": "tg-c8dba54e-92a4-4447-a4db-88452a545e5a"
+    },
+    {
+      "kind": "received",
+      "type": "thread:opened",
+      "workspaceId": "material-project",
+      "viewId": "file-viewer",
+      "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4",
+      "threadGroupId": "tg-8bb2561b-3444-4105-9d1e-d1e962d4095b"
+    },
+    {
+      "kind": "received",
+      "type": "state:worksurface_result",
+      "workspaceId": "material-project",
+      "viewId": "file-viewer",
+      "threadGroupId": "tg-8bb2561b-3444-4105-9d1e-d1e962d4095b"
+    },
+    {
+      "kind": "received",
+      "type": "thread:opened",
+      "workspaceId": "material-project",
+      "viewId": "file-viewer",
+      "threadId": "2026-10-07T15-37-55-985",
+      "threadGroupId": "tg-8bb2561b-3444-4105-9d1e-d1e962d4095b",
+      "historyOnly": true
+    },
+    {
+      "kind": "received",
+      "type": "wire_ready",
+      "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4"
+    },
+    {
+      "stage": "capture",
+      "view": "file-viewer",
+      "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4",
+      "kind": "global",
+      "dom": {
+        "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4",
+        "viewId": "file-viewer",
+        "host": "main",
+        "surface": "chat-surface:main:2:a4ab36bf-0ae9-49f4-abbc-338673fd89da"
+      },
+      "capability": "function",
+      "focus": 1
+    },
+    {
+      "stage": "capture",
+      "view": "file-viewer",
+      "threadId": "2026-10-07T15-37-55-985",
+      "kind": "global",
+      "dom": {
+        "threadId": "2026-10-07T15-37-55-985",
+        "viewId": "file-viewer",
+        "host": "side-tab",
+        "surface": "chat-surface:component:chat-side:scp-c7b2d157-84a9-4e07-a8e6-a69af2805779:6"
+      },
+      "capability": "function",
+      "focus": 1
+    },
+    {
+      "stage": "capture",
+      "view": "file-viewer",
+      "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4",
+      "kind": "own",
+      "dom": {
+        "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4",
+        "viewId": "file-viewer",
+        "host": "main",
+        "surface": "chat-surface:main:2:a4ab36bf-0ae9-49f4-abbc-338673fd89da"
+      },
+      "capability": "function",
+      "focus": 1
+    },
+    {
+      "stage": "capture",
+      "view": "file-viewer",
+      "threadId": "2026-10-07T15-37-55-985",
+      "kind": "own",
+      "dom": {
+        "threadId": "2026-10-07T15-37-55-985",
+        "viewId": "file-viewer",
+        "host": "side-tab",
+        "surface": "chat-surface:component:chat-side:scp-c7b2d157-84a9-4e07-a8e6-a69af2805779:6"
+      },
+      "capability": "function",
+      "focus": 1
+    },
+    {
+      "kind": "received",
+      "type": "thread:list",
+      "viewId": null
+    },
+    {
+      "kind": "received",
+      "type": "panel_changed"
+    },
+    {
+      "kind": "received",
+      "type": "thread:list",
+      "viewId": "wiki-viewer"
+    },
+    {
+      "kind": "received",
+      "type": "state:worksurface_result",
+      "workspaceId": "material-project",
+      "viewId": "file-viewer",
+      "threadGroupId": "tg-8bb2561b-3444-4105-9d1e-d1e962d4095b"
+    },
+    {
+      "kind": "received",
+      "type": "thread:list",
+      "viewId": null
+    },
+    {
+      "kind": "received",
+      "type": "panel_changed"
+    },
+    {
+      "kind": "received",
+      "type": "turn_begin",
+      "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4"
+    },
+    {
+      "kind": "received",
+      "type": "thread:state_changed",
+      "workspaceId": "material-project",
+      "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4"
+    },
+    {
+      "kind": "received",
+      "type": "step_begin",
+      "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4"
+    },
+    {
+      "kind": "received",
+      "type": "thinking",
+      "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4"
+    },
+    {
+      "kind": "received",
+      "type": "tool_call",
+      "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4"
+    },
+    {
+      "kind": "received",
+      "type": "tool_call_args",
+      "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4"
+    },
+    {
+      "kind": "received",
+      "type": "tool_result",
+      "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4"
+    },
+    {
+      "kind": "received",
+      "type": "status_update",
+      "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4"
+    },
+    {
+      "kind": "received",
+      "type": "content",
+      "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4"
+    },
+    {
+      "kind": "received",
+      "type": "content",
+      "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4"
+    },
+    {
+      "kind": "received",
+      "type": "content",
+      "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4"
+    },
+    {
+      "kind": "received",
+      "type": "turn_end",
+      "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4"
+    },
+    {
+      "kind": "received",
+      "type": "thread:state_changed",
+      "workspaceId": "material-project",
+      "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4"
+    },
+    {
+      "kind": "received",
+      "type": "exchange_metadata",
+      "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4"
+    },
+    {
+      "kind": "received",
+      "type": "turn_begin",
+      "threadId": "2026-10-07T15-37-55-985"
+    },
+    {
+      "kind": "received",
+      "type": "thread:state_changed",
+      "workspaceId": "material-project",
+      "threadId": "2026-10-07T15-37-55-985"
+    },
+    {
+      "kind": "received",
+      "type": "step_begin",
+      "threadId": "2026-10-07T15-37-55-985"
+    },
+    {
+      "kind": "received",
+      "type": "thinking",
+      "threadId": "2026-10-07T15-37-55-985"
+    },
+    {
+      "kind": "received",
+      "type": "tool_call",
+      "threadId": "2026-10-07T15-37-55-985"
+    },
+    {
+      "kind": "received",
+      "type": "tool_call_args",
+      "threadId": "2026-10-07T15-37-55-985"
+    },
+    {
+      "kind": "received",
+      "type": "tool_result",
+      "threadId": "2026-10-07T15-37-55-985"
+    },
+    {
+      "kind": "received",
+      "type": "status_update",
+      "threadId": "2026-10-07T15-37-55-985"
+    },
+    {
+      "kind": "received",
+      "type": "content",
+      "threadId": "2026-10-07T15-37-55-985"
+    },
+    {
+      "kind": "received",
+      "type": "content",
+      "threadId": "2026-10-07T15-37-55-985"
+    },
+    {
+      "kind": "received",
+      "type": "content",
+      "threadId": "2026-10-07T15-37-55-985"
+    },
+    {
+      "kind": "received",
+      "type": "turn_end",
+      "threadId": "2026-10-07T15-37-55-985"
+    },
+    {
+      "kind": "received",
+      "type": "thread:state_changed",
+      "workspaceId": "material-project",
+      "threadId": "2026-10-07T15-37-55-985"
+    },
+    {
+      "kind": "received",
+      "type": "exchange_metadata",
+      "threadId": "2026-10-07T15-37-55-985"
+    },
+    {
+      "kind": "received",
+      "type": "thread:list",
+      "viewId": null
+    },
+    {
+      "kind": "received",
+      "type": "panel_changed"
+    },
+    {
+      "kind": "received",
+      "type": "thread:list",
+      "viewId": "issues-viewer"
+    },
+    {
+      "kind": "received",
+      "type": "state:worksurface_result",
+      "workspaceId": "material-project",
+      "viewId": "file-viewer",
+      "threadGroupId": "tg-8bb2561b-3444-4105-9d1e-d1e962d4095b"
+    },
+    {
+      "kind": "received",
+      "type": "state:result",
+      "workspaceId": "material-project"
+    },
+    {
+      "kind": "received",
+      "type": "thread:created",
+      "workspaceId": "material-project",
+      "viewId": "issues-viewer",
+      "threadId": "2026-10-07T15-38-02-108",
+      "threadGroupId": "tg-eb44dde0-c85e-4654-8efd-5c46121cab0b"
+    },
+    {
+      "kind": "received",
+      "type": "thread:list",
+      "viewId": "issues-viewer"
+    },
+    {
+      "kind": "received",
+      "type": "thread:opened",
+      "workspaceId": "material-project",
+      "viewId": "issues-viewer",
+      "threadId": "2026-10-07T15-38-02-108",
+      "threadGroupId": "tg-eb44dde0-c85e-4654-8efd-5c46121cab0b"
+    },
+    {
+      "kind": "received",
+      "type": "state:worksurface_result",
+      "workspaceId": "material-project",
+      "viewId": "issues-viewer",
+      "threadGroupId": "tg-eb44dde0-c85e-4654-8efd-5c46121cab0b"
+    },
+    {
+      "kind": "received",
+      "type": "wire_ready",
+      "threadId": "2026-10-07T15-38-02-108"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response",
+      "workspaceId": "material-project"
+    },
+    {
+      "kind": "received",
+      "type": "thread:opened",
+      "workspaceId": "material-project",
+      "viewId": "issues-viewer",
+      "threadId": "2026-10-07T15-38-02-108",
+      "threadGroupId": "tg-eb44dde0-c85e-4654-8efd-5c46121cab0b"
+    },
+    {
+      "kind": "received",
+      "type": "thread:opened",
+      "workspaceId": "material-project",
+      "viewId": "issues-viewer",
+      "threadId": "2026-10-07T15-38-02-108",
+      "threadGroupId": "tg-eb44dde0-c85e-4654-8efd-5c46121cab0b"
+    },
+    {
+      "kind": "received",
+      "type": "thread:action:completed",
+      "workspaceId": "material-project",
+      "viewId": "issues-viewer",
+      "threadId": "2026-10-07T15-38-02-108",
+      "threadGroupId": "tg-eb44dde0-c85e-4654-8efd-5c46121cab0b"
+    },
+    {
+      "kind": "received",
+      "type": "state:worksurface_result",
+      "workspaceId": "material-project",
+      "viewId": "issues-viewer",
+      "threadGroupId": "tg-eb44dde0-c85e-4654-8efd-5c46121cab0b"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "thread:created",
+      "workspaceId": "material-project",
+      "viewId": "issues-viewer",
+      "threadId": "2026-10-07T15-38-02-432",
+      "threadGroupId": "tg-69881ca3-e5f1-4122-a730-1d48954ad5a6"
+    },
+    {
+      "kind": "received",
+      "type": "thread:list",
+      "viewId": "issues-viewer"
+    },
+    {
+      "kind": "received",
+      "type": "thread:opened",
+      "workspaceId": "material-project",
+      "viewId": "issues-viewer",
+      "threadId": "2026-10-07T15-38-02-432",
+      "threadGroupId": "tg-69881ca3-e5f1-4122-a730-1d48954ad5a6"
+    },
+    {
+      "kind": "received",
+      "type": "wire_ready",
+      "threadId": "2026-10-07T15-38-02-432"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "state:worksurface_result",
+      "workspaceId": "material-project",
+      "viewId": "issues-viewer",
+      "threadGroupId": "tg-69881ca3-e5f1-4122-a730-1d48954ad5a6"
+    },
+    {
+      "kind": "received",
+      "type": "file_tree_response",
+      "workspaceId": "material-project"
+    },
+    {
+      "kind": "received",
+      "type": "thread:opened",
+      "workspaceId": "material-project",
+      "viewId": "issues-viewer",
+      "threadId": "th-b49cde01-6fe1-42e8-ba9f-ae31e08d1ad7",
+      "threadGroupId": "tg-eb44dde0-c85e-4654-8efd-5c46121cab0b"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "file_content_response"
+    },
+    {
+      "kind": "received",
+      "type": "thread:opened",
+      "workspaceId": "material-project",
+      "viewId": "issues-viewer",
+      "threadId": "2026-10-07T15-38-02-108",
+      "threadGroupId": "tg-eb44dde0-c85e-4654-8efd-5c46121cab0b",
+      "historyOnly": true
+    },
+    {
+      "kind": "received",
+      "type": "wire_ready",
+      "threadId": "th-b49cde01-6fe1-42e8-ba9f-ae31e08d1ad7"
+    },
+    {
+      "stage": "capture",
+      "view": "issues-viewer",
+      "threadId": "th-b49cde01-6fe1-42e8-ba9f-ae31e08d1ad7",
+      "kind": "global",
+      "dom": {
+        "threadId": "th-b49cde01-6fe1-42e8-ba9f-ae31e08d1ad7",
+        "viewId": "issues-viewer",
+        "host": "main",
+        "surface": "chat-surface:main:4:4989d6aa-cca1-4759-971e-06ad02d8f09d"
+      },
+      "capability": "function",
+      "focus": 1
+    }
+  ],
+  "nativeCapability": {
+    "at": "2026-10-07T22:37:52.594Z",
+    "desktopLocked": false
+  },
+  "identities": {
+    "stagedClient": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-stage/fusion-studio-client",
+    "stagedServer": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-stage/fusion-studio-server",
+    "profile": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-profile",
+    "machine": "RC-MacAir-15",
+    "workspaceRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace",
+    "dbPath": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-profile/server-data/fusion.db",
+    "renderer": {
+      "assets/CaptureDocumentPresenter-BDP5xibP.js": "d991af5342c7efcdd7deb980c25e646fe24a4999cc5b18fe6dc53bcba34e1226",
+      "assets/ChatSurfaceComponentMount-1v7sMjpU.js": "70c7aa770f959175dbdcd8365ceec886401de8ab0a59a7a6c95ceec19e5c71ee",
+      "assets/FileDocumentPresenter-CflsNQo-.css": "1255a539e24702681e2710bb0895f5a1e7f45646f5ab5873b5fe277987e37517",
+      "assets/FileDocumentPresenter-CooZ27Vn.js": "1059d2e096b0735829888b4e520e664f5ea543e66d00557e599fb58af20d2300",
+      "assets/FileEmptyTabBody-BM6C8O52.js": "21bfaad3eb6cb8ec83510487796dcfdf9cd32d8abf79198977ff0882738d95e8",
+      "assets/FileEmptyTabBody-Cxwzun_s.css": "533ee1a6af9531e9f976b34a852cf650e83357292a75db238be02aa5e72e19c4",
+      "assets/FilePickerDrawerLayer-CQODmtw5.css": "af6ceb799a35cca419f477260c1aede230fda1e82381d76f9e57de4b7be941d4",
+      "assets/FilePickerDrawerLayer-DtW7ZlHq.js": "5d694c32af06d0024659bb3e6ffce37119dcf8b16ed9b3b73c3811960e0320f7",
+      "assets/KaTeX_AMS-Regular-BQhdFMY1.woff2": "0cdd387c9590a1a9f9794560022dbb59654a7d86f187aa0c81495ad42d3a7308",
+      "assets/KaTeX_AMS-Regular-DMm9YOAa.woff": "30da91e84c893f875e252689faebdc590b2871145e8adc7f9a9d4dbd8ce0b251",
+      "assets/KaTeX_AMS-Regular-DRggAlZN.ttf": "68534840bcfdd2bffb6f0e8deb48684dd01e7f04ea2813267577afb906de1d13",
+      "assets/KaTeX_Caligraphic-Bold-ATXxdsX0.ttf": "07d8e303ce4fc12b4bb54f1004170dd190a1f3db45d400fe68060df3e0897268",
+      "assets/KaTeX_Caligraphic-Bold-BEiXGLvX.woff": "1ae6bd7475590e97e7f145a89e09ccde322f7a6bc0b91607b1c8b8ee28290fed",
+      "assets/KaTeX_Caligraphic-Bold-Dq_IR9rO.woff2": "de7701e42cf1f4cf0b766c03fb27977207eee2f4fd5d76fa82188406da43ea4c",
+      "assets/KaTeX_Caligraphic-Regular-CTRA-rTL.woff": "3398dd02302557a793f2863f88e02d96ce10df2abffa07c8e9fa90775116e65c",
+      "assets/KaTeX_Caligraphic-Regular-Di6jR-x-.woff2": "5d53e70ad607c2352162dec9e0923fb54ecdafaccbf604cd8dcf7d00facb989b",
+      "assets/KaTeX_Caligraphic-Regular-wX97UBjC.ttf": "ed0b74372feefcbb9c0666b2e210da37b7e49fa7fbbf3eeb11db5f693dacfbb7",
+      "assets/KaTeX_Fraktur-Bold-BdnERNNW.ttf": "9163df9c7122432e6495b4229fa9071cf9ae86a758ae5efc4924ec2e1a6dbce1",
+      "assets/KaTeX_Fraktur-Bold-BsDP51OF.woff": "9be7ceb88004ab8ad124082246fbfcca4091e36385d4ec6ed1df67375dad50fb",
+      "assets/KaTeX_Fraktur-Bold-CL6g_b3V.woff2": "74444efd593c005e3f4573b44524704c0af0a937fe911cca9e94068d0d140d3f",
+      "assets/KaTeX_Fraktur-Regular-CB_wures.ttf": "1e6f9579e90e2cac37f8f60a597c436e075c114385652b7cbeb0dec0421291b3",
+      "assets/KaTeX_Fraktur-Regular-CTYiF6lA.woff2": "51814d270d06ff0255dba0799994fa4d8c84d11f09951d47595f4abb1f3602dc",
+      "assets/KaTeX_Fraktur-Regular-Dxdc4cR9.woff": "5e28753be717dac97f559f49bc10be9cf3c124ddcabda6659d11cb68febc6463",
+      "assets/KaTeX_Main-Bold-Cx986IdX.woff2": "0f60d1b897938ec918c8ce073092411baf9438f6739465693ff18b0f9d20b021",
+      "assets/KaTeX_Main-Bold-Jm3AIy58.woff": "c76c5d696297d51b9cb1639c7da4334f0e7dec81b42b11213b5e25ef671bb822",
+      "assets/KaTeX_Main-Bold-waoOVXN0.ttf": "138ac28d1663b3037e9c5f52371fa5c63d8324f4a38d22cd573e6ea3a3fd0cf8",
+      "assets/KaTeX_Main-BoldItalic-DxDJ3AOS.woff2": "99cd42a3c072d918f2f44984a807cf7aa16e13545fd0875fc07c6c65f99e715b",
+      "assets/KaTeX_Main-BoldItalic-DzxPMmG6.ttf": "70ee1f64a20f2048c21940ef46d0144fd215baa953ca69afd1e31e98544f708f",
+      "assets/KaTeX_Main-BoldItalic-SpSLRI95.woff": "a6f7ec0d846ac7ad975adb8959c37ed49b94acbc4ae436db9ce9e20287e4a64c",
+      "assets/KaTeX_Main-Italic-3WenGoN9.ttf": "0d85ae7cc30f23790a7f1a58c4a112fdca8aae769b6ba11429af1d98b1b6cb3a",
+      "assets/KaTeX_Main-Italic-BMLOBm91.woff": "f1d6ef86f3b11a528bd5185199bd2443ecb2b0dead96d88674b5a2c12be24bdf",
+      "assets/KaTeX_Main-Italic-NWA7e6Wa.woff2": "97479ca6cce906abc961ecac96faa5f9ca2e61b8e7670d475826bcdee9a7c267",
+      "assets/KaTeX_Main-Regular-B22Nviop.woff2": "c2342cd8b869e01752a9321dc17213fc40d4d04c79688c1d43f2cf316abd7866",
+      "assets/KaTeX_Main-Regular-Dr94JaBh.woff": "c6368d87e8a1a3a5d337623d83d8dc4b868f242a9ad476237d6f8d1e0f168cdc",
+      "assets/KaTeX_Main-Regular-ypZvNtVU.ttf": "d0332f52868370fd83ae7fa46470f90c8f2eab2fcf12bc4f88080b340c95a830",
+      "assets/KaTeX_Math-BoldItalic-B3XSjfu4.ttf": "f9377ab0271cda59af24bcffbd46a4d0c8a3572ffafdbb38de2ad5ea7b0d5ee5",
+      "assets/KaTeX_Math-BoldItalic-CZnvNsCZ.woff2": "dc47344dbb6cb5b655c8460d561f4df5f501b90c804ad3c6cec65fe322351ab1",
+      "assets/KaTeX_Math-BoldItalic-iY-2wyZ7.woff": "850c0af5c2238497febaf5e461d880bf458c341f42f4f330f1b1ab5698b1998e",
+      "assets/KaTeX_Math-Italic-DA0__PXp.woff": "8a8d244581371912b8f3f5a23e2437cb2a59cd9bcaebb0346e722c05737a2571",
+      "assets/KaTeX_Math-Italic-flOr_0UB.ttf": "08ce98e51b04d58945a301e639e02b6998af29fdfd61a7b8afdd07bbfc479d4a",
+      "assets/KaTeX_Math-Italic-t53AETM-.woff2": "7af58c5ec8f132a2ddde9027c6d7814decce4d3b822a11192a42a20e2e973264",
+      "assets/KaTeX_SansSerif-Bold-CFMepnvq.ttf": "1ece03f79f95277d57dc7f6b435a74e1379b0d46104a8530286b60ff49369ea0",
+      "assets/KaTeX_SansSerif-Bold-D1sUS0GD.woff2": "e99ae51144bf1232efcc1bfe5add36262c6866b0faab24fa75740e1b98577a62",
+      "assets/KaTeX_SansSerif-Bold-DbIhKOiC.woff": "ece03cfd83e22c212cdef66feb8442d25a083beb988db3f1883f3f9738d750ba",
+      "assets/KaTeX_SansSerif-Italic-C3H0VqGB.woff2": "00b26ac825e2095056396e0553b8ac26d3f8ad158c3826e28b4c45b385c4714a",
+      "assets/KaTeX_SansSerif-Italic-DN2j7dab.woff": "91ee67500cc0129aa0ace3ac5c61ff1692102f0f31d02b69347fba35dcb75bf2",
+      "assets/KaTeX_SansSerif-Italic-YYjJ1zSn.ttf": "3931dd81faed86ba021bb2bbdc36f5bed9a38d6b4f4077aca59b265aa1b02083",
+      "assets/KaTeX_SansSerif-Regular-BNo7hRIc.ttf": "f36ea897e19f4a2e571d1e900e4e3710e438deb05a842486045ba0a3e616a4ad",
+      "assets/KaTeX_SansSerif-Regular-CS6fqUqJ.woff": "11e4dc8a6471ff6d6ee561d53d10fde8f7489e798257ff449c5d37c197435605",
+      "assets/KaTeX_SansSerif-Regular-DDBCnlJ7.woff2": "68e8c73ef42afd3ccec58bf0fba302cce448938e7fc020a5e31f8a952eee1342",
+      "assets/KaTeX_Script-Regular-C5JkGWo-.ttf": "1c67f068fea8bb09bf099c088b1cf64bd27516a6e07f4684344873564bb66a67",
+      "assets/KaTeX_Script-Regular-D3wIWfF6.woff2": "036d4e95149b69ff9bcc0cd55771efeb25ffa3947293e69acd78d5ac328c684b",
+      "assets/KaTeX_Script-Regular-D5yQViql.woff": "d96cdf2b3bdd4d64a8fd5f74a4c467f123a8a73931cd435889f08ffaf9bf947a",
+      "assets/KaTeX_Size1-Regular-C195tn64.woff": "c943cc986384f59e86bea5fd7dc50a9c4dfe567a7c05eb40d6790720dead97c9",
+      "assets/KaTeX_Size1-Regular-Dbsnue_I.ttf": "95b6d2f1a50173bfedb8c63e1d1c99b10427d0a4df4201cb44513b226951a22b",
+      "assets/KaTeX_Size1-Regular-mCD8mA8B.woff2": "6b47c40166b6dbe21a5dfca7718413f2147fd2399be1ba605d8ad39cedf25dfe",
+      "assets/KaTeX_Size2-Regular-B7gKUWhC.ttf": "a6b2099fb555c60e3a0db3a08842ebf1d732c6eb4e4bf44913613bed4fc4e39b",
+      "assets/KaTeX_Size2-Regular-Dy4dx90m.woff2": "d04c54219f9eaec6d4d4fd42dfb28785975a4794d6b2fc71e566b9cd6db842dd",
+      "assets/KaTeX_Size2-Regular-oD1tc_U0.woff": "2014c523c3210bcc166648c4d4cc57f05b747df07a24277bf71c51e67dc79e3d",
+      "assets/KaTeX_Size3-Regular-CTq5MqoE.woff": "6ab6b62e9b62dae2c00dd90f791bd10950be0ecc3490d7d6045f51c2e8fe0949",
+      "assets/KaTeX_Size3-Regular-DgpXs0kz.ttf": "500e04d54f0d51666332c9d2089aa803be22aa878eca539e59fa53c6e522b082",
+      "assets/KaTeX_Size4-Regular-BF-4gkZK.woff": "99f9c6750b489c9462bf04900bd3f939df9b829339daaaaa99ef5495cdddea58",
+      "assets/KaTeX_Size4-Regular-DWFBv043.ttf": "c647367d1dd4e162468717d020e1fc0f1dc5c26ebfdffbe55261713bf88c5877",
+      "assets/KaTeX_Size4-Regular-Dl5lxZxV.woff2": "a4af7d414440a1c1790825cfb700cf9cf43b0f2c4b04f0ebc523011ad9853ec0",
+      "assets/KaTeX_Typewriter-Regular-C0xS9mPB.woff": "e14fed02b1aba7ce9f5afd5844b5d0321b22351febc720e0de8b8723527609f7",
+      "assets/KaTeX_Typewriter-Regular-CO6r4hn1.woff2": "71d517d67827787cfabdf186914cc3358eda539e37931941f2b2fd4a21f68c0b",
+      "assets/KaTeX_Typewriter-Regular-D3Ib7_Hf.ttf": "f01f3e87d9c6a61c0c081ceb577abd864eb00a612f7ac1620dd6915fad2ef5aa",
+      "assets/MenuSurface-BrYLoXvx.css": "dab03a11f209ffbeea5130ceb17601c3d851eed429a7e62e2eabb7a05b6f8820",
+      "assets/apl-B4CMkyY2.js": "f242eda34c4a72bd8e51c278934ec62fe4804f129733e27d0441e1dc8bbc07a9",
+      "assets/asciiarmor-Df11BRmG.js": "a4f24c2097052635b21234f8995ea0bc9aa6eb4627e9aad3d4c7da5fb3eb9321",
+      "assets/asn1-EdZsLKOL.js": "ae03ba33f00f6d244c134c98deb75db9ef27894ed42661b6b96cf897561e1bab",
+      "assets/asterisk-B-8jnY81.js": "47dfc80fb04e1d00d31d9f5286c817e3a75d012bc8c88b97585ea4776a4761c7",
+      "assets/brainfuck-C4LP7Hcl.js": "de73a71178f148e59b5a6d7ca989842599d46d92836517bad1ddf005a968ab4e",
+      "assets/chat-completing-pinwheel.gif": "921d36808bfc3816beacbf37ad281d59b9e2414b98f3d533926e5ed6ff89d874",
+      "assets/clike-B9uivgTg.js": "362289d801a4f7b5abb548e9220660731b08cf3e00989bb8462ebed73bf28e96",
+      "assets/clojure-BMjYHr_A.js": "498a60106d02e5d91242032d01e8c02c8405cc0dd2d089d69f55eab8e78d1a20",
+      "assets/cmake-BQqOBYOt.js": "754963f9ba8388c27113791b9da35a6291f5784fd853027081091ae4b9018ca7",
+      "assets/cobol-CWcv1MsR.js": "b5708cea6e07765d16bd3cea07d4a10a3672636bbc45ce2d2646c9f1833a4372",
+      "assets/coffeescript-S37ZYGWr.js": "140d96ba54d87483b611e343940304fd55d851a31289ffb6b9ab1a2c8b4793a2",
+      "assets/commonlisp-DBKNyK5s.js": "5ab53180afeb19f45f2adb48571c37465b9b697129377d2745eb0948ee8add01",
+      "assets/crystal-SjHAIU92.js": "66127e5531035963dfda0a8bc314538018e1205865fa9371da29ddc850b3fd7b",
+      "assets/css-BnMrqG3P.js": "aa3e47bd7d7e6f2b9aed7b342b7d6aa059ff6e770c86d64cb0eaf97b403ec98a",
+      "assets/cypher-C_CwsFkJ.js": "4a2a3e7313e1339de833d287d518acc97046ddd16fb244a28b34f15f01f01b4b",
+      "assets/d-pRatUO7H.js": "7d17f349f6b8da47c4e024e6646b867bcae32da8f1262291e93eb551f2d6f15d",
+      "assets/diff-DbItnlRl.js": "100f04b4d542403a267b0beed52abb489c507eb75bd1cff9e11447af2dbf9eda",
+      "assets/dockerfile-BKs6k2Af.js": "95f163ab68a8f7365d9a168beafab67b4eaaf73ed8a051cad2bbb445d3dbd208",
+      "assets/dtd-DF_7sFjM.js": "e107c8a82ea6a638f3350669326809c15eb5e227e6dae8d8dd41ca139cd522ee",
+      "assets/dylan-DwRh75JA.js": "9b7382fd95169a9a2b34765109c2bf6c7ae30b3dd0bd62759b04a49c3d394acc",
+      "assets/ebnf-CDyGwa7X.js": "ef22ca54434ab2be0f6ed0dc36b246cdcfa507556fed7a847d77064c5fb1c0ef",
+      "assets/ecl-Cabwm37j.js": "af42e9e8b926913548f8cf9d90bbe9ea829ced5b235a49d8b59e4f8010113fc1",
+      "assets/eiffel-CnydiIhH.js": "6a7536ca49edb77b3af0b9a68caeb900aa05f71ae09babb95591fa4699ccb07f",
+      "assets/elm-vLlmbW-K.js": "649698475e1b2b949f3af3c199a7e4cb72dbc4e51a111984437689b8893865ad",
+      "assets/erlang-BNw1qcRV.js": "8a3a9b30601fc689347511fed678378f5db855c49743cbf971043e1c10b19fed",
+      "assets/factor-kuTfRLto.js": "c3f0ab8713e16d718edae2753adce49b7d87b3ee36d3a529db49e4c7ae209335",
+      "assets/fcl-Kvtd6kyn.js": "685d86c935fa25d282da3444b211803edf318f1723b0e3db5a665ec50db10151",
+      "assets/forth-Ffai-XNe.js": "f6680528a050997990fd2eac73d2fee5e3c5432b34aaf52fe1fdc2f984db261b",
+      "assets/fortran-DYz_wnZ1.js": "91936d3b97248972ef6db720395a5f811a4f560a34920d60ebcf3add475162b1",
+      "assets/gas-Bneqetm1.js": "548fd06740ff7e7e6dab57021f454462c6899e78043f5d70e1902e4ca7c317a0",
+      "assets/gherkin-heZmZLOM.js": "75d36502feb18a52191c195ac7fd3b5f7e57a29b6e73ae30422815efc689fc81",
+      "assets/groovy-D9Dt4D0W.js": "6912e83a4950c0e255f200359253bfb636344600ab03ad7178aaa166041fb79e",
+      "assets/haskell-Cw1EW3IL.js": "b47ca38b34ea1f8fb65c1f4f1043277796f6437c9852bad46a7c6cf1445d6f20",
+      "assets/haxe-H-WmDvRZ.js": "3754ffb01bd31420d626dd6139d4fc5b12f58485c5779552a99710740ee0f5da",
+      "assets/http-DBlCnlav.js": "269060ee11376e85e7b8d4c7dd15c014fe4b755289a85d084d125a2615488e75",
+      "assets/idl-BEugSyMb.js": "24a7719ff1d38588f4889f8d0f6bca90690f58436a048ef8e3c644aabf1aaffd",
+      "assets/index-3di9rXEv.js": "f674978015083437e1437d67cc90074bb49266f275e357a8029ec4c1594e0047",
+      "assets/index-8x3dJma1.js": "8886e046fde9385c77f39792d97204b2212af532c870617c2a5e6e730ad74509",
+      "assets/index-BFXv_ex6.js": "8fff2fb34e5718310be9fa723beb65ba8e25bc993976f629074ce9899f337c16",
+      "assets/index-BY6G1Ici.js": "b17cd4140f7c94f4d3f432061850632388d40a4ba5b817f0702261ef6bec116c",
+      "assets/index-BZkEZlTp.js": "b268867b3ffb97b1376ffa17d9d310056af79acbce77746f3924037f0f03ebe9",
+      "assets/index-BbyxhuB-.js": "d8b2b714c741301e36c8f79cbcc11e0240b676ffe430bc7cd662b5904fcfc124",
+      "assets/index-Br8lPc8p.js": "a1b2633753cb5930e3344aa52f14f1bb6efb3e196747aa44409e08b58a775940",
+      "assets/index-BsqEsEo7.js": "1aa446e1833052532fccff41bed5e7e86bae3796b189b67d87e680c04380d97c",
+      "assets/index-CAmukpoZ.js": "9515dae7bb11e5d4a6539d3e5704d893042a5a730234d66d32c5b290d1bda80b",
+      "assets/index-CJTOmigp.js": "6e5bae94fdbff5fd3c8ed854c19ce55292285f6e8ce228235bbc68e03415c8f7",
+      "assets/index-CPlZIF4-.js": "02818461a31d29d0931998ab7fd0cb5f8dfaec57ad211cbc00c9503fb235391d",
+      "assets/index-CS0PhBBt.js": "e1507829908645191acd1f9634d737a0d03d047ed157189c8c74468de581cb98",
+      "assets/index-CoUWcuFr.js": "f7492b1a317ff8c0f75436a7a1076a9521509676d588ecc2f46819c51501ebff",
+      "assets/index-Cy_vezaS.js": "935522332277ad566995091bbce048393810fdb13b0f5623782cbb5a2d950179",
+      "assets/index-CzRyTnzy.js": "4dac953461054425c90910228b0e3e00f351a311cc0b618e948afa31d2bc6f79",
+      "assets/index-D-VGcjKx.css": "230b93ffbc7fda6a3c17eb38982513963b679b1c994530524ce5ade90417a951",
+      "assets/index-D24b1efO.js": "ef1cb38fe4667e7030562355bc2729ea61a913db2a4d16c2f4f62c8002dd5748",
+      "assets/index-D2r1jHJi.js": "75b4bd4c84063a809d74531dc7df58d2fc625c0e20776c407cad92993d0eda95",
+      "assets/index-DhQ0m7yX.js": "86e7a76098792c38e0f0e519407a4d2b2eaf137dcf756e3f447a5ede338b1e62",
+      "assets/index-Hcqxw_Wf.js": "2db8447ae4781125c101bb10701fa39a5392d41f3dd7289d90e89f76251cc421",
+      "assets/index-K21I7g7t.js": "eab5eb14386b5772522239f4e998f0f2a802a1f0723614b52d55bc897b94c764",
+      "assets/index-Txlyoo2b.js": "0ba4e2fe7dc32117d079efcb8f543b0977831cd436b1a58cd508704d2dead045",
+      "assets/index-axPuZqkB.js": "6a71be84739c40e04acc302a4491e0a039fe63e1294752354826994ed5f0017b",
+      "assets/index-n5rmeS-A.js": "7484dd9d81b5db3a8218bfae7cedf6c5935c49afdfb5c4888c99c61904e5ca50",
+      "assets/javascript-iXu5QeM3.js": "182fdca66238d12ed737c8fd2d3f5a4bfec8d6559889f9c79117a1caab05d649",
+      "assets/julia-DuME0IfC.js": "9c693e030ec08a516cdbb591c88c08c69a6525445481ba74a899961e8704b9d6",
+      "assets/livescript-BwQOo05w.js": "63b490e7cca07ce077a7c204e930a01413d0d5e18064eed03b1e662e01c22103",
+      "assets/lua-BgMRiT3U.js": "dabbc2ffcce570b8ac8374c85c98d9f58bf0c51031bd0e9a1a02f080420a2521",
+      "assets/material-symbols-outlined-CqIkmgaP.woff2": "9ec3f3deed0be4da191a434b78fdc53e76ead92333290d3f8ee9f3dde34b6339",
+      "assets/mathematica-DTrFuWx2.js": "d3613780e5d57d3809324863462a59a54fb9b83f31e223d59f504a77b04dc495",
+      "assets/mbox-CNhZ1qSd.js": "19086bb5a8b00d893a7b6aceea1d06a0cc34c24bdb053031f880cb1bb1994ced",
+      "assets/mirc-CjQqDB4T.js": "76ae2e410f90b453529c367ac69d476e5fb516964c0bf8ffb2676d875b8522b4",
+      "assets/mllike-CXdrOF99.js": "0bf60c6883fe103d813759f1b69baa46af8b5dc0b502aae492c247838a5d8784",
+      "assets/modelica-Dc1JOy9r.js": "03c2e8fe9a47723c0e6eb8a2394543d7e2bdddace7770b4ae9c54005d6ae4be9",
+      "assets/mscgen-BA5vi2Kp.js": "f0e7bd8988241778eac8d6093bee63f099bcd957994a35c58979ff33f5a137cc",
+      "assets/mumps-BT43cFF4.js": "1eee059f667d792d74620cbb7e83406488e209e548c7de0f880cd8830d97a58f",
+      "assets/nginx-DdIZxoE0.js": "67487e9c0fa87bca9b8e9be91aad97fca8b610627731156b4ae44116a2b33b36",
+      "assets/nsis-LdVXkNf5.js": "b57b168755b7a19fc7100fb4dba6b50b66e3e8561606232b8be6020c13ef4f1b",
+      "assets/ntriples-BfvgReVJ.js": "46bcf88e08c9250fac68671aa5bb4b5314a3ff62c487736825f6bdc41f02392b",
+      "assets/octave-Ck1zUtKM.js": "2050e71c70081d414f73ab9b72ccf17a7319d311d6aba18193ba050705d661e9",
+      "assets/oz-BzwKVEFT.js": "930fe68084255ef156188a29a640431ca0f276d323ce07241b92f1b678390777",
+      "assets/pascal--L3eBynH.js": "19eb54c507f12be735989dcfebb5dc2f7a139777cdd71665896fb4bd287f89ca",
+      "assets/perl-CdXCOZ3F.js": "195216883cd9274b5414861746c3ca02f4df013330b91440c785561fbc188f37",
+      "assets/pig-CevX1Tat.js": "8a443e606edc2da2658abe26c048af2a468c4f3244434957fe11320a15938043",
+      "assets/powershell-CFHJl5sT.js": "5eef7d073bc36b86d7cfd0804c38c091931f20dadc61b176ca2d70ce6bb488d2",
+      "assets/properties-C78fOPTZ.js": "5b083077fe05a0376e6ca5536d04fb555ba72e848b7a8ba2cd8a7236a3a5d6b9",
+      "assets/protobuf-ChK-085T.js": "872320ac45a7915b0f7aed71325ae2adb105b51cadd2a6fc74b65f5a552791ae",
+      "assets/pug-DeIclll2.js": "803a888b8468015a2133ca30b67d5ad7d18a7b67e0715cbb8b0fb5426f790d20",
+      "assets/puppet-DMA9R1ak.js": "c614d78e96603483b265bdb548e7cdd7a54a68df8b7a3556829d7b7ea874eb4e",
+      "assets/python-BuPzkPfP.js": "ac31cf70d1ebf5ecde918d2284e736615fab53442c2b3c230bfa83f85f806d78",
+      "assets/q-pXgVlZs6.js": "c4828fd3608a4a8a9b322b6e5653aea3b21aa2556267680d5d27520796320fd9",
+      "assets/r-B6wPVr8A.js": "e32bc0fe55b99eb76ad25438a9c224ee4ae4d9ed482e95c40af328e44ea70a64",
+      "assets/rpm-CTu-6PCP.js": "60f8f25323f47996c1e5a299f87f42de42bd6c13a584733c4fe3d71ec48ba65a",
+      "assets/ruby-B2Rjki9n.js": "5cd3a5c7aab2013878c02b629ac364781ffd33eea086457f1d1c28f5cdede906",
+      "assets/sas-B4kiWyti.js": "f8c7889fa764fc5a840cbe7010e1d9f931865efee9d4c510425d62b0ac84075d",
+      "assets/scheme-C41bIUwD.js": "7ddaa1a5f63ea49d2ba6007ee977de4495644082218253d0c107f7b6865ce8fe",
+      "assets/shell-CjFT_Tl9.js": "b4da8a11db1127e003f10a94ff707474af1392051c41f1e0ef78152e9bd0ea95",
+      "assets/sieve-C3Gn_uJK.js": "e30edd162cbd37962e7e62440bf9835dad2bb1234288486f24ad4e4940fd1e8f",
+      "assets/simple-mode-GW_nhZxv.js": "8ae187bd3b7d02dbf9bd195a73c4c8635c67a557825c91a00ef476d4e1113db2",
+      "assets/smalltalk-CnHTOXQT.js": "6fea82ec5301f1b147fda0b2e757be2c8dd8b4792c74dac06261c07718290762",
+      "assets/solr-DehyRSwq.js": "c4f3f72687c813db9a8a676f52b958aec08292b294aade4f43ee53222bafb2cd",
+      "assets/sparql-DkYu6x3z.js": "35e5e4f888aac0249bb3570ac5f07f7dbb45cef40eb8444ec2a3a0772776d0f0",
+      "assets/spreadsheet-BCZA_wO0.js": "44d7acba2c5b735fbda1649b9845fbb6de24821882d2a34682bc726c1925bb03",
+      "assets/sql-D0XecflT.js": "de179cb192745a50f178503fd65ae5ff2488f34b4d421de85961a1207930a125",
+      "assets/stex-C3f8Ysf7.js": "bee5f7a433d45272561fef44f62f4c354b7c849efbadfe2143da5595ce0c1537",
+      "assets/stylus-B533Al4x.js": "352405ae3d7bbf0dfcd087d128510cb3cd5f4763bc2e58136e069c7e915be77e",
+      "assets/swift-BzpIVaGY.js": "6fdd63ef4febc2aaff6b39553ef9b5d60a76a59a4ddfedbbd260b0ebded352f9",
+      "assets/tcl-DVfN8rqt.js": "dd357643696c69931e253fb64d0cd3911ac609616448c3197958a821dcbbbd08",
+      "assets/textile-CnDTJFAw.js": "0f2de1a421c605520b0c8b876bd124369085c5fb7f13b12c9dfbcc60bd27c394",
+      "assets/tiddlywiki-DO-Gjzrf.js": "0bf0e719c5c34298e72e308cd6be69ca63680a0bf538086adf4939a16f41aa8a",
+      "assets/tiki-DGYXhP31.js": "3bdc3135821a80ff86d40c2d4fbae733f59b7dcf86a43a2367a17d1df5cb1b80",
+      "assets/toml-Bm5Em-hy.js": "b7f8416bfb193fea056e2ea29ac97d5569055b02829786fae1f23d619a3b08d6",
+      "assets/troff-wAsdV37c.js": "8e77af30b3dfad9e8c5fb316df448139905aeb2ec55ed63970c1c5f1e43758cd",
+      "assets/ttcn-CfJYG6tj.js": "09fd86d60a4bf3f39f56146b8444dab213087d567f3685f91b810499020f5255",
+      "assets/ttcn-cfg-B9xdYoR4.js": "8d367f5c728e0a125912df85cc96c61e1bd2616e3617535c70783494e6361653",
+      "assets/turtle-B1tBg_DP.js": "7aee24b54c788eb05f03336ac595622a7e26d5a51d7d175fc95b12bd139f948a",
+      "assets/vb-CmGdzxic.js": "a6d39b887d52687053a94f7fd6438d9e193c78735e36ec0d7585ab54873e0e3a",
+      "assets/vbscript-BuJXcnF6.js": "6ca48951cc338f55899631cf06bae1f31e0ab9068225eb7a1c4a2bcbe35b1693",
+      "assets/velocity-D8B20fx6.js": "a83193ff3101931e7df5a8e2c0fcd29d4b9db08d1464e270efdcfd589ad3dc17",
+      "assets/verilog-C6RDOZhf.js": "51f07eed339c5f2fb36a10c69b0311f6888e5b93694ac2ba8527da651317091d",
+      "assets/vhdl-lSbBsy5d.js": "9e808646c19567daf6856e0e835ea01b94fc38e4b8529c526872ecf587041256",
+      "assets/webidl-ZXfAyPTL.js": "bce47d0d06b098cede3bbb8ffee3d534c1cd85610afe7463f579e357037a3bd2",
+      "assets/xquery-DzFWVndE.js": "c98f053278244c215c51c68f20cc352f038a2fd3c99436400785a6d36a9853bd",
+      "assets/yacas-BJ4BC0dw.js": "5f69a3c388a14c26bd6060c2eddb3970b6e3e8a40fc6419ce705783685526bf5",
+      "assets/z80-Hz9HOZM7.js": "af74ec9a00d4224b94ceb13fc87cac85fadc218e26b64a2d6e4f7e47a8fede01",
+      "index.html": "9de4ae624b89d93dce60a55b4a09ce2288f0301eb6796b6cdb002e2e1d63d58d",
+      "vite.svg": "4a748afd443918bb16591c834c401dae33e87861ab5dbad0811c3a3b4a9214fb"
+    },
+    "electron": {
+      "authorized-ipc.cjs": "2bc4151c61a81c77c1ca656af296c91daa9692d5e02ea042c04a7127f9191e78",
+      "authorized-ipc.test.cjs": "bf15fb6ee0aa1af8b8a6007ff721f69e002203814d35e4addd168a196ff9cca9",
+      "build-preload.mjs": "398c159ba2891ca42b39c9feefe131210e5ea1ea421df836f6926836aff0742a",
+      "export/export-controller.cjs": "f18b11009195d6b9655a50830542f777bc8a118ff3193031919c6a908e4810bc",
+      "export/pdf-engine.cjs": "feb727741c8ed4473d9c2a21ad6d85ece9cfcca4ecde31338f5ba82f10f640c2",
+      "export/submodules/documents/document-output-coordinator.cjs": "34980d97836b1b09db71801eb3a779d23239f740faa8b0aefc1ee5c349f8cb4a",
+      "export/submodules/documents/docx-table-presentation.cjs": "24b1d7803060eb887c8085332f8dc2c15c318d3b822cdf4d8e9bb69142e4a814",
+      "export/submodules/documents/docx-table-presentation.test.cjs": "5e0fb4b25adec06cf6ea9d07de5d2959eb45214ab1236492f09af6d8a7aab080",
+      "export/submodules/documents/index.cjs": "2369332c9efd10a7d8b5d4d6245b5414eceb481d481a6f41f2580f5747e83f1f",
+      "export/submodules/documents/pandoc-table-breaks.cjs": "37f59b9a309ad603e8128e0ee5e7d94fc4db2c125ad065b463f9197e9d9c28b5",
+      "export/submodules/documents/pandoc-table-breaks.test.cjs": "f372b9ed44217748d10753c0e9b786b3cacdc4f806d624febcb1542645a5970e",
+      "export/submodules/documents/presentation-output-electron-smoke.cjs": "e60a05d05b8c24deffeb7708858034e5a93420a13b3b985618a6f79080b7bc06",
+      "export/submodules/documents/presentation-raster-ownership.cjs": "125f1308331a46e1f4a8f6904831def0807f43a7da1813af278f4226d9726b0f",
+      "export/submodules/documents/table-presentation.cjs": "6452a8020259507ed0a7784fdfa72d8ae2a680a55752a62b0cd99ca29a270e10",
+      "export/submodules/documents/table-presentation.test.cjs": "57ed2e800bbd91be0b925a3746bbb60a15609a8155a5a7085a5abd42ec203ade",
+      "export/submodules/html-artifacts/index.cjs": "0e524e8a006b199c7afc122b341c3d6219a4e4591c15843f087faa46115fa715",
+      "export/submodules/spreadsheets/index.cjs": "2dd0005dbe78277350ca6e8ff817ce62df4ca8c72ed8d940eec114a623ebbfa2",
+      "focus-state.cjs": "e8c9ca8988632da22f0e5b643bbee3972c3100f3763f29b50119261256498484",
+      "ipc/capture-handlers.cjs": "0495e11ea1e01dbd2b214058a053f9fcb2b067d0eaf901d88525cb6162a1a65f",
+      "ipc/document-handlers.cjs": "0f09cdea2137e416f3e9584b92ff5de81bcd53fd0cec0d4fdc617ba3ae4d80c0",
+      "ipc/document-handlers.test.cjs": "51460132dbb0ea1b9f9745763782e883d6c38876be13d8f3b23a3f0fe4956c69",
+      "ipc/screenshot-handlers.cjs": "3ad9d6be65a725d5cbad46cd35d6ed7a3ff0ede5109400c996192679ba9f07aa",
+      "ipc/screenshot-handlers.test.cjs": "1dc78749eec9327d3605d5ee163fa2fb6c18e9d5f17ef87a926b6ca6382c0ba9",
+      "main.cjs": "22d254036040a367782656c3d29730e719dae3056d6d54f4ada94f2ed1bca260",
+      "port-file.cjs": "34c20261b5234ba609adf33234b8c5298b9ad930df4cf57a7e0bc92f5249731e",
+      "preload-authority-inventory.test.cjs": "27f3eafff6d402d31a996fd2938f2dcdf995d059c623348b5980c0bd6d600a96",
+      "preload-sandbox-smoke-cleanup.cjs": "055ba2dae17a9c205a4cd52587fa45baa935506415e69e9ed956225a02665549",
+      "preload-sandbox-smoke.cjs": "517a96baccddb1ff68652c744b28819118af548928c4348ce635ccf58d7e6bd6",
+      "preload-source.cjs": "2f5b8e8ca6cd914b4cd93693da772fe6036b63941c5dac160d7026a4541b1407",
+      "preload.cjs": "a87aaefb6d60425ec30013a6a1b8a2a3e21d50208a6c1727adc0be9968adef05",
+      "preload.test.cjs": "eef34c109a0f62ac1b2aa3d55240631d7e7f5c4303a5940341bbc8608f833e0a",
+      "process-shutdown.cjs": "12fb6c48f81dac0eaf343586623a96f88b43c08a6a2a7ea06ab5c937d321fed8",
+      "process-shutdown.test.cjs": "ef1eac681b7a3481699fb529e1470fc57e17131358dd50a755ec9cce2c04adba",
+      "protocol-handler.cjs": "e19d345994ae63391141fc3ff509047c0c34dd255e502e947b154c2132e29790",
+      "protocol-handler.test.cjs": "a51bf6eb193173a701efa8e5acc8db1737415916a246e570ffa8f114eecc9745",
+      "renderer-console-logging.cjs": "cc96acf239efbf6b95326620af3adef348326e5fb4bb82c76696d214e640609c",
+      "renderer-console-logging.test.cjs": "b573cff6f0a40b59dd2ab63f1971aec372c77d465d0de290497d3f3ccca3dfd2",
+      "runtime-descriptor.cjs": "8c347a35b536cdd25664821a477c3b80f3681ede2e450c23cee0754444820aef",
+      "runtime-descriptor.test.cjs": "65f315e5ec481c2ad4d20361afff8157bc21bbd96faf7ca110c2e606f17421bd",
+      "runtime-endpoint-inventory.test.cjs": "39cd835453c201e0cd649e06606dee0f4f149348bf2b51ac4c8d60370c7b24ef",
+      "runtime-ipc.cjs": "157c3d2407f15cfd5daf409e75d5473db2195acdb4bd12ee282c403edcc251ca",
+      "runtime-ipc.test.cjs": "4452da855e1a5204da3118432bde638b23143d1d62389f930665ee5ebc6be112",
+      "runtime-preload.test.cjs": "e53c9c0be2ec519f996a59eeb91a39f7f85b47adb7a2a6158f4f7503529c47c1",
+      "server-readiness.cjs": "0aa2915415ed4bf7bb27f8429dfafac37d37e710475e10174773deb014334912",
+      "server-readiness.test.cjs": "89a838362d45d2926a85bff7de1473eb9de451a95deeeaa36184307cf3cb6b74",
+      "server-spawn.cjs": "6fb9d7200858dbba74c649ec8dde6c703052c4429423a07f8b8e6648731b275e",
+      "server-spawn.test.cjs": "12980552c5b200c4ae481a16508947f86eecfe0d59c2cf4abcf0f437a390ef24",
+      "server-workspace-binding.cjs": "9461b5138db62a54d5cf79bef86fb139f028d49c7544a5e196d83bca0570dcb7",
+      "server-workspace-binding.test.cjs": "32c365735fb4e23494ed00ff8394e0d0df1c480d36bfd79e91e177a231d8990b",
+      "shared/office-table-presentation-validation.cjs": "c9de34525bf1aee0abf5162516b63a6188c139d0afcd5665b9bc3e584e00f570",
+      "shared/office-table-source-binding.d.mts": "7a733bf2468a01dc52ffb2bf65b8f583995c380649dcc695913f0648687c9d90",
+      "shared/office-table-source-binding.mjs": "2ec5506a943a5beb3bef019ec3aea395873b298f853a66da1426aa3c37419201",
+      "shared/office-table-source-binding.test.mjs": "5f89d5bcced800b72d0fdba3d836efdbc1658ea7365d0410dec9d84bbb8cc01d",
+      "shell-bootstrap-inventory.test.cjs": "75409bd721f9f21b4db4978de979a0492abdc2e9047a2e1042cd4580a0645b67",
+      "shell-launch-authority.cjs": "d87de2638dab6fa6e5689912ecb9edec3b553d1cd2179b13803013a798ab3a16",
+      "shell-launch-authority.test.cjs": "20d13e37c4ecf9f3a270678c2f98f3d2a73b8e410050866504a4f4dcabc43d4b",
+      "shell-navigation-policy.cjs": "71962fedea09dac0b5ea0815d06b3656fd1dee14f66fa906f17f39ff9ec8f671",
+      "shell-navigation-policy.test.cjs": "9273bae290afcc29a63cffd8394b5d1bf7c408fe6dcaffd5f7db49d026cd2526",
+      "shell-proof-ipc.cjs": "e1c80a840c391c4b08ac4b6592ab1eef72bdfffd34814e7a1f2e34411b1eafa6",
+      "shell-proof-ipc.test.cjs": "fa34b617292b75aa2033370c1a45a537c6b69643fd7a760eb6ba5a07f2b3facd",
+      "shell-protocol.cjs": "26ea633628d40b0a2412105e80e8b160ae379c8f92f7861e8370e5527bec58ee",
+      "shell-protocol.test.cjs": "652ee4495438e8c640db365f4f85879b4fd8ef07b5e571c77c348f4df09cb915",
+      "system-manager-seed.cjs": "ef382d4ded6faa7a5be7a9c77045ef39c370c8fd3af3cf12268cb923b0a8afd2",
+      "view-capsule-registry.cjs": "23120be280d71eb9af86e995804c9d2ca1762218fc6dd5ec1e03be98f3cf8e59",
+      "view-capsule-registry.test.cjs": "d3bded1acdcc4b1bf5094803ede598043acba688ed325788ad2d0b43a6b09415"
+    },
+    "server": {
+      "agent-provenance/activity-owner.js": "f83f5c83faf10811ac0def6412a7c254512939ba05ebabd62016767b14626eb7",
+      "agent-provenance/activity-repository.js": "2c671d01109ed3595d5bc8c025f30cffb77393a59c0768690a1e3e00afbb8a1f",
+      "agent-provenance/agent-ledger-reconciler.js": "673a068cf3594cdff8881c166599c64cb8d2171d94bf89cb6486a26706425b8c",
+      "agent-provenance/agent-ledger-repository.js": "912649ad6f57751cc04dc8555cfd4a742cd5b3a9294fd67c93a41ea3987babbb",
+      "agent-provenance/announced-activity-reconciler.js": "0564c1bb86fc25b22f1c3b5e39a22fee7e84ad3ca19a5eb65f456d76dc276abc",
+      "agent-provenance/bounded-canonical-hash.js": "9dee1464c144b61af9e050d94c396ceb02b0fe860a02548021dc5470fe3690cb",
+      "agent-provenance/candidate-fingerprints.js": "96cba2347cae01fdcde208448b0249a3a6ddc6c60d9eac22c833fc50d395a188",
+      "agent-provenance/checkpoint-repository.js": "be6d22dc1e34181e6bc6a8730792d894c15752afc231c265486224a1f5db21e2",
+      "agent-provenance/exchange-bind-repository.js": "b6d2646a5bd4914c670b88045441bde27ed0182379ee3557e8a857e220ae748d",
+      "agent-provenance/exchange-binder.js": "a9401239892b8d170d961d8e15c37b06bc4b50a9e56a634b2232ecdb51ccf7ac",
+      "agent-provenance/fact-admission-reconciler.js": "ce3a96795a2e02987f95aff4a6cecc4ffa66ee154abe7ad491b0c4f56f558cfe",
+      "agent-provenance/fact-authority-repository.js": "2db31b728b022854474231665da185573ad0904bc42d94bf83fb37c6caa338be",
+      "agent-provenance/observation-job-repository.js": "be7729064c66391503e11062a56edf6dcdad7fde86f9cb94b11eeda5f8ba3d95",
+      "agent-provenance/query-repository.js": "6011faba606b0f0abe5f7492f432ebf9e01d6dfe089006301f0b3c4c43d4a834",
+      "agent-provenance/reconciliation-db.js": "5cfb3db3bf1a9c4dc421941bf947c60596a4920cc9aa080e607ba7d5552916a8",
+      "agent-provenance/renderer-projection-authority.js": "a59ebf3d9bdccf8c840db570d0da01feaa367e6a9602fae6a1412a3c4cb0bfde",
+      "agent-provenance/renderer-projection-job-repository.js": "fb07c2fe0ee8f8c6e3c63eede0c8e136b900ffc50bceea893cb9c4367ba447c9",
+      "agent-provenance/renderer-projection-scheduler.js": "5feb9733d2f0c1b1623446570ce230519bfe959073c272e360a10296ad7c1c9c",
+      "agent-provenance/resource-identity.js": "dda5566a7c3f280d2acb37cdeadbf7e2412c01a76fcb6c3162f6298bf0883049",
+      "agent-provenance/resource-observer.js": "f23cdf9bf487accd8a54a3930b4608a79d4f8d523f2a02b696ae5e9c7a21c7a4",
+      "agent-provenance/turn-authority.js": "13ccd0732b9604a98ab12e56ed541ed217acf001fbeb8ed2a067d7255f3449f6",
+      "agent-provenance/values.js": "330e2a0bdc087038c853062d6687108a6f247b62d33c64ff62d5095cfb974bea",
+      "audit/audit-subscriber.js": "7e32880bf0479f7c2e8a2d1fd62e480b4184a868994c5c21d4a2d6444a4a0f72",
+      "background-services/config.js": "da4f8365c3eee743d7580f3e828cc3c89d35840544d3b518590210176c189401",
+      "background-services/log.js": "a8d23a2dff5e5ed4bdf52eebee2b7a870a96cce2593904d27327260ea6f1f5fe",
+      "background-services/safety.js": "8f05e610b14991ecb636ab80986a283301aaf77d9dbd40e38f555ed7b0837e5e",
+      "bookmarks/handlers.js": "3c6c0aebb9c069382b5276d10410c8fdc450d011baf33db43d97875a1e230c2a",
+      "bookmarks/index-table.js": "df5d175f921d51999e7e0c5bc9c393fd3dc388a9dbd1677aabf3924a7b8db803",
+      "calendar/apple/convert.js": "e43354210057ab644dffe195f9a75a95ad3d2a687f78af42f738e3bf1afb9dba",
+      "calendar/apple/reader.js": "f0a8448d6629e43e2fd658030d51786130b28a4c554f1b243915b41489ba47b9",
+      "calendar/apple/sync.js": "b2f571af00173e8d843f3e48024c9e6ffc511f26efb568492dbdcdcda05a7d31",
+      "calendar/db-writer.js": "159b5d646fd16c6272567ecfbf030da1c5258d5e65b142ecbd2bbcb0140e5529",
+      "calendar/google/client.js": "ffd48d57e262988156a11d8992efea13db2835106430d96b6608dfe278fe40fe",
+      "calendar/google/convert.js": "9c6bf9cec3a11247884025565fd1ca7390e00fb24da799e86e433a722ec41b53",
+      "calendar/google/poller.js": "eee8e2cd76476f899e3e69bce3f5cdee34e7643a68710e3dcbbb100f41e6ffe3",
+      "calendar/google/sync.js": "00bad86406281c6a0a24786e5a371e87cef377e826ca002e2fd5a9eb3e72abb0",
+      "calendar/index.js": "ecfab563937ba6f24595f22a8f51484145c01bd8f1ba0a0ef9955372b05a99fb",
+      "capabilities/index.js": "39e8461010be13013d9371b16b7e84ef36aa1b534713ad422301bc45942d1723",
+      "capabilities/prompt-loader.js": "c2e6ba21bd815880c727b677c4c8bb5738c5ef04fea74d58ac6fad55b85482b4",
+      "capabilities/providers/transformers-js.js": "d5bb9e0fd20b61f367be21a14f8132e44e7e5b3ab9253d0beacf7d0f0d756de7",
+      "capabilities/registry.js": "36020f2142d271dbce0682c6636c4189b8ff832e4b4d84188ac3e520a73e13eb",
+      "capabilities/runner.js": "9e1bf7a9b24c1950d7c577342b87abe5dc30114299bd3652e012cc908f1c9c33",
+      "capabilities/warm-service.js": "4d5df8964ee03f0d011fd9ea00f34870f81dfa3e8f4d9d2f07512a2428b8a2c7",
+      "chat-metadata/collectors/attachments.js": "00e6e8d77dfd3effb7191c8df20bcd5addad93b05e9b359d552075668a2074a1",
+      "chat-metadata/collectors/file-mentions.js": "20e5846f7736e44622e3376cbd6a114b8ccd804b63b030b31c38d2493c251e9b",
+      "chat-metadata/collectors/file-mutations.js": "cbd83ed651b03a2eeee368f99210c6e1b52733a5179d765b7909d59d593b06d7",
+      "chat-metadata/exchange-metadata-aggregator.js": "b9bb65c83beb5f7995abfdd82b8f075a1bc6a1a141a10cc8eb034df5306ba2a4",
+      "chat-metadata/exchange-metadata-registry.js": "c52ae6e44128241dd6f963742f46baedb95f0bd2a4304c994aa5dd6cceb982ee",
+      "chat-metadata/exchange-metadata-update-service.js": "001178f1b58326c7a267a1b0bd9c7243037fccc24990fa02cf9554a8f0964c82",
+      "chat-scope.js": "5c88ce0a6173c39299cf17db501feadc0949da32641203d30c4530e60abc7874",
+      "cli-config/catalog.js": "556642f3d73de27380da3a3bd3e0904e2e36e795bf3d478552eee498ccd16d25",
+      "cli-config/index.js": "f3a1f91028cd3a2a461db161c63232210acab46baace16153674d2cafb17acdb",
+      "cli-config/loader.js": "1d8ed0e929f5362ea24104960d988a53badb741bcb7e0fb9ba76ce42c1d3242f",
+      "cli-config/resolver.js": "6c50a55a5da37540927aed3f44791930e62030963824f505186c27297912e969",
+      "components/component-loader.js": "a54e807a0ab3814353e68e72c8446f55791433eef2e14af43f1c6f22f697c231",
+      "cron-label.js": "58efa59849a3f9eb54e835ece75b50f6d3a13bca5aecb5e874fa4d6eb111506c",
+      "db/migrations/001_initial.js": "159a6d52257dcf2e76be2c2c6f563ff5ef23cbe4f3fcb5c2964697c0cb0438d1",
+      "db/migrations/002_system_panel.js": "6b39ba16b163a1e89126236f6e090439c5ab3e649b1b9a4bc2aa77a02006a72e",
+      "db/migrations/003_workspace_themes.js": "bb25bef60de4c11495f5f3fd80b1823c0f32e24f6e1af999c7f8d8d9cbdf162d",
+      "db/migrations/004_secrets_wiki_update.js": "a3a1c31b5e87e9456c2798b9eb0002b4a65a2041ebaeb107fdd1ca9c82f087c0",
+      "db/migrations/005_clipboard.js": "5c623d584d15b6530d435cfd46dc23612d2f51f2edc91879cc39d904455109b7",
+      "db/migrations/006_harness_selector.js": "292f0848ab03e8fb1e92dced362ca7f806d7aff6b7de331808f4bf3497ca2fef",
+      "db/migrations/007_thread_name_nullable.js": "ad2d0ee436fb0ca5ac5346b5fc85bc961adc7cf22e34697ec3e0b03c18949691",
+      "db/migrations/008_project_scoped_threads.js": "48aeb990ddac7b9d70a5bea8ee938ffa65df13e1d91869bb17cfc38e1c900c18",
+      "db/migrations/009_workspace_registry.js": "f5a470d85ff76dae4e0fedb8c600cc19f8c6d7225203283693c709da45f5a903",
+      "db/migrations/010_harness_status.js": "8ad4620db0a5562ce558acb0a8efce60f399ed46cda07f816fd9a6574af67191",
+      "db/migrations/011_harness_theme.js": "11c2219ee66ea91b55a12b04f1e15b82966ee305db3121529ea7ae62b895cf9b",
+      "db/migrations/012_drop_harness_theme.js": "a3061c252c1ff1a520c80f6316d165e106947041263200348c8d3d9c55626376",
+      "db/migrations/013_secrets_index.js": "23ae5312885c43220004f0277adb946c5ebdf4aecfb0f7c31c3334c8a25ed0dd",
+      "db/migrations/014_drop_secrets_system_tab.js": "e98e1c02dfbadbc3eb79893a0aa926185719c9b406eeda610666459c88a5f7de",
+      "db/migrations/015_drop_use_when.js": "764fa737a9d086ba654f3083a677573025eb4275ae506bda9895396ea370ef9a",
+      "db/migrations/016_clipboard_keychain.js": "8d3e5e79368d0eef11b5e5096fa189332f5c16c8c2ce98e54568e0d6e3b7a216",
+      "db/migrations/017_workspace_id_threads.js": "d072835322f5154dd98f5e0a76dbb3d22f4c9aac4365ce7a62ff460e64061444",
+      "db/migrations/019_workspace_type.js": "2e21e34a01276bcda595b9fb66aac8fe51d240fd8c81241fb4899b256c8b4b3f",
+      "db/migrations/020_workspace_screenshots.js": "9de0e57822eec1d2224e79f52d307609b6501a5f86d21b50df001271f123a25b",
+      "db/migrations/021_recent_docs.js": "27c656f1c2f1773db327dc2e920c642def2ec963f3541c739ea50e2d6a8c67ff",
+      "db/migrations/021_screenshot_source_folder.js": "ed68ea19d631c05ff867c739f3c05b9e0a202ba73253f199d432db67fc185280",
+      "db/migrations/022_calendar_sync.js": "10ceb1dbfb2d28d4907a62c738bc7fafec1bcd42f1703ef66a58c7473d234cdc",
+      "db/migrations/023_bookmarks.js": "82542450018306078790882e97e570905094aebcf5de26042a9eedf48edb117c",
+      "db/migrations/024_slack_liaison_foundation.js": "8dbc1d6254ca72e1c55c2106c4016be370f4b7d3563b4a929886809419389eb1",
+      "db/migrations/025_workspace_ribbon_membership.js": "f3e84d77ee5f8be8e3e857364c2e18b9986c4679c598cf3084b802b4aeae7cc0",
+      "db/migrations/026_transcription_history.js": "9881e557cbd6ea2c8893a0fde4de18eda9e05dd8c33788e28e576053f752988f",
+      "db/migrations/027_emoji_recents.js": "d1a0e7cd3a162fe86df46e4ff18dd831adfc7a2bb22fa894c1d31c9fa1b3103f",
+      "db/migrations/028_local_machine_identity.js": "edbd2668d4a1e4c12c07273edd9dbac8a7531a9deefc294cc8395e24c1e78d92",
+      "db/migrations/029_event_ledger.js": "00ef6e89fe29f4a01fbfdab92b928d342dd365bf181597055d7f7e4821a7d0d8",
+      "db/migrations/030_drop_local_machine_identity.js": "5629d80e3d8c4613c23497ab8fbf317838443f9ce1ba07ca42dd4b819d1f9090",
+      "db/migrations/031_repair_workspace_themes_fk.js": "bf15c73f34a8c89b38d34f34eba3e1b169951c683152af198acc94cbdd64f15f",
+      "db/migrations/032_drop_recent_docs.js": "35da80e6383312b92f8cb4c3ddd25289965088f6192a65a2c53ea04633ae1e1b",
+      "db/migrations/033_restore_exact_workspace_paths.js": "6aa844766e9ca43d1ff9ce8269c5a08e09b6c381d599fc90e492a2b5188c1c92",
+      "db/migrations/034_event_registry_authority.js": "f87ed11164161e4fcff1f0f510468ec0164bae55af1fd1a350f16be34e1f859e",
+      "db/migrations/034_harness_error_diagnostics.js": "611ddb821962aaf3fef1f48f65408bc3718d1f843f7a717d7860c7cd4b63fb70",
+      "db/migrations/035_file_provenance.js": "18bd81495ac4f8dc830740687e8582f53d35d3e6299944d17a62d3fb916d52f6",
+      "db/migrations/036_agent_tool_provenance.js": "cbdd98c8469f16f2089132bd3ae9b1e0334ef59c1537a41116274a11b16e914b",
+      "db/migrations/037_harness_diagnostic_binding_identity.js": "6cd38ed2a4764f692566a4e72715f43434c8418b009770cfd3427347726e0961",
+      "db/migrations/038_view_capsule_relocation_journal.js": "59c9b729cc51a48ffb9f9dd303a36638b7df4e8107782aca12706b279eb8e826",
+      "db/migrations/039_system_wiki_canonical_view_path.js": "3da75247314bfbd5dd4c3e696b406b2f97338a886ab2ca3ded7642b55d491be9",
+      "db/migrations/040_reported_ui_context.js": "3cc009d3188ce4e21bf004e5243834ffdd15d32a87007b1b1a72b32edbb5d63e",
+      "db/migrations/041_thread_group_foundation.js": "b2411925acf4b94602ac669dcad84cda9d598f9835a8982f7bdc8c58300156c9",
+      "db/migrations/042_thread_group_action_recovery.js": "18d7e28c3537581e14b494d6b43fb2364fb1b684a72ee039c4fd29538c4aab23",
+      "db/migrations/043_thread_group_worksurface_cleanup.js": "44e3bf1c86ebe16fe389c47d716593e33b9ebad6ff6a98a5d639c3ef07739040",
+      "db/migrations/044_thread_group_placement_outbox.js": "08197c2b84835c63890ab292db11ebf68d5f697295c54f894a8d8298fb322d12",
+      "db/migrations/045_prompt_submission_receipts.js": "fb290fe85a08c0203832fa227b6de6d6458d31ee0f161acbd4dd0cfda7144ed0",
+      "db.js": "343780913d538c1dfddf0d430fb2c17ea7e1f3008e3d38936543fc9a29f6ca76",
+      "emoji-recents/handlers.js": "e9be522d68736f8e7437f632b4838ae4a56110d1115c000bb1a4a1da29f76566",
+      "emoji-recents/index-table.js": "5db50d0bbf63977dcc02576ffd7bd958ad531ce367c624d144b00a33dcfd596f",
+      "enforcement.js": "8074c48a1891c7dc093f81cadf9d48ede051f461199917c952f65f223eb56aa8",
+      "event-bus.js": "3c8578fd716ceb8c72d33110190cb1d2c15351c741cca731f9280c205578b846",
+      "event-registry/canonical-json.js": "c394a9b6568f16246f79ba073a2386f26d2dce53079f2379f15b8b99940bbad4",
+      "event-registry/capability-catalog.js": "a1105d2e53c3ee6552fe6c6c0d975cb2aa875e63509db27c717ed353211cecb5",
+      "event-registry/filter.js": "f924dd6a909cd013228d2765aca471a400d9c230edb357ddfb5fd09f7ed25061",
+      "event-registry/index.js": "9cbfbed9f46a94c2c6201ddfda2da607c536bceb10adfe2bf15d9e67a936c633",
+      "event-registry/ordinal.js": "d1518594446b37e0f39fb273806e46d0c4717ad8bf06879411eb15f6799dcff7",
+      "event-registry/policy.js": "31ef0fbb7b58d52bafa0de0b089d96b7db32e98de9dc197f0c4e550a78b332ed",
+      "event-registry/reconcile.js": "089558d64678204668b67f01b19de2ccf32141b39ae442c3cc829d0e24bd1f01",
+      "event-registry/repository.js": "6dee7b6e2a71b30db2a89d691c55718a0dea3c24bde31f4936ec67e22e2858c3",
+      "event-registry/schema-validator.js": "0303dbb528f01f0a1f492c20cfc02e3e7e7adb111df946c3c9334c4943c00b24",
+      "event-registry/schemas/agent-activity-v1.json": "eefd4b0c9273361ca297ddcc149b2c79e12ed8ff577cb94c171796404315660f",
+      "event-registry/schemas/agent-tool-completed-v1.json": "9c62b2b5398d88c6f73718e1d99eaf19dc73d38d4be153e9599abe2d35cb6b97",
+      "event-registry/schemas/file-command-accepted-v1.json": "eb7e16db3c2ed6fd51d6572c792e8feb0e6df0fbe70bb11b0b5a1f1f88f741af",
+      "event-registry/schemas/file-content-v1.json": "94ba44c10f5e198209a3ebe3bb9c7ea22e63cee57c967e46b5b14dad00e083a2",
+      "event-registry/schemas/file-save-v1.json": "957eb713da585420ac90326358bfd0e746863111441bc1b7c85410d55d07b120",
+      "event-registry/schemas/file-tree-v1.json": "00dd9cae63c4bddc63d2329fa677d7ca5575a0e4ccd662ac424642d29f9d1757",
+      "event-registry/schemas/resource-changed-v1.json": "1891de528b79bc34666f4b17c5e0ff8c2a4492c783c042f4aecc02837fc9a3a2",
+      "event-registry/schemas/resource-changed-v2.json": "b1ac1fc766d10a5e815f5dadd673ddf1a8cc85f5d890253fec214d1392fafa75",
+      "event-registry/schemas/resource-mutated-v1.json": "6a07bdfe5eba8a7c1cf8a77c55faecfbf7ef16272a390d54d9236cd43327e55a",
+      "event-registry/schemas/resource-provenance-v1.json": "6c07b16bd0dbd0d673c80fb117a653d1a09b4ec03d71255c07eb2f6fa9b9735a",
+      "event-registry/schemas/resource-refresh-required-v1.json": "edaf1593d9495b0b61439647563ecf7a473804d471e90016379f8dab77229469",
+      "event-registry/schemas/resource-state-observed-v1.json": "406ae3ee88bdcbe90554de2fb53a9c10895599970aa98b8c3e731cf0a307ed78",
+      "event-registry/seed-catalog.js": "308a7bb57599915273b77d1b8f885780e783ebe6c9761449d977baf4468ca4b3",
+      "event-registry/subscription-seed-catalog.js": "2435a0dce4b6075801b8422469169c3d3e1e2f2df0f3ad8d399c5d43829be1ee",
+      "file-explorer.js": "2e92c602c26ee519b5942ce1a1aa261b96d92013088f9596a4da6280f2c82fb4",
+      "file-extensions.js": "754564df62baa449671ca874e51870015b22e539f4190c5e66018fa809b00a1c",
+      "file-mutations/atomic-writer.js": "b91fdd071eaa53febd4e286572cc38b00071e7e016d5c4ca7b905f9be23ad9e6",
+      "file-mutations/bounded-file-read.js": "bdfb0d6d677b642321437e6e86b93ab38fcd5b0dbcbc441897a648b945cfa3cb",
+      "file-mutations/checkpoint-adapter.js": "732abbb6683a70e98e44831bcf43d938b241ca8f2aac7d1a5bae83228e775013",
+      "file-mutations/durable-reservations.js": "bd615efbde764acd3233dd6558c5730d990a316be17f1aa72c187f059305cdd9",
+      "file-mutations/fact-replay.js": "dc6e0126c6f1dd087580e868f0ded58fcf349c9d194d21e96ba1ff475ab8a6d3",
+      "file-mutations/fact-reservation-bindings.js": "bade6412af21f143edb08573211ce6e0d807612ce1cacb6d553aa6836c65d9cb",
+      "file-mutations/file-operation-repository.js": "7ef825b6cd80f04c5a456eff43f81396ccca9d7449ff3ab7b985f33e798bb016",
+      "file-mutations/file-version-repository.js": "748955d606e8e58fe530a57239fe155ffbb79d540d5af1182343306b0558744a",
+      "file-mutations/path-authority.js": "7bf9762e21d9eca7caf80c0dd130f2be0dffcf7207d31e0089cb84fcec4206fd",
+      "file-mutations/provenance-values.js": "4d04f140267d5abf51b3cca1da5f9d6f43c49434373f54b1e2ef683e1ae2a35c",
+      "file-mutations/reconciliation.js": "b8b1c1aa2896117dc85de000262b66fb448e65e2b99e6f4053514de2e0dd059f",
+      "file-mutations/reported-ui-context.js": "6d43a5c89bb38fb5c35d87d21787aa6d05db1c3fc3a7fe3c2dc6a435af6004ce",
+      "file-mutations/save-controller.js": "9ef47d8de84e6e76274bb1c1928d6238415cfcd7a5a2c3c5d7947a3cc227a60d",
+      "file-mutations/save-mutex.js": "5f1994507ddcc5aa9f20c1a1681157f1579892d1ce0f89f27bc6bc076a3e6ed2",
+      "file-mutations/save-owner.js": "f39cb7ccebe325e51315bffd3aeeb0128fe29396f4dbf43fa8172c768334af7c",
+      "file-mutations/sqlite-contention.js": "784e82332a447ce3b02f3420e7a580a215ffccde29a867160f07cdb8293a6f56",
+      "file-mutations/stable-resource-repository.js": "fbdd5d61054578f93347eb23fd4b1f05c415c5629f680173757c67be9c607267",
+      "file-mutations/text-codec.js": "95b4b256eda552d9f193761fa7d31fbdbdb42cc34143101e62ca6e2f0bb9df6d",
+      "file-mutations/validation-patterns.js": "e105151eb3fe2ebbff604f8b8a0ccca8ca8542a8e147f78dae93bf65ce4991c0",
+      "file-ops.js": "5ed4028e9b7c3200de85c97d14131914782694a7b1ca65022765e32751f2d922",
+      "file-reads/file-viewer-read-service.js": "85d2bc066976233019c68e330688e0b97470f1e619cc2cd0db272db45dc81cdf",
+      "frontmatter/catalog.js": "8e449ca30d65bfa451faf91d841353008b885f982bdd546a5d0010c81296b2dd",
+      "frontmatter/index.js": "e93705f0e855e7912b92e51b9fa8ea8e83b06d7125db36f8080a7292f76cef43",
+      "frontmatter/parser.js": "47a4654056d913e484697d59a34503d9367db33f88131ea1ddd5ae0feb8e8c22",
+      "frontmatter/serializer.js": "2dfbde6084a9ef0151036484c25bbcf919161c5f98f3f89477a97b86dc71343e",
+      "fs/cycle-guard.js": "f9efe05cec342af9c7ac45ae2c7391892c27250fafaa82c3936b8415bf2b3408",
+      "fs/dirents.js": "78b0c933f40ffecf6602d61f7855db1fd9f16d36d945183050f25e2500be016d",
+      "fs/symlinks.js": "517f3c262a1c85530ef0284b80324567e6f03671bcca5f4e109d1c02edee7c5b",
+      "fusion/queries.js": "0ed47a8637e270a36ef58a814b45f5a5592e1f789a0620037e11ab03ac35f260",
+      "fusion/ws-handlers.js": "04d3ab1589cb3a3a76505f22033987a8d19af33201726705a1e8148e0873dc19",
+      "git-credential-fusion-studio.sh": "00345218dc8d4c830ad1425faa03eb2e90c722e4f8df52b1d5c789123f146108",
+      "harness/bin-locator.js": "eedfa3ebc6942bc30e6dacabf4ceeaa6b26571fa642233780a6d61bc5e51f805",
+      "harness/child-environment.js": "a60e49cefa91b3d72a5a0cdc1df659f001b0e74038c664445f7c9f1d86701e66",
+      "harness/clis/base-cli-harness.js": "34ab34b3752c1ecc74a1bf5eb22f9bbb81c22234926d67385bb4a4f41e0e0ee3",
+      "harness/clis/claude-code/acp-event-translator.js": "80e38ae37a7d0bf61262e5d3f49f9c81c4d11818358eb3117e51105635795a23",
+      "harness/clis/claude-code/acp-wire-parser.js": "8631cea32a9f2dcd24db18d62d3058ea1f8efc28345920063e6a85c2608f7f3c",
+      "harness/clis/claude-code/index.js": "e404125edc20fd7f5c3319ba0edef23442ecdd959bef50a6a2a9b01414219538",
+      "harness/clis/claude-code/session-state.js": "da7c9d9c339e2373a70f7340e3132f99afc5f74357e84c121fb849671a3b4fef",
+      "harness/clis/claude-code/tool-mapper.js": "729ac71c56d16c233e9f62f24295d849f2b2765a10117d19fd23dd3a38947832",
+      "harness/clis/codex/__tests__/acp-event-translator.test.js": "1526576b1c2e24bf5c53c330ddd45aa614124bfad64e4198f59cb23978eac8f0",
+      "harness/clis/codex/__tests__/acp-wire-parser.test.js": "464317d762fecc7b0c9e6859d8fdb68c144fc27db6b6c1c45cb14340b7cf7189",
+      "harness/clis/codex/__tests__/session-state.test.js": "64a2e80d9625fce869175132fc1e47c69b6748286d141bb089d2b904e7abc69b",
+      "harness/clis/codex/__tests__/tool-mapper.test.js": "42faf29ad611d10ffd7f3cd98257cc604446e01782667acc19541131e22a58f3",
+      "harness/clis/codex/acp-event-translator.js": "e40034205d5fa3338227305287ee201e56516e95f64c9de31e8c3656d9a7be7e",
+      "harness/clis/codex/acp-wire-parser.js": "c2370c6032dd3b4b7bbfca9971a68955136cb54a5a6a0877c3afdea62bea2a2b",
+      "harness/clis/codex/index.js": "4ad8f9f313da7a8823acbb5fb38a36cfee896253860566581014cd886b3f05ec",
+      "harness/clis/codex/session-state.js": "155caa6184c00f9d0c2e6fae9d97524c1fb9cb1f61fbb1b5f6966ee2e240180c",
+      "harness/clis/codex/simulate-exchange.js": "cca04bd6e4113cddc9dab2f393b5b095f8eeef83e98bf8284f6ca914ff49f967",
+      "harness/clis/codex/tool-mapper.js": "3e767d851a0ad7fdc55dda744e3ee0efe037a53858d5a3f6f1ae37fb3dee0772",
+      "harness/clis/gemini/__tests__/acp-event-translator.test.js": "f52cef7c9462828435aafdb55cedd12da4f36bc5a1c46022e639390682b6d4b9",
+      "harness/clis/gemini/__tests__/acp-wire-parser.test.js": "464317d762fecc7b0c9e6859d8fdb68c144fc27db6b6c1c45cb14340b7cf7189",
+      "harness/clis/gemini/__tests__/session-state.test.js": "5afd232e99003f31d0b19d846b4446512b93ccbd296301dcef681c1d0cfd2fc8",
+      "harness/clis/gemini/__tests__/tool-mapper.test.js": "90b94f95aba1ca59f71b2a626b0a28d2d48b54d5a6314d973378253edcb4438e",
+      "harness/clis/gemini/acp-event-translator.js": "3fd237f321372c324ee5f7e67badee622359c08056fe919eb9f7a3ff95e0993d",
+      "harness/clis/gemini/acp-wire-parser.js": "18431ebf718d3fbfc5af7f37e5e7bc2e8e457c15ecfd5aebc83a44df119f5cbf",
+      "harness/clis/gemini/index.js": "15a72eb136fbd75ca61635524fa10734c4dec9f1f131ad106640344d664e6a67",
+      "harness/clis/gemini/session-state.js": "047b1bd33f1a998d0fb5b2f178e27d010f0260228d541d006ee5b851acf3acee",
+      "harness/clis/gemini/test-integration.js": "80b2b3c240cbdccc225f0ebef919257daadc6797953f0f1bca996676a9e94977",
+      "harness/clis/gemini/tool-mapper.js": "572fbd948f6719f7846af8b3283e19a85890bada6f732ed2d90792300b04ab2a",
+      "harness/clis/qwen/__tests__/event-translator.test.js": "2bd286d320e3ff9426ad87587e9b48ea42a79928dade4fe80fbd5e84bbb94f25",
+      "harness/clis/qwen/__tests__/session-state.test.js": "5e110382b7551cf164ffed6892d2111377cb3bd4b860d691a075e09865af6255",
+      "harness/clis/qwen/__tests__/tool-mapper.test.js": "914ab9aa599d99635a49497271a99b05f7c98a80349258fad1f1b1eb941f1205",
+      "harness/clis/qwen/__tests__/wire-parser.test.js": "5fe2ae958cf4eb0d37e2b10b42027eddab8c24a317d33e4fe09256c9ac5d5d69",
+      "harness/clis/qwen/event-translator.js": "95ad946bbfa90d494744bf6dcec390b16cf9aaf0987dfe6b9294a44636eab2e6",
+      "harness/clis/qwen/index.js": "3ec2dc87e5a8e09dc1b5f829795ef5112d3a2514b34386b4a5d5962bf66500d3",
+      "harness/clis/qwen/session-state.js": "ccb57fcc1a46e7d83fb8ccba490fb52a97809e22fdce9ec9a59be758206a79c7",
+      "harness/clis/qwen/tool-mapper.js": "dcd13df9dbbde6bb133caae7d67b3c54a83f06b306eca3822ba8d4410e7a1e69",
+      "harness/clis/qwen/wire-parser.js": "0f357ce6138dc1df8d14b0f92d6acd8c8bc8ece20cd498e789d0e2666ef2dcd7",
+      "harness/compat.js": "5b1b041ec7ab259e9f8f6e0320e503f3c0059d44c3a206de7a413b64708fe7bf",
+      "harness/errors.js": "a8ba639a54106ea1ff87b3cb1e18c2efe7fd40899ef03d7a82adc56c42b74cfc",
+      "harness/feature-flags.js": "ce28e4670bd45471f4a5fb8063274f7a3de29a0ed2b04b1a6ac775913c91dc10",
+      "harness/harness-status-service.js": "82d7b6782771a2f43ce9ab4198e5a4245458e39f8a0a3ff7843e269cea8a85c4",
+      "harness/index.js": "48cf28248b6059f99ea25ae0d579c2e61df7dbf16150f14f0c6dd3b47c4b1b84",
+      "harness/kimi/__tests__/display-normalizer.test.js": "7efc19845333f094208331c9c40d5d4a032a527fe396bf6980deab31a17ea98d",
+      "harness/kimi/__tests__/event-translator.test.js": "da58536fd47c9aced5b687ba79c8d437cc4f9f6528835a133336c27f3e76a950",
+      "harness/kimi/__tests__/harness-send-message.test.js": "996384adbcbc58fc4dad1da109f71ee85d4aa8cdb17b716f3418b7217b4d86a2",
+      "harness/kimi/__tests__/session-state.test.js": "c822464973b99ecf313b89a7d2a7a1ba49d903df1db6620d22a5d14b9f995ea8",
+      "harness/kimi/__tests__/wire-parser.test.js": "fe3b7d32d7f4daf5f9ff4147843ecf9afa77b8f8b80f2627cf43094d4580c515",
+      "harness/kimi/display-normalizer.js": "5724f2a02aad8a3c87bf48a117650e75fb8762811c3a78b5a8b61de14a51f13d",
+      "harness/kimi/event-translator.js": "8844239221e0e4d375ac1b4813a889c79ade755089f74aada7d3701fe1bbc65f",
+      "harness/kimi/index.js": "43121b3deb485f7567ff715c9c4d1af83460a5cf6f0cc14fa9467b35e5830599",
+      "harness/kimi/session-state.js": "e62d28bebb04416364774e5c8715c8cb3fb48b4508b57104ca62b762ea1fb073",
+      "harness/kimi/tool-mapper.js": "d94095ebffc843b917a0918e45119192a760e719c7722ea7c000977d5967cbf8",
+      "harness/kimi/wire-parser.js": "34317d4a69c4039e9737d9f9a7723e7ab43503fba7f3e5024b83b7aaf65db43e",
+      "harness/model-catalog.js": "fb7c43d5ef53be8206cae3e5612c73894d08aaae34d7fc19d3221055f9f33d09",
+      "harness/opencode/configured-secrets-provider.js": "2cb9fbf68ff33345f643fa3153edfe4373f5c0e2e575761db0bd7793d79ffc4f",
+      "harness/opencode/failure-marker-builder.js": "f99ce4bc0056b7cbdac6ee1f89d0520862e25c543081779101d1577ca2c09772",
+      "harness/opencode/fixture-fault-runtime.cjs": "68d37a5933559337c2bdd581c1729e25913c345e606eaea6a2e87bfa3e537ab1",
+      "harness/opencode/harness-diagnostic-redactor.js": "4a17671a9dd674ba6a4a55d5db08a378f2a3560eb8c01fadbe83ab12ed92af38",
+      "harness/opencode/index.js": "7ba87f35596301bcfbbff7ec0280dace34efc16665c568dc586d120a1c660fe8",
+      "harness/opencode/json-event-translator.js": "1d62309c6787b816351f5df540f6688f4d61536652c74421688349a0f4a82060",
+      "harness/opencode/json-line-parser.js": "53205f7927c30e2be6de9157587b0ebaadbe0b0b7e731c9b99ec3c8f472c970f",
+      "harness/opencode/native-diagnostic-tap.js": "90fde114011adc34d5916a09604395c9d02f1f924b5dc31302dc7d91191d297e",
+      "harness/opencode/resource-extractor.js": "8956d89558e4bd3228ec9d3c2fe94e3e682bf6db5c4dff0a3f3d65150a340fb4",
+      "harness/opencode/session-retirement.js": "b854844b0a69c671bb07a3ac6f82711796e251f33e6ca801a03623bd7f62b51f",
+      "harness/opencode/turn-outcome.js": "b01efd354b33b383fc27d0dbcf4dbb206bf581463357397616eaac564ccf14f1",
+      "harness/registry.js": "ac07f0adad5080ef21f482b60eb2027b97fadb060780f63e6d43191b20fed2f4",
+      "harness/types.js": "d0639c442d0115c8e893af58abfb8eea9ee1e076bdf9c090ea860c5aeabdf1dc",
+      "http/calendar-routes.js": "165281dd7ae9994ac5f792929079c8ee428fe7ec10fab538ad65586f0fbc022d",
+      "http/capabilities-routes.js": "8433d72e4251fae24ad7ffaf88b4532eb3827123a94c0d75a76d37ce90d9788f",
+      "http/harness-routes.js": "0200dc9b0422192fdf4d74a41598a4d9168bdbcba082b95f8bb5735a80318850",
+      "http/panel-file-route.js": "f01939bbfc8d19e5952456c0ce6122da98ce0995e8052d703f931fa7a6978f1a",
+      "http/shell-cors.js": "657fb0a4b422de26dae91ee07495e6744835ee4e9862cb4d7ce8eaf272c4e6df",
+      "http/view-config-route.js": "9b4176115c00fb21ada8753e6abd5a2bd83b6b6273515d458e2aa5db81c0021b",
+      "ledger/event-ledger-subscriber.js": "2ba6334af1c4a23a7829507434a2c3a3b688a9abb4b2a3ebf30d4f15bc8e0692",
+      "ledger/event-ledger.js": "d4f1c9946ba84333fed073ad34a03259a12ab2072c923fb5915796de71dea4a9",
+      "ledger/provenance-ledger-handler.js": "dd3badf6a61c6cac23ddc1938ef64a72658963bbf4495b5dda8c95d76c58c362",
+      "ledger/provenance-query-paths.js": "8d2c73e606590e55fc53af471ea3e92d679f51fa656d31193e8623d77b954d92",
+      "ledger/resource-provenance-repository.js": "bba3f47ff6fabeaad15d19c208f327f276df6ffc5ca9cf60deb02b347c287e97",
+      "logging.js": "2acf3c7bee42238358add9b447fe3091a3eb275e20ccccc45f5ea8e77bf4b0ab",
+      "office/palette-codec.js": "ffad2ba5de0bd33b2db7a9c7415137792a3fef0a228f9bf022c57977d8036904",
+      "office/palette-errors.js": "ce65b05cd63433c59d299ef3bcedd0812db24410631fe6e6c3498c06f8418284",
+      "office/palette-file-store.js": "bfaa589df51d614c3af9d6cf8779b8b398e7480e8ae1b31c391ce19bcc1f84b6",
+      "office/palette-paths.js": "e7358d2005dbf15332e405994703dcdb4321ee44feff86c0cacc5bb914a4be12",
+      "office/palette-service.js": "f05bcf6cca6bba7ecba9784910a36189a465701dc33b08abe67d63887b03c054",
+      "prompts/prompt-registry.js": "9ed18bff7e76c10bee7ca68e03f4d200e11cce866d6bf607103cd8d6078d9213",
+      "resources/resolver.js": "c9447adc779f9cc03412fb16aae7c3e81e987b65c15f96588454dbc6faa4e37f",
+      "runner/heartbeat.js": "6cfbe02376ad3e2b1e625966773948710ded9953326c582fb127d0c428ef5224",
+      "runner/index.js": "c1811044116fbade2bc70ec4adef164a3c9cc4f8efa398aa47726688a4dda006",
+      "runner/prompt-builder.js": "3da52f0ab79b25a79680bea8ce549cbb4d37acadf8b556fb519bbbfd9fbffb40",
+      "runner/run-folder.js": "8d8e32d07323105a0d44693b28f99474a0788295dbf7f7cd913f98d21549f290",
+      "runner/wire-session.js": "3b1f8421ca3df3c9e042a6bb8bb755503a76af71039f731ad77dddd0533e33be",
+      "screenshot/router.js": "d285e1588aed37ee177a0130fd8784efd1709a5c32e1f59b85ee2e23fedf66da",
+      "screenshot/ws-handlers.js": "8d11853e29ee8f0264090145aaf1d461384caeac6b58797a63cb687869756254",
+      "secrets/api-keys/backend.js": "aef6d6dc725418df2b8a44a58da14e17427826ef1f23fd7607a64b7ed592e876",
+      "secrets/api-keys/fingerprint.js": "9bd524397589048ad1c9c1a46173df77913a40dc83b9d4dabd4378ad0544887f",
+      "secrets/api-keys/handlers.js": "f4d89640c79c178ba9c62f8efa5ac1328cc7eb6274d96aede2ecc47020afd657",
+      "secrets/api-keys/index-table.js": "249c41b2a46e040463ec3fc6a277bace6a7ee8905f2e2acfe688a3c09bebdb6e",
+      "secrets/clipboard/backend.js": "53d9c98e3d0177686e3f20992db621bd4b0a4089a2bc5fa31c154d8386b4d658",
+      "secrets/clipboard/handlers.js": "36eb0701b82cfb6c08a4b0f4ffe63bcca67979fccc2393913374cdd8fd8bb67b",
+      "secrets/clipboard/index-table.js": "73d7d326f62a7f1a92b0eda97d5bf401fa23280ed5ddb2111da6722a4fe7fae5",
+      "secrets/clipboard/keychain.js": "6c8ca35ccc74d671426186bc93eed8cf44b68f268a63dcfb60183c4958da5d40",
+      "secrets/clipboard/log-preview.js": "f0ab3bf6cab47a64506534568e067652c90fb2eadf4621a1ad8f4673b7de407f",
+      "secrets/clipboard/secret-detector.js": "418590110ff7ccfeb248ccff6c2be106f65cf15c42085ef64eb14af629e21634",
+      "secrets/index.js": "0fca29094b097c7c6bbefa0d155050e5ed01921b6baf434c7574af7fa0412e86",
+      "secrets.js": "142c6954348e2557e31fcf8e98a8733c9f750ecf216a30555790bc29f8549963",
+      "shell-bootstrap.js": "5f4f28dafa5b9dac2dcec8476543cfe268613529be56af8b2fa907c380aac7c1",
+      "shutdown.js": "f651e3a4e85e80a2f438a4ed3bfe2a59d31b9777c6d9f50e53ee7c89454b6520",
+      "startup-loopback.js": "259044e0338a90718f03d95c143775422fabc83d9aa445b166633135b3f33130",
+      "startup.js": "caf5d7f68d6beb9bb689b22ee3c106024910a0148f7dd54f8a02ce220fc858ec",
+      "subscriptions/admission.js": "dc709809975c64c05a71b6c1c6fa5a87af764b0ffb633ef424489159adf8596d",
+      "subscriptions/capability-factory.js": "70aac6ce5a3569046ef54641f19b21f4c33d67af2cdf5f6343d96f60350d4fe9",
+      "subscriptions/controller.js": "18de3b625e2c57ced7cfc79e49537e8f1c9a2f282b525590f69fc187c41a4e9e",
+      "subscriptions/deep-freeze.js": "575ed1bd222983518d65b0c2316f374f5b1fde218b24f4fa202172aa4d36fdd1",
+      "subscriptions/file-provenance-bootstrap.js": "f7a7dbf2e7da649fb9178905e41109d654f649ea7749187b9e9c668c2e480d25",
+      "subscriptions/generation-compiler.js": "abf2914b2e9e0ee20d8642cef4da627dbb06c8ad156b0ba85248a76f5632a290",
+      "subscriptions/handler-catalog.js": "41f8f281574828ecc8e1d84bfeed8dff28f7bd824c91c7d81abef561632b1305",
+      "subscriptions/handlers/agent-provenance-ledger.js": "0d06fe84b336b12d76fa789810b89623c5393fd816ae5225dadc31d9b9715897",
+      "subscriptions/handlers/agent-resource-observer.js": "9c2149eda950efcadd41fb94a2262d5c26a2f9b9202faf20db6935a50c010e0c",
+      "subscriptions/handlers/resource-render-projection.js": "79b15ecf77fd2ba4256984ffba915f8b93e4068a828306f6db59dfa51f39e4f9",
+      "subscriptions/host-bootstrap.js": "7259865ed67ea2d4d18d0f1adf990939d563c96fbea84ce1f6857650c6534b79",
+      "subscriptions/index.js": "c5fa4b2b56b0fe687f0681875f5d9aaeabaa778791e1b1151ed6d8d2f8e9ba2a",
+      "sync/index.js": "015fff8beca017d2909afc969acba27353db5f2098a1491dabe4f2cbb5b07c97",
+      "sync/pull.js": "ddf4703f55489079d8fb9f10da1f518a79f1781b6a6060a59c48adef22cae6a9",
+      "sync/push.js": "d9f8269d4a555ffe80859e3cb9918b21db7793388863cc22c3fd0fed24f63f33",
+      "sync/request.js": "e35e830e7a6ea96fef637c41a184878af6d43bc53c04aa850a07af34bf16562a",
+      "testing/agent-tool-fixture-route.js": "6831c3be385beca0dcd16047a2e02f94e798f6b63f4f66eb58054da4bf179ef9",
+      "testing/isolated-provenance-runtime.js": "281f5c45b8125473ca42b62448ef4243b907181f5ac767b9a201c7264bafa12f",
+      "theme/accent-css.js": "cc3ebf8985a4fde1d5b8a41ae77b769c498059c92f5e1c2318db80364e94af62",
+      "theme/border-control-css.js": "db06660251dc0bcac0e7ee91b081f774e948d8e3187a85101f3216fc1f407db4",
+      "theme/border-css.js": "74924d78f1ac5a3e258631bfa093bf1e9fe566cef4d3264170fa56053127e66b",
+      "theme/color-math.d.ts": "011b043458b70bf8571b039534c756f11ac12a75b2ca4f11a523f6132c9d0ced",
+      "theme/color-math.js": "c2700bf376802fe6b50764418363dbd643fa76eee82e46d7deff17085df8a821",
+      "theme/content-css.js": "b6db38dd8a028f7e6ed36eca1bff3861f29eb481c1861f79376a7aed95477a42",
+      "theme/layout-service.js": "63db59ee2a840db9071cdc01febb81d90ebf36567f8d9b78383701075ae1e273",
+      "theme/panel-css.js": "fd40e34ada6fb800e5758e3cef7d4dc942a47ae1452a794f2af7074f35121efd",
+      "theme/syntax-css.js": "2cde8eb1e171fd120e363f6d3c69ea3323bd6a7f90c95551d9608d4affe5ad7d",
+      "theme/text-css.js": "da05500b9eb9934b435beeb8ae49f2dfefa76d4a784c2cc6ba869061564bc198",
+      "theme/theme-css-generator.js": "fac5836679496840a9164d290a44fc8d970d88174405941c0c4eb5683f34d616",
+      "theme/themes-service.js": "2fe960090cfe0488f2c5a8fa1eb58e73df573648748355248cb4e98e303a1aec",
+      "theme/workspace-css.js": "729214706cea25a63238c39cecf497868749b16bf00706490ab793702a1fb669",
+      "thread/ChatFile.js": "5332584dfd0c84facb1d15eee9e1b9fe2c3a02f7978f1a829458974307e65eb1",
+      "thread/HistoryFile.js": "632e4dee32ccc275c76a0399c6eafdb6167c9524896df4fb6b004d033b2d2f39",
+      "thread/ThreadIndex.js": "4f40b01609929e1a168eed1bcaa5ed5f09963ddab56f1d7bb31d946aedae9294",
+      "thread/ThreadManager.js": "b458a3a6a7947dbbea3fe8665758c6d3d618c877e8db6ae817bf2743de44d043",
+      "thread/ThreadWebSocketHandler.js": "5ebfd2d14d1acbc286c797a8a8ff9825d2014bc702d48d4d4e6ca6be85ffa864",
+      "thread/automation-drain.js": "3e1ceceef140551c46106450473f7f410d7fa6dbadb0335c760c7599c8f029b6",
+      "thread/automation-runtime-activation.js": "f4c514c609b26b7515ad94933fe105369735f825fcd12f9f2620c65bdb0aef54",
+      "thread/automation-turn-context.js": "d90400011bdf52ca21dc044aca9b86a0689bab2628de4e5af52b0ce02c0db99a",
+      "thread/canonical-drain-context.js": "071da31c5fc7e5a26d68173304784604d38f60cdec55b1707d84b24d5c8e5af1",
+      "thread/canonical-turn-accumulator.js": "735e7fcbba7a678fe0e8ea66bb14dbe7be895760d3eeab1bcba17c5f8fc00ca9",
+      "thread/chat-search.js": "dda29d26c24f473adb0f14bf8802d6d8317672f787e52d4154fbfda57e4b307d",
+      "thread/chatlog-mirror.js": "72c4511948a79578b9b4ae159322acac77f8f960b8058c619fba77157099cd59",
+      "thread/harness-diagnostic-service.js": "c8da56ae4c4c62390a10b4442716981198f18a12d836c6a69e294728fd2e939c",
+      "thread/index.js": "c4116f60f384286356917317d804de7f1e4b6a716aed9216f3dfe689d2bfd307",
+      "thread/live-diagnostic-service.js": "f9434147f5d280bd7811cd78f676fa991d5bf620cda7cd1b15d7da624d6f46e8",
+      "thread/live-turn-snapshot.js": "957d04e22fb6df40d8b3f96d3c4b1a544f2bbb11c1adf1adaba3ba2382b1fd12",
+      "thread/mirror-journal.js": "808d9c43b1bada795ff1320f5c7dd5862b1fed133516a4c3df081664ac405140",
+      "thread/prompt-submission-repository.js": "b5623f9f85290ea5378ebac317de44e8f0b8dd05cad356178bcda1b779fe157c",
+      "thread/prompt-submission-service.js": "c6c2ceb640e5aa9d8de221c9d8ca43899a263247da39b3d7a1ec380f72d36966",
+      "thread/provider-termination.js": "f70cacad959ade9afc1a72855f5d4e230f0ab46677bb7548dd109eaf2ab80f1b",
+      "thread/runtime-activation.js": "fdca5391240d016ffdce0ef353d421b37b58f2a43764e2f34bee36a54bfb2a08",
+      "thread/runtime-dispatch.js": "6b479e5d9fd355e85f4821cba724abe0fbbb46d9e353a07018544849380dfd15",
+      "thread/runtime-identity.js": "e8de9ea5b587669f4b5ee9944d5fc87ae390890e1f55bb96b80fc8d8d20bfef6",
+      "thread/runtime-prompt-admission.js": "10f92c55bd42df7dc801fa9535616e3e15efc1f601625d6e2fca4c9cd3cc2c30",
+      "thread/runtime-response.js": "f4c6ef3d98970754f761b625f4ac268646178ffe97840b681e783dd3e468d92d",
+      "thread/runtime-session-activation.js": "ac9f070e752c558d45f3ff149629e4c0910dcfc6da87785a79ecdf5320d4d1fb",
+      "thread/runtime-session-binding.js": "4ff35911f289ba84868f7ae6bce62ca9456442b1b98b32855082f23c2969c99b",
+      "thread/runtime-stop.js": "34e3689cc378b22ffe23a218153cefa379882f949ffe7f5c8ae7be9080f9af4a",
+      "thread/server-test.js": "80c6fc0d84e376b5c3ad6e287008a9b232abb843cb2d29da44d74d71e91ee78a",
+      "thread/session-lifecycle.js": "747b27becdf523f4083f7ccac3ea066bd7b128129d600fccb948fee8a498a62f",
+      "thread/session-manager.js": "522107e5937f7250f15d17fc2e35aaee3928c26172c558e61481904320b305b4",
+      "thread/session-metadata.js": "bf7622a938404ff3cb3c731e1aab01c1e888d195dc629e3ab5bb719bfab1f4d8",
+      "thread/session-repository.js": "79a602f856c30a0bd125359bcecf63a904450135d507e71a3e99f0bd361ec9ad",
+      "thread/terminal-diagnostic-boundary.js": "3f89f43012c3a7377b7e5707981aaaf324259a6bee62fbe931297c878c6602cc",
+      "thread/thread-crud.js": "cb1019800408e03bb5e0ef6efff7ae75fcb0a6025c70000ac03ef69948a5ec53",
+      "thread/thread-harness-config-policy.js": "7e26f9d8b35707229510725dbe9fb03c6437a206b83fe2ff550fbb2dca7a8aec",
+      "thread/thread-lifecycle-controller.js": "d245539bb6e1be74a44359547e83b77879385bdef80a9fa8573733a4c5c2d1e3",
+      "thread/thread-manager-registry.js": "2d21060df89d553f78cab1e883bbeb8bffb41ac8004347d4dbb65d485646f36d",
+      "thread/thread-messages.js": "eb1e68445b2023f1de25f33ce3df61d3efb2ff80eab8b7d6450ac02e5cded2b2",
+      "thread/thread-open-handler.js": "fcf62ab684ad48efb9d71ee651b8143385df1a28991deb3d72c94a0e0cadd4cb",
+      "thread/thread-runtime-automation.js": "fab0725be76e67efab8679ddc87ca92876a52222fca41ce3abd9c0aace139494",
+      "thread/thread-runtime-controller.js": "f8d47ea5a8b26de62b030089af0498f0f710c12b61dd85bd3b663821832ef64a",
+      "thread/thread-runtime-manager.js": "253a06ed66420936bd700c055f26b3e5a9a4689bfb4a65b707b3406536608859",
+      "thread/turn-application-context.js": "a604a07d6a1193dacc5e465cbe371f0f7aca0f064b148b390a2cfe0a7dcb12f9",
+      "thread/turn-terminal-error.js": "3b7b8c48907b09673e898eb46e68ea9548a54110c9f104f442ed1ec457c12d4a",
+      "thread/types.js": "e0f96bbe6b3a63bb9e0d14dcab6631a8cec493fecf92c1834b00ada4bf80b6b4",
+      "thread-groups/action-identity.js": "2782e33faf6703c64f54828b6825a587c8d2701e7fb693aa5797c496aa82def7",
+      "thread-groups/action-result-repository.js": "e322bd4b3b9635415d024dbe600cc73d4b02aa7151b4b9204c0e8b4ea6f8c604",
+      "thread-groups/application-link.js": "59ca6eadeba6127b274f5d9abb4a78eee7e924ce9674e4ac2d1d2ba84e4e64b3",
+      "thread-groups/chat-capable-views.js": "5d93d88880f5af481eb848795eb6a956654ab92ca524a8542ad2d4c0fdedd7f1",
+      "thread-groups/delete-service.js": "e090db58e5da2a202a65c14e77d319788e6599190446c121274537787ffede86",
+      "thread-groups/delete-transaction.js": "8ad68b9099a2a5c17233d1cccffc8c4d5820538baa8cdcf4668f7e969ea538ad",
+      "thread-groups/group-mutation-lease.js": "5534a13158f81850679e2a33ed26681582cd629449469ae0e260905597474d27",
+      "thread-groups/ids.js": "64a04e7da4a4bd6d3d8ecfdd5bd553e8aa10ba5091fdb4b8d2142c7804383d1c",
+      "thread-groups/link-service.js": "55a8c701d987678b121f472ec7903d7ae10d9824c5954db07564121e65c4abb8",
+      "thread-groups/member-service.js": "378e962b78eddaade799dadfde27dbdcfdf99af023bfb699dcb9134a81a19b3d",
+      "thread-groups/mirror-repository.js": "2a4a551e1a062788ddf02ddfebcbb14c49cc0d3a2d6822874e6ba58e264081b7",
+      "thread-groups/move-service.js": "a554d5158d9620b2e863d783b19d2126969035972a7fd1fd78ffb5e76ce4f7ff",
+      "thread-groups/placement-delivery.js": "c21939e54e86ad9de6f3756543cc8631b5ffab5d34b3731c2d6e4d84333d6f57",
+      "thread-groups/projection-outbox-repository.js": "3d5b6a4332a50d8e3907dc4c6d2accc12ae69e284fbf258ba794eec31dd684f0",
+      "thread-groups/repository.js": "386f167acb1e38f263bc3aaa1594c2ac34e76f268de1eb34b0ab897eed206851",
+      "thread-groups/selection-service.js": "76a32be7730a47e8a0e331c8530682316e39bd54354f6e0464f091211baeb349",
+      "thread-groups/service.js": "b75f8be840c23beb5c235cabc1890dce7a3e7830c74d5582b9a91bedef53780e",
+      "thread-groups/session-transactions.js": "5c6e2fa691ffbe31185d1051b2c71f864a9c68f2bcb7be5ae649ff3bc5cfa806",
+      "thread-groups/startup-reconciliation.js": "894fdceaa3dccb3bac18bc1c398c4321f48efd1d690b3914d6962ecdbb4a1046",
+      "thread-groups/worksurface-cleanup.js": "f02b43990703b7ded75df12bd5a8b40a764d529c83082fc4ddff5138e53a54fb",
+      "tickets/dispatch.js": "0e9b22edffdd0de1bf1a39f25c1e2d882d752a0ae5f395e0b2ee401d317c2801",
+      "tickets/loader.js": "0c3169d587c17e75e39666e46140ace69ea3bbb413431b9468162b584773b29d",
+      "tokenizer.js": "8c841960a225534f166996be021fefbf86ff913639d7979c759c55b604fb3a5f",
+      "transcription/INTEGRATION.md": "58231202c09b676e38196c0df1c904d66942feffe057d0598a9b923f05d6d17f",
+      "transcription/README.md": "910ef4bf24afed24337e736da7aaadcb4ed8b5cc2f41152e28c831e31dc992d4",
+      "transcription/cleanup-final-pass.js": "64473729d349957cdcaabcb807e1ecf14894249f96a39abc2ef149199a1a7bbf",
+      "transcription/cleanup-first-pass.js": "c42520543baba4ea2891f6506789837906fa101ea1cf448c6188288dd274bf59",
+      "transcription/cleanup-list-pass.js": "391ebcd64517d17b17e3ff43ec6870cdc5998e0dca3dedd9b00d52daeb5e3a0b",
+      "transcription/cleanup-utils.js": "cb3b48eaf9bf7cd566eac2eecdddfaa86dec4b9e27dcdcc27495803125ed4936",
+      "transcription/deterministic-cleanup.js": "76806d1b73eb08e0586162d2b0a7083a779b369ec69093ed457e6fa0b57da16c",
+      "transcription/history-subscriber.js": "5ccc143b990e58772b2b14a8298f3dfb4ecf5902d961eb38c27f46421d3a1299",
+      "transcription/index.js": "a60dd628b793f0f06b745058cf57c98a7a114f9f39606d37e07e9a858f3ae8d9",
+      "transcription/setup.js": "bd388532dc4bfbd9103178c86db121726b237de15610260922f1a6fca4d21bfe",
+      "triggers/cron-scheduler.js": "fcec3ca69760e86cd1d7063deea4a59b3eb9668890203086e33237322d2f7b21",
+      "triggers/hold-registry.js": "a2d07d3be74110765c7056bfe1758ac0da603226724be0f639bbcf7f1127bbf6",
+      "triggers/script-runner.js": "71034f7ff11dac87a836e3a74fd954b846dde66c2cdd3b95454653d5f0bce677",
+      "triggers/trigger-loader.js": "be96186df7eb0bc2ebc55d6be96798e679d9e55b4b7f35d3a1c72ebaacfc9b54",
+      "triggers/trigger-parser.js": "56cf013e5bb7f9e510309cdd2cd3c7683e0376fed5dabe45c40254985c0a2dc0",
+      "versioning.js": "ce8113e8d1785143b6836f7eacf59cd5f79140d898e12d33bc4d10da449cb68f",
+      "view-folders.js": "3924f926ca11f340c2d7718fd8ebe4eba21c4dd4f59ddcfa154fbbbce802d9c2",
+      "view-state/defaults.js": "2a27edfca0f5135082a2d05762773e4fef7faa87fceb5c01a1a936e7e23da6a8",
+      "view-state/index.js": "eb583b3bbcec2c73588740905473695bf309d56dba75c5a61d1f858dd81a1318",
+      "view-state/resolver.js": "50607ad41264004461f75e0c73ec1445dc2e505b482d9731d7e4302951df742d",
+      "view-state/thread-worksurface.js": "d7aec4b6d9b6eed11cd2d689bf0274b4b35c5606542bb558bf22f4b6b937f837",
+      "view-state/writer.js": "29c4714ca8cf383d6324580c5b4759aafcc19339ce14c98962e19f9f1268e2c6",
+      "views/index.js": "3adaacc60a3fa8c155a9fe9091e96e347400ba93c34b26235b2dc946afe776a3",
+      "views/panel-paths.js": "701261e69514125272530a9558adacd90aff98ab3fbbcbbaf8f3cf260ab7942e",
+      "views/protected-path-policy.js": "424385815b58dcd432f16c83ae6004bb5ee096d9cad5a5006c5206946d269c8a",
+      "views/readiness-coordinator.js": "5dfc41f78021b16e80da8db0735cdbd56021b47c8dbd83da820e58756ef34011",
+      "views/readiness-runtime.js": "437da5103af964c86a0f5a008593174e699cc52099efa8bdef8b3813bb95719b",
+      "views/readiness-startup.js": "23cb61a73ca7b092bc4870ddf3cd4927893dd0210f8d6f3b7a7b169cc2a5dda3",
+      "views/relocation-content-roots.js": "417a9926b3f40c4962a6e89f79132969f85960c85f9f4a414c7a2920b13306c5",
+      "views/relocation-errors.js": "804b7db97dd369726fab9156f78165fbf673e33da89eeadc8266785c7bf30e75",
+      "views/relocation-identity.js": "e22493be64dea3c98db26e6399ca5f8e65f3035f126f45ed114dc37d32998361",
+      "views/relocation-inventory.js": "37d840a0ebfabae69a9fa04649fac8328402b40999ad7f3c05799bf0a39e6f43",
+      "views/relocation-journal.js": "a13472d03f53663e7dc502d190315ab8edf5e8fe7442499d700ae041b45a7839",
+      "views/relocation-service.js": "a62775e479d41e147dee90d7736d6c5a3389db2de221c1249f6fb9f8b562042b",
+      "views/simple-yaml.js": "6c9a0c72a33b9ad1ce405936f550ba23ef5dd0b13b36005fc375b2079aa77838",
+      "views/stable-view-id-preflight.js": "19e0f02c85c498d0401436a3395e756ccb09eaca3b08705f87b27e1a81e5725f",
+      "views/tab-launcher-catalog.js": "d88caa1f0aabf0fe156a401f7fccbaf9734ec24024d288c0ff3694503d8ea41d",
+      "views/tab-policy.js": "ab4fca2b5ef31f46d1e793a2c022f20e531b62353bfc32db1fc2fecf6e47af03",
+      "views/view-capsules-projection.js": "cf87b7672ebb28c1c06f419414599b4e8045588dbef87232a215a9ff185e5d40",
+      "views/view-id.js": "37eac5a179177106560d767750ae9d20decf46ec67055a3fbff18fc61d4c35b8",
+      "views/workspace-registry-writer.js": "bd9c98082e2bbdb49dc546d53994efd5c6f03026685d967b4891025e1ecdc54f",
+      "watch/workspace-context.js": "4bbb13ad3dd13d3461fc6035d44fa5f81d8b771d33fab3d6f3c8bc816fbdcf55",
+      "watcher/actions.js": "dd73712ce0879d9452097a77f8f3330ac277eb2fa1becbc7e3284b653ef3ada7",
+      "watcher/filter-loader.js": "d79f148aa2a9aa87b4c46a36903a706588e998b187e121789ba826b7aa4d8206",
+      "wiki/audit/markers.js": "066257bcd9c122ff7cc178c4e39f5303188ea5a61f2a7fed7aecf534ec80931e",
+      "wiki/audit/run.js": "914328a6a38f053967db2cd85f14b06c35eba74948aa1e665de87b01dd9d5d03",
+      "wiki/audit/state.js": "db36cee03c4ba9ecc41e6aaa8361b3890571716f85c772c31fffbb30a89a5942",
+      "wiki/audit/toc-sync.js": "8fa1b29f766bb7142ab89f54b3cf8606cecab0ede458d04004893e3c0ec40b5f",
+      "wiki/query/run.js": "e6d0f93d83bb3bc433a3c14229dec0a0f1aee8e09734fe8343839cdec89d6de9",
+      "wiki/wiki-tree.js": "3840e218342806dc3e350f6f73bf0c9a8d68d5c70382963bf5fc86ccf2e0ce8f",
+      "wire/canonical-chat-event-applier-legacy.js": "7c875dbf681953573ca4c2bdeb8afcbde8259fd019869fc635a148c374ef2069",
+      "wire/canonical-chat-event-applier.js": "0411d054fce528a93be962e8ae2f36a1af72123960c9799323f2dab066a35d4e",
+      "wire/canonical-chat-terminal-events.js": "19aa50621324a586069d3f2e95aa9f2d3c37b9a22bbb35c370aebc447fc81372",
+      "wire/canonical-chat-text-events.js": "244ed52b3ce46ce18558c91296737adfdcfc6d624ee8933bd71f42239eceaa4c",
+      "wire/canonical-chat-tool-events.js": "160a8f3301751b9733a0387635c7a361cecb9c74855ba86c3f7d0413ba6a3d40",
+      "wire/canonical-harness-event-bridge.js": "a2fa412d7cfbc6db82693d4514d9548f3ea1c8f3417087a34cc4a4c561ee4cd6",
+      "wire/message-router.js": "c42e841c4eb442d15fcbae7c8c96a216aa501bccde10acbf007e004a274c4047",
+      "wire/process-manager.js": "ed6851fcf1c7488378ace4f49907871378fe662c59cf4a7369b287c999667a5b",
+      "wire/terminal-saved-delivery.js": "12a9092ca7d1e2136d81f2d73227fe073264d271861319ca2848e64f646104c4",
+      "wire/wire-broadcaster.js": "3bf31585795c56129ec5a1026480717073083f037fb8d92ba477a084c4591e8d",
+      "wire/wire-log.js": "88728cd34506eb9849953e8244e6ace325e34f02e719980a0a67f1db44e4e729",
+      "workspace/ai-paths.js": "05757f7bb6e77f7b41571455f511e9ee1665d470d5b2dfc799443b8db1cc10ba",
+      "workspace/bootstrap-service.js": "bdb06beac5f90b7e086d56b13924d9e5e9ba1093c1807a973e8fc57daf726795",
+      "workspace/create-service.js": "09d5685c5c368e329fa18e68da798615c1aafc736b0d16b8f2008ba0e083e641",
+      "workspace/electron-binding-channel.js": "a77da3835377bda34223bd0ad25f09ba004742ae030f0154d7da20c131116331",
+      "workspace/path-service.js": "8a9f07ff352d7ea47965b4a7b2dbd4171579c0d7ffd622a70e301ad2d7ca28bb",
+      "workspace/registry-service.js": "32c911d54b1a8889c89a2cd627440a31fc25e34d380fbbdbf9e6910e2b710c29",
+      "workspace/screenshot-service.js": "b7faa23ad0c976c30d1b84e12cffd0d4d0156225592853e5912958f29dc63287",
+      "workspace/workspace-controller.js": "4042bde78e7e6a7bfed1a6fd98828e8c82667632ef0143f09e3650d036ad2c27",
+      "workspace/workspace-ribbon.js": "4d1e52b3920f893e5e15ad0cb85d3d3cfe62bd00954562ef2e262657669b6ecc",
+      "workspace/workspace-state.js": "dc5108c1f729bac5bda79d5c01fd5bd05f5e1f4eae7021efe638b647819bbdce",
+      "ws/agent-activity-route.js": "c3641128b4c0494e32a16d535d58dc6b3feba768000c855faaae55ec32ec867f",
+      "ws/calendar-broadcaster.js": "a152b9ddb45659ccf323c68b8a0307318ca533c083196074f5a9b7222489b3e3",
+      "ws/chat-runtime-ws-handlers.js": "1760aeab66b9ad7145e8a64a9aff6c9a7c7ec50cfa5cd2ce77714a3117de693e",
+      "ws/chat-turn-diagnostic-handlers.js": "a9f382da000bde0790db6643f757f985a37c6b85d7d505b07c427c574e99dd33",
+      "ws/chat-turn-metadata-handlers.js": "e40ff945ab00989cdc3bfb02a063aa24d0994b3a9f021a795917d6acf169ef6c",
+      "ws/client-frame-decoder.js": "7493d3f57a038a8bc0229bbd2a70cbaaedcb6c03a9158eb44e931e6212a483a1",
+      "ws/client-message-router.js": "8e9f6ec7f7d604f3e0e4e175a7443aa105e537696e44e0da0dfdfa2511805bd0",
+      "ws/connection-init.js": "5ebde76af73772da56f5736414382995815e552a25a774d1d04046f720c479e2",
+      "ws/deferred-product-connection.js": "444a5fae827bf46c764a4591fb22c7e9fa446d891eee0605c054fb3eac59fbc7",
+      "ws/file-request-dispatch.js": "d264dcdedf082346f76a0da2d7c361367a3bc088d72400798ee648a70fc20f38",
+      "ws/file-save-route.js": "cf70ae494290b065346a8f0268ddc3b100d17ef6843ed773e60fe92156dd4875",
+      "ws/file-viewer-read-route.js": "c2de7b8df0e48ff9c56ebaf1c834165a0a5c4236168516ff7fa35bdb99d81629",
+      "ws/harness-broadcaster.js": "324a674efa9ed280c332b6533fd5ba86a78dffe8af185ef493961c4ed64b52cd",
+      "ws/harness-ws-handlers.js": "f52457608729a6938cca72eec729cb257df5e716f14355495c9fd8b2474fe323",
+      "ws/live-diagnostic-handlers.js": "838d3c3e3aea519a973253348e2d97b0bc94892b7766f5cc6f95500f35cbb8e9",
+      "ws/office-palette-dispatch.js": "cd5a1c4a27d9c2df7a2e855320007395ee2916a7a60ac1a2ce08c8513cbd9c50",
+      "ws/office-palette-handlers.js": "d80cc0b4766e8e010fe28f26743e56c2c9ee130f2799731fc67a5535cbdd09c6",
+      "ws/privileged-thread-guard.js": "a66cc4c28b035dd5d463333e9385914bffeeba14fd489ed83cb081fb02673341",
+      "ws/product-session-registry.js": "43774bb5d5764d3fedd9d24135bb858f95b029b700c534a8c79fd0a6110527fc",
+      "ws/redaction-map.js": "1aa9adf3f0267d2cb26ab02d77e52d81b140e6a0caa47c8577304593b4ef2f95",
+      "ws/request-diagnostic-context.js": "691fdeaee132ef1cdb408f6c54aa3f56eb7eade5a9e1f81b0d4bf46a2d0ff0dd",
+      "ws/resource-projection-publisher.js": "3587ca39b1c7cb0302b1ac8617b710f5481ecb859b26d5bb62ed60e93883e6d2",
+      "ws/resource-provenance-route.js": "8555703be80788d4675ea8f564c5dfceb4fbdc1a7d581a9dcdf0667a8b67ab20",
+      "ws/server-runtime-activation.js": "045433ef6ed7f3b0a23a6867b8184c7344234a60e5a3cfec7fc85fdca39d165a",
+      "ws/shell-auth-dispatch.js": "87843c9a0f41a5ef8a4187caaa7e1731724965cb699ac083062cd29af0d4c69a",
+      "ws/shell-auth.js": "18ede8323ecba1e22991cc612033beebec74bcd90d36b875a070ebb80b5e09aa",
+      "ws/theme-handlers.js": "c2dde4c484a64b32b2f55715e771ad697b43f92a84db6f406c31baf2b93d4843",
+      "ws/thread-action-handler.js": "b647c99d03b3f871f9c76d0586b6f9db2306edb7e43f9292fae895fc6b465af7",
+      "ws/thread-action-protocol.js": "bc6dd7059455a2b439725e77511312aeb77f578d9a14a7f319ef34355104a8b2",
+      "ws/thread-provider-binding.js": "a6035dd80905bbf5aec6f370567b61a72c2dfe9826c55fd9558cf4c42d36df29",
+      "ws/thread-ws-handlers.js": "f9c1ed9b35faa9654996943e35271ac33d5226e096d918952fbab1a96213856f",
+      "ws/transport-connection-registry.js": "56890b413bfa88f5ab5ec80e8935448b5b1c07e792a9c704ba0944e628f9e96a",
+      "ws/trusted-shell-authority.js": "ec1d7a134c7ae75bd5c134016f591c9a78347715154fc20aa52671e9eb499b42",
+      "ws/view-workspace-ws-handlers.js": "b4155e555676d5d1e482c0bb3c2e252f6e7c246bed52fc4a36026db816be0fc7",
+      "ws/websocket-payload-boundary.js": "b84407f68fb33d702fb3ed130d6462a477a7197c5f31e3bc26d0585779de6322",
+      "ws/workspace-broadcaster.js": "3369b5dc9991c071375035a9756a2ffc98404ee1fc069f45966b14cd7111fea4",
+      "ws/workspace-operation-lease.js": "eb00c13f7c951c8d49100fd4c3752aaf5eddde45b6b1e9620c9aff3550a6ef94",
+      "ws/workspace-request-handlers.js": "2fe0eda3c252f6eb4c2c7c21f4614ed658dd3a5d598fb8be6ea66e2981bb5458",
+      "ws/workspace-session.js": "465a45755f604b84426dcc787b27e542a42f0d060402c4cff477230ffc91eada"
+    },
+    "serverEntry": "293e3f56f7c61aa855d8e116fe901cb58db86eedf69cce3ac2e4ad865ad62a07",
+    "electronBinary": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+      "sha256": "c86c2701f15ca66ba460f4cdcd7ebcab0b5133a4cc299295f02108b3754e9eed"
+    },
+    "nativeObserver": "c9aa17eb72b253235ea6eb1b4c6a639e455939d9e8b070129a25c587c9c69d11"
+  },
+  "runtime": {
+    "pid": 16082,
+    "descendants": [
+      16084,
+      16085,
+      16086,
+      16096
+    ],
+    "port": 51283,
+    "commands": "16082 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron -r /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/playwright-core/lib/server/electron/loader.js --inspect=0 --remote-debugging-port=0 /var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-stage/fusion-studio-client/electron/main.cjs --chat-architecture-token=chat-architecture-owner-material-16063-1ac8e1b7-124e-4148-9032-7f540fe74c20\n16084 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=gpu-process --disable-breakpad --user-data-dir=/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-profile --gpu-preferences=SAAAAAAAAAAgAQAEAAAAAAAAAAAAAGAAAwAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=1718379636,r,7893266450962363150,9704732798392466411,262144 --enable-features=CDPScreenshotNewSurface,PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,DropInputEventsWhilePaintHolding,GlobalMediaControls,HttpsUpgrades,LensOverlay,LocalNetworkAccessChecks,MediaRouter,OptimizationHints,PaintHolding,RenderDocument,ScreenAIOCREnabled,SpareRendererForSitePerProcess,ThirdPartyStoragePartitioning,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation,Translate --variations-seed-version --pseudonymization-salt-handle=1935764596,r,13044709924502128809,16965084932210131765,4 --trace-process-track-uuid=3190708988185955192 --seatbelt-client=41\n16085 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --user-data-dir=/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-profile --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --shared-files --field-trial-handle=1718379636,r,7893266450962363150,9704732798392466411,262144 --enable-features=CDPScreenshotNewSurface,PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,DropInputEventsWhilePaintHolding,GlobalMediaControls,HttpsUpgrades,LensOverlay,LocalNetworkAccessChecks,MediaRouter,OptimizationHints,PaintHolding,RenderDocument,ScreenAIOCREnabled,SpareRendererForSitePerProcess,ThirdPartyStoragePartitioning,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation,Translate --variations-seed-version --pseudonymization-salt-handle=1935764596,r,13044709924502128809,16965084932210131765,4 --trace-process-track-uuid=3190708989122997041 --seatbelt-client=43\n16086 /opt/homebrew/bin/node /private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-stage/fusion-studio-server/server.js\n16096 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-profile --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-stage/fusion-studio-client/electron --enable-sandbox --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --enable-automation --force-color-profile=srgb --remote-debugging-port=0 --allow-pre-commit-input --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=4 --time-ticks-at-unix-epoch=-1787630017011506 --launch-time-ticks=3782657260549 --shared-files --field-trial-handle=1718379636,r,7893266450962363150,9704732798392466411,262144 --enable-features=CDPScreenshotNewSurface,PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,DropInputEventsWhilePaintHolding,GlobalMediaControls,HttpsUpgrades,LensOverlay,LocalNetworkAccessChecks,MediaRouter,OptimizationHints,PaintHolding,RenderDocument,ScreenAIOCREnabled,SpareRendererForSitePerProcess,ThirdPartyStoragePartitioning,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation,Translate --variations-seed-version --pseudonymization-salt-handle=1935764596,r,13044709924502128809,16965084932210131765,4 --trace-process-track-uuid=3190708990060038890 --seatbelt-client=69\n",
+    "url": "fusion-shell://app/"
+  },
+  "workspace": {
+    "id": "material-project",
+    "repo_path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project"
+  },
+  "galleries": [
+    {
+      "view": "file-viewer",
+      "host": "main",
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-265Z.png",
+      "nonTargetPreserved": true
+    },
+    {
+      "view": "file-viewer",
+      "host": "side",
+      "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-017Z.png",
+      "nonTargetPreserved": true
+    }
+  ],
+  "resources": [
+    {
+      "sourceView": "wiki-viewer",
+      "destinationView": "file-viewer",
+      "sourceRelative": "999-Material_Native/001-Owned_Material/PAGE.md",
+      "sourcePath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Wiki/999-Material_Native/001-Owned_Material/PAGE.md",
+      "workspaceId": "material-project",
+      "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4",
+      "host": "main",
+      "renderedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Wiki/999-Material_Native/001-Owned_Material/PAGE.md",
+      "sourceVisibleAtInvocation": false,
+      "actualRetainedDOMButton": true,
+      "nonTargetPreserved": true
+    },
+    {
+      "sourceView": "wiki-viewer",
+      "destinationView": "file-viewer",
+      "sourceRelative": "999-Material_Native/001-Owned_Material/PAGE.md",
+      "sourcePath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Wiki/999-Material_Native/001-Owned_Material/PAGE.md",
+      "workspaceId": "material-project",
+      "threadId": "2026-10-07T15-37-55-985",
+      "host": "side",
+      "renderedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Wiki/999-Material_Native/001-Owned_Material/PAGE.md",
+      "sourceVisibleAtInvocation": false,
+      "actualRetainedDOMButton": true,
+      "nonTargetPreserved": true
+    }
+  ],
+  "nativeWindow": {
+    "appActive": true,
+    "appHidden": false,
+    "windows": [
+      {
+        "id": 1,
+        "url": "fusion-shell://app/",
+        "focused": true,
+        "visible": true,
+        "minimized": false,
+        "focusable": true,
+        "key": true
+      }
+    ]
+  },
+  "failureDOM": {
+    "observations": [
+      {
+        "kind": "toast",
+        "message": "Moved to a Side Chat"
+      },
+      {
+        "kind": "commit",
+        "owner": {
+          "workspaceId": "material-project",
+          "viewId": "file-viewer",
+          "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4",
+          "generation": 3,
+          "current": true
+        },
+        "bindingSerial": 3,
+        "bindingRevision": 2
+      },
+      {
+        "kind": "toast",
+        "message": "Moved to a Side Chat"
+      },
+      {
+        "kind": "toast",
+        "message": "Screenshot attached to chat."
+      },
+      {
+        "kind": "commit",
+        "owner": {
+          "workspaceId": "material-project",
+          "viewId": "file-viewer",
+          "threadId": "2026-10-07T15-37-55-985",
+          "generation": 4,
+          "current": true
+        },
+        "bindingSerial": 3,
+        "bindingRevision": 2
+      },
+      {
+        "kind": "toast",
+        "message": "Screenshot attached to chat."
+      },
+      {
+        "kind": "commit",
+        "owner": {
+          "workspaceId": "material-project",
+          "viewId": "file-viewer",
+          "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4",
+          "generation": 3,
+          "current": true
+        },
+        "bindingSerial": 3,
+        "bindingRevision": 2
+      },
+      {
+        "kind": "toast",
+        "message": "Screenshot attached to chat."
+      },
+      {
+        "kind": "commit",
+        "owner": {
+          "workspaceId": "material-project",
+          "viewId": "file-viewer",
+          "threadId": "2026-10-07T15-37-55-985",
+          "generation": 4,
+          "current": true
+        },
+        "bindingSerial": 3,
+        "bindingRevision": 2
+      },
+      {
+        "kind": "toast",
+        "message": "Screenshot attached to chat."
+      },
+      {
+        "kind": "commit",
+        "owner": {
+          "workspaceId": "material-project",
+          "viewId": "file-viewer",
+          "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4",
+          "generation": 3,
+          "current": true
+        },
+        "bindingSerial": 3,
+        "bindingRevision": 2
+      },
+      {
+        "kind": "toast",
+        "message": "Screenshot attached to chat."
+      },
+      {
+        "kind": "commit",
+        "owner": {
+          "workspaceId": "material-project",
+          "viewId": "file-viewer",
+          "threadId": "2026-10-07T15-37-55-985",
+          "generation": 4,
+          "current": true
+        },
+        "bindingSerial": 3,
+        "bindingRevision": 2
+      },
+      {
+        "kind": "toast",
+        "message": "Screenshot attached to chat."
+      },
+      {
+        "kind": "commit",
+        "owner": {
+          "workspaceId": "material-project",
+          "viewId": "file-viewer",
+          "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4",
+          "generation": 3,
+          "current": true
+        },
+        "bindingSerial": 3,
+        "bindingRevision": 2
+      },
+      {
+        "kind": "toast",
+        "message": "Screenshot attached to chat."
+      },
+      {
+        "kind": "toast",
+        "message": "Link attached to chat"
+      },
+      {
+        "kind": "commit",
+        "owner": {
+          "workspaceId": "material-project",
+          "viewId": "file-viewer",
+          "threadId": "2026-10-07T15-37-55-985",
+          "generation": 4,
+          "current": true
+        },
+        "bindingSerial": 3,
+        "bindingRevision": 2
+      },
+      {
+        "kind": "toast",
+        "message": "Link attached to chat"
+      },
+      {
+        "kind": "toast",
+        "message": "Moved to a Side Chat"
+      },
+      {
+        "kind": "commit",
+        "owner": {
+          "workspaceId": "material-project",
+          "viewId": "issues-viewer",
+          "threadId": "th-b49cde01-6fe1-42e8-ba9f-ae31e08d1ad7",
+          "generation": 7,
+          "current": true
+        },
+        "bindingSerial": 3,
+        "bindingRevision": 2
+      },
+      {
+        "kind": "toast",
+        "message": "Screenshot attached to chat."
+      }
+    ],
+    "pills": [
+      {
+        "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-38-03-149Z.png",
+        "threadId": "th-b49cde01-6fe1-42e8-ba9f-ae31e08d1ad7"
+      }
+    ],
+    "status": [
+      "Connected",
+      "Material Native Fixture"
+    ],
+    "destinations": [
+      {
+        "threadId": "",
+        "viewId": "capture-viewer",
+        "host": "main",
+        "surfaceId": "chat-surface:main:1:50445bf1-5aee-4302-8697-d070d58b2e10"
+      },
+      {
+        "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4",
+        "viewId": "file-viewer",
+        "host": "main",
+        "surfaceId": "chat-surface:main:2:a4ab36bf-0ae9-49f4-abbc-338673fd89da"
+      },
+      {
+        "threadId": "2026-10-07T15-37-55-985",
+        "viewId": "file-viewer",
+        "host": "side-tab",
+        "surfaceId": "chat-surface:component:chat-side:scp-c7b2d157-84a9-4e07-a8e6-a69af2805779:6"
+      },
+      {
+        "threadId": "",
+        "viewId": "wiki-viewer",
+        "host": "main",
+        "surfaceId": "chat-surface:main:3:9a347e93-ece2-4a91-96eb-d227383bd3c8"
+      },
+      {
+        "threadId": "th-b49cde01-6fe1-42e8-ba9f-ae31e08d1ad7",
+        "viewId": "issues-viewer",
+        "host": "main",
+        "surfaceId": "chat-surface:main:4:4989d6aa-cca1-4759-971e-06ad02d8f09d"
+      },
+      {
+        "threadId": "2026-10-07T15-38-02-108",
+        "viewId": "issues-viewer",
+        "host": "side-tab",
+        "surfaceId": "chat-surface:component:chat-side:scp-13265bb1-4d1d-4e51-80e2-24d23b1d7f66:8"
+      },
+      {
+        "threadId": "",
+        "viewId": "agents-viewer",
+        "host": "main",
+        "surfaceId": "chat-surface:main:5:fdbbbd6f-be79-4156-b257-532792a99990"
+      }
+    ],
+    "capability": "function",
+    "connected": true
+  },
+  "status": "FAIL",
+  "error": {
+    "name": "AssertionError",
+    "message": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'MAIN issues-viewer',\n+   'SIDE issues-viewer '\n-   'SIDE issues-viewer'\n  ]\n"
+  },
+  "lingeringOwnedPids": [],
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "wire": {
+    "sent": [
+      {
+        "type": "thread:open-assistant",
+        "viewId": "file-viewer"
+      },
+      {
+        "type": "thread:open-assistant",
+        "viewId": "file-viewer"
+      },
+      {
+        "type": "screenshot:file-capture",
+        "requestId": "screenshot-1791412678014-9h6hfkz1m6o",
+        "workspaceId": "material-project",
+        "pngPayloadSha256": "9115b2515bbbe4bfde8f8f280972df7e66dc0c7d0fff7287a9a61fc8a1eaf3e0"
+      },
+      {
+        "type": "screenshot:file-capture",
+        "requestId": "screenshot-1791412678262-d29fyxpy96q",
+        "workspaceId": "material-project",
+        "pngPayloadSha256": "6518699bb349d2ac551d6cdaabe06992aeb0e727e0a1ffe4ce00314ceeb58c22"
+      },
+      {
+        "type": "screenshot:file-capture",
+        "requestId": "screenshot-1791412678495-0e1k5a2ydfsa",
+        "workspaceId": "material-project",
+        "pngPayloadSha256": "5d03658cb0bbffeaf4b5434dacf3ae4a711275ceeb020325e620c27aca88f2e5"
+      },
+      {
+        "type": "screenshot:file-capture",
+        "requestId": "screenshot-1791412678731-hf6b6trfew",
+        "workspaceId": "material-project",
+        "pngPayloadSha256": "b563ecd2896935f40eb7e0fc70152ed9c1348c07f7d26e86c282c038e575ba5e"
+      },
+      {
+        "type": "prompt",
+        "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4",
+        "requestId": "52e9b521b920f929df3fcbffe98ae928",
+        "user_input": "MATERIAL ACCEPT file-viewer th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4",
+        "attachments": [
+          {
+            "id": "file:/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-017Z.png:file:fusion-capture-2026-10-07T22-37-58-017Z.png",
+            "kind": "file",
+            "label": "file:fusion-capture-2026-10-07T22-37-58-017Z.png",
+            "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-017Z.png",
+            "sourceName": "fusion-capture-2026-10-07T22-37-58-017Z",
+            "panel": "screenshots",
+            "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-37-58-017Z.png"
+          },
+          {
+            "id": "file:/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-497Z.png:file:fusion-capture-2026-10-07T22-37-58-497Z.png",
+            "kind": "file",
+            "label": "file:fusion-capture-2026-10-07T22-37-58-497Z.png",
+            "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-497Z.png",
+            "sourceName": "fusion-capture-2026-10-07T22-37-58-497Z",
+            "panel": "screenshots",
+            "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-37-58-497Z.png"
+          },
+          {
+            "id": "file:/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-265Z.png:file:fusion-capture-2026-10-07T22-37-58-265Z.png",
+            "kind": "file",
+            "label": "file:fusion-capture-2026-10-07T22-37-58-265Z.png",
+            "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-265Z.png",
+            "sourceName": "fusion-capture-2026-10-07T22-37-58-265Z",
+            "panel": "screenshots",
+            "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-37-58-265Z.png"
+          },
+          {
+            "id": "wiki:/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Wiki/999-Material_Native/001-Owned_Material/PAGE.md:wiki:material-native:owned-material",
+            "kind": "wiki",
+            "label": "wiki:material-native:owned-material",
+            "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Wiki/999-Material_Native/001-Owned_Material/PAGE.md",
+            "sourceName": "Owned Material",
+            "panel": "wiki-viewer",
+            "relativePath": "999-Material_Native/001-Owned_Material/PAGE.md"
+          }
+        ]
+      },
+      {
+        "type": "prompt",
+        "threadId": "2026-10-07T15-37-55-985",
+        "requestId": "17c1305c6322188fb65dd403603f9fca",
+        "user_input": "MATERIAL ACCEPT file-viewer 2026-10-07T15-37-55-985",
+        "attachments": [
+          {
+            "id": "file:/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-265Z.png:file:fusion-capture-2026-10-07T22-37-58-265Z.png",
+            "kind": "file",
+            "label": "file:fusion-capture-2026-10-07T22-37-58-265Z.png",
+            "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-265Z.png",
+            "sourceName": "fusion-capture-2026-10-07T22-37-58-265Z",
+            "panel": "screenshots",
+            "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-37-58-265Z.png"
+          },
+          {
+            "id": "file:/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-736Z.png:file:fusion-capture-2026-10-07T22-37-58-736Z.png",
+            "kind": "file",
+            "label": "file:fusion-capture-2026-10-07T22-37-58-736Z.png",
+            "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-736Z.png",
+            "sourceName": "fusion-capture-2026-10-07T22-37-58-736Z",
+            "panel": "screenshots",
+            "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-37-58-736Z.png"
+          },
+          {
+            "id": "file:/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-017Z.png:file:fusion-capture-2026-10-07T22-37-58-017Z.png",
+            "kind": "file",
+            "label": "file:fusion-capture-2026-10-07T22-37-58-017Z.png",
+            "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-017Z.png",
+            "sourceName": "fusion-capture-2026-10-07T22-37-58-017Z",
+            "panel": "screenshots",
+            "relativePath": "Data/Screenshots/fusion-capture-2026-10-07T22-37-58-017Z.png"
+          },
+          {
+            "id": "wiki:/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Wiki/999-Material_Native/001-Owned_Material/PAGE.md:wiki:material-native:owned-material",
+            "kind": "wiki",
+            "label": "wiki:material-native:owned-material",
+            "path": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Wiki/999-Material_Native/001-Owned_Material/PAGE.md",
+            "sourceName": "Owned Material",
+            "panel": "wiki-viewer",
+            "relativePath": "999-Material_Native/001-Owned_Material/PAGE.md"
+          }
+        ]
+      },
+      {
+        "type": "thread:open-assistant",
+        "viewId": "issues-viewer"
+      },
+      {
+        "type": "thread:open-assistant",
+        "viewId": "issues-viewer"
+      },
+      {
+        "type": "screenshot:file-capture",
+        "requestId": "screenshot-1791412683147-um5w6s3zxd",
+        "workspaceId": "material-project",
+        "pngPayloadSha256": "f3a4ad36581a7cc454a7c507cd30e5f61780b8696357910168f2cbdff63b6c0d"
+      }
+    ],
+    "received": [
+      {
+        "type": "workspace:init",
+        "workspaceId": "material-project"
+      },
+      {
+        "type": "screenshot:file-captured",
+        "requestId": "screenshot-1791412678014-9h6hfkz1m6o",
+        "workspaceId": "material-project",
+        "savedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-017Z.png"
+      },
+      {
+        "type": "screenshot:file-captured",
+        "requestId": "screenshot-1791412678262-d29fyxpy96q",
+        "workspaceId": "material-project",
+        "savedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-265Z.png"
+      },
+      {
+        "type": "screenshot:file-captured",
+        "requestId": "screenshot-1791412678495-0e1k5a2ydfsa",
+        "workspaceId": "material-project",
+        "savedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-497Z.png"
+      },
+      {
+        "type": "screenshot:file-captured",
+        "requestId": "screenshot-1791412678731-hf6b6trfew",
+        "workspaceId": "material-project",
+        "savedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-37-58-736Z.png"
+      },
+      {
+        "type": "message:sent",
+        "requestId": "52e9b521b920f929df3fcbffe98ae928",
+        "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4",
+        "workspaceId": "material-project"
+      },
+      {
+        "type": "chat-turn:saved",
+        "threadId": "th-77fa5742-0de8-4cc0-81c7-63f3db72d0b4"
+      },
+      {
+        "type": "message:sent",
+        "requestId": "17c1305c6322188fb65dd403603f9fca",
+        "threadId": "2026-10-07T15-37-55-985",
+        "workspaceId": "material-project"
+      },
+      {
+        "type": "chat-turn:saved",
+        "threadId": "2026-10-07T15-37-55-985"
+      },
+      {
+        "type": "screenshot:file-captured",
+        "requestId": "screenshot-1791412683147-um5w6s3zxd",
+        "workspaceId": "material-project",
+        "savedPath": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD/material-native-workspace/material-project/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-07T22-38-03-149Z.png"
+      }
+    ]
+  },
+  "protectedProcessesAfter": [
+    "12443 /Users/rccurtrightjr./Applications/SoloBooks-Fusion-Runtime.app/Contents/MacOS/Fusion Studio Alpha",
+    "12448 /Users/rccurtrightjr./Applications/SoloBooks-Fusion-Runtime.app/Contents/Frameworks/Fusion Studio Alpha Helper.app/Contents/MacOS/Fusion Studio Alpha Helper --type=gpu-process --user-data-dir=/Users/rccurtrightjr./Library/Application Support/SoloBooks --gpu-preferences=SAAAAAAAAAAgAQAEAAAAAAAAAAAAAGAAAwAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=1718379636,r,2850300321946220739,13563117833552282474,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,560746908677690620,6632698554225308893,4 --trace-process-track-uuid=3190708988185955192 --seatbelt-client=34",
+    "12449 /Users/rccurtrightjr./Applications/SoloBooks-Fusion-Runtime.app/Contents/Frameworks/Fusion Studio Alpha Helper.app/Contents/MacOS/Fusion Studio Alpha Helper --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --user-data-dir=/Users/rccurtrightjr./Library/Application Support/SoloBooks --standard-schemes=fusion-studio --secure-schemes=fusion-studio --cors-schemes=fusion-studio --fetch-schemes=fusion-studio --shared-files --field-trial-handle=1718379636,r,2850300321946220739,13563117833552282474,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,560746908677690620,6632698554225308893,4 --trace-process-track-uuid=3190708989122997041 --seatbelt-client=33",
+    "12886 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs --user-data-dir=/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated --remote-debugging-address=127.0.0.1 --remote-debugging-port=50699",
+    "12889 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=gpu-process --user-data-dir=/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated --gpu-preferences=SAAAAAAAAAAgAQAEAAAAAAAAAAAAAGAAAwAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=1718379636,r,11852059511766355808,4803331251703815501,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5554488052210331966,1464568878525138357,4 --trace-process-track-uuid=3190708988185955192 --seatbelt-client=34",
+    "12890 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --user-data-dir=/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --shared-files --field-trial-handle=1718379636,r,11852059511766355808,4803331251703815501,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5554488052210331966,1464568878525138357,4 --trace-process-track-uuid=3190708989122997041 --seatbelt-client=35",
+    "12892 /opt/homebrew/bin/node /Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+    "12904 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron --enable-sandbox --remote-debugging-port=50699 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=4 --time-ticks-at-unix-epoch=-1787605995589361 --launch-time-ticks=3609727206617 --shared-files --field-trial-handle=1718379636,r,11852059511766355808,4803331251703815501,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5554488052210331966,1464568878525138357,4 --trace-process-track-uuid=3190708990060038890 --seatbelt-client=60",
+    "35320 node --watch src/server.js",
+    "35321 /opt/homebrew/Cellar/node/25.6.1/bin/node --test-concurrency=0 --heap-prof-interval=524288 --stack-trace-limit=10 --report-signal=SIGUSR2 --max-http-header-size=16384 --heapsnapshot-near-heap-limit=0 --tls-cipher-list=TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:DHE-RSA-AES256-SHA384:ECDHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA256:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!SRP:!CAMELLIA --watch-kill-signal=SIGTERM --inspect-publish-uid=stderr,http --cpu-prof-interval=1000 --test-coverage-functions=0 --test-timeout=0 --test-coverage-lines=0 --inspect-port=127.0.0.1:9229 --test-coverage-branches=0 --test-isolation=process --use-largepages=off --network-family-autoselection-attempt-timeout=500 --secure-heap-min=2 --v8-pool-size=4 --node-snapshot --trace-event-file-pattern=node_trace.${rotation}.log --secure-heap=0 src/server.js",
+    "45006 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron --enable-sandbox --remote-debugging-port=50699 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=23 --time-ticks-at-unix-epoch=-1787605995589361 --launch-time-ticks=3740813219640 --shared-files --field-trial-handle=1718379636,r,11852059511766355808,4803331251703815501,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5554488052210331966,1464568878525138357,4 --trace-process-track-uuid=3190709007863834021 --seatbelt-client=67",
+    "50654 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --remote-debugging-address=127.0.0.1 --remote-debugging-port=60949",
+    "50657 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=gpu-process --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --gpu-preferences=SAAAAAAAAAAgAQAEAAAAAAAAAAAAAGAAAwAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=1718379636,r,4723662950021138952,14092727233831086506,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,13175293216465320847,6022433364601031042,4 --trace-process-track-uuid=3190708988185955192 --seatbelt-client=33",
+    "50658 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --shared-files --field-trial-handle=1718379636,r,4723662950021138952,14092727233831086506,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,13175293216465320847,6022433364601031042,4 --trace-process-track-uuid=3190708989122997041 --seatbelt-client=35",
+    "50659 /opt/homebrew/bin/node /Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+    "50671 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron --enable-sandbox --remote-debugging-port=60949 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=4 --time-ticks-at-unix-epoch=-1787611981705306 --launch-time-ticks=3749185235474 --shared-files --field-trial-handle=1718379636,r,4723662950021138952,14092727233831086506,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,13175293216465320847,6022433364601031042,4 --trace-process-track-uuid=3190708990060038890 --seatbelt-client=61",
+    "52519 /Applications/Fusion Studio Alpha.app/Contents/MacOS/Fusion Studio Alpha --remote-debugging-address=127.0.0.1 --remote-debugging-port=61056",
+    "52543 /Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Alpha Helper.app/Contents/MacOS/Fusion Studio Alpha Helper --type=gpu-process --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --gpu-preferences=SAAAAAAAAAAgAQAEAAAAAAAAAAAAAGAAAwAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=1718379636,r,4802480082851952972,11236632304372599803,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,3697658166456062361,2703053587300973391,4 --trace-process-track-uuid=3190708988185955192 --seatbelt-client=33",
+    "52544 /Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Alpha Helper.app/Contents/MacOS/Fusion Studio Alpha Helper --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --shared-files --field-trial-handle=1718379636,r,4802480082851952972,11236632304372599803,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,3697658166456062361,2703053587300973391,4 --trace-process-track-uuid=3190708989122997041 --seatbelt-client=35",
+    "52545 /opt/homebrew/bin/node /Applications/Fusion Studio Alpha.app/Contents/Resources/fusion-studio-server/server.js",
+    "52557 /Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Alpha Helper (Renderer).app/Contents/MacOS/Fusion Studio Alpha Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Applications/Fusion Studio Alpha.app/Contents/Resources/app.asar --enable-sandbox --remote-debugging-port=61056 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=4 --time-ticks-at-unix-epoch=-1787611981703281 --launch-time-ticks=3749511799719 --shared-files --field-trial-handle=1718379636,r,4802480082851952972,11236632304372599803,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,3697658166456062361,2703053587300973391,4 --trace-process-track-uuid=3190708990060038890 --seatbelt-client=61",
+    "54391 /Applications/Wispr Flow.app/Contents/Frameworks/Electron Framework.framework/Helpers/chrome_crashpad_handler --no-rate-limit --monitor-self-annotation=ptype=crashpad-handler --database=/Users/rccurtrightjr./Library/Application Support/Wispr Flow/Crashpad --url=https://f.a.k/e --annotation=_productName=Wispr Flow --annotation=_version=1.6.1074 --annotation=plat=OS X --annotation=prod=Electron --annotation=ver=42.11.2 --handshake-fd=19",
+    "56849 /Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Alpha Helper (Renderer).app/Contents/MacOS/Fusion Studio Alpha Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Applications/Fusion Studio Alpha.app/Contents/Resources/app.asar --enable-sandbox --remote-debugging-port=61056 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=9 --time-ticks-at-unix-epoch=-1787611981703281 --launch-time-ticks=3752738643649 --shared-files --field-trial-handle=1718379636,r,4802480082851952972,11236632304372599803,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,3697658166456062361,2703053587300973391,4 --trace-process-track-uuid=3190708994745248135 --seatbelt-client=67",
+    "56850 /Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Alpha Helper (Renderer).app/Contents/MacOS/Fusion Studio Alpha Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Applications/Fusion Studio Alpha.app/Contents/Resources/app.asar --enable-sandbox --remote-debugging-port=61056 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=10 --time-ticks-at-unix-epoch=-1787611981703281 --launch-time-ticks=3752738645100 --shared-files --field-trial-handle=1718379636,r,4802480082851952972,11236632304372599803,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,3697658166456062361,2703053587300973391,4 --trace-process-track-uuid=3190708995682289984 --seatbelt-client=67",
+    "82055 /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron --enable-sandbox --remote-debugging-port=50699 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=25 --time-ticks-at-unix-epoch=-1787605995589361 --launch-time-ticks=3766454062260 --shared-files --field-trial-handle=1718379636,r,11852059511766355808,4803331251703815501,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5554488052210331966,1464568878525138357,4 --trace-process-track-uuid=3190709009737917719 --seatbelt-client=67"
+  ],
+  "ended": "2026-10-07T22:38:03.944Z"
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "url": "https://raw.githubusercontent.com/anomalyco/opencode/v1.18.32/packages/opencode/src/effect/runtime-flags.ts",
+    "file": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-06/06B/CLAUDE-COMPAT/upstream/packages/opencode/src/effect/runtime-flags.ts",
+    "sha256": "5b580cb96f9d5300f8ff995a29ec5e602e0e3e0200661dfff971998562f2a1a9"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/anomalyco/opencode/v1.18.32/packages/opencode/src/skill/index.ts",
+    "file": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-06/06B/CLAUDE-COMPAT/upstream/packages/opencode/src/skill/index.ts",
+    "sha256": "91dce57f590e1ad3103e0555b893500e098a95cde2739422b699233889b205e6"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/anomalyco/opencode/v1.18.32/packages/opencode/src/session/instruction.ts",
+    "file": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-06/06B/CLAUDE-COMPAT/upstream/packages/opencode/src/session/instruction.ts",
+    "sha256": "fee79c023eae44f720d4d600f334a987ad5f7615c4a008a20c89131a92684a8f"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/anomalyco/opencode/v1.18.32/packages/opencode/src/cli/cmd/debug/skill.ts",
+    "file": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-06/06B/CLAUDE-COMPAT/upstream/packages/opencode/src/cli/cmd/debug/skill.ts",
+    "sha256": "e8aeac1d4a48092c9ad2cd1ccf6bb0fd5a3adf081909584f543ca2f923a475e2"
+  }
+]

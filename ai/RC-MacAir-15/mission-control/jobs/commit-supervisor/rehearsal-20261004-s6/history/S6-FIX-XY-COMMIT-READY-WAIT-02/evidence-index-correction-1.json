@@ -1,0 +1,55 @@
+{
+  "at": "2026-10-04T19:39:17.349595+00:00",
+  "correction": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-owner-packet-mention-correction.json",
+    "sha256": "00637fadf7f56973c0f41e85da514a3da363e1757e889b8f99bb2338c7230b96"
+  },
+  "current_records": [
+    {
+      "current": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/owner-packet-fix-xy.md",
+        "sha256": "4262b884dccc10a10b53a43e1a96e00167a5557b85f88802c324414410c29870"
+      },
+      "history": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/history/S6-FIX-XY-COMMIT-READY-WAIT-02/owner-packet-correction-1.md",
+        "sha256": "4262b884dccc10a10b53a43e1a96e00167a5557b85f88802c324414410c29870"
+      }
+    },
+    {
+      "current": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/supervisor-fix-xy-report.md",
+        "sha256": "4d43f904f54c4d7d255d832a6c977572b2eb9abd870095d7428cec1491496355"
+      },
+      "history": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/history/S6-FIX-XY-COMMIT-READY-WAIT-02/supervisor-report-correction-1.md",
+        "sha256": "4d43f904f54c4d7d255d832a6c977572b2eb9abd870095d7428cec1491496355"
+      }
+    },
+    {
+      "current": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/checkpoint-fix-xy.json",
+        "sha256": "3c8b1928e3eed370df4e9a8cab22fe812eabf24ed59b1ac0323c9d2a4822ec1a"
+      },
+      "history": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/history/S6-FIX-XY-COMMIT-READY-WAIT-02/checkpoint-correction-1.json",
+        "sha256": "3c8b1928e3eed370df4e9a8cab22fe812eabf24ed59b1ac0323c9d2a4822ec1a"
+      }
+    },
+    {
+      "current": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/lifecycle-fix-xy.json",
+        "sha256": "b7de4f8bc500f3f2d0f10048226efae521771c083c685d4f7671a50a22fbdf85"
+      },
+      "history": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/history/S6-FIX-XY-COMMIT-READY-WAIT-02/lifecycle-correction-1.json",
+        "sha256": "b7de4f8bc500f3f2d0f10048226efae521771c083c685d4f7671a50a22fbdf85"
+      }
+    }
+  ],
+  "original_history_index": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/history/S6-FIX-XY-COMMIT-READY-WAIT-02/evidence-index.json",
+    "sha256": "a3feb074a703940118537324348133080c90b584c2c33e2dd730bc1dea9668c8"
+  },
+  "source_check_runtime_reused_unchanged": true,
+  "actual_operations": []
+}

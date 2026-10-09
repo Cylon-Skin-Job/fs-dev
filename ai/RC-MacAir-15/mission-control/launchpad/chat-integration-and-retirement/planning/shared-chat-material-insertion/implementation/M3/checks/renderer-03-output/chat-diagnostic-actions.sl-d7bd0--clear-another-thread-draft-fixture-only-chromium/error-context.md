@@ -1,0 +1,152 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - generic [ref=e7]: AI source
+        - button "AI source" [ref=e8] [cursor=pointer]:
+          - generic [ref=e9]: "Local: RC-MacAir-15"
+          - generic: arrow_drop_down
+      - generic [ref=e10]: Connected
+    - generic [ref=e11]:
+      - button "chevron_left" [ref=e12] [cursor=pointer]:
+        - generic [ref=e13]: chevron_left
+      - button "Chat Transport Fixture" [ref=e14] [cursor=pointer]:
+        - generic [ref=e15]: Chat Transport Fixture
+      - button "chevron_right" [ref=e16] [cursor=pointer]:
+        - generic [ref=e17]: chevron_right
+    - generic [ref=e18]:
+      - button "Take screenshot" [ref=e19] [cursor=pointer]:
+        - generic [ref=e20]: control_camera
+      - button "Expand content" [ref=e21] [cursor=pointer]:
+        - generic [ref=e22]: first_page
+      - button "Reduce content" [ref=e23] [cursor=pointer]:
+        - generic [ref=e24]: last_page
+      - generic [ref=e25]:
+        - button "Open workspace controls" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: discover_tune
+        - menu "macOS Connectors":
+          - generic:
+            - generic: hub
+            - generic: macOS Connectors
+          - menuitem "mail Apple Mail Off Enable Apple Mail":
+            - generic: mail
+            - generic:
+              - generic: Apple Mail
+            - generic:
+              - generic "Off"
+              - button "Enable Apple Mail"
+          - menuitem "calendar_month Apple Calendar Off Enable Apple Calendar":
+            - generic: calendar_month
+            - generic:
+              - generic: Apple Calendar
+            - generic:
+              - generic "Off"
+              - button "Enable Apple Calendar"
+          - menuitem "note_stack Apple Notes Off Enable Apple Notes":
+            - generic: note_stack
+            - generic:
+              - generic: Apple Notes
+            - generic:
+              - generic "Off"
+              - button "Enable Apple Notes"
+          - menuitem "task_alt Apple Reminders Off Enable Apple Reminders":
+            - generic: task_alt
+            - generic:
+              - generic: Apple Reminders
+            - generic:
+              - generic "Off"
+              - button "Enable Apple Reminders"
+          - generic:
+            - button "Close"
+  - navigation [ref=e28]:
+    - button "folder" [ref=e29] [cursor=pointer]:
+      - generic [ref=e30]: folder
+  - generic [ref=e32]:
+    - complementary [ref=e33]:
+      - generic [ref=e34]:
+        - button "Hide threads" [ref=e35] [cursor=pointer]:
+          - generic [ref=e36]: dock_to_right
+        - combobox "Thread view" [ref=e37] [cursor=pointer]:
+          - option "Active Threads" [selected]
+          - option "Archive"
+      - button "edit_square New chat" [ref=e38] [cursor=pointer]:
+        - generic [ref=e39]: edit_square
+        - generic [ref=e40]: New chat
+      - separator [ref=e41]
+      - generic [ref=e42]:
+        - generic [ref=e43] [cursor=pointer]:
+          - generic [ref=e44]:
+            - generic "WA-THREAD-ALPHA" [ref=e45]: WA-THREAD-ALPHA●
+            - button "More options" [ref=e46]:
+              - generic [ref=e47]: more_vert
+          - generic [ref=e49]: 0 msgs · 7/31/2026
+        - generic [ref=e50] [cursor=pointer]:
+          - generic [ref=e51]:
+            - generic "WA-THREAD-BETA" [ref=e52]: WA-THREAD-BETA●
+            - button "More options" [ref=e53]:
+              - generic [ref=e54]: more_vert
+          - generic [ref=e56]: 0 msgs · 7/31/2026
+    - generic [ref=e58]:
+      - button "More options" [ref=e61] [cursor=pointer]:
+        - generic [ref=e62]: event_list
+      - generic [ref=e64]:
+        - generic [ref=e66]: DIAGNOSTIC-PROMPT
+        - generic [ref=e67]:
+          - paragraph [ref=e69]: PARTIAL-OUTPUT
+          - alert [ref=e70]:
+            - generic [ref=e71]: Response failed
+            - generic [ref=e72]: MODEL_RESPONSE_FAILED
+            - generic [ref=e73]: The model response failed before it completed.
+          - generic [ref=e74]:
+            - generic "Diagnostic actions" [ref=e75]:
+              - button "View" [ref=e76] [cursor=pointer]
+              - button "Copy" [ref=e77] [cursor=pointer]
+              - button "Ask AI" [active] [ref=e78] [cursor=pointer]
+            - generic [ref=e79]: Diagnostic added to the composer for review.
+            - generic [ref=e80]: "Redacted harness diagnostic Harness: opencode Category: runtime Renderable output: yes Tool calls: no Truncated fields: none Message: redacted message SLICE-C-REPORT-CANARY Stderr excerpt: redacted stderr SLICE-C-REPORT-CANARY"
+          - generic [ref=e82]:
+            - button "Copy reply" [ref=e83] [cursor=pointer]:
+              - generic [ref=e84]: content_copy
+            - button "Text to speech" [disabled] [ref=e85]:
+              - generic [ref=e86]: text_to_speech
+            - button "Add bookmark" [ref=e87] [cursor=pointer]:
+              - generic [ref=e88]: bookmark
+            - button "Chat ID" [ref=e89] [cursor=pointer]:
+              - generic [ref=e90]: link_2
+      - generic [ref=e93]:
+        - textbox "Ask about wa shell view..." [ref=e97]: "PRESERVED-DRAFT Please help me troubleshoot this failed model response using the redacted diagnostic below. Suggest safe next steps. Redacted harness diagnostic Harness: opencode Category: runtime Renderable output: yes Tool calls: no Truncated fields: none Message: redacted message SLICE-C-REPORT-CANARY Stderr excerpt: redacted stderr SLICE-C-REPORT-CANARY"
+        - generic [ref=e98]:
+          - generic [ref=e99]:
+            - button "Add" [ref=e101] [cursor=pointer]:
+              - generic [ref=e102]: add
+            - button "Mode" [ref=e104] [cursor=pointer]:
+              - generic [ref=e105]: shield_lock
+          - generic [ref=e106]:
+            - 'button "Context usage: 10%" [ref=e108] [cursor=pointer]'
+            - button "DeepSeek V4 Flash" [ref=e110] [cursor=pointer]:
+              - generic [ref=e111]: DeepSeek V4 Flash
+              - generic [ref=e112]: keyboard_arrow_down
+            - button "Voice input (click to open)" [ref=e114] [cursor=pointer]:
+              - generic [ref=e115]: mic
+            - button "Send message" [ref=e117] [cursor=pointer]:
+              - generic [ref=e118]: arrow_upward
+    - main [ref=e120]:
+      - generic [ref=e121]:
+        - heading "WA Shell View" [level=3] [ref=e122]
+        - paragraph [ref=e123]: Content area for wa shell view panel.
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - generic: folder
+          - generic: Chat Transport Fixture
+          - button:
+            - generic: cancel
+      - generic:
+        - button:
+          - generic: add
+          - generic: Add
+```

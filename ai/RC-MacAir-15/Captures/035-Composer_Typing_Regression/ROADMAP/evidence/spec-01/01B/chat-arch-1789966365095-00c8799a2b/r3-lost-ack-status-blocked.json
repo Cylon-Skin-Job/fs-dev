@@ -1,0 +1,15 @@
+{
+  "caseId": "R3-LOST-ACK-STATUS",
+  "status": "blocked",
+  "fixture": "F5",
+  "owner": "SPEC-02/02B",
+  "missingContract": "receipt-status-contract",
+  "assertions": [
+    "drop acceptance response after commit",
+    "reconnect through the authenticated receipt/status route",
+    "prove one receipt and one group activity row",
+    "prove at most one provider dispatch and one user bubble"
+  ],
+  "statusEndpointFabricated": false,
+  "activation": "run --suite submit --mode enforce --cases R3-LOST-ACK-STATUS"
+}

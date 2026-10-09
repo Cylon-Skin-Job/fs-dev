@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-04T20:51:15.208783+00:00",
+  "actor": "/root/s6_supervisor_recovery_1",
+  "records": [
+    {
+      "attempt": "Initial inline python3 full read-only inspection",
+      "original_tool_output": "Traceback (most recent call last): File \"<stdin>\", line 1, in <module> ModuleNotFoundError: No module named 'tomllib'",
+      "result_source": "Actual tool output retained here; initial wrapper exposed only output, not a separately captured exit code",
+      "candidate_mutation": false
+    },
+    {
+      "attempt": "Initial inline predecessor proof comparator",
+      "original_tool_output": "Traceback (most recent call last): File \"<stdin>\", line 22, in <module>; File \"<stdin>\", line 20, in norm; KeyError: 'cwd'",
+      "result_source": "Actual tool output retained; no proof/control write had occurred before this exception",
+      "candidate_mutation": false
+    },
+    {
+      "attempt": "collision_and_fixed.py",
+      "actual_session": 57453,
+      "actual_exit": 1,
+      "original_tool_output": "Actual public REFUSED already saved; local assertion stopped at collision_and_fixed.py line37 comparing whole source porcelain raw hashes",
+      "preserved_script": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/collision_and_fixed.py",
+      "candidate_state_at_stop": "Only recorded collision working bytes remain; no restore executed",
+      "recovery": "continue_fixed.py validates same saved refusal/snapshots with exact J/E source scope, undoes only known collision control, then actual guarded fixed restore"
+    }
+  ],
+  "limits": "These are preserved transcripts of actual original attempts, not new commands or fabricated re-execution receipts."
+}

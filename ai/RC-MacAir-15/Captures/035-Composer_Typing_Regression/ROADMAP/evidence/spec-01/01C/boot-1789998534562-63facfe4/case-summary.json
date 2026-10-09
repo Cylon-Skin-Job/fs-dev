@@ -1,0 +1,1418 @@
+{
+  "runId": "boot-1789998534562-63facfe4",
+  "mode": "--all",
+  "port": 63085,
+  "baseURL": "http://127.0.0.1:63085",
+  "total": 117,
+  "byStatus": {
+    "expected": 116,
+    "unexpected": 1
+  },
+  "setupFailures": [],
+  "cases": [
+    {
+      "id": "chat-surface-identity.spec.ts > ChatSurface explicitly consumes an identity/model/actions contract",
+      "file": "chat-surface-identity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "chat-surface-identity.spec.ts > ChatSurface module imports no app store, socket, controller, service, filesystem, or tab owner",
+      "file": "chat-surface-identity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "chat-surface-identity.spec.ts > surfaceId never enters canonical action envelopes, results, or fan-out",
+      "file": "chat-surface-identity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "chat-surface-identity.spec.ts > late thread:opened and usage for thread B cannot mutate thread A displayed state",
+      "file": "chat-surface-identity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "chat-surface-identity.spec.ts > model selection is pending by exact thread, promoted by exact ack, and rejection restores the prior value",
+      "file": "chat-surface-identity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "chat-surface-identity.spec.ts > passive thread:open request carries the group identity and never warms",
+      "file": "chat-surface-identity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "chat-surface-identity.spec.ts > two mounts of one session share session truth but keep DOM/menu/focus state separate",
+      "file": "chat-surface-identity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "chat-surface-identity.spec.ts > surfaceId is minted at mount, never persisted, and collapse/expand preserves it",
+      "file": "chat-surface-identity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "chat-surface-identity.spec.ts > contract mints distinct transient surface ids per runtime mount generation",
+      "file": "chat-surface-identity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "chat-surface-isolation.spec.ts > two simultaneously mounted explicit surfaces have distinct transient surfaceIds and hosts",
+      "file": "chat-surface-isolation.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "chat-surface-isolation.spec.ts > Send in each surface emits a prompt frame with its exact threadId and acknowledged model snapshot",
+      "file": "chat-surface-isolation.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "chat-surface-isolation.spec.ts > two mounts of one session share one pending attempt and one accepted bubble",
+      "file": "chat-surface-isolation.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "chat-surface-isolation.spec.ts > ACK cleanup preserves a stable-ID attachment removed and readded while pending",
+      "file": "chat-surface-isolation.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "chat-surface-isolation.spec.ts > interleaved live frames for both threads render only their own content, thinking, tools, usage, Todos, errors, and saved turns",
+      "file": "chat-surface-isolation.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "chat-surface-isolation.spec.ts > Stop targets one active session and leaves the other session untouched",
+      "file": "chat-surface-isolation.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "chat-surface-isolation.spec.ts > usage/readiness are per-thread and a wire_ready for one session never marks the other",
+      "file": "chat-surface-isolation.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "chat-surface-isolation.spec.ts > model/variant pending, acknowledgement, rejection, and hydration stay per thread",
+      "file": "chat-surface-isolation.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "chat-surface-isolation.spec.ts > drafts and attachments remain per workspace/thread owner stores and never cross surfaces",
+      "file": "chat-surface-isolation.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "chat-surface-isolation.spec.ts > opening a menu on surface A leaves surface B DOM/menu/focus untouched",
+      "file": "chat-surface-isolation.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "chat-surface-isolation.spec.ts > Chat/Threads collapse and content collapse/expand preserve both surface identities and state",
+      "file": "chat-surface-isolation.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "chat-surface-isolation.spec.ts > the pending-new-thread connecting state is surface-owned and never leaks to another mount",
+      "file": "chat-surface-isolation.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "move-chat-to-side-chat.spec.ts > SPEC-04 Move Chat to Side Chat > the visible Main Chat menu emits one canonical move_chat_to_side intent",
+      "file": "move-chat-to-side-chat.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "move-chat-to-side-chat.spec.ts > SPEC-04 Move Chat to Side Chat > the moved member renders centered in a Side Chat tab through fusion.chat-surface",
+      "file": "move-chat-to-side-chat.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "move-chat-to-side-chat.spec.ts > SPEC-04 Move Chat to Side Chat > a placement-only broadcast after a failed delivery materializes the Side Chat without another trigger",
+      "file": "move-chat-to-side-chat.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "move-chat-to-side-chat.spec.ts > SPEC-04 Move Chat to Side Chat > Move is unavailable while the session has an unresolved finalizing Stop boundary",
+      "file": "move-chat-to-side-chat.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "move-chat-to-side-chat.spec.ts > SPEC-04 Move Chat to Side Chat > the delivered placement survives a rail remount (restart/readback)",
+      "file": "move-chat-to-side-chat.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "prompt-ownership.slice-c.spec.ts > Slice C: identical attachment IDs remain isolated by workspace and thread owner",
+      "file": "prompt-ownership.slice-c.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "prompt-ownership.slice-c.spec.ts > correlated message:sent commits once; unmatched, deleted and foreign ownership cannot recreate state",
+      "file": "prompt-ownership.slice-c.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "prompt-ownership.slice-c.spec.ts > Slice C: workspace activation evicts only the departed workspace attachment owners",
+      "file": "prompt-ownership.slice-c.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "prompt-ownership.slice-c.spec.ts > Slice C: composer drafts swap immediately by thread and preserve pending retry ownership",
+      "file": "prompt-ownership.slice-c.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "prompt-ownership.slice-c.spec.ts > Slice C: deferred screenshot cancels when its workspace and thread owner changes",
+      "file": "prompt-ownership.slice-c.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "side-chat-isolation.spec.ts > SPEC-04 04C Main/Side isolation > Main Chat B and Side Chat A mount as distinct sessions",
+      "file": "side-chat-isolation.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "side-chat-isolation.spec.ts > SPEC-04 04C Main/Side isolation > a send for one member never lands in the other",
+      "file": "side-chat-isolation.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "side-chat-isolation.spec.ts > SPEC-04 04C Main/Side isolation > every Side Chat frame carries durable identities only and no surfaceId",
+      "file": "side-chat-isolation.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "side-chat-placement-recovery.spec.ts > SPEC-04 04C Side Chat close disposition and recovery > closing a Side Chat records a durable closed disposition, removes the tab, and keeps the member",
+      "file": "side-chat-placement-recovery.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "side-chat-placement-recovery.spec.ts > SPEC-04 04C Side Chat close disposition and recovery > restart/readback does not resurrect a closed Side Chat",
+      "file": "side-chat-placement-recovery.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "side-chat-placement-recovery.spec.ts > SPEC-04 04C Side Chat close disposition and recovery > an explicit member action reopens a closed Side Chat without a new placement",
+      "file": "side-chat-placement-recovery.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "side-chat-placement-recovery.spec.ts > SPEC-04 04C Side Chat close disposition and recovery > a failed close disposition is a classified non-destructive warning and keeps the tab",
+      "file": "side-chat-placement-recovery.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "side-chat-placement-recovery.spec.ts > SPEC-04 04C Side Chat close disposition and recovery > a placement-only broadcast for a closed placement never reopens the tab",
+      "file": "side-chat-placement-recovery.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "threaded-chat-host.spec.ts > ThreadRail is a portable population/menu boundary with no store or socket access",
+      "file": "threaded-chat-host.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "threaded-chat-host.spec.ts > ThreadedChat composes exactly one ThreadRail with one ChatSurface",
+      "file": "threaded-chat-host.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "threaded-chat-host.spec.ts > the connected view host owns qualified list/open correlation and never touches the Legacy store",
+      "file": "threaded-chat-host.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "threaded-chat-host.spec.ts > the dead un-gated ThreadJumpDropdown is removed",
+      "file": "threaded-chat-host.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "threaded-chat-host.spec.ts > open-request correlation is per-request/per-population, not a single slot",
+      "file": "threaded-chat-host.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "threaded-chat-host.spec.ts > thread:list fills only the echoed view population and keeps Legacy explicit",
+      "file": "threaded-chat-host.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "threaded-chat-host.spec.ts > thread:list fills only its echoed {workspaceId, viewId} population",
+      "file": "threaded-chat-host.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "threaded-chat-host.spec.ts > a late list/open for view B cannot fill or select view A",
+      "file": "threaded-chat-host.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "threaded-chat-host.spec.ts > thread:opened updates only its own population selection and retires its request",
+      "file": "threaded-chat-host.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "threaded-chat-host.spec.ts > Legacy viewId:null is explicit and never borrows a view population",
+      "file": "threaded-chat-host.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "threaded-chat-host.spec.ts > restart/readback restores keyed populations and selections through the handler path",
+      "file": "threaded-chat-host.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "threaded-chat-host.spec.ts > accepted rename updates the composite Legacy and view populations, not only threads",
+      "file": "threaded-chat-host.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "threaded-chat-host.spec.ts > accepted delete removes the row and clears the qualified selection",
+      "file": "threaded-chat-host.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "threaded-chat-host.spec.ts > a row mutation acked for one population never mutates an unrelated population",
+      "file": "threaded-chat-host.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "threaded-chat-host.spec.ts > accepted create inserts into an initialized Legacy population without double-adding",
+      "file": "threaded-chat-host.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "threaded-chat-host.spec.ts > two view-bound hosts restore independent selected rows and transcripts",
+      "file": "threaded-chat-host.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "threaded-chat-host.spec.ts > rendered hosts isolate a late list/open for view B from view A",
+      "file": "threaded-chat-host.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "threaded-chat-host.spec.ts > hidden inactive panels issue no list request and do not steal selection",
+      "file": "threaded-chat-host.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "threaded-chat-host.spec.ts > ThreadRail rows emit canonical thread:open and thread:action intents",
+      "file": "threaded-chat-host.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @routing routing: turn_begin initializes a thread panel with no current turn",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @routing routing: same-turnId duplicate begin is idempotent and never resets streamed output",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @routing routing: different-active-turnId begin rejected without reset",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @routing routing: wrong-thread and wrong-turn frames drop before any store or helper mutation",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @routing routing: status_update enforces the addressed current turnId",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @routing routing: interleaved A/B content, tool args, grouping, subagent and terminal events stay isolated",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @routing routing: one turn terminalization leaves the other pair fully intact",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @routing routing: post-terminal chat-turn:saved and metadata correlate to completed messages",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @frontier frontier: in-flight snapshot at N installs every baseline segment already revealed",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @frontier frontier: unfinished catch-up baseline defers reply chrome to its error terminal tail",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @frontier frontier: events at or below N never replay over the installed baseline",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @frontier frontier: N+1/N+2 apply exactly once in streamSeq order",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @frontier frontier: N+2 before N+1 stays buffered until N+1 lands then drains contiguously",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @frontier frontier: newer snapshot advances through a buffered gap without duplication or loss",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @frontier frontier: live events arriving before hydration buffer and drain contiguously onto the snapshot",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @frontier frontier: an older snapshot cannot regress visible content tool or terminal state",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @frontier frontier: whole-turn order follows streamSeq across equal lower and greater activityRevision mixes",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @frontier frontier: completed return takes the instant rendering path",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @frontier frontier: terminal-snapshot save race yields exactly one completed message without duplicate content",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @frontier frontier: hydrating and draining thread A cannot reset or delay thread B",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @routing complement(node): chat-turn:saved attaches exchange metadata without duplicate rows — reason: merged exchangeId/metadata are invisible in today’s DOM",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @routing complement(browser console): diagnostic report logs ids-only via the exported redactMessageForLog seam — reason: imports of ws-client cannot load under the Node runner (module-time window reference), so the packet’s chosen alternative proves the seam’s exact output shape end-to-end through the packaged client’s own log line",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @routing complement(node): requestChatTurnDiagnostic pending registry resolves on matched report and exact-route denial — reason: registry semantics need SPEC-05 UI to be DOM-visible",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @working delayed first step keeps the orb fallback, then shows a truthful nonzero label",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @working blank or opaque initial thinking keeps Working and creates no blank assistant row",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @working readable thinking replaces Working",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @working assistant content replaces Working",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @working tool-first output replaces Working",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @working output during orb collapse prevents a Working flash",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @working a post-tool step appears after the already-revealed tool",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @working duplicate/stale step and stale snapshot cannot reset or resurrect cleared activity",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @working activity revision is strictly greater while valid output still follows streamSeq",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @working a harness with no step event retains the orb fallback",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @working in-flight return restores original startedAt over an already-revealed baseline",
+      "file": "working-activity.spec.ts",
+      "status": "unexpected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "failed",
+          "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.rv-working-activity').first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.rv-working-activity').first()\u001b[22m\n"
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @working completed return is instant and historical metadata never creates Working",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @working exposes one stable announcement while visual seconds change",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @working reduced motion keeps the status visible and clamps hourglass animation",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @terminal-error no-output post-begin failure renders one safe error before reply chrome",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @terminal-error partial text flushes immediately before the error",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @terminal-error partial tool flushes immediately before the error",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @terminal-error authentication has one inline row plus the existing notification",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @terminal-error pre-begin transport failure creates no transcript row",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @terminal-error post-terminal companion never duplicates the authoritative inline row",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @terminal-error wrong-turn terminal cannot mutate the active turn",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @terminal-error terminal snapshot before save renders exactly one message and error",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @terminal-error typed live envelope and durable save metadata merge into one completed row",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @terminal-error saved-history reopen renders one durable safe error",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @terminal-error hostile raw envelope is sanitized before frontier buffering and logging",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @terminal-error exactly one alert survives the later save rerender",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @terminal-error unscoped generic error cannot clear or terminalize another active turn",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @terminal-error same-prompt empty retry keeps distinct turn identities through snapshot/save",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @terminal-error View is explicit-only, uses the exact tuple, and report canaries never enter any console argument",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @terminal-error Copy fetches only on activation and copies only the validated report",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @terminal-error Ask AI adds the report to the draft without sending a prompt",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @terminal-error Ask AI cannot overwrite a server-owned pending acceptance",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @terminal-error missing expired or rejected diagnostic returns one fixed unavailable state",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @terminal-error malformed retrieved report fails closed without displaying its canary",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @terminal-error exact-route request survives unmount/remount without a duplicate fetch",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "working-activity.spec.ts > @terminal-error complement(node): unavailable response requires the exact route tuple",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    }
+  ]
+}

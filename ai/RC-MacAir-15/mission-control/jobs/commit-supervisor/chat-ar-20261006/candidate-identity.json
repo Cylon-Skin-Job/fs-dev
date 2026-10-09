@@ -1,0 +1,20 @@
+{
+  "candidate": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+  "branch": "codex/chat-retirement-and-startup-repair",
+  "target": "3356e1b73cc5d44028eac5baa02fd542a8bbc385",
+  "source": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "staged_tree": "44b2592705cdbc35620207e579113ede27a4a787",
+  "frozen_inventory_sha256": "206117508c5a1c706c987b698753bc138217b27061765d5328bbb403284cd1e2",
+  "staged_scope_leaves": 1593,
+  "owned_replayed_leaves": 1659,
+  "runtime_only_paths": [
+    "restart-fusion.sh",
+    "scripts/fusion-restart-probe.mjs",
+    "scripts/fusion-restart-processes.mjs",
+    "scripts/fusion-restart-target.mjs",
+    "scripts/fusion-restart.mjs"
+  ],
+  "commit_paths_sha256": "f29f18cedc42ce5217bf780904f836e568d7c41dad13b3a40648fff2869cb315",
+  "source_index_preserved": true,
+  "source_refs_preserved": true
+}

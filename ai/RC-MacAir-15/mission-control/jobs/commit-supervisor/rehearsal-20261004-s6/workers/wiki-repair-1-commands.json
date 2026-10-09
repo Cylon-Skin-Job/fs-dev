@@ -1,0 +1,105 @@
+[
+  {
+    "started": "2026-10-04T15:18:21.420587+00:00",
+    "finished": "2026-10-04T15:18:22.276742+00:00",
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "command": [
+      "python3.12",
+      "-B",
+      ".agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+      "verify",
+      "--job",
+      "jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/first-wiki-1"
+    ],
+    "environment": {
+      "GIT_OPTIONAL_LOCKS": "0"
+    },
+    "exit_code": 0,
+    "stdout": "{\"result\": \"VERIFIED\", \"payloads_valid\": true, \"matches_checkpoint\": true, \"status_equal\": true, \"current_sha256\": \"bcf9fe2ecc85956231b55053338eafc3e1bbed2f6d4eb5e2366c6a5148f4d608\", \"manifest_sha256\": \"36c99f10ccdc4eed268e2859d2f737eac282181784ea0385572e64d3221c7e75\"}\n",
+    "stderr": ""
+  },
+  {
+    "started": "2026-10-04T15:18:22.277206+00:00",
+    "finished": "2026-10-04T15:18:22.683790+00:00",
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "command": [
+      "python3.12",
+      "-B",
+      "jobs/commit-supervisor/rehearsal-20261004-s6/workers/wiki-repair-1-verify.py",
+      "preflight"
+    ],
+    "environment": {
+      "GIT_OPTIONAL_LOCKS": "0"
+    },
+    "exit_code": 0,
+    "stdout": "{\n  \"union_manifest_sha256\": \"36c99f10ccdc4eed268e2859d2f737eac282181784ea0385572e64d3221c7e75\",\n  \"original_manifest_sha256\": \"f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb\",\n  \"owned_count\": 129,\n  \"authority_count\": 50,\n  \"suite_dependency_count\": 35,\n  \"source_dependencies\": {\n    \"rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js\": \"7a325bf81452d0d785c22fb4bc7cc4950c4abd2c4e6a68604ff683c1d4990b0d\",\n    \"rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js\": \"fc3c3da3961bbd8ba1d9f0d1a320dd8f8baf514e0fc0a7d158d5c474ddfe36a5\",\n    \"rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html\": \"c2ba834be53b0d84b17f2e2bbcde7e3b468ae05903c3b5179ef7070f342428d2\",\n    \"rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css\": \"6e3d4171ec9dd14bff1d521f6d9df9b6afa25bfef0b336dba791e1f7fdfc3184\",\n    \"scripts/fusion-restart-target.mjs\": \"0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d\",\n    \"scripts/fusion-restart.mjs\": \"c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4\",\n    \"fusion-studio-client/src/components/ContentArea.tsx\": \"f3b02f929a2baf1ba18025b41883bf351759815c2204537ccf61454e66ef1327\"\n  },\n  \"retained_articles\": {\n    \"rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/002-Navigation_Guide/PAGE.md\": {\n      \"sha256\": \"7a3058e3ca2a0b793e6c4831487b53098a49c4c80f2f3d91f8a2dbe6463b28ed\",\n      \"bytes\": 434,\n      \"mode\": 420,\n      \"mtime_ns\": 1791118139075062550,\n      \"last_modified\": \"2026-10-04T11:43:14Z\"\n    },\n    \"rehearsal-workspace/ai/MC-S6/Wiki/PAGE.md\": {\n      \"sha256\": \"09d0c7fd6ad2882d50c137412194c6060f2e6d9668d7d3a3e1569f3274ea3a6c\",\n      \"bytes\": 219,\n      \"mode\": 420,\n      \"mtime_ns\": 1791118139075267633,\n      \"last_modified\": \"2026-10-04T11:43:14Z\"\n    }\n  },\n  \"changed_paths\": [],\n  \"baseline_leaf_count\": 4354,\n  \"current_state_sha256\": \"bcf9fe2ecc85956231b55053338eafc3e1bbed2f6d4eb5e2366c6a5148f4d608\",\n  \"refs\": {\n    \"head\": \"d15792920731f85e45b743519d4af2b807d95a9c\",\n    \"branch\": null,\n    \"refs_sha256\": \"9d16de57b401c2857b4e01e956037365f3ca9669a716562248c6be8faf58472d\",\n    \"config_sha256\": \"0a84192202948bd789d2bd8bbb405668470eb300a3539fcdd609677fb2af310e\",\n    \"index_file_sha256\": \"f60a305e9691ad6ecac0d696c78dfc5bc779a73004fce64b0e5f955b76eaecbb\"\n  },\n  \"protected\": {\n    \"/Users/rccurtrightjr./projects/fs-dev\": {\n      \"head\": \"d15792920731f85e45b743519d4af2b807d95a9c\",\n      \"branch\": \"refs/heads/agent/exact-workspace-paths\",\n      \"refs_sha256\": \"2137fda44918eee605a707a4931a0f12f57125dbab104179ca490556d5e74976\",\n      \"config_sha256\": \"15b4867e1facba02e3e54d699d8e9133c336ff6bd3beb6aab997538d77efbcb3\",\n      \"index_file_sha256\": \"f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966\"\n    }\n  },\n  \"version_absent\": true,\n  \"guide\": {\n    \"sha256\": \"e2877b2a21a23cce18a7b079d1532a8c7a5a8f30467e369248d75e9750ce527c\",\n    \"bytes\": 596,\n    \"mode\": 420,\n    \"mtime_ns\": 1791118139074841633,\n    \"last_modified\": \"2026-10-04T11:43:14Z\"\n  }\n}\n",
+    "stderr": ""
+  },
+  {
+    "started": "2026-10-04T15:18:43.925431+00:00",
+    "finished": "2026-10-04T15:18:45.009375+00:00",
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "command": [
+      "python3.12",
+      "-B",
+      "jobs/commit-supervisor/rehearsal-20261004-s6/workers/wiki-repair-1-verify.py",
+      "repair"
+    ],
+    "environment": {
+      "GIT_OPTIONAL_LOCKS": "0"
+    },
+    "exit_code": 0,
+    "stdout": "{\n  \"page\": {\n    \"sha256\": \"a3d372eba6208c2fbee71cd046f305a91fc7c44185c5dae42b5da50e5cbcfdce\",\n    \"bytes\": 1620,\n    \"mode\": 420,\n    \"mtime_ns\": 1791127125004254272,\n    \"last_modified\": \"2026-10-04T15:18:44Z\"\n  },\n  \"version\": {\n    \"sha256\": \"e2877b2a21a23cce18a7b079d1532a8c7a5a8f30467e369248d75e9750ce527c\",\n    \"bytes\": 596,\n    \"mode\": 420,\n    \"mtime_ns\": 1791118139074841633,\n    \"last_modified\": \"2026-10-04T11:43:14Z\"\n  },\n  \"write_utc\": \"2026-10-04T15:18:44Z\",\n  \"exclusive_create\": \"xb\",\n  \"complete_preimage_equal\": true,\n  \"before_retained_articles\": {\n    \"rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/002-Navigation_Guide/PAGE.md\": {\n      \"sha256\": \"7a3058e3ca2a0b793e6c4831487b53098a49c4c80f2f3d91f8a2dbe6463b28ed\",\n      \"bytes\": 434,\n      \"mode\": 420,\n      \"mtime_ns\": 1791118139075062550,\n      \"last_modified\": \"2026-10-04T11:43:14Z\"\n    },\n    \"rehearsal-workspace/ai/MC-S6/Wiki/PAGE.md\": {\n      \"sha256\": \"09d0c7fd6ad2882d50c137412194c6060f2e6d9668d7d3a3e1569f3274ea3a6c\",\n      \"bytes\": 219,\n      \"mode\": 420,\n      \"mtime_ns\": 1791118139075267633,\n      \"last_modified\": \"2026-10-04T11:43:14Z\"\n    }\n  }\n}\n",
+    "stderr": ""
+  },
+  {
+    "started": "2026-10-04T15:20:40.940594+00:00",
+    "finished": "2026-10-04T15:20:41.735692+00:00",
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "command": [
+      "python3.12",
+      "-B",
+      "jobs/commit-supervisor/rehearsal-20261004-s6/workers/wiki-repair-1-verify.py",
+      "postflight"
+    ],
+    "environment": {
+      "GIT_OPTIONAL_LOCKS": "0"
+    },
+    "exit_code": 0,
+    "stdout": "{\n  \"union_manifest_sha256\": \"36c99f10ccdc4eed268e2859d2f737eac282181784ea0385572e64d3221c7e75\",\n  \"original_manifest_sha256\": \"f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb\",\n  \"owned_count\": 129,\n  \"authority_count\": 50,\n  \"suite_dependency_count\": 35,\n  \"source_dependencies\": {\n    \"rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js\": \"7a325bf81452d0d785c22fb4bc7cc4950c4abd2c4e6a68604ff683c1d4990b0d\",\n    \"rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js\": \"fc3c3da3961bbd8ba1d9f0d1a320dd8f8baf514e0fc0a7d158d5c474ddfe36a5\",\n    \"rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html\": \"c2ba834be53b0d84b17f2e2bbcde7e3b468ae05903c3b5179ef7070f342428d2\",\n    \"rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css\": \"6e3d4171ec9dd14bff1d521f6d9df9b6afa25bfef0b336dba791e1f7fdfc3184\",\n    \"scripts/fusion-restart-target.mjs\": \"0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d\",\n    \"scripts/fusion-restart.mjs\": \"c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4\",\n    \"fusion-studio-client/src/components/ContentArea.tsx\": \"f3b02f929a2baf1ba18025b41883bf351759815c2204537ccf61454e66ef1327\"\n  },\n  \"retained_articles\": {\n    \"rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/002-Navigation_Guide/PAGE.md\": {\n      \"sha256\": \"7a3058e3ca2a0b793e6c4831487b53098a49c4c80f2f3d91f8a2dbe6463b28ed\",\n      \"bytes\": 434,\n      \"mode\": 420,\n      \"mtime_ns\": 1791118139075062550,\n      \"last_modified\": \"2026-10-04T11:43:14Z\"\n    },\n    \"rehearsal-workspace/ai/MC-S6/Wiki/PAGE.md\": {\n      \"sha256\": \"09d0c7fd6ad2882d50c137412194c6060f2e6d9668d7d3a3e1569f3274ea3a6c\",\n      \"bytes\": 219,\n      \"mode\": 420,\n      \"mtime_ns\": 1791118139075267633,\n      \"last_modified\": \"2026-10-04T11:43:14Z\"\n    }\n  },\n  \"changed_paths\": [\n    \"rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-080936.md\",\n    \"rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md\"\n  ],\n  \"baseline_leaf_count\": 4354,\n  \"current_state_sha256\": \"83a9f2145e5788ae2ac91008a58e87613e547922c87ad41f1ffb9d77906824bc\",\n  \"refs\": {\n    \"head\": \"d15792920731f85e45b743519d4af2b807d95a9c\",\n    \"branch\": null,\n    \"refs_sha256\": \"9d16de57b401c2857b4e01e956037365f3ca9669a716562248c6be8faf58472d\",\n    \"config_sha256\": \"0a84192202948bd789d2bd8bbb405668470eb300a3539fcdd609677fb2af310e\",\n    \"index_file_sha256\": \"f60a305e9691ad6ecac0d696c78dfc5bc779a73004fce64b0e5f955b76eaecbb\"\n  },\n  \"protected\": {\n    \"/Users/rccurtrightjr./projects/fs-dev\": {\n      \"head\": \"d15792920731f85e45b743519d4af2b807d95a9c\",\n      \"branch\": \"refs/heads/agent/exact-workspace-paths\",\n      \"refs_sha256\": \"2137fda44918eee605a707a4931a0f12f57125dbab104179ca490556d5e74976\",\n      \"config_sha256\": \"15b4867e1facba02e3e54d699d8e9133c336ff6bd3beb6aab997538d77efbcb3\",\n      \"index_file_sha256\": \"f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966\"\n    }\n  },\n  \"page\": {\n    \"sha256\": \"a3d372eba6208c2fbee71cd046f305a91fc7c44185c5dae42b5da50e5cbcfdce\",\n    \"bytes\": 1620,\n    \"mode\": 420,\n    \"mtime_ns\": 1791127125004254272,\n    \"last_modified\": \"2026-10-04T15:18:44Z\"\n  },\n  \"version\": {\n    \"sha256\": \"e2877b2a21a23cce18a7b079d1532a8c7a5a8f30467e369248d75e9750ce527c\",\n    \"bytes\": 596,\n    \"mode\": 420,\n    \"mtime_ns\": 1791118139074841633,\n    \"last_modified\": \"2026-10-04T11:43:14Z\"\n  },\n  \"links\": [\n    {\n      \"from\": \"rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/002-Navigation_Guide/PAGE.md\",\n      \"to\": \"/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md\"\n    },\n    {\n      \"from\": \"rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md\",\n      \"to\": \"/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/002-Navigation_Guide/PAGE.md\"\n    }\n  ],\n  \"source_files\": [\n    \"rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js\",\n    \"rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js\",\n    \"scripts/fusion-restart-target.mjs\",\n    \"scripts/fusion-restart.mjs\"\n  ],\n  \"preimage_bytes_equal\": true\n}\n",
+    "stderr": ""
+  },
+  {
+    "started": "2026-10-04T15:20:41.736226+00:00",
+    "finished": "2026-10-04T15:20:41.807417+00:00",
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "command": [
+      "node",
+      "-e",
+      "const fs = require('fs');\nconst matter = require('/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/gray-matter');\nconst assert = require('assert/strict');\nconst p='/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md';\nconst text=fs.readFileSync(p,'utf8'); const parsed=matter(text);\nassert.equal(parsed.data.name,'Checklist Guide');\nassert.equal(parsed.data.description,'How to complete and revisit the disposable checklist.');\nassert.deepEqual(Object.keys(parsed.data.metadata).sort(),['last-modified','source-files']);\nassert.equal(typeof parsed.data.metadata['last-modified'],'string');\nassert.match(parsed.data.metadata['last-modified'],/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$/);\nassert.match(text,/last-modified: \"\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z\"/);\nassert.equal(parsed.data.metadata['source-files'].length,4);\nassert.equal(new Set(parsed.data.metadata['source-files']).size,4);\nconsole.log(JSON.stringify({page:p,frontmatter:parsed.data,contentBytes:Buffer.byteLength(parsed.content)},null,2));\n"
+    ],
+    "environment": {
+      "GIT_OPTIONAL_LOCKS": "0"
+    },
+    "exit_code": 0,
+    "stdout": "{\n  \"page\": \"/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md\",\n  \"frontmatter\": {\n    \"name\": \"Checklist Guide\",\n    \"description\": \"How to complete and revisit the disposable checklist.\",\n    \"metadata\": {\n      \"source-files\": [\n        \"rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js\",\n        \"rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js\",\n        \"scripts/fusion-restart-target.mjs\",\n        \"scripts/fusion-restart.mjs\"\n      ],\n      \"last-modified\": \"2026-10-04T15:18:44Z\"\n    }\n  },\n  \"contentBytes\": 1202\n}\n",
+    "stderr": ""
+  },
+  {
+    "started": "2026-10-04T15:23:14.852226+00:00",
+    "finished": "2026-10-04T15:23:14.875061+00:00",
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "command": [
+      "python3.12",
+      "-B",
+      "-c",
+      "from pathlib import Path\nimport hashlib,json\nj=Path('jobs/commit-supervisor/rehearsal-20261004-s6'); p=Path('/private/tmp/mc-s6-commit-supervisor-20261004/candidate'); prefix='rehearsal-workspace/ai/MC-S6/Wiki/'\nexpected={prefix+'001-Checklist/001-Checklist_Guide/PAGE.md':'a3d372eba6208c2fbee71cd046f305a91fc7c44185c5dae42b5da50e5cbcfdce',prefix+'001-Checklist/001-Checklist_Guide/.versions/2026-10-04-080936.md':'e2877b2a21a23cce18a7b079d1532a8c7a5a8f30467e369248d75e9750ce527c',prefix+'PAGE.md':'09d0c7fd6ad2882d50c137412194c6060f2e6d9668d7d3a3e1569f3274ea3a6c',prefix+'001-Checklist/002-Navigation_Guide/PAGE.md':'7a3058e3ca2a0b793e6c4831487b53098a49c4c80f2f3d91f8a2dbe6463b28ed'}\nsha=lambda b:hashlib.sha256(b).hexdigest()\nmeasurements={}\nfor name,value in expected.items():\n data=(p/name).read_bytes(); assert sha(data)==value; measurements[str(p/name)]={'sha256':sha(data),'bytes':len(data)}\nfor name in ('wiki-repair-1.md','wiki-repair-1-verify.py'):\n path=j/'workers'/name; data=path.read_bytes(); assert path.read_bytes()==data; measurements[str(path.resolve())]={'sha256':sha(data),'bytes':len(data)}\nreport=(j/'workers/wiki-repair-1.md').read_text(); assert 'READY_FOR_HANDOFF_REVIEW' in report and 'S6-I1-003' in report\nrows=json.loads((j/'workers/wiki-repair-1-commands.json').read_bytes()); assert len(rows)==5\nassert all(r['exit_code']==0 and set(r)=={'started','finished','cwd','command','environment','exit_code','stdout','stderr'} for r in rows)\nprint(json.dumps({'files':measurements,'prior_receipt_count':len(rows),'prior_exit_codes':[r['exit_code'] for r in rows]},indent=2))\n"
+    ],
+    "environment": {
+      "GIT_OPTIONAL_LOCKS": "0"
+    },
+    "exit_code": 0,
+    "stdout": "{\n  \"files\": {\n    \"/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md\": {\n      \"sha256\": \"a3d372eba6208c2fbee71cd046f305a91fc7c44185c5dae42b5da50e5cbcfdce\",\n      \"bytes\": 1620\n    },\n    \"/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-080936.md\": {\n      \"sha256\": \"e2877b2a21a23cce18a7b079d1532a8c7a5a8f30467e369248d75e9750ce527c\",\n      \"bytes\": 596\n    },\n    \"/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/PAGE.md\": {\n      \"sha256\": \"09d0c7fd6ad2882d50c137412194c6060f2e6d9668d7d3a3e1569f3274ea3a6c\",\n      \"bytes\": 219\n    },\n    \"/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/002-Navigation_Guide/PAGE.md\": {\n      \"sha256\": \"7a3058e3ca2a0b793e6c4831487b53098a49c4c80f2f3d91f8a2dbe6463b28ed\",\n      \"bytes\": 434\n    },\n    \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/wiki-repair-1.md\": {\n      \"sha256\": \"22148e2c83afbae60ed7806bfff9900e7f6cdf65fe87d345d414b471e021ddcd\",\n      \"bytes\": 9918\n    },\n    \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/wiki-repair-1-verify.py\": {\n      \"sha256\": \"1ea9dde172db460f00af07250c9adaf0dbe605f3d351cf362a4605f23b76635c\",\n      \"bytes\": 11414\n    }\n  },\n  \"prior_receipt_count\": 5,\n  \"prior_exit_codes\": [\n    0,\n    0,\n    0,\n    0,\n    0\n  ]\n}\n",
+    "stderr": ""
+  }
+]

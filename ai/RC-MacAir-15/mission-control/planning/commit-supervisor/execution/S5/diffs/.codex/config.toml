@@ -1,0 +1,20 @@
+--- .codex/config.toml preimage
++++ .codex/config.toml current
+@@ -49,6 +49,14 @@
+ description = "Independently validate a draft, candidate stage or final planning release."
+ config_file = "agents/mc-planning-validator.toml"
+ 
+-[agents.mc-review-and-merge]
+-description = "Prepare and evaluate completed-build integration, then wait for owner commit/push approval."
+-config_file = "agents/mc-review-and-merge.toml"
++[agents.mc-commit-supervisor]
++description = "Prepare an accepted integration unit through review and runtime handoff, then wait for owner operation approval."
++config_file = "agents/mc-commit-supervisor.toml"
++
++[agents.mc-code-review-orchestrator]
++description = "Coordinate independent initial/final code review for an assigned integration candidate."
++config_file = "agents/mc-code-review-orchestrator.toml"
++
++[agents.mc-commit-repair-worker]
++description = "Repair bounded validated integration findings and return for independent handoff review."
++config_file = "agents/mc-commit-repair-worker.toml"

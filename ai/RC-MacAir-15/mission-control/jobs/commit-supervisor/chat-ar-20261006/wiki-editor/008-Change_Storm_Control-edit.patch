@@ -1,0 +1,14 @@
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md before
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md after
+@@ -4,10 +4,9 @@
+ metadata:
+   source-files:
+     - fusion-studio-server/lib/event-bus.js
+-    - fusion-studio-server/lib/event-bus.js
+     - fusion-studio-server/lib/event-registry/seed-catalog.js
+     - fusion-studio-server/lib/agent-provenance/checkpoint-repository.js
+-  last-modified: "2026-09-19T11:52:20Z"
++  last-modified: "2026-10-06T22:14:26Z"
+ ---
+ 
+ Status: source inspected on 2026-09-19 in the development checkout. Legacy bus guards and bounded tool checkpoints exist. The generic workspace watcher and its rename heuristics have since been retired. A governed storm detector, durable storm-batch schema and compaction policy are not implemented in the inspected owners. No runtime or load test was run.

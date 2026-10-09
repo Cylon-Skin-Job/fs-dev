@@ -1,0 +1,22 @@
+{
+  "runId": "chat-arch-1790498104305-33a622729d",
+  "status": "failed",
+  "results": [
+    {
+      "id": "TO-01-NATIVE-OUTCOME",
+      "code": 1,
+      "signal": null,
+      "pid": 88756,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 53015
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "TO-01-NATIVE-OUTCOME exited 1",
+    "stack": "Error: TO-01-NATIVE-OUTCOME exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:510:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

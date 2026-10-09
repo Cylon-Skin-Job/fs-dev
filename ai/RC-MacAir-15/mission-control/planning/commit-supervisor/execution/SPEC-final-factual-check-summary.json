@@ -1,0 +1,90 @@
+{
+  "at": "2026-10-05T03:39:01.247528+00:00",
+  "commands": {
+    "python": {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite/python-command.json",
+      "sha256": "2d833fcc6bb7f658076eae3784750884ab1a59b23f5ce64dcf44dd4b334e6c09",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-v",
+        "-s",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests",
+        "-p",
+        "test_*.py"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "started_at": "2026-10-05T03:21:13.656745+00:00",
+      "finished_at": "2026-10-05T03:21:36.411317+00:00",
+      "exit_code": 0
+    },
+    "node": {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite/node-command.json",
+      "sha256": "0dffb5fd37fe64a4303058700ac2965ad610843b3e3586eaee127db9cc45d980",
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "--test",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "started_at": "2026-10-05T03:21:37.084342+00:00",
+      "finished_at": "2026-10-05T03:22:04.047103+00:00",
+      "exit_code": 0
+    },
+    "dry_run": {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite/default-dry-run-command.json",
+      "sha256": "6d14cfce6bb17083c0753b64dc4f50b7d4e6718de4eb32f71f622427bd5f01ac",
+      "argv": [
+        "bash",
+        "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh",
+        "--dry-run"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev",
+      "started_at": "2026-10-05T03:23:27.453234+00:00",
+      "finished_at": "2026-10-05T03:23:27.519873+00:00",
+      "exit_code": 0
+    },
+    "suite": {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite/result.json",
+      "sha256": "d2cc013e6af58d5527a934160645c35b3577ab7c1780d347fe249b3473c8a9c3",
+      "at": "2026-10-05T03:23:27.520906+00:00",
+      "result": "FINAL_SUITES_PASSED_WITH_RETAINED_REPORT_FORMAT_CORRECTION"
+    },
+    "static": {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-static/result.json",
+      "sha256": "547a3163eb153bab9005db162ea18c06f371734533e95cbdb826455a59f1d971",
+      "at": "2026-10-05T03:30:31.391317+00:00",
+      "result": "FINAL_STATIC_AND_SOURCE_PRESERVATION_PASSED"
+    },
+    "preservation": {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-preservation/result.json",
+      "sha256": "a639b8ae4eea0d42f45d413528a2136fa95177d9950c114bb08ca381690cb483",
+      "at": "2026-10-05T03:27:12.954773+00:00",
+      "result": "FINAL_PROCESS_STORAGE_RECOVERY_PRESERVATION_PASSED"
+    }
+  },
+  "python55_dependencies": 3809,
+  "executed_JS_bound": 82,
+  "node17_current_binary_bound": true,
+  "passing_suites_replayed": false,
+  "profile_count": 12,
+  "skill_validators": 8,
+  "index_documents": 21,
+  "links": 292,
+  "fragments": 12,
+  "current_process_roots": 4,
+  "current_protected_tree": 14,
+  "historical_protected_tree": 13,
+  "unowned_exact": 15941,
+  "later_live_state": 1,
+  "unowned_absences": 68,
+  "source_caches": 193,
+  "snapshot_archives": 6,
+  "current_original_owned": 128,
+  "current_full_inventory": 4353,
+  "private_profile_leaves": 460,
+  "preserved_historical_job_leaves": 1844
+}

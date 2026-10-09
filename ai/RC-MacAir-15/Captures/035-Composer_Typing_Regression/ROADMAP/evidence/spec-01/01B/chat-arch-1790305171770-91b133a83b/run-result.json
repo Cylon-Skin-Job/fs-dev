@@ -1,0 +1,22 @@
+{
+  "runId": "chat-arch-1790305171770-91b133a83b",
+  "status": "failed",
+  "results": [
+    {
+      "id": "R9-LIFECYCLE-RESOURCES",
+      "code": 1,
+      "signal": null,
+      "pid": 47583,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 38134
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "R9-LIFECYCLE-RESOURCES exited 1",
+    "stack": "Error: R9-LIFECYCLE-RESOURCES exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:463:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

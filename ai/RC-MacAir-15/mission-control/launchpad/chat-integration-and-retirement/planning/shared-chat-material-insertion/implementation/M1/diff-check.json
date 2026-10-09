@@ -1,0 +1,10 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--check"
+  ],
+  "cwd": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev",
+  "exit": 0,
+  "source_identity": "SOURCE-IDENTITY.json"
+}

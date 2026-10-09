@@ -1,0 +1,16 @@
+{
+  "at": "2026-10-04T14:55:54.275756+00:00",
+  "actor": "/root/s6_supervisor_candidate_1",
+  "mixed_source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/code-repair-1-checks.json",
+  "source_sha256": "1f0f9c3e22c35ab2a87e14785958fa404578798b92227914e28146ee1aef93b3",
+  "derivative": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-code-command-only.json",
+  "derivative_sha256": "413f037a8c923fd6e9f61ab101714e9511da4b7d7342754299cf0c62c6d30add",
+  "copied_json_pointer": "/actual_check_receipts",
+  "values_equal": true,
+  "commands_regenerated": false,
+  "verdict_generated": false,
+  "reviewer2_exposure": "Original cat exposed raw_finding_origin/proposed_finding_dispositions, reported honestly by reviewer before terminal",
+  "gate_disposition": "invalid independence; no HANDOFF_VALIDATED; fresh replacement only after actual terminal",
+  "product_bytes_changed": false,
+  "root_assessment_consumed": false
+}

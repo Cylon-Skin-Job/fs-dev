@@ -1,0 +1,119 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - generic [ref=e5]:
+    - complementary [ref=e6]:
+      - generic [ref=e7]:
+        - button "Hide threads" [ref=e8] [cursor=pointer]:
+          - generic [ref=e9]: dock_to_right
+        - combobox "Thread view" [ref=e10] [cursor=pointer]:
+          - option "Active Threads" [selected]
+          - option "Archive"
+      - button "edit_squareNew chat" [ref=e11]
+      - separator [ref=e12]
+      - generic [ref=e13]:
+        - generic [ref=e14]:
+          - generic [ref=e15]:
+            - generic "Screenshot New Chat" [ref=e16]: Screenshot New Chat●
+            - button "More options" [ref=e17]: more_vert
+          - generic [ref=e19]: 1 msgs · 12/31/2025
+        - generic [ref=e20]:
+          - generic [ref=e21]:
+            - generic "Alpha" [ref=e22]: Alpha●
+            - button "More options" [ref=e23]: more_vert
+          - generic [ref=e25]: 1 msgs · 12/31/2025
+    - generic [ref=e26]:
+      - button "More options" [ref=e29] [cursor=pointer]:
+        - generic [ref=e30]: event_list
+      - generic [ref=e33]: Start a conversation
+      - generic [ref=e36]:
+        - textbox "Ask about fixture-a..." [ref=e40]
+        - generic [ref=e41]:
+          - generic [ref=e42]:
+            - button "Add" [ref=e44] [cursor=pointer]:
+              - generic [ref=e45]: add
+            - button "Mode" [ref=e47] [cursor=pointer]:
+              - generic [ref=e48]: shield_lock
+              - generic [ref=e49]: Mode
+          - generic [ref=e50]:
+            - 'button "Context usage: 0%" [ref=e52] [cursor=pointer]'
+            - button "DeepSeek V4 Flash" [ref=e54] [cursor=pointer]:
+              - generic [ref=e55]: DeepSeek V4 Flash
+              - generic [ref=e56]: keyboard_arrow_down
+            - button "Voice input (click to open)" [ref=e58] [cursor=pointer]:
+              - generic [ref=e59]: mic
+            - button "Send message" [ref=e61] [cursor=pointer]:
+              - generic [ref=e62]: arrow_upward
+  - generic [ref=e64]:
+    - complementary [ref=e65]:
+      - generic [ref=e66]:
+        - button "Hide threads" [ref=e67] [cursor=pointer]:
+          - generic [ref=e68]: dock_to_right
+        - combobox "Thread view" [ref=e69] [cursor=pointer]:
+          - option "Active Threads" [selected]
+          - option "Archive"
+      - button "edit_squareNew chat" [ref=e70]
+      - separator [ref=e71]
+      - generic [ref=e73]: No threads yet
+    - generic [ref=e74]:
+      - button "More options" [ref=e77] [cursor=pointer]:
+        - generic [ref=e78]: event_list
+      - generic [ref=e81]: No thread selected
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - textbox [disabled]
+          - generic:
+            - generic:
+              - generic:
+                - button "Add":
+                  - generic: add
+              - generic:
+                - button "Mode":
+                  - generic: shield_lock
+                  - generic: Mode
+            - generic:
+              - generic:
+                - 'button "Context usage: 0%"'
+              - generic:
+                - button "DeepSeek V4 Flash":
+                  - generic: DeepSeek V4 Flash
+                  - generic: keyboard_arrow_down
+              - generic:
+                - button "Voice input (click to open)":
+                  - generic: mic
+              - generic:
+                - button "Send message":
+                  - generic: arrow_upward
+  - generic [ref=e83]:
+    - generic [ref=e84]:
+      - generic [ref=e85]:
+        - button "Show threads" [ref=e86] [cursor=pointer]:
+          - generic [ref=e87]: dock_to_right
+        - button "New chat" [ref=e88] [cursor=pointer]:
+          - generic [ref=e89]: edit_square
+      - button "More options" [ref=e91] [cursor=pointer]:
+        - generic [ref=e92]: event_list
+    - generic [ref=e95]: Start a conversation
+    - generic [ref=e98]:
+      - textbox "Ask about chat-surface-component-screenshot-component..." [ref=e102]
+      - generic [ref=e103]:
+        - generic [ref=e104]:
+          - button "Add" [ref=e106] [cursor=pointer]:
+            - generic [ref=e107]: add
+          - button "Mode" [ref=e109] [cursor=pointer]:
+            - generic [ref=e110]: shield_lock
+            - generic [ref=e111]: Mode
+        - generic [ref=e112]:
+          - 'button "Context usage: 0%" [ref=e114] [cursor=pointer]'
+          - button "DeepSeek V4 Flash" [ref=e116] [cursor=pointer]:
+            - generic [ref=e117]: DeepSeek V4 Flash
+            - generic [ref=e118]: keyboard_arrow_down
+          - button "Voice input (click to open)" [ref=e120] [cursor=pointer]:
+            - generic [ref=e121]: mic
+          - button "Send message" [ref=e123] [cursor=pointer]:
+            - generic [ref=e124]: arrow_upward
+```

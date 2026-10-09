@@ -1,0 +1,138 @@
+{
+  "reader": "codex_app.read_thread",
+  "previousPairId": null,
+  "highWaterPairId": "01a0f97d-64d0-7920-91bd-620d1e4d40d2",
+  "contentReviewed": true,
+  "limitations": [
+    "Owner requested only the latest 20 settled turns; older history was deliberately not read and the null main checkpoint boundary remains unchanged.",
+    "Synthesis uses returned user messages and assistant final responses; native tool payloads and reasoning are excluded. It is not a verbatim transcript or a fresh verification of historical work."
+  ],
+  "pages": [
+    {
+      "requestCursor": null,
+      "threadId": "01a0e6c9-e4e0-7872-9268-9a77a76f0c57",
+      "hostId": "local",
+      "order": "newest_first",
+      "hasMore": true,
+      "nextCursor": "{\"requestedThreadId\":\"01a0e6c9-e4e0-7872-9268-9a77a76f0c57\",\"rolloutOrdinal\":4715,\"includeAnchor\":false,\"scope\":{\"kind\":\"turns\"}}",
+      "turns": [
+        {
+          "id": "01a0f97d-64d0-7920-91bd-620d1e4d40d2",
+          "status": "completed"
+        },
+        {
+          "id": "01a0f8f4-7f58-7bb3-9b9d-bed037bcebac",
+          "status": "completed"
+        },
+        {
+          "id": "01a0f55b-5a18-74b0-9ce1-29e522e98f5c",
+          "status": "completed"
+        },
+        {
+          "id": "01a0f55a-b1b0-74a0-85e7-11019e2b9d4d",
+          "status": "completed"
+        },
+        {
+          "id": "01a0f54b-732d-7770-a37a-1d7e510becf6",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "requestCursor": "{\"requestedThreadId\":\"01a0e6c9-e4e0-7872-9268-9a77a76f0c57\",\"rolloutOrdinal\":4715,\"includeAnchor\":false,\"scope\":{\"kind\":\"turns\"}}",
+      "threadId": "01a0e6c9-e4e0-7872-9268-9a77a76f0c57",
+      "hostId": "local",
+      "order": "newest_first",
+      "hasMore": true,
+      "nextCursor": "{\"requestedThreadId\":\"01a0e6c9-e4e0-7872-9268-9a77a76f0c57\",\"rolloutOrdinal\":4604,\"includeAnchor\":false,\"scope\":{\"kind\":\"turns\"}}",
+      "turns": [
+        {
+          "id": "01a0f516-3c61-7c80-ac04-b9115ba8d7c4",
+          "status": "completed"
+        },
+        {
+          "id": "01a0ee53-841a-7ec1-895a-e399de6a0248",
+          "status": "completed"
+        },
+        {
+          "id": "01a0ee4b-9f85-7303-8420-3f103d905769",
+          "status": "completed"
+        },
+        {
+          "id": "01a0ee4a-bba5-7bd3-a796-c5cbe8034c2d",
+          "status": "completed"
+        },
+        {
+          "id": "01a0ee49-fbc2-7200-853b-2b0d7a7fa05c",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "requestCursor": "{\"requestedThreadId\":\"01a0e6c9-e4e0-7872-9268-9a77a76f0c57\",\"rolloutOrdinal\":4604,\"includeAnchor\":false,\"scope\":{\"kind\":\"turns\"}}",
+      "threadId": "01a0e6c9-e4e0-7872-9268-9a77a76f0c57",
+      "hostId": "local",
+      "order": "newest_first",
+      "hasMore": true,
+      "nextCursor": "{\"requestedThreadId\":\"01a0e6c9-e4e0-7872-9268-9a77a76f0c57\",\"rolloutOrdinal\":4490,\"includeAnchor\":false,\"scope\":{\"kind\":\"turns\"}}",
+      "turns": [
+        {
+          "id": "01a0ee49-46ff-7981-8f4b-aca8800784db",
+          "status": "completed"
+        },
+        {
+          "id": "01a0ec70-882a-7a00-b30d-07e1e4f146e8",
+          "status": "completed"
+        },
+        {
+          "id": "01a0ec66-d27c-7fb2-8cfa-7162742e13ef",
+          "status": "completed"
+        },
+        {
+          "id": "01a0ec66-5fb2-7682-ac0e-e97671b7622d",
+          "status": "completed"
+        },
+        {
+          "id": "01a0ec64-d57f-7123-85e0-b871c61bfe29",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "requestCursor": "{\"requestedThreadId\":\"01a0e6c9-e4e0-7872-9268-9a77a76f0c57\",\"rolloutOrdinal\":4490,\"includeAnchor\":false,\"scope\":{\"kind\":\"turns\"}}",
+      "threadId": "01a0e6c9-e4e0-7872-9268-9a77a76f0c57",
+      "hostId": "local",
+      "order": "newest_first",
+      "hasMore": true,
+      "nextCursor": "{\"requestedThreadId\":\"01a0e6c9-e4e0-7872-9268-9a77a76f0c57\",\"rolloutOrdinal\":3394,\"includeAnchor\":false,\"scope\":{\"kind\":\"turns\"}}",
+      "turns": [
+        {
+          "id": "01a0eabc-86b4-7353-a989-8c9810a1671a",
+          "status": "completed"
+        },
+        {
+          "id": "01a0ea9f-f4d9-7502-a12f-ef0e362c5eee",
+          "status": "completed"
+        },
+        {
+          "id": "01a0ea4f-30c6-7b02-b0f8-497f8493e235",
+          "status": "completed"
+        },
+        {
+          "id": "01a0ea36-cf73-7051-b870-8dfae0d7c061",
+          "status": "completed"
+        },
+        {
+          "id": "01a0ea36-4a41-7de2-974d-045278a4be0e",
+          "status": "completed"
+        }
+      ]
+    }
+  ],
+  "recordedAt": "2026-10-01T22:58:23Z",
+  "contributor": "Codex side chat (ephemeral)",
+  "scope": "owner_requested_latest_20_settled_turns",
+  "registryAdvanced": false,
+  "artifactSha256": "17a0acd143bd40dd106f853a656c623d88e73243c3d85bc5a1f994180fa11238",
+  "artifactPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/CAPTURE.md"
+}

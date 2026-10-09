@@ -1,0 +1,31 @@
+{
+  "gate": "M1 builder-owned",
+  "reviewer": "/root/m1_builder/builder_review_01",
+  "agent_type": "clean-room-reviewer",
+  "fork_turns": "none",
+  "model_effort": "inherited root; no overrides",
+  "dispatched_utc": "2026-10-07T13:06:03Z",
+  "status": "completed",
+  "prior_reviewers": [],
+  "before_spawn": "list_agents found root and builder only; no previous reviewer or competing writer",
+  "closure_capability": "close_agent tool unavailable; terminal final result will be recorded before handoff",
+  "source": "SOURCE-IDENTITY.json",
+  "source_diff_sha256": "588082b3eaa12ce18137afff587e044d157747e999fd86e5823b73dc34bfe0d9",
+  "terminal_result": "CLEAN",
+  "terminal_observed_utc": "2026-10-07T16:09:38Z",
+  "terminal_evidence": "collaboration.list_agents completed status and received final answer",
+  "review_report": "BUILDER-REVIEW-01.md",
+  "review_sha256": "ba1a50bdbd14cd51cfa16331a43dae94abda51c89a6c6d23cfe7a04aa34b7d3f",
+  "closure": {
+    "tool_available": false,
+    "action": "not callable; no close_agent tool exposed",
+    "disposition": "terminal completed reviewer retained as lifecycle evidence only"
+  },
+  "advisory": {
+    "id": "report-count",
+    "old": "30/30",
+    "corrected": "31/31",
+    "material": false,
+    "source_changed": false
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "observed_native_exit": 1,
+  "failed_location": "SPEC-final-suite-runner.py main line112",
+  "# pass 17 assumption": "Actual stdout uses \u2139 pass 17; actual command exit0/all17passed/fail0/skip0/cancel0",
+  "native_trace": "AssertionError at assert # pass 17 in n[stdout] and # fail 0 in n[stdout]",
+  "original_runner": {
+    "exists": true,
+    "kind": "file",
+    "mode": "0o100644",
+    "sha256": "8a15996c3d1e4093f5b1db61df94087385520cb1948784edba8f97fd46d5a079"
+  },
+  "continuation": {
+    "exists": true,
+    "kind": "file",
+    "mode": "0o100644",
+    "sha256": "9f690dc25302ff108d31ad753127dec3dea8474dc4a4c3d20c099c6a78f1d5cd"
+  },
+  "correction": "Read and validate saved actual receipt in native format; save current exact post binding and perform only previously unexecuted syntax/dry-run commands; no passing suite replay",
+  "no_product_byte_changes": true
+}

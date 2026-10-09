@@ -1,0 +1,43 @@
+{
+  "runId": "boot-1790140695941-779cf87c",
+  "mode": "--working-return",
+  "token": "chat-architecture-owner-boot-1790140695941-779cf87c",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--config=e2e/chat-architecture/playwright.boot.config.ts",
+    "e2e/working-activity.spec.ts",
+    "--grep",
+    "in-flight return restores original startedAt"
+  ],
+  "selectedPaths": [
+    "e2e/working-activity.spec.ts"
+  ],
+  "sourceHashes": {
+    "fusion-studio-client/e2e/chat-architecture/boot-regressions.mjs": "adc077a1367985dff66796b4c17721462eb6d010f03acf3b8d16cba6af9d3d02",
+    "fusion-studio-client/e2e/chat-architecture/playwright.boot.config.ts": "20bad30a2c15fc46288d72d1dc3b6e261ad372315c7808447717fcbe20fd467c",
+    "fusion-studio-client/e2e/chat-architecture/owned-regression-launcher.mjs": "4b4d402cbd1d7a727a3dbf1b602b6c0f33407c0213b52af6e994491cd8c46e20",
+    "fusion-studio-client/e2e/chat-architecture/owned-regression-supervisor.mjs": "3786f6c16bb6309a74243e43283181b494e3ad15ce3989d6fa41d901fdba9abe",
+    "fusion-studio-client/e2e/chat-architecture/owned-regression-lifecycle.test.mjs": "c6bcee77b55f6d8de41b37dcf29935e16b81116e1befdd19a8beba7d92e8fefb",
+    "fusion-studio-client/e2e/chat-architecture/fixture-lifecycle.mjs": "2c2ce4b330593faf04e4eadc7c95d0adccdd1b75c1d02452b4110efa19a3b84d",
+    "fusion-studio-client/e2e/chat-architecture/stage-fixture.mjs": "2b773edec71d065d927b5507e46d6acdd16dd8d622b04e229a0d203bca7a6e19",
+    "fusion-studio-client/e2e/support/working-activity-ws-fixture.ts": "449e9bc9c2c94e8c2485837b983cb191be931052930b7c3a6fa9a9413a39ceb6",
+    "fusion-studio-client/playwright.chat-architecture.config.ts": "30605cd962368f6ed861727a7ec88d3baebd28a193a2edd5e792f23c58a71f24",
+    "fusion-studio-client/dist/index.html": "34bf1e4483f7b96ab92cea3c2dd72f8d837b904ad8b2019b9757fbd47d8f7ff4",
+    "fusion-studio-server/server.js": "293e3f56f7c61aa855d8e116fe901cb58db86eedf69cce3ac2e4ad865ad62a07",
+    "fusion-studio-client/e2e/chat-surface-identity.spec.ts": "bf473b53e9d304308a779eedcc173d025c07011637258c6a689249de73feb6de",
+    "fusion-studio-client/e2e/chat-surface-isolation.spec.ts": "b8489d4b124c134bbd5b70daa88127e218c662da00134e9c680af1492dcc51d3",
+    "fusion-studio-client/e2e/threaded-chat-host.spec.ts": "bb19545801a73e9ef3637473cc7437f0e10bb7334f9399bb941f12758812a2bc",
+    "fusion-studio-client/e2e/prompt-ownership.slice-c.spec.ts": "de6bb8b82c28cad53da19b78f1552ee698a359d7ecbab4f5f81dec33ddf1e978",
+    "fusion-studio-client/e2e/working-activity.spec.ts": "a5a3fde83adf1a759731ea75c7be01454a74afc5446e47fe7f3b7679dd51552d",
+    "fusion-studio-client/e2e/move-chat-to-side-chat.spec.ts": "7ea3e257e50b7097df3529c4f5e1afc2315aba2d094a5cb3da110e69f5b947d1",
+    "fusion-studio-client/e2e/side-chat-isolation.spec.ts": "66d0b5cc28ca97e314c4ff5eabd8ccbc083a8b60f1c2efac1876c1946a11fa18",
+    "fusion-studio-client/e2e/side-chat-placement-recovery.spec.ts": "05e4a325f5724e632848560400f2fa28b9aa7991d7ea4af8188d7f38cce88bac"
+  },
+  "stagedServer": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/boot-1790140695941-779cf87c-bMVPp9/stage/fusion-studio-server",
+  "profileRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/boot-1790140695941-779cf87c-bMVPp9/profile",
+  "workspaceRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/boot-1790140695941-779cf87c-bMVPp9/workspace",
+  "serverPolicy": "private migrated DB, test-owned workspace, PORT=0, loopback only; never port 3001",
+  "nativeAuthentication": "existing trusted-shell browser fixture; Electron public route separately covered by V-SHELL/V-BASE"
+}

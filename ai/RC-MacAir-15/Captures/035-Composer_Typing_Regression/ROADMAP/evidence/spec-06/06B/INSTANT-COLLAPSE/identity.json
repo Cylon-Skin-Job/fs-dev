@@ -1,0 +1,14 @@
+{
+  "source": {
+    "entries": 1969,
+    "sha256": "32de225544d72a86dac75bf19926046cf57a8154d2a95550df8f7e10539d7216"
+  },
+  "build": {
+    "entries": 200,
+    "sha256": "405fe114c4a3d734112645b1305407f74d71b93620a7e520f47f45365fd4f192"
+  },
+  "baseline": {
+    "source": "2bedc37c0dd1b4373df5f90d2dbcde2e74059521f14b6346525ab7596d94ecc7",
+    "build": "b070d633863382e48ea2f6d677a92cfe65b9a4dea79caa87975711c109c70b03"
+  }
+}

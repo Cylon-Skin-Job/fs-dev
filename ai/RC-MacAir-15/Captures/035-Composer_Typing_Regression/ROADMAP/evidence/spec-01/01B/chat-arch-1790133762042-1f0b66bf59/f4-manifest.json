@@ -1,0 +1,35 @@
+{
+  "id": "F4-MOUNT-MATRIX-V1",
+  "cases": [
+    {
+      "id": "F4-SAME-SESSION-DUPLICATE",
+      "session": "session-a",
+      "mounts": [
+        "main-a",
+        "duplicate-a"
+      ],
+      "states": [
+        "visible",
+        "inactive-mounted"
+      ]
+    },
+    {
+      "id": "F4-TWO-SESSIONS-VIEWS",
+      "sessions": [
+        "session-a",
+        "session-b"
+      ],
+      "views": [
+        "capture-viewer",
+        "wiki-viewer"
+      ]
+    },
+    {
+      "id": "F4-SIDE-AFTER-MOVE",
+      "group": "group-a",
+      "primary": "session-b",
+      "side": "session-a",
+      "placement": "side-placement-a"
+    }
+  ]
+}

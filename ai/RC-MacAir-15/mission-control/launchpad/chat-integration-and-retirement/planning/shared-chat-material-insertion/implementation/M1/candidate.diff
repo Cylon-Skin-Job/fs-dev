@@ -1,0 +1,572 @@
+diff --git a/fusion-studio-client/e2e/chat-surface-identity.spec.ts b/fusion-studio-client/e2e/chat-surface-identity.spec.ts
+index 4e5ab8d7..1a01b32b 100644
+--- a/fusion-studio-client/e2e/chat-surface-identity.spec.ts
++++ b/fusion-studio-client/e2e/chat-surface-identity.spec.ts
+@@ -298,16 +298,21 @@ async function buildChatSurfaceHarness(): Promise<string> {
+     const resolvedEntry = `\0${virtualEntry}`;
+     const panelStorePath = path.resolve('src/state/panelStore.ts');
+     const hostPath = path.resolve('src/components/chat/ChatSessionHost.tsx');
++    const workspaceStorePath = path.resolve('src/state/workspaceStore.ts');
+     const source = `
+       import React from 'react';
+       import { createRoot } from 'react-dom/client';
+       import { usePanelStore } from ${JSON.stringify(panelStorePath)};
+       import { ChatSessionHost } from ${JSON.stringify(hostPath)};
++      import { useWorkspaceStore } from ${JSON.stringify(workspaceStorePath)};
+ 
+       const SHARED = 'fixture-shared-thread';
+       const GROUP = 'fixture-group';
++      useWorkspaceStore.setState({ activeWorkspaceId: 'fixture-workspace', workspaceEpoch: 'identity-epoch',
++        bindingRevision: 1, bindingSerial: 1, hasReceivedInit: true });
+       usePanelStore.setState({
+         activeWorkspaceId: 'fixture-workspace',
++        currentPanel: 'file-viewer',
+         currentThreadId: SHARED,
+         chatActive: true,
+         ws: null,
+@@ -334,8 +339,11 @@ async function buildChatSurfaceHarness(): Promise<string> {
+         tokenUsageByThread: {},
+         wireReadyByThread: {},
+         harnessSelectionByThread: {},
+-        threadGroupsByWorkspaceAndView: {},
+-        currentThreadGroupIdByWorkspaceAndView: {},
++        threadGroupsByWorkspaceAndView: { 'fixture-workspace': { 'file-viewer': [{
++          threadId: SHARED, threadGroupId: GROUP, viewId: 'file-viewer',
++          entry: { name: 'Shared', status: 'active' },
++        }] } },
++        currentThreadGroupIdByWorkspaceAndView: { 'fixture-workspace': { 'file-viewer': GROUP } },
+         legacyThreadGroupsByWorkspaceId: {},
+         currentLegacyThreadGroupIdByWorkspaceId: {},
+         pendingThreadOpens: [],
+@@ -349,6 +357,9 @@ async function buildChatSurfaceHarness(): Promise<string> {
+             toggleCollapse: () => setCollapsed((value) => !value),
+             collapsed,
+             storeState: () => JSON.stringify(usePanelStore.getState()),
++            mountedState: () => Object.values(usePanelStore.getState().mountedChats).map(({ surfaceId, generation }) => ({ surfaceId, generation })),
++            durableState: () => JSON.stringify({ workspaceState: usePanelStore.getState().workspaceState,
++              viewStates: usePanelStore.getState().viewStates }),
+           };
+         }, [collapsed]);
+         return React.createElement('div', null,
+@@ -461,23 +472,31 @@ test('surfaceId is minted at mount, never persisted, and collapse/expand preserv
+   const before = await mountIdentity(page, '#mount-a');
+   expect(before.surfaceId).toBeTruthy();
+ 
+-  // Never persisted: the app store never carries a transient surface id.
++  // Mounted bindings live in the transient Chat projection, outside durable lanes.
+   const serialized = await page.evaluate(() => (
+     (window as unknown as { __chatSurfaceFixture: { storeState: () => string } })
+       .__chatSurfaceFixture.storeState()
+   ));
+   expect(serialized).toContain('SHARED-TRUTH');
+-  expect(serialized).not.toContain('chat-surface:');
++  expect(serialized).toContain(before.surfaceId!);
++  const mounted = await page.evaluate(() => (window as any).__chatSurfaceFixture.mountedState());
++  expect(mounted).toHaveLength(2);
++  expect(new Set(mounted.map((binding: any) => binding.generation)).size).toBe(2);
++  expect(await page.evaluate(() => (window as any).__chatSurfaceFixture.durableState())).not.toContain('chat-surface:');
+ 
+   await page.evaluate(() => (window as unknown as { __chatSurfaceFixture: { toggleCollapse: () => void } }).__chatSurfaceFixture.toggleCollapse());
+   await expect(page.locator('#mount-a [data-surface-id]')).toBeVisible();
+   const after = await mountIdentity(page, '#mount-a');
+   expect(after.surfaceId).toBe(before.surfaceId);
++  expect(await page.evaluate(() => (window as any).__chatSurfaceFixture.mountedState())).toEqual([]);
+ 
+   await page.evaluate(() => (window as unknown as { __chatSurfaceFixture: { toggleCollapse: () => void } }).__chatSurfaceFixture.toggleCollapse());
+   const restored = await mountIdentity(page, '#mount-a');
+   expect(restored.surfaceId).toBe(before.surfaceId);
+   await expect(page.locator('#mount-a .rv-chat-messages')).toContainText('SHARED-TRUTH');
++  const reopened = await page.evaluate(() => (window as any).__chatSurfaceFixture.mountedState());
++  expect(reopened).toHaveLength(2);
++  expect(reopened.every((binding: any) => !mounted.some((old: any) => old.generation === binding.generation))).toBe(true);
+ });
+ 
+ test('contract mints distinct transient surface ids per runtime mount generation', async () => {
+diff --git a/fusion-studio-client/e2e/chat-surface-isolation.spec.ts b/fusion-studio-client/e2e/chat-surface-isolation.spec.ts
+index 2244b177..47fed939 100644
+--- a/fusion-studio-client/e2e/chat-surface-isolation.spec.ts
++++ b/fusion-studio-client/e2e/chat-surface-isolation.spec.ts
+@@ -53,6 +53,8 @@ async function buildHarness(): Promise<string> {
+     const textFormatterPath = path.resolve('src/lib/text/index.ts');
+     const threadHandlersPath = path.resolve('src/lib/ws/thread-handlers.ts');
+     const streamHandlersPath = path.resolve('src/lib/ws/stream-handlers.ts');
++    const workspaceStorePath = path.resolve('src/state/workspaceStore.ts');
++    const productSendPath = path.resolve('src/lib/ws/product-send.ts');
+     const source = `
+       import React from 'react';
+       import { createRoot } from 'react-dom/client';
+@@ -62,6 +64,8 @@ async function buildHarness(): Promise<string> {
+       import { ChatSessionHost } from ${JSON.stringify(hostPath)};
+       import { handleThreadMessage } from ${JSON.stringify(threadHandlersPath)};
+       import { handleStreamMessage } from ${JSON.stringify(streamHandlersPath)};
++      import { useWorkspaceStore } from ${JSON.stringify(workspaceStorePath)};
++      import { installProductSendCapability } from ${JSON.stringify(productSendPath)};
+ 
+       var WS_ID = ${JSON.stringify(WS_ID)};
+       var GROUP_A = ${JSON.stringify(GROUP_A)};
+@@ -84,6 +88,19 @@ async function buildHarness(): Promise<string> {
+         removeEventListener: function () {},
+         close: function () {},
+       };
++      // This fixture represents an initialized authenticated product connection.
++      // Enqueue remains distinct from the exact server message:sent ACK below.
++      useWorkspaceStore.setState({ activeWorkspaceId: WS_ID, workspaceEpoch: 'isolation-epoch',
++        bindingRevision: 1, bindingSerial: 1, hasReceivedInit: true });
++      installProductSendCapability({ socket: fakeWs, generation: 'isolation-fixture',
++        isAuthenticated: function () { return true; },
++        captureBinding: function (id) { return id === WS_ID ? { workspaceId: WS_ID,
++          workspaceEpoch: 'isolation-epoch', bindingRevision: 1, bindingSerial: 1 } : null; },
++        isBindingCurrent: function () { return usePanelStore.getState().activeWorkspaceId === WS_ID; },
++        sendProductResult: function (value, policy, current) {
++          if (!current()) return { status: 'not_enqueued', reason: 'stale_binding' };
++          fakeWs.send(value); return { status: 'enqueued', destination: 'socket' };
++        } });
+ 
+       function row(threadId, threadGroupId, name, model, variant) {
+         return {
+diff --git a/fusion-studio-client/src/components/SendToChatButton.tsx b/fusion-studio-client/src/components/SendToChatButton.tsx
+index e19e2395..cc578ff0 100644
+--- a/fusion-studio-client/src/components/SendToChatButton.tsx
++++ b/fusion-studio-client/src/components/SendToChatButton.tsx
+@@ -9,7 +9,7 @@
+  */
+ 
+ import { createResourceChatAttachment } from '../lib/resource-path';
+-import { dispatchChatAction } from '../lib/chat-action';
++import { beginChatMaterial, commitChatMaterial } from '../lib/chat-action';
+ import { showToast } from '../lib/toast';
+ 
+ interface SendToChatButtonProps {
+@@ -26,15 +26,12 @@ export function SendToChatButton({
+   title = 'Send path to chat',
+ }: SendToChatButtonProps) {
+   const handleClick = async () => {
++    const begun = beginChatMaterial();
++    if (begun.status !== 'ready') { showToast('Chat target unavailable'); return; }
+     const attachment = createResourceChatAttachment(panel, relativePath);
+     if (attachment) {
+-      const result = await dispatchChatAction({
+-        attachment,
+-        target: 'current',
+-        delivery: 'insert',
+-        sourceViewId: panel,
+-      });
+-      showToast(result.status === 'applied' ? 'Link attached to chat' : 'Chat target unavailable');
++      const result = await commitChatMaterial(begun.operation, { attachment });
++      showToast(result.status === 'applied' || result.status === 'noop' ? 'Link attached to chat' : 'Chat target unavailable');
+     } else {
+       showToast('Path not available');
+     }
+diff --git a/fusion-studio-client/src/components/chat/ChatSurface.tsx b/fusion-studio-client/src/components/chat/ChatSurface.tsx
+index 392accfa..28bfc57b 100644
+--- a/fusion-studio-client/src/components/chat/ChatSurface.tsx
++++ b/fusion-studio-client/src/components/chat/ChatSurface.tsx
+@@ -37,6 +37,7 @@ export const ChatSurface = memo(function ChatSurface({
+   threadId,
+   surfaceId,
+   host,
++  componentInstanceId,
+   shell,
+   header,
+   composer,
+@@ -59,6 +60,8 @@ export const ChatSurface = memo(function ChatSurface({
+       data-chat-thread-id={threadId}
+       data-chat-workspace-id={workspaceId}
+       data-chat-view-id={viewId ?? ''}
++      onPointerDownCapture={actions.onActivate}
++      onFocusCapture={actions.onActivate}
+     >
+       <ConnectedChatHeader
+         workspaceId={workspaceId}
+@@ -88,6 +91,7 @@ export const ChatSurface = memo(function ChatSurface({
+         threadGroupId={threadGroupId}
+         host={host}
+         screenshotSelection={screenshotSelection}
++        componentInstanceId={componentInstanceId}
+         threadId={threadId}
+         surfaceId={surfaceId}
+         panel={panel}
+diff --git a/fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx b/fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx
+index 542949c3..5d066ba6 100644
+--- a/fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx
++++ b/fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx
+@@ -127,6 +127,7 @@ function ChatSurfaceReadyMount({
+     workspaceId: input.workspaceId,
+     host: input.host,
+     surfaceId,
++    componentInstanceId: descriptor.componentInstanceId,
+   });
+ 
+   return (
+diff --git a/fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx b/fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx
+index 5df6490e..6bf1de00 100644
+--- a/fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx
++++ b/fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx
+@@ -17,6 +17,7 @@ import { hasAcceptedPromptExecutionWatch } from '../../lib/chat/prompt-submissio
+ import type { ChatLinkAttachment } from '../../lib/chat-file-links/file-link-types';
+ import type { ChatSurfaceActions, ChatSurfaceComposerPresentation, ChatSurfaceRefs } from './chatSurfaceContract';
+ import { ChatAreaFooter } from './ChatAreaFooter';
++import { useMountedChatBinding } from './useMountedChatBinding';
+ import type { ScreenshotAttachmentOwner } from '../../screenshots/chatScreenshotCapture';
+ 
+ const EMPTY_ATTACHMENTS: readonly ChatLinkAttachment[] = [];
+@@ -30,6 +31,7 @@ interface ConnectedChatComposerProps {
+   threadId: string;
+   surfaceId: string;
+   panel: string;
++  componentInstanceId?: string;
+   hasThread: boolean;
+   isActive: boolean;
+   isSendingForCurrentThread: boolean;
+@@ -47,6 +49,7 @@ export const ConnectedChatComposer = memo(function ConnectedChatComposer({
+   threadId,
+   surfaceId,
+   panel,
++  componentInstanceId,
+   hasThread,
+   isActive,
+   isSendingForCurrentThread,
+@@ -55,6 +58,11 @@ export const ConnectedChatComposer = memo(function ConnectedChatComposer({
+   inputRef,
+ }: ConnectedChatComposerProps) {
+   const ownerReady = Boolean(workspaceId && hasThread && threadId);
++  const materialIdentity = useMemo(() => ownerReady && viewId ? {
++    workspaceId, viewId, threadGroupId, threadId, surfaceId, host,
++    binding: screenshotSelection, componentInstanceId,
++  } : null, [ownerReady, workspaceId, viewId, threadGroupId, threadId, surfaceId, host, screenshotSelection, componentInstanceId]);
++  useMountedChatBinding(materialIdentity);
+   const screenshotViewActive = usePanelStore(
+     (state) => viewId === null || state.currentPanel === viewId,
+   );
+diff --git a/fusion-studio-client/src/components/chat/chatSurfaceContract.ts b/fusion-studio-client/src/components/chat/chatSurfaceContract.ts
+index e261da62..110ce0f5 100644
+--- a/fusion-studio-client/src/components/chat/chatSurfaceContract.ts
++++ b/fusion-studio-client/src/components/chat/chatSurfaceContract.ts
+@@ -30,6 +30,7 @@ export interface ChatMountIdentity {
+   threadId: string;
+   surfaceId: string;
+   host: ChatSurfaceHostKind;
++  componentInstanceId?: string;
+ }
+ 
+ /**
+@@ -74,6 +75,7 @@ export interface ChatSurfaceComposerPresentation {
+ 
+ /** Explicit user intents emitted by one mounted `ChatSurface`. */
+ export interface ChatSurfaceActions {
++  onActivate: () => void;
+   onSend: (text: string) => void;
+   onCheckSubmissionStatus: () => void;
+   onStop: () => void;
+diff --git a/fusion-studio-client/src/components/chat/useChatSessionActions.ts b/fusion-studio-client/src/components/chat/useChatSessionActions.ts
+index 128f5ee3..1c5d1932 100644
+--- a/fusion-studio-client/src/components/chat/useChatSessionActions.ts
++++ b/fusion-studio-client/src/components/chat/useChatSessionActions.ts
+@@ -60,7 +60,7 @@ interface UseChatSessionActionsOptions {
+ }
+ 
+ export interface ChatSessionActionProjection {
+-  actions: ChatSurfaceActions;
++  actions: Omit<ChatSurfaceActions, 'onActivate'>;
+   onToggleThreads: () => void;
+   onToggleContent: () => void;
+ }
+@@ -219,8 +219,9 @@ export function useChatSessionActions({
+       return;
+     }
+     const socket = usePanelStore.getState().ws;
+-    sendChatProduct({ type: 'thread:open-assistant', viewId },
++    const result = sendChatProduct({ type: 'thread:open-assistant', viewId },
+       { workspaceId, policy: 'socket_only', expectedSocket: socket });
++    if (result.status !== 'not_enqueued') usePanelStore.getState().requestNewChatActivation(workspaceId, viewId);
+   }, [selectableHarnessCount, setCliPickerOpen, viewId, workspaceId]);
+ 
+   const handleHarnessSelect = useCallback((harnessId: string, modelId?: string) => {
+@@ -233,6 +234,7 @@ export function useChatSessionActions({
+         ...(modelId ? { harnessConfig: { model: modelId } } : {}),
+       }, { workspaceId, policy: 'socket_only', expectedSocket: socket });
+     if (outcome.status === 'not_enqueued') usePanelStore.getState().clearConnectingHarnessForSurface(surfaceId);
++    else usePanelStore.getState().requestNewChatActivation(workspaceId, viewId);
+     setCliPickerOpen(false);
+   }, [setCliPickerOpen, setConnectingHarnessForSurface, surfaceId, viewId, workspaceId]);
+ 
+@@ -276,7 +278,7 @@ export function useChatSessionActions({
+   );
+   const handleCloseCliPicker = useCallback(() => setCliPickerOpen(false), [setCliPickerOpen]);
+ 
+-  const actions = useMemo<ChatSurfaceActions>(() => ({
++  const actions = useMemo<Omit<ChatSurfaceActions, 'onActivate'>>(() => ({
+     onSend: handleSend,
+     onCheckSubmissionStatus: handleCheckSubmissionStatus,
+     onStop: handleStop,
+diff --git a/fusion-studio-client/src/components/chat/useChatSessionHost.ts b/fusion-studio-client/src/components/chat/useChatSessionHost.ts
+index 2024f402..4b2bb657 100644
+--- a/fusion-studio-client/src/components/chat/useChatSessionHost.ts
++++ b/fusion-studio-client/src/components/chat/useChatSessionHost.ts
+@@ -7,7 +7,7 @@
+  * observes only stable shell/header/composer projections for its exact session.
+  */
+ 
+-import { useEffect, useMemo } from 'react';
++import { useCallback, useEffect, useMemo } from 'react';
+ import { usePanelStore } from '../../state/panelStore';
+ import { useResolvedHarness, useSelectableHarnesses } from '../../config/harness';
+ import { useHarnessStatuses } from '../../hooks/useHarnessStatuses';
+@@ -39,6 +39,7 @@ export interface UseChatSessionHostOptions {
+   isActive?: boolean;
+   /** Component-backed mounts may supply their descriptor-derived surface id. */
+   surfaceId?: string;
++  componentInstanceId?: string;
+ }
+ 
+ export interface ChatSessionHostProjection {
+@@ -65,6 +66,7 @@ export function useChatSessionHost({
+   contentCollapsed = false,
+   isActive: isActivePanel = true,
+   surfaceId: surfaceIdProp,
++  componentInstanceId,
+ }: UseChatSessionHostOptions): ChatSessionHostProjection {
+   const mintedSurfaceId = useChatSurfaceIdentity(host);
+   const surfaceId = surfaceIdProp ?? mintedSurfaceId;
+@@ -120,6 +122,7 @@ export function useChatSessionHost({
+     clearConnectingHarnessForSurface(surfaceId);
+   }, [clearConnectingHarnessForSurface, surfaceId]);
+ 
++  const onActivate = useCallback(() => usePanelStore.getState().activateMountedChat(surfaceId), [surfaceId]);
+   const identity = useMemo<ChatMountIdentity>(() => ({
+     workspaceId,
+     viewId,
+@@ -127,7 +130,8 @@ export function useChatSessionHost({
+     threadId,
+     surfaceId,
+     host,
+-  }), [host, surfaceId, threadGroupId, threadId, viewId, workspaceId]);
++    componentInstanceId,
++  }), [componentInstanceId, host, surfaceId, threadGroupId, threadId, viewId, workspaceId]);
+ 
+   const shell = useMemo<ChatSurfaceShellPresentation>(() => ({
+     hasThread,
+@@ -185,7 +189,7 @@ export function useChatSessionHost({
+     shell,
+     header,
+     composer,
+-    actions: actionProjection.actions,
++    actions: { ...actionProjection.actions, onActivate },
+     refs: mount.refs,
+     onToggleThreads: actionProjection.onToggleThreads,
+     onToggleContent: actionProjection.onToggleContent,
+diff --git a/fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts b/fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts
+index 1ea260a1..5539b062 100644
+--- a/fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts
++++ b/fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts
+@@ -95,6 +95,9 @@ export function useSideChatRailAdapter(
+       activePlacementId,
+       threadGroupId: groupId,
+       onFocusPlacement: (placementId) => {
++        const placement = readOpenSideChatPlacements(entry, viewId).find((item) => item.placementId === placementId);
++        if (placement) usePanelStore.getState().requestChatActivation({ workspaceId, viewId,
++          threadGroupId: groupId ?? '', threadId: placement.threadId, host: 'side-tab', binding: 'session', componentInstanceId: placement.descriptor.componentInstanceId });
+         usePanelStore.getState().setActiveSideChatPlacement(workspaceId, viewId, placementId);
+       },
+       onFocusNative: () => {
+diff --git a/fusion-studio-client/src/components/chat/useViewChatHost.ts b/fusion-studio-client/src/components/chat/useViewChatHost.ts
+index ff5284ce..e68cbea5 100644
+--- a/fusion-studio-client/src/components/chat/useViewChatHost.ts
++++ b/fusion-studio-client/src/components/chat/useViewChatHost.ts
+@@ -161,6 +161,8 @@ export function useViewChatHost({
+   }, [isActive, ws, workspaceId, viewId, selectedThreadGroupId, rows]);
+ 
+   const handleOpenThread = useCallback((row: Thread) => {
++    usePanelStore.getState().requestChatActivation({ workspaceId, viewId,
++      threadGroupId: row.threadGroupId ?? '', threadId: row.threadId, host: 'main', binding: 'view' });
+     // CHAT-03 / SPEC-03 §6.1: when this view is worksurface-capable, selecting
+     // another group flushes the outgoing capture first and keeps the outgoing
+     // group selected until the correlated server acknowledgement lands.
+@@ -174,8 +176,9 @@ export function useViewChatHost({
+ 
+   const handleCreateThread = useCallback(() => {
+     // Bind the new group to this exact view, never the active panel.
+-    sendMessage({ type: 'thread:open-assistant', viewId });
+-  }, [sendMessage, viewId]);
++    const result = sendMessage({ type: 'thread:open-assistant', viewId });
++    if (result.status !== 'not_enqueued') usePanelStore.getState().requestNewChatActivation(workspaceId, viewId);
++  }, [sendMessage, viewId, workspaceId]);
+ 
+   const handleStartRename = useCallback((row: Thread) => {
+     setRenamingId(row.threadId);
+diff --git a/fusion-studio-client/src/lib/chat-action-controller.ts b/fusion-studio-client/src/lib/chat-action-controller.ts
+index 837aefa9..82eba57a 100644
+--- a/fusion-studio-client/src/lib/chat-action-controller.ts
++++ b/fusion-studio-client/src/lib/chat-action-controller.ts
+@@ -1,4 +1,5 @@
+-import { CHAT_ACTION_EVENT, dispatchChatAction, type ChatActionAddress, type ChatActionRequest, type ChatActionResult } from './chat-action';
++import { CHAT_ACTION_EVENT, type ChatActionAddress, type ChatActionRequest, type ChatActionResult } from './chat-action';
++import { useWorkspaceStore } from '../state/workspaceStore';
+ import { usePanelStore } from '../state/panelStore';
+ import { getThreadGroupPopulation } from '../state/slices/chatSurfaceSlice';
+ import { chatComposerDraftOwnerKey, useChatComposerDraftStore } from '../state/chatComposerDraftStore';
+@@ -8,6 +9,7 @@ import { trackPromptAttempt } from './chat/prompt-submission-recovery';
+ import { acknowledgedHarnessConfigForThread } from '../state/slices/chatSurfaceSlice';
+ import { getThreadMembers } from '../state/slices/worksurfaceSlice';
+ import { showToast } from './toast';
++import { consumeChatMaterial } from './chat-material-commit';
+ import { consumeCreationAction } from './chat-action-creation';
+ 
+ const failure = (reason: Extract<ChatActionResult, { status: 'failed' }>['reason']): ChatActionResult => ({ status: 'failed', reason });
+@@ -26,7 +28,9 @@ function validCurrentAddress(address: ChatActionAddress | null): address is Chat
+ 
+ /** One command consumer; no mounted surface owns this listener or its result. */
+ function consumeAction(event: Event): void {
+-  const request = (event as CustomEvent<ChatActionRequest>).detail;
++  const detail = (event as CustomEvent).detail;
++  if (detail?.kind === 'material') { consumeChatMaterial(detail); return; }
++  const request = detail as ChatActionRequest;
+   if (!request || typeof request.complete !== 'function' || typeof request.claim !== 'function') return;
+   request.claim();
+   if (request.target === 'new') {
+@@ -120,13 +124,10 @@ let installed = false;
+ export function installChatActionConsumer(): void {
+   if (installed) return;
+   window.addEventListener(CHAT_ACTION_EVENT, consumeAction);
+-  window.addEventListener('fusion:chat-insert', (event: Event) => {
+-    const text = (event as CustomEvent<unknown>).detail;
+-    if (typeof text === 'string' && text.length) {
+-      void dispatchChatAction({ content: text, target: 'current', delivery: 'insert' }).then((result) => {
+-        if (result.status === 'failed') showToast('Chat target unavailable');
+-      });
+-    }
++  useWorkspaceStore.subscribe((state, previous) => {
++    if (state.activeWorkspaceId !== previous.activeWorkspaceId || state.workspaceEpoch !== previous.workspaceEpoch
++      || state.bindingRevision !== previous.bindingRevision || state.bindingSerial !== previous.bindingSerial
++      || state.hasReceivedInit !== previous.hasReceivedInit) usePanelStore.getState().retireMountedChatAuthority();
+   });
+   installed = true;
+ }
+diff --git a/fusion-studio-client/src/lib/chat-action.ts b/fusion-studio-client/src/lib/chat-action.ts
+index 6504ffaa..e3630d8a 100644
+--- a/fusion-studio-client/src/lib/chat-action.ts
++++ b/fusion-studio-client/src/lib/chat-action.ts
+@@ -83,3 +83,44 @@ export function dispatchChatAction(action: ChatActionPayload): Promise<ChatActio
+     if (!claimed) complete({ status: 'failed', reason: 'no_consumer' });
+   });
+ }
++
++// Compose-only prepared material. Explicit Send and System creation keep their separate API above.
++export { beginChatMaterial, validateChatMaterial } from './chat-material-target';
++export type { ChatMaterialOperation, ChatMaterialResult, ChatMaterialBegin } from './chat-material-target';
++import type { ChatMaterialOperation, ChatMaterialResult } from './chat-material-target';
++
++export interface ChatMaterialSelection {
++  surfaceId: string;
++  generation: number;
++  value: string;
++  revision: number;
++  start: number;
++  end: number;
++}
++export type PreparedChatMaterial =
++  | { text: string; selection?: ChatMaterialSelection }
++  | { attachment: ChatLinkAttachment }
++  | { sourceFailure: true };
++export interface ChatMaterialRequest {
++  readonly kind: 'material';
++  readonly operation: ChatMaterialOperation;
++  readonly material: PreparedChatMaterial;
++  readonly complete: (result: ChatMaterialResult) => void;
++  readonly claim: () => void;
++}
++
++/** Dispatch is synchronous through the single installed consumer before this promise returns. */
++export function commitChatMaterial(operation: ChatMaterialOperation, material: PreparedChatMaterial): Promise<ChatMaterialResult> {
++  return new Promise((resolve) => {
++    let claimed = false, completed = false;
++    const complete = (result: ChatMaterialResult) => {
++      if (completed) return;
++      completed = true;
++      resolve(result);
++    };
++    window.dispatchEvent(new CustomEvent<ChatMaterialRequest>(CHAT_ACTION_EVENT, {
++      detail: { kind: 'material', operation, material, claim: () => { claimed = true; }, complete },
++    }));
++    if (!claimed) complete({ status: 'unavailable', reason: 'no_consumer' });
++  });
++}
+diff --git a/fusion-studio-client/src/lib/ws/thread-handlers.ts b/fusion-studio-client/src/lib/ws/thread-handlers.ts
+index 69c6451d..a67616f6 100644
+--- a/fusion-studio-client/src/lib/ws/thread-handlers.ts
++++ b/fusion-studio-client/src/lib/ws/thread-handlers.ts
+@@ -149,6 +149,8 @@ export function handleThreadMessage(msg: WebSocketMessage): boolean {
+         // create never writes the Legacy selection or global view content.
+         if (!msg.requestId) {
+           if (typeof msg.viewId === 'string' && msg.viewId && store.activeWorkspaceId) {
++            if (msg.threadGroupId) store.resolveNewChatActivation({ workspaceId: store.activeWorkspaceId, viewId: msg.viewId,
++              threadGroupId: msg.threadGroupId, threadId: msg.threadId, host: 'main', binding: 'view' });
+             if (!msg.threadGroupId
+               || !requestGroupSelection(store.activeWorkspaceId, msg.viewId, msg.threadGroupId)) {
+               store.requestThreadOpen({
+diff --git a/fusion-studio-client/src/state/panelStore.ts b/fusion-studio-client/src/state/panelStore.ts
+index 94a25bc9..1608d75b 100644
+--- a/fusion-studio-client/src/state/panelStore.ts
++++ b/fusion-studio-client/src/state/panelStore.ts
+@@ -14,6 +14,7 @@ import {
+   removeThreadFromPopulations,
+   renameThreadInPopulations,
+ } from './slices/chatSurfaceSlice';
++import { retireInvalidMountedChats } from './slices/mountedChatState';
+ import { createChatActivitySlice } from './slices/chatActivityState';
+ import { createViewSlice, clampPaneWidth } from './slices/viewSlice';
+ import { createWorksurfaceSlice } from './slices/worksurfaceSlice';
+@@ -547,6 +548,12 @@ export const usePanelStore = create<AppState>((set, get) => ({
+   },
+ }));
+ 
++// The Chat owner retires invalid mounted lifetimes synchronously on authority loss.
++usePanelStore.subscribe((state, previous) => {
++  const retired = retireInvalidMountedChats(state, previous);
++  if (retired) usePanelStore.setState(retired);
++});
++
+ // ── Workspace-keyed convenience selectors (WORKSPACE_ISOLATION_SPEC) ─────────
+ 
+ export function getCurrentWorkspaceState(state: AppState): WorkspacePanelState | null {
+diff --git a/fusion-studio-client/src/state/panelStoreTypes.ts b/fusion-studio-client/src/state/panelStoreTypes.ts
+index 7955f102..30beb03c 100644
+--- a/fusion-studio-client/src/state/panelStoreTypes.ts
++++ b/fusion-studio-client/src/state/panelStoreTypes.ts
+@@ -1,3 +1,4 @@
++import type { MountedChatState } from './slices/mountedChatState';
+ /**
+  * @module panelStoreTypes
+  * @role Shared TypeScript interfaces for the panel store and its slices.
+@@ -96,7 +97,7 @@ export interface WorkspacePanelState {
+ }
+ 
+ // Full application state — the type contract for usePanelStore and all slices.
+-export interface AppState {
++export interface AppState extends MountedChatState {
+   // ── Workspace isolation (WORKSPACE_ISOLATION_SPEC) ──
+   activeWorkspaceId: string | null;
+   workspaceState: Record<string, WorkspacePanelState>;
+diff --git a/fusion-studio-client/src/state/slices/chatSurfaceSlice.ts b/fusion-studio-client/src/state/slices/chatSurfaceSlice.ts
+index 1c7523e5..54a0355e 100644
+--- a/fusion-studio-client/src/state/slices/chatSurfaceSlice.ts
++++ b/fusion-studio-client/src/state/slices/chatSurfaceSlice.ts
+@@ -23,6 +23,7 @@
+ import type { Thread, TokenUsage } from '../../types';
+ import type { AppState } from '../panelStoreTypes';
+ import { threadMembersKey } from './worksurfaceSlice';
++import { createMountedChatState } from './mountedChatState';
+ 
+ type Set = (partial: Partial<AppState> | ((state: AppState) => Partial<AppState>)) => void;
+ type Get = () => AppState;
+@@ -432,8 +433,9 @@ export function acknowledgedHarnessConfigForThread(
+   };
+ }
+ 
+-export function createChatSurfaceSlice(set: Set, _get: Get) {
++export function createChatSurfaceSlice(set: Set, get: Get) {
+   return {
++    ...createMountedChatState(set, get),
+     contextUsageByThread: {} as Record<string, number>,
+     tokenUsageByThread: {} as Record<string, TokenUsage | null>,
+     wireReadyByThread: {} as Record<string, boolean>,

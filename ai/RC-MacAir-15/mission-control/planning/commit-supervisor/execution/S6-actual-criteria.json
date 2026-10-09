@@ -1,0 +1,340 @@
+{
+  "at": "2026-10-05T04:51:37.895307+00:00",
+  "authority": "planning/commit-supervisor/SPEC.md S6 and final criteria",
+  "criteria": [
+    {
+      "id": "S6-A01",
+      "criterion": "Independent existing-ref candidate/profile/machine/workspace and exact mixed-state checkpoint",
+      "state": "accepted_full_S6_and_final_SPEC_integration",
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md"
+      ],
+      "historical_state_before_final_closeout": "preparation_raw_available"
+    },
+    {
+      "id": "S6-A02",
+      "criterion": "Actual Supervisor explicit role/CWD/permission/settings acknowledgment",
+      "state": "accepted_full_S6_and_final_SPEC_integration",
+      "evidence": [
+        "S6-runtime-actor-ledger.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md"
+      ],
+      "historical_state_before_final_closeout": "actual_acknowledgment_recorded"
+    },
+    {
+      "id": "S6-A03",
+      "criterion": "Actual terminal provider hold then labeled release/replacement with landed/adoption distinction",
+      "state": "accepted_full_S6_and_final_SPEC_integration",
+      "evidence": [
+        "S6-provider-terminal.md",
+        "S6-provider-release.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/intent-release-validation.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md"
+      ],
+      "historical_state_before_final_closeout": "actual_hold_release_successor_validation_recorded"
+    },
+    {
+      "id": "S6-A04",
+      "criterion": "Actual terminal intent hold then labeled resolution/replacement without feature dispatch",
+      "state": "accepted_full_S6_and_final_SPEC_integration",
+      "evidence": [
+        "S6-intent-terminal.md",
+        "S6-intent-resolution.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-release-reconciliation.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md"
+      ],
+      "historical_state_before_final_closeout": "actual_intent_terminal_labeled_resolution_successor_validation_recorded"
+    },
+    {
+      "id": "S6-A05",
+      "criterion": "Actual fresh initial review manager/reviewer identifies material behavior and Wiki obligation",
+      "state": "accepted_full_S6_and_final_SPEC_integration",
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/initial-reviewer-1.raw.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/initial-manager-1.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/initial-manager-1-lifecycle.json",
+        "S6-runtime-actor-ledger.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md"
+      ],
+      "historical_state_before_final_closeout": "actual_fresh_initial_manager_and_reviewer_terminal_findings"
+    },
+    {
+      "id": "S6-A06",
+      "criterion": "Bounded installed leaf repair and separate fresh original-assignment handoff gate",
+      "state": "accepted_full_S6_and_final_SPEC_integration",
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/code-repair-1.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-code-command-only.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/code-handoff-3.raw.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-code-handoff-acceptance.json",
+        "S6-runtime-deviations.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md"
+      ],
+      "historical_state_before_final_closeout": "actual_installed_leaf_terminal_current_code_fresh_raw_only_original_assignment_gate3_CLEAN_manager_HANDOFF_VALIDATED"
+    },
+    {
+      "id": "S6-A07",
+      "criterion": "Settled-code bounded Wiki leaf with full preimage/actual UTC/collision-safe exact versions/unchanged Navigation",
+      "state": "accepted_full_S6_and_final_SPEC_integration",
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/wiki-repair-1.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/wiki-repair-1-commands.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/first-wiki-1/recovery/manifest.json",
+        "S6-root-wiki-repair-checks.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md"
+      ],
+      "historical_state_before_final_closeout": "actual_bounded_Wiki_leaf_terminal_completepreimage_exactversion_and_root_current129_postflight_pass"
+    },
+    {
+      "id": "S6-A08",
+      "criterion": "Separate fresh Wiki original-coverage gate",
+      "state": "accepted_full_S6_and_final_SPEC_integration",
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/wiki-handoff-1.raw.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-wiki-handoff-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-wiki-command-only.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md"
+      ],
+      "historical_state_before_final_closeout": "actual_distinct_original_three_page_fresh_Wiki_REVIEW_COMPLETE_complete_CLEAN_manager_HANDOFF_VALIDATED"
+    },
+    {
+      "id": "S6-A09",
+      "criterion": "Fresh final review manager/reviewer all5lenses/current bytes/required checks",
+      "state": "accepted_full_S6_and_final_SPEC_integration",
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-final-identity.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/final-reviewer-1.raw.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/final-manager-1.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/final-manager-1-lifecycle.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md"
+      ],
+      "historical_state_before_final_closeout": "actual_different_final_manager_and_fresh_allfive_reviewer_terminal_REVIEW_COMPLETE_CLEAN_root_full_raw_inspection"
+    },
+    {
+      "id": "S6-A10",
+      "criterion": "Real canonical rebuild/candidate executable/server/profile/machine/sustained initialized connection",
+      "state": "accepted_full_S6_and_final_SPEC_integration",
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-canonical-runtime-command.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-runtime-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-root-first-live-inspection.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md"
+      ],
+      "historical_state_before_final_closeout": "actual_first_runtime_complete_raw_and_root_independent_checks_first_terminal_observed"
+    },
+    {
+      "id": "S6-A11",
+      "criterion": "Real fixed UI/Wiki/navigation/reload and preinitializer full-restart reset readback",
+      "state": "accepted_full_S6_and_final_SPEC_integration",
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-preinitializer-reset.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-preinitializer-reset.json.png",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-ui-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-runtime-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-root-first-live-inspection.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md"
+      ],
+      "historical_state_before_final_closeout": "actual_first_runtime_complete_raw_and_root_independent_checks_first_terminal_observed"
+    },
+    {
+      "id": "S6-A12",
+      "criterion": "Actual ordinary persisted watcher; disconnected/wrong-profile failures withhold readiness",
+      "state": "accepted_full_S6_and_final_SPEC_integration",
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-runtime-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-root-first-live-inspection.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md"
+      ],
+      "historical_state_before_final_closeout": "actual_first_runtime_complete_raw_and_root_independent_checks_first_terminal_observed"
+    },
+    {
+      "id": "S6-A13",
+      "criterion": "Actual first COMMIT_READY_WAITING_OWNER packet and intentional terminal turn",
+      "state": "accepted_full_S6_and_final_SPEC_integration",
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-first-owner-terminal.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/owner-packet-first.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-owner-evidence-index-final.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md"
+      ],
+      "historical_state_before_final_closeout": "actual_first_COMMIT_READY_WAITING_OWNER_native_terminal_full_root_inspection_complete"
+    },
+    {
+      "id": "S6-A14",
+      "criterion": "Labeled fix-X/Y successor preserves valid unaffected evidence; fresh affected gates/rebuild/runtime/new terminal wait",
+      "state": "accepted_full_S6_and_final_SPEC_integration",
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-fix-xy-event.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-supervisor-fix-xy-assignment.md",
+        "S6-root-fix-code-handoff-inspection.json",
+        "S6-root-fix-wiki-union-inspection.json",
+        "S6-root-fix-wiki-handoff-inspection.json",
+        "S6-root-python-binding-finding.json",
+        "S6-root-renewed-python-binding-inspection.json",
+        "S6-root-revised-final3-inspection.json",
+        "S6-root-revised-actual-runtime-inspection.json",
+        "S6-second-owner-terminal.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md"
+      ],
+      "historical_state_before_final_closeout": "actual_revised_fresh_leaf_Wiki_final3_gates_and_canonical_runtime_second_native_owner_wait_complete"
+    },
+    {
+      "id": "S6-A15",
+      "criterion": "Actual source/target/candidate/operation drift and mismatched authority refusals with zero operations",
+      "state": "accepted_full_S6_and_final_SPEC_integration",
+      "evidence": [
+        "S6-root-refusal-inspection.json",
+        "S6-refusal-deviation-classifications.json",
+        "S6-negative-controls/restored.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md"
+      ],
+      "historical_state_before_final_closeout": "actual_four_way_readonly_refusal_native_END_raw_independently_inspected_private_controls_exactly_restored"
+    },
+    {
+      "id": "S6-A16",
+      "criterion": "Actual interrupted mixed-state restore/collision nonmutation/supplement reverse restore/original verification",
+      "state": "accepted_full_S6_and_final_SPEC_integration",
+      "evidence": [
+        "S6-root-recovery-inspection.json",
+        "S6-recovery-deviation-classifications.json",
+        "S6-root-original-current-readback.json",
+        "S6-runtime-actor-ledger.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md"
+      ],
+      "historical_state_before_final_closeout": "actual_recovery_and_owned_stop_complete_root_raw_and_current_preservation_inspected"
+    },
+    {
+      "id": "S6-A17",
+      "criterion": "Owned stopped preview/protected source/shared index/refs/unrelated/process/profile/cache preservation",
+      "state": "accepted_full_S6_and_final_SPEC_integration",
+      "evidence": [
+        "S6-root-recovery-inspection.json",
+        "S6-recovery-deviation-classifications.json",
+        "S6-root-original-current-readback.json",
+        "S6-runtime-actor-ledger.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md"
+      ],
+      "historical_state_before_final_closeout": "actual_recovery_and_owned_stop_complete_root_raw_and_current_preservation_inspected"
+    },
+    {
+      "id": "S6-A18",
+      "criterion": "Factual current MC-T09/deployment/canonical restart Wiki closeout after actual proof with affected gates",
+      "state": "accepted_full_S6_and_final_SPEC_integration",
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout-manifest.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md"
+      ],
+      "historical_state_before_final_closeout": "accepted_current_full_S6"
+    },
+    {
+      "id": "S6-A19",
+      "criterion": "Fresh root full-S6 acceptance and fresh whole-SPEC integration",
+      "state": "accepted_full_S6_and_final_SPEC_integration",
+      "evidence": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-acceptance-review-1.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md"
+      ],
+      "historical_state_before_final_closeout": "fresh root full S6 CLEAN; fresh whole SPEC gate pending"
+    }
+  ],
+  "ledger_mapping": {
+    "S6-A1": [
+      "S6-A01",
+      "S6-A02"
+    ],
+    "S6-A2": [
+      "S6-A01",
+      "S6-A16"
+    ],
+    "S6-A3": [
+      "S6-A03"
+    ],
+    "S6-A4": [
+      "S6-A04"
+    ],
+    "S6-A5": [
+      "S6-A05"
+    ],
+    "S6-A6": [
+      "S6-A06"
+    ],
+    "S6-A7": [
+      "S6-A07",
+      "S6-A08"
+    ],
+    "S6-A8": [
+      "S6-A09"
+    ],
+    "S6-A9": [
+      "S6-A10",
+      "S6-A11",
+      "S6-A12"
+    ],
+    "S6-A10": [
+      "S6-A12",
+      "S6-A17"
+    ],
+    "S6-A11": [
+      "S6-A13"
+    ],
+    "S6-A12": [
+      "S6-A14"
+    ],
+    "S6-A13": [
+      "S6-A15"
+    ],
+    "S6-A14": [
+      "S6-A16",
+      "S6-A17"
+    ],
+    "S6-A15": [
+      "S6-A18",
+      "S6-A19"
+    ]
+  },
+  "last_root_progress_at": "2026-10-05T03:21:12.390022+00:00",
+  "historical_check_qualification": "Actual first owner-wait and native gates remain historical behavioral events; historical55 invocation/35-entry reuse binding incompleteness was later found. New current2 supplies55 current proof; no historical drift or failed test inferred.",
+  "final_result": "SPEC_READY_FOR_OWNER_REVIEW",
+  "owner_accepted": false,
+  "original_and_refined_outcomes": "All15 original and19 refined accepted; no required outcome deferred"
+}

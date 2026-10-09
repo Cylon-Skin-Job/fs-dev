@@ -1,0 +1,27 @@
+[
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/observation-contract.test.mjs",
+    "before": "c0efbde76b985155844ecd42493b0aa6fce198792775f4ec8736b1056540a51c",
+    "after": "3be4d05f9ae06819525a47da2442b02ce47d4ac915b311a1ad08c268d6314e90"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/run.mjs",
+    "before": "1558a6f6c28e34d912684dd2dca0fe356db02aab1662447ffb8717b53229c020",
+    "after": "98fd53c90fb93288bab86693c3bd4dbbace384b319e82e4b5c411aa1b01cb223"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/soak-electron.mjs",
+    "before": "b27ea8266f1c346237f1495c89bea842208b8159e864e6990c4f8be986629fe5",
+    "after": "0bc9b3fe7c26ac4b6994725b0336f86f84a83b776029d4bc429115f13e14199a"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/soak-preparation.mjs",
+    "before": null,
+    "after": "bff41c032fa6b7be8f183be9ad2d59a9a349c8357bf056695724b3046fa316c0"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/soak-preparation.test.mjs",
+    "before": null,
+    "after": "aa3cedec341cef381421f1a7c71594fa65eed2412ef9a1561237c676adaa7435"
+  }
+]

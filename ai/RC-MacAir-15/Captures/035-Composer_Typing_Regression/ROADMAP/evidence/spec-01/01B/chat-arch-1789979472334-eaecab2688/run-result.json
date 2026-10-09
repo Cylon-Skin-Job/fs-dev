@@ -1,0 +1,18 @@
+{
+  "runId": "chat-arch-1789979472334-eaecab2688",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R6-PRODUCTION-ACTION-OWNER",
+      "code": 0,
+      "signal": null,
+      "pid": 14546,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 52115
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

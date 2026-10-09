@@ -1,0 +1,36 @@
+{
+  "candidateId": "CHAT-AR-TO-a5ef3ffe74d7",
+  "artifacts": [
+    {
+      "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/SPEC-06B-TURN-OUTCOME.md",
+      "sha256": "a5ef3ffe74d7c72bcaf0ce9f5ebb8c062adb0add2557d71621d75fa9a6f7ca11"
+    }
+  ],
+  "order": [
+    "full-auto bounded follow-up clean",
+    "SPEC-06B-TURN-OUTCOME/TO-01"
+  ],
+  "authority": "Owner explicitly requested draft and dispatch of bounded premature-turn reporting fix; no implementation acceptance inferred.",
+  "decisions": [
+    "TO-D1",
+    "TO-D2"
+  ],
+  "deferrals": [
+    "hook and approval UI",
+    "live staged-runtime refresh",
+    "historical transcript backfill",
+    "separate composer lockout and styling"
+  ],
+  "review": {
+    "result": "CLEAN",
+    "reviewer": "/root/review_turn_outcome_spec",
+    "receipt": "PLANNING-REVIEW.md",
+    "postReviewChange": "status sentence only"
+  },
+  "completionEvidence": "SPEC acceptance matrix, public-route adapter/wire/SQLite/renderer/history checks, fresh builder and orchestrator reviews, supervisor review and owner acceptance",
+  "dispatch": {
+    "threadId": "01a0d633-7d87-7ff3-8804-f2291bceb0c6",
+    "host": "local",
+    "kind": "supplemental active SPEC-06 repair; no parallel writer"
+  }
+}

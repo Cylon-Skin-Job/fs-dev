@@ -1,0 +1,59 @@
+{
+  "at": "2026-10-04T20:51:15.208783+00:00",
+  "actual_actor": "/root/s6_supervisor_recovery_1",
+  "manager": "/root",
+  "effective_host": "danger-full-access/never",
+  "root_model_effort": "Inherited without overrides; concrete values/native role loader metadata unexposed",
+  "actual_predecessor_native": "Exact collaboration.list_agents subtree independently completed unmet-gate/native END, no children at entry and final",
+  "actual_self_native_at_save": {
+    "tool": "collaboration.list_agents",
+    "path_prefix": "/root/s6_supervisor_recovery_1",
+    "result": {
+      "agents": [
+        {
+          "agent_name": "/root/s6_supervisor_recovery_1",
+          "agent_status": "running"
+        }
+      ]
+    }
+  },
+  "children": [],
+  "conflicting_writers": [],
+  "matching_schedules": [
+    {
+      "path": "/Users/rccurtrightjr./.codex/automations/chat-ar-orchestrator-hourly-check-in/automation.toml",
+      "sha256": "ec7257312e7c4d5393449d5477dda758932315a3461123d6111baad10353403f",
+      "status": "PAUSED",
+      "matching": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/automations/check-chat-wiki-orchestrator/automation.toml",
+      "sha256": "04db689d5c84a756b2bbcc51c7201385f564ea44baee342448d152ab4c5d1178",
+      "status": "PAUSED",
+      "matching": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/automations/check-provenance-wiki-reconciliation/automation.toml",
+      "sha256": "33e85b9b6843a72c82b2ea8f795aa0127c8f5bf14af508f5172c1b0e621ea794",
+      "status": "PAUSED",
+      "matching": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/automations/check-workspaces-and-views-wiki-orchestrator/automation.toml",
+      "sha256": "1d1fb54ac2a80a20cdc82d75694b2e71e82c66abcf01539b83e4dbb43de0a5b4",
+      "status": "PAUSED",
+      "matching": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/automations/monitor-chokidar-first-draft/automation.toml",
+      "sha256": "7af0ff68f3557f9a4bbf1a79a9574081a33e2d0ee13ed11bd4075f5d698d2cbe",
+      "status": "PAUSED",
+      "matching": false
+    }
+  ],
+  "root_writer": "Root owns disjoint E and explicitly transferred SECOND private recovery only",
+  "private_stop": "Retained real predecessor completed stop; never signaled any old/private/protected PID in this turn",
+  "closure_capability": "close_agent unavailable; no closure fabricated",
+  "next_native_action": "Return saved REHEARSAL_RECOVERY_COMPLETE test result and intentionally END",
+  "actual_own_END_observation": "Not yet available inside this running turn; root must independently observe native terminal after final response"
+}

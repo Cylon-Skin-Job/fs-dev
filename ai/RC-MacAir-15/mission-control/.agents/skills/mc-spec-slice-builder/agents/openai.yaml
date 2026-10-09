@@ -1,0 +1,4 @@
+interface:
+  display_name: "MC SPEC Slice Builder"
+  short_description: "Implement and review one assigned SPEC slice"
+  default_prompt: "Use $mc-spec-slice-builder to complete this approved slice and return its evidence to the orchestrator."

@@ -1,0 +1,25 @@
+{
+  "runId": "boot-regressions-1789986771666-44c3a8c9",
+  "mode": "--smoke",
+  "port": 58132,
+  "baseURL": "http://127.0.0.1:58132",
+  "total": 1,
+  "byStatus": {
+    "unexpected": 1
+  },
+  "setupFailures": [],
+  "cases": [
+    {
+      "id": "prompt-ownership.slice-c.spec.ts > Slice C: composer drafts swap immediately by thread and preserve pending retry ownership",
+      "file": "prompt-ownership.slice-c.spec.ts",
+      "status": "unexpected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "timedOut",
+          "error": "\u001b[31mTest timeout of 45000ms exceeded.\u001b[39m"
+        }
+      ]
+    }
+  ]
+}

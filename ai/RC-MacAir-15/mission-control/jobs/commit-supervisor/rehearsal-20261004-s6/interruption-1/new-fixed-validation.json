@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-04T20:16:40.103015+00:00",
+  "actor": "/root/s6_supervisor_interruption_1",
+  "new_fixed_manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/fixed-checkpoint/recovery/manifest.json",
+  "sha256": "a885cde0f24e25d9cea6437edad6b9258f365d3a2db08bcb426d690195e4291a",
+  "paths": 130,
+  "full_input_inventory": 4355,
+  "payloads": 119,
+  "old_fixed_manifest_sha256": "fd15619a9ebd65f9600e6867054ddd15dbaef589a607d2177c9f3528e33f5e9e",
+  "exact_owned_base_index_worktree_modes_flags_absence_equal_old_fixed": true,
+  "exact_full_baseline_refs_protected_unrelated_equal_old_fixed": true,
+  "new_current_public_verify": {
+    "result": "VERIFIED",
+    "payloads_valid": true,
+    "matches_checkpoint": true,
+    "status_equal": true,
+    "current_sha256": "b09ccfdfea23309603f462fefc5e4e1f2956a9541fb99e2a19fb741fd05adf01",
+    "manifest_sha256": "a885cde0f24e25d9cea6437edad6b9258f365d3a2db08bcb426d690195e4291a"
+  },
+  "historical_manifest_owner_inactive": "/root/s6_supervisor_fix_xy_1",
+  "root_transfer": {
+    "method": "NEW distinct full fixed130 public capture after actual bounded private stop, before intentional staged/work binary interruption and declared-absent leaf creation. Original archive bytes and all original inputs, both Wiki versions and watcher leaves preserved.",
+    "based_on_manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/fix-xy/recovery/manifest.json",
+    "based_on_sha256": "fd15619a9ebd65f9600e6867054ddd15dbaef589a607d2177c9f3528e33f5e9e",
+    "baseline": "d15792920731f85e45b743519d4af2b807d95a9c",
+    "actual_current_actor": "/root/s6_supervisor_interruption_1",
+    "root_transfer_assignment": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-supervisor-interruption-1-assignment.md",
+    "root_transfer_sha256": "f3d7b3687257fe1ab017ad74dff34268190556a1036c554398c64093193c215b",
+    "historical_capture_owner": "/root/s6_supervisor_fix_xy_1",
+    "historical_owner_active": false,
+    "native_terminal_observation": "collaboration.list_agents completed predecessor/refusal/all returned prior private writers; root current disjoint E writer",
+    "no_children": true,
+    "no_matching_schedules": true,
+    "publication_authority": "NONE"
+  },
+  "code_wiki_mixed_inputs_exact_latest_owner_snapshot": true,
+  "owned_runtime_completed_stop": true,
+  "current_ready": false,
+  "restoration_executed": false
+}

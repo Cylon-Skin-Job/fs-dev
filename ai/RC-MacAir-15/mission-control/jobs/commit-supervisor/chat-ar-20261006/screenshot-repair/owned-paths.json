@@ -1,0 +1,71 @@
+{
+  "owner": "/root/screenshot_repair",
+  "conflicting_writers": [],
+  "source_repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "paths": [
+    {
+      "path": "fusion-studio-client/src/screenshots/chatScreenshotCapture.ts",
+      "job_created": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx",
+      "job_created": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatSurface.tsx",
+      "job_created": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx",
+      "job_created": false
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatAreaFooter.tsx",
+      "job_created": false
+    },
+    {
+      "path": "fusion-studio-client/e2e/prompt-ownership.slice-c.spec.ts",
+      "job_created": false
+    },
+    {
+      "path": "fusion-studio-client/e2e/threaded-chat-host.spec.ts",
+      "job_created": false
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-send-transport.spec.ts",
+      "job_created": false
+    }
+  ],
+  "shared_repos": [
+    "/Users/rccurtrightjr./projects/fs-dev"
+  ],
+  "source_refs": [
+    {
+      "repo": "/Users/rccurtrightjr./projects/fs-dev",
+      "ref": "refs/heads/agent/exact-workspace-paths"
+    },
+    {
+      "repo": "/Users/rccurtrightjr./projects/fs-dev",
+      "ref": "refs/remotes/origin/main"
+    },
+    {
+      "repo": "/Users/rccurtrightjr./projects/fs-dev",
+      "ref": "refs/heads/main"
+    }
+  ],
+  "target_ref": "HEAD",
+  "authority_paths": [
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/assignment.md",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/COMPLETED-WORK-OWNER-ACCEPTANCE.md",
+    "/Users/rccurtrightjr./projects/fs-dev/AGENTS.md",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md"
+  ],
+  "preparation": "Immutable current candidate preimages and staged/index bytes before bounded original screenshot-preservation repair. Candidate-only leaf writes; no primary source edits.",
+  "runtime": {
+    "boundary": "disposable profile and sole disposable workspace outside both checkouts",
+    "deps": "APFS private file copies of existing client/server node_modules; no borrowed Electron executable",
+    "normal_and_alpha": "read-only protection identity; no DB copy/restore",
+    "recovery_limits": "snapshot recovers candidate files/index only, not profile/database/runtime effects"
+  },
+  "ignored_runtime_paths": []
+}

@@ -1,0 +1,17 @@
+[
+  "fusion-studio-client/e2e/chat-architecture/run.mjs",
+  "fusion-studio-client/e2e/chat-architecture/server-focused-regressions.mjs",
+  "fusion-studio-server/lib/thread-groups/delete-service.js",
+  "fusion-studio-server/lib/thread-groups/link-service.js",
+  "fusion-studio-server/lib/thread-groups/member-service.js",
+  "fusion-studio-server/lib/thread-groups/move-service.js",
+  "fusion-studio-server/lib/thread-groups/selection-service.js",
+  "fusion-studio-server/lib/thread-groups/service.js",
+  "fusion-studio-server/lib/thread-groups/session-transactions.js",
+  "fusion-studio-server/lib/thread/ThreadManager.js",
+  "fusion-studio-server/lib/thread/session-lifecycle.js",
+  "fusion-studio-server/lib/thread/session-repository.js",
+  "fusion-studio-server/test/thread/session-manager.test.js",
+  "fusion-studio-server/test/thread/thread-group-lifecycle.test.js",
+  "fusion-studio-server/test/ws/prompt-submission-recovery.integration.test.js"
+]

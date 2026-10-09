@@ -1,0 +1,53 @@
+--- pre-doc-correction/ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md
++++ ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md
+@@ -276,8 +276,12 @@
+ 
+ Stop waits for the existing bounded event-effect barrier for its exact
+ workspace/root/epoch/thread/turn before removing the provider route. This keeps
+-`chat-turn:saved` deliverable after the interrupted exchange commits. A three
+-second effect timeout retains STOPPING; a failed save never invents an ACK.
++`chat-turn:saved` deliverable after the interrupted exchange commits. After a
++three-second effect timeout, Stop still terminates the captured provider and
++releases its session only after termination is proven. A bounded 30-second
++listener can deliver the actual late saved event; completion after that deadline
++requires history/reconnect recovery. Failed save never invents an ACK, and
++failed provider termination retains STOPPING.
+ The session's active Stop-finalization token and existing close promise prevent
+ its provider-exit observer from starting competing retirement. Observed exits
+ are retained on that exact session; releasing the token schedules at most one
+--- pre-doc-correction/ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md
++++ ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md
+@@ -208,15 +208,15 @@
+ | Legacy list | `{ "type": "thread:list", "viewId": null }` or `{ "type": "thread:list" }` | Only the null-view Legacy population |
+ | View list | `{ "type": "thread:list", "viewId": "file-viewer" }` | Only that registry-validated view; unavailable view fails without Legacy fallback |
+ | Visible-row browse | `{ "type": "thread:open", "threadGroupId": "<group-id>" }` | Group's current primary, resolved by server |
+-| Session compatibility browse | `{ "type": "thread:open", "threadId": "<current-primary-session-id>" }` | Validates membership; hydrates that session when it is current primary |
++| Session compatibility browse | `{ "type": "thread:open", "threadId": "<member-session-id>" }` | Validates workspace/group membership; hydrates that exact member, including a non-primary session |
+ | Legacy New Chat | `{ "type": "thread:open-assistant" }` or the same request with `"viewId": null` | New session plus one-member Legacy group |
+ | View New Chat | `{ "type": "thread:open-assistant", "viewId": "file-viewer" }` | New session plus one-member group bound to that registered view |
+ 
+ `thread:list` echoes `viewId` and returns `threads` as group projections; it does not echo a request token or a top-level workspace ID. The client maps each row's primary to the session `threadId`, combines the active workspace with the response's nullable view, filters foreign-workspace rows, and updates that population. Only null-view responses also update the Legacy backing list. A view-qualified result is never a request to overwrite Legacy. The server's exact connection binding remains the authority; these fields do not grant workspace switching.
+ 
+-Before passive row selection, the client records `requestThreadOpen` with its local `{workspaceId, viewId, threadGroupId, threadId}` target. `thread:opened` returns authoritative population and target identities, not an echoed `requestId`. `matchesPendingThreadOpen` correlates by population plus matching group or session identity. It can select only that response population when a request matches, the target is already selected, or selection is empty; then `consumeThreadOpen` retires matching entries for that population. History/live state hydrates the returned session's own slot even when selection is not changed. This is identity-based pending-open correlation, not a wire-level latest-request token guarantee. Registered worksurface views additionally route group selection through the acknowledgement-gated worksurface controller.
+-
+-The session compatibility shape is not an exact non-primary-member hydration API. Although `resolveOpenTarget` returns the validated member ID, `handleThreadOpen` uses the projection's current primary for history and response; existing-session assistant activation shares that path. Unknown/foreign passive targets fail without creation. The separate exact Side Chat placement actions and link-consumer gap are documented [below](#group-and-exact-member-links).
++Before passive row selection, the client records `requestThreadOpen` with its local `{workspaceId, viewId, threadGroupId, threadId}` target. For passive `thread:open`, `thread:opened` returns authoritative population and target identities and echoes the supplied `requestId` (or null). `matchesPendingThreadOpen` correlates by population plus matching group or session identity, not by request ID. For ordinary opens with a request ID, selection requires that pending identity match; responses without a request ID may also retain the already-selected target or fill an empty selection. `consumeThreadOpen` then retires matching entries for that population. A `historyOnly: true` response changes neither selection nor pending Main open requests. History/live state hydrates the returned session's own slot in either mode. This remains identity-based pending-open correlation, not a wire-level latest-request token guarantee. Registered worksurface views additionally route group selection through the acknowledgement-gated worksurface controller.
++
++The session compatibility shape hydrates the exact validated member returned by `resolveOpenTarget`; a group-only request resolves its current primary. Existing-session assistant activation uses the same resolved member with activation metadata enabled. Unknown/foreign passive targets fail without creation. Restored Side Chat sends both member/group IDs with `historyOnly: true` to read that member without changing Main selection or provider ownership. The separate Side Chat placement actions and link-consumer gap are documented [below](#group-and-exact-member-links).
+ 
+ `thread:open-assistant` first passes trusted-shell authority, `normalizeOpenAssistantRequest`, and the bound workspace-operation lease. Its closed top-level schema permits IDs but rejects client authority/unknown fields. Unknown explicit group or mismatched member fails; a foreign session-only ID fails; an unknown session-only ID absent everywhere can still fall through to eager creation, just like omitted IDs. That reachable fallback does not satisfy the intended no-replacement rule for explicit unknown targets. The [Runtime creation table](../../006-Runtime_Model/PAGE.md#new-thread-and-activation) records the exact distinctions and the source-observed follow-up.
+ 
+--- pre-doc-correction/ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md
++++ ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md
+@@ -344,9 +344,9 @@
+ 
+ | Request target | Current source behavior |
+ |---|---|
+-| Known `threadGroupId`, with optional valid member `threadId` | Validate group/workspace/membership, then open and activate the group's current primary; no replacement group |
++| Known `threadGroupId`, with optional valid member `threadId` | Validate group/workspace/membership, then open and activate the specified member, or the current primary when no member is supplied; no replacement group |
+ | Unknown/foreign explicit `threadGroupId`, or mismatched group/member | `not_found`; no fallback creation |
+-| Existing session-only `threadId` in this workspace | Delegate to `handleThreadOpen` with activation metadata enabled; primary-selection limitation above still applies |
++| Existing session-only `threadId` in this workspace | Delegate to `handleThreadOpen` for that exact validated session with activation metadata enabled |
+ | Session-only `threadId` belonging to another workspace | Return an unavailable-thread error; do not create a replacement |
+ | Unknown session-only `threadId`, absent from this workspace and other workspaces | Reachable fallback to eager creation with newly minted session and group IDs; the supplied unknown ID is not reused |
+ | Neither ID supplied | Eager creation |

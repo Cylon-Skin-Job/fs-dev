@@ -1,0 +1,54 @@
+{
+  "at": "2026-10-04T14:23:49.110769+00:00",
+  "actor": "/root/s6_supervisor_candidate_1",
+  "findings": [
+    {
+      "id": "S6-I1-001",
+      "originating_raw": "jobs/commit-supervisor/rehearsal-20261004-s6/reviews/initial-reviewer-1.raw.md",
+      "originating_raw_sha256": "b6268c64c098c48f1de81a55a2c41c8480f63264d50cf8f51cb9665b19eccd6c",
+      "reviewer": "/root/s6_supervisor_candidate_1/initial_review_manager_1/all_lenses_reviewer_1",
+      "covered_identity": "jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-initial-identity.json",
+      "severity": "high",
+      "confidence": "high",
+      "authority": "Summary counts incomplete tasks, accepted sequence3\u21922\u21921\u21922/0",
+      "affected_path": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js",
+      "direct_evidence": "Actual current source passes tasks.length without incomplete derivation; original raw UI reflects same constant total.",
+      "realistic_impact": "Every completed task still reports3 remaining.",
+      "four_materiality_dimensions_validated": true,
+      "disposition": "open",
+      "next": "code repair"
+    },
+    {
+      "id": "S6-I1-002",
+      "originating_raw": "jobs/commit-supervisor/rehearsal-20261004-s6/reviews/initial-reviewer-1.raw.md",
+      "originating_raw_sha256": "b6268c64c098c48f1de81a55a2c41c8480f63264d50cf8f51cb9665b19eccd6c",
+      "reviewer": "/root/s6_supervisor_candidate_1/initial_review_manager_1/all_lenses_reviewer_1",
+      "covered_identity": "jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-initial-identity.json",
+      "severity": "material",
+      "confidence": "high",
+      "authority": "Exact released summary N remaining of3",
+      "affected_path": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js",
+      "direct_evidence": "Current interpolation omits of3, exact root intent receipt selects it.",
+      "realistic_impact": "Strict required summary fails even initial state.",
+      "four_materiality_dimensions_validated": true,
+      "disposition": "open",
+      "next": "code repair"
+    },
+    {
+      "id": "S6-I1-003",
+      "originating_raw": "jobs/commit-supervisor/rehearsal-20261004-s6/reviews/initial-reviewer-1.raw.md",
+      "originating_raw_sha256": "b6268c64c098c48f1de81a55a2c41c8480f63264d50cf8f51cb9665b19eccd6c",
+      "reviewer": "/root/s6_supervisor_candidate_1/initial_review_manager_1/all_lenses_reviewer_1",
+      "covered_identity": "jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-initial-identity.json",
+      "severity": "material",
+      "confidence": "high",
+      "authority": "Guide completion/reversal/count/reload/fullrestart facts accurate",
+      "affected_path": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md",
+      "direct_evidence": "Current prose says rows disappear/reload resets; current source persists all visible rows and restart clears storage.",
+      "realistic_impact": "Users receive false completion/reload instructions, missing reset distinction.",
+      "four_materiality_dimensions_validated": true,
+      "disposition": "open",
+      "next": "settled-code Wiki leaf"
+    }
+  ]
+}

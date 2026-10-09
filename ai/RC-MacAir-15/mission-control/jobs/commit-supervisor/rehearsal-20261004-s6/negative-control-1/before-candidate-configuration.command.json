@@ -1,0 +1,32 @@
+{
+  "command": [
+    "git",
+    "-C",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+    "config",
+    "--null",
+    "--list",
+    "--show-origin"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "GIT_LITERAL_PATHSPECS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "started": "2026-10-04T19:50:16.354464+00:00",
+  "finished": "2026-10-04T19:50:16.358105+00:00",
+  "exit_code": 0,
+  "stdout": "file:/opt/homebrew/etc/gitconfig\u0000credential.helper\nosxkeychain\u0000file:/Users/rccurtrightjr./.gitconfig\u0000filter.lfs.process\ngit-lfs filter-process\u0000file:/Users/rccurtrightjr./.gitconfig\u0000filter.lfs.required\ntrue\u0000file:/Users/rccurtrightjr./.gitconfig\u0000filter.lfs.clean\ngit-lfs clean -- %f\u0000file:/Users/rccurtrightjr./.gitconfig\u0000filter.lfs.smudge\ngit-lfs smudge -- %f\u0000file:/Users/rccurtrightjr./.gitconfig\u0000user.name\nCylon-Skin-Job\u0000file:/Users/rccurtrightjr./.gitconfig\u0000user.email\n105960223+Cylon-Skin-Job@users.noreply.github.com\u0000file:/Users/rccurtrightjr./.gitconfig\u0000credential.helper\n!/usr/local/bin/gh auth git-credential\u0000file:/Users/rccurtrightjr./.gitconfig\u0000credential.https://gitlab.com.helper\n!/opt/homebrew/bin/glab auth git-credential\u0000file:.git/config\u0000core.repositoryformatversion\n0\u0000file:.git/config\u0000core.filemode\ntrue\u0000file:.git/config\u0000core.bare\nfalse\u0000file:.git/config\u0000core.logallrefupdates\ntrue\u0000file:.git/config\u0000core.ignorecase\ntrue\u0000file:.git/config\u0000core.precomposeunicode\ntrue\u0000file:.git/config\u0000remote.origin.url\n/Users/rccurtrightjr./projects/fs-dev\u0000file:.git/config\u0000remote.origin.fetch\n+refs/heads/*:refs/remotes/origin/*\u0000file:.git/config\u0000branch.agent/exact-workspace-paths.remote\norigin\u0000file:.git/config\u0000branch.agent/exact-workspace-paths.merge\nrefs/heads/agent/exact-workspace-paths\u0000",
+  "stderr": "",
+  "stdout_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/before-candidate-configuration.stdout",
+    "sha256": "0a84192202948bd789d2bd8bbb405668470eb300a3539fcdd609677fb2af310e",
+    "size": 1287
+  },
+  "stderr_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/before-candidate-configuration.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  }
+}

@@ -1,0 +1,48 @@
+[
+  {
+    "command": "node fusion-studio-client/e2e/chat-architecture/run.mjs --suite backend --mode enforce --cases R7-R8-RUNTIME-OWNERSHIP",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790243555508-675cfa595b",
+    "result": {
+      "runId": "chat-arch-1790243555508-675cfa595b",
+      "status": "passed",
+      "results": [
+        {
+          "id": "R7-R8-RUNTIME-OWNERSHIP",
+          "code": 0,
+          "signal": null,
+          "pid": 38316,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 11821
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": null
+    },
+    "checkedDependencies": 66,
+    "mismatches": []
+  },
+  {
+    "command": "node fusion-studio-client/e2e/chat-architecture/run.mjs --suite submit --mode enforce --cases R4-DISTINCT-RECEIPTS",
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790243591694-373426c7bd",
+    "result": {
+      "runId": "chat-arch-1790243591694-373426c7bd",
+      "status": "passed",
+      "results": [
+        {
+          "id": "R4-DISTINCT-RECEIPTS",
+          "code": 0,
+          "signal": null,
+          "pid": 40200,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 14054
+        }
+      ],
+      "ownedRunRootRemoved": true,
+      "failure": null
+    }
+  }
+]

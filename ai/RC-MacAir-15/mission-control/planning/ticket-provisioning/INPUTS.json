@@ -1,0 +1,243 @@
+{
+  "schemaVersion": 1,
+  "planningId": "TP-001",
+  "capturedAt": "2026-10-08T02:44:30.296548+00:00",
+  "author": "Codex side chat (ephemeral)",
+  "controllerHome": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "repositoryRoot": "/Users/rccurtrightjr./projects/fs-dev",
+  "sourceHeadObserved": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "contentIdentityNote": "Relevant MC/template inputs are untracked; hashes identify these bytes. HEAD is context, not the sole content revision.",
+  "ownerSource": {
+    "kind": "visible_side_conversation",
+    "scope": "Post-boundary summary mirroring, seed-to-ticket cutover, replication-script discussion and SPEC authoring request.",
+    "verifiedThreadId": null,
+    "limitations": "No main-history registration or exhaustive history review; no inherited request is executed."
+  },
+  "sources": [
+    {
+      "path": "/Users/rccurtrightjr./.codex/visualizations/2026/10/07/01a115b3-5392-7d71-86f7-e9965319fde5/HTML-UPDATER.md",
+      "sha256": "040e66b6fcf6b230419a8586b97aae9b749855ff9d6ac86906d3d53bc33ad1fd",
+      "coverage": "Writer/lock/render/refresh or updater ownership paths inspected; no runtime test."
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/visualizations/2026/10/07/01a115b3-5392-7d71-86f7-e9965319fde5/TIMELINE-STATUS-AGENT.md",
+      "sha256": "c2b15141745eb6f80d38d9068839a77068eab2d74bafb0f0b077263ae5fb0bda",
+      "coverage": "Writer/lock/render/refresh or updater ownership paths inspected; no runtime test."
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/visualizations/2026/10/07/01a115b3-5392-7d71-86f7-e9965319fde5/agents-skills-and-workflows.html",
+      "sha256": "f3a60aaeabdd8064b40ed31132b2b86f1851a03c7dbd4303f7f0047332f565ce",
+      "coverage": "Inline items/checklists/dependency plans compared; primary modal/checklist paths inspected. The three source definitions match at this check."
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/visualizations/2026/10/07/01a115b3-5392-7d71-86f7-e9965319fde5/agents-skills-and-workflows.workflow.json",
+      "sha256": "d4e1269f36f9d43c91b629a1cadddb930344c664a9829cf3494c20f3448e0169",
+      "coverage": "Current JSON fingerprint; primary build #2 record inspected. Unrelated live workflow observations not recertified."
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/visualizations/2026/10/07/01a115b3-5392-7d71-86f7-e9965319fde5/fusion-studio-timeline.html",
+      "sha256": "c17fdc3e57261aa9c72c5ccdaf1258b56e24a8cd81018f3036216e386ae1334d",
+      "coverage": "Inline items/checklists/dependency plans compared; primary modal/checklist paths inspected. The three source definitions match at this check."
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/visualizations/2026/10/07/01a115b3-5392-7d71-86f7-e9965319fde5/upcoming-builds.workflow.json",
+      "sha256": "2b8ad020e32b1ab4390fd19f7704de0b28f411e394fc054f714e9e6435fa7f67",
+      "coverage": "Current JSON fingerprint; primary build #2 record inspected. Unrelated live workflow observations not recertified."
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/visualizations/2026/10/07/01a115b3-5392-7d71-86f7-e9965319fde5/wiki-updates.html",
+      "sha256": "902de4b7a2ddf00581daccc8518d52972778af7c0c9a7d96e88df66e579f43b4",
+      "coverage": "Inline items/checklists/dependency plans compared; primary modal/checklist paths inspected. The three source definitions match at this check."
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/visualizations/2026/10/07/01a115b3-5392-7d71-86f7-e9965319fde5/wiki-updates.workflow.json",
+      "sha256": "193a21ab784e678c2542f11997365d089916b50fa7305f4c8e9f57b906a1d49a",
+      "coverage": "Current JSON fingerprint; primary build #2 record inspected. Unrelated live workflow observations not recertified."
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/visualizations/2026/10/07/01a115b3-5392-7d71-86f7-e9965319fde5/workflow-ui.js",
+      "sha256": "437f510e01d104afc750b7e25c6d9ea5e2129506e2910d58a95769000ae78808",
+      "coverage": "Writer/lock/render/refresh or updater ownership paths inspected; no runtime test."
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/visualizations/2026/10/07/01a115b3-5392-7d71-86f7-e9965319fde5/workflow-update.py",
+      "sha256": "87c9e84d41de0615b5abc262c01cefa76cee6a19573de807fd497138bae292e7",
+      "coverage": "Writer/lock/render/refresh or updater ownership paths inspected; no runtime test."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/AGENTS.md",
+      "sha256": "41dc4e9dc4d58e7505cb6fc37b500129502231293894b5f90eda9398315e001d",
+      "coverage": "Applicable repository instructions read."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/005-User_Profile_Preferences_and_Design_Philosophy/PAGE.md",
+      "sha256": "45fa9f630563d79935d5a461b308c823c0db3ded5c23817ba6d4c8a06c794ed5",
+      "coverage": "Applicable current Wiki authority read; no runtime verification."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md",
+      "sha256": "de3995c68ae84f3b0fa389c6af0327e21dd08f30ac9ffbc7548b76f80ac393d7",
+      "coverage": "Applicable current Wiki authority read; no runtime verification."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/001-Architecture_Routing/PAGE.md",
+      "sha256": "4c5fcbf62912c9e8ff6d3d0e1ec07016145e1f1c90c792a162dfcc3ca1b0bfba",
+      "coverage": "Applicable current Wiki authority read; no runtime verification."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/002-Frontend_UI/PAGE.md",
+      "sha256": "18a093c333a610ec8d2c77661b29744f1fae6e9ca8f4e113148fee10a0d9fc18",
+      "coverage": "Applicable current Wiki authority read; no runtime verification."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/PAGE.md",
+      "sha256": "2b4e55ed7580659b35a91d13f5a7b781960c659868027dd8b6ea6f79e609b105",
+      "coverage": "Applicable current Wiki authority read; no runtime verification."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md",
+      "sha256": "bd3e7be468289ac0a6ee6502cd8b9fc340f03fd7568deb59370ed00cc3b2a7a3",
+      "coverage": "Applicable current Wiki authority read; no runtime verification."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/008-Testing_And_Smoke_Slices/PAGE.md",
+      "sha256": "e7319750bd27b7ccdad8e5e451b9779044e8fc7a713fc6d461113b409b39018d",
+      "coverage": "Applicable current Wiki authority read; no runtime verification."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md",
+      "sha256": "696afb2d3ec027256e783957c3461eb03300db0b97b34b3e62162977c22ed42f",
+      "coverage": "Applicable current Wiki authority read; no runtime verification."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-memory-maintenance/SKILL.md",
+      "sha256": "d4dac3b13b575800a8751ac6973533dd1ec6e9da03dc4af7497f7c6163cfacba",
+      "coverage": "Applicable authoring/record procedure or read-only verification helper inspected."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-memory-maintenance/references/records.md",
+      "sha256": "a1eaaff8ada20e4e7e48b8d59708ee9b39a31132a12af3ca0152f3008ce6b61f",
+      "coverage": "Applicable authoring/record procedure or read-only verification helper inspected."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-memory-maintenance/scripts/validate_index.py",
+      "sha256": "27a36b4bfc79c728b7805805c9172e22be3223d26ee87e4cf8aed011bdabe59c",
+      "coverage": "Applicable authoring/record procedure or read-only verification helper inspected."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-author/SKILL.md",
+      "sha256": "6bbc04d37cedf7096f2da2de8be7ac29def302fb192870c0869c1e00a0d35581",
+      "coverage": "Applicable authoring/record procedure or read-only verification helper inspected."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-creator/SKILL.md",
+      "sha256": "2ae93d991f726a9ab059a239bca19b00f8f37587732299093da4da930bd17dda",
+      "coverage": "Applicable authoring/record procedure or read-only verification helper inspected."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-creator/references/planning-contract.md",
+      "sha256": "ce471fe594051c7c375c1f371c0ebe4af18b65639f740ad3d95c918a70b9e5ad",
+      "coverage": "Applicable authoring/record procedure or read-only verification helper inspected."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-creator/scripts/candidate_manifest.py",
+      "sha256": "ef91c9cbb57c7fd6b873d0a25d8498b7febac96a99bda1742b5993275fca1297",
+      "coverage": "Applicable authoring/record procedure or read-only verification helper inspected."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md",
+      "sha256": "d4dce1ca561b013641ca999d4183a73be739b408cfa5e518c750af783420de6d",
+      "coverage": "Assignment, document ownership and execution boundaries read."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-harness-repair-and-testing/TICKET.md",
+      "sha256": "a84ae3b9163802d1b6ec4eb89fc3bc79055d7c4236c883d1cc03c21f99c30e22",
+      "coverage": "Upstream assignment/sequence read; historical evidence not recertified."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/template/AGENTS.md",
+      "sha256": "11dbf51505212678f97ead2bcaa5e6d279371a8f7310f4330cd148452f144f9a",
+      "coverage": "Template structure, prompts, roles and links inspected; index validation passed."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/template/BULLETIN.md",
+      "sha256": "10477a75aef6eb7d65a75f3bd988a53c6d2d5a98394cb5dee219936823a1cefc",
+      "coverage": "Template structure, prompts, roles and links inspected; index validation passed."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/template/CAPTURE.md",
+      "sha256": "825994565a04afdba700512df0392a60856890a5f82dff4851690c83d6ee77fd",
+      "coverage": "Template structure, prompts, roles and links inspected; index validation passed."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/template/CHANGE_SURFACE.md",
+      "sha256": "03c2d74b46e660707418ea71841ed7b0b20163d170f396b10a0d8b9cd87928ed",
+      "coverage": "Template structure, prompts, roles and links inspected; index validation passed."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/template/CONTRACTS.md",
+      "sha256": "69bc45afd9ddf81ef565819f973315ea2706ae1c11bdfdb72e6b4e9c7ea5df97",
+      "coverage": "Template structure, prompts, roles and links inspected; index validation passed."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/template/DECISIONS.md",
+      "sha256": "9d52574dc9db12daf17118b7e723b457e57c26b0d806757104708e74b4955c6d",
+      "coverage": "Template structure, prompts, roles and links inspected; index validation passed."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/template/INTENT.md",
+      "sha256": "67f316400bf73c7a890b6d033d364c47ff5efb9cfbb6925ecfe3772c9d712023",
+      "coverage": "Template structure, prompts, roles and links inspected; index validation passed."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/template/ISSUES.md",
+      "sha256": "25eb1c6efe230e2fa5be14455131b6a61570de9ae1e2e336842eb52e49fccfe3",
+      "coverage": "Template structure, prompts, roles and links inspected; index validation passed."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/template/PROPOSALS.md",
+      "sha256": "311fc654a1a0553d63854ad8c15802eb4e39ef332440b8040f5d89ae45c0c5c8",
+      "coverage": "Template structure, prompts, roles and links inspected; index validation passed."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/template/REFERENCES.md",
+      "sha256": "7422deff0dac76ab24fdd66fe8f2c9e6d4e0b8cf7d8ac1f6a8b219915d07c773",
+      "coverage": "Template structure, prompts, roles and links inspected; index validation passed."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/template/TICKET.md",
+      "sha256": "56bc658a42f8f49d18b3a9a72db19ecd6c4f566f83d292c4eb0f88968e421a27",
+      "coverage": "Template structure, prompts, roles and links inspected; index validation passed."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/template/index.json",
+      "sha256": "f48f0517d467e95d1e9ac3430b14d00a0e96d7755c90a6118fa008517342e589",
+      "coverage": "Template structure, prompts, roles and links inspected; index validation passed."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/managers/AGENTS.md",
+      "sha256": "10e9229a3348eae518d7298b9945f1c163fbb2a46ee71ff0ac96ebd93d3ab866",
+      "coverage": "Existing management scope and pending catalog cutover inspected; no live status recertification."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/managers/workfolder-manager/AGENTS.md",
+      "sha256": "2b4bd65875cf3a3693db61abe7769b8db77c48ddd696c94871eeacdeeae096f1",
+      "coverage": "Existing management scope and pending catalog cutover inspected; no live status recertification."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/managers/workfolder-manager/handoff.md",
+      "sha256": "d6330abdddacbadb4970e12ad66a18f65284fa35508ad058bae42b325ba02a90",
+      "coverage": "Existing management scope and pending catalog cutover inspected; no live status recertification."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/session-contract.md",
+      "sha256": "d82d5a815a94f8c27b64d1d90aa0085790e3d98408c011e86d6126dd1bd9b570",
+      "coverage": "Assignment, document ownership and execution boundaries read."
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/ticket-workflow.md",
+      "sha256": "ab1abedc86bc88a53197feac4f50a3e1a845110071bb455c7643d2eef3807e00",
+      "coverage": "Assignment, document ownership and execution boundaries read."
+    }
+  ]
+}

@@ -39,24 +39,23 @@ test('composer screenshot menu preserves split capture and gallery controls', as
 
   expect(appSource).toContain('void captureAndAttachScreenshot()');
   expect(appSource).toContain('onClick={handleControlCamera}');
-  expect(footerSource).toContain('onAttach={onAddAttachment}');
-  expect(footerSource).toContain('onInsert={onInsertText}');
+  expect(footerSource).toContain('beginMaterial={beginMaterial}');
   expect(footerSource).not.toContain('<ScreenshotsTrigger');
-  expect(addMenuSource).toContain('void captureAndAttachScreenshot(screenshotOwner)');
+  expect(addMenuSource).toContain('onTakeScreenshot();');
   expect(addMenuSource).toContain('control_camera');
   expect(addMenuSource).toContain('triggerVariant="submenu"');
   expect(gallerySource).toContain("triggerVariant?: 'icon' | 'submenu'");
   expect(gallerySource).toContain('<span>Screenshots</span>');
   expect(gallerySource).toContain('chevron_right');
-  expect(addMenuSource).toContain('<ClipboardTrigger onInsert={handleInsert} triggerVariant="submenu" />');
-  expect(addMenuSource).toContain('<RecentFilesTrigger onInsert={handleInsert} triggerVariant="submenu" />');
+  expect(addMenuSource).toContain('<ClipboardTrigger beginMaterial={handleBegin} triggerVariant="submenu" />');
+  expect(addMenuSource).toContain('<RecentFilesTrigger beginMaterial={handleBegin} triggerVariant="submenu" />');
   expect(clipboardSource).toContain('<span>Clipboard</span>');
   expect(clipboardSource).toContain('listPage(0, 1)');
   expect(clipboardSource).toContain('fetchEntryValue(entry.id)');
   expect(clipboardSource).toContain('handleInsertTopRanked()');
   expect(editsSource).toContain('<span>Edits</span>');
   expect(editsSource).toContain('requestRecentFiles(1)');
-  expect(editsSource).toContain('onInsert?.(mostRecent.path)');
+  expect(editsSource).toContain('await begin.source.text(mostRecent.path)');
 
   await page.setContent(`
     <style>${dropdownCss}\n${hoverModalCss}\n${chatAreaCss}</style>

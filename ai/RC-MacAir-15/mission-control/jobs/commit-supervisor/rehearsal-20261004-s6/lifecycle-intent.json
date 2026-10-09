@@ -1,0 +1,25 @@
+{
+  "at": "2026-10-04T13:53:41.173002+00:00",
+  "actor": "/root/s6_supervisor_intent_1",
+  "parent": "/root",
+  "role": "mc-commit-supervisor supported default exact installed fallback",
+  "root_settings_inherited": true,
+  "overrides": false,
+  "children": [],
+  "state": "needs-owner",
+  "terminal_return": "needs-owner",
+  "predecessor": {
+    "identity": "/root/s6_supervisor_provider_1",
+    "terminal": "completed",
+    "return": "waiting-dependency",
+    "observed_via": "Actual collaboration.list_agents on this turn plus parent E terminal/ledger receipt; only lifecycle used from other earlier agents text.",
+    "release_issued_after_observed_terminal": true,
+    "close_agent": "unavailable"
+  },
+  "historical_predecessor_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/history/S6-ACTUAL-PROVIDER-HOLD-01/lifecycle.json",
+  "original_lifecycle_unchanged": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/lifecycle.json",
+  "turn_disposition": "Intentional saved terminal needs-owner return via final; end immediately without polling or successor dispatch.",
+  "host_completed_observation": "Parent must independently observe after final; not falsely claimed before delivery.",
+  "close_agent": "unavailable; no unsupported API invented",
+  "next_safe_action": "End intentionally in needs-owner after saved current verification. Parent /root independently observes actual host completion, then may supply only labeled fixture intent resolution and a fresh bounded replacement. Do not poll, auto-resume, dispatch child/repair/runtime/prerequisite build, schedule or operate Git/Alpha."
+}

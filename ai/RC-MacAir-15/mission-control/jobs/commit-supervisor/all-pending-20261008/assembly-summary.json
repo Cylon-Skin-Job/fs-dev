@@ -1,0 +1,82 @@
+{
+  "at": "2026-10-09T01:00:02.864424+00:00",
+  "candidate": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate",
+  "primary_input_count": 17670,
+  "primary_input_bytes": 1175782681,
+  "accepted_product_count": 65,
+  "excluded_sqlite": [
+    {
+      "path": "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/first/recovery/payloads/27378cd3e8cfb0d85fb34024d95b2caca46514428429ca5e8ff3acbea46a9d14",
+      "bytes": 61440
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/fix-xy/recovery/payloads/27378cd3e8cfb0d85fb34024d95b2caca46514428429ca5e8ff3acbea46a9d14",
+      "bytes": 61440
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/fixed-checkpoint/recovery/payloads/27378cd3e8cfb0d85fb34024d95b2caca46514428429ca5e8ff3acbea46a9d14",
+      "bytes": 61440
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/public-controls/first-wiki/recovery/payloads/27378cd3e8cfb0d85fb34024d95b2caca46514428429ca5e8ff3acbea46a9d14",
+      "bytes": 61440
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/public-controls/fix-xy-wiki/recovery/payloads/27378cd3e8cfb0d85fb34024d95b2caca46514428429ca5e8ff3acbea46a9d14",
+      "bytes": 61440
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/public-controls/fixed/recovery/payloads/27378cd3e8cfb0d85fb34024d95b2caca46514428429ca5e8ff3acbea46a9d14",
+      "bytes": 61440
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/public-controls/original/recovery/payloads/27378cd3e8cfb0d85fb34024d95b2caca46514428429ca5e8ff3acbea46a9d14",
+      "bytes": 61440
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/first-wiki-1/recovery/payloads/27378cd3e8cfb0d85fb34024d95b2caca46514428429ca5e8ff3acbea46a9d14",
+      "bytes": 61440
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/fix-xy-wiki-1/recovery/payloads/27378cd3e8cfb0d85fb34024d95b2caca46514428429ca5e8ff3acbea46a9d14",
+      "bytes": 61440
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery/payloads/27378cd3e8cfb0d85fb34024d95b2caca46514428429ca5e8ff3acbea46a9d14",
+      "bytes": 61440
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/preparation-recovery/recovery/payloads/27378cd3e8cfb0d85fb34024d95b2caca46514428429ca5e8ff3acbea46a9d14",
+      "bytes": 61440
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/wiki-supplement-1/recovery/payloads/27378cd3e8cfb0d85fb34024d95b2caca46514428429ca5e8ff3acbea46a9d14",
+      "bytes": 61440
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-recovery/wiki-supplement-2/recovery/payloads/27378cd3e8cfb0d85fb34024d95b2caca46514428429ca5e8ff3acbea46a9d14",
+      "bytes": 61440
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/final-recovery/preparation-recovery/recovery/payloads/27378cd3e8cfb0d85fb34024d95b2caca46514428429ca5e8ff3acbea46a9d14",
+      "bytes": 61440
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/final-recovery/wiki-supplement-1/recovery/payloads/27378cd3e8cfb0d85fb34024d95b2caca46514428429ca5e8ff3acbea46a9d14",
+      "bytes": 61440
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/final-recovery/wiki-supplement-2/recovery/payloads/27378cd3e8cfb0d85fb34024d95b2caca46514428429ca5e8ff3acbea46a9d14",
+      "bytes": 61440
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/preparation-recovery/recovery/payloads/27378cd3e8cfb0d85fb34024d95b2caca46514428429ca5e8ff3acbea46a9d14",
+      "bytes": 61440
+    },
+    {
+      "path": "fusion-studio-server/data/backups/fusion.db.20260919-074207",
+      "bytes": 167026688
+    }
+  ],
+  "assembly_manifest": "/private/tmp/fusion-main-consolidation-95vxg0_h/assembly.json"
+}

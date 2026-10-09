@@ -1,0 +1,37 @@
+{
+  "status": "VERIFIED_READY",
+  "verifiedAt": 1790544827946,
+  "receipt": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/render-diagnostics/HUMAN-RESUME/human-1790544782494-7dc3b427/session.json",
+  "runId": "human-1790544782494-7dc3b427",
+  "title": "HUMAN TEST \u2014 human-1790544782494-7dc3b427",
+  "driverPid": 38743,
+  "electronPid": 38775,
+  "server": [
+    "38794 38775 /opt/homebrew/bin/node /private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790494814495-ca038557-SYwgRn/stage-human-1790544782494-7dc3b427/fusion-studio-server/server.js"
+  ],
+  "profile": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790494814495-ca038557-SYwgRn/profile",
+  "project": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790494814495-ca038557-SYwgRn/workspace/Human-Test",
+  "serverUrl": "http://127.0.0.1:63241",
+  "selectedThreadId": "2026-09-27T01-25-18-759",
+  "preservedCounts": {
+    "workspaces": 1,
+    "threads": 2,
+    "exchanges": 11
+  },
+  "stageFilesCompared": 1872,
+  "stageMismatches": [],
+  "acceptedBuildFiles": 200,
+  "acceptedBuildMismatch": [],
+  "lastRendererBatchAt": 1790544827340,
+  "hasResourceRecord": true,
+  "surface": {
+    "threadId": "2026-09-27T01-25-18-759",
+    "diagnosticsRightmost": true,
+    "diagnosticsClosed": true,
+    "historyVisible": true,
+    "composerEnabled": true
+  },
+  "recording": true,
+  "automaticExpiry": false,
+  "noPromptSent": true
+}

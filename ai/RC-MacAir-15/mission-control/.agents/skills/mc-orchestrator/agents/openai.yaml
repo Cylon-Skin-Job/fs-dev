@@ -1,0 +1,4 @@
+interface:
+  display_name: "MC Orchestrator"
+  short_description: "Finish one approved SPEC with fail-forward review"
+  default_prompt: "Use $mc-orchestrator to finish this approved SPEC one slice at a time, repair forward until clean, and return every deviation and downstream impact for owner review."

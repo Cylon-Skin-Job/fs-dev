@@ -1,0 +1,12 @@
+ee4b84aa06b763dc9e06ac6cc28860e1c7f0b78a62189092eefbbfcecb0b54a9  fusion-studio-client/src/lib/chat-action.ts
+7a23aa9ee58c4724bf7db42b4ad5fc521f66c3505610177b7971b6a72cc5ef89  fusion-studio-client/src/lib/chat-action-controller.ts
+511723c364bdc1cadc72aa4d9911fb05eea1d9add525e23574a2fa08c3a77a4b  fusion-studio-client/src/lib/chat-action-creation.ts
+799ea39d8085c7d7472aab0e56ba3c748488a3f9a007a18b79c427854e708648  fusion-studio-client/src/lib/ws-client.ts
+5e915db6b5031530444e4e430abeeb8003ec9f7be6551466149ad0d1194ff0bf  fusion-studio-client/src/lib/ws/thread-handlers.ts
+85e43ee1c0f57875dd5090c4edbafb08db2a4287550f5a606b92d4a0b35be110  fusion-studio-client/src/types/websocket.ts
+4935090a25266fd4ecc5e58e3d48aeb7b34e70840812c51f9cfa7a19e7ed6992  fusion-studio-client/src/components/SystemViewer.tsx
+f58220c33937a3ffab79d7febf54ca1c72644f185acd28905b0786375d717a3f  fusion-studio-server/lib/thread/thread-crud.js
+fad6d6d9e3c70c9dd9d7a1627524f5ee7ca8fadff1cf5c8581b8e83a552b20fe  fusion-studio-server/test/thread/thread-crud-cli-policy.test.js
+4b6489e0da2090694979a8ebf866cf0641a6a09b120bc058b3aaf71774ec69fc  fusion-studio-client/e2e/chat-architecture/r5-r6-electron.mjs
+f3fdc82fc8c05f3f98b2009456f7326bbcc5f9691bb0df82a18490c8e8cc066b  fusion-studio-client/e2e/chat-architecture/run.mjs
+18c4aa8d50f591ff47b6672424dee5f385834e865f0718dd2bd2e810fe07b795  fusion-studio-client/e2e/chat-architecture/observation-boundaries.spec.ts

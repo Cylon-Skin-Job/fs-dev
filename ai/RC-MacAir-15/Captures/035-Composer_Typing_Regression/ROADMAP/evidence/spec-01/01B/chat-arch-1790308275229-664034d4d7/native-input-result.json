@@ -1,0 +1,545 @@
+{
+  "status": "native-keyboard-paste-passed-manual-pending",
+  "nativeMethods": [
+    {
+      "method": "macOS System Events keystroke to verified exact owned frontmost PID",
+      "exit": 0,
+      "error": ""
+    },
+    {
+      "method": "macOS Cmd+V with Electron OS clipboard",
+      "exit": 0,
+      "error": ""
+    }
+  ],
+  "ownerAcceptance": "pending; explicit timestamped owner receipt required",
+  "capability": {
+    "at": "2026-09-25T03:51:15.559Z",
+    "locked": false
+  },
+  "fixture": {
+    "rendererLifetime": "fresh isolated candidate; not the post-soak renderer",
+    "f2": {
+      "id": "F2-DETERMINISTIC-HISTORY-V1",
+      "exchanges": 30,
+      "renderedMessages": 60,
+      "includes": [
+        "text",
+        "code",
+        "lists",
+        "tables",
+        "collapsed-tool-results",
+        "reply-metadata"
+      ],
+      "dense": {
+        "exchanges": 2,
+        "assistantPayloadBytes": 534528,
+        "sha256": "9b06d21b677d93e4479544db39cf56f86eb4d3cd25fb603740407f263e7420dc"
+      }
+    },
+    "f3": {
+      "id": "F3-DETERMINISTIC-WORKSPACE-V1",
+      "algorithm": "label-repeated-to-fixed-byte-count",
+      "counts": {
+        "smallFiles": 1000,
+        "captureFolders": 100,
+        "wikiPages": 100,
+        "officeDocuments": 20
+      },
+      "totalFiles": 1220,
+      "totalContentBytes": 11059200,
+      "root": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790308275229-664034d4d7-BsUVx5/native-workspace/native-input",
+      "everyPathFixtureContained": true,
+      "manifestHash": "421c0ef8f5e255bb333a82a9f26d28c74eb2c8d55e95fc262ad241ed45740079"
+    },
+    "project": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790308275229-664034d4d7-BsUVx5/native-workspace/native-input",
+    "profile": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790308275229-664034d4d7-BsUVx5/native-profile",
+    "pid": 19848,
+    "threadId": "2026-09-24T20-51-17-647"
+  },
+  "focus": [
+    {
+      "at": 1790308279639,
+      "pid": 19848,
+      "windowId": 1,
+      "url": "fusion-shell://app/",
+      "focused": true
+    },
+    {
+      "at": 1790308280557,
+      "pid": 19848,
+      "windowId": 1,
+      "url": "fusion-shell://app/",
+      "focused": true
+    }
+  ],
+  "keyboard": {
+    "expected": "native keyboard 2227ebc2",
+    "actual": "native keyboard 2227ebc2",
+    "exact": true
+  },
+  "paste": {
+    "expected": "native keyboard 2227ebc2 native paste 😀 café 日本語",
+    "actual": "native keyboard 2227ebc2 native paste 😀 café 日本語"
+  },
+  "events": [
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": "n",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "",
+      "at": 683.3000001907349
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": "n",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "n",
+      "at": 683.7000002861023
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": "a",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "n",
+      "at": 685.2000002861023
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": "a",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "na",
+      "at": 685.3000001907349
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": "t",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "na",
+      "at": 685.8000001907349
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": "t",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "nat",
+      "at": 685.9000000953674
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": "i",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "nat",
+      "at": 686.3000001907349
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": "i",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "nati",
+      "at": 686.3000001907349
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": "v",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "nati",
+      "at": 686.5
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": "v",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "nativ",
+      "at": 686.7000002861023
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": "e",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "nativ",
+      "at": 686.8000001907349
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": "e",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native",
+      "at": 686.9000000953674
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": " ",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native",
+      "at": 687.3000001907349
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": " ",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native ",
+      "at": 687.5
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": "k",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native ",
+      "at": 688.4000000953674
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": "k",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native k",
+      "at": 688.5
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": "e",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native k",
+      "at": 688.8000001907349
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": "e",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native ke",
+      "at": 688.9000000953674
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": "y",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native ke",
+      "at": 689.2000002861023
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": "y",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native key",
+      "at": 689.2000002861023
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": "b",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native key",
+      "at": 689.5999999046326
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": "b",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyb",
+      "at": 689.7000002861023
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": "o",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyb",
+      "at": 689.9000000953674
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": "o",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keybo",
+      "at": 689.9000000953674
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": "a",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keybo",
+      "at": 690.0999999046326
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": "a",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboa",
+      "at": 690.0999999046326
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": "r",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboa",
+      "at": 690.4000000953674
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": "r",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboar",
+      "at": 690.4000000953674
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": "d",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboar",
+      "at": 690.5999999046326
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": "d",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard",
+      "at": 690.7000002861023
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": " ",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard",
+      "at": 690.9000000953674
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": " ",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard ",
+      "at": 691
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard ",
+      "at": 691.0999999046326
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2",
+      "at": 691.0999999046326
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2",
+      "at": 691.4000000953674
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 22",
+      "at": 691.5
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 22",
+      "at": 691.5999999046326
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 222",
+      "at": 691.5999999046326
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": "7",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 222",
+      "at": 691.9000000953674
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": "7",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227",
+      "at": 692
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": "e",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227",
+      "at": 692.0999999046326
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": "e",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227e",
+      "at": 692.2000002861023
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": "b",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227e",
+      "at": 692.4000000953674
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": "b",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227eb",
+      "at": 692.4000000953674
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": "c",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227eb",
+      "at": 692.5999999046326
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": "c",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227ebc",
+      "at": 692.7000002861023
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227ebc",
+      "at": 692.8000001907349
+    },
+    {
+      "type": "input",
+      "inputType": "insertText",
+      "data": "2",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227ebc2",
+      "at": 692.9000000953674
+    },
+    {
+      "type": "beforeinput",
+      "inputType": "insertFromPaste",
+      "data": " native paste 😀 café 日本語",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227ebc2",
+      "at": 1598.2000002861023
+    },
+    {
+      "type": "input",
+      "inputType": "insertFromPaste",
+      "data": " native paste 😀 café 日本語",
+      "isComposing": false,
+      "isTrusted": true,
+      "value": "native keyboard 2227ebc2 native paste 😀 café 日本語",
+      "at": 1618.4000000953674
+    }
+  ],
+  "ime": "not established: OS clipboard Unicode is not IME composition",
+  "emoji": "native Unicode paste verified; Character Palette/manual autocomplete remains separate",
+  "lingering": [],
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  }
+}

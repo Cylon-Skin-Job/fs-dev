@@ -1,0 +1,11 @@
+--- /Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md@preimage
++++ /Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md@current
+@@ -10,7 +10,7 @@
+ 
+ ### Explicit roles and commands
+ 
+-D-024 names the top-level integration role **Commit Supervisor** (historical alias: Review and Merge). The sole current entry/profile is `mc-commit-supervisor`, with `mc-code-review-orchestrator` and `mc-commit-repair-worker` under [the workflow SPEC](planning/commit-supervisor/SPEC.md). S5 installs the routes; isolated behavioral rehearsal remains pending. Installation does not activate a job or approve publication.
++D-024 names the top-level integration role **Commit Supervisor** (historical alias: Review and Merge). The sole current entry/profile is `mc-commit-supervisor`, with `mc-code-review-orchestrator` and `mc-commit-repair-worker` under [the workflow SPEC](planning/commit-supervisor/SPEC.md). S5 installed the routes; the S6 [private behavioral rehearsal](jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/report.md) is complete and its preview is stopped with original inputs restored. As of the S6 closeout observation at 2026-10-04T21:16:40.081914+00:00, root full-S6/whole-SPEC gates remain pending. When `planning/commit-supervisor/execution/SPEC-final-report.md` is present, read it for the current root acceptance/final-review result and next safe action; owner setup acceptance remains separate. Installation and rehearsal do not activate operational MC or approve publication.
+ 
+ - `$mission-control` explicitly selects `.agents/skills/mission-control/SKILL.md` and restores the designated task's ownership/checkpoint. Role selection does not enable scheduling.
+ - **Status** / `$status` invokes `.agents/skills/status/SKILL.md`: observe current assigned work, build on prior status and return role-appropriate progress/events. It does not start a timer or dispatch. Read that exact file if skill UI discovery is unavailable.

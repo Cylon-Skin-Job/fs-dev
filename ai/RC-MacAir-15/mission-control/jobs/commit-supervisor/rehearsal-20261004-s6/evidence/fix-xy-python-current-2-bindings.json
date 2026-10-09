@@ -1,0 +1,514 @@
+{
+  "schema": 1,
+  "at": "2026-10-04T18:13:03.480234+00:00",
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "kind": "CURRENT_EXECUTED_SUITE_BINDING",
+  "pre": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-python-pre2.json",
+    "sha256": "50bddcd416ac17f65f2be2be8fc095719a7048433f9d8246afa808b5fe3a499e",
+    "mode": "0o100444"
+  },
+  "raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-python-suite-current-2-command.json",
+    "sha256": "6a802b2f18a498f71e86695073a21e7871025f5a92c32b70ef88e5f9db8954ac",
+    "mode": "0o100644"
+  },
+  "post": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-python-post2.json",
+    "sha256": "8ce22ba930046e936f3d7ae106e173212fae681afd9384fc2bd5c36d372ec9fe",
+    "mode": "0o100444"
+  },
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "command": [
+    "env",
+    "NODE_V8_COVERAGE=/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-python-node-coverage2",
+    "python3.12",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-v",
+    "-s",
+    ".agents/skills/mc-commit-supervisor/tests",
+    "-p",
+    "test_*.py"
+  ],
+  "started": "2026-10-04T18:12:06.847411+00:00",
+  "finished": "2026-10-04T18:12:27.488938+00:00",
+  "exit_code": 0,
+  "stdout": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-python-suite-current-2-stdout.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mode": "0o100444"
+  },
+  "stderr": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-python-suite-current-2-stderr.log",
+    "sha256": "08787e7d58bb00acb52731a1fd2783b110aa9565599d9902168c8dc4c2a414f2",
+    "mode": "0o100444"
+  },
+  "test_count": 55,
+  "test_names": [
+    [
+      "test_actual_capture_writer_mutation_retains_writer_bytes",
+      "test_job_snapshot",
+      "SnapshotTests",
+      "test_actual_capture_writer_mutation_retains_writer_bytes"
+    ],
+    [
+      "test_capture_concurrent_mutation_retains_no_checkpoint",
+      "test_job_snapshot",
+      "SnapshotTests",
+      "test_capture_concurrent_mutation_retains_no_checkpoint"
+    ],
+    [
+      "test_checkpoint_is_immutable_and_index_lock_refuses",
+      "test_job_snapshot",
+      "SnapshotTests",
+      "test_checkpoint_is_immutable_and_index_lock_refuses"
+    ],
+    [
+      "test_git_configuration_collision_refuses",
+      "test_job_snapshot",
+      "SnapshotTests",
+      "test_git_configuration_collision_refuses"
+    ],
+    [
+      "test_ignored_input_requires_explicit_separate_ownership",
+      "test_job_snapshot",
+      "SnapshotTests",
+      "test_ignored_input_requires_explicit_separate_ownership"
+    ],
+    [
+      "test_index_flags_round_trip",
+      "test_job_snapshot",
+      "SnapshotTests",
+      "test_index_flags_round_trip"
+    ],
+    [
+      "test_intent_to_add_reports_unmet_prerequisite",
+      "test_job_snapshot",
+      "SnapshotTests",
+      "test_intent_to_add_reports_unmet_prerequisite"
+    ],
+    [
+      "test_io_failure_rolls_back_guarded_pre_restore_state",
+      "test_job_snapshot",
+      "SnapshotTests",
+      "test_io_failure_rolls_back_guarded_pre_restore_state"
+    ],
+    [
+      "test_job_created_removal_declaration_required",
+      "test_job_snapshot",
+      "SnapshotTests",
+      "test_job_created_removal_declaration_required"
+    ],
+    [
+      "test_missing_guard_and_conflicting_owner_refuse",
+      "test_job_snapshot",
+      "SnapshotTests",
+      "test_missing_guard_and_conflicting_owner_refuse"
+    ],
+    [
+      "test_missing_indexed_file_round_trip",
+      "test_job_snapshot",
+      "SnapshotTests",
+      "test_missing_indexed_file_round_trip"
+    ],
+    [
+      "test_other_isolated_checkout_refuses",
+      "test_job_snapshot",
+      "SnapshotTests",
+      "test_other_isolated_checkout_refuses"
+    ],
+    [
+      "test_owned_collision_is_non_mutating",
+      "test_job_snapshot",
+      "SnapshotTests",
+      "test_owned_collision_is_non_mutating"
+    ],
+    [
+      "test_parent_symlink_and_path_traversal_refuse",
+      "test_job_snapshot",
+      "SnapshotTests",
+      "test_parent_symlink_and_path_traversal_refuse"
+    ],
+    [
+      "test_payload_corruption_refuses_without_mutation",
+      "test_job_snapshot",
+      "SnapshotTests",
+      "test_payload_corruption_refuses_without_mutation"
+    ],
+    [
+      "test_public_cli_exact_reproduction_and_restore",
+      "test_job_snapshot",
+      "SnapshotTests",
+      "test_public_cli_exact_reproduction_and_restore"
+    ],
+    [
+      "test_restore_concurrent_mutation_before_write_is_non_mutating",
+      "test_job_snapshot",
+      "SnapshotTests",
+      "test_restore_concurrent_mutation_before_write_is_non_mutating"
+    ],
+    [
+      "test_source_checkout_restore_refuses",
+      "test_job_snapshot",
+      "SnapshotTests",
+      "test_source_checkout_restore_refuses"
+    ],
+    [
+      "test_unrelated_index_collision_is_non_mutating",
+      "test_job_snapshot",
+      "SnapshotTests",
+      "test_unrelated_index_collision_is_non_mutating"
+    ],
+    [
+      "test_unrelated_worktree_collision_is_non_mutating",
+      "test_job_snapshot",
+      "SnapshotTests",
+      "test_unrelated_worktree_collision_is_non_mutating"
+    ],
+    [
+      "test_unresolved_merge_stages_round_trip",
+      "test_job_snapshot",
+      "SnapshotTests",
+      "test_unresolved_merge_stages_round_trip"
+    ],
+    [
+      "test_advisory_confidence_does_not_raise_severity",
+      "test_review_packet",
+      "ReviewPacketTests",
+      "test_advisory_confidence_does_not_raise_severity"
+    ],
+    [
+      "test_bounded_issue_table_preserves_progress_and_never_dispatches",
+      "test_review_packet",
+      "ReviewPacketTests",
+      "test_bounded_issue_table_preserves_progress_and_never_dispatches"
+    ],
+    [
+      "test_current_material_finding_cannot_be_hidden_by_repair_report",
+      "test_review_packet",
+      "ReviewPacketTests",
+      "test_current_material_finding_cannot_be_hidden_by_repair_report"
+    ],
+    [
+      "test_deferred_material_or_selfaccepted_handoff_is_not_clean",
+      "test_review_packet",
+      "ReviewPacketTests",
+      "test_deferred_material_or_selfaccepted_handoff_is_not_clean"
+    ],
+    [
+      "test_duplicate_advisory_does_not_suppress_validated_material_root_cause",
+      "test_review_packet",
+      "ReviewPacketTests",
+      "test_duplicate_advisory_does_not_suppress_validated_material_root_cause"
+    ],
+    [
+      "test_each_identity_component_invalidates_affected_claims",
+      "test_review_packet",
+      "ReviewPacketTests",
+      "test_each_identity_component_invalidates_affected_claims"
+    ],
+    [
+      "test_failed_check_is_repair_work",
+      "test_review_packet",
+      "ReviewPacketTests",
+      "test_failed_check_is_repair_work"
+    ],
+    [
+      "test_final_handoff_requires_all_original_assignment_paths",
+      "test_review_packet",
+      "ReviewPacketTests",
+      "test_final_handoff_requires_all_original_assignment_paths"
+    ],
+    [
+      "test_fresh_supported_same_id_reopens_historical_disposition",
+      "test_review_packet",
+      "ReviewPacketTests",
+      "test_fresh_supported_same_id_reopens_historical_disposition"
+    ],
+    [
+      "test_handoff_requires_original_assigned_path_coverage",
+      "test_review_packet",
+      "ReviewPacketTests",
+      "test_handoff_requires_original_assigned_path_coverage"
+    ],
+    [
+      "test_hold_does_not_accept_worker_handoff",
+      "test_review_packet",
+      "ReviewPacketTests",
+      "test_hold_does_not_accept_worker_handoff"
+    ],
+    [
+      "test_holds_preserve_raw_reviews_findings_and_independent_repair_packet",
+      "test_review_packet",
+      "ReviewPacketTests",
+      "test_holds_preserve_raw_reviews_findings_and_independent_repair_packet"
+    ],
+    [
+      "test_malformed_packet_refuses_without_mutation",
+      "test_review_packet",
+      "ReviewPacketTests",
+      "test_malformed_packet_refuses_without_mutation"
+    ],
+    [
+      "test_material_to_repair_to_separate_handoff_to_fresh_final",
+      "test_review_packet",
+      "ReviewPacketTests",
+      "test_material_to_repair_to_separate_handoff_to_fresh_final"
+    ],
+    [
+      "test_materiality_dimensions_require_independent_validation",
+      "test_review_packet",
+      "ReviewPacketTests",
+      "test_materiality_dimensions_require_independent_validation"
+    ],
+    [
+      "test_missing_or_nonfresh_reviewers_and_lenses_withhold_gate",
+      "test_review_packet",
+      "ReviewPacketTests",
+      "test_missing_or_nonfresh_reviewers_and_lenses_withhold_gate"
+    ],
+    [
+      "test_missing_reviewer_retains_known_repair_packet_but_gate_is_unmet",
+      "test_review_packet",
+      "ReviewPacketTests",
+      "test_missing_reviewer_retains_known_repair_packet_but_gate_is_unmet"
+    ],
+    [
+      "test_narrow_handoff_survives_unrelated_owned_path_change",
+      "test_review_packet",
+      "ReviewPacketTests",
+      "test_narrow_handoff_survives_unrelated_owned_path_change"
+    ],
+    [
+      "test_omitted_owned_path_is_incomplete_evidence",
+      "test_review_packet",
+      "ReviewPacketTests",
+      "test_omitted_owned_path_is_incomplete_evidence"
+    ],
+    [
+      "test_rejection_must_match_current_bytes_and_finding_evidence",
+      "test_review_packet",
+      "ReviewPacketTests",
+      "test_rejection_must_match_current_bytes_and_finding_evidence"
+    ],
+    [
+      "test_shortened_packet_cannot_shorten_original_finding_assignment",
+      "test_review_packet",
+      "ReviewPacketTests",
+      "test_shortened_packet_cannot_shorten_original_finding_assignment"
+    ],
+    [
+      "test_split_reviewers_cover_all_lenses",
+      "test_review_packet",
+      "ReviewPacketTests",
+      "test_split_reviewers_cover_all_lenses"
+    ],
+    [
+      "test_terminal_dispositions_preserve_raw_history_and_route_current_evidence",
+      "test_review_packet",
+      "ReviewPacketTests",
+      "test_terminal_dispositions_preserve_raw_history_and_route_current_evidence"
+    ],
+    [
+      "test_generation_imports_only_owned_block_and_is_stable",
+      "test_wiki_handoff",
+      "WikiHandoffTests",
+      "test_generation_imports_only_owned_block_and_is_stable"
+    ],
+    [
+      "test_missing_article_creation_has_absent_preimage_and_resolved_coverage",
+      "test_wiki_handoff",
+      "WikiHandoffTests",
+      "test_missing_article_creation_has_absent_preimage_and_resolved_coverage"
+    ],
+    [
+      "test_new_and_deleted_source_presence_drift_is_not_hidden",
+      "test_wiki_handoff",
+      "WikiHandoffTests",
+      "test_new_and_deleted_source_presence_drift_is_not_hidden"
+    ],
+    [
+      "test_no_op_and_timestamp_only_refresh_retain_page_time",
+      "test_wiki_handoff",
+      "WikiHandoffTests",
+      "test_no_op_and_timestamp_only_refresh_retain_page_time"
+    ],
+    [
+      "test_original_subject_omission_and_missing_article_are_findings",
+      "test_wiki_handoff",
+      "WikiHandoffTests",
+      "test_original_subject_omission_and_missing_article_are_findings"
+    ],
+    [
+      "test_page_collision_preserves_other_writer_and_no_snapshot",
+      "test_wiki_handoff",
+      "WikiHandoffTests",
+      "test_page_collision_preserves_other_writer_and_no_snapshot"
+    ],
+    [
+      "test_renamed_source_repair_keeps_old_page_preimage_and_exact_new_source",
+      "test_wiki_handoff",
+      "WikiHandoffTests",
+      "test_renamed_source_repair_keeps_old_page_preimage_and_exact_new_source"
+    ],
+    [
+      "test_same_second_collision_never_overwrites_snapshots",
+      "test_wiki_handoff",
+      "WikiHandoffTests",
+      "test_same_second_collision_never_overwrites_snapshots"
+    ],
+    [
+      "test_snapshot_failure_prevents_replacement",
+      "test_wiki_handoff",
+      "WikiHandoffTests",
+      "test_snapshot_failure_prevents_replacement"
+    ],
+    [
+      "test_source_drift_refuses_edit_until_bounded_recheck",
+      "test_wiki_handoff",
+      "WikiHandoffTests",
+      "test_source_drift_refuses_edit_until_bounded_recheck"
+    ],
+    [
+      "test_substantive_edit_preserves_complete_preimage_and_actual_time",
+      "test_wiki_handoff",
+      "WikiHandoffTests",
+      "test_substantive_edit_preserves_complete_preimage_and_actual_time"
+    ]
+  ],
+  "unique_dependency_count": 3808,
+  "discovered_modules": [
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_job_snapshot.py",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_review_packet.py",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_wiki_handoff.py"
+  ],
+  "all_dependencies_equal": true,
+  "all_discovery_imports_executables_source_git_equal": true,
+  "coverage_receipts": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-python-node-coverage2/coverage-23149-1791137547067-0.json",
+      "sha256": "2384927148e9d60a65c6cdd3dd9686106e1062e90ec6f1c1e3165a737150a3bd",
+      "mode": "0o100444"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-python-node-coverage2/coverage-23150-1791137547133-0.json",
+      "sha256": "94327f9c06526c0d58ae72dbc8d41d20dcdecd812c2a1a1c284caa87c2de9869",
+      "mode": "0o100444"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-python-node-coverage2/coverage-23151-1791137547197-0.json",
+      "sha256": "997c1a2ea82ea220ee75c7e56665cf53a1af2d73e8775e6066fe539737385a92",
+      "mode": "0o100444"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-python-node-coverage2/coverage-23152-1791137547262-0.json",
+      "sha256": "64f39245891970a9c11c8fd6ceb9a0bb1ce4d3207df1667cac56dba897122cff",
+      "mode": "0o100444"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-python-node-coverage2/coverage-23153-1791137547331-0.json",
+      "sha256": "110fc3272ca0736672353bc4123dfb8aaa0f7362c372e853db499784b3efaa7d",
+      "mode": "0o100444"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-python-node-coverage2/coverage-23154-1791137547398-0.json",
+      "sha256": "26e92cc2b5e5994b9eda7f40be02f617d1e3dee00148385a398458effd8ffa2a",
+      "mode": "0o100444"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-python-node-coverage2/coverage-23155-1791137547476-0.json",
+      "sha256": "442f5f61fffa1f5674ab71be21543f3152b14ea9c63277d9b0eb574e9278b33e",
+      "mode": "0o100444"
+    }
+  ],
+  "actual_javascript_files": [
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/esprima/dist/esprima.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/extend-shallow/index.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/index.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/lib/defaults.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/lib/engine.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/lib/engines.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/lib/excerpt.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/lib/parse.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/lib/stringify.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/lib/to-file.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/lib/utils.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/index.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/common.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/dumper.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/exception.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/loader.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/mark.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/schema.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/schema/core.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/schema/default_full.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/schema/default_safe.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/schema/failsafe.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/schema/json.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/binary.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/bool.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/float.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/int.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/js/function.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/js/regexp.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/js/undefined.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/map.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/merge.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/null.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/omap.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/pairs.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/seq.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/set.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/str.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/timestamp.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/is-extendable/index.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/kind-of/index.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/section-matter/index.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/strip-bom-string/index.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/frontmatter/catalog.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/frontmatter/index.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/frontmatter/parser.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/frontmatter/serializer.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/fs/cycle-guard.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/fs/dirents.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/index.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/readiness-runtime.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/relocation-errors.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/simple-yaml.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/tab-launcher-catalog.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/tab-policy.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/view-capsules-projection.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/view-id.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/views/workspace-registry-writer.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/wiki/audit/markers.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/wiki/audit/run.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/wiki/audit/state.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/wiki/audit/toc-sync.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/wiki/query/run.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/wiki/wiki-tree.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/workspace/ai-paths.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/workspace/create-service.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules/better-sqlite3/lib/database.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules/better-sqlite3/lib/index.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules/better-sqlite3/lib/methods/aggregate.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules/better-sqlite3/lib/methods/backup.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules/better-sqlite3/lib/methods/function.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules/better-sqlite3/lib/methods/inspect.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules/better-sqlite3/lib/methods/pragma.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules/better-sqlite3/lib/methods/serialize.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules/better-sqlite3/lib/methods/table.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules/better-sqlite3/lib/methods/transaction.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules/better-sqlite3/lib/methods/wrappers.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules/better-sqlite3/lib/sqlite-error.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules/better-sqlite3/lib/util.js",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/scripts/wiki.js"
+  ],
+  "unbound_actual_javascript_files": [],
+  "historical_qualification": "Original55/35-entry reuse and current-1 pass remain historical successful invocations with incomplete executed dependency coverage. This actual current-2 invocation supplies current55 provenance; no historical drift or test failure is asserted.",
+  "limits": "Disposable fixture/review/recovery/document-source checks only; no product UI/runtime, Git publication, Wiki real closeout or owner readiness claim."
+}

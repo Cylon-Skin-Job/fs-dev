@@ -1,0 +1,6 @@
+{"at":1791405471114,"type":"session-start","threadId":"2026-10-07T13-37-51-102","sessionKey":"[\"material-project\",\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-ZVM9tA/material-native-workspace/material-project\",\"2026-10-07T13-37-51-102\"]","externalProcess":false}
+{"at":1791405501579,"type":"gate","gate":"before-stop","owner":"adapter","occurrence":1}
+{"at":1791405501579,"type":"gate","gate":"after-stop","owner":"adapter","occurrence":1}
+{"at":1791405501579,"type":"gate","gate":"before-shutdown","owner":"adapter","occurrence":1}
+{"at":1791405501579,"type":"gate","gate":"after-shutdown","owner":"adapter","occurrence":1}
+{"at":1791405501579,"type":"session-retired","threadId":"2026-10-07T13-37-51-102","sessionKey":"[\"material-project\",\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-ZVM9tA/material-native-workspace/material-project\",\"2026-10-07T13-37-51-102\"]","retainedSessions":0}

@@ -1,0 +1,21 @@
+{
+  "sourceCommit": "3356e1b73cc5d44028eac5baa02fd542a8bbc385",
+  "installed": "/Applications/Fusion Studio Alpha.app",
+  "backup": "/Applications/Fusion Studio Alpha.previous-20261001T193651Z.app",
+  "logOffset": 7134713,
+  "launchedAt": "2026-10-01T19:36:56.735583+00:00",
+  "verifiedAt": "2026-10-01T19:40:29.553116+00:00",
+  "mainPid": 48636,
+  "serverPid": 48653,
+  "serverPort": 64353,
+  "workspaceCount": 6,
+  "profileVerified": true,
+  "machineVerified": true,
+  "rendererSocketEstablished": true,
+  "visualInspection": "unavailable: Computer Use returned -10005",
+  "logLimit": "Current server log redacts counts, active IDs and path text to category markers; workspace count verified read-only from Alpha SQLite. File explorer also observes ordinary repository content from other machine folders; not classified as workspace-state binding.",
+  "activeWorkspaceId": "fs-dev",
+  "alphaUpdated": true,
+  "status": "installed_and_started_with_backend_identity_and_connection_verified",
+  "scope": "Owner-authorized Alpha update and launch; visual inspection unavailable and redacted server logs do not expose workspace counts or paths."
+}

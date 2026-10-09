@@ -1,0 +1,32 @@
+{
+  "command": [
+    "git",
+    "-C",
+    "/Users/rccurtrightjr./projects/fs-dev",
+    "config",
+    "--null",
+    "--list",
+    "--show-origin"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "GIT_LITERAL_PATHSPECS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "started": "2026-10-04T19:52:35.904791+00:00",
+  "finished": "2026-10-04T19:52:35.908459+00:00",
+  "exit_code": 0,
+  "stdout": "file:/opt/homebrew/etc/gitconfig\u0000credential.helper\nosxkeychain\u0000file:/Users/rccurtrightjr./.gitconfig\u0000filter.lfs.process\ngit-lfs filter-process\u0000file:/Users/rccurtrightjr./.gitconfig\u0000filter.lfs.required\ntrue\u0000file:/Users/rccurtrightjr./.gitconfig\u0000filter.lfs.clean\ngit-lfs clean -- %f\u0000file:/Users/rccurtrightjr./.gitconfig\u0000filter.lfs.smudge\ngit-lfs smudge -- %f\u0000file:/Users/rccurtrightjr./.gitconfig\u0000user.name\nCylon-Skin-Job\u0000file:/Users/rccurtrightjr./.gitconfig\u0000user.email\n105960223+Cylon-Skin-Job@users.noreply.github.com\u0000file:/Users/rccurtrightjr./.gitconfig\u0000credential.helper\n!/usr/local/bin/gh auth git-credential\u0000file:/Users/rccurtrightjr./.gitconfig\u0000credential.https://gitlab.com.helper\n!/opt/homebrew/bin/glab auth git-credential\u0000file:.git/config\u0000core.repositoryformatversion\n0\u0000file:.git/config\u0000core.filemode\ntrue\u0000file:.git/config\u0000core.bare\nfalse\u0000file:.git/config\u0000core.logallrefupdates\ntrue\u0000file:.git/config\u0000core.ignorecase\ntrue\u0000file:.git/config\u0000core.precomposeunicode\ntrue\u0000file:.git/config\u0000core.hookspath\n/Users/rccurtrightjr./projects/open-robin/.git/hooks\u0000file:.git/config\u0000remote.origin.url\nhttps://github.com/Cylon-Skin-Job/fs-dev.git\u0000file:.git/config\u0000remote.origin.fetch\n+refs/heads/*:refs/remotes/origin/*\u0000file:.git/config\u0000remote.gitlab.url\nhttps://gitlab.com/m1-build-server/fs-dev.git\u0000file:.git/config\u0000remote.gitlab.fetch\n+refs/heads/*:refs/remotes/gitlab/*\u0000file:.git/config\u0000branch.main.remote\norigin\u0000file:.git/config\u0000branch.main.merge\nrefs/heads/main\u0000file:.git/config\u0000branch.agent/alpha-office-editor-promotion.remote\norigin\u0000file:.git/config\u0000branch.agent/alpha-office-editor-promotion.merge\nrefs/heads/agent/alpha-office-editor-promotion\u0000file:.git/config\u0000branch.agent/alpha-packaged-log-path.remote\norigin\u0000file:.git/config\u0000branch.agent/alpha-packaged-log-path.merge\nrefs/heads/agent/alpha-packaged-log-path\u0000file:.git/config\u0000branch.agent/exact-workspace-paths.remote\norigin\u0000file:.git/config\u0000branch.agent/exact-workspace-paths.merge\nrefs/heads/agent/exact-workspace-paths\u0000file:.git/config\u0000extensions.worktreeconfig\ntrue\u0000",
+  "stderr": "",
+  "stdout_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/after-source-configuration.stdout",
+    "sha256": "15b4867e1facba02e3e54d699d8e9133c336ff6bd3beb6aab997538d77efbcb3",
+    "size": 2031
+  },
+  "stderr_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/after-source-configuration.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  }
+}

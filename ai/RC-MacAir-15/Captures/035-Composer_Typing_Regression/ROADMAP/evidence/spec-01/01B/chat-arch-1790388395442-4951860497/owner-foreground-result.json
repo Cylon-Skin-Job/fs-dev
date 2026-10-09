@@ -1,0 +1,16 @@
+{
+  "clickRequired": true,
+  "enabled": true,
+  "status": "failed",
+  "runId": "chat-arch-1790388395442-4951860497",
+  "pid": 45584,
+  "windowId": 1,
+  "title": "ISOLATED ACCEPTANCE — chat-arch-1790388395442-4951860497",
+  "url": "fusion-shell://app/",
+  "profile": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790388395442-4951860497-8PTl6A/r1-sustained-profile",
+  "workspace": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790388395442-4951860497-8PTl6A/r1-sustained-workspace",
+  "timeoutMs": 120000,
+  "failure": {
+    "message": "electronApplication.evaluate: Execution context was destroyed, most likely because of a navigation."
+  }
+}

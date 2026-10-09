@@ -1,0 +1,84 @@
+{
+  "startedAt": "2026-09-27T07:30:30.109Z",
+  "root": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-claude-discovery-uYV3uZ",
+  "command": [
+    "opencode",
+    "debug",
+    "skill"
+  ],
+  "runs": [
+    {
+      "label": "isolated-before",
+      "status": 0,
+      "signal": null,
+      "errorCode": null,
+      "stderrBytes": 0,
+      "skills": [
+        {
+          "name": "agents-global-canary",
+          "location": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-claude-discovery-uYV3uZ/home/.agents/skills/agents-global-canary/SKILL.md"
+        },
+        {
+          "name": "agents-project-canary",
+          "location": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-claude-discovery-uYV3uZ/project/.agents/skills/agents-project-canary/SKILL.md"
+        },
+        {
+          "name": "claude-global-canary",
+          "location": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-claude-discovery-uYV3uZ/home/.claude/skills/claude-global-canary/SKILL.md"
+        },
+        {
+          "name": "claude-project-canary",
+          "location": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-claude-discovery-uYV3uZ/project/.claude/skills/claude-project-canary/SKILL.md"
+        },
+        {
+          "name": "customize-opencode",
+          "location": "<built-in>"
+        },
+        {
+          "name": "native-global-canary",
+          "location": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-claude-discovery-uYV3uZ/config/opencode/skills/native-global-canary/SKILL.md"
+        },
+        {
+          "name": "native-project-canary",
+          "location": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-claude-discovery-uYV3uZ/project/.opencode/skills/native-project-canary/SKILL.md"
+        }
+      ]
+    },
+    {
+      "label": "isolated-current",
+      "status": 0,
+      "signal": null,
+      "errorCode": null,
+      "stderrBytes": 0,
+      "skills": [
+        {
+          "name": "agents-global-canary",
+          "location": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-claude-discovery-uYV3uZ/home/.agents/skills/agents-global-canary/SKILL.md"
+        },
+        {
+          "name": "agents-project-canary",
+          "location": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-claude-discovery-uYV3uZ/project/.agents/skills/agents-project-canary/SKILL.md"
+        },
+        {
+          "name": "customize-opencode",
+          "location": "<built-in>"
+        },
+        {
+          "name": "native-global-canary",
+          "location": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-claude-discovery-uYV3uZ/config/opencode/skills/native-global-canary/SKILL.md"
+        },
+        {
+          "name": "native-project-canary",
+          "location": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-claude-discovery-uYV3uZ/project/.opencode/skills/native-project-canary/SKILL.md"
+        }
+      ]
+    }
+  ],
+  "version": "1.18.32",
+  "status": "failed",
+  "failure": "Unterminated string in JSON at position 65330 (line 120 column 73)",
+  "cleanup": {
+    "rootAbsent": true
+  },
+  "completedAt": "2026-09-27T07:30:31.789Z"
+}

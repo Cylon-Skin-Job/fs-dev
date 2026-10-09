@@ -1,0 +1,14 @@
+[
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs",
+    "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+    "lines": 178,
+    "mode": 420
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs",
+    "sha256": "9b4bb189ebff26ceaf9b899abafa75400ebbd5e9157f0a45468640d87459ad85",
+    "lines": 328,
+    "mode": 420
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "scope": "runtime-only cohesive canonical restart inputs; not selected for commit",
+  "files": {
+    "restart-fusion.sh": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+    "scripts/fusion-restart.mjs": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+    "scripts/fusion-restart-target.mjs": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+    "scripts/fusion-restart-processes.mjs": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+    "scripts/fusion-restart-probe.mjs": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e"
+  },
+  "native_build": {
+    "command": "npm run build:native-observer",
+    "cwd": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/fusion-studio-server",
+    "status": 0,
+    "log_sha256": "8cd5f4672d8135728af18f87b790c8b99084ec7c658ed7a323d549a751e37f0b"
+  },
+  "toml_check": {
+    "command": "python3.12 tomllib.loads on all5 Wiki .codex TOMLs",
+    "status": 0,
+    "runtime_profiles_verified": false
+  }
+}

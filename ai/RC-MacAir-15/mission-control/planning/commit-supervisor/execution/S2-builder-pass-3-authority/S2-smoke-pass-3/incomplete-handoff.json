@@ -1,0 +1,186 @@
+{
+  "phase": "final",
+  "candidate": {
+    "target": "target-1",
+    "sources": [
+      "source-1"
+    ],
+    "owned": {
+      "code.py": {
+        "worktree": "fixed",
+        "index": "base",
+        "mode": "100644"
+      }
+    },
+    "configuration": {
+      "profile": "disposable"
+    },
+    "fixtures": {
+      "oracle": "correct"
+    },
+    "authority": {
+      "SPEC": "approved"
+    },
+    "preparation": "replay-owned-bytes"
+  },
+  "orchestrator_id": "fixture-final-orchestrator",
+  "participants": [
+    "fixture-writer",
+    "fixture-reviewer-1",
+    "fixture-initial-orchestrator",
+    "fixture-manager",
+    "fixture-handoff-reviewer"
+  ],
+  "required_checks": [
+    "behavior"
+  ],
+  "evidence": [
+    {
+      "id": "behavior",
+      "dependencies": {
+        "target": "target-1",
+        "sources": [
+          "source-1"
+        ],
+        "owned": {
+          "code.py": {
+            "worktree": "fixed",
+            "index": "base",
+            "mode": "100644"
+          }
+        },
+        "configuration": {
+          "profile": "disposable"
+        },
+        "fixtures": {
+          "oracle": "correct"
+        },
+        "authority": {
+          "SPEC": "approved"
+        },
+        "preparation": "replay-owned-bytes"
+      },
+      "raw_path": "fixture/behavior.log",
+      "result": "pass"
+    },
+    {
+      "id": "F1-handoff",
+      "kind": "worker-handoff",
+      "result": "pass",
+      "fresh_independent": true,
+      "raw_path": "fixture/handoff.md",
+      "dependencies": {
+        "authority": {
+          "SPEC": "approved"
+        }
+      },
+      "assigned_paths": [
+        "code.py"
+      ]
+    }
+  ],
+  "reviews": [
+    {
+      "identity": "fixture-final-reviewer",
+      "terminal": true,
+      "clean_room": true,
+      "read_only": true,
+      "root_inherited": true,
+      "dependencies": {
+        "target": "target-1",
+        "sources": [
+          "source-1"
+        ],
+        "owned": {
+          "code.py": {
+            "worktree": "fixed",
+            "index": "base",
+            "mode": "100644"
+          }
+        },
+        "configuration": {
+          "profile": "disposable"
+        },
+        "fixtures": {
+          "oracle": "correct"
+        },
+        "authority": {
+          "SPEC": "approved"
+        },
+        "preparation": "replay-owned-bytes"
+      },
+      "raw_path": "fixture/review-1.md",
+      "lenses": [
+        "Behavior & Verification",
+        "Standards Compliance",
+        "Integrations & Dependencies",
+        "Forward Compatibility",
+        "Wiki Impact"
+      ],
+      "result": "clean",
+      "findings": []
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "authority": "approved behavior criterion",
+      "path": "code.py",
+      "impact": "accepted input returns incorrect result",
+      "evidence": "fixture/repro.log",
+      "severity": "high",
+      "confidence": "medium",
+      "validated": true,
+      "assigned_paths": [
+        "code.py"
+      ]
+    }
+  ],
+  "dispositions": {
+    "F1": [
+      {
+        "actor": "fixture-manager",
+        "evidence": "fixture/repro.log",
+        "status": "open"
+      },
+      {
+        "actor": "fixture-writer",
+        "status": "repair-reported"
+      },
+      {
+        "actor": "fixture-manager",
+        "candidate": {
+          "authority": {
+            "SPEC": "approved"
+          },
+          "configuration": {
+            "profile": "disposable"
+          },
+          "fixtures": {
+            "oracle": "correct"
+          },
+          "owned": {
+            "code.py": {
+              "index": "base",
+              "mode": "100644",
+              "worktree": "fixed"
+            }
+          },
+          "preparation": "replay-owned-bytes",
+          "sources": [
+            "source-1"
+          ],
+          "target": "target-1"
+        },
+        "reviewers": [
+          "fixture-handoff-reviewer"
+        ],
+        "status": "handoff-validated",
+        "handoff_id": "F1-handoff"
+      }
+    ]
+  },
+  "assigned_paths": [
+    "code.py"
+  ]
+}

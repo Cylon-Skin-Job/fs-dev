@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-05T04:18:26.653582+00:00",
+  "entries": [
+    {
+      "id": "SPEC-FINAL-REVIEW-PACKET-P01",
+      "scope": "SPEC root coordination",
+      "original_source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-review-replacement.py",
+      "original_requirement": "Retain immutable reviewed packets and classified full factual deviations before fresh dispatch",
+      "actual_change": "Root packet script completed first-pass lifecycle capture, factual inventory, neutral and manifest/assignment, then failed updating the read-only original classifications file. Bounded continuation writes a new classifications v2 and completes only metadata before dispatch.",
+      "reason_authority": "Preserve original frozen records; root-owned coordination correction without replaying checks or modifying product",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-review-replacement.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-deviation-classifications.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-deviation-classifications-v2.json"
+      ],
+      "checks": "Actual Python exit1 PermissionError at last write; original classifications unchanged. New packet already passed exact frozen source/authority/raw/helper/preimage comparison; remaining classification performed separately.",
+      "observable_effect": "No review accepted on incomplete coordination; original immutable classification retained",
+      "risk": "Failed original invocation remains failed; no product or suite changes",
+      "downstream_impact": "Coordination metadata only; no later SPEC correction"
+    }
+  ],
+  "native_failure": {
+    "exit_code": 1,
+    "exception": "PermissionError",
+    "operation": "write_text original read-only classifications",
+    "line": 154
+  },
+  "passing_checks_replayed": false
+}

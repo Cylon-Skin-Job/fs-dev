@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-04T13:37:08.329358+00:00",
+  "command": [
+    "python3.12",
+    "-B",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/protection_readback.py",
+    "supervisor-provider-intake-after",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/protection-after.json"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"phase\": \"supervisor-provider-intake-after\", \"unowned_leaves\": 12849, \"cache_leaves\": 193, \"protected_processes\": 4, \"head\": \"d15792920731f85e45b743519d4af2b807d95a9c\"}\n",
+  "stderr": ""
+}

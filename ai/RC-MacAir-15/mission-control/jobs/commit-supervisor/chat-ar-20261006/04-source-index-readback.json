@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-07T00:29:37.999838+00:00",
+  "status": "EXACT_REVIEWED_TREE",
+  "tree": "1c80f83c6c4b2b61e42c4dbb988c1f942b672ade",
+  "semantic_index_sha256": "948eaab32a4b86757ac27ac8e526fab33a8e3e37ba3618f1257a37fc623672cf",
+  "changed_paths": 1605,
+  "changed_markdown": 940,
+  "unowned_staged_paths": [],
+  "unselected_source_exact": true
+}

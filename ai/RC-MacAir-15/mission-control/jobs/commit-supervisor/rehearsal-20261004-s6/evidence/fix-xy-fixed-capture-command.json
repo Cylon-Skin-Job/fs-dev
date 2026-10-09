@@ -1,0 +1,21 @@
+{
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "started": "2026-10-04T19:30:17.288435+00:00",
+  "finished": "2026-10-04T19:30:19.069669+00:00",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "command": [
+    "python3.12",
+    "-B",
+    ".agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+    "capture",
+    "--repo",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+    "--job",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/fix-xy",
+    "--paths-file",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/fix-xy/owned-paths.json"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"result\": \"CAPTURED\", \"manifest_sha256\": \"fd15619a9ebd65f9600e6867054ddd15dbaef589a607d2177c9f3528e33f5e9e\", \"paths\": 130, \"target_commit\": \"d15792920731f85e45b743519d4af2b807d95a9c\"}\n",
+  "stderr": ""
+}

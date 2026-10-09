@@ -1,0 +1,33 @@
+{
+  "command": [
+    "python3.12",
+    "-B",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+    "verify",
+    "--job",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "actor": "/root/s6_supervisor_interruption_1",
+  "started": "2026-10-04T20:14:03.716504+00:00",
+  "finished": "2026-10-04T20:14:04.447862+00:00",
+  "exit_code": 0,
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "GIT_LITERAL_PATHSPECS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "inherited_git_variables_removed": "ALL GIT_* repository/index/object/alternate variables",
+  "stdout_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-verify-0.stdout",
+    "sha256": "c542170a56b0141a4e4e83a2a1b337533c88dfc4e28c59ab20542fccfbb6d8f0",
+    "size": 272
+  },
+  "stderr_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/interruption-1/before-stop-verify-0.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  "stdout": "{\"result\": \"VERIFIED\", \"payloads_valid\": true, \"matches_checkpoint\": false, \"status_equal\": false, \"current_sha256\": \"b09ccfdfea23309603f462fefc5e4e1f2956a9541fb99e2a19fb741fd05adf01\", \"manifest_sha256\": \"f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb\"}\n",
+  "stderr": ""
+}

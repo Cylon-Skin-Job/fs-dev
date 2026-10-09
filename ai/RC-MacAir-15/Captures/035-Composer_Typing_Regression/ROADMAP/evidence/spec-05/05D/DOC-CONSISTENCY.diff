@@ -1,0 +1,62 @@
+--- pre-doc-consistency/ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md
++++ ai/RC-MacAir-15/Wiki/007-Chat_System/002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md
+@@ -132,7 +132,7 @@
+ | Message | Purpose |
+ |---|---|
+ | `thread:list` | Request one connection-workspace population: nullable Legacy view or registered view ID |
+-| `thread:open` | Passively hydrate the current primary of a validated group/member target |
++| `thread:open` | Passively hydrate a validated exact member, or the current primary for a group-only target |
+ | `thread:open-assistant` | Activate/resume assistant thread or create new one |
+ | `thread:members` | Qualified ordered-member read for one validated thread group |
+ | `thread:warm` | Trusted-shell-only warm of a cold runtime based on send intent |
+@@ -182,7 +182,7 @@
+ | Message | Purpose |
+ |---|---|
+ | `thread:created` | Eager session and one-member group were committed; carries both IDs and nullable view |
+-| `thread:opened` | Current primary history/live state plus workspace, view, group and session identities |
++| `thread:opened` | Resolved session history/live state plus workspace, view, group and exact session identities |
+ | `thread:list` | Group projections for the echoed nullable view population |
+ | `thread:members` | Ordered durable member projections for one validated group (no transcript content) |
+ | `thread:members:error` | Fixed value-free denial for an unknown/foreign/unavailable group read |
+@@ -393,7 +393,7 @@
+ Existing historical threads use their stored `harness_id` when resumed; do not
+ migrate them by changing policy.
+ 
+-Public creation and prompt-selection `harnessConfig` accepts only portable `model` as a non-empty string and `variant` as either a non-empty string or explicit `null`; null clears an earlier persisted/live variant. Provider session ids, Fork metadata, credentials, and unknown fields are rejected before lookup or persistence. Runtime loading also removes legacy Fork state before any adapter sees stored configuration; ordinary OpenCode provider session IDs without Fork markers remain eligible for provider-session reuse. That stored adapter binding is separate from public group/member selection: the current assistant-open path still hydrates and activates the group primary, as documented in [List And Open Correlation](#list-and-open-correlation).
++Public creation and prompt-selection `harnessConfig` accepts only portable `model` as a non-empty string and `variant` as either a non-empty string or explicit `null`; null clears an earlier persisted/live variant. Provider session ids, Fork metadata, credentials, and unknown fields are rejected before lookup or persistence. Runtime loading also removes legacy Fork state before any adapter sees stored configuration; ordinary OpenCode provider session IDs without Fork markers remain eligible for provider-session reuse. That stored adapter binding is separate from public group/member selection: the existing-session assistant-open path hydrates and activates the validated exact member, or the current primary for a group-only request, as documented in [List And Open Correlation](#list-and-open-correlation).
+ 
+ All production harness launches and harness/CLI installation or version probes
+ build their child environment through `lib/harness/child-environment.js`.
+--- pre-doc-consistency/ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md
++++ ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/PAGE.md
+@@ -37,7 +37,7 @@
+ 
+ The Electron renderer shell loads only at `fusion-shell://app`. Electron gives that exact current main frame a public runtime descriptor for one server launch generation. The renderer's runtime transport validates that descriptor and is the sole owner of WebSocket, HTTP API, and server-resource endpoints. A missing or malformed descriptor leaves the shell visibly disconnected; it never falls back to the page URL, `localhost`, or a fixed development port. This public descriptor is endpoint information only. Each Electron server launch also owns an in-memory master delivered once over inherited pipe fd 3. Every renderer socket must complete the bounded `shell-auth:*` challenge/HMAC exchange before any per-connection product/router factory runs, initialization is released, or the socket enters any product recipient map. The server first completes its startup audit, installs shutdown supervision, publishes application handler owners, and opens a runtime-activation barrier. It publishes the authenticated acknowledgement only after product session activation succeeds beyond that barrier. A separate transport-only registry owns every upgraded socket for expiry, abnormal close, restart, and shutdown without making pending sockets product recipients. Graceful shutdown awaits every owned close event before process exit, so activated product cleanup completes. Only the server records the resulting `trusted-shell` connection role; authentication never enters app stores, SQLite, Provenance, or the UEB. The thread WebSocket domain consumes only that private live role before New Chat, assistant activation/resume, Rename, Delete, Warm, or prompt-triggered runtime activation can reach their manager, provider, persistence, mirror, or fan-out owners. Passive `thread:open` only hydrates and does not write resume/MRU state. Legacy `thread:fork` is unconditionally unavailable to every role, including through stored provider configuration. Every production harness/CLI launch receives a closed, family-specific allowlisted environment from the server-owned child-environment builder; unknown host variables and shell-authority material never transit by default.
+ 
+-Passive row browsing uses `thread:open` with `threadGroupId` to hydrate the server-resolved Main Chat. Lists are scoped to the connection's workspace and one nullable view: null/omission means Legacy, not every view. Session-addressed compatibility open still selects the group's primary, so it is not an exact Side Chat hydration route. Trusted `thread:open-assistant` handles activation and currently eager New Chat, committing a session and one-member group before provider startup; Pending New Chat/provider-signal-gated commit remains future work. Unknown explicit group, foreign session, unknown session-only ID, and omitted IDs have different outcomes; see [Runtime Model](../006-Runtime_Model/PAGE.md#new-thread-and-activation) before changing create/resume behavior.
++Passive row browsing uses `thread:open` with `threadGroupId` to hydrate the server-resolved Main Chat. Lists are scoped to the connection's workspace and one nullable view: null/omission means Legacy, not every view. Session-addressed compatibility open hydrates the exact validated member, including a non-primary Side Chat. Restored components use `historyOnly: true` to preserve Main selection, pending Main opens, and provider ownership. Trusted `thread:open-assistant` handles activation and currently eager New Chat, committing a session and one-member group before provider startup; Pending New Chat/provider-signal-gated commit remains future work. Unknown explicit group, foreign session, unknown session-only ID, and omitted IDs have different outcomes; see [Runtime Model](../006-Runtime_Model/PAGE.md#new-thread-and-activation) before changing create/resume behavior.
+ 
+ The live-turn contract is also turn- and sequence-bound. Each accepted prompt owns one immutable canonical route context and unique drain, every accepted in-flight publication carries the bound `threadId`, `turnId`, and authoritative `streamSeq`, and the client rejects or buffers frames before mutation according to that frontier. Provider-neutral `step_begin` drives a transient Working row; readable thinking remains actual model output. Failed accepted turns finalize through one safe catalog error, while detailed redacted diagnostics are retrieved only after an explicit user action.
+ 
+--- pre-doc-consistency/ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md
++++ ai/RC-MacAir-15/Wiki/007-Chat_System/000-Overview_and_References/002-Decisions/PAGE.md
+@@ -73,7 +73,7 @@
+ 
+ ## Passive Browse Is Separate From Activation
+ 
+-Use `thread:open` for passive hydration of the visible group's current primary, and trusted `thread:open-assistant` for assistant activation and new creation. A list selects one workspace/view population; null or omitted view means Legacy and never the active view. Existing-session compatibility open currently hydrates the primary even when a different validated member was supplied, so it must not be treated as exact Side Chat access.
++Use `thread:open` for passive hydration of a validated exact member, or the visible group's current primary for a group-only request, and trusted `thread:open-assistant` for assistant activation and new creation. A list selects one workspace/view population; null or omitted view means Legacy and never the active view. Existing-session compatibility open hydrates the exact validated member. Restored Side Chat adds `historyOnly: true` to leave Main selection, pending Main opens, and provider ownership unchanged.
+ 
+ New Chat currently commits a session and one-member group eagerly, with explicit view binding or null-view Legacy binding, before provider readiness. Pending New Chat/provider-signal-gated commit is deferred. Unknown explicit group and foreign session targets fail, while an unknown session-only ID can still create a new group/session; this source-observed fallback conflicts with the intended no-replacement rule for explicit unknown targets and is a product follow-up. See the [Runtime creation contract](../../006-Runtime_Model/PAGE.md#new-thread-and-activation) for the complete current branches, separately from future intent.
+ 
+--- pre-doc-consistency/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md
++++ ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md
+@@ -22,7 +22,7 @@
+ 
+ This page describes validation requirements and assertions in existing test sources, not current passing results. The September 19 documentation reconciliation inspected selected tests and source paths without running server suites, browser/Electron smoke, builds, or Alpha. Older “proves” and “coverage” wording below describes intended assertions; it does not certify this checkout or every listed test.
+ 
+-Session resume coverage must distinguish stored provider-session reuse from public member selection. Current `thread:open` and existing-session `thread:open-assistant` hydrate the group primary even for a validated non-primary member. Existing single-member/current-primary tests do not establish exact Side Chat hydration; see [Runtime Model](../006-Runtime_Model/PAGE.md#new-thread-and-activation). Server link success likewise does not establish renderer focus/reopening; see [Group and exact-member links](../002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md#group-and-exact-member-links).
++Session resume coverage must distinguish stored provider-session reuse from public member selection. Current `thread:open` and existing-session `thread:open-assistant` hydrate the exact validated member; a group-only request resolves the current primary. Single-member/current-primary tests alone do not establish exact Side Chat hydration. Coverage must also open a non-primary member after Move, restore its exact history on reconnect, and verify that `historyOnly` does not change Main selection, pending Main opens, or provider ownership; see [Runtime Model](../006-Runtime_Model/PAGE.md#new-thread-and-activation). Server link success likewise does not establish renderer focus/reopening; see [Group and exact-member links](../002-Harness_And_Event_Flow/004-WebSocket_Protocol/PAGE.md#group-and-exact-member-links).
+ 
+ Fusion Studio is a single-machine Electron workspace app with a browser
+ renderer and a Node server. Browser Playwright is useful for focused renderer

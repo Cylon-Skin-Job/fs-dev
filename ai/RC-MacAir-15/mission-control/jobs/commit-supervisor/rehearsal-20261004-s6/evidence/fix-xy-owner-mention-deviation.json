@@ -1,0 +1,22 @@
+{
+  "id": "FIX-XY-OWNER-MENTION-D21",
+  "at": "2026-10-04T19:40:42.393922+00:00",
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "original_criterion": "Precise owner packet cites actual immutable historical checkpoint SHA and current packet bindings; historical artifacts retained.",
+  "actual_change": "Corrected one copied historical checkpoint hash character in current second packet; current report/checkpoint/lifecycle packet hashes updated; original current preimages retained and corrected copies appended to unique history.",
+  "reason_authority": "Root identified the factual typo and explicitly authorized only current mention correction plus binding/preimage retention; actual first-history checkpoint bytes independently hashed.",
+  "files": [
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/owner-packet-fix-xy.md",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/supervisor-fix-xy-report.md",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/checkpoint-fix-xy.json",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/lifecycle-fix-xy.json"
+  ],
+  "effect": "Correct historical checkpoint SHA 214621bcc2c6e6a70c415e4f8c2610a4c49454f2538e4f6671eaf382b1fe54aa; current packet SHA 4262b884dccc10a10b53a43e1a96e00167a5557b85f88802c324414410c29870; old current ownerpacket/checkpoint/report/lifecycle copies unchanged; accepted source/check/runtime unaffected.",
+  "checks": "Exact one-mention preimage/current textual delta; actual historical-file digest; current checkpoint/report/lifecycle owner hash bindings; corrected history copies and all ownerpacket local links verified. No source/test/runtime gate rerun.",
+  "risk": "Old current packet remains as explicitly superseded immutable preimage. Corrected current owner-wait packet and appended history index govern this handoff.",
+  "downstream_consumer": "Root concrete second-terminal inspection and later separately authorized controls.",
+  "classification": "accepted factual documentation correction; no source/check/runtime dependency impact",
+  "correction_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-owner-packet-mention-correction.json",
+  "correction_history_index": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/history/S6-FIX-XY-COMMIT-READY-WAIT-02/evidence-index-correction-1.json",
+  "actual_operations": []
+}

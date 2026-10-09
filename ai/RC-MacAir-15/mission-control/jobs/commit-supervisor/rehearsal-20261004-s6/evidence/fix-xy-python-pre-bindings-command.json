@@ -1,0 +1,15 @@
+{
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "started": "2026-10-04T18:03:48.420799+00:00",
+  "finished": "2026-10-04T18:03:49.274158+00:00",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "command": [
+    "python3.12",
+    "-B",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/python_suite_bindings.py",
+    "fix-xy-python-pre"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-python-pre.json\", \"sha256\": \"c5801ac6927574fccba01814c2a36aa162f109507157edda47c997a51f3eac3a\", \"dependency_count\": 3801, \"discovered_modules\": 3, \"test_methods\": 55, \"mismatches\": []}\n",
+  "stderr": ""
+}

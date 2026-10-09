@@ -1,0 +1,19 @@
+# Owner direction — queued-next-item instant tool collapse
+
+2026-09-27. Owner: “We need to extend this paradigm to tool call collapse. If there is a next chunk, let's do an instant collapse.” This resumes only this bounded implementation from the preceding pause. Existing full-auto and TO-01 work/evidence must be preserved; no runtime refresh is implied.
+
+## Authorized behavior
+
+Apply queue lookahead to collapse in the existing LiveSegmentRenderer tool-like item path (including thinking which shares that path). At a current item's reveal completion, if a subsequent renderable item is already queued for the same turn, collapse the current item immediately: no post-typing hold and no CSS collapse duration. A subsequent item is a later renderable segment, not another parser chunk belonging to the current item. Do not collapse before current content has finished its existing reveal. If nothing follows, preserve current timing. The existing next-item handoff gap remains unchanged; this is not a typing-speed or whole-queue redesign.
+
+Read current queue state, not a mount-time closure. If the next item arrives during the post-reveal hold/collapse interval, adopt the immediate-collapse policy without waiting out stale queued delays. Cancellation/unmount/turn replacement must retire stale continuations; each item may advance the reveal frontier only once. Zero duration must actually reach the CSS/presentation owner as zero. Manual expansion after completion remains available; do not repeatedly recollapse a user-opened completed item on unrelated rerenders.
+
+Preserve subagent special behavior, sequential ordering, text animation/typing speeds, no-next-item timings, reduced-motion behavior, user Stop/error handling, saved ACK and finalization ownership. No hook/permission/UI mode work, global changes, Alpha/publishing or live human-app input/restart. This does not claim to solve the entire57second backlog or enforce a universal two-chunk maximum; those broader pacing decisions remain separate.
+
+## Implementation and validation
+
+Existing SPEC-06 orchestrator owns this supplemental06B change through a fresh bounded builder/review chain, serialized after terminal TO-01 writers/reviews. Read root AGENTS and Chat overview plus Rendering And Lifecycle/Live Rendering/Turn Finalization. Required standards: current RC-MacAir-15 Code Standards hub and Architecture Routing, Frontend UI, State Management, Testing And Smoke Slices. Expected area: LiveSegmentRenderer.tsx and ToolCallBlock.tsx if necessary, with narrowly owned helper/tests only when needed.
+
+Regression tests must exercise the rendered production component or its actual controller integration, not a duplicated predicate: queued-next before completion; no-next unchanged timings; next arrives during hold; cancellation/turn replacement; no duplicate onDone; retained manual expansion; zero-duration actual collapse; next item still follows correct order. Include thinking/tool shared-path coverage and unchanged subagent bypass. Run affected client checks and build; use isolated renderer fixtures with exact owned cleanup. Preserve ongoing instrumented human session and avoid altering native dependencies it uses. Both fresh builder-owned and orchestrator-owned independent gates must be clean; retain failed tests and repair forward.
+
+Record current candidate/delta, checks, source/build identity, deviations and downstream impact. Renderer changes invalidate applicable prior build/render evidence for changed bytes only; no automatic full-soak rerun or owner acceptance is inferred. Return source-ready report at `evidence/spec-06/06B/INSTANT-COLLAPSE/REPORT.md`, including activation requirements and remaining pacing limitations. Root handles owner-facing acceptance and separately coordinated test-app update.

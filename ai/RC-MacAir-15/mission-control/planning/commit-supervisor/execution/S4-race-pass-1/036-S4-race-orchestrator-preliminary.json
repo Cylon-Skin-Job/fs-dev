@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-04T12:04:12.854336+00:00",
+  "status": "preliminary independent inspection, not acceptance",
+  "inspected": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs",
+      "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+      "lines": 178
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs",
+      "sha256": "76e0321568cf3f71bbca9315a642d9d0cc8ddbeb9b7945309026acb5393bc6b6",
+      "lines": 327
+    }
+  ],
+  "coverage": "Complete process module plus complete new regression test tail; original test body/stop coordinator and immediate selector/probe seams already read. Exact no-process status errors trigger reobservation; live read errors and identity drift refuse; terminal records omitted without signals. Actual disposable adapters act only at real OS boundary on selected PID. No known material issue; current-byte frozen handoff, own clean gate, root checks and separate acceptance remain required."
+}

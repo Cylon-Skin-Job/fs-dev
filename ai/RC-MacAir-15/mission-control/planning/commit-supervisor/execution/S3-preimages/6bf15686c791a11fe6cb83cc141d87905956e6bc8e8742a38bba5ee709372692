@@ -1,0 +1,69 @@
+# Integration job records
+
+Create each record when it contains useful evidence. Supervisor-owned reports
+live in the assigned job folder; each child has its own unique report path.
+The helper owns immutable `recovery/` payloads, not central registry state.
+Use [workflow.md](workflow.md) for intake and recovery mechanics.
+
+## Assignment fields
+
+Record job/work/SPEC IDs; actual verified task or runtime-child identity and host
+(separate from a persistent UUID); manager and report recipient; original owner
+authority and accepted scope; absolute controller home, memory folder and
+implementation checkout; actual CWD, branch, HEAD and effective permissions;
+target/source refs and full IDs; source work acceptance/review evidence;
+integration-unit grouping; dirty path ownership and index/worktree fingerprints;
+SPEC/checklist/decision/standards paths, revisions and hashes; prerequisite
+provider/consumer, resolver and exact release conditions; preparation, repair
+and runtime scope; active writer identities and disjoint/held paths; history
+thread/host/checkpoint pointers or explicit unavailable limit; stopped MC cycle
+evidence when MC assigned; report destination and allowed follow-ups. Record
+deduplication key and any prior dispatch/operation reconciliation.
+
+## Checkpoint fields
+
+`checkpoint.json` tracks mutable workflow progress separately from immutable
+`recovery/manifest.json`. Record schema version, job/owner/manager identities,
+current phase, accepted progress, next unfinished authorized action, holds and
+release conditions, candidate location/identity, target baseline and ordered
+source commits, owned inventory/index/worktree hashes/modes/deletions, authority
+and relevant configuration/fixture hashes, reproduction recipe, recovery manifest
+hash/location, original preimage payloads, runtime profile/database ownership
+and recovery limits, current versus covered gate identities, child lifecycle,
+last-check versus last-progress UTC times and report paths.
+
+Use the phase appropriate to actual progress: `intake`, `initial-review`,
+`repair`, `wiki-update`, `final-review`, `runtime-check`, `waiting-owner`,
+`waiting-dependency`, `needs-owner`, `unmet-gate` or `authorized-publication`.
+`waiting-owner` is an intentional terminal turn, never a stalled action to retry.
+Record actual permission scope before any operation; preparation is not Git
+publication, per-SPEC acceptance, adoption or Alpha permission.
+
+## Evidence and report fields
+
+`findings.md` retains raw unique child reports, violated authority, affected path,
+severity/confidence, reproducible impact, stable disposition, repair/review
+ownership and exact current coverage. Each deviation states original criterion,
+actual correction, reason/authority, files, observable effect, checks, risk,
+downstream consumer/impact and owning classification (`accepted`,
+`repair_required`, `owner_ruling_required`, `downstream_impact`).
+
+`verification.md` records candidate identity, source revisions, exact commands,
+results/log paths, required coverage, skipped checks and reasons, raw independent
+review identities/lifecycle, invalidated versus unaffected evidence, and recovery
+readbacks including source/shared/index/unrelated/profile sentinels. Record actual
+runtime paths/profile/machine/server/log/connection evidence when that phase runs;
+absence is a limit, not readiness.
+
+`owner-packet.md` presents behavior/consequential corrections, exact candidate
+location/identity, source/target, changed files, independent gate/check coverage
+and limits, actual app/profile/machine/server/logs, owner test steps, recovery
+point, residual risks and exact proposed Git operation(s)/destinations. It remains
+`waiting-owner` until an actual owner instruction addresses that candidate.
+
+`receipt.md` keeps distinct reviewed candidate, owner instruction and exact
+operation permission, local commit IDs, remote push, PR URL/attachment, PR merge,
+landed baseline and consumer adoption evidence. Record each only after it occurs.
+`resume.md` records predecessor terminal/non-conflicting status and paused schedule,
+freshness/authority checks, retained valid evidence, unfinished authorized action
+and exact hold release. Do not replay completed work or revive an intentional wait.

@@ -1,0 +1,124 @@
+{
+  "phase": "initial",
+  "candidate": {
+    "target": "target-1",
+    "sources": [
+      "source-1"
+    ],
+    "owned": {
+      "code.py": {
+        "worktree": "bad",
+        "index": "base",
+        "mode": "100644"
+      }
+    },
+    "configuration": {
+      "profile": "disposable"
+    },
+    "fixtures": {
+      "oracle": "correct"
+    },
+    "authority": {
+      "SPEC": "approved"
+    },
+    "preparation": "replay-owned-bytes"
+  },
+  "orchestrator_id": "fixture-manager",
+  "participants": [
+    "fixture-writer"
+  ],
+  "required_checks": [
+    "behavior"
+  ],
+  "evidence": [
+    {
+      "id": "behavior",
+      "dependencies": {
+        "target": "target-1",
+        "sources": [
+          "source-1"
+        ],
+        "owned": {
+          "code.py": {
+            "worktree": "bad",
+            "index": "base",
+            "mode": "100644"
+          }
+        },
+        "configuration": {
+          "profile": "disposable"
+        },
+        "fixtures": {
+          "oracle": "correct"
+        },
+        "authority": {
+          "SPEC": "approved"
+        },
+        "preparation": "replay-owned-bytes"
+      },
+      "raw_path": "fixture/behavior.log",
+      "result": "pass"
+    }
+  ],
+  "reviews": [
+    {
+      "identity": "fixture-reviewer-1",
+      "terminal": true,
+      "clean_room": true,
+      "read_only": true,
+      "root_inherited": true,
+      "dependencies": {
+        "target": "target-1",
+        "sources": [
+          "source-1"
+        ],
+        "owned": {
+          "code.py": {
+            "worktree": "bad",
+            "index": "base",
+            "mode": "100644"
+          }
+        },
+        "configuration": {
+          "profile": "disposable"
+        },
+        "fixtures": {
+          "oracle": "correct"
+        },
+        "authority": {
+          "SPEC": "approved"
+        },
+        "preparation": "replay-owned-bytes"
+      },
+      "raw_path": "fixture/review-1.md",
+      "lenses": [
+        "Behavior & Verification",
+        "Standards Compliance",
+        "Integrations & Dependencies",
+        "Forward Compatibility",
+        "Wiki Impact"
+      ],
+      "result": "findings",
+      "findings": [
+        {
+          "id": "F1",
+          "authority": "approved behavior criterion",
+          "path": "code.py",
+          "impact": "accepted input returns incorrect result",
+          "evidence": "fixture/repro.log",
+          "severity": "high",
+          "confidence": "medium",
+          "validated": true,
+          "assigned_paths": [
+            "code.py"
+          ]
+        }
+      ]
+    }
+  ],
+  "findings": [],
+  "dispositions": {},
+  "assigned_paths": [
+    "code.py"
+  ]
+}

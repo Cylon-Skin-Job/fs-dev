@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-04T14:39:09.094703+00:00",
+  "action": "Read-only root discovery git rev-parse and git status -sb after compaction",
+  "correction": "This invocation inadvertently omitted GIT_OPTIONAL_LOCKS=0; all subsequent reads retain it. Full status output was unnecessarily broad and truncated. No edit/ref/index action was requested.",
+  "source_index_sha256_after": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+  "physical_index_matches_original": true,
+  "assessment": "No observed index mutation; coordination provenance only, excluded from fresh candidate gates."
+}

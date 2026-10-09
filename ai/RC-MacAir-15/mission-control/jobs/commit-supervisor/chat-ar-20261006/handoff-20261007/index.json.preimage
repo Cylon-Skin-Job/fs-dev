@@ -1,0 +1,495 @@
+{
+  "schema_version": 2,
+  "name": "CHAT-AR integration and retirement",
+  "description": "Finish the current last-build repair, verification and closeout job; route broader subsequent OpenCode harness work to its separate home.",
+  "repository_root": "../../../../..",
+  "wiki_root": "../../../Wiki",
+  "workflow": [
+    "intake",
+    "shaping",
+    "planning",
+    "authorized implementation",
+    "verification"
+  ],
+  "documents": [
+    {
+      "path": "TICKET.md",
+      "kind": "ticket",
+      "authority": "context",
+      "description": "Intake, authority, current position and next safe action.",
+      "lifecycle": "Maintain as source-backed understanding evolves.",
+      "read_before": [],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Assignment",
+          "description": "Assignment"
+        },
+        {
+          "key": "s2",
+          "heading": "Desired outcome",
+          "description": "Desired outcome"
+        },
+        {
+          "key": "s3",
+          "heading": "Scope and dependencies",
+          "description": "Scope and dependencies"
+        },
+        {
+          "key": "s4",
+          "heading": "Current disposition",
+          "description": "Current disposition"
+        },
+        {
+          "key": "s5",
+          "heading": "Next safe action",
+          "description": "Next safe action"
+        }
+      ]
+    },
+    {
+      "path": "CAPTURE.md",
+      "kind": "capture",
+      "authority": "context",
+      "description": "Working synthesis and open discussion.",
+      "lifecycle": "Maintain as source-backed understanding evolves.",
+      "read_before": [
+        "TICKET.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Current understanding",
+          "description": "Current understanding"
+        },
+        {
+          "key": "s2",
+          "heading": "Open discussion",
+          "description": "Open discussion"
+        },
+        {
+          "key": "s3",
+          "heading": "Routed outcomes",
+          "description": "Routed outcomes"
+        }
+      ]
+    },
+    {
+      "path": "INTENT.md",
+      "kind": "intent",
+      "authority": "owner",
+      "description": "Owner-directed outcomes and boundaries.",
+      "lifecycle": "Maintain as source-backed understanding evolves.",
+      "read_before": [
+        "TICKET.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Outcomes",
+          "description": "Outcomes"
+        },
+        {
+          "key": "s2",
+          "heading": "Boundaries",
+          "description": "Boundaries"
+        },
+        {
+          "key": "s3",
+          "heading": "Success and unresolved detail",
+          "description": "Success and unresolved detail"
+        }
+      ]
+    },
+    {
+      "path": "DECISIONS.md",
+      "kind": "decisions",
+      "authority": "owner",
+      "description": "Explicit owner decisions and exact scope.",
+      "lifecycle": "Maintain as source-backed understanding evolves.",
+      "read_before": [
+        "INTENT.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Folder ownership",
+          "description": "Folder ownership"
+        },
+        {
+          "key": "s2",
+          "heading": "Verification direction",
+          "description": "Owner decisions about follow-up verification."
+        }
+      ],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": [
+          "D"
+        ],
+        "required_fields": [
+          "Source",
+          "Status",
+          "Scope"
+        ]
+      }
+    },
+    {
+      "path": "ISSUES.md",
+      "kind": "issues",
+      "authority": "evidence",
+      "description": "Sourced problems and consequential unresolved intent.",
+      "lifecycle": "Maintain as source-backed understanding evolves.",
+      "read_before": [
+        "INTENT.md",
+        "DECISIONS.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Scope and contracts",
+          "description": "Scope and contracts"
+        },
+        {
+          "key": "s2",
+          "heading": "Live runtime",
+          "description": "Observed failures in the running development app."
+        }
+      ],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": [
+          "I"
+        ],
+        "required_fields": [
+          "Category",
+          "Type",
+          "Severity",
+          "Status",
+          "Source",
+          "Observation",
+          "Affected scope",
+          "Consequence",
+          "Resolution needed",
+          "Owner",
+          "Next",
+          "Related"
+        ]
+      }
+    },
+    {
+      "path": "REFERENCES.md",
+      "kind": "references",
+      "authority": "evidence",
+      "description": "Sources, provenance and limitations.",
+      "lifecycle": "Maintain as source-backed understanding evolves.",
+      "read_before": [
+        "TICKET.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Current runtime evidence",
+          "description": "Current app observations and their limits."
+        },
+        {
+          "key": "s2",
+          "heading": "Owner direction and prior work",
+          "description": "Owner direction and prior work"
+        }
+      ],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": [
+          "REF"
+        ],
+        "required_fields": [
+          "Kind",
+          "Status",
+          "Source",
+          "Locator",
+          "Revision",
+          "Checked",
+          "Supports",
+          "Limitations",
+          "Related"
+        ]
+      }
+    }
+  ],
+  "support_files": [
+    {
+      "path": "AGENTS.md",
+      "description": "Local role, scope and re-entry contract.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Scope and authority",
+          "description": "Scope and authority"
+        },
+        {
+          "key": "s2",
+          "heading": "Main and side roles",
+          "description": "Main and side roles"
+        },
+        {
+          "key": "s3",
+          "heading": "Re-entry and records",
+          "description": "Re-entry and records"
+        },
+        {
+          "key": "s6",
+          "heading": "Main-chat startup",
+          "description": "Main identity verification, registration, cursor preservation and side-chat boundaries."
+        },
+        {
+          "key": "s4",
+          "heading": "Boundaries",
+          "description": "Boundaries"
+        },
+        {
+          "key": "s5",
+          "heading": "Reports and handoff",
+          "description": "Reports and handoff"
+        }
+      ]
+    },
+    {
+      "path": "BULLETIN.md",
+      "description": "Advisory coordination notices.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Coordination Notices",
+          "description": "Coordination Notices"
+        }
+      ]
+    },
+    {
+      "path": "index.json",
+      "description": "Static document routing schema."
+    },
+    {
+      "path": "CHECKPOINT.json",
+      "kind": "checkpoint_registry",
+      "authority": "coordination",
+      "description": "Verified main-task identity and live checkpoint boundary; history is read through Codex's built-in task reader.",
+      "lifecycle": "Initialized by the main task at startup; advanced by the state-only helper after a validated native-reader checkpoint is saved."
+    },
+    {
+      "path": "planning/chat-transport-simplification/PLANNING.md",
+      "description": "First Draft assignment and supervisor disposition.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Assignment and authority",
+          "description": "Assignment and authority"
+        },
+        {
+          "key": "s2",
+          "heading": "Scope and preflight",
+          "description": "Scope and preflight"
+        },
+        {
+          "key": "s3",
+          "heading": "Writers and progress",
+          "description": "Writers and progress"
+        },
+        {
+          "key": "s4",
+          "heading": "Handoff",
+          "description": "Handoff"
+        },
+        {
+          "key": "s5",
+          "heading": "Supervisor disposition",
+          "description": "Supervisor disposition"
+        }
+      ]
+    },
+    {
+      "path": "planning/chat-transport-simplification/FIRST-DRAFT.md",
+      "description": "Reviewed provisional outcomes, slices, smokes and Creator questions.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Status and basis",
+          "description": "Status and basis"
+        },
+        {
+          "key": "s2",
+          "heading": "Capability skeleton and proposed order",
+          "description": "Capability skeleton and proposed order"
+        },
+        {
+          "key": "s3",
+          "heading": "Candidate slice cards",
+          "description": "Candidate slice cards"
+        },
+        {
+          "key": "s4",
+          "heading": "Source and standards coverage",
+          "description": "Source and standards coverage"
+        },
+        {
+          "key": "s5",
+          "heading": "Dependencies, impact and deferred-work contract",
+          "description": "Dependencies, impact and deferred-work contract"
+        },
+        {
+          "key": "s6",
+          "heading": "Decision and research queue",
+          "description": "Decision and research queue"
+        },
+        {
+          "key": "s7",
+          "heading": "Author return and self-check",
+          "description": "Author return and self-check"
+        }
+      ]
+    },
+    {
+      "path": "planning/chat-transport-simplification/SOURCE-SNAPSHOT.json",
+      "description": "Immutable First Draft intake source identities."
+    },
+    {
+      "path": "planning/chat-transport-simplification/reports/STAGE-REPORT.md",
+      "description": "Managed stage return and evidence coverage.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Assignment and checkpoint",
+          "description": "Assignment and checkpoint"
+        },
+        {
+          "key": "s2",
+          "heading": "Assignments and evidence",
+          "description": "Assignments and evidence"
+        },
+        {
+          "key": "s3",
+          "heading": "Authority and scope",
+          "description": "Authority and scope"
+        },
+        {
+          "key": "s4",
+          "heading": "Research synthesis and dispositions",
+          "description": "Research synthesis and dispositions"
+        },
+        {
+          "key": "s5",
+          "heading": "Independent validation and coverage",
+          "description": "Independent validation and coverage"
+        },
+        {
+          "key": "s6",
+          "heading": "Deferral assessment and Roadmap conditions",
+          "description": "Deferral assessment and Roadmap conditions"
+        },
+        {
+          "key": "s7",
+          "heading": "Exact output identity and checks",
+          "description": "Exact output identity and checks"
+        },
+        {
+          "key": "s8",
+          "heading": "Next safe action",
+          "description": "Next safe action"
+        }
+      ]
+    },
+    {
+      "path": "planning/chat-transport-simplification/reports/DRAFT-VALIDATION-01.md",
+      "description": "Independent four-perspective draft validation.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Assignment, independence and identity",
+          "description": "Assignment, independence and identity"
+        },
+        {
+          "key": "s2",
+          "heading": "Four-perspective coverage",
+          "description": "Four-perspective coverage"
+        },
+        {
+          "key": "s3",
+          "heading": "Findings and dispositions",
+          "description": "Findings and dispositions"
+        },
+        {
+          "key": "s4",
+          "heading": "Deferrals and remaining conditions",
+          "description": "Deferrals and remaining conditions"
+        },
+        {
+          "key": "s5",
+          "heading": "Source fingerprints and return",
+          "description": "Source fingerprints and return"
+        }
+      ]
+    },
+    {
+      "path": "planning/chat-transport-simplification/reports/STANDARDS-REPORT.md",
+      "description": "Bounded preference and standards research.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Scope and source identity",
+          "description": "Scope and source identity"
+        },
+        {
+          "key": "s2",
+          "heading": "Conclusion and coverage map",
+          "description": "Conclusion and coverage map"
+        },
+        {
+          "key": "s3",
+          "heading": "Ordering and deferral implications",
+          "description": "Ordering and deferral implications"
+        },
+        {
+          "key": "s4",
+          "heading": "Documentation and consumer impact",
+          "description": "Documentation and consumer impact"
+        },
+        {
+          "key": "s5",
+          "heading": "Fingerprints and checks",
+          "description": "Fingerprints and checks"
+        }
+      ]
+    },
+    {
+      "path": "planning/chat-transport-simplification/reports/BOUNDARIES-REPORT.md",
+      "description": "Bounded transport ownership and deferral research.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Answer and candidate order",
+          "description": "Answer and candidate order"
+        },
+        {
+          "key": "s2",
+          "heading": "Observed boundaries",
+          "description": "Observed boundaries"
+        },
+        {
+          "key": "s3",
+          "heading": "Deferred recovery work remains repairable under explicit constraints",
+          "description": "Deferred recovery work remains repairable under explicit constraints"
+        },
+        {
+          "key": "s4",
+          "heading": "High-risk smoke scenarios for later planning",
+          "description": "High-risk smoke scenarios for later planning"
+        },
+        {
+          "key": "s5",
+          "heading": "Evidence and limits",
+          "description": "Evidence and limits"
+        }
+      ]
+    }
+  ]
+}

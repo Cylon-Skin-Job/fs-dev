@@ -1,0 +1,8 @@
+{"at":1789958750095,"type":"session-start","threadId":"2026-09-20T19-45-50-090","sessionKey":"[\"f1-empty-capture\",\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1789958747722-8d45924ab3-LUc4qw/workspace/f1-empty-capture\",\"2026-09-20T19-45-50-090\"]","externalProcess":false}
+{"at":1789958750756,"type":"gate","gate":"before-dispatch","owner":"adapter"}
+{"at":1789958750756,"type":"gate","gate":"after-dispatch","owner":"adapter"}
+{"at":1789958750756,"type":"gate","gate":"before-turn-begin","owner":"adapter"}
+{"at":1789958750757,"type":"gate","gate":"after-turn-begin","owner":"adapter"}
+{"at":1789958750820,"type":"gate","gate":"before-stop","owner":"adapter"}
+{"at":1789958750820,"type":"gate","gate":"after-stop","owner":"adapter"}
+{"at":1789958750862,"type":"iterator-end","stopRequested":true,"stopSignal":"SIGTERM","frames":2}

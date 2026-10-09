@@ -1,0 +1,2 @@
+[Migration 019] Added workspaces.type (default: code)
+{"DB_PATH":"/private/tmp/fusion-main-consolidation-95vxg0_h/profile/server-data/fusion.db","workspaces":[{"id":"fs-dev","repo_path":"/private/tmp/fusion-main-consolidation-95vxg0_h/candidate"}]}

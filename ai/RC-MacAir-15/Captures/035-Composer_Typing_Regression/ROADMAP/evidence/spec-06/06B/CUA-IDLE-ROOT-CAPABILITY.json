@@ -1,0 +1,14 @@
+{
+  "at": "2026-09-27T04:06:54.157571+00:00",
+  "requestedBy": "supervisor explicit bounded independent capability diagnostic",
+  "tool": "mcp__cua_repl.js",
+  "code": "await cua.getState();",
+  "wallTimeSeconds": 26.4304,
+  "apps": [],
+  "browserInventoryAvailable": true,
+  "error": "Native apps: Error: Computer Use server error -10005: codex app-server exited before returning a response",
+  "uiInputSent": false,
+  "getAppCalled": false,
+  "retryOrReset": false,
+  "interpretation": "Native capability failure independently reproduced outside supervisor CUA session; no fixture/product failure inference."
+}

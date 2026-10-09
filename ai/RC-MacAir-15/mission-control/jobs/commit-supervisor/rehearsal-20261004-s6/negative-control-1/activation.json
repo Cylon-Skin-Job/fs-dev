@@ -1,0 +1,85 @@
+{
+  "at": "2026-10-04T19:57:04.303643+00:00",
+  "actor": "/root/s6_supervisor_refusal_1",
+  "manager": "/root",
+  "actual_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "role": "mc-commit-supervisor bounded refusal observer",
+  "fallback": "supported default agent explicitly loaded exact installed SKILL and TOML developer instructions; no claim of native named-loader use",
+  "loaded_skill": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md",
+    "sha256": "b4ec0266a8d72f573dd4f3670c671a856ee5cc98b6942aad48683fa22fb14d68"
+  },
+  "loaded_profile": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-supervisor.toml",
+    "sha256": "01887fdc12c962be5a7438b513836e6269cff1f9683b7a17c2edfbf2aa961044"
+  },
+  "source_repository": "/Users/rccurtrightjr./projects/fs-dev",
+  "candidate_repository": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "source_identity": {
+    "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+    "branch": "refs/heads/agent/exact-workspace-paths",
+    "refs_sha256": "2137fda44918eee605a707a4931a0f12f57125dbab104179ca490556d5e74976",
+    "config_sha256": "15b4867e1facba02e3e54d699d8e9133c336ff6bd3beb6aab997538d77efbcb3",
+    "index_file_sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966"
+  },
+  "candidate_identity": {
+    "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+    "branch": null,
+    "refs_sha256": "b1c2358cc8dde4e628fa5e5c605324de2a5c142bddbece9b400d50a507904bdf",
+    "config_sha256": "0a84192202948bd789d2bd8bbb405668470eb300a3539fcdd609677fb2af310e",
+    "index_file_sha256": "f60a305e9691ad6ecac0d696c78dfc5bc779a73004fce64b0e5f955b76eaecbb"
+  },
+  "permissions": "Host developer metadata: danger-full-access; approval_policy never; network enabled. Not inferred from TOML.",
+  "root_settings": "Inherited root model and reasoning effort without overrides; concrete values/native loader metadata unexposed.",
+  "scope": "REHEARSAL_ONLY",
+  "publication_authority": "NONE",
+  "owned_records": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1",
+  "no_children": true,
+  "parent_assignment": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-supervisor-negative-controls-assignment.md",
+    "sha256": "5e57d7097c668da1a44d9310fd2e266319d8d10e244302164bee1f2b3b3b6603"
+  },
+  "readset": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/read-coverage.json",
+    "sha256": "bf7342f68b9b2f352e7be5dfc64aa1c9f7150cc1832ac052460a9ede78dca2d2"
+  },
+  "prewrite_acknowledgment": "Actual commentary before mkdir/record writes acknowledged identity/CWD/roots/effective permissions/inheritance/exact loaded SKILL b4ec0266... and TOML01887fdc... plus bounded phase.",
+  "schedule_check": [
+    {
+      "path": "/Users/rccurtrightjr./.codex/automations/chat-ar-orchestrator-hourly-check-in/automation.toml",
+      "sha256": "ec7257312e7c4d5393449d5477dda758932315a3461123d6111baad10353403f",
+      "status": "PAUSED",
+      "kind": "heartbeat",
+      "matching": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/automations/check-chat-wiki-orchestrator/automation.toml",
+      "sha256": "04db689d5c84a756b2bbcc51c7201385f564ea44baee342448d152ab4c5d1178",
+      "status": "PAUSED",
+      "kind": "heartbeat",
+      "matching": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/automations/check-provenance-wiki-reconciliation/automation.toml",
+      "sha256": "33e85b9b6843a72c82b2ea8f795aa0127c8f5bf14af508f5172c1b0e621ea794",
+      "status": "PAUSED",
+      "kind": "heartbeat",
+      "matching": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/automations/check-workspaces-and-views-wiki-orchestrator/automation.toml",
+      "sha256": "1d1fb54ac2a80a20cdc82d75694b2e71e82c66abcf01539b83e4dbb43de0a5b4",
+      "status": "PAUSED",
+      "kind": "heartbeat",
+      "matching": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/automations/monitor-chokidar-first-draft/automation.toml",
+      "sha256": "7af0ff68f3557f9a4bbf1a79a9574081a33e2d0ee13ed11bd4075f5d698d2cbe",
+      "status": "PAUSED",
+      "kind": "heartbeat",
+      "matching": false
+    }
+  ]
+}

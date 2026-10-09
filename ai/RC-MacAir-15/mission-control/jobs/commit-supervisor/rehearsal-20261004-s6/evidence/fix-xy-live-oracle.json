@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-04T16:30:49.837202+00:00",
+  "producer": "/root/s6_supervisor_fix_xy_1",
+  "origin": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs",
+  "origin_sha256": "e11d5dec9ae3219648abcf86bc7651c32f6d3c08b9a7ffffeeef9740424db697",
+  "new_oracle": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix_xy_live_smoke.mjs",
+  "new_sha256": "9d53162f8ae15a328ac4ae564d66ef5ff2f454b51891c4c8af4df4e70dfa92c0",
+  "purpose": "Retained original completion reversal reload plus exact revised Reset immediate actual localStorage and revised Wiki phrase/no oldlabel assertions; no successful runtime injected",
+  "scope": "job-owned helper only; installed helper unchanged"
+}

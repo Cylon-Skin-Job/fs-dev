@@ -1,0 +1,1297 @@
+[
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md",
+    "target": "planning/commit-supervisor/SPEC.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/SPEC.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md",
+    "target": ".agents/skills/mc-roadmap-creator/references/planning-contract.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-creator/references/planning-contract.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md",
+    "target": "ticket-workflow.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/ticket-workflow.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md",
+    "target": "conversation-evidence.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/conversation-evidence.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/session-contract.md",
+    "target": "conversation-evidence.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/conversation-evidence.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/session-contract.md",
+    "target": "record-templates.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/record-templates.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/session-contract.md",
+    "target": "investigation-contract.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/investigation-contract.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/session-contract.md",
+    "target": ".agents/skills/mc-roadmap-creator/references/planning-contract.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-creator/references/planning-contract.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/record-templates.md",
+    "target": ".agents/skills/mc-commit-supervisor/references/job-template.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/job-template.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/record-templates.md",
+    "target": ".agents/skills/mc-commit-supervisor/references/owner-publication.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/owner-publication.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/record-templates.md",
+    "target": "investigation-contract.md#assignment-packet",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/investigation-contract.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/record-templates.md",
+    "target": "investigation-contract.md#report-and-synthesis",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/investigation-contract.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/mission-control.md",
+    "target": "../Captures/030-Plugin_System/plugin-system-vision.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/030-Plugin_System/plugin-system-vision.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/mission-control.md",
+    "target": "../Captures/037-Plugin_Integration_And_Parallel_Roadmaps/integration-jobs.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/037-Plugin_Integration_And_Parallel_Roadmaps/integration-jobs.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/mission-control.md",
+    "target": "ticket-workflow.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/ticket-workflow.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/mission-control.md",
+    "target": "deployment.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/mission-control.md",
+    "target": "handoff.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/mission-control.md",
+    "target": "todo.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/mission-control.md",
+    "target": "registry.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mission-control/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mission-control/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/status/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/status/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/monitor/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/monitor/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-commit-supervisor/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-code-review-orchestrator/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-code-review-orchestrator/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-commit-repair-worker/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-repair-worker/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-preflight/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-preflight/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-document-sweep/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-document-sweep/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-draft-supervisor/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-draft-supervisor/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-first-draft/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-first-draft/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-capture/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-capture/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-checkpoint/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-checkpoint/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-memory-maintenance/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-memory-maintenance/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-roadmap-creator/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-creator/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-planning-stage/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-planning-stage/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-roadmap-author/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-author/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-planning-validation/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-planning-validation/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-roadmap-implementation-supervisor/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-implementation-supervisor/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-orchestrator/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-orchestrator/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-spec-review-gate/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-review-gate/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-spec-slice-builder/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-slice-builder/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": "launchpad/.agents/skills/mc-launchpad/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/.agents/skills/mc-launchpad/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".codex/agents/mc-commit-supervisor.toml",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-supervisor.toml"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".codex/agents/mc-code-review-orchestrator.toml",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-code-review-orchestrator.toml"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".codex/agents/mc-commit-repair-worker.toml",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-repair-worker.toml"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".codex/agents/mc-roadmap-creation-supervisor.toml",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-roadmap-creation-supervisor.toml"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".codex/agents/mc-planning-stage-orchestrator.toml",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-planning-stage-orchestrator.toml"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".codex/agents/mc-roadmap-author.toml",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-roadmap-author.toml"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".codex/agents/mc-planning-validator.toml",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-planning-validator.toml"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".codex/agents/mc-draft-supervisor.toml",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-draft-supervisor.toml"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".codex/agents/mc-first-draft.toml",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-first-draft.toml"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".codex/agents/mc-roadmap-supervisor.toml",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-roadmap-supervisor.toml"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".codex/agents/mc-spec-orchestrator.toml",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-spec-orchestrator.toml"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".codex/agents/mc-spec-slice-builder.toml",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-spec-slice-builder.toml"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": "session-contract.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/session-contract.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-preflight/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-preflight/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": "investigation-contract.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/investigation-contract.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-roadmap-creator/references/planning-contract.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-creator/references/planning-contract.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-roadmap-creator/scripts/candidate_manifest.py",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-creator/scripts/candidate_manifest.py"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-draft-supervisor/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-draft-supervisor/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-roadmap-creator/references/planning-contract.md#validation-and-repair-rules",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-creator/references/planning-contract.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".codex/config.toml",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/config.toml"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-memory-maintenance/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-memory-maintenance/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-memory-maintenance/references/records.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-memory-maintenance/references/records.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-memory-maintenance/scripts/validate_index.py",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-memory-maintenance/scripts/validate_index.py"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-memory-maintenance/scripts/route_capture.py",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-memory-maintenance/scripts/route_capture.py"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": "installation-sources.json",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/installation-sources.json"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": "conversation-evidence.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/conversation-evidence.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-document-sweep/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-document-sweep/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": ".agents/skills/mc-commit-supervisor/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": "planning/commit-supervisor/execution/approval-receipt.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/approval-receipt.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": "planning/commit-supervisor/execution/S5/cutover-inventory.json",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/cutover-inventory.json"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "target": "planning/commit-supervisor/execution/S5-builder.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-builder.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "deployment.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": ".agents/skills/mc-commit-supervisor/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": ".agents/skills/mc-code-review-orchestrator/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-code-review-orchestrator/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": ".agents/skills/mc-commit-repair-worker/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-repair-worker/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "deployment.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": ".agents/skills/mc-commit-supervisor/references/workflow.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/skills/launchpad/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./.codex/skills/launchpad/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/skills/capture/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./.codex/skills/capture/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/skills/checkpoint/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./.codex/skills/checkpoint/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/skill-backups/2026-09-26-second-brain-retirement/second-brain/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./.codex/skill-backups/2026-09-26-second-brain-retirement/second-brain/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/skills/roadmap-creator/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./.codex/skills/roadmap-creator/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/skills/roadmap-implementation-supervisor/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./.codex/skills/roadmap-implementation-supervisor/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/skills/orchestrator/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./.codex/skills/orchestrator/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/skills/spec-review-gate/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./.codex/skills/spec-review-gate/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/skills/delegater/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./.codex/skills/delegater/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/skills/clean-room-loop/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./.codex/skills/clean-room-loop/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/skills/fusion-electron-restart/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./.codex/skills/fusion-electron-restart/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/agents/clean-room-reviewer.toml",
+    "resolved": "/Users/rccurtrightjr./.codex/agents/clean-room-reviewer.toml"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/agents/spec-orchestrator.toml",
+    "resolved": "/Users/rccurtrightjr./.codex/agents/spec-orchestrator.toml"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/agents/spec-slice-builder.toml",
+    "resolved": "/Users/rccurtrightjr./.codex/agents/spec-slice-builder.toml"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/skills/capture/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./.codex/skills/capture/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/skills/checkpoint/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./.codex/skills/checkpoint/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/skills/clean-room-loop/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./.codex/skills/clean-room-loop/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/skills/delegater/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./.codex/skills/delegater/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/skills/fusion-electron-restart/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./.codex/skills/fusion-electron-restart/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/skills/launchpad/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./.codex/skills/launchpad/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/skills/orchestrator/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./.codex/skills/orchestrator/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/skills/roadmap-creator/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./.codex/skills/roadmap-creator/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/skills/roadmap-implementation-supervisor/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./.codex/skills/roadmap-implementation-supervisor/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/skill-backups/2026-09-26-second-brain-retirement/second-brain/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./.codex/skill-backups/2026-09-26-second-brain-retirement/second-brain/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/skills/spec-review-gate/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./.codex/skills/spec-review-gate/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/agents/clean-room-reviewer.toml",
+    "resolved": "/Users/rccurtrightjr./.codex/agents/clean-room-reviewer.toml"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/agents/spec-orchestrator.toml",
+    "resolved": "/Users/rccurtrightjr./.codex/agents/spec-orchestrator.toml"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "target": "/Users/rccurtrightjr./.codex/agents/spec-slice-builder.toml",
+    "resolved": "/Users/rccurtrightjr./.codex/agents/spec-slice-builder.toml"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "planning/commit-supervisor/execution/approval-receipt.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/approval-receipt.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": ".agents/skills/mc-commit-supervisor/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "planning/commit-supervisor/execution/S5/cutover-inventory.json",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/cutover-inventory.json"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "planning/commit-supervisor/execution/S5-builder.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-builder.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "registry.md#workspace-and-session-bindings",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "launchpad/chat-integration-and-retirement/TICKET.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/TICKET.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "deployment.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": ".agents/skills/mc-first-draft/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-first-draft/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "investigation-contract.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/investigation-contract.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "launchpad/template/AGENTS.md#use-the-starter-documents-to-guide-discussion",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/template/AGENTS.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": ".agents/skills/mc-document-sweep/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-document-sweep/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "launchpad/template/TICKET.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/template/TICKET.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "ticket-workflow.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/ticket-workflow.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": ".agents/skills/mc-preflight/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-preflight/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "../Captures/037-Plugin_Integration_And_Parallel_Roadmaps/role-hierarchy-and-guardrails.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/037-Plugin_Integration_And_Parallel_Roadmaps/role-hierarchy-and-guardrails.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "conversation-evidence.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/conversation-evidence.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": ".agents/skills/mc-roadmap-creator/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-creator/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": ".agents/skills/mc-draft-supervisor/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-draft-supervisor/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "planning/commit-supervisor/execution/slice-ledger.json",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/slice-ledger.json"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "planning/commit-supervisor/SPEC.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/SPEC.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "planning/commit-supervisor/PLANNING.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/PLANNING.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "planning/commit-supervisor/reports/release-review-1.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/reports/release-review-1.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "review-and-merge-design.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "../Wiki/008-Workflows/002-Wiki_Update/PAGE.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/008-Workflows/002-Wiki_Update/PAGE.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "review-and-merge-handoff.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "decisions.md#d-020--owner-directed-ticket-changes-by-any-agent",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/decisions.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "template-review.md#p-001--intake-shaping-and-numbered-ticket-conversations",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/template-review.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "AGENTS.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "ticket-workflow.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/ticket-workflow.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": ".agents/skills/mc-memory-maintenance/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-memory-maintenance/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": ".agents/skills/mc-checkpoint/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-checkpoint/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "conversation-evidence.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/conversation-evidence.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "deployment.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": ".codex/config.toml",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/config.toml"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "template-review.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/template-review.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "skills-and-agents.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "deployment.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "domain-routing.md#governing-sessions-in-subordinate-folders",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/domain-routing.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "decisions.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/decisions.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "registry.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "bulletin.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/bulletin.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "todo.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "record-templates.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/record-templates.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "source-map.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/source-map.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "target": "codex-context.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/codex-context.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "../Captures/030-Plugin_System/plugin-system-vision.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/030-Plugin_System/plugin-system-vision.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "source-map.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/source-map.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "template-review.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/template-review.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "mission-control.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/mission-control.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "handoff.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "../Captures/037-Plugin_Integration_And_Parallel_Roadmaps/coordination-system.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/037-Plugin_Integration_And_Parallel_Roadmaps/coordination-system.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "registry.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "bulletin.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/bulletin.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "domain-routing.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/domain-routing.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "../Captures/037-Plugin_Integration_And_Parallel_Roadmaps/coordination-system.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/037-Plugin_Integration_And_Parallel_Roadmaps/coordination-system.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "skills-and-agents.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "deployment.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "template-review.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/template-review.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": ".agents/skills/mc-preflight/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-preflight/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "investigation-contract.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/investigation-contract.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "../Captures/037-Plugin_Integration_And_Parallel_Roadmaps/coordination-system.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/037-Plugin_Integration_And_Parallel_Roadmaps/coordination-system.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "../Captures/037-Plugin_Integration_And_Parallel_Roadmaps/integration-jobs.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/037-Plugin_Integration_And_Parallel_Roadmaps/integration-jobs.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": ".agents/skills/mc-first-draft/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-first-draft/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "../Captures/037-Plugin_Integration_And_Parallel_Roadmaps/integration-jobs.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/037-Plugin_Integration_And_Parallel_Roadmaps/integration-jobs.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "../Captures/037-Plugin_Integration_And_Parallel_Roadmaps/integration-jobs.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/037-Plugin_Integration_And_Parallel_Roadmaps/integration-jobs.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "ticket-workflow.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/ticket-workflow.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "../Captures/037-Plugin_Integration_And_Parallel_Roadmaps/ticket-inventory.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/037-Plugin_Integration_And_Parallel_Roadmaps/ticket-inventory.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "deployment.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "planning/commit-supervisor/execution/approval-receipt.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/approval-receipt.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "planning/commit-supervisor/execution/S5-builder.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-builder.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "planning/commit-supervisor/SPEC.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/SPEC.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "planning/commit-supervisor/PLANNING.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/PLANNING.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "target": "../Captures/037-Plugin_Integration_And_Parallel_Roadmaps/integration-jobs.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/037-Plugin_Integration_And_Parallel_Roadmaps/integration-jobs.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+    "target": "../Captures/030-Plugin_System/plugin-system-vision.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/030-Plugin_System/plugin-system-vision.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+    "target": "bulletin.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/bulletin.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+    "target": "launchpad/chat-integration-and-retirement/TICKET.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/TICKET.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+    "target": "launchpad/plugin-foundation/TICKET.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/plugin-foundation/TICKET.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+    "target": "launchpad/governed-events-and-ledger/TICKET.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/governed-events-and-ledger/TICKET.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+    "target": "launchpad/plugin-views-and-provisioning/TICKET.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/plugin-views-and-provisioning/TICKET.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+    "target": "launchpad/fusion-health-and-governed-observability/TICKET.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/fusion-health-and-governed-observability/TICKET.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+    "target": ".agents/skills/mission-control/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mission-control/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+    "target": ".agents/skills/status/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/status/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+    "target": ".agents/skills/monitor/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/monitor/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+    "target": ".agents/skills/mc-commit-supervisor/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+    "target": "planning/commit-supervisor/SPEC.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/SPEC.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+    "target": "planning/commit-supervisor/PLANNING.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/PLANNING.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+    "target": "planning/commit-supervisor/execution/S5-builder.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-builder.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mission-control/SKILL.md",
+    "target": "../status/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/status/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mission-control/SKILL.md",
+    "target": "../monitor/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/monitor/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/monitor/SKILL.md",
+    "target": "../status/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/status/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-implementation-supervisor/SKILL.md",
+    "target": "../mc-orchestrator/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-orchestrator/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-implementation-supervisor/SKILL.md",
+    "target": "../mc-spec-review-gate/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-review-gate/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-implementation-supervisor/SKILL.md",
+    "target": "../monitor/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/monitor/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-implementation-supervisor/SKILL.md",
+    "target": "../status/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/status/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-implementation-supervisor/SKILL.md",
+    "target": "../../../session-contract.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/session-contract.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+    "target": "job-template.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/job-template.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+    "target": "../../mc-code-review-orchestrator/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-code-review-orchestrator/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+    "target": "../../mc-spec-review-gate/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-review-gate/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+    "target": "../../mc-commit-repair-worker/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-repair-worker/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+    "target": "wiki-handoff.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/wiki-handoff.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+    "target": "runtime-handoff.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/runtime-handoff.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+    "target": "owner-publication.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/owner-publication.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/job-template.md",
+    "target": "workflow.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/job-template.md",
+    "target": "wiki-handoff.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/wiki-handoff.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/job-template.md",
+    "target": "owner-publication.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/owner-publication.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md",
+    "target": "references/workflow.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md",
+    "target": "references/job-template.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/job-template.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md",
+    "target": "references/owner-publication.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/owner-publication.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/owner-publication.md",
+    "target": "workflow.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "target": "decisions.md#d-024--commit-supervisor-and-one-integrated-workflow-spec",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/decisions.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "target": "planning/commit-supervisor/SPEC.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/SPEC.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "target": ".agents/skills/mc-commit-supervisor/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "target": "deployment.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "target": "review-and-merge-handoff.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "target": ".agents/skills/mc-commit-supervisor/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "target": ".codex/agents/mc-commit-supervisor.toml",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-supervisor.toml"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "target": ".codex/config.toml",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/config.toml"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "target": "AGENTS.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "target": "session-contract.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/session-contract.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "target": "decisions.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/decisions.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "target": ".agents/skills/mc-spec-review-gate/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-review-gate/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "target": "../Wiki/000-Wiki_Guidance/005-User_Profile_Preferences_and_Design_Philosophy/PAGE.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/005-User_Profile_Preferences_and_Design_Philosophy/PAGE.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "target": "../Wiki/000-Wiki_Guidance/003-Updating_Wikis/PAGE.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/003-Updating_Wikis/PAGE.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "target": "../Wiki/000-Wiki_Guidance/004-Audit_Workflow/PAGE.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/PAGE.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "target": "../Wiki/008-Workflows/001-Sync_Wiki_Context/PAGE.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/008-Workflows/001-Sync_Wiki_Context/PAGE.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "target": "../Wiki/008-Workflows/002-Wiki_Update/PAGE.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/008-Workflows/002-Wiki_Update/PAGE.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "target": "../Wiki/AGENTS.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/AGENTS.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "target": "../Wiki/.agents/wiki-session-contract.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/.agents/wiki-session-contract.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "target": "../Wiki/.agents/skills/wiki-update/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/.agents/skills/wiki-update/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "target": ".agents/skills/mc-commit-supervisor/references/wiki-handoff.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/wiki-handoff.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": "decisions.md#d-024--commit-supervisor-and-one-integrated-workflow-spec",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/decisions.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": "planning/commit-supervisor/SPEC.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/SPEC.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": ".agents/skills/mc-commit-supervisor/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": "deployment.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": ".agents/skills/mc-commit-supervisor/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": ".codex/agents/mc-commit-supervisor.toml",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-supervisor.toml"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": "todo.md#mc-t09--build-the-commit-supervisor",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": ".agents/skills/mc-commit-supervisor/references/wiki-handoff.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/wiki-handoff.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": "AGENTS.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": "session-contract.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/session-contract.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": "decisions.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/decisions.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": ".agents/skills/mc-roadmap-creator/references/planning-contract.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-creator/references/planning-contract.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": ".agents/skills/mc-planning-validation/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-planning-validation/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": "todo.md#mc-t09--build-the-commit-supervisor",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": "record-templates.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/record-templates.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": "investigation-contract.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/investigation-contract.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": "deployment.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": ".agents/skills/mission-control/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mission-control/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": ".agents/skills/mc-roadmap-implementation-supervisor/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-implementation-supervisor/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": ".agents/skills/mc-orchestrator/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-orchestrator/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": ".agents/skills/mc-spec-slice-builder/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-slice-builder/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": ".agents/skills/mc-memory-maintenance/SKILL.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-memory-maintenance/SKILL.md"
+  },
+  {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "target": "conversation-evidence.md",
+    "resolved": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/conversation-evidence.md"
+  }
+]

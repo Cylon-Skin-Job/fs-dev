@@ -1,0 +1,977 @@
+--- predecessor/e2e/support/working-activity-working-cases.ts
++++ fusion-studio-client/e2e/support/working-activity-working-cases.ts
+@@ -165,7 +165,7 @@
+     await expect(page.locator(WORKING)).toHaveCount(0);
+   });
+ 
+-  test('@working in-flight return restores original startedAt over an already-revealed baseline', async ({ browser }) => {
++  test('@working in-flight return starts a fresh surface wait over an already-revealed baseline', async ({ browser }) => {
+     const startedAt = Date.now() - 8_500;
+     const { page } = await startWaSession(browser, { alpha: { threadId: THREAD_A, liveTurn: snapshot({
+       threadId: THREAD_A, turnId: TURN_A1, streamSeq: 7,
+@@ -177,7 +177,7 @@
+     await expectTranscript(page, { ordered: ['RETURN-BASELINE'] });
+     expect((await assistantRows(page))[0].isLivePlane).toBe(false);
+     await waitForWorking(page);
+-    await expect(page.locator(SECONDS).first()).toHaveText(/^Working… (?:[89]|\d{2,})s$/);
++    await expect(page.locator(SECONDS).first()).toHaveText(/^Working… [23]s$/);
+   });
+ 
+   test('@working completed return is instant and historical metadata never creates Working', async ({ browser }) => {
+--- /dev/null
++++ fusion-studio-client/e2e/visible-wait.spec.ts
+@@ -0,0 +1,232 @@
++import { expect, test, type Page } from '@playwright/test';
++import path from 'node:path';
++import { build } from 'vite';
++import { snapshot, openedReply } from './support/working-activity-wire';
++
++const bundle = (async () => {
++  const entry = 'virtual:visible-wait';
++  const source = `
++    import React from 'react';
++    import { createRoot } from 'react-dom/client';
++    import { flushSync } from 'react-dom';
++    import { LiveSegmentRenderer } from ${JSON.stringify(path.resolve('src/components/LiveSegmentRenderer.tsx'))};
++    import { readRevealSurfaces, RevealProgress } from ${JSON.stringify(path.resolve('src/lib/reveal/progress.ts'))};
++    import { animateText } from ${JSON.stringify(path.resolve('src/lib/text/text-animate.ts'))};
++    import { animateTool } from ${JSON.stringify(path.resolve('src/lib/tool-animate.ts'))};
++    import { DEFAULT_TIMING_PROFILE } from ${JSON.stringify(path.resolve('src/lib/timing.ts'))};
++    import { MessageList } from ${JSON.stringify(path.resolve('src/components/MessageList.tsx'))};
++    import { usePanelStore } from ${JSON.stringify(path.resolve('src/state/panelStore.ts'))};
++    import { handleStreamMessage } from ${JSON.stringify(path.resolve('src/lib/ws/stream-handlers.ts'))};
++    import { handleThreadMessage } from ${JSON.stringify(path.resolve('src/lib/ws/thread-handlers.ts'))};
++    function Routed() {
++      const chat = usePanelStore(s => s.projectChats.thread);
++      return React.createElement(MessageList, { workspaceId: 'ws', threadId: 'thread', surfaceId: 'main',
++        messages: chat?.messages ?? [], currentTurn: chat?.currentTurn ?? null, segments: chat?.segments ?? [],
++        onRequestDiagnostic: async () => null, onCopyDiagnostic: async () => {}, onAskAIWithDiagnostic: async () => false,
++        askAIWithDiagnosticEnabled: false });
++    }
++    const roots = new Map(), props = new Map(), completions = [];
++    const render = (next, id = 'main') => {
++      if (!roots.has(id)) { const el = document.createElement('div'); el.id = id; document.body.append(el); roots.set(id, createRoot(el)); }
++      const value = { workspaceId: 'ws', threadId: 'thread', surfaceId: id, turnId: 'A', segments: [], ...props.get(id), ...next };
++      props.set(id, value);
++      flushSync(() => roots.get(id).render(value.routed ? React.createElement(Routed) : React.createElement(LiveSegmentRenderer, { ...value,
++        onRevealComplete: value.terminal ? () => completions.push(value.turnId) : undefined })));
++    };
++    window.fixture = { render, completions, read: readRevealSurfaces,
++      route(frame) { flushSync(() => handleStreamMessage(frame)); },
++      hydrate(frame) { flushSync(() => handleThreadMessage(frame)); },
++      stop() { flushSync(() => usePanelStore.getState().setPendingExchangeSave('thread', 'A')); },
++      state() { return usePanelStore.getState().projectChats.thread; },
++      unmount(id = 'main') { flushSync(() => roots.get(id).unmount()); roots.delete(id); },
++      runController(kind, observed) {
++        const events = []; const start = Date.now(); const progress = observed ? new RevealProgress() : undefined;
++        const emit = value => events.push([Date.now() - start, value]);
++        const opts = { contentRef: { current: kind === 'text' ? '# Heading\\n\\nBody & more\\n\\n' : 'one\\ntwo\\n' },
++          completeRef: { current: kind !== 'think-live' }, cancelRef: { current: false }, segmentType: kind === 'think-live' ? 'think' : kind,
++          getTimingProfile: () => DEFAULT_TIMING_PROFILE, onDone: () => events.push([Date.now() - start, 'DONE']),
++          setDisplayedHtml: emit, setDisplayedContent: emit, progress };
++        if (kind === 'think-live') {
++          opts.contentRef.current = 'partial';
++          setTimeout(() => { opts.contentRef.current += ' more'; }, 400);
++          setTimeout(() => { opts.completeRef.current = true; }, 1000);
++        }
++        window.trace = events; (kind === 'text' ? animateText : animateTool)(opts);
++      },
++    };
++  `;
++  const result = await build({ configFile: false, logLevel: 'silent',
++    plugins: [{ name: entry, resolveId: id => id === entry ? `\0${entry}` : null, load: id => id === `\0${entry}` ? source : null }],
++    build: { write: false, minify: false, cssCodeSplit: false, rollupOptions: { input: entry, output: { format: 'iife' } } },
++  });
++  if (Array.isArray(result) || !('output' in result)) throw new Error('Unexpected build');
++  return { js: result.output.filter(x => x.type === 'chunk').map(x => x.code).join('\n'),
++    css: result.output.filter(x => x.type === 'asset').map(x => x.source).join('\n') };
++})();
++async function render(page: Page, props: object, id = 'main') {
++  await page.evaluate(({ props, id }) => (window as any).fixture.render(props, id), { props, id });
++}
++async function boot(page: Page, props: object = {}) {
++  await page.clock.install(); await page.clock.pauseAt(new Date()); await page.setContent('<body></body>');
++  const built = await bundle;
++  await page.addStyleTag({ content: built.css }); await page.addScriptTag({ content: built.js }); await render(page, props);
++}
++async function read(page: Page) { return page.evaluate(() => (window as any).fixture.read()); }
++async function untilWait(page: Page) {
++  for (let i = 0; i < 6000; i += 10) {
++    const records = await read(page);
++    if (records[0]?.waitingSince != null) return records[0].waitingSince as number;
++    await page.clock.runFor(10);
++  }
++  throw new Error('No production-controller wait');
++}
++async function atWait(page: Page, elapsed: number) {
++  const since = await untilWait(page); const now = await page.evaluate(() => Date.now());
++  await page.clock.runFor(Math.max(0, since + elapsed - now));
++}
++const working = (page: Page) => page.locator('.rv-working-activity');
++const text = (content = 'first\n\n', complete = false) => ({ type: 'text', content, complete });
++const step = { kind: 'working', turnId: 'A', identity: 'step', startedAt: 1, activityRevision: 1 };
++for (const kind of ['text', 'think', 'shell', 'read']) {
++  test(`${kind}: controller wait 1999 absent / 2000 shows 2s`, async ({ page }) => {
++    const segment = kind === 'text' ? text() : { type: kind, content: kind === 'think' ? 'first\n' : '', complete: false };
++    await boot(page, { segments: [segment] }); await atWait(page, 1999); await expect(working(page)).toHaveCount(0);
++    await page.clock.runFor(1); await expect(page.locator('.rv-working-activity-seconds')).toHaveText('Working… 2s');
++    const snapshot = (await read(page))[0];
++    expect(snapshot).toMatchObject({ workspaceId: 'ws', threadId: 'thread', surfaceId: 'main', turnId: 'A' });
++    expect(snapshot.segments[0]).toMatchObject({ sourceUnit: 'UTF16', phase: 'waiting' });
++    if (kind === 'shell') expect(snapshot.segments[0].sourceCursor).toBeNull();
++  });
++}
++test('undisplayable fragments preserve wait; resume hides and next gap resets', async ({ page }) => {
++  await boot(page, { segments: [text('```ts\npartial')] }); const first = await untilWait(page);
++  await atWait(page, 1800); await render(page, { segments: [text('```ts\npartial more')] }); await atWait(page, 2000);
++  expect((await read(page))[0].waitingSince).toBe(first); await expect(page.locator('.rv-working-activity-seconds')).toHaveText('Working… 2s');
++  await render(page, { segments: [text('```ts\npartial more\n```\n\n')] }); await page.clock.runFor(30);
++  await expect(working(page)).toHaveCount(0); const second = await untilWait(page); expect(second).toBeGreaterThan(first + 2000);
++  await atWait(page, 1999); await expect(working(page)).toHaveCount(0);
++  await page.clock.runFor(1); await expect(page.locator('.rv-working-activity-seconds')).toHaveText('Working… 2s');
++});
++test('wait ending before threshold never flashes while resumed characters reveal', async ({ page }) => {
++  await boot(page, { segments: [text()] }); await atWait(page, 1969);
++  await render(page, { segments: [text('first\n\n' + 'second '.repeat(500) + '\n\n')] }); await page.clock.runFor(30);
++  await expect(working(page)).toHaveCount(0); await page.clock.runFor(1500); await expect(working(page)).toHaveCount(0);
++  expect((await read(page))[0].segments[0].phase).toBe('revealing');
++});
++test('step age cannot bypass orb or 2s; no-step orb remains', async ({ page }) => {
++  await boot(page); await page.clock.runFor(4000); await expect(page.locator('.rv-orb-wrapper')).toHaveCount(1);
++  await expect(working(page)).toHaveCount(0); await render(page, { activity: step });
++  await page.clock.runFor(499); await expect(working(page)).toHaveCount(0); await page.clock.runFor(1);
++  await atWait(page, 1999); await expect(working(page)).toHaveCount(0);
++  await page.clock.runFor(1); await expect(page.locator('.rv-working-activity-seconds')).toHaveText('Working… 2s');
++});
++test('queued work and animation phases exclude wait; between-segment wait needs no step', async ({ page }) => {
++  await boot(page, { segments: [{ type: 'think', content: 'done\n', complete: true }, text('x\n\n', true)] });
++  for (let i = 0; i < 250; i++) {
++    const state = (await read(page))[0]; if (state.frontier === 2) break;
++    expect(state.waitingSince).toBeNull(); await expect(working(page)).toHaveCount(0); await page.clock.runFor(10);
++  }
++  expect((await read(page))[0].frontier).toBe(2); await atWait(page, 2000); await expect(page.locator('.rv-working-activity-seconds')).toHaveText('Working… 2s');
++});
++for (const action of ['terminal', 'replacement', 'unmount']) {
++  test(`${action} retires clock and stale callbacks`, async ({ page }) => {
++    await boot(page, { segments: [text()] }); await atWait(page, 2000); await expect(working(page)).toHaveCount(1);
++    if (action === 'terminal') await render(page, { terminal: true, segments: [text('first\n\n', true)] });
++    if (action === 'replacement') await render(page, { turnId: 'B', segments: [] });
++    if (action === 'unmount') await page.evaluate(() => (window as any).fixture.unmount());
++    await expect(working(page)).toHaveCount(0); await page.clock.runFor(5000); await expect(working(page)).toHaveCount(0);
++    if (action === 'unmount') expect(await read(page)).toEqual([]);
++    if (action === 'terminal') expect(await page.evaluate(() => (window as any).fixture.completions)).toEqual(['A']);
++  });
++}
++test('same-thread surfaces have independent waits and disposal', async ({ page }) => {
++  await boot(page, { segments: [text()] }); await atWait(page, 2000);
++  await render(page, { segments: [text('```ts\npartial')] }, 'side'); await page.clock.runFor(500);
++  expect((await read(page)).map((s: any) => s.surfaceId)).toEqual(['main', 'side']);
++  await expect(page.locator('#main .rv-working-activity')).toHaveCount(1); await expect(page.locator('#side .rv-working-activity')).toHaveCount(0);
++  await page.evaluate(() => (window as any).fixture.unmount('main')); await page.clock.runFor(2000);
++  await expect(page.locator('#side .rv-working-activity')).toHaveCount(1);
++  expect((await read(page)).map((s: any) => s.surfaceId)).toEqual(['side']);
++});
++for (const kind of ['text', 'think', 'shell', 'think-live']) {
++  test(`${kind}: observer on/off exact output order and timing`, async ({ page }) => {
++    await boot(page); const traces = [];
++    for (const observed of [false, true]) {
++      await page.evaluate(({ kind, observed }) => (window as any).fixture.runController(kind, observed), { kind, observed });
++      await page.clock.runFor(5000); traces.push(await page.evaluate(() => (window as any).trace));
++    }
++    expect(traces[0].at(-1)[1]).toBe('DONE'); expect(traces[1]).toEqual(traces[0]);
++  });
++}
++
++async function route(page: Page, frame: object) {
++  await page.evaluate(frame => (window as any).fixture.route(frame), { threadId: 'thread', turnId: 'A', ...frame });
++}
++async function routedWait(page: Page) {
++  await boot(page, { routed: true });
++  await route(page, { type: 'turn_begin', streamSeq: 1 });
++  await route(page, { type: 'step_begin', streamSeq: 2, ...step, startedAt: 1 });
++  await atWait(page, 2000);
++  await expect(working(page)).toHaveCount(1);
++}
++for (const reason of ['complete', 'interrupted', 'error']) {
++  test(`production route ${reason} clears clock and preserves saved ACK guard`, async ({ page }) => {
++    await routedWait(page);
++    if (reason === 'interrupted') {
++      await page.evaluate(() => (window as any).fixture.stop());
++      await expect(working(page)).toHaveCount(0);
++      await page.clock.runFor(3000); await expect(working(page)).toHaveCount(0);
++    }
++    await route(page, { type: 'turn_end', streamSeq: 3, reason });
++    await expect(working(page)).toHaveCount(0); await page.clock.runFor(5000);
++    await expect(working(page)).toHaveCount(0);
++    const state = await page.evaluate(() => (window as any).fixture.state());
++    expect(state.currentTurn).toBeNull();
++    expect(state.messages.at(-1).exchangeId).toBeUndefined();
++    await route(page, { type: 'chat-turn:saved', exchangeId: 999, seq: 1, ts: 1, reason });
++    const saved = await page.evaluate(() => (window as any).fixture.state());
++    expect(saved.messages.at(-1).exchangeId).toBe(999);
++  });
++}
++test('production step revisions remain canonical while the clock keeps local wait age', async ({ page }) => {
++  await routedWait(page); const since = (await read(page))[0].waitingSince;
++  await route(page, { type: 'step_begin', streamSeq: 3, identity: 'equal', startedAt: 1, activityRevision: 1 });
++  await route(page, { type: 'step_begin', streamSeq: 4, identity: 'new', startedAt: 1, activityRevision: 2 });
++  expect((await read(page))[0].waitingSince).toBe(since);
++  await expect(page.locator('.rv-working-activity-seconds')).toHaveText('Working… 2s');
++  expect((await page.evaluate(() => (window as any).fixture.state())).activity.identity).toBe('new');
++  await route(page, { type: 'content', streamSeq: 5, text: 'content\n\n', activityRevision: 3 });
++  await page.clock.runFor(30); await expect(working(page)).toHaveCount(0);
++  await route(page, { type: 'step_begin', streamSeq: 6, identity: 'step', startedAt: 1, activityRevision: 4 });
++  expect((await page.evaluate(() => (window as any).fixture.state())).activity).toBeNull();
++});
++test('production snapshot return starts local 2s wait instead of restoring server step age', async ({ page }) => {
++  await boot(page, { routed: true });
++  const frame = openedReply({ threadId: 'thread', liveTurn: snapshot({ threadId: 'thread', turnId: 'A', streamSeq: 7,
++    parts: [{ type: 'text', content: 'baseline' }], activityRevision: 4, seenStepIdentities: ['step'],
++    activity: { ...step, activityRevision: 4 }, stepCursor: { identity: 'step', startedAt: 1 },
++  }) });
++  await page.evaluate(frame => (window as any).fixture.hydrate(frame), frame);
++  await expect(page.locator('body')).toContainText('baseline');
++  await atWait(page, 1999); await expect(working(page)).toHaveCount(0);
++  await page.clock.runFor(1); await expect(page.locator('.rv-working-activity-seconds')).toHaveText('Working… 2s');
++});
++
++for (const reducedMotion of ['reduce', 'no-preference'] as const) {
++  test(`clock has one stable announcement and timestamp seconds (${reducedMotion})`, async ({ page }) => {
++    await page.emulateMedia({ reducedMotion });
++    await boot(page, { activity: step }); await atWait(page, 2000);
++    const status = page.getByRole('status', { name: 'Model working' });
++    await expect(status).toHaveCount(1); await expect(status).toHaveAttribute('aria-live', 'polite');
++    await expect(page.locator('.rv-working-activity-seconds')).toHaveAttribute('aria-hidden', 'true');
++    await page.clock.runFor(5000);
++    await expect(page.locator('.rv-working-activity-seconds')).toHaveText('Working… 7s');
++    await expect(status).toHaveCount(1);
++  });
++}
++test('tool result resume clears visible wait before reveal/hold/collapse', async ({ page }) => {
++  await boot(page, { segments: [{ type: 'shell', content: '', complete: false }] }); await atWait(page, 2000);
++  await render(page, { segments: [{ type: 'shell', content: 'result\n', complete: true }] });
++  await page.clock.runFor(30); await expect(working(page)).toHaveCount(0);
++  await page.clock.runFor(700); await expect(working(page)).toHaveCount(0);
++});
+--- predecessor/src/components/LiveSegmentRenderer.tsx
++++ fusion-studio-client/src/components/LiveSegmentRenderer.tsx
+@@ -28,7 +28,7 @@
+  * └─────────────────────────────────────────────────────────────┘
+  */
+ 
+-import { useState, useEffect, useRef, useCallback } from 'react';
++import { useState, useEffect, useRef, useCallback, useId } from 'react';
+ import type { StreamSegment, TurnActivity } from '../types';
+ import { getToolRenderer } from '../lib/tool-renderers';
+ import type { TimingProfile } from '../lib/timing';
+@@ -39,7 +39,8 @@
+ import { ToolCallBlock } from './ToolCallBlock';
+ import { Orb } from './Orb';
+ import { HourglassFlow } from './chat/HourglassFlow';
+-import { WorkingActivity } from './chat/WorkingActivity';
++import { VisibleWaitActivity } from './chat/VisibleWaitActivity';
++import { SurfaceRevealProgress, registerRevealSurface, type RevealProgress } from '../lib/reveal/progress';
+ import './LiveSegmentRenderer.css';
+ 
+ interface TimingProbe {
+@@ -55,26 +56,36 @@
+ // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ 
+ interface LiveSegmentRendererProps {
++  workspaceId?: string;
++  threadId?: string;
++  surfaceId?: string;
++  terminal?: boolean;
+   turnId?: string;
+   segments: StreamSegment[];
+   onRevealComplete?: () => void;
+   /**
+-   * SPEC-05 Slice A: the addressed thread's observable transient Working
+-   * activity (passed through by MessageList, the documented presentation
+-   * routing point). Read-only here — all transitions live in the state layer.
++   * Canonical step activity still starts the existing orb disposal.
++   * Visible-wait eligibility and elapsed time belong to this mounted surface.
+    */
+   activity?: TurnActivity | null;
+ }
+ 
+ export function LiveSegmentRenderer(props: LiveSegmentRendererProps) {
+   // A replacement turn owns a fresh frontier and retires every old continuation.
+-  return <LiveTurnSegments key={props.turnId} {...props} />;
+-}
+-
+-function LiveTurnSegments({ turnId, segments, onRevealComplete, activity }: LiveSegmentRendererProps) {
++  return <LiveTurnSegments key={JSON.stringify([props.workspaceId, props.threadId, props.surfaceId, props.turnId])} {...props} />;
++}
++
++function LiveTurnSegments({ turnId, workspaceId, threadId, surfaceId, terminal, segments, onRevealComplete, activity }: LiveSegmentRendererProps) {
++  const fallbackSurfaceId = useId();
++  const [waitingSince, setWaitingSince] = useState<number | null>(null);
++  const [observation] = useState(() => new SurfaceRevealProgress({ workspaceId, threadId, surfaceId: surfaceId ?? fallbackSurfaceId, turnId }, setWaitingSince));
+   const [orbDone, setOrbDone] = useState(false);
+   const [orbDisposing, setOrbDisposing] = useState(false);
+   const [revealedCount, setRevealedCount] = useState(0);
++  useEffect(() => registerRevealSurface(observation), [observation]);
++  useEffect(() => {
++    observation.update(terminal || onRevealComplete ? 'terminal' : orbDone ? 'active' : 'orb', revealedCount, segments.length);
++  }, [observation, terminal, onRevealComplete, orbDone, revealedCount, segments.length]);
+   const prevLenRef = useRef(0);
+   const hasTokenRef = useRef(false);
+   const finalizedRef = useRef(false);
+@@ -199,25 +210,11 @@
+     return <Orb disposing={orbDisposing} onDone={handleOrbDone} />;
+   }
+ 
+-  // SPEC-05 Slice A (§4.5) — Working reveal order. Render Working only when
+-  // ALL hold: orb disposal is complete (we are past Phase 1); the activity
+-  // belongs to the CURRENT turn; no newer renderable event cleared it
+-  // (activity still non-null in state); and every already-queued segment has
+-  // revealed (revealedCount >= segments.length — which also orders a later
+-  // post-tool step AFTER the queued tool segments). Output rendering is
+-  // independent of this gate; the gate only places the transient row.
+-  const showWorking = Boolean(activity && turnId && activity.turnId === turnId)
+-    && revealedCount >= segments.length;
+-  const working = showWorking && activity ? activity : null;
+-
+-  // Phase 2: Orb is done. Render segments sequentially.
++  const working = !terminal && !onRevealComplete && waitingSince !== null
++    ? <VisibleWaitActivity key={waitingSince} since={waitingSince} /> : null;
++
+   if (!segments || segments.length === 0) {
+-    if (working) {
+-      // key={identity}: a fresh step remounts the row, so its elapsed label
+-      // re-inits truthfully from the new server startedAt (never stale, never 0s-forced).
+-      return <WorkingActivity key={working.identity} activity={working} />;
+-    }
+-    return <div className="rv-message-assistant-content streaming" />;
++    return working ?? <div className="rv-message-assistant-content streaming" />;
+   }
+ 
+   // Mount only completed segments + the one currently animating
+@@ -232,6 +229,7 @@
+               key={`text-${i}`}
+               segment={seg}
+               index={i}
++              progress={observation.segment(i, seg.type, () => seg.content.length)}
+               getTimingProfile={getTimingProfile}
+               onDone={onSegmentDone}
+             />
+@@ -243,6 +241,7 @@
+             <LiveToolSegment
+               segment={seg}
+               index={i}
++              progress={observation.segment(i, seg.type, () => seg.content.length)}
+               hasQueuedNext={hasQueuedItemAfter(i)}
+               hasQueuedItemAfter={hasQueuedItemAfter}
+               skipShimmer={i === 0}
+@@ -253,7 +252,7 @@
+           </div>
+         );
+       })}
+-      {working && <WorkingActivity key={working.identity} activity={working} />}
++      {working}
+     </>
+   );
+ }
+@@ -265,6 +264,7 @@
+ // ── Live Text Segment ─────────────────────────────────────────────────
+ 
+ interface LiveTextSegmentProps {
++  progress: RevealProgress;
+   segment: StreamSegment;
+   index: number;
+   skipAnimation?: boolean;
+@@ -278,7 +278,7 @@
+  * Owns React state and refs. Delegates animation to animateText().
+  * Display state is HTML (pre-rendered by sub-renderers), not raw markdown.
+  */
+-function LiveTextSegment({ segment, index, skipAnimation, getTimingProfile, onDone }: LiveTextSegmentProps) {
++function LiveTextSegment({ progress, segment, index, skipAnimation, getTimingProfile, onDone }: LiveTextSegmentProps) {
+   const [displayedHtml, setDisplayedHtml] = useState('');
+   const animatingRef = useRef(false);
+   const contentRef = useRef(segment.content);
+@@ -301,7 +301,7 @@
+     cancelRef.current = false;
+ 
+     animateText({
+-      contentRef, completeRef, cancelRef,
++      contentRef, completeRef, cancelRef, progress,
+       segmentType: segment.type,
+       setDisplayedHtml, getTimingProfile,
+       onDone: () => onDone(index),
+@@ -321,6 +321,7 @@
+ // ── Live Tool Segment ─────────────────────────────────────────────────
+ 
+ interface LiveToolSegmentProps {
++  progress: RevealProgress;
+   hasQueuedNext: boolean;
+   hasQueuedItemAfter: (index: number) => boolean;
+   segment: StreamSegment;
+@@ -345,7 +346,7 @@
+  * boundary, returning the stable timing profile. Reveal speed is
+  * controlled by chunk queue lookahead inside the reveal controllers.
+  */
+-function LiveToolSegment({ segment, index, hasQueuedNext, hasQueuedItemAfter, skipShimmer, skipAnimation, getTimingProfile, onDone }: LiveToolSegmentProps) {
++function LiveToolSegment({ progress, segment, index, hasQueuedNext, hasQueuedItemAfter, skipShimmer, skipAnimation, getTimingProfile, onDone }: LiveToolSegmentProps) {
+   const [phase, setPhase] = useState<'shimmer' | 'revealing' | 'collapsing' | 'done'>('shimmer');
+   const [expanded, setExpanded] = useState(true);
+   const [displayedContent, setDisplayedContent] = useState('');
+@@ -363,6 +364,7 @@
+ 
+   useEffect(() => {
+     if (segment.type !== 'subagent') return;
++    progress.directOutput(segment.content.length);
+     setDisplayedContent(segment.content);
+     if (segment.complete) setExpanded(false);
+   }, [segment.type, segment.content, segment.complete]);
+@@ -384,6 +386,7 @@
+     const finish = () => {
+       if (cancelled.current || done) return;
+       done = true;
++      progress.setPhase('done');
+       onDone(index);
+     };
+     const cleanup = () => {
+@@ -442,7 +445,7 @@
+         console.log(`[TIMING] REVEAL START (${segment.type} #${index}) at ${revealAt.toFixed(1)}ms — ${sinceSend}ms after send`);
+       }
+       await animateTool({
+-        contentRef, completeRef, cancelRef: cancelled,
++        contentRef, completeRef, cancelRef: cancelled, progress,
+         segmentType: segment.type,
+         toolArgs: segment.toolArgs,
+         setDisplayedContent,
+@@ -461,15 +464,18 @@
+         setExpanded(false);
+         finishWait?.();
+       };
++      progress.setPhase('holding');
+       setPhase('collapsing');
+       setCollapseMs(immediate ? 0 : collapseProfile.collapseDuration);
+       if (!immediate && collapseProfile.postTypingPause > 0) await wait(collapseProfile.postTypingPause);
+       if (cancelled.current) return;
++      progress.setPhase('collapsing');
+       setExpanded(false);
+       if (!immediate && collapseProfile.collapseDuration > 0) await wait(collapseProfile.collapseDuration);
+       if (cancelled.current) return;
+       // Retire lookahead before the gap: completed items stay user-expandable.
+       interruptCollapseRef.current = null;
++      progress.setPhase('gap');
+       setPhase('done');
+       await wait(100);
+       finish();
+--- predecessor/src/components/MessageList.tsx
++++ fusion-studio-client/src/components/MessageList.tsx
+@@ -48,6 +48,8 @@
+ } from '../lib/chat/message-revisions';
+ 
+ interface MessageListProps {
++  workspaceId?: string;
++  surfaceId?: string;
+   // PER_THREAD_CHAT_STATE: the mounted host passes its exact session's threadId.
+   threadId: string | null;
+   messages: Message[];
+@@ -237,6 +239,8 @@
+ ));
+ 
+ export function MessageList({
++  workspaceId,
++  surfaceId,
+   threadId,
+   messages,
+   currentTurn,
+@@ -251,6 +255,9 @@
+   // PER_THREAD_CHAT_STATE: pendingTurnEnd is keyed by threadId.
+   const pendingTurnEnd = usePanelStore((s) =>
+     threadId ? (s.projectChats[threadId]?.pendingTurnEnd ?? false) : false
++  );
++  const pendingSave = usePanelStore((s) =>
++    threadId ? Boolean(s.projectChats[threadId]?.pendingExchangeSaveTurnId) : false
+   );
+   const finalizeTurn = usePanelStore((s) => s.finalizeTurn);
+ 
+@@ -293,6 +300,10 @@
+           className="rv-message rv-message-assistant"
+         >
+           <LiveSegmentRenderer
++            workspaceId={workspaceId}
++            surfaceId={surfaceId}
++            threadId={threadId ?? undefined}
++            terminal={pendingTurnEnd || pendingSave || currentTurn?.status !== 'streaming'}
+             turnId={currentTurn?.id}
+             segments={segments}
+             activity={activity}
+--- predecessor/src/components/chat/ConnectedChatHistory.tsx
++++ fusion-studio-client/src/components/chat/ConnectedChatHistory.tsx
+@@ -65,6 +65,8 @@
+           </div>
+         ) : (
+           <MessageList
++            workspaceId={workspaceId}
++            surfaceId={scrollId}
+             threadId={threadId}
+             messages={messages}
+             currentTurn={currentTurn}
+--- /dev/null
++++ fusion-studio-client/src/components/chat/VisibleWaitActivity.tsx
+@@ -0,0 +1,12 @@
++/** Local threshold presentation; elapsed time starts at the actual visible wait. */
++import { useEffect, useState } from 'react';
++import { WorkingActivity } from './WorkingActivity';
++
++export function VisibleWaitActivity({ since }: { since: number }) {
++  const [visible, setVisible] = useState(() => Date.now() - since >= 2000);
++  useEffect(() => {
++    const timer = window.setTimeout(() => setVisible(true), Math.max(0, 2000 - (Date.now() - since)));
++    return () => window.clearTimeout(timer);
++  }, [since]);
++  return visible ? <WorkingActivity startedAt={since} /> : null;
++}
+--- predecessor/src/components/chat/WorkingActivity.tsx
++++ fusion-studio-client/src/components/chat/WorkingActivity.tsx
+@@ -7,11 +7,11 @@
+  * tool rows (muted label, CSS variables with fallbacks only — §4.3).
+  *
+  * Label: the visible `Working… Ns` computes WHOLE elapsed seconds from the
+- * server-authoritative `startedAt` as a clock delta — never an incrementing
++ * surface visible-wait `startedAt` as a clock delta — never an incrementing
+  * counter (a backgrounded tab resyncs to the truthful value instead of
+  * drifting) and never a forced initial `0s` (parent §4.10). The component is
+- * remounted per step identity by the renderer (`key={identity}`), so every
+- * step's first paint is truthful.
++ * remounted per visible-wait interval by the renderer (`key={waitingSince}`), so every
++ * wait's first paint is truthful.
+  *
+  * Accessibility (§4.10): the HourglassFlow live region carries ONE stable
+  * "Model working" announcement mounted once per Working appearance. The
+@@ -20,8 +20,6 @@
+  */
+ 
+ import { useEffect, useState } from 'react';
+-import type { TurnActivity } from '../../types';
+-import { wholeElapsedSeconds } from '../../state/slices/chatActivityState';
+ import { HourglassFlow } from './HourglassFlow';
+ import './WorkingActivity.css';
+ 
+@@ -32,18 +30,17 @@
+ const SECONDS_TICK_MS = 1000;
+ 
+ interface WorkingActivityProps {
+-  activity: TurnActivity;
++  startedAt: number;
+ }
+ 
+-export function WorkingActivity({ activity }: WorkingActivityProps) {
+-  const startedAt = activity.startedAt;
++export function WorkingActivity({ startedAt }: WorkingActivityProps) {
+   const [elapsedSeconds, setElapsedSeconds] = useState(() =>
+-    wholeElapsedSeconds(startedAt, Date.now())
++    Math.max(0, Math.floor((Date.now() - startedAt) / 1000))
+   );
+ 
+   useEffect(() => {
+     const timer = window.setInterval(() => {
+-      setElapsedSeconds(wholeElapsedSeconds(startedAt, Date.now()));
++      setElapsedSeconds(Math.max(0, Math.floor((Date.now() - startedAt) / 1000)));
+     }, SECONDS_TICK_MS);
+     return () => window.clearInterval(timer);
+   }, [startedAt]);
+--- predecessor/src/lib/reveal/grouped-summary.ts
++++ fusion-studio-client/src/lib/reveal/grouped-summary.ts
+@@ -15,6 +15,7 @@
+  * tool_result. The reveal watches for those updates.
+  */
+ 
++import { RevealProgress } from './progress';
+ import type { RevealController } from './types';
+ 
+ const POLL_INTERVAL = 50; // ms between content checks during live streaming
+@@ -24,21 +25,29 @@
+ }
+ 
+ export const groupedSummaryReveal: RevealController = {
+-  async run(contentRef, setDisplayed, cancelRef, completeRef) {
++  async run(contentRef, setDisplayed, cancelRef, completeRef, options) {
++    const progress = options?.progress ?? new RevealProgress();
++    progress.received = () => contentRef.current.length;
++    progress.sourceCursor = contentRef.current.length;
++    progress.advance(contentRef.current.length);
+     // Show whatever we have immediately
+     setDisplayed(contentRef.current);
+ 
+     // If already complete (history replay), we're done
+-    if (completeRef.current) return;
++    if (completeRef.current) { progress.setPhase('done'); return; }
+ 
+     // Live: poll for content updates until segment is complete.
+     // Each poll shows the latest content — new file paths appear
+     // as lines the moment tool_result messages arrive.
+     let lastLen = contentRef.current.length;
+     while (!completeRef.current && !cancelRef.current) {
++      progress.setPhase('waiting');
+       await sleep(POLL_INTERVAL);
+       const current = contentRef.current;
+       if (current.length !== lastLen) {
++        progress.setPhase('revealing');
++        progress.advance(current.length - lastLen);
++        progress.sourceCursor = current.length;
+         setDisplayed(current);
+         lastLen = current.length;
+       }
+@@ -47,6 +56,9 @@
+     // Final update with complete content
+     if (!cancelRef.current) {
+       setDisplayed(contentRef.current);
++      progress.advance(contentRef.current.length - lastLen);
++      progress.sourceCursor = contentRef.current.length;
++      progress.setPhase('done');
+     }
+   },
+ };
+--- predecessor/src/lib/reveal/orchestrator.ts
++++ fusion-studio-client/src/lib/reveal/orchestrator.ts
+@@ -14,6 +14,7 @@
+  * The parser is content-type-specific. The orchestrator is shared.
+  */
+ 
++import { RevealProgress } from './progress';
+ import type { ChunkParser, ParsedChunk, RevealOptions } from './types';
+ 
+ // Defaults used when no RevealOptions are provided.
+@@ -72,6 +73,9 @@
+   const batchFast = options?.batchSizeFast ?? DEFAULT_BATCH_SIZE_FAST;
+   const chunkPause = options?.interChunkPause ?? DEFAULT_INTER_CHUNK_PAUSE;
+ 
++  const progress = options?.progress ?? new RevealProgress();
++  progress.received = () => contentRef.current.length;
++  // Transforms have no source-to-display mapping. Cursor remains explicitly unknown.
+   const buffer: ParsedChunk[] = [];
+   let bufferCursor = 0;   // next chunk to render
+   let displayed = '';     // parsed/render-ready content displayed so far
+@@ -87,6 +91,7 @@
+         buffer.push(chunk);
+       }
+       lastFedLength = content.length;
++      progress.parserFedSource = lastFedLength;
+     }
+ 
+     // ── Step 2: Is there a chunk ready to render? ──
+@@ -97,15 +102,24 @@
+       const speed = nextChunkReady ? speedFast : speedSlow;
+       const batch = nextChunkReady ? batchFast : 1;
+ 
++      progress.readyChunks = buffer.length - bufferCursor - 1;
++      progress.chunkTotal = chunk.text.length;
++      progress.chunkVisible = 0;
++      progress.speedMs = speed;
++      progress.batchSize = batch;
++      progress.setPhase('revealing');
++
+       // ── Step 3: Type this chunk ──
+       await typeChunk(chunk.text, speed, batch, (typed) => {
+         displayed += typed;
++        progress.advance(typed.length);
+         setDisplayed(displayed);
+       }, cancelRef);
+ 
+       bufferCursor++;
+ 
+       if (!cancelRef.current && chunkPause > 0) {
++        progress.setPhase('pacing');
+         await sleep(chunkPause);
+       }
+     } else {
+@@ -142,8 +156,15 @@
+         // Render any remaining buffered chunks
+         while (bufferCursor < buffer.length && !cancelRef.current) {
+           const chunk = buffer[bufferCursor];
++          progress.readyChunks = buffer.length - bufferCursor - 1;
++          progress.chunkTotal = chunk.text.length;
++          progress.chunkVisible = 0;
++          progress.speedMs = speedSlow;
++          progress.batchSize = 1;
++          progress.setPhase('revealing');
+           await typeChunk(chunk.text, speedSlow, 1, (typed) => {
+             displayed += typed;
++            progress.advance(typed.length);
+             setDisplayed(displayed);
+           }, cancelRef);
+           bufferCursor++;
+@@ -175,6 +196,8 @@
+       }
+ 
+       // Not complete yet — wait for more tokens
++      progress.readyChunks = 0;
++      progress.setPhase('waiting');
+       await sleep(POLL_INTERVAL);
+     }
+   }
+@@ -182,4 +205,5 @@
+   // Ensure final parsed content is fully displayed without replacing transformed
+   // chunks with raw transport text.
+   setDisplayed(displayed || contentRef.current);
++  if (!cancelRef.current) progress.setPhase('done');
+ }
+--- /dev/null
++++ fusion-studio-client/src/lib/reveal/progress.ts
+@@ -0,0 +1,104 @@
++/** Passive reveal measurements. Controllers write counters; consumers only pull copies. */
++export type RevealPhase = 'shimmer' | 'revealing' | 'pacing' | 'waiting' | 'holding' | 'collapsing' | 'gap' | 'done';
++export class RevealProgress {
++  phase: RevealPhase = 'shimmer';
++  /** Completed raw prefix only where known; never derived from display length. */
++  sourceCursor: number | null = null;
++  parserFedSource: number | null = null;
++  readyChunks = 0;
++  visible = 0;
++  /** HTML units match html-utils (entities count once); display UTF16 is pre-tool-format text. */
++  visibleUnit: 'html-visible-units' | 'display-UTF16' = 'display-UTF16';
++  chunkTotal = 0;
++  chunkVisible = 0;
++  speedMs: number | null = null;
++  batchSize: number | null = null;
++  waitingSince: number | null = null;
++  lastVisibleAt: number | null = null;
++  received = () => 0;
++  private changed: () => void;
++  constructor(changed: () => void = () => {}) { this.changed = changed; }
++  setPhase(phase: RevealPhase) {
++    if (this.phase === phase) return;
++    this.phase = phase;
++    this.waitingSince = phase === 'waiting' ? Date.now() : null;
++    this.changed();
++  }
++  advance(amount: number) {
++    this.visible += amount;
++    this.chunkVisible += amount;
++    if (amount > 0) this.lastVisibleAt = Date.now();
++  }
++  directOutput(length: number) {
++    if (this.visible !== length) this.advance(length - this.visible);
++    this.chunkTotal = length;
++  }
++  snapshot() {
++    return {
++      phase: this.phase, receivedSource: this.received(), sourceUnit: 'UTF16' as const,
++      sourceCursor: this.sourceCursor, parserFedSource: this.parserFedSource,
++      readyChunks: this.readyChunks, visible: this.visible, visibleUnit: this.visibleUnit,
++      chunkTotal: this.chunkTotal, chunkVisible: this.chunkVisible,
++      speedMs: this.speedMs, batchSize: this.batchSize,
++      waitingSince: this.waitingSince, lastVisibleAt: this.lastVisibleAt,
++    };
++  }
++}
++
++export interface RevealSurfaceIdentity {
++  workspaceId?: string;
++  threadId?: string;
++  surfaceId: string;
++  turnId?: string;
++}
++export class SurfaceRevealProgress {
++  private records = new Map<number, { type: string; progress: RevealProgress }>();
++  private frontier = 0;
++  private phase: 'orb' | 'active' | 'terminal' | 'unmounted' = 'orb';
++  private count = 0;
++  waitingSince: number | null = null;
++  readonly identity: RevealSurfaceIdentity;
++  private changed: (since: number | null) => void;
++  constructor(identity: RevealSurfaceIdentity, changed: (since: number | null) => void) {
++    this.identity = identity;
++    this.changed = changed;
++  }
++  segment(index: number, type: string, received: () => number) {
++    let record = this.records.get(index);
++    if (!record) {
++      record = { type, progress: new RevealProgress(() => this.refresh()) };
++      this.records.set(index, record);
++    }
++    record.progress.received = received;
++    return record.progress;
++  }
++  update(phase: 'orb' | 'active' | 'terminal', frontier: number, count: number) {
++    this.phase = phase;
++    this.frontier = frontier;
++    this.count = count;
++    this.refresh();
++  }
++  private refresh() {
++    const waiting = this.phase === 'active' && (this.frontier >= this.count
++      || this.records.get(this.frontier)?.progress.phase === 'waiting');
++    const since = waiting ? (this.waitingSince ?? Date.now()) : null;
++    if (since !== this.waitingSince) {
++      this.waitingSince = since;
++      this.changed(since);
++    }
++  }
++  dispose() { this.phase = 'unmounted'; this.waitingSince = null; }
++  snapshot() {
++    return { ...this.identity, phase: this.phase, frontier: this.frontier,
++      waitingSince: this.waitingSince,
++      segments: [...this.records].map(([index, { type, progress }]) => ({ index, type, ...progress.snapshot() })),
++    };
++  }
++}
++const mounted = new Set<SurfaceRevealProgress>();
++/** No notification fanout, timers, retained transcripts or canonical state writes. */
++export function readRevealSurfaces() { return [...mounted].map(surface => surface.snapshot()); }
++export function registerRevealSurface(surface: SurfaceRevealProgress) {
++  mounted.add(surface);
++  return () => { mounted.delete(surface); surface.dispose(); };
++}
+--- predecessor/src/lib/reveal/types.ts
++++ fusion-studio-client/src/lib/reveal/types.ts
+@@ -1,3 +1,4 @@
++import type { RevealProgress } from './progress';
+ /**
+  * Reveal types — interfaces for chunk parsing and reveal orchestration.
+  */
+@@ -39,6 +40,7 @@
+  * queue lookahead.
+  */
+ export interface RevealOptions {
++  progress?: RevealProgress;
+   speedFast?: number;
+   speedSlow?: number;
+   batchSizeFast?: number;
+--- predecessor/src/lib/text/text-animate.ts
++++ fusion-studio-client/src/lib/text/text-animate.ts
+@@ -22,6 +22,7 @@
+ import { createChunkBuffer } from './chunk-buffer';
+ import { truncateHtmlToChars, getVisibleTextLength } from './html-utils';
+ import { sleep } from '../animate-utils';
++import { RevealProgress } from '../reveal/progress';
+ import type { TimingProfile } from '../timing';
+ 
+ const CODE_FENCE_AS_LOOKAHEAD = true;
+@@ -29,6 +30,7 @@
+ // ── Public Interface ─────────────────────────────────────────────────
+ 
+ export interface AnimateTextOptions {
++  progress?: RevealProgress;
+   /** Reactive ref to the full content string (grows as tokens stream in) */
+   contentRef: { current: string };
+   /** Reactive ref — true when the segment is done streaming */
+@@ -53,12 +55,16 @@
+     setDisplayedHtml, getTimingProfile, onDone,
+   } = opts;
+ 
++  const progress = opts.progress ?? new RevealProgress();
++  progress.received = () => contentRef.current.length;
++  progress.visibleUnit = 'html-visible-units';
++
+   // Text queue metadata determines buffer behavior (code fences as lookahead)
+   const buffer = createChunkBuffer({
+     codeFenceAsLookahead: CODE_FENCE_AS_LOOKAHEAD,
+   });
+ 
+-  let cursor = 0;                // byte position in raw content (only moves forward)
++  let cursor = 0;                // UTF16 position in raw content (only moves forward)
+   let accumulatedHtml = '';       // HTML for all fully-typed blocks
+ 
+   while (!cancelRef.current) {
+@@ -70,8 +76,12 @@
+     // Returns blocks with pre-rendered HTML + how far we consumed.
+     const { blocks, consumed } = parseTextChunks(content, cursor, isComplete);
+ 
++    progress.sourceCursor = cursor;
++    progress.parserFedSource = consumed;
++    progress.readyChunks = blocks.length;
+     if (blocks.length === 0) {
+       if (isComplete) break;      // nothing left to type, segment done
++      progress.setPhase('waiting');
+       await sleep(30);            // wait for more streaming content
+       continue;
+     }
+@@ -109,6 +119,14 @@
+       const html = block.html;
+       const totalChars = getVisibleTextLength(html);
+ 
++      progress.readyChunks = blocks.length - blockIndex;
++      progress.chunkTotal = totalChars;
++      progress.chunkVisible = 0;
++      progress.speedMs = speedMs;
++      progress.batchSize = batchSize;
++      progress.sourceCursor = null; // A partially revealed HTML block has no exact raw position.
++      progress.setPhase('revealing');
++
+       if (totalChars === 0) {
+         // Empty block (e.g. whitespace-only) — accumulate and move on
+         accumulatedHtml += html;
+@@ -118,9 +136,11 @@
+ 
+       let charCount = 0;
+       while (charCount < totalChars && !cancelRef.current) {
++        const previous = charCount;
+         charCount = Math.min(charCount + batchSize, totalChars);
+         const partial = truncateHtmlToChars(html, charCount);
+         setDisplayedHtml(accumulatedHtml + partial);
++        progress.advance(charCount - previous);
+ 
+         if (charCount < totalChars) {
+           await sleep(speedMs);
+@@ -136,13 +156,14 @@
+       // If the next block is already queued, skip the pause — go straight to it.
+       if (!buffer.hasNext() && !cancelRef.current) {
+         const pause = getTimingProfile().interChunkPause;
+-        if (pause > 0) await sleep(pause);
++        if (pause > 0) { progress.setPhase('pacing'); await sleep(pause); }
+       }
+     }
+ 
+     // Update cursor to consumed position (covers any blocks that
+     // were parsed but not typed due to cancellation)
+     cursor = consumed;
++    progress.sourceCursor = cursor;
+   }
+ 
+   // ── Finalize ──
+@@ -159,9 +180,10 @@
+ 
+   // Inter-segment pause — timing-aware gap before next segment
+   if (!cancelRef.current) {
++    progress.setPhase('gap');
+     const segPause = getTimingProfile().interSegmentPause;
+     if (segPause > 0) await sleep(segPause);
+   }
+ 
+-  onDone();
++  if (!cancelRef.current) { progress.setPhase('done'); onDone(); }
+ }
+--- predecessor/src/lib/tool-animate.ts
++++ fusion-studio-client/src/lib/tool-animate.ts
+@@ -11,6 +11,7 @@
+  * interface so we can reuse orchestrateReveal() without rewriting it.
+  */
+ 
++import { RevealProgress } from './reveal/progress';
+ import type { SegmentType } from '../types';
+ import type { TaggedChunk } from '../types/tagged-chunk';
+ import type { ActiveChunkStrategy } from '../types/active-strategy';
+@@ -25,6 +26,7 @@
+ // =============================================================================
+ 
+ export interface ToolAnimateOptions {
++  progress?: RevealProgress;
+   contentRef: { current: string };
+   completeRef: { current: boolean };
+   cancelRef: { current: boolean };
+@@ -51,7 +53,9 @@
+   const adapter = createAdapter(strategy, entry, toolArgs);
+ 
+   // ── Build reveal options from timing profile + catalog speed ──
+-  const revealOptions = buildRevealOptions(entry, getTimingProfile);
++  const progress = opts.progress ?? new RevealProgress();
++  progress.received = () => contentRef.current.length;
++  const revealOptions = { ...buildRevealOptions(entry, getTimingProfile), progress };
+ 
+   // ── Handle awaitsResult: wait for content, then reveal through the adapter ──
+   if (entry.awaitsResult) {
+@@ -156,6 +160,7 @@
+       break;
+     }
+ 
++    revealOptions.progress?.setPhase('waiting');
+     await sleep(30);
+   }
+ 

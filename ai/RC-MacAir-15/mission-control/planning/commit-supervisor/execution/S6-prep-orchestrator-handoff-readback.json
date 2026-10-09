@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-04T13:17:02.939921+00:00",
+  "frozen_records": 1037,
+  "dependencies": 46,
+  "only_report_metadata_updated": true,
+  "exact_provisional_preimage_verified": true,
+  "preimage_mode": "0o100444",
+  "source_report_mode": "0o100644",
+  "candidate_leaves": 126,
+  "candidate_failures": [],
+  "provenance_note": "Immutable preimage is readonly; original source mode checked on current source, not copied preimage.",
+  "probe_correction": "Initial comparison stripped file type bits and omitted schema fields; corrected exact recorded-field comparison passes all126. No candidate mutation."
+}

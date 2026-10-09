@@ -1,0 +1,100 @@
+{
+  "baselineHead": "88637d11c65be53d4f2ad0f049f64a07fa3db1de",
+  "results": {
+    "V-ACTIONS": { "status": "passed", "runId": "chat-arch-1790142422679-bb66a300de" },
+    "V-SUBMIT": { "status": "passed", "runId": "chat-arch-1790142587284-2c68046e22" },
+    "V-ISOLATION": { "status": "passed", "tests": 18 },
+    "V-SHELL": {
+      "status": "passed",
+      "runId": "chat-arch-1790145892538-7487268b0d",
+      "startupLists": 1,
+      "startupNullLists": 0,
+      "startupOpens": 0
+    },
+    "V-RENDER-short-streaming": { "status": "passed", "runId": "chat-arch-1790142872239-8774a215dd" },
+    "V-RENDER-correctness": { "status": "passed", "runId": "chat-arch-1790142889393-2c965f4de0" },
+    "V-RENDER-full": {
+      "status": "passed",
+      "runId": "chat-arch-1790228222155-271e516a9a",
+      "r1WallMs": [1981, 1994, 2008, 1961, 1971, 1984, 1961, 1969, 1983, 1972],
+      "inputP95MaxMs": 0.7000002861022949,
+      "rafP95MaxMs": 16.90000009536743,
+      "rafMaxMs": 18.300000190734863,
+      "longTasks": 0,
+      "typingOutboundFrames": 0,
+      "draftInducedSiblingHistoryFormatterRenders": 0,
+      "exactRetention": true,
+      "focusBeforeAndAfter": true
+    },
+    "R1-five-minute": {
+      "status": "passed",
+      "runId": "chat-arch-1790228438993-225fac9ea0",
+      "measurementStarted": true,
+      "configuredDurationMs": 300000,
+      "configuredCharacters": 9520,
+      "configuredDelayMs": 32,
+      "configuredWallBudgetMs": 456960,
+      "wallMs": 351517,
+      "inputP95Ms": 1.4000000953674316,
+      "inputMaxMs": 2.1999998092651367,
+      "rafP95Ms": 17.700000286102295,
+      "rafMaxMs": 21,
+      "longTasks": 0,
+      "typingOutboundFrames": 0,
+      "draftInducedSiblingHistoryFormatterRenders": 0,
+      "exactRetention": true,
+      "focusBeforeAndAfter": true,
+      "preMeasurementScreenshotLifecycle": ["screenshot:capture", "screenshot:updated", "screenshot:request", "screenshot:data"],
+      "preMeasurementQuietMs": 500,
+      "dbQuickCheck": "ok",
+      "lingeringOwnedPids": [],
+      "ownedRunRootRemoved": true
+    },
+    "host-identity-observation": { "status": "passed", "tests": 64 },
+    "side-work-surface-integration": { "status": "passed", "tests": 44 },
+    "architecture-inventory-lifecycle": { "status": "passed", "tests": 28 },
+    "focused-repair-architecture-oracle-lifecycle": { "status": "passed", "tests": 21 },
+    "historical-null-view-read-only": { "status": "passed", "tests": 1, "hiddenOpens": 0 },
+    "thread-worksurface-electron-smoke": {
+      "status": "passed",
+      "groups": 2,
+      "deleteIsolated": true,
+      "relaunchRestored": true
+    },
+    "side-chat-electron-smoke": { "status": "passed", "peers": 4, "singleRow": true, "outerRailToggle": true },
+    "V-BUILD": { "status": "passed", "modules": 1940 },
+    "diffCheck": { "status": "passed", "scope": "04C-owned paths" },
+    "builder-review-pass-1": {
+      "status": "findings-repaired",
+      "reviewer": "/root/spec04_slice04c/review_04c_pass1",
+      "findings": 2
+    },
+    "builder-review-pass-2": {
+      "status": "clean",
+      "reviewer": "/root/spec04_slice04c/review_04c_pass2",
+      "manifestDigest": "c255f626917d09db1045513845d8069523960f349c6cf94ab22542bb7addc774"
+    },
+    "focused-fail-forward": {
+      "initialRunId": "chat-arch-1790226538113-ec3ff261d5",
+      "singleWallFailureMs": 2567,
+      "unchangedShortLimitMs": 2550,
+      "unchangedSourceExactPassRunId": "chat-arch-1790226813486-07f8ef9936",
+      "unchangedSourceFullPassRunId": "chat-arch-1790227008022-0bead4164a",
+      "fiveMinuteBoundaryDiagnosticRunId": "chat-arch-1790227741979-09f18c2150",
+      "diagnosticOutboundTypes": ["screenshot:capture", "screenshot:request"]
+    },
+    "builder-review-pass-3": {
+      "status": "clean",
+      "reviewer": "/root/spec04_slice04c/review_04c_focus_pass3",
+      "manifestDigest": "21eb00b014cf37b7a710c59a0be97016b91ef55ec9c2b0f8f1e551caadbeaa44",
+      "filesEdited": false
+    }
+  },
+  "rawEvidenceBase": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B",
+  "notes": [
+    "Focused current-byte full V-RENDER and five-minute timing now pass. Earlier focus-unavailable receipts remain honest repair history.",
+    "The first unlocked full run had one isolated 17-ms wall overshoot with every renderer signal clean; exact and full unchanged-source reruns passed without changing the short threshold.",
+    "The first focused five-minute run exposed an invented 1.15x wall oracle and queued screenshot bootstrap crossing measurement start. The runner now uses the approved 1.5x per-character delay formula and an ordered, fail-closed screenshot quiescence boundary; it does not filter measured traffic.",
+    "Pass-1 review found and the builder repaired the remaining hidden null-view bootstrap/open path and the retired-dock Electron smoke. The repair also removed the five-view reconnect Side Chat list sweep exposed by the new real-shell startup oracle."
+  ]
+}

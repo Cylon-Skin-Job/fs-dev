@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-07T20:53:41.499045+00:00",
+  "builder_freeze_message": "Product/renderer/Wiki65 integrated files frozen at source seal; only M3 reports writable; no more product edits without notice. Complete native and builder gate pending.",
+  "source_seal_sha256": "6fcef6edfdf2439a45eec626a1d854ed67db209b7c78988a6aeaa48a713fd316",
+  "product_count": 65,
+  "mismatches": [],
+  "baseline_preload_sha256": "a87aaefb6d60425ec30013a6a1b8a2a3e21d50208a6c1727adc0be9968adef05",
+  "HEAD": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "scope": "Independent frozen-byte nonnative Orchestrator checks only; M3 acceptance awaits native and clean builder gate."
+}

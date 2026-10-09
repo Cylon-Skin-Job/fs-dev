@@ -1,0 +1,49 @@
+{
+  "at": "2026-10-04T13:52:18.747673+00:00",
+  "actor": "/root/s6_supervisor_intent_1",
+  "kind": "EXACT_PRIOR_JOB_RECORD_PREIMAGES",
+  "scope": "REHEARSAL_ONLY",
+  "records": [
+    {
+      "original_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/checkpoint.json",
+      "preimage_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/history/S6-ACTUAL-PROVIDER-HOLD-01/checkpoint.json",
+      "sha256": "fe9ec1642a9c506586e40781c1047d851755b71fce2adfc761eb1752fed44d21",
+      "complete_exact_bytes": true
+    },
+    {
+      "original_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/assignment.md",
+      "preimage_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/history/S6-ACTUAL-PROVIDER-HOLD-01/assignment.md",
+      "sha256": "06f4b56503e029b876e7dc652eee50255f90afba1cf38123f39dc14490f83a0d",
+      "complete_exact_bytes": true
+    },
+    {
+      "original_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/resume.md",
+      "preimage_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/history/S6-ACTUAL-PROVIDER-HOLD-01/resume.md",
+      "sha256": "7c9829eaf66289c0877e0ab67dc961b0ac7ffc5a0bdfe5a761192e94c970a9f5",
+      "complete_exact_bytes": true
+    },
+    {
+      "original_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/verification.md",
+      "preimage_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/history/S6-ACTUAL-PROVIDER-HOLD-01/verification.md",
+      "sha256": "acbcb94ca239fe5744c9f50b590fd2561af31e594b55c38e1fb2feca4f3ecf6b",
+      "complete_exact_bytes": true
+    },
+    {
+      "original_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/findings.md",
+      "preimage_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/history/S6-ACTUAL-PROVIDER-HOLD-01/findings.md",
+      "sha256": "e8652fdcc74891a504c9f191b92bf609ac89293d4eed16753a10656d81f0ea59",
+      "complete_exact_bytes": true
+    },
+    {
+      "original_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/lifecycle.json",
+      "preimage_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/history/S6-ACTUAL-PROVIDER-HOLD-01/lifecycle.json",
+      "sha256": "5668ede7a2e73a194a720af94eb266390ecc2f04f883d7813bff3caa939354c0",
+      "complete_exact_bytes": true
+    }
+  ],
+  "immutable_recovery_unmodified": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery/manifest.json",
+    "sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb"
+  },
+  "reason": "Preserve exact historical provider terminal records before new current workflow transition; not a candidate recovery capture or replay."
+}

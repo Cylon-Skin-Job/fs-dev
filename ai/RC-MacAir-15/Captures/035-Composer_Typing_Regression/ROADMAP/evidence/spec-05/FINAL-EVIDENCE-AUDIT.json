@@ -1,0 +1,437 @@
+{
+  "manifestSha256": "da6ecbffec10d9f79951ecf6c2fb65996eb2a8ebfb341c5f26bd31458ca4ea73",
+  "integratedMismatches": [],
+  "checks": [
+    {
+      "gate": "backend",
+      "exit": 0,
+      "receipt": {
+        "runId": "chat-arch-1790255487009-f51dcf83f5",
+        "status": "passed",
+        "results": [
+          {
+            "id": "R8-OWNER-GRAPH",
+            "code": 0,
+            "signal": null,
+            "pid": 39156,
+            "timedOut": false,
+            "interrupted": false,
+            "leakedOwnedPids": [],
+            "elapsedMs": 118
+          },
+          {
+            "id": "R8-EXACT-MEMBER-HYDRATION",
+            "code": 0,
+            "signal": null,
+            "pid": 39180,
+            "timedOut": false,
+            "interrupted": false,
+            "leakedOwnedPids": [],
+            "elapsedMs": 1411
+          },
+          {
+            "id": "R8-UI-LIFECYCLE",
+            "code": 0,
+            "signal": null,
+            "pid": 39365,
+            "timedOut": false,
+            "interrupted": false,
+            "leakedOwnedPids": [],
+            "elapsedMs": 9994
+          },
+          {
+            "id": "R7-R8-RUNTIME-OWNERSHIP",
+            "code": 0,
+            "signal": null,
+            "pid": 40649,
+            "timedOut": false,
+            "interrupted": false,
+            "leakedOwnedPids": [],
+            "elapsedMs": 12927
+          },
+          {
+            "id": "R8-MIRROR-RECOVERY",
+            "code": 0,
+            "signal": null,
+            "pid": 42544,
+            "timedOut": false,
+            "interrupted": false,
+            "leakedOwnedPids": [],
+            "elapsedMs": 12316
+          },
+          {
+            "id": "R8-SESSION-LIFECYCLE",
+            "code": 0,
+            "signal": null,
+            "pid": 44353,
+            "timedOut": false,
+            "interrupted": false,
+            "leakedOwnedPids": [],
+            "elapsedMs": 9707
+          }
+        ],
+        "ownedRunRootRemoved": true,
+        "failure": null
+      },
+      "manifests": [
+        {
+          "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790255487009-f51dcf83f5/run-manifest.json",
+          "sourceCount": 34,
+          "mismatches": [],
+          "ownedRoots": {}
+        },
+        {
+          "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790255487009-f51dcf83f5/r8-mirror-recovery/manifest.json",
+          "sourceCount": 1607,
+          "mismatches": [],
+          "ownedRoots": {
+            "stagedServer": {
+              "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790255487009-f51dcf83f5-SAc09k/r8-mirror-recovery/stage/fusion-studio-server",
+              "exists": false
+            },
+            "profileRoot": {
+              "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790255487009-f51dcf83f5-SAc09k/r8-mirror-recovery/profile",
+              "exists": false
+            },
+            "workspaceRoot": {
+              "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790255487009-f51dcf83f5-SAc09k/r8-mirror-recovery/workspace",
+              "exists": false
+            },
+            "testTmp": {
+              "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790255487009-f51dcf83f5-SAc09k/r8-mirror-recovery/test-tmp",
+              "exists": false
+            }
+          }
+        },
+        {
+          "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790255487009-f51dcf83f5/r7-r8-runtime-ownership/manifest.json",
+          "sourceCount": 1607,
+          "mismatches": [],
+          "ownedRoots": {
+            "stagedServer": {
+              "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790255487009-f51dcf83f5-SAc09k/r7-r8-runtime-ownership/stage/fusion-studio-server",
+              "exists": false
+            },
+            "profileRoot": {
+              "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790255487009-f51dcf83f5-SAc09k/r7-r8-runtime-ownership/profile",
+              "exists": false
+            },
+            "workspaceRoot": {
+              "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790255487009-f51dcf83f5-SAc09k/r7-r8-runtime-ownership/workspace",
+              "exists": false
+            },
+            "testTmp": {
+              "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790255487009-f51dcf83f5-SAc09k/r7-r8-runtime-ownership/test-tmp",
+              "exists": false
+            }
+          }
+        },
+        {
+          "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790255487009-f51dcf83f5/r8-session-lifecycle/manifest.json",
+          "sourceCount": 1607,
+          "mismatches": [],
+          "ownedRoots": {
+            "stagedServer": {
+              "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790255487009-f51dcf83f5-SAc09k/r8-session-lifecycle/stage/fusion-studio-server",
+              "exists": false
+            },
+            "profileRoot": {
+              "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790255487009-f51dcf83f5-SAc09k/r8-session-lifecycle/profile",
+              "exists": false
+            },
+            "workspaceRoot": {
+              "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790255487009-f51dcf83f5-SAc09k/r8-session-lifecycle/workspace",
+              "exists": false
+            },
+            "testTmp": {
+              "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790255487009-f51dcf83f5-SAc09k/r8-session-lifecycle/test-tmp",
+              "exists": false
+            }
+          }
+        }
+      ],
+      "ui": {
+        "status": "passed",
+        "flows": {
+          "create": {
+            "groupId": "tg-2cceb674-1b9c-49e6-b09d-fc57b25fe3f4",
+            "threadId": "2026-09-24T06-11-32-038",
+            "mirror": true
+          },
+          "send": {
+            "accepted": true,
+            "receipt": true,
+            "exchangeId": 1
+          },
+          "stop": {
+            "partial": true,
+            "reason": "interrupted",
+            "threadId": "2026-09-24T06-11-32-038"
+          },
+          "move": {
+            "original": "2026-09-24T06-11-32-038",
+            "newMain": "th-64dd8502-73ec-4ec9-8175-68937f822061",
+            "memberCount": 2,
+            "sourceHistoryRetained": true,
+            "fileReadback": true
+          },
+          "reconnect": {
+            "authenticatedHydration": true,
+            "sourcePromptVisible": true,
+            "oneExchange": true
+          },
+          "delete": {
+            "groupAndBothPeersRemoved": true,
+            "receiptsRemoved": true,
+            "mirrorsRemoved": true,
+            "worksurfaceRemoved": true
+          }
+        },
+        "cleanup": {
+          "dbQuickCheck": "ok",
+          "portFileRemoved": true,
+          "fixtureRootsRemoved": true
+        },
+        "errors": [
+          {
+            "type": "error",
+            "message": "No active workspace"
+          },
+          {
+            "type": "error",
+            "message": "Message handling failed"
+          }
+        ],
+        "consoleErrors": [
+          "[SharedStyles] Failed to load workspace styles: Error: Panel \"__settings__\" is not filesystem-backed\n    at Proxy.R (fusion-shell://app/assets/index-BjfSiJuf.js:124:82063)\n    at l (fusion-shell://app/assets/index-BjfSiJuf.js:124:76176)\n    at WebSocket.xe (fusion-shell://app/assets/index-BjfSiJuf.js:124:76406)",
+          "[WS] handler_error",
+          "[WS] handler_error",
+          "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        ]
+      }
+    },
+    {
+      "gate": "submit",
+      "exit": 0,
+      "receipt": {
+        "runId": "chat-arch-1790255544092-3ef44b09e3",
+        "status": "passed",
+        "results": [
+          {
+            "id": "R2-NO-ENQUEUE",
+            "code": 0,
+            "signal": null,
+            "pid": 45885,
+            "timedOut": false,
+            "interrupted": false,
+            "leakedOwnedPids": [],
+            "elapsedMs": 6439
+          },
+          {
+            "id": "R3-LOST-ACK-STATUS",
+            "code": 0,
+            "signal": null,
+            "pid": 46873,
+            "timedOut": false,
+            "interrupted": false,
+            "leakedOwnedPids": [],
+            "elapsedMs": 7142
+          },
+          {
+            "id": "R3-RECONNECT-UI",
+            "code": 0,
+            "signal": null,
+            "pid": 47819,
+            "timedOut": false,
+            "interrupted": false,
+            "leakedOwnedPids": [],
+            "elapsedMs": 11237
+          },
+          {
+            "id": "R4-DISTINCT-ATTEMPTS",
+            "code": 0,
+            "signal": null,
+            "pid": 49209,
+            "timedOut": false,
+            "interrupted": false,
+            "leakedOwnedPids": [],
+            "elapsedMs": 11274
+          },
+          {
+            "id": "R4-DISTINCT-RECEIPTS",
+            "code": 0,
+            "signal": null,
+            "pid": 50605,
+            "timedOut": false,
+            "interrupted": false,
+            "leakedOwnedPids": [],
+            "elapsedMs": 11416
+          },
+          {
+            "id": "R4-LATE-DRAFT-RECOVERY",
+            "code": 0,
+            "signal": null,
+            "pid": 52003,
+            "timedOut": false,
+            "interrupted": false,
+            "leakedOwnedPids": [],
+            "elapsedMs": 25630
+          },
+          {
+            "id": "R4-DUPLICATE-MISMATCH",
+            "code": 0,
+            "signal": null,
+            "pid": 55089,
+            "timedOut": false,
+            "interrupted": false,
+            "leakedOwnedPids": [],
+            "elapsedMs": 8465
+          }
+        ],
+        "ownedRunRootRemoved": true,
+        "failure": null
+      },
+      "manifests": [
+        {
+          "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790255544092-3ef44b09e3/run-manifest.json",
+          "sourceCount": 34,
+          "mismatches": [],
+          "ownedRoots": {}
+        }
+      ]
+    },
+    {
+      "gate": "actions",
+      "exit": 0,
+      "receipt": {
+        "runId": "chat-arch-1790255639018-264b288937",
+        "status": "passed",
+        "results": [
+          {
+            "id": "R5-R6-PUBLIC-ACTIONS",
+            "code": 0,
+            "signal": null,
+            "pid": 56204,
+            "timedOut": false,
+            "interrupted": false,
+            "leakedOwnedPids": [],
+            "elapsedMs": 44254
+          },
+          {
+            "id": "R5-CURRENT-ACTIONS",
+            "code": 0,
+            "signal": null,
+            "pid": 61481,
+            "timedOut": false,
+            "interrupted": false,
+            "leakedOwnedPids": [],
+            "elapsedMs": 15147
+          },
+          {
+            "id": "R6-PRODUCTION-ACTION-OWNER",
+            "code": 0,
+            "signal": null,
+            "pid": 63445,
+            "timedOut": false,
+            "interrupted": false,
+            "leakedOwnedPids": [],
+            "elapsedMs": 45498
+          },
+          {
+            "id": "R5-DIAGNOSTIC-APPEND",
+            "code": 0,
+            "signal": null,
+            "pid": 68969,
+            "timedOut": false,
+            "interrupted": false,
+            "leakedOwnedPids": [],
+            "elapsedMs": 3288
+          },
+          {
+            "id": "R5-CURRENT-OWNER",
+            "code": 0,
+            "signal": null,
+            "pid": 69365,
+            "timedOut": false,
+            "interrupted": false,
+            "leakedOwnedPids": [],
+            "elapsedMs": 2867
+          },
+          {
+            "id": "R6-LIFETIME-BOUNDARIES",
+            "code": 0,
+            "signal": null,
+            "pid": 69713,
+            "timedOut": false,
+            "interrupted": false,
+            "leakedOwnedPids": [],
+            "elapsedMs": 45049
+          }
+        ],
+        "ownedRunRootRemoved": true,
+        "failure": null
+      },
+      "manifests": [
+        {
+          "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790255639018-264b288937/run-manifest.json",
+          "sourceCount": 34,
+          "mismatches": [],
+          "ownedRoots": {}
+        }
+      ]
+    },
+    {
+      "gate": "build",
+      "exit": 0
+    },
+    {
+      "gate": "server",
+      "exit": 0,
+      "receipt": {
+        "runId": "server-full-1790255827447-30e97acc",
+        "status": "passed",
+        "result": {
+          "code": 0,
+          "signal": null,
+          "pid": 75266,
+          "timedOut": false,
+          "interrupted": false,
+          "leakedOwnedPids": [],
+          "elapsedMs": 75752
+        },
+        "failure": null,
+        "ownedRunRootRemoved": true
+      },
+      "manifests": [
+        {
+          "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-full-1790255827447-30e97acc/manifest.json",
+          "sourceCount": 1607,
+          "mismatches": [],
+          "ownedRoots": {
+            "stagedServer": {
+              "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/server-full-1790255827447-30e97acc-jYafl8/stage/fusion-studio-server",
+              "exists": false
+            },
+            "profileRoot": {
+              "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/server-full-1790255827447-30e97acc-jYafl8/profile",
+              "exists": false
+            },
+            "workspaceRoot": {
+              "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/server-full-1790255827447-30e97acc-jYafl8/workspace",
+              "exists": false
+            },
+            "testTmp": {
+              "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/server-full-1790255827447-30e97acc-jYafl8/test-tmp",
+              "exists": false
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

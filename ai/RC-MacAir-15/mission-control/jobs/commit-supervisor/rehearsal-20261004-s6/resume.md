@@ -1,0 +1,3 @@
+COMMIT_READY_WAITING_OWNER — intentional first owner wait.
+
+Read current checkpoint.json and owner-packet-first.md. Do not resume this actor, schedule a cycle, apply inactive futurecontrols, stop preview or run recovery/cleanup automatically. Parent /root must observe actual native terminal first; only a later explicit labeled fix-X/Y/freshreplacement authorizes further work. All prior actors completed; original128 and Wiki129 recovery plus currentfixed129 remain immutable. Active restoreguardNONE; privateprofile effects separate from code, currentguard/ownership/verifiedowned-tree stop required only under later recovery authority. No Git operation authority.

@@ -1,0 +1,16 @@
+{
+  "repo": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "client": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client",
+  "main": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/electron/main.cjs",
+  "server": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-server/server.js",
+  "machine": "MC-S6",
+  "profile": "/private/tmp/mc-s6-commit-supervisor-20261004/profile",
+  "profileMode": "explicit",
+  "defaultProfile": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio",
+  "bin": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+  "runtime": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart",
+  "portFile": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/server.port",
+  "dryRun": false,
+  "database": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/server-data/fusion.db",
+  "serverLog": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/server-live.log"
+}

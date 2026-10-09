@@ -1,0 +1,205 @@
+{
+  "classification_owner": "/root SPEC orchestrator; proposals only",
+  "deviations": [
+    {
+      "id": "S6-D1",
+      "original_requirement": "Existing-ref disposable preparation with source preservation",
+      "actual": "Local no-hardlinks detached clone, private COW dependencies, separate public-created workspace/profile; replay all five accepted restart files only",
+      "reason_authority": "Explicit S6 preparation packet; clean HEAD isolates unrelated dirty watcher/server work",
+      "paths": [
+        "private-paths.json",
+        "current-private-paths.json",
+        "current-helper-replay.json",
+        "protection-before.json",
+        "initial-preservation-readback.json"
+      ],
+      "checks": "Fresh private build/canonical; 63077 dependency inode/link checks; source HEAD/index/refs/caches",
+      "effect": "Normal app/DB protected; clone committed history retained only as code baseline",
+      "risk": "Private disk cost and profile writes remain disposable",
+      "downstream": "Actual Supervisor uses exact private paths; takes its own current checkpoint",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-D2",
+      "original_requirement": "No real workspace/profile copy; ordinary runtime machine",
+      "actual": "Fresh migrations then remove dev seed before app; UI Create New Project/add/rename Custom; set machine through existing private configuration owner",
+      "reason_authority": "Reuse established public-shell bootstrap mechanics and chosen baseline owner",
+      "paths": [
+        "prepare_rehearsal_shell.mjs",
+        "public-bootstrap.json",
+        "current-canonical-raw/verified.json"
+      ],
+      "checks": "Exactly one private registry row; ordinary actual watcher event",
+      "effect": "Avoids registering R; ordinary MC-S6 proves namespace",
+      "risk": "Migration/bootstrap only runs once; refuses existing profile/workspace",
+      "downstream": "Future reproduction must follow one-shot recipe",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-D3",
+      "original_requirement": "Preserve exact deletion checkpoint inputs",
+      "actual": "Initial installer assumed nonexistent docs HEAD path, stopped after partial fixture install; use existing tracked HANDOFF.md and complete remaining private recovery leaves without overwriting app/state",
+      "reason_authority": "Bounded mechanical correction; no authority/code behavior change",
+      "paths": [
+        "fixture-install-attempt-1.log",
+        "fixture-install.json",
+        "install_rehearsal_fixture.py"
+      ],
+      "checks": "Public125 historical/126 current exact restoration",
+      "effect": "Current normal installer has correct baseline path",
+      "risk": "Partial attempt requires recorded manual completion; not independently replayed successful one-shot yet",
+      "downstream": "Fresh independent one-shot run now uses corrected installer; actual initial leaf inventory readback remains required",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-D4",
+      "original_requirement": "Actual Wiki public route readback",
+      "actual": "Duplicate article H1 strict selector failed; use first exact H1 matching title/body, preserve raw partial and successful attempts",
+      "reason_authority": "Observed baseline React title/body rendering",
+      "paths": [
+        "ui-attempt-1.log",
+        "public-ui-attempt-1-partial.json",
+        "rehearsal_ui_smoke.mjs",
+        "current-public-ui-observation.json"
+      ],
+      "checks": "Actual article text/navigation/reload screenshot and sustained connection",
+      "effect": "Changes locator only",
+      "risk": "Prose correctness remains fresh Wiki reviewer responsibility",
+      "downstream": "Actual runtime uses real article and original coverage",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-D5",
+      "original_requirement": "Private writable dependencies/cache only",
+      "actual": "Copied dependencies had private .tmp cache; deleted private .tmp then built from fresh cache; source193 ignored cache leaves unchanged",
+      "reason_authority": "Preparation cache isolation",
+      "paths": [
+        "preparation-build.log",
+        "preparation-clean-cache-build.log",
+        "initial-preservation-readback.json"
+      ],
+      "checks": "Both builds exit0; source cache hashes equal",
+      "effect": "Fresh private build reproducible",
+      "risk": "Existing baseline Vite mixed import/chunk-size warnings retained",
+      "downstream": "Warnings advisory; no unrelated production bundle refactor",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-D6",
+      "original_requirement": "Canonical owned cleanup; dependency gate stays current",
+      "actual": "Live S4 cleanup discovery race aborted after processes exited; stop confirmation retained, writer paused, responsible S4 builder repaired, root accepted; only changed accepted helper replayed, current evidence/checkpoints distinct",
+      "reason_authority": "Validated runtime defect routed through responsible builder; no S6 product helper edit",
+      "paths": [
+        "cleanup-attempt-1.log",
+        "cleanup-attempt-2.log",
+        "current-helper-replay.json",
+        "current-canonical-run.log",
+        "current-owned-runtime-stop.json"
+      ],
+      "checks": "Current17 regression/canonical actual stop and separate zero-owned readback",
+      "effect": "Current helper succeeds; old checkpoints never used to restore current helper",
+      "risk": "Old successful runtime/recovery are historical bytes; cannot certify current",
+      "downstream": "Actual Supervisor must use accepted repaired helper/current initial checkpoint",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-D7",
+      "original_requirement": "Preimages before replacement and exact new Wiki leaves",
+      "actual": "Two immutable supplemental union checkpoints declare actual timestamped versions absent before copy; retain complete PAGE bytes and restore newest-first before original",
+      "reason_authority": "Necessary original recovery integration",
+      "paths": [
+        "rehearsal_wiki_recovery_smoke.py",
+        "final-recovery/wiki-recovery-smoke.json"
+      ],
+      "checks": "Original refusal nonmutating; both supplements remove exact leaves; final original verify; Navigation unchanged",
+      "effect": "Proves version outputs recover with no original manifest rewrite",
+      "risk": "Actual Wiki writer must independently do this for its own real edit timestamps",
+      "downstream": "Actual job captures new original/supplements and preserves raw PAGE preimages",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-D8",
+      "original_requirement": "Visible labels/states/reset and supported wording per original intent",
+      "actual": "UI oracle now asserts exact three labels and checked flags each scenario, immediately after Reset and reload; accepts only known modes and resolved supported format for verdict modes",
+      "reason_authority": "Completes original authority external acceptance coverage",
+      "paths": [
+        "rehearsal_ui_smoke.mjs",
+        "current-public-ui-observation.json",
+        "current-ui-oracle-negatives.json",
+        "final-ui-validation-negatives.json"
+      ],
+      "checks": "Seeded numerical oracle fails; state/label observations pass; unsupported/missing mode/format refused",
+      "effect": "No final wording guessed; negative config explicitly preparation-only",
+      "risk": "Fixed/reset live behavior still unimplemented and must run later",
+      "downstream": "Actual resolved/fix controls and current corrected UI checked by Supervisor",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-D9",
+      "original_requirement": "Record actual write times and protected identities honestly",
+      "actual": "Templates synthetic timestamp; installed PAGE actual UTC; original hashes before bootstrap; extra DB inode/executable detail first captured after bootstrap before canonical; confirmed after-cleanup readback separate from one scheduled before completion confirmation",
+      "reason_authority": "Root requested stronger metadata; preserve timing limits instead of inventing evidence",
+      "paths": [
+        "fixture-install.json",
+        "protected-identity-before-canonical.json",
+        "current-protection-before.json",
+        "current-protection-after.json",
+        "current-protection-after-confirmed.json",
+        "current-preservation-summary.json"
+      ],
+      "checks": "Protected DB inode/dev and four process start/executable identities equal; volatile live Alpha/source DB hash drift raw recorded",
+      "effect": "No profile DB/cache replacement/signal; no user content inspection",
+      "risk": "Pre-bootstrap inode observation unavailable; hashes only for that earlier interval; naturally volatile hashes not claimed equal",
+      "downstream": "Actual Supervisor captures full current before/after metadata; retains limit",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-D10",
+      "original_requirement": "Required skill validation available dependency",
+      "actual": "System and bundled Python lacked yaml; retained both failed logs, used already cached PyYAML read-only via PYTHONPATH with bytecode disabled",
+      "reason_authority": "No dependency/global configuration mutation or network install",
+      "paths": [
+        "current-skill-validation.log",
+        "current-skill-validation-bundled.log",
+        "current-skill-validation-cached.log"
+      ],
+      "checks": "quick_validate K exit0",
+      "effect": "Only interpreter dependency adapter",
+      "risk": "Cached dependency path machine-specific",
+      "downstream": "Recipe/check record exact adapter; no reviewer capability substitution",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-D11",
+      "original_requirement": "Complete supplemental recovery against prepared exact page paths",
+      "actual": "First new smoke assumed missing top-level article path and stopped before any mutation; corrected to actual 001-Checklist article tree and passed twice",
+      "reason_authority": "Mechanical path correction",
+      "paths": [
+        "current-wiki-recovery-smoke.log",
+        "current-wiki-recovery-smoke-attempt-2.log",
+        "final-wiki-recovery-smoke.log"
+      ],
+      "checks": "Two supplements/original exact final verify",
+      "effect": "No authority/content change remains",
+      "risk": "Raw failed attempt retained",
+      "downstream": "Actual runtime packets use readback exact paths",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "S6-D12",
+      "original_requirement": "Source preservation while root coordinates later work",
+      "actual": "Current source sentinel readback detects new root-owned undispatched S4 Wiki assignment; preserved article unchanged. Root later transferred that deterministic article correction to final S6 closeout after actual proof",
+      "reason_authority": "Root coordination scope refinement only; not preparation permission",
+      "paths": [
+        "current-protection-before.json",
+        "current-protection-after-confirmed.json",
+        "current-preservation-summary.json"
+      ],
+      "checks": "12703 original current unowned leaves unchanged except newly recorded root assignment; 193cache and HEAD/index/refs equal",
+      "effect": "Root evidence creation distinctly recorded; no real Wiki prep edit",
+      "risk": "Later documentation modifies article and central facts under new preimages/gates",
+      "downstream": "Remain prep-only; root owns actual chain and later bounded closeout",
+      "proposed_classification": "downstream_impact"
+    }
+  ]
+}

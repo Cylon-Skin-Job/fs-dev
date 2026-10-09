@@ -1,0 +1,284 @@
+[
+  {
+    "finding": "CR-S2-01",
+    "argv": [
+      "/opt/homebrew/bin/python3.12",
+      "-B",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+      "--packet",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-review-2-reproduction-inputs/CR-S2-01.json"
+    ],
+    "input_sha256": "900bc455a0082b09cac2150a91bf6d4b2959bee3a16ad5dcc8b574a4d141ba1e",
+    "script_sha256": "c4768a4f473996b73518ee184fbbe7f1a3e68f37fa15c3c15aed069ac554c8d8",
+    "result": {
+      "agent_gate_proof": false,
+      "candidate": {
+        "authority": {
+          "SPEC": "approved"
+        },
+        "configuration": {
+          "profile": "disposable"
+        },
+        "fixtures": {
+          "oracle": "correct"
+        },
+        "owned": {
+          "adapter.py": {
+            "worktree": "still-bad"
+          },
+          "code.py": {
+            "index": "base",
+            "mode": "100644",
+            "worktree": "fixed"
+          }
+        },
+        "preparation": "replay-owned-bytes",
+        "sources": [
+          "source-1"
+        ],
+        "target": "target-1"
+      },
+      "dispatch_actions": [],
+      "dispositions": {
+        "F1": [
+          {
+            "status": "repair-reported"
+          },
+          {
+            "actor": "fixture-manager",
+            "candidate": {
+              "authority": {
+                "SPEC": "approved"
+              },
+              "configuration": {
+                "profile": "disposable"
+              },
+              "fixtures": {
+                "oracle": "correct"
+              },
+              "owned": {
+                "adapter.py": {
+                  "worktree": "still-bad"
+                },
+                "code.py": {
+                  "index": "base",
+                  "mode": "100644",
+                  "worktree": "fixed"
+                }
+              },
+              "preparation": "replay-owned-bytes",
+              "sources": [
+                "source-1"
+              ],
+              "target": "target-1"
+            },
+            "reviewers": [
+              "fixture-reviewer-1"
+            ],
+            "status": "handoff-validated"
+          }
+        ]
+      },
+      "findings": [
+        {
+          "assigned_paths": [
+            "code.py",
+            "adapter.py"
+          ],
+          "authority": "approved behavior criterion",
+          "confidence": "medium",
+          "evidence": "fixture/repro.log",
+          "id": "F1",
+          "impact": "accepted input returns incorrect result",
+          "path": "code.py",
+          "severity": "high",
+          "validated": true
+        }
+      ],
+      "gaps": [],
+      "hold_packet": null,
+      "invalidated": [],
+      "raw_reports": [
+        {
+          "clean_room": true,
+          "dependencies": {
+            "authority": {
+              "SPEC": "approved"
+            },
+            "owned": {
+              "code.py": {
+                "index": "base",
+                "mode": "100644",
+                "worktree": "fixed"
+              }
+            }
+          },
+          "findings": [],
+          "identity": "fixture-reviewer-1",
+          "lenses": [
+            "Behavior & Verification",
+            "Standards Compliance",
+            "Integrations & Dependencies",
+            "Forward Compatibility",
+            "Wiki Impact"
+          ],
+          "raw_path": "fixture/review-1.md",
+          "read_only": true,
+          "result": "clean",
+          "root_inherited": true,
+          "terminal": true
+        }
+      ],
+      "repair_packet": null,
+      "result": "clean",
+      "return": "HANDOFF_VALIDATED",
+      "state": "handoff-validated",
+      "unaffected": [
+        "behavior"
+      ]
+    },
+    "validated": true
+  },
+  {
+    "finding": "CR-S2-02",
+    "argv": [
+      "/opt/homebrew/bin/python3.12",
+      "-B",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+      "--packet",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-review-2-reproduction-inputs/CR-S2-02.json"
+    ],
+    "input_sha256": "e5569ca19d6612396e7610c55f47150e2b7e99a2fe01f7fec6097c0526562259",
+    "script_sha256": "c4768a4f473996b73518ee184fbbe7f1a3e68f37fa15c3c15aed069ac554c8d8",
+    "result": {
+      "agent_gate_proof": false,
+      "candidate": {
+        "authority": {
+          "SPEC": "approved"
+        },
+        "configuration": {
+          "profile": "disposable"
+        },
+        "fixtures": {
+          "oracle": "correct"
+        },
+        "owned": {
+          "code.py": {
+            "index": "base",
+            "mode": "100644",
+            "worktree": "bad"
+          }
+        },
+        "preparation": "replay-owned-bytes",
+        "sources": [
+          "source-1"
+        ],
+        "target": "target-1"
+      },
+      "dispatch_actions": [],
+      "dispositions": {
+        "F1": [
+          {
+            "status": "not-supported",
+            "validation_evidence": "prior/rejection.log"
+          }
+        ]
+      },
+      "findings": [
+        {
+          "assigned_paths": [
+            "code.py"
+          ],
+          "authority": "approved behavior criterion",
+          "confidence": "medium",
+          "evidence": "prior/unsupported.log",
+          "id": "F1",
+          "impact": "accepted input returns incorrect result",
+          "path": "code.py",
+          "severity": "high",
+          "validated": false
+        },
+        {
+          "assigned_paths": [
+            "code.py"
+          ],
+          "authority": "approved behavior criterion",
+          "confidence": "medium",
+          "evidence": "fixture/repro.log",
+          "id": "F1",
+          "impact": "accepted input returns incorrect result",
+          "path": "code.py",
+          "severity": "high",
+          "validated": true
+        }
+      ],
+      "gaps": [],
+      "hold_packet": null,
+      "invalidated": [],
+      "raw_reports": [
+        {
+          "clean_room": true,
+          "dependencies": {
+            "authority": {
+              "SPEC": "approved"
+            },
+            "configuration": {
+              "profile": "disposable"
+            },
+            "fixtures": {
+              "oracle": "correct"
+            },
+            "owned": {
+              "code.py": {
+                "index": "base",
+                "mode": "100644",
+                "worktree": "bad"
+              }
+            },
+            "preparation": "replay-owned-bytes",
+            "sources": [
+              "source-1"
+            ],
+            "target": "target-1"
+          },
+          "findings": [
+            {
+              "assigned_paths": [
+                "code.py"
+              ],
+              "authority": "approved behavior criterion",
+              "confidence": "medium",
+              "evidence": "fixture/repro.log",
+              "id": "F1",
+              "impact": "accepted input returns incorrect result",
+              "path": "code.py",
+              "severity": "high",
+              "validated": true
+            }
+          ],
+          "identity": "fixture-reviewer-1",
+          "lenses": [
+            "Behavior & Verification",
+            "Standards Compliance",
+            "Integrations & Dependencies",
+            "Forward Compatibility",
+            "Wiki Impact"
+          ],
+          "raw_path": "fixture/review-1.md",
+          "read_only": true,
+          "result": "findings",
+          "root_inherited": true,
+          "terminal": true
+        }
+      ],
+      "repair_packet": null,
+      "result": "clean",
+      "return": "REVIEW_COMPLETE",
+      "state": "review-complete",
+      "unaffected": [
+        "behavior"
+      ]
+    },
+    "validated": true
+  }
+]

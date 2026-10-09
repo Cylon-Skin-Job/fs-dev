@@ -1,0 +1,38 @@
+{
+  "fusion-studio-client/e2e/chat-architecture/owner-foreground.mjs": {
+    "before": "eef9c11efafe5ea05cf98c3cef5cb56b80266eca622a0c87ea49846508b8b63c",
+    "after": "f6e4d0f3f6f4025773f46f3be02f7636180ba16251de3a5b44ee53ef2c4d79ac"
+  },
+  "fusion-studio-client/e2e/chat-architecture/owner-foreground.test.mjs": {
+    "before": "f18beec66f8af12a743438846a768f7bf20adde90027dae7197f28e08b603508",
+    "after": "91699e561bc0c7584b496ad78d2efb1a1b072abd82c5d229b4efb07f123af794"
+  },
+  "fusion-studio-client/e2e/chat-architecture/r1-sustained-electron.mjs": {
+    "before": "b35a66da9abecfd9f4b17fe5430fc242ee6d736623e396cc563452de19a42bf8",
+    "after": "4cb2d8228335e6e489826b3de5f0c2e62b4db91d0213d084adff6fc086e92775"
+  },
+  "fusion-studio-client/e2e/chat-architecture/r1-sustained-fixture.mjs": {
+    "before": null,
+    "after": "3ab71a13b29d8814df26ef776e9783edc14db2eca7fc24ec221869537345185f"
+  },
+  "fusion-studio-client/e2e/chat-architecture/run.mjs": {
+    "before": "22b6e6fc7621f42e78ae302ca75e3d50bb7fc93ed239d51e9afd308d1d989397",
+    "after": "05db433c9c982c606eb281f27d197a21d6f087ef2eeb11342e3e7a5ffbe5f24a"
+  },
+  "fusion-studio-client/e2e/chat-architecture/scenario-inventory.mjs": {
+    "before": "a81e00f2214fb69d794144ba28fc192c8aacaba2820165831686127b9de38e82",
+    "after": "a05124c8b8d554c29b2bc50492c29c25e4ceebbeddad53c3377bf0e2d2c9504f"
+  },
+  "fusion-studio-client/e2e/chat-architecture/watched-pointer.mjs": {
+    "before": null,
+    "after": "7b928ae88a82c2cf566962493c965214ecfd35296c42628cf10065d5bf6e1efa"
+  },
+  "fusion-studio-client/e2e/chat-architecture/watched-setup.test.mjs": {
+    "before": null,
+    "after": "70de14649f35783ff3936a25d8c82c62b1c5a96355ce98f641cd4092471853fd"
+  },
+  "fusion-studio-client/e2e/watched-pointer.spec.ts": {
+    "before": null,
+    "after": "4bb3ca2b0a0275521fd31403b907a03dfeeaf6725609849b433c1e7586803e72"
+  }
+}

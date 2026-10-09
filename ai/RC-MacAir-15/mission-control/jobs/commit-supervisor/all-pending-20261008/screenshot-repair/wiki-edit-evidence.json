@@ -1,0 +1,13 @@
+{
+  "article": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+  "complete_adjacent_preimage": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/.versions/2026-10-08-181237.md",
+  "preimage_sha256": "2ca9937fd14648f9af85e6b3effd151c0107811b4eadacb551a7938ef00b4ceb",
+  "current_sha256": "7f6c2f3bb793008211c82a8cd0c45061b2899ec81554ac65ae81f542a23128db",
+  "source": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/fusion-studio-server/lib/screenshot/ws-handlers.js",
+  "source_sha256": "e1f0c2d5afe85a9f548a24b5f1696f3e23f15502371c71290f53d347cbfc5585",
+  "actual_utc_write_timestamp": "2026-10-09T01:12:37Z",
+  "version_local_zone": "America/Los_Angeles",
+  "scope": "One server-save paragraph and actual edit timestamp; no structure/navigation change",
+  "preimage_readback_equal": true,
+  "source_readback_equal": true
+}

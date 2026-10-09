@@ -1,0 +1,19 @@
+{
+  "command": [
+    "npx",
+    "--no-install",
+    "playwright",
+    "test",
+    "--config=playwright.chat-architecture.config.ts",
+    "e2e/chat-material-wiki.spec.ts",
+    "--workers=1",
+    "--output=/private/tmp/fusion-main-consolidation-95vxg0_h/wiki-02-output"
+  ],
+  "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/fusion-studio-client",
+  "started": "2026-10-09T01:17:38.993575+00:00",
+  "ended": "2026-10-09T01:17:43.881811+00:00",
+  "exit_code": 0,
+  "log": "/private/tmp/fusion-main-consolidation-95vxg0_h/wiki-02.log",
+  "article_before": "7f6c2f3bb793008211c82a8cd0c45061b2899ec81554ac65ae81f542a23128db",
+  "article_after": "7f6c2f3bb793008211c82a8cd0c45061b2899ec81554ac65ae81f542a23128db"
+}

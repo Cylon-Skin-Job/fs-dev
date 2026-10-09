@@ -1,0 +1,29 @@
+{
+  "result": "PASS",
+  "article": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+  "source_count": 22,
+  "local_links_resolved": 1,
+  "version_preimage_equal": true,
+  "timestamp": "2026-10-09T01:12:37Z",
+  "renderer": "Current production parseWikiPage + markdownToHtml exported via in-memory esbuild bundle",
+  "html_sha256": "84299f3d8a1becce18e2e2ddf23ce21797e9e5bc55a172d8670b82ee783966c0",
+  "dependencies": [
+    {
+      "path": "fusion-studio-client/src/lib/wiki-frontmatter.ts",
+      "sha256": "e48a66ec45bc49342628d2c86884d1a8975a7bd5fa883eac117e2ca71f817f9c"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/front-matter.ts",
+      "sha256": "59960e08331746349fd76584630487f35339563e9fd631990db48a727e6cdb11"
+    },
+    {
+      "path": "fusion-studio-client/src/lib/transforms/markdown.ts",
+      "sha256": "5e1100ef1b90c515c0fa8ed8255aec6962fd6bc5a6f5f2716f33a50c099a8721"
+    },
+    {
+      "path": "fusion-studio-client/src/components/wiki/PageViewer.tsx",
+      "sha256": "34da50e392764a18d0de12ac7137a745678d1d14ce4bec1a7de9fb2f1fc0bbbf"
+    }
+  ],
+  "limits": "Markdown/frontmatter and HTML readback only; no native app or visual UI gate. No navigation change; no audit generation required."
+}

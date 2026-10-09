@@ -1,0 +1,39 @@
+---
+id: RCC-0100
+title: 'Live TRIGGERS.md files use stale match: paths — file-change triggers cannot fire'
+assignee: rccurtrightjr
+created: 2026-06-13T00:00:00.000Z
+author: rccurtrightjr
+state: open
+priority: medium
+---
+
+The background-worker `TRIGGERS.md` files reference paths that no longer exist in the current tree, so their `file-change` triggers can never match. The trigger system itself is built and loaded at boot — the trigger *definitions* point at dead paths.
+
+Found while documenting the background-agents and ticketing wiki pages.
+
+---
+
+## What Is Stale
+
+In `ai/<machine>/Agents/Background Workers/wiki-manager/settings/TRIGGERS.md` (and the sibling `ops-manager` / `code-manager` settings + workflow files):
+
+- `match: "open-robin-server/lib/**/*.js"` — the server is now `fusion-studio-server/`, not `open-robin-server/`.
+- `match: "ai/<machine>/Wiki/project/**/PAGE.md"` — wiki pages now live under `ai/<machine>/Wiki/**/PAGE.md`, not `content/project/`.
+- `exclude: ["ai/<machine>/Views/*-doc-viewer/**"]` — confirm `doc-viewer` is still the intended exclusion target.
+
+A `file-change` trigger whose `match` glob resolves to a non-existent path silently never fires, so these workers are inert even though the loader registered them.
+
+## What Needs to Happen
+
+1. Audit every `TRIGGERS.md` under `ai/<machine>/Agents/Background Workers/` for `match` / `exclude` globs.
+2. Update stale globs to the current tree (`fusion-studio-server/`, `ai/<machine>/Wiki/`, etc.).
+3. Confirm the referenced `prompt:` files (e.g. `PROMPT_01.md`, `PROMPT_03.md`) exist in the worker's `settings/`; remove or fix dangling references.
+4. Note: this only makes the triggers *match*. Triggers still cannot spawn a worker session today — they can only fire the built-in actions (create-ticket, etc.). See the long-term outlook on the Background Agents wiki page.
+
+## Verification
+
+- Touch a file under a corrected `match` path and confirm the trigger fires its action in the server log.
+- No trigger references a path outside the current tree.
+
+Related: Background Agents wiki page (`ai/<machine>/Wiki/001-Project/013-Background_Agents/PAGE.md`).

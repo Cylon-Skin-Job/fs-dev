@@ -1,0 +1,214 @@
+{
+  "at": "2026-10-04T21:56:30.751904+00:00",
+  "return": "READY_FOR_ORCHESTRATOR_REVIEW \u2014 FULL S6",
+  "actor": "/root/s6_builder",
+  "manager": "/root",
+  "current_ready": false,
+  "reviewed_manifest_kept_exact": "5a3cd688a30036095af7da276907543961331fe3a11bd7fa2db89486d98357aa",
+  "records": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout-manifest.json",
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 259042643,
+      "size": 1598854,
+      "mtime_ns": 1791149283736330394,
+      "sha256": "5a3cd688a30036095af7da276907543961331fe3a11bd7fa2db89486d98357aa"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/review-freeze.json",
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 259044319,
+      "size": 75965,
+      "mtime_ns": 1791149391824490218,
+      "sha256": "80647ab62331481e469d48b3369f1115b02dab85e6d627b03a83b87d0b2ce3a0"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/criterion-map-v2.json",
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 259042630,
+      "size": 62718,
+      "mtime_ns": 1791148920342046063,
+      "sha256": "73ca441bc8124212294f1db64b24216a8e3b22912dffa950ec56dfc70f20eda2"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/actor-tree-v2.json",
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 259042631,
+      "size": 12769,
+      "mtime_ns": 1791148920342849893,
+      "sha256": "5fcd131b7a25c081c6fbcc024b733fe400c39efee1c42db3292d839656482c58"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/deviations-neutral-v3.json",
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 259043101,
+      "size": 143069,
+      "mtime_ns": 1791149283709550987,
+      "sha256": "dc7ff03c6bb903e71e323938fcb2c5f6a1ac8881dba652a557d4b7e229207953"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/reviewer-procedural-deviations-addendum.json",
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 259045319,
+      "size": 4894,
+      "mtime_ns": 1791150884336802318,
+      "sha256": "3dc2ab1d0f335686f76cd1d218d9d32743e997d8d064ba2d5dcf22d778aef7a9"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/reviewer-1.raw.md",
+      "exists": true,
+      "kind": "file",
+      "mode": 33060,
+      "dev": 16777230,
+      "ino": 259045303,
+      "size": 16909,
+      "mtime_ns": 1791150820980414539,
+      "sha256": "7437bf65b0067e5e0ee3c819712ab04477a5579e078cc1368044835d88a0e403"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/reviewer-1-lifecycle.json",
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 259045318,
+      "size": 1638,
+      "mtime_ns": 1791150884336429069,
+      "sha256": "ee80d125e9d23e15aa0e0471885e787406de63cab294d1560209a8fdff415f91"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/terminal-current-hashes.json",
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 259045320,
+      "size": 7683,
+      "mtime_ns": 1791150884361731242,
+      "sha256": "f810bdfb6bf6f26a7330bdc44a968363b673430a9277144c5204fa74cde57857"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout-builder.md",
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 259045353,
+      "size": 11606,
+      "mtime_ns": 1791150990670492943,
+      "sha256": "3bbc6209a1d7ede78c221a28be2d926033ae66b8ac1b4ec0699d9404d7d10bb2"
+    }
+  ],
+  "reviewed_doc_leaves": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md",
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 253884811,
+      "size": 11823,
+      "mtime_ns": 1791148867694850265,
+      "sha256": "d4dce1ca561b013641ca999d4183a73be739b408cfa5e518c750af783420de6d"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 253884813,
+      "size": 24178,
+      "mtime_ns": 1791148867701029608,
+      "sha256": "432b77f8d83297935d3017063e74fc4172d7376d544139abd0d509cbebc81d16"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 253884814,
+      "size": 14365,
+      "mtime_ns": 1791148867695296012,
+      "sha256": "ca478d6baa5dc05bff44daca96295736d69a7226037b8ce8223fc51251230bc0"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 253884817,
+      "size": 37337,
+      "mtime_ns": 1791148867698308997,
+      "sha256": "1804c147efba7fd8b5fa892c41ee9be6f906c69a7209ce45c9d419ec81c9869e"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 254286643,
+      "size": 24436,
+      "mtime_ns": 1791148867701588230,
+      "sha256": "e8a4da6a21b73a293f57626f315da78e3bc8ff77eb841000a8c5dde441e9bafd"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 254233150,
+      "size": 19311,
+      "mtime_ns": 1791148867702040311,
+      "sha256": "592dd2042cc12042186941128e44b34957e8d9db52773b61ffec3a6ae84d31d9"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md",
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 65627116,
+      "size": 3428,
+      "mtime_ns": 1791148600081893915,
+      "sha256": "ccf7a76b4201ce3f5a95b29816f72f85cf1506b6f94172a581c100170dd4b94e"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/.versions/2026-10-04-141458.md",
+      "exists": true,
+      "kind": "file",
+      "mode": 33188,
+      "dev": 16777230,
+      "ino": 259038572,
+      "size": 819,
+      "mtime_ns": 1791148600080939003,
+      "sha256": "fa7ecb9041a4d4c9f2f24cba9386b3e844a6dbe98c9af52063b05fe90345a9f0"
+    }
+  ],
+  "neutral_contextual_deviations": 88,
+  "pending": "Root independent full-S6 acceptance; fresh whole-SPEC gate; owner setup acceptance",
+  "builder_native_state": "Running while packet saved; intentional final END follows; root must observe terminal afterward",
+  "no_additional_effects": "Postgate unique report/lifecycle/factual deviation/hash sidecars only; reviewed source/docs/candidate/helper/fixture/manifest unchanged"
+}

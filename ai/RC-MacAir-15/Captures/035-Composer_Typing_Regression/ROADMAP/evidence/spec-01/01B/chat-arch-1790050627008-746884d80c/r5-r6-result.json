@@ -1,0 +1,5213 @@
+{
+  "status": "passed",
+  "characterization": true,
+  "startupPanelReadiness": "exact-rail-before-activation",
+  "systemSetupReadiness": {
+    "id": "R5-SYSTEM-FIXTURE-READINESS",
+    "sourceCapsuleVerified": true,
+    "boundedRebind": false,
+    "initial": null,
+    "final": {
+      "workspaceLabel": "R5 System Fixture",
+      "connected": true,
+      "projectionFrames": [
+        {
+          "workspaceId": "system-files",
+          "unavailable": false,
+          "viewIds": [
+            "capture-viewer",
+            "file-viewer",
+            "wiki-viewer",
+            "issues-viewer",
+            "agents-viewer",
+            "system-viewer"
+          ]
+        }
+      ],
+      "railTitles": [
+        "Captures",
+        "Files",
+        "Wiki",
+        "Issues",
+        "Agents",
+        "System"
+      ]
+    }
+  },
+  "authenticatedShell": true,
+  "publicRouteResults": [
+    {
+      "id": "R5-NO-TARGET-CONSUMER",
+      "toast": "Chat target unavailable",
+      "successToastClaimed": false,
+      "visibleFailure": true,
+      "attachmentPills": 0,
+      "sourcePanelMatches": true,
+      "sourcePathFixtureContained": true,
+      "sourcePathSha256": "765f16de0f79807a8252d31eef879b41b3b981f0c194561f8461de093cebd26d",
+      "deliveredPathSha256": null,
+      "exactSourceAttachmentApplied": false,
+      "orderingObserverSupported": true,
+      "resultMutationObserved": false,
+      "successMutationObserved": false,
+      "resultBeforeSuccess": false,
+      "resultMutationSequence": null,
+      "successMutationSequence": null,
+      "targetThreadId": "",
+      "draftLength": 0,
+      "outgoingDelta": {
+        "shell-auth:proof": 0,
+        "office:palette_get": 0,
+        "state:get": 0,
+        "thread:list": 0,
+        "screenshot:list": 0,
+        "file_content_request": 0,
+        "set_panel": 0,
+        "file_tree_request": 0,
+        "state:set": 0,
+        "workspace:state_push": 0
+      }
+    },
+    {
+      "id": "R5-FILE-ACTION",
+      "toast": "Link attached to chat",
+      "successToastClaimed": true,
+      "visibleFailure": false,
+      "attachmentPills": 1,
+      "sourcePanelMatches": true,
+      "sourcePathFixtureContained": true,
+      "sourcePathSha256": "765f16de0f79807a8252d31eef879b41b3b981f0c194561f8461de093cebd26d",
+      "deliveredPathSha256": "765f16de0f79807a8252d31eef879b41b3b981f0c194561f8461de093cebd26d",
+      "exactSourceAttachmentApplied": true,
+      "orderingObserverSupported": true,
+      "resultMutationObserved": true,
+      "successMutationObserved": true,
+      "resultBeforeSuccess": true,
+      "resultMutationSequence": 1,
+      "successMutationSequence": 2,
+      "targetThreadId": "2026-09-21T21-17-13-539",
+      "draftLength": 0,
+      "outgoingDelta": {
+        "shell-auth:proof": 0,
+        "office:palette_get": 0,
+        "state:get": 0,
+        "thread:list": 0,
+        "screenshot:list": 0,
+        "file_content_request": 0,
+        "set_panel": 0,
+        "file_tree_request": 0,
+        "state:set": 0,
+        "workspace:state_push": 0,
+        "thread:open-assistant": 0,
+        "thread:open": 0,
+        "state:worksurface_get": 0
+      }
+    },
+    {
+      "id": "R5-TEXT-INSERT",
+      "exactDraftMutation": true,
+      "elapsedMs": 318,
+      "expectedDraftLength": 40,
+      "observedDraftLength": 40,
+      "expectedDraftSha256": "c8a5dbcb807bbcf7a439f27c9c0fab097604e29906cf855e9b7f62dca6d29c4d",
+      "observedDraftSha256": "c8a5dbcb807bbcf7a439f27c9c0fab097604e29906cf855e9b7f62dca6d29c4d",
+      "visibleFailure": false,
+      "contentRecorded": false
+    },
+    {
+      "id": "R5-WIKI-ACTION",
+      "toast": "Link attached to chat",
+      "successToastClaimed": true,
+      "visibleFailure": false,
+      "attachmentPills": 1,
+      "sourcePanelMatches": true,
+      "sourcePathFixtureContained": true,
+      "sourcePathSha256": "bc778cc685216294aa30677e95b606b2e5df4d5a78e5d3c07f7ccc609176e491",
+      "deliveredPathSha256": "bc778cc685216294aa30677e95b606b2e5df4d5a78e5d3c07f7ccc609176e491",
+      "exactSourceAttachmentApplied": true,
+      "orderingObserverSupported": true,
+      "resultMutationObserved": true,
+      "successMutationObserved": false,
+      "resultBeforeSuccess": true,
+      "resultMutationSequence": 1,
+      "successMutationSequence": null,
+      "targetThreadId": "2026-09-21T21-17-16-140",
+      "draftLength": 0,
+      "outgoingDelta": {
+        "shell-auth:proof": 0,
+        "office:palette_get": 0,
+        "state:get": 0,
+        "thread:list": 0,
+        "screenshot:list": 0,
+        "file_content_request": 0,
+        "set_panel": 0,
+        "file_tree_request": 0,
+        "state:set": 0,
+        "workspace:state_push": 0,
+        "thread:open-assistant": 0,
+        "thread:open": 0,
+        "state:worksurface_get": 0,
+        "thread:warm": 0,
+        "state:worksurface_put": 0
+      }
+    },
+    {
+      "id": "R5-OFFICE-ACTION",
+      "toast": "Link attached to chat",
+      "successToastClaimed": true,
+      "visibleFailure": false,
+      "attachmentPills": 1,
+      "sourcePanelMatches": true,
+      "sourcePathFixtureContained": true,
+      "sourcePathSha256": "d47b56013d122d0b0f4ab4a0d5ce146d9c4adffb84655330849cdf6c6388bfc5",
+      "deliveredPathSha256": "d47b56013d122d0b0f4ab4a0d5ce146d9c4adffb84655330849cdf6c6388bfc5",
+      "exactSourceAttachmentApplied": true,
+      "orderingObserverSupported": true,
+      "resultMutationObserved": true,
+      "successMutationObserved": true,
+      "resultBeforeSuccess": true,
+      "resultMutationSequence": 1,
+      "successMutationSequence": 2,
+      "targetThreadId": "2026-09-21T21-17-20-008",
+      "draftLength": 0,
+      "outgoingDelta": {
+        "shell-auth:proof": 0,
+        "office:palette_get": 0,
+        "state:get": 0,
+        "thread:list": 0,
+        "screenshot:list": 0,
+        "file_content_request": 0,
+        "set_panel": 0,
+        "file_tree_request": 0,
+        "state:set": 0,
+        "workspace:state_push": 0,
+        "thread:open-assistant": 0,
+        "thread:open": 0,
+        "state:worksurface_get": 0,
+        "thread:warm": 0,
+        "state:worksurface_put": 0
+      }
+    },
+    {
+      "id": "R5-SOURCE-SWITCH",
+      "toast": "",
+      "successToastClaimed": false,
+      "visibleFailure": false,
+      "attachmentPills": 1,
+      "sourcePanelMatches": true,
+      "sourcePathFixtureContained": true,
+      "sourcePathSha256": "765f16de0f79807a8252d31eef879b41b3b981f0c194561f8461de093cebd26d",
+      "deliveredPathSha256": "765f16de0f79807a8252d31eef879b41b3b981f0c194561f8461de093cebd26d",
+      "exactSourceAttachmentApplied": true,
+      "orderingObserverSupported": true,
+      "resultMutationObserved": true,
+      "successMutationObserved": false,
+      "resultBeforeSuccess": true,
+      "resultMutationSequence": 1,
+      "successMutationSequence": null,
+      "targetThreadId": "2026-09-21T21-17-13-539",
+      "draftLength": 0,
+      "outgoingDelta": {
+        "shell-auth:proof": 0,
+        "office:palette_get": 0,
+        "state:get": 0,
+        "thread:list": 0,
+        "screenshot:list": 0,
+        "file_content_request": 0,
+        "set_panel": 3,
+        "file_tree_request": 0,
+        "state:set": 0,
+        "workspace:state_push": 3,
+        "thread:open-assistant": 0,
+        "thread:open": 0,
+        "state:worksurface_get": 0,
+        "thread:warm": 0,
+        "state:worksurface_put": 3
+      },
+      "destinationUnaffected": true,
+      "destinationBeforeCount": 0,
+      "destinationAfterCount": 1
+    },
+    {
+      "id": "R5-SYSTEM-PROMPT-NEW",
+      "entryPointAvailable": true,
+      "wrongWorkspaceTarget": true,
+      "visibleFailure": true,
+      "overlayStillOpen": true,
+      "outgoingDelta": {
+        "shell-auth:proof": 0,
+        "office:palette_get": 0,
+        "state:get": 0,
+        "thread:list": 0,
+        "screenshot:list": 0,
+        "file_content_request": 0,
+        "set_panel": 0,
+        "file_tree_request": 0,
+        "state:set": 0,
+        "workspace:state_push": 0,
+        "thread:open-assistant": 0,
+        "thread:open": 0,
+        "state:worksurface_get": 0,
+        "thread:warm": 0,
+        "state:worksurface_put": 3,
+        "workspace:switch_requested": 1
+      }
+    },
+    {
+      "id": "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+      "promptActionEmitted": true,
+      "promptResolveSent": 1,
+      "promptResolved": 1,
+      "threadOpenSent": 1,
+      "threadOpened": 1,
+      "draftLength": 687,
+      "exactResolvedDraft": true,
+      "targetThreadId": "2026-09-21T21-17-24-088",
+      "successToastClaimed": false,
+      "visibleFailure": false,
+      "overlayStillOpen": false,
+      "contentRecorded": false,
+      "authenticatedSystemWorkspace": true,
+      "systemSetupBoundedRebind": false,
+      "stagedPromptSha256": "3566d297f6627c155ec6b08b7093f9987c94d4e4f73feaf968567d0e63197aab",
+      "newTarget": true,
+      "commandResultApplied": true,
+      "resultObservedBeforeSuccess": true,
+      "resultMutationSequence": 1,
+      "successMutationSequence": null,
+      "sameMutationBatch": false,
+      "resultMutationObserved": true,
+      "successMutationObserved": false
+    }
+  ],
+  "fixtures": {
+    "f3": {
+      "id": "F3-DETERMINISTIC-WORKSPACE-V1",
+      "counts": {
+        "smallFiles": 1000,
+        "captureFolders": 100,
+        "wikiPages": 100,
+        "officeDocuments": 20
+      },
+      "totalContentBytes": 11059200,
+      "manifestHash": "421c0ef8f5e255bb333a82a9f26d28c74eb2c8d55e95fc262ad241ed45740079"
+    }
+  },
+  "r5Classification": "observed-no-false-success",
+  "reproducedDefects": [],
+  "r6ProductionBoundary": {
+    "id": "R6-PRODUCTION-ACTION-OWNER",
+    "status": "executed",
+    "ownerRoute": "authenticated SystemViewer fusion:chat-action",
+    "promptAwaiting": true,
+    "promptHeldResponses": 4,
+    "promptNoStaleCreate": true,
+    "promptDestinationDraftPreserved": true,
+    "promptOperationListenersRemoved": true,
+    "promptOriginThreadPreserved": true,
+    "promptOriginDraftPreserved": true,
+    "promptNoVisibleSuccess": true,
+    "competingFrameReceived": true,
+    "competingHeldResponses": 4,
+    "completionOperationListenersAttached": 0,
+    "competingDidNotConsumeOriginal": true,
+    "competingTargetPreserved": true,
+    "competingDraftPreserved": true,
+    "completionExactThread": true,
+    "completionDraftPresent": true,
+    "completionExactDraft": true,
+    "completionListenersRemoved": true,
+    "completionNoExtraPromptDispatch": true,
+    "createHeldResponses": 8,
+    "createDestinationDraftPreserved": true,
+    "createOperationListenersRemoved": false,
+    "createNoExtraPromptDispatch": true,
+    "createOriginalTargetOutcome": "cancelled",
+    "createVisibleClaimConsistent": true,
+    "createServerGroupPreserved": true,
+    "createCancelledGroupClean": true,
+    "requestErrorSettledOnce": true,
+    "promptTimeoutSettledOnce": true,
+    "contentRecorded": false,
+    "listeners": {
+      "sentTypes": {
+        "shell-auth:proof": 3,
+        "office:palette_get": 7,
+        "state:get": 5,
+        "thread:list": 29,
+        "screenshot:list": 3,
+        "file_content_request": 462,
+        "set_panel": 10,
+        "file_tree_request": 692,
+        "state:set": 4,
+        "workspace:state_push": 8,
+        "prompt:resolve": 6,
+        "thread:open-assistant": 3,
+        "thread:open": 9,
+        "workspace:switch_requested": 4,
+        "state:worksurface_get": 6
+      },
+      "receivedTypes": {
+        "shell-auth:challenge": 3,
+        "connected": 3,
+        "workspace:init": 3,
+        "panel_config": 7,
+        "shell-auth:authenticated": 3,
+        "office:palette_state": 5,
+        "screenshot:list": 3,
+        "thread:list": 38,
+        "panel_changed": 8,
+        "file_content_response": 408,
+        "file_tree_response": 685,
+        "state:result": 6,
+        "error": 1,
+        "prompt:resolved": 5,
+        "thread:created": 3,
+        "thread:opened": 12,
+        "wire_ready": 3,
+        "workspace:switched": 4,
+        "state:worksurface_result": 6,
+        "wire_disconnected": 1,
+        "prompt:resolve_error": 1
+      },
+      "fusionActionAdds": 1,
+      "fusionActionRemoves": 0,
+      "socketMessageAdds": 269,
+      "socketMessageRemoves": 259,
+      "actionEvents": [
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "workspace-manager.workspace-creation",
+          "target": "new",
+          "delivery": "insert"
+        },
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "workspace-manager.workspace-creation",
+          "target": "new",
+          "delivery": "insert"
+        },
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "workspace-manager.workspace-creation",
+          "target": "new",
+          "delivery": "insert"
+        },
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "workspace-manager.workspace-creation",
+          "target": "new",
+          "delivery": "insert"
+        },
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "fixture.missing-prompt",
+          "target": "new",
+          "delivery": "insert"
+        },
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "workspace-manager.workspace-creation",
+          "target": "new",
+          "delivery": "insert"
+        }
+      ],
+      "listenerBalance": 10
+    },
+    "classification": "authenticated-production-action-owner-lifetime-executed",
+    "laterOwner": "SPEC-03/03B"
+  },
+  "systemAttemptSnapshot": {
+    "afterClick": {
+      "phase": "after-create-click",
+      "radio": [
+        {
+          "value": "New Folder",
+          "checked": true
+        },
+        {
+          "value": "Choose Existing Folder",
+          "checked": false
+        }
+      ],
+      "name": "R5 Synthetic Workspace",
+      "selectedFolder": null,
+      "overlay": true,
+      "actionEvents": [
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "workspace-manager.workspace-creation",
+          "target": "new",
+          "delivery": "insert"
+        }
+      ],
+      "sentFrames": [
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": null
+        },
+        {
+          "type": "prompt:resolve",
+          "requestId": "chat-action-muc5xoq1-1"
+        }
+      ],
+      "sentDelta": {
+        "file_content_request": 1,
+        "file_tree_request": 24,
+        "prompt:resolve": 1
+      },
+      "receivedDelta": {
+        "thread:list": 1,
+        "panel_changed": 1,
+        "file_content_response": 1,
+        "file_tree_response": 40,
+        "state:result": 2,
+        "error": 1
+      },
+      "toast": null,
+      "activeThreadId": null,
+      "resolvedCommandObserved": false
+    },
+    "atFailure": {
+      "phase": "failure",
+      "radio": [],
+      "name": null,
+      "selectedFolder": null,
+      "overlay": false,
+      "actionEvents": [
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "workspace-manager.workspace-creation",
+          "target": "new",
+          "delivery": "insert"
+        },
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "workspace-manager.workspace-creation",
+          "target": "new",
+          "delivery": "insert"
+        },
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "workspace-manager.workspace-creation",
+          "target": "new",
+          "delivery": "insert"
+        },
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "workspace-manager.workspace-creation",
+          "target": "new",
+          "delivery": "insert"
+        },
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "fixture.missing-prompt",
+          "target": "new",
+          "delivery": "insert"
+        },
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "workspace-manager.workspace-creation",
+          "target": "new",
+          "delivery": "insert"
+        }
+      ],
+      "sentFrames": [
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": null
+        },
+        {
+          "type": "prompt:resolve",
+          "requestId": "chat-action-muc5xoq1-1"
+        },
+        {
+          "type": "thread:open-assistant",
+          "requestId": "chat-action-muc5xoq1-1"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-3-3"
+        },
+        {
+          "type": "thread:open",
+          "requestId": null
+        },
+        {
+          "type": "prompt:resolve",
+          "requestId": "chat-action-muc5xozr-2"
+        },
+        {
+          "type": "workspace:switch_requested",
+          "requestId": null
+        },
+        {
+          "type": "office:palette_get",
+          "requestId": "palette-280ae1d3-d678-43a1-9907-039127218965-2"
+        },
+        {
+          "type": "workspace:state_push",
+          "requestId": null
+        },
+        {
+          "type": "state:get",
+          "requestId": "workspace-request-muc5xp45-2"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-57"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-4-4"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-58"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-59"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-60"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-61"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-62"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-63"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-64"
+        },
+        {
+          "type": "shell-auth:proof",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-5"
+        },
+        {
+          "type": "thread:list",
+          "requestId": null
+        },
+        {
+          "type": "screenshot:list",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-65"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-66"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-67"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-68"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-69"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-70"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-71"
+        },
+        {
+          "type": "set_panel",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-72"
+        },
+        {
+          "type": "office:palette_get",
+          "requestId": "palette-0715d4a2-aa1b-4648-9a55-2f766fb24cc2-3"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-73"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-74"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-75"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-76"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-77"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-78"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-79"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-80"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-81"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-82"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-83"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-84"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-85"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-86"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-87"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-88"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-89"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-90"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-91"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-92"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-93"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-94"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-95"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-96"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-97"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-98"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-99"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-100"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-101"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-102"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-103"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-104"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-105"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-106"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-107"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-108"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-109"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-110"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-111"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-112"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-113"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-114"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-115"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-116"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-6"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-117"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-118"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-119"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-120"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-121"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-122"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-123"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-124"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-7"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-8"
+        },
+        {
+          "type": "thread:list",
+          "requestId": null
+        },
+        {
+          "type": "thread:list",
+          "requestId": null
+        },
+        {
+          "type": "thread:list",
+          "requestId": null
+        },
+        {
+          "type": "thread:list",
+          "requestId": null
+        },
+        {
+          "type": "thread:list",
+          "requestId": null
+        },
+        {
+          "type": "thread:list",
+          "requestId": null
+        },
+        {
+          "type": "thread:list",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-125"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-126"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-9"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-10"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-11"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-12"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-13"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-14"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-15"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-16"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-17"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-18"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-19"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-20"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-21"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-22"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-23"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-24"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-25"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-26"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-27"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-28"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-29"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-30"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-31"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-32"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-33"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-34"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-35"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-36"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-37"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-38"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-39"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-40"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-41"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-42"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-43"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-44"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-45"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-46"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-47"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-48"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-49"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-50"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-51"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-52"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-53"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-54"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-55"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-56"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-57"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-58"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-59"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-60"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-61"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-62"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-63"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-64"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-65"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-66"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-67"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-68"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-69"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-70"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-71"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-72"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-73"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-74"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-75"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-76"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-77"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-78"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-79"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-80"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-81"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-82"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-83"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-84"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-85"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-86"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-87"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-88"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-89"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-90"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-91"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-92"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-93"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-94"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-95"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-96"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-97"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-98"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-99"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-100"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-101"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-102"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-103"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-104"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-105"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-106"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-107"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-7-108"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "state:worksurface_get",
+          "requestId": "worksurface-get-muc5xrps-0"
+        },
+        {
+          "type": "state:worksurface_get",
+          "requestId": "worksurface-get-muc5xrps-1"
+        },
+        {
+          "type": "state:worksurface_get",
+          "requestId": "worksurface-get-muc5xrpu-2"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-109"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-110"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-111"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-112"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-113"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-114"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-115"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-116"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-117"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-118"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-119"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-120"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-121"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-122"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-123"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-124"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-125"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-126"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-127"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-128"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-129"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-130"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-131"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-132"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-133"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-134"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-135"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-136"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-137"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-138"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-139"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-140"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-141"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-142"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-143"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-144"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-145"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-146"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-147"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-148"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-149"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-150"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-151"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-152"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-153"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-154"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-155"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-156"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-157"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-158"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-159"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-160"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-161"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-162"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-163"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-164"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-165"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-166"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-167"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-168"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-169"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-170"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-171"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-172"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-173"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-174"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-175"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-176"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-177"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-178"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-179"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-180"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-181"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-182"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-183"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-184"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-185"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-186"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-187"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-188"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-189"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-190"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-191"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-192"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-193"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-194"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-195"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-196"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-197"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-198"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-199"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-200"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-201"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-202"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-203"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-204"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-205"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-206"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-207"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-7-208"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "workspace:switch_requested",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "office:palette_get",
+          "requestId": "palette-c6b3f571-76e1-4c17-9828-87967cf93b2a-4"
+        },
+        {
+          "type": "workspace:state_push",
+          "requestId": null
+        },
+        {
+          "type": "set_panel",
+          "requestId": null
+        },
+        {
+          "type": "workspace:state_push",
+          "requestId": null
+        },
+        {
+          "type": "set_panel",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-8-209"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-127"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-128"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-8-210"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-129"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-130"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-131"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-132"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-133"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-134"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-8-211"
+        },
+        {
+          "type": "thread:list",
+          "requestId": null
+        },
+        {
+          "type": "thread:list",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "thread:open",
+          "requestId": null
+        },
+        {
+          "type": "thread:open",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": null
+        },
+        {
+          "type": "thread:open",
+          "requestId": null
+        },
+        {
+          "type": "prompt:resolve",
+          "requestId": "chat-action-muc5xsp3-3"
+        },
+        {
+          "type": "thread:open-assistant",
+          "requestId": "chat-action-muc5xsp3-3"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-8-212"
+        },
+        {
+          "type": "thread:open",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-135"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-136"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-137"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-138"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-139"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-140"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-141"
+        },
+        {
+          "type": "prompt:resolve",
+          "requestId": "chat-action-muc5xt2z-4"
+        },
+        {
+          "type": "thread:open-assistant",
+          "requestId": "chat-action-muc5xt2z-4"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-8-213"
+        },
+        {
+          "type": "workspace:switch_requested",
+          "requestId": null
+        },
+        {
+          "type": "office:palette_get",
+          "requestId": "palette-0f10303d-a9ec-4581-a39e-68d6dfbf1bc9-5"
+        },
+        {
+          "type": "workspace:state_push",
+          "requestId": null
+        },
+        {
+          "type": "state:get",
+          "requestId": "workspace-request-muc5xt9j-3"
+        },
+        {
+          "type": "set_panel",
+          "requestId": null
+        },
+        {
+          "type": "workspace:state_push",
+          "requestId": null
+        },
+        {
+          "type": "state:get",
+          "requestId": "workspace-request-muc5xt9j-4"
+        },
+        {
+          "type": "set_panel",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-9-214"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-142"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-143"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-9-215"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-144"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-145"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-146"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-147"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-148"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-149"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-150"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-151"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-9-216"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-9-217"
+        },
+        {
+          "type": "thread:list",
+          "requestId": null
+        },
+        {
+          "type": "shell-auth:proof",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-222"
+        },
+        {
+          "type": "thread:list",
+          "requestId": null
+        },
+        {
+          "type": "screenshot:list",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-152"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-153"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-154"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-155"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-156"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-157"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-158"
+        },
+        {
+          "type": "set_panel",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-159"
+        },
+        {
+          "type": "office:palette_get",
+          "requestId": "palette-26c9fd1b-836f-445f-8cfa-e4a61a0f4b84-6"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-160"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-161"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-162"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-163"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-164"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-165"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-166"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-167"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-168"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-169"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-170"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-171"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-172"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-173"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-174"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-175"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-176"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-177"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-178"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-179"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-180"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-181"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-182"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-183"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-184"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-185"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-186"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-187"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-188"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-189"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-190"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-191"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-192"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-193"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-194"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-195"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-196"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-197"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-198"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-199"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-200"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-201"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-202"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-203"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-223"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-204"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-205"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-206"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-207"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-208"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-209"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-210"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-211"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-224"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-225"
+        },
+        {
+          "type": "thread:list",
+          "requestId": null
+        },
+        {
+          "type": "thread:list",
+          "requestId": null
+        },
+        {
+          "type": "thread:list",
+          "requestId": null
+        },
+        {
+          "type": "thread:list",
+          "requestId": null
+        },
+        {
+          "type": "thread:list",
+          "requestId": null
+        },
+        {
+          "type": "thread:list",
+          "requestId": null
+        },
+        {
+          "type": "thread:list",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-226"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-227"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-228"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-229"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-230"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-231"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-232"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-233"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-234"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-235"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-236"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-237"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-238"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-239"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-240"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-241"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-242"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-243"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-244"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-245"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-246"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-247"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-248"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-249"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-250"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-251"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-252"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-253"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-254"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-255"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-256"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-257"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-258"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-259"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-260"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-261"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-262"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-263"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-264"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-265"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-266"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-267"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-268"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-269"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-270"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-271"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-272"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-273"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-274"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-275"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-276"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-277"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-278"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-279"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-280"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-281"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-282"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-283"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-284"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-285"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-286"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-287"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-288"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-289"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-290"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-291"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-292"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-293"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-294"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-295"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-296"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-297"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-298"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-299"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-300"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-301"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-302"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-303"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-304"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-305"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-306"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-307"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-308"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-309"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-310"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-311"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-312"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-313"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-314"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-315"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-316"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-317"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-318"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-319"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-320"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-321"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-322"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-323"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-324"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-12-325"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "state:worksurface_get",
+          "requestId": "worksurface-get-muc5xvtw-3"
+        },
+        {
+          "type": "state:worksurface_get",
+          "requestId": "worksurface-get-muc5xvtw-4"
+        },
+        {
+          "type": "state:worksurface_get",
+          "requestId": "worksurface-get-muc5xvu5-5"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-326"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-327"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-328"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-329"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-330"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-331"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-332"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-333"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-334"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-335"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-336"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-337"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-338"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-339"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-340"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-341"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-342"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-343"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-344"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-345"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-346"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-347"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-348"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-349"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-350"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-351"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-352"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-353"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-354"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-355"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-356"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-357"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-358"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-359"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-360"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-361"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-362"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-363"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-364"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-365"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-366"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-367"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-368"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-369"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-370"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-371"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-372"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-373"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-374"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-375"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-376"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-377"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-378"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-379"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-380"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-381"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-382"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-383"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-384"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-385"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-386"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-387"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-388"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-389"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-390"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-391"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-392"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-393"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-394"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-395"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-396"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-397"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-398"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-399"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-400"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-401"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-402"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-403"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-404"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-405"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-406"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-407"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-408"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-409"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-410"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-411"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-412"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-413"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-414"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-415"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-416"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-417"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-418"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-419"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-420"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-421"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-422"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-423"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-424"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "file-12-425"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "workspace:switch_requested",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "office:palette_get",
+          "requestId": "palette-647133fc-6106-4f8b-bf97-cca727820935-7"
+        },
+        {
+          "type": "workspace:state_push",
+          "requestId": null
+        },
+        {
+          "type": "set_panel",
+          "requestId": null
+        },
+        {
+          "type": "workspace:state_push",
+          "requestId": null
+        },
+        {
+          "type": "set_panel",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-13-426"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-212"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-213"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-13-427"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-214"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-215"
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-216"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-217"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-218"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-219"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": "file-13-428"
+        },
+        {
+          "type": "thread:list",
+          "requestId": null
+        },
+        {
+          "type": "thread:list",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "thread:open",
+          "requestId": null
+        },
+        {
+          "type": "thread:open",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_tree_request",
+          "requestId": null
+        },
+        {
+          "type": "file_content_request",
+          "requestId": null
+        },
+        {
+          "type": "thread:open",
+          "requestId": null
+        },
+        {
+          "type": "thread:open",
+          "requestId": null
+        },
+        {
+          "type": "prompt:resolve",
+          "requestId": "chat-action-muc5xwuy-5"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-220"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-221"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-222"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-223"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-224"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-225"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-226"
+        },
+        {
+          "type": "prompt:resolve",
+          "requestId": "chat-action-muc5xwy0-6"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-227"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-228"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-229"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-230"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-231"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-232"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-233"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-234"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-235"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-236"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-237"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-238"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-239"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-240"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-241"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-242"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-243"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-244"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-245"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-246"
+        },
+        {
+          "type": "file_content_request",
+          "requestId": "panel-file-247"
+        }
+      ],
+      "sentDelta": {
+        "shell-auth:proof": 2,
+        "office:palette_get": 6,
+        "state:get": 3,
+        "thread:list": 21,
+        "screenshot:list": 2,
+        "file_content_request": 404,
+        "set_panel": 8,
+        "file_tree_request": 652,
+        "workspace:state_push": 7,
+        "prompt:resolve": 6,
+        "thread:open-assistant": 3,
+        "thread:open": 9,
+        "workspace:switch_requested": 4,
+        "state:worksurface_get": 6
+      },
+      "receivedDelta": {
+        "shell-auth:challenge": 2,
+        "connected": 2,
+        "workspace:init": 2,
+        "panel_config": 6,
+        "shell-auth:authenticated": 2,
+        "office:palette_state": 4,
+        "screenshot:list": 2,
+        "thread:list": 30,
+        "panel_changed": 7,
+        "file_content_response": 350,
+        "file_tree_response": 661,
+        "state:result": 2,
+        "error": 1,
+        "prompt:resolved": 5,
+        "thread:created": 3,
+        "thread:opened": 12,
+        "wire_ready": 3,
+        "workspace:switched": 4,
+        "state:worksurface_result": 6,
+        "wire_disconnected": 1,
+        "prompt:resolve_error": 1
+      },
+      "toast": null,
+      "activeThreadId": "2026-09-21T21-17-29-738",
+      "resolvedCommandObserved": true
+    }
+  },
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": {
+    "name": "AssertionError",
+    "message": "R6 production action owner failed createOperationListenersRemoved\n\nfalse !== true\n",
+    "stack": "AssertionError [ERR_ASSERTION]: R6 production action owner failed createOperationListenersRemoved\n\nfalse !== true\n\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r5-r6-electron.mjs:989:16"
+  }
+}

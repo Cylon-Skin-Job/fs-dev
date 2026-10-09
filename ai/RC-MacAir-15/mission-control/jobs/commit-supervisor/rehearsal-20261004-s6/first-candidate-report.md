@@ -1,0 +1,13 @@
+# First actual Commit Supervisor owner wait
+
+COMMIT_READY_WAITING_OWNER — REHEARSAL_ONLY, 2026-10-04T16:17:55.120187+00:00. Actual actor `/root/s6_supervisor_candidate_1` intentionally ends here; parent `/root` observes native terminal afterward.
+
+Exact [first owner packet](owner-packet-first.md) SHA `be1b988ced2b88b6e309e03f2831e2c8938034a1c79aeb3c8d0a75f50eb5fde9`; [checkpoint](checkpoint.json) SHA `214621bcc2c6e6a70c415e4f8c2610a4c49454f2538e4f6671eaf382b1fe54aa`; [current identity](evidence/first-owner-runtime-identity.json) SHA `fa91eb339a518ebb0cf878f5f15d0df3f2d5e5309cdf0eadab2c030b1f499a58`. Current fixed manifest `5bf3fb69c13aacfd60afcb384de2c9975fc917ad3f1f7a49b9176073b7b34d96` publicverify passes129leaves/118payloads; original128 `f827e476...2834fb` and Wikiunion129 `36c99f10...c7e75` preserved.
+
+All material original code/Wiki findings resolved under fresh independent handoff/final gates; separate real canonicalbuild/resetbeforeinitializer/UI/Wiki/sustained/watcher/privateprotection accepted.55/17 current35dependencies retained; no extra unchangedreview. Current-source controller `7a325bf8...990b0d`, view `fc3c3da3...fe36a5`, Guide `a3d372eb...bcfdce`, completeversion `e2877b2a...527c`. Exact hashes/paths/reports/rawreceipts are in packet and immutable archives.
+
+[Actual actor tree](evidence/first-actual-actor-tree.json):8directchildterminals plus2freshmanagerreviewers, actualdepth3; fork none/inheritedroot/nooverrides, defaultexactinstalledroles, leafwriters, close_agentunavailable. Capacityerror pass1 suppliesnoassessment; honestlyexposed pass2 excluded; freshrawonly codehandoff3 CLEAN. Different finalmanager/rawreviewer clean. [Nine full-field accepted entries](first-deviations.json) retain corrections, fallback, checkprovenance, exposure replacement, prefixomission and supplementalparsecorrection honestly. No unresolvedmaterialhold; labeled providerlanding/adoption are separatelysimulated, actualNONE.
+
+Real selectedprivatepreview remains running MC-S6, profile `/private/tmp/mc-s6-commit-supervisor-20261004/profile`, localhost62275, main5349/server5358. Deliberatelyleft Draftchecked/2 survivesreload; laterfixresetprecondition real. SourceHEAD/refs/index/193caches and normal/Alpha4process/inodes preserved; two liveDBhashchanges qualified. ActiveguardNONE, no recovery/refusal/cleanupperformed; exact laterownership/currentguard/ownedstop/profilelimits are in packet. ActualGit/ref/stage/commit/remote/PR/landing/adoption/Alpha authority/eventsNONE.
+
+Nextsafeaction: parent observes this actual terminal; later explicit labeledcontrol and freshreplacement only. No auto-resume/poll/dispatch/timer/MC/previewstop. Root owns S6/wholeSPEC/central acceptance.

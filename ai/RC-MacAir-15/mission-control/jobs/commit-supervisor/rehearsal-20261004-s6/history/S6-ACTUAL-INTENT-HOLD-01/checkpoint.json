@@ -1,0 +1,139 @@
+{
+  "schema": 1,
+  "checkpoint_id": "S6-ACTUAL-INTENT-HOLD-01",
+  "job_id": "rehearsal-20261004-s6",
+  "spec": "SPEC-COMMIT-SUPERVISOR-01:S6",
+  "owner_actor": "/root/s6_supervisor_intent_1",
+  "manager": "/root",
+  "report_recipient": "/root",
+  "scope": "REHEARSAL_ONLY",
+  "phase": "needs-owner",
+  "return": "needs-owner",
+  "current_candidate_location": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "candidate_git_identity": {
+    "common_dir": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/.git",
+    "git_dir": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/.git",
+    "root": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate"
+  },
+  "target_baseline": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "ordered_source_commits": [
+    {
+      "commit": "d15792920731f85e45b743519d4af2b807d95a9c",
+      "ref": "HEAD",
+      "repo": "/Users/rccurtrightjr./projects/fs-dev"
+    }
+  ],
+  "candidate_identity_sha256": "03739c79e6b7aff698d884828d1686002327c85e9be126014eaf8d00a8e518bf",
+  "current_state_sha256": "ee63a5c309a1a72dd36db462f520931e777a701acd237c9350d2d5eee4cf6d73",
+  "owned_path_count": 128,
+  "owned_inventory": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/owned-paths.json",
+  "recovery_manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery/manifest.json",
+  "recovery_manifest_sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb",
+  "recovery_payload_count": 117,
+  "original_preimage_payloads": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery/payloads",
+  "runtime_profile": {
+    "authority_this_turn": "NONE",
+    "future_method": "Exact private restart-fusion.sh --repo candidate --machine MC-S6 --user-data private profile only after fresh final review on an explicit root replacement assignment.",
+    "machine": "MC-S6",
+    "profile": "/private/tmp/mc-s6-commit-supervisor-20261004/profile",
+    "recovery": "Profile effects are separate from code snapshot; disposable profile/workspace only. Retain evidence; stop only owned trees before abandon or guarded source recovery; never copy/restore source or Alpha databases.",
+    "workspace": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace"
+  },
+  "authority_readset": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/authority-readset.json",
+  "current_configuration": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/runtime-config.json",
+  "accepted_progress": [
+    "Exact installed role fallback loaded/acknowledged and actual CWD/permissions verified.",
+    "Accepted S1\u2013S5 definitions and preparation authority retained without upgrading acceptance.",
+    "Substantive disjoint job intake/deduplication/current authority/ref/index/status/profile sentinels.",
+    "New original immutable recovery for 128 leaves captured and verified publicly; both runtime watcher leaves declared absent/job-created.",
+    "Job-owned runtime config derived without changing preparation config or selecting final wording.",
+    "Provider predecessor actual host completed and schedule absent; sole J writer transferred by explicit root assignment, disjoint E coordination retained.",
+    "Exact labeled provider release independently validated against sample bytes/hash, current original authority, source/target baseline, consumer source/task IDs/labels and historical raw UI labels.",
+    "All current public snapshot semantics and 41 prior authority hashes/modes unchanged; prior completed intake/recovery retained without replay."
+  ],
+  "holds": [
+    {
+      "id": "FIXTURE_PROVIDER_01",
+      "state": "release-validated-for-fixture-only",
+      "provider": "fixture-sample-provider",
+      "consumer": "checklist-view",
+      "resolver": "/root",
+      "release_validation": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/intent-release-validation.json",
+      "prior_hold_unchanged": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/provider-hold.json",
+      "fixture_landed": "simulated only",
+      "consumer_adoption": "separately simulated only",
+      "actual_landing": "NONE",
+      "actual_production_adoption": "NONE"
+    },
+    {
+      "id": "FIXTURE_INTENT_01",
+      "state": "needs-owner",
+      "resolver": "/root",
+      "question": "Must the fixture summary present the settled incomplete count as N remaining or N remaining of 3?",
+      "record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/intent-hold.json",
+      "release_receipt_kind": "REHEARSAL_ONLY_INTENT_RESOLUTION",
+      "release_condition": "After the actual /root/s6_supervisor_intent_1 needs-owner terminal is observed, /root supplies a labeled REHEARSAL_ONLY_INTENT_RESOLUTION for FIXTURE_INTENT_01 selecting exactly N remaining or N remaining of 3 under the approved original fixture authority. Numerical/completion/reversal/visible-row/reload/full-restart requirements remain settled. A fresh explicit root replacement assignment independently validates that receipt/current sources and resumes only affected authorized work; no completion label, existing source wording, silence or fixture resolution grants Git permission."
+    }
+  ],
+  "next_unfinished_authorized_action": "End intentionally in needs-owner after saved current verification. Parent /root independently observes actual host completion, then may supply only labeled fixture intent resolution and a fresh bounded replacement. Do not poll, auto-resume, dispatch child/repair/runtime/prerequisite build, schedule or operate Git/Alpha.",
+  "review_claims_current": [],
+  "runtime_claims_current": [],
+  "operational_phase_acceptance": "Provider fixture release validation and terminal intent hold only; no integration reviewer/runtime readiness claim.",
+  "child_lifecycle": [],
+  "predecessor": {
+    "identity": "/root/s6_supervisor_provider_1",
+    "terminal": "completed",
+    "return": "waiting-dependency",
+    "observed_via": "Actual collaboration.list_agents on this turn plus parent E terminal/ledger receipt; only lifecycle used from other earlier agents text.",
+    "release_issued_after_observed_terminal": true,
+    "close_agent": "unavailable"
+  },
+  "actual_actor_lifecycle": "Intentional actual needs-owner final return; parent independently observes completed afterward. close_agent unavailable.",
+  "deduplication_key": "6d91237b4a0b279d3a81d96b21900b4c1377bdb511a1e45dc9bc41e76d6edb45",
+  "git_operation_authority": "NONE",
+  "last_check_utc": "2026-10-04T13:53:42.030429+00:00",
+  "last_progress_utc": "2026-10-04T13:52:18.747673+00:00",
+  "report_paths": [
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/provider-hold-report.md",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/verification.md",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/resume.md",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/intent-hold-report.md",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/intent-hold.json",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/intent-release-validation.json",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/lifecycle-intent.json",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/intent-finalization-correction.json"
+  ],
+  "guard_active": false,
+  "guard_requirements": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/ownership-receipt-intake.json",
+  "recovery_limits": "Exact code/index/worktree preimages captured; no actual interrupted restore/collision exercise occurred this turn. No profile/database effects captured or reversible through code helper; profile unchanged. Future new Wiki leaves need immutable supplemental union BEFORE write, restore newest supplements before original.",
+  "checkpoint_history": [
+    {
+      "checkpoint_id": "S6-ACTUAL-PROVIDER-HOLD-01",
+      "actor": "/root/s6_supervisor_provider_1",
+      "phase": "waiting-dependency",
+      "immutable_exact_preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/history/S6-ACTUAL-PROVIDER-HOLD-01/checkpoint.json",
+      "preimage_sha256": "fe9ec1642a9c506586e40781c1047d851755b71fce2adfc761eb1752fed44d21",
+      "transition": "Explicit root replacement after actual predecessor completion and labeled provider release; no intake replay."
+    },
+    {
+      "checkpoint_id": "S6-ACTUAL-INTENT-HOLD-01",
+      "actor": "/root/s6_supervisor_intent_1",
+      "phase": "needs-owner",
+      "at": "2026-10-04T13:52:18.747673+00:00",
+      "provider_release_validation": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/intent-release-validation.json",
+      "remaining_intent": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/intent-hold.json"
+    }
+  ],
+  "retained_identity_reason": "Original public snapshot equality, protected source/target/index/refs, unchanged 41 authority revisions and runtime config; no candidate mutation.",
+  "current_verification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/intent-final-verify.json",
+  "actual_lifecycle_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/lifecycle-intent.json",
+  "historical_lifecycle_unchanged": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/lifecycle.json",
+  "current_verification_result": {
+    "result": "VERIFIED",
+    "payloads_valid": true,
+    "matches_checkpoint": true,
+    "status_equal": true,
+    "current_sha256": "ee63a5c309a1a72dd36db462f520931e777a701acd237c9350d2d5eee4cf6d73",
+    "manifest_sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb"
+  }
+}

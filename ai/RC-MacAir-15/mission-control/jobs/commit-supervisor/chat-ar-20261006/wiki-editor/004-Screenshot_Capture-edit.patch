@@ -1,0 +1,41 @@
+--- ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md before
++++ ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md after
+@@ -1,8 +1,16 @@
+ ---
+ name: Screenshot Capture
+-description: App captures, macOS screenshot imports, optional CLI access, and storage limits.
++description: Direct app captures, exact chat attachments, saved-image gallery, workspace previews, and storage limits.
+ metadata:
+   source-files:
++    - fusion-studio-client/src/state/chatFileLinkStore.ts
++    - fusion-studio-client/src/lib/chat/side-chat-placements.ts
++    - fusion-studio-client/src/state/slices/chatSurfaceSlice.ts
++    - fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx
++    - fusion-studio-client/src/components/chat/ChatSurface.tsx
++    - fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx
++    - fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx
++    - fusion-studio-client/src/components/App.tsx
+     - fusion-studio-server/lib/screenshot/ws-handlers.js
+     - fusion-studio-client/electron/ipc/capture-handlers.cjs
+     - fusion-studio-client/electron/ipc/screenshot-handlers.cjs
+@@ -10,12 +18,18 @@
+     - fusion-studio-client/src/screenshots/ScreenshotsTrigger.tsx
+     - fusion-studio-client/src/hooks/useScreenshotCapture.ts
+     - fusion-studio-server/lib/workspace/screenshot-service.js
+-  last-modified: "2026-09-28T04:25:27Z"
++  last-modified: "2026-10-06T22:14:26Z"
+ ---
+ 
+ ## In-app captures and attachments
+ 
+-In the desktop app, **Take screenshot** captures the focused Fusion Studio window. The server saves a PNG under the active workspace's `ai/<machine>/Data/Screenshots/`, and the current chat receives a pending file attachment. The Screenshots gallery lists image files from that workspace folder and can attach an existing one. Workspace preview images are separate: they capture the app panel on workspace changes and are stored as one PNG row per workspace in SQLite for the ribbon and carousel.
++In the desktop app, **Take screenshot** captures the focused Fusion Studio window. The capture controller snapshots the destination chat and socket before awaiting native capture, then sends `screenshot:file-capture` with that workspace and a request ID. The server validates the active workspace and saves a PNG under its `ai/<machine>/Data/Screenshots/`. Only the matching `screenshot:file-captured` response supplies the saved path for a pending attachment in that exact workspace and chat session; an unrelated response cannot attach a file.
++
++The composer Add menu supplies its explicit workspace, view, Thread group, chat session and mounted-surface lifetime. The view's Main Chat follows its selected Thread group and current primary session. A Main Chat mounted as an explicit content component keeps its hydrated session independently of the outer thread rail. A Side Chat keeps its own session and open service-managed placement, so changing Main Chat selection cannot redirect its capture. The global header camera resolves the selected Main Chat in the active view; it falls back to the current Legacy session only when no qualified Main Chat is available.
++
++The controller checks ownership before capture and again after native capture and saving. A workspace, owning-view, selected Main Chat or session change cancels attachment. Connected composers also cancel when they become inactive or unmount, or when their Side Chat placement closes. A content component retained in a hidden view cannot finish a capture for that view; switching away and back does not revive the old composer capture. Cancellation before the save request leaves no new saved file. Cancellation while the save is pending can leave the PNG in the workspace gallery, but it does not attach it to another chat.
++
++The Screenshots gallery lists image files from the workspace folder and can attach an existing one. Workspace preview images are separate: they capture the app panel on workspace changes and are stored as one PNG row per workspace in SQLite for the ribbon and carousel.
+ 
+ ## macOS screenshots
+ 

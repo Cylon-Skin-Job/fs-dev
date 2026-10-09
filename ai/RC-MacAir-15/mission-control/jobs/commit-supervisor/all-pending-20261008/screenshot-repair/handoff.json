@@ -1,0 +1,457 @@
+{
+  "state": "READY_FOR_HANDOFF_REVIEW",
+  "at": "2026-10-09T01:17:40.408095+00:00",
+  "worker": "/root/screenshot_unique_path_repair",
+  "manager": "/root",
+  "report_owner": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/screenshot-repair",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "memory_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "implementation_checkout": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate",
+  "baseline": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "branch": "detached HEAD",
+  "root_settings": "inherited model/effort and host Full Access; no override",
+  "finding": {
+    "id": "ALL-SCREENSHOT-001",
+    "origin_id": "IR-001",
+    "origin_reviewer": "/root/all_pending_initial_review/material_sources",
+    "origin_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/initial-review/material-sources-raw.md",
+    "raw_reproduction": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/initial-review/screenshot-collision-validation.json",
+    "original_handler_sha256": "8d11853e29ee8f0264090145aaf1d461384caeac6b58797a63cb687869756254",
+    "severity": "material",
+    "confidence": "high for same-millisecond overwrite mechanics; UI frequency unmeasured",
+    "impact": "Distinct concurrent screenshot saves could ACK the same path and one replaced image bytes, allowing cross-attachment despite request correlation",
+    "proposed_disposition": "repair-reported; independent acceptance/closure reserved to manager",
+    "authority": "CHAT-MATERIAL-SPEC-01 \u00a74.4/A12/M3; evidenced necessary server correction permitted by M3, assigned by root under direct owner integration instruction"
+  },
+  "correction": "Existing prepare/save owner adds crypto.randomUUID per save filename and writeFile flag wx. Existing active-workspace/protected-path validation, requestId echo, savedPath response and source workspace ownership preserved. No new route or protocol/schema/store change. Rare existing path is an honest correlated save error with old bytes intact.",
+  "current_owned": [
+    {
+      "path": "fusion-studio-server/lib/screenshot/ws-handlers.js",
+      "sha256": "e1f0c2d5afe85a9f548a24b5f1696f3e23f15502371c71290f53d347cbfc5585",
+      "mode": "0o644",
+      "index": "100644 f575eed494af840042fd23d3c8f023d17252d355 0\tfusion-studio-server/lib/screenshot/ws-handlers.js"
+    },
+    {
+      "path": "fusion-studio-server/test/screenshot-file-capture-request-id.test.js",
+      "sha256": "74729e86f4c9e56827aabd82f79bc15333a65c8c75562a5d678a037ad73a8063",
+      "mode": "0o644",
+      "index": "100644 aa928df04198b310da3b5e3167662d526e064a5e 0\tfusion-studio-server/test/screenshot-file-capture-request-id.test.js"
+    },
+    {
+      "path": "fusion-studio-server/test/screenshot-protected-view-path.test.js",
+      "sha256": "b96cce21addf67336e3d7584f96e4be754888fc4b0b2ff334010eab0d533d54e",
+      "mode": "0o644",
+      "index": "100644 5247457e91476f236375313d5090931a3609da12 0\tfusion-studio-server/test/screenshot-protected-view-path.test.js"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+      "sha256": "7f6c2f3bb793008211c82a8cd0c45061b2899ec81554ac65ae81f542a23128db",
+      "mode": "0o644",
+      "index": "100644 bbaba2ed5efe6884720741f9c83dfd46ea45fb6c 0\tai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/.versions/2026-10-08-181237.md",
+      "sha256": "2ca9937fd14648f9af85e6b3effd151c0107811b4eadacb551a7938ef00b4ceb",
+      "mode": "0o644",
+      "index": "untracked new preimage"
+    }
+  ],
+  "preimages": [
+    {
+      "path": "fusion-studio-server/lib/screenshot/ws-handlers.js",
+      "sha256": "8d11853e29ee8f0264090145aaf1d461384caeac6b58797a63cb687869756254",
+      "mode": "0o644",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/screenshot-repair/preimages/fusion-studio-server/lib/screenshot/ws-handlers.js"
+    },
+    {
+      "path": "fusion-studio-server/test/screenshot-file-capture-request-id.test.js",
+      "sha256": "79f331849cff605f963731744066d94941c80b8d3298d2300e49778880bb78e8",
+      "mode": "0o644",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/screenshot-repair/preimages/fusion-studio-server/test/screenshot-file-capture-request-id.test.js"
+    },
+    {
+      "path": "fusion-studio-server/test/screenshot-protected-view-path.test.js",
+      "sha256": "1fe319e540ca4376398bbb8b0daa48bdea18a1ed2a7889d2618d74e9e799d8c6",
+      "mode": "0o644",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/screenshot-repair/preimages/fusion-studio-server/test/screenshot-protected-view-path.test.js"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+      "sha256": "2ca9937fd14648f9af85e6b3effd151c0107811b4eadacb551a7938ef00b4ceb",
+      "mode": "0o644",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/screenshot-repair/preimages/ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md"
+    }
+  ],
+  "adjacent_wiki_preimage": {
+    "article": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+    "complete_adjacent_preimage": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/.versions/2026-10-08-181237.md",
+    "preimage_sha256": "2ca9937fd14648f9af85e6b3effd151c0107811b4eadacb551a7938ef00b4ceb",
+    "current_sha256": "7f6c2f3bb793008211c82a8cd0c45061b2899ec81554ac65ae81f542a23128db",
+    "source": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/fusion-studio-server/lib/screenshot/ws-handlers.js",
+    "source_sha256": "e1f0c2d5afe85a9f548a24b5f1696f3e23f15502371c71290f53d347cbfc5585",
+    "actual_utc_write_timestamp": "2026-10-09T01:12:37Z",
+    "version_local_zone": "America/Los_Angeles",
+    "scope": "One server-save paragraph and actual edit timestamp; no structure/navigation change",
+    "preimage_readback_equal": true,
+    "source_readback_equal": true
+  },
+  "checks": [
+    {
+      "id": "RED-CONCURRENCY",
+      "command": "npx --no-install jest --runInBand --runTestsByPath test/screenshot-file-capture-request-id.test.js --testNamePattern='concurrent captures at the same timestamp'",
+      "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/fusion-studio-server",
+      "exit": 1,
+      "result": "Expected failure: returned path set size 1, required 2; 1 failed/3 skipped",
+      "logs": [
+        "collision-regression-before-fix.stdout",
+        "collision-regression-before-fix.stderr"
+      ],
+      "handler_sha256": "8d11853e29ee8f0264090145aaf1d461384caeac6b58797a63cb687869756254",
+      "test_sha256": "74729e86f4c9e56827aabd82f79bc15333a65c8c75562a5d678a037ad73a8063",
+      "raw_hashes": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/screenshot-repair/collision-regression-before-fix.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/screenshot-repair/collision-regression-before-fix.stderr",
+          "sha256": "f1314ac94605b236ae5b7c8df3483422b5e0b0863ae679b67c5a19dd9372b94e"
+        }
+      ]
+    },
+    {
+      "id": "GREEN-FIRST",
+      "command": "npx --no-install jest --runInBand --runTestsByPath test/screenshot-file-capture-request-id.test.js test/screenshot-protected-view-path.test.js test/ws/prompt-submission-recovery.integration.test.js",
+      "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/fusion-studio-server",
+      "exit": 0,
+      "result": "3 suites, 12 tests passed before strengthened final-symlink assertion",
+      "logs": [
+        "focused-screenshot-and-acceptance.stdout",
+        "focused-screenshot-and-acceptance.stderr"
+      ],
+      "status": "Historical; affected protected-test oracle renewed below",
+      "raw_hashes": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/screenshot-repair/focused-screenshot-and-acceptance.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/screenshot-repair/focused-screenshot-and-acceptance.stderr",
+          "sha256": "820fc755bcbfae8c1d71633c35a55d1a9d2dbc88f5d5d7b9087d841e303107bd"
+        }
+      ]
+    },
+    {
+      "id": "GREEN-CURRENT",
+      "command": "npx --no-install jest --runInBand --runTestsByPath test/screenshot-file-capture-request-id.test.js test/screenshot-protected-view-path.test.js test/ws/prompt-submission-recovery.integration.test.js",
+      "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/fusion-studio-server",
+      "exit": 0,
+      "result": "3 suites, 12 tests passed",
+      "logs": [
+        "focused-current-screenshot-and-acceptance.stdout",
+        "focused-current-screenshot-and-acceptance.stderr"
+      ],
+      "dependencies": [
+        {
+          "path": "fusion-studio-server/lib/screenshot/ws-handlers.js",
+          "sha256": "e1f0c2d5afe85a9f548a24b5f1696f3e23f15502371c71290f53d347cbfc5585",
+          "mode": "0o644",
+          "index": "100644 f575eed494af840042fd23d3c8f023d17252d355 0\tfusion-studio-server/lib/screenshot/ws-handlers.js"
+        },
+        {
+          "path": "fusion-studio-server/test/screenshot-file-capture-request-id.test.js",
+          "sha256": "74729e86f4c9e56827aabd82f79bc15333a65c8c75562a5d678a037ad73a8063",
+          "mode": "0o644",
+          "index": "100644 aa928df04198b310da3b5e3167662d526e064a5e 0\tfusion-studio-server/test/screenshot-file-capture-request-id.test.js"
+        },
+        {
+          "path": "fusion-studio-server/test/screenshot-protected-view-path.test.js",
+          "sha256": "b96cce21addf67336e3d7584f96e4be754888fc4b0b2ff334010eab0d533d54e",
+          "mode": "0o644",
+          "index": "100644 5247457e91476f236375313d5090931a3609da12 0\tfusion-studio-server/test/screenshot-protected-view-path.test.js"
+        },
+        {
+          "path": "fusion-studio-server/test/ws/prompt-submission-recovery.integration.test.js",
+          "sha256": "1399b7473f096e21eab1b54c690c53d58e9e759e9af4b9e902e299b3412853bd"
+        }
+      ],
+      "warnings": "Node --localstorage-file warning without valid path, observed before repair and after; unchanged environment warning",
+      "raw_hashes": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/screenshot-repair/focused-current-screenshot-and-acceptance.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/screenshot-repair/focused-current-screenshot-and-acceptance.stderr",
+          "sha256": "a5577ac66273da1e3144065338734ecf1fe820a4f68a8653477cf16553b05208"
+        }
+      ]
+    },
+    {
+      "id": "WIKI-READBACK",
+      "command": "node /Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/screenshot-repair/validate-wiki.cjs",
+      "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate",
+      "exit": 0,
+      "result": "PASS: 22 exact sources, 1 local link, actual production frontmatter/Markdown functions, HTML readback and preimage/source/timestamp equality",
+      "logs": [
+        "wiki-validation.stdout",
+        "wiki-validation.stderr"
+      ],
+      "dependencies": [
+        {
+          "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+          "sha256": "7f6c2f3bb793008211c82a8cd0c45061b2899ec81554ac65ae81f542a23128db",
+          "mode": "0o644",
+          "index": "100644 bbaba2ed5efe6884720741f9c83dfd46ea45fb6c 0\tai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md"
+        },
+        {
+          "path": "fusion-studio-server/lib/screenshot/ws-handlers.js",
+          "sha256": "e1f0c2d5afe85a9f548a24b5f1696f3e23f15502371c71290f53d347cbfc5585",
+          "mode": "0o644",
+          "index": "100644 f575eed494af840042fd23d3c8f023d17252d355 0\tfusion-studio-server/lib/screenshot/ws-handlers.js"
+        },
+        {
+          "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/.versions/2026-10-08-181237.md",
+          "sha256": "2ca9937fd14648f9af85e6b3effd151c0107811b4eadacb551a7938ef00b4ceb",
+          "mode": "0o644",
+          "index": "untracked new preimage"
+        }
+      ],
+      "limits": "No visual/native UI readback; no structure/navigation changes, so generator not run",
+      "raw_hashes": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/screenshot-repair/wiki-validation.stdout",
+          "sha256": "5eb9777e9b82d68fda7cb4de39fecabe01d8ff2b12fa2584ac495471e0748bff"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/screenshot-repair/wiki-validation.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "id": "SYNTAX-DIFF",
+      "commands": [
+        {
+          "command": [
+            "node",
+            "--check",
+            "fusion-studio-server/lib/screenshot/ws-handlers.js"
+          ],
+          "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate",
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "node",
+            "--check",
+            "fusion-studio-server/test/screenshot-file-capture-request-id.test.js"
+          ],
+          "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate",
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "node",
+            "--check",
+            "fusion-studio-server/test/screenshot-protected-view-path.test.js"
+          ],
+          "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate",
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "git",
+            "diff",
+            "--check",
+            "--",
+            "fusion-studio-server/lib/screenshot/ws-handlers.js",
+            "fusion-studio-server/test/screenshot-file-capture-request-id.test.js",
+            "fusion-studio-server/test/screenshot-protected-view-path.test.js",
+            "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md"
+          ],
+          "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate",
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "result": "PASS",
+      "logs": [
+        "syntax-and-diff-checks.json"
+      ],
+      "raw_hashes": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/screenshot-repair/syntax-and-diff-checks.json",
+          "sha256": "1606a528c3c67accdabe6866742213bf82451b8f314b2efb75b1209d9d35bea3"
+        }
+      ]
+    },
+    {
+      "id": "PNG-FIXTURES",
+      "command": "Recorded Python PNG signature/CRC/IHDR/zlib scanline validation against current regression constants",
+      "result": "PASS: two distinguishable actual 1x1 red/blue PNGs",
+      "logs": [
+        "png-fixtures-validation.json"
+      ],
+      "raw_hashes": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/screenshot-repair/png-fixtures-validation.json",
+          "sha256": "b721aaa8c33e629df36098b5c1e66865adfd50b64070e008988cc1caad5ff566"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "fusion-studio-server/lib/views/protected-path-policy.js",
+      "sha256": "424385815b58dcd432f16c83ae6004bb5ee096d9cad5a5006c5206946d269c8a"
+    },
+    {
+      "path": "fusion-studio-server/lib/workspace/workspace-controller.js",
+      "sha256": "4042bde78e7e6a7bfed1a6fd98828e8c82667632ef0143f09e3650d036ad2c27"
+    },
+    {
+      "path": "fusion-studio-server/lib/workspace/ai-paths.js",
+      "sha256": "05757f7bb6e77f7b41571455f511e9ee1665d470d5b2dfc799443b8db1cc10ba"
+    },
+    {
+      "path": "fusion-studio-client/src/screenshots/chatScreenshotCapture.ts",
+      "sha256": "5e1018214c45a16ff1f40391e2749fa6cc2ed34a20f3291f7f8ebd52fa585712"
+    },
+    {
+      "path": "fusion-studio-client/electron/ipc/screenshot-handlers.cjs",
+      "sha256": "3ad9d6be65a725d5cbad46cd35d6ed7a3ff0ede5109400c996192679ba9f07aa"
+    },
+    {
+      "path": "fusion-studio-server/package.json",
+      "sha256": "15113c033b6deb5622aa8a5213042bcb1b67e82d87f63df3b006efc9640717db"
+    },
+    {
+      "path": "fusion-studio-client/package.json",
+      "sha256": "9b9e9c906358afd17eb5027af187fbe2030c537a9536d6d0d6fbcf64fb70dfb0"
+    }
+  ],
+  "authority_hashes": [
+    {
+      "path": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/SPEC.md",
+      "sha256": "063562058007928d07477913a1ba05e43a2d191d6e42a0e9cb1d6a6e5c71659e"
+    },
+    {
+      "path": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/OWNER-APPROVAL.md",
+      "sha256": "459e03d05c8e2144db863cb9e31d46586e80fe2912641ee7157abbfae9a4b942"
+    },
+    {
+      "path": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/OWNER-ACCEPTANCE.json",
+      "sha256": "c27c9c0a9ecd61cf6c65e005ec8161590573ec5cc71b3be30d17f13f7205a3c2"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/session-contract.md",
+      "sha256": "d82d5a815a94f8c27b64d1d90aa0085790e3d98408c011e86d6126dd1bd9b570"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-repair-worker/SKILL.md",
+      "sha256": "f6aa836695ab3cfb22b256e0bc6c5df5cd64b1a65e2ca75654da59be3972daa9"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+      "sha256": "27aab53da9edbed9f6ee8ceb4917d7c7531a7de914a3c2df7fb2196b6bd4a20c"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-review-gate/SKILL.md",
+      "sha256": "cc738b3ecebca875b1f6d4460d26c3185dd3b3dd2a93550086742995a0c6c56a"
+    }
+  ],
+  "final_assertion_change": {
+    "path": "fusion-studio-server/test/screenshot-protected-view-path.test.js",
+    "observed_last_write_time_utc": "2026-10-09T01:14:43.350323+00:00",
+    "last_write_mtime_ns": 1791508483350322851,
+    "current_sha256": "b96cce21addf67336e3d7584f96e4be754888fc4b0b2ff334010eab0d533d54e",
+    "prior_sha256": "f1501a3a3b9118f6b71f375b516104105da25d0491cd6c92bd04aad66521226c",
+    "prior_evidence": "Exact earlier bytes reconstructed from the single known assertion edit; not an immutable checkpoint/preimage claim",
+    "reason": "After exclusive creation, EEXIST could otherwise satisfy generic screenshot:error. Require Protected view path so the test still proves protected-path policy denied the final symlink."
+  },
+  "deviations": [
+    {
+      "id": "SR-D01",
+      "original_criterion": "M3 keeps server owner unchanged unless a separately evidenced necessary defect invalidates assumption",
+      "actual_change": "3-line bounded screenshot save correction: built-in crypto import, UUID filename suffix, exclusive write",
+      "reason_authority": "ALL-SCREENSHOT-001 direct reproduction + \u00a74.4/A12/M3 allowed exception",
+      "files": [
+        "fusion-studio-server/lib/screenshot/ws-handlers.js"
+      ],
+      "effect_checks": "Same-time public save isolation and forced-existing-path non-overwrite with correlated responses pass",
+      "risk": "Existing filename rejected rather than overwritten; returned path remains sole client authority",
+      "downstream_consumer": "Screenshot attachment producer and gallery; renew native/server/final gate and propagate modified integration identity",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "SR-D02",
+      "original_criterion": "Primary assigned files were handler and request-correlation test; mechanically necessary adjacent test permitted",
+      "actual_change": "Update generated broken-symlink pathname with stubbed UUID; require Protected view path denial message",
+      "reason_authority": "Name change otherwise makes old test target unrelated pathname; exclusive creation could mask policy denial if generic error accepted",
+      "files": [
+        "fusion-studio-server/test/screenshot-protected-view-path.test.js"
+      ],
+      "effect_checks": "Existing protected directory alias and final broken symlink remain denied; focused current 12 tests pass",
+      "risk": "Test-only; native/server product bytes unaffected by final assertion strengthening",
+      "downstream_consumer": "Fresh full-server oracle gate; root will rerun after terminal handoff",
+      "proposed_classification": "accepted"
+    },
+    {
+      "id": "SR-D03",
+      "original_criterion": "Assigned bounded screenshot Wiki factual update after correction",
+      "actual_change": "Add server per-save timestamp/UUID and exclusive-create/correlated-error sentence; actual timestamp; one complete exclusive adjacent version",
+      "reason_authority": "Manager added exact article ownership; source owner now guarantees no overwrite via wx",
+      "files": [
+        "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/.versions/2026-10-08-181237.md"
+      ],
+      "effect_checks": "Preimage/source equality, 22 concrete source paths, link resolution and production HTML readback pass",
+      "risk": "No structure/navigation change; native visual article readback remains manager-owned",
+      "downstream_consumer": "Future screenshot builders, gallery/attachment consumers and fresh handoff/final reviewers",
+      "proposed_classification": "accepted"
+    }
+  ],
+  "invalidation": {
+    "affected": [
+      "Whole accepted 65-file seal remains historical input, not current delivered integration identity",
+      "Prior handler-dependent concurrency/save/native/server claims and source-dependent Wiki paragraph acceptance",
+      "Earlier focused/full-server protected-path test oracle after final assertion change; current focused run renews narrow scope, root reruns full server after terminal handoff"
+    ],
+    "unaffected": [
+      "Original raw review and exact owner-accepted receipt retained as historical evidence",
+      "Unchanged renderer source/build/269-case evidence with documented dependencies",
+      "Unchanged Electron capture/gallery module code and unaffected earlier API checks; no broad provider/runtime recertification"
+    ],
+    "manager_reported_current_cumulative": "Root reports corrected-handler full221-server exit0 at 01:14:15, native exit0 at01:13:25 (8 actual captures/4 Send readbacks/cleanup), renderer02 build-before-run269pass. These are manager-owned records, not this worker execution. Full-server is to be rerun after terminal handoff because final protected oracle changed; native/renderer dependencies remain unchanged."
+  },
+  "required_checks_and_skips": {
+    "worker_required": "Focused screenshot/protected/acceptance current checks pass; self-review/source/code/metadata/HTML/preimage/fixture checks pass",
+    "manager_required_remaining": "Fresh independent handoff review, final current-byte integration gate, full-server renewal for final oracle, canonical isolated production runtime/owner operation handling",
+    "not_run_by_worker": [
+      "npm test native-observer pretest",
+      "full-server Jest",
+      "client build/renderer suite",
+      "native Electron scenario",
+      "production runtime app launch",
+      "visual Wiki UI gate"
+    ],
+    "reason": "Root owns cumulative/runtime checks; leaf has no app/runtime-operation scope. Direct Jest does not execute npm test pretest. No navigation generation because unchanged navigation."
+  },
+  "recovery": {
+    "whole_checkpoint": "/private/tmp/fusion-main-consolidation-95vxg0_h/recovery-checkpoint",
+    "prewrite_verification": "recovery-verification-prewrite.json: VERIFIED payloads_valid=true, matches_checkpoint=true, manifest 4d4b616b5f3bd4f09d3decbd0110aef27c7055386d433f6782c53171bbe81a91",
+    "worker_preimages": "preimages/ plus assignment-and-preimages.json; complete exact bytes read back before edits",
+    "limits": "Checkpoint describes pre-repair candidate; changed owned bytes intentionally differ. New adjacent version is explicitly listed separately, no implicit original-checkpoint absence/removal coverage. No database/app/runtime recovery claim; no restore performed."
+  },
+  "self_review": "Checked save owner/public response seam, source workspace/protection owner, UUID allocation and exclusive-create failure, realistic public-handler concurrent readback, current symlink policy error, unchanged basename extraction and gallery extension enumeration, article factual owners and adjacent no-op Composer/Testing claims. No missing intent, prerequisite or extra feature found.",
+  "lifecycle": "Leaf completed; no children or external reviewer process, no self acceptance, no source/main/shared-worktree product writes or ref/index movement, publication, runtime app restart, Alpha, MC activation, timer or feature dispatch. Other worker/accepted bytes preserved.",
+  "next_safe_action": "Manager assigns a fresh read-only worker-handoff reviewer against ALL-SCREENSHOT-001 original authority, all five changed leaf/preimage paths, current hashes/raw checks and original scope; manager alone may record HANDOFF_VALIDATED."
+}

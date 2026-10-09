@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-04T13:53:41.173449+00:00",
+  "actor": "/root/s6_supervisor_intent_1",
+  "failure": "Prior finalization attempted write to predecessor lifecycle.json, mode 0444, and received PermissionError.",
+  "partial_progress": "All exact preimages, new release/hold/activation/report, append-only assignment/resume/verification/findings entries and current needs-owner checkpoint were saved before refusal.",
+  "readback": "Original lifecycle bytes equal preserved exact preimage; no predecessor lifecycle change occurred. Candidate/source/index/ref/profile unaffected.",
+  "correction": "Preserved predecessor lifecycle.json and wrote unique lifecycle-intent.json; current checkpoint links new record. No permission change or force overwrite.",
+  "deviation_classification": "accepted mechanical record integration within current assigned J ownership; all substantive authority and gates unchanged."
+}

@@ -1,0 +1,16 @@
+{
+  "command": [
+    "git",
+    "-C",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+    "update-ref",
+    "refs/remotes/origin/agent/exact-workspace-paths",
+    "551a74313d099724cdb3d76ead04e940ae88f223",
+    "d15792920731f85e45b743519d4af2b807d95a9c"
+  ],
+  "started": "2026-10-04T19:42:22.057222+00:00",
+  "finished": "2026-10-04T19:42:22.064276+00:00",
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": ""
+}

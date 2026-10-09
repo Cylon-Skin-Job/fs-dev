@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-05T03:26:59.315870+00:00",
+  "static": {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-static-checks.py",
+    "sha256": "a632fb92f2a425c785c13ba115d5e343ecd74139bf2f439d6c2e62f9b226fb05",
+    "continuation": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-static-continuation.py",
+    "continuation_sha256": "aaf6db63cf16a5af42735474569bad65df14d75ede293e4fae4496e0e18cf0a1",
+    "changes": "Reuse nine passing validator/index receipts; validate two original template links at declared installed Wiki paths; resume remaining current static/source checks without product writes"
+  },
+  "preservation": {
+    "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-preservation-check.py",
+    "sha256": "dfae87f13355d8e1c1371a48c4418e7719c70d06f3006af49d37a3b853315aa6",
+    "continuation": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-preservation-continuation.py",
+    "continuation_sha256": "444df266fbb845cf806b7a2b1ac5e0c483b1d1115523a4a6367af220bd698529",
+    "changes": "Reuse complete current process raw receipt; retain historical13 and reconcile current14 renderer lifecycle/identity; resume remaining original recovery/storage checks without effects or live app mutation"
+  },
+  "original_failures_retained": [
+    "Native static AssertionError checklist-guide template Navigation path at raw template location",
+    "Native preservation AssertionError expecting current protectedTrees13; actual latest14"
+  ],
+  "passing_suites_replayed": false
+}

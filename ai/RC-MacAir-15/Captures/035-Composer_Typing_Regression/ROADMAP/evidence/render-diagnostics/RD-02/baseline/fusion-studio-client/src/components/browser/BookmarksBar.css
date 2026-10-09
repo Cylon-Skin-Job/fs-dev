@@ -1,0 +1,69 @@
+/* BookmarksBar — horizontal bookmark strip below the chrome bar */
+
+.rv-bookmarks-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 4px 10px;
+  background: var(--browser-active-surface);
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  overflow-x: auto;
+  min-height: 32px;
+}
+
+.rv-bookmarks-bar--empty {
+  justify-content: center;
+}
+
+.rv-bookmarks-bar-hint {
+  font-size: 11px;
+  color: var(--text-dim, rgba(255, 255, 255, 0.35));
+  user-select: none;
+}
+
+/* Bookmark chip */
+.rv-bookmark-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 24px;
+  padding: 0 6px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-primary, #e0e0e0);
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+
+.rv-bookmark-chip:hover {
+  background: var(--glass-md, rgba(255, 255, 255, 0.08));
+}
+
+.rv-bookmark-chip--icon-only {
+  padding: 0 4px;
+}
+
+.rv-bookmark-chip-icon {
+  font-size: 13px;
+  color: var(--text-dim, rgba(255, 255, 255, 0.5));
+}
+
+.rv-bookmark-favicon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.rv-bookmark-chip-title {
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

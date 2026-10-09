@@ -1,0 +1,16 @@
+{"at":1790002760446,"type":"session-start","threadId":"2026-09-21T07-59-20-252","sessionKey":"[\"fresh-project\",\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790002751215-6649405850-fs8qLG/fault-save-ack-workspace/fresh-project\",\"2026-09-21T07-59-20-252\"]","externalProcess":false}
+{"at":1790002762174,"type":"gate","gate":"before-admission","owner":"server","occurrence":1}
+{"at":1790002762181,"type":"gate","gate":"after-admission","owner":"server","occurrence":1}
+{"at":1790002762181,"type":"gate","gate":"before-ack","owner":"transport","occurrence":1}
+{"at":1790002762181,"type":"gate","gate":"after-ack","owner":"transport","occurrence":1}
+{"at":1790002762184,"type":"gate","gate":"before-dispatch","owner":"adapter","occurrence":1}
+{"at":1790002762184,"type":"gate","gate":"after-dispatch","owner":"adapter","occurrence":1}
+{"at":1790002762184,"type":"gate","gate":"before-turn-begin","owner":"adapter","occurrence":1}
+{"at":1790002762186,"type":"gate","gate":"after-turn-begin","owner":"adapter","occurrence":1}
+{"at":1790002762351,"type":"iterator-end","stopRequested":false,"stopSignal":null,"frames":3}
+{"at":1790002762356,"type":"gate","gate":"before-save-ack","owner":"server","occurrence":1}
+{"at":1790002762356,"type":"gate","gate":"after-save-ack","owner":"transport","occurrence":1}
+{"at":1790002762764,"type":"gate","gate":"before-stop","owner":"adapter","occurrence":1}
+{"at":1790002762764,"type":"gate","gate":"after-stop","owner":"adapter","occurrence":1}
+{"at":1790002762764,"type":"gate","gate":"before-shutdown","owner":"adapter","occurrence":1}
+{"at":1790002762764,"type":"gate","gate":"after-shutdown","owner":"adapter","occurrence":1}

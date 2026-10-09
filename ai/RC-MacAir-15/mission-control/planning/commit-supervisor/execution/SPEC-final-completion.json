@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-05T04:51:37.895307+00:00",
+  "result": "SPEC_READY_FOR_OWNER_REVIEW",
+  "report": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md",
+    "size": 21649,
+    "sha256": "da27c283678cf7137a38fec70e5641472e169007e0570905a96f055f09a730b6"
+  },
+  "release_manifest": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-release-manifest.json",
+    "size": 3563,
+    "sha256": "392a66ae03cef97ab0f47dbd97fd233c31ebee51f0882757d41b594830cba989"
+  },
+  "all_slices": "accepted",
+  "independent_final_gate": "CLEAN",
+  "contextual_deviations": 119,
+  "unique_ids": 113,
+  "all_deviations_classified": true,
+  "required_repairs": [],
+  "owner_rulings_required": [],
+  "downstream_impact": "compatible deviation",
+  "owner_accepted": false,
+  "private_preview": "stopped; original fixture restored; fixed archives retained",
+  "publication_operations": [],
+  "Alpha_operations": [],
+  "operational_MC_activation": false,
+  "monitoring_started": false,
+  "next_SPEC_started": false
+}

@@ -1,0 +1,129 @@
+{
+  "status": "passed",
+  "characterization": true,
+  "authenticatedShell": true,
+  "publicRouteResults": [
+    {
+      "id": "R2-DISCONNECT-BEFORE-CLICK",
+      "draftRetained": true,
+      "draftLength": 29,
+      "draftSha256": "25419e2f60587e02e838c3fa900cdfb99a6b3b88d710bda3c38d64eff146d986",
+      "promptContentRecorded": false,
+      "composerPresent": true,
+      "composerEnabled": false,
+      "sendPresent": false,
+      "sendDisabled": null,
+      "userBubbleCount": 0,
+      "acceptanceSpinnerCount": 0,
+      "visibleNotSent": true,
+      "transport": {
+        "sockets": [
+          {
+            "readyState": 3
+          }
+        ],
+        "sentTypes": {
+          "shell-auth:proof": 1,
+          "office:palette_get": 1,
+          "state:get": 2,
+          "thread:list": 8,
+          "screenshot:list": 1,
+          "file_content_request": 53,
+          "set_panel": 2,
+          "file_tree_request": 65,
+          "state:set": 5,
+          "workspace:state_push": 1,
+          "thread:open-assistant": 1,
+          "thread:open": 1,
+          "state:worksurface_get": 1,
+          "thread:warm": 1
+        },
+        "receivedTypes": {
+          "shell-auth:challenge": 1,
+          "connected": 1,
+          "workspace:init": 1,
+          "panel_config": 1,
+          "shell-auth:authenticated": 1,
+          "office:palette_state": 1,
+          "screenshot:list": 1,
+          "thread:list": 10,
+          "panel_changed": 2,
+          "file_content_response": 53,
+          "file_tree_response": 64,
+          "state:result": 6,
+          "error": 1,
+          "thread:created": 1,
+          "thread:opened": 1
+        },
+        "sendThrows": 0
+      }
+    },
+    {
+      "id": "R2-ENQUEUE-THROW-RACE",
+      "draftRetained": true,
+      "draftLength": 31,
+      "draftSha256": "1909921209d0d3fec0d3e5ec512e9cb53627f7b6e307530f8773208ab15eb295",
+      "promptContentRecorded": false,
+      "composerPresent": true,
+      "composerEnabled": false,
+      "sendPresent": false,
+      "sendDisabled": null,
+      "userBubbleCount": 0,
+      "acceptanceSpinnerCount": 0,
+      "visibleNotSent": false,
+      "transport": {
+        "sockets": [
+          {
+            "readyState": 1
+          }
+        ],
+        "sentTypes": {
+          "shell-auth:proof": 1,
+          "office:palette_get": 1,
+          "state:get": 1,
+          "thread:list": 7,
+          "screenshot:list": 1,
+          "file_content_request": 51,
+          "set_panel": 1,
+          "file_tree_request": 63,
+          "state:set": 2,
+          "state:worksurface_get": 2,
+          "thread:open": 1,
+          "prompt": 1
+        },
+        "receivedTypes": {
+          "shell-auth:challenge": 1,
+          "connected": 1,
+          "workspace:init": 1,
+          "panel_config": 1,
+          "shell-auth:authenticated": 1,
+          "office:palette_state": 1,
+          "thread:list": 8,
+          "screenshot:list": 1,
+          "panel_changed": 1,
+          "file_content_response": 51,
+          "file_tree_response": 63,
+          "state:result": 3,
+          "state:worksurface_result": 2,
+          "thread:opened": 1
+        },
+        "sendThrows": 1,
+        "throwPrompt": true
+      }
+    }
+  ],
+  "reproducedDefects": [
+    "disconnect_retained_draft_not_editable",
+    "enqueue_throw_has_no_visible_not_sent_result",
+    "enqueue_throw_retained_draft_not_editable"
+  ],
+  "hypothesis": "confirmed-current-product-violation",
+  "laterEnforceOwner": "SPEC-02/02A",
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": null
+}

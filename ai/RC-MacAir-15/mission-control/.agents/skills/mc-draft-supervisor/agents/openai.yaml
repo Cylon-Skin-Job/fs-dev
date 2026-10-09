@@ -1,0 +1,4 @@
+interface:
+  display_name: "MC First Draft Supervisor"
+  short_description: "Coordinate drafting, review and open questions"
+  default_prompt: "Use $mc-draft-supervisor to produce an independently reviewed first draft from the supplied conversation and documents, preserving unresolved intent for discussion."

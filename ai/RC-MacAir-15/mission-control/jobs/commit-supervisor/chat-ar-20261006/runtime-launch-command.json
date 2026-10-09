@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "/private/tmp/chat-ar-integration-r6pe5gmi/candidate/restart-fusion.sh",
+    "--repo",
+    "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+    "--machine",
+    "RC-MacAir-15",
+    "--user-data",
+    "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-ar-live-6xvxap6k/candidate-profile"
+  ],
+  "cwd": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+  "fixture_runtime_replacements": false
+}

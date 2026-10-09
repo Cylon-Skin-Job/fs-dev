@@ -1,0 +1,5 @@
+{"at":1790242608929,"type":"session-start","threadId":"2026-09-24T02-36-48-725","sessionKey":"[\"r2-project\",\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790242604412-a0a1d9fd84-jNW7Tp/r2-project\",\"2026-09-24T02-36-48-725\"]","externalProcess":false}
+{"at":1790242608935,"type":"gate","gate":"before-stop","owner":"adapter","occurrence":1}
+{"at":1790242608935,"type":"gate","gate":"after-stop","owner":"adapter","occurrence":1}
+{"at":1790242608935,"type":"gate","gate":"before-shutdown","owner":"adapter","occurrence":1}
+{"at":1790242608935,"type":"gate","gate":"after-shutdown","owner":"adapter","occurrence":1}

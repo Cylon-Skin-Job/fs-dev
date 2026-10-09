@@ -1,0 +1,19 @@
+{
+  "finding": "OTHER-MD-02",
+  "paths": [
+    "ai/RC-MacAir-15/mission-control/launchpad/chat-harness-repair-and-testing/AGENTS.md",
+    "ai/RC-MacAir-15/mission-control/launchpad/chat-harness-repair-and-testing/index.json",
+    "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/AGENTS.md",
+    "ai/RC-MacAir-15/mission-control/launchpad/governed-events-and-ledger/AGENTS.md",
+    "ai/RC-MacAir-15/mission-control/launchpad/governed-events-and-ledger/index.json",
+    "ai/RC-MacAir-15/mission-control/launchpad/plugin-foundation/AGENTS.md",
+    "ai/RC-MacAir-15/mission-control/launchpad/plugin-foundation/index.json",
+    "ai/RC-MacAir-15/mission-control/launchpad/plugin-views-and-provisioning/AGENTS.md",
+    "ai/RC-MacAir-15/mission-control/launchpad/plugin-views-and-provisioning/index.json"
+  ],
+  "source_unchanged": true,
+  "current_source_preimages_preserved": "frozen-source-inventory.json and initial-review raw inventories",
+  "candidate_action": "new8leaves absent; trackedChat AGENTS restored to3356 baseline",
+  "resolver": "separate MC framework owner acceptance and closed dependency unit",
+  "baseline_missing_routes": "pre-existing trackedChat routes remain disclosed; not a new active package"
+}

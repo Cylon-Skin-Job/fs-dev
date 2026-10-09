@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-04T11:39:50.610723+00:00",
+  "available_concurrency_from_host": 12,
+  "configured_global_max_depth": 3,
+  "config_observation": "read-only exact key; no config mutation",
+  "planned_deepest_tree": "/root/runtime_supervisor/initial_or_final_review_manager/fresh_clean_room_reviewer",
+  "planned_depth_from_root": 3,
+  "supported_requested_types": [
+    "default",
+    "clean-room-reviewer",
+    "mc-spec-slice-builder"
+  ],
+  "new_integration_types_in_current_catalog": false,
+  "fallback": "supported default child explicitly reads exact installed skill/profile/session/workflow; acknowledge actual loading/CWD/permissions/inheritance",
+  "proof_limit": "configuration and offered capacity do not prove actual deepest spawn; actual chain must succeed before S6 acceptance",
+  "global_limit_or_model_change": false
+}

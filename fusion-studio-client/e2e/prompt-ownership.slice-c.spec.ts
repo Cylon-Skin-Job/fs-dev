@@ -413,6 +413,9 @@ test('Slice C: direct screenshot attaches only the path acknowledged for its req
   }
 
   const { usePanelStore } = await import('../src/state/panelStore');
+  const { useWorkspaceStore } = await import('../src/state/workspaceStore');
+  const { installChatActionConsumer } = await import('../src/lib/chat-action-controller');
+  const { createInitialPanelState } = await import('../src/state/slices/chatSlice');
   const { useChatFileLinkStore } = await import('../src/state/chatFileLinkStore');
   const { captureAndAttachScreenshot } = await import('../src/screenshots/chatScreenshotCapture');
   const { registerToastSetter, unregisterToastSetter } = await import('../src/lib/toast');
@@ -420,14 +423,20 @@ test('Slice C: direct screenshot attaches only the path acknowledged for its req
   usePanelStore.setState({
     activeWorkspaceId: WORKSPACE_A,
     currentThreadId: THREAD_A,
+    currentPanel: 'wiki-viewer',
     threads: [],
+    projectChats: { [THREAD_A]: createInitialPanelState() },
+    threadGroupsByWorkspaceAndView: { [WORKSPACE_A]: { 'wiki-viewer': [{ threadId: THREAD_A, threadGroupId: 'camera-unit-group', viewId: 'wiki-viewer' }] } },
+    currentThreadGroupIdByWorkspaceAndView: { [WORKSPACE_A]: { 'wiki-viewer': 'camera-unit-group' } },
     ws: socket,
   });
+  useWorkspaceStore.setState({ activeWorkspaceId: WORKSPACE_A, workspaceEpoch: 'camera-unit-epoch', bindingSerial: 1, bindingRevision: 1, hasReceivedInit: true });
+  installChatActionConsumer();
+  const owner = usePanelStore.getState().registerMountedChat({ workspaceId: WORKSPACE_A, viewId: 'wiki-viewer', threadGroupId: 'camera-unit-group', threadId: THREAD_A, surfaceId: 'camera-unit', host: 'main', binding: 'view' });
+  expect(owner).not.toBeNull();
   registerToastSetter(() => {});
 
-  const attachment = await captureAndAttachScreenshot({
-    workspaceId: WORKSPACE_A, threadId: THREAD_A, surface: 'primary',
-  });
+  const attachment = await captureAndAttachScreenshot(owner);
   const pending = useChatFileLinkStore.getState().pendingAttachmentsByOwner[
     JSON.stringify([WORKSPACE_A, THREAD_A])
   ];

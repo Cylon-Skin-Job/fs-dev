@@ -1,0 +1,171 @@
+{
+  "status": "passed",
+  "measurementStarted": true,
+  "configuredDurationMs": 300000,
+  "configuredCharacters": 9520,
+  "configuredDelayMs": 32,
+  "configuredWallBudgetMs": 456960,
+  "fixture": {
+    "f2": {
+      "id": "F2-DETERMINISTIC-HISTORY-V1",
+      "exchanges": 30,
+      "renderedMessages": 60,
+      "includes": [
+        "text",
+        "code",
+        "lists",
+        "tables",
+        "collapsed-tool-results",
+        "reply-metadata"
+      ],
+      "dense": {
+        "exchanges": 2,
+        "assistantPayloadBytes": 534528,
+        "sha256": "9b06d21b677d93e4479544db39cf56f86eb4d3cd25fb603740407f263e7420dc"
+      }
+    },
+    "f3": {
+      "id": "F3-DETERMINISTIC-WORKSPACE-V1",
+      "algorithm": "label-repeated-to-fixed-byte-count",
+      "counts": {
+        "smallFiles": 1000,
+        "captureFolders": 100,
+        "wikiPages": 100,
+        "officeDocuments": 20
+      },
+      "totalFiles": 1220,
+      "totalContentBytes": 11059200,
+      "root": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790228438993-225fac9ea0-UaFSMG/r1-sustained-project",
+      "everyPathFixtureContained": true,
+      "manifestHash": "421c0ef8f5e255bb333a82a9f26d28c74eb2c8d55e95fc262ad241ed45740079"
+    }
+  },
+  "identity": {
+    "threadId": "2026-09-23T22-40-42-373",
+    "threadGroupId": "tg-3b7fbb4e-523e-43d8-8560-2ce3a03549a5"
+  },
+  "coverageCalibration": {
+    "discovered": [
+      "ChatAreaFooter",
+      "ChatAreaHeader",
+      "ContentArea",
+      "InstantSegmentRenderer",
+      "MessageList",
+      "ThreadRail",
+      "renderTextInstant"
+    ],
+    "invocationCounts": {
+      "renderTextInstant": 150,
+      "MessageList": 2,
+      "InstantSegmentRenderer": 30,
+      "ChatAreaHeader": 17,
+      "ThreadRail": 25,
+      "ContentArea": 9,
+      "ChatAreaFooter": 15
+    }
+  },
+  "preMeasurementQuiescence": {
+    "requiredLifecycle": [
+      "screenshot:capture",
+      "screenshot:updated",
+      "screenshot:request",
+      "screenshot:data"
+    ],
+    "quietMs": 500,
+    "finalTrafficSequence": 891,
+    "lifecycle": [
+      {
+        "sequence": 888,
+        "atMs": 1659.2,
+        "direction": "outbound",
+        "type": "screenshot:capture"
+      },
+      {
+        "sequence": 889,
+        "atMs": 1664.8,
+        "direction": "inbound",
+        "type": "screenshot:updated"
+      },
+      {
+        "sequence": 890,
+        "atMs": 1665,
+        "direction": "outbound",
+        "type": "screenshot:request"
+      },
+      {
+        "sequence": 891,
+        "atMs": 1667.3,
+        "direction": "inbound",
+        "type": "screenshot:data"
+      }
+    ]
+  },
+  "wallMs": 351517,
+  "exactRetention": true,
+  "promptSha256": "fcf7111123f47d1647337b09adae4accba3f8c005c751165cbdcecebc95f9dff",
+  "promptContentRecorded": false,
+  "metrics": {
+    "inputCount": 9520,
+    "inputP95Ms": 1.4000000953674316,
+    "inputMaxMs": 2.1999998092651367,
+    "nextRafCount": 9520,
+    "nextRafP95Ms": 17.700000286102295,
+    "nextRafMaxMs": 21,
+    "longTaskObserverSupported": true,
+    "longTaskCount": 0,
+    "longTaskMaxMs": 0,
+    "reactCommitCount": 28560,
+    "domMutations": 28561,
+    "wsSent": 0,
+    "outboundEvidence": [],
+    "outboundEvidenceOverflow": 0
+  },
+  "renderCounts": {
+    "MessageList": 0,
+    "InstantSegmentRenderer": 0,
+    "ChatAreaHeader": 0,
+    "ThreadRail": 0,
+    "ContentArea": 0,
+    "renderTextInstant": 0
+  },
+  "focusEvidence": {
+    "establishment": {
+      "attempts": 1,
+      "elapsedMs": 10,
+      "observation": {
+        "available": true,
+        "focused": true,
+        "visible": true,
+        "minimized": false,
+        "windowId": 1,
+        "title": "Fusion Studio",
+        "url": "fusion-shell://app/"
+      }
+    },
+    "beforeTyping": {
+      "available": true,
+      "focused": true,
+      "visible": true,
+      "minimized": false,
+      "windowId": 1,
+      "title": "Fusion Studio",
+      "url": "fusion-shell://app/"
+    },
+    "afterTyping": {
+      "available": true,
+      "focused": true,
+      "visible": true,
+      "minimized": false,
+      "windowId": 1,
+      "title": "Fusion Studio",
+      "url": "fusion-shell://app/"
+    }
+  },
+  "violations": [],
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "lingeringOwnedPids": []
+}

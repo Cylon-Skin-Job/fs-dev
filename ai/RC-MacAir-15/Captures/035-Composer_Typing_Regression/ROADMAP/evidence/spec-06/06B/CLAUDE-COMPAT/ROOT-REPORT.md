@@ -1,0 +1,18 @@
+# Claude compatibility policy — orchestrator inspection
+
+2026-09-27 07:34 UTC. Current implementation inspected; fresh reviews pending. Root independently verified all1964source/200build hashes, all three predecessor copies and exact three-path delta against the prior human-session candidate. See ROOT-IDENTITY-INSPECTION.json.
+
+The production change is one OpenCode-only fixed environment assignment after the existing allowlist/override loop. It neither changes the credential allowlists nor other harness output. Actual OpenCode sendMessage uses this owner for its environment snapshot and spawned CLI environment. Focused tests pin forced default/false/empty behavior, exact preserved native configuration/credential values, no other-family policy injection, existing secret/authority isolation inventory and actual adapter spawn option.
+
+Root repeated the three focused Jest suites:117tests passed,0skips,1.511s (root-focused-tests.log). Existing Node localstorage warning is nonfatal. No unrelated nativeaddon rebuild, renderer build or fullserver/performance suite was run. JavaScript-only server environment policy has direct targeted coverage; renderer build hashes remain unchanged.
+
+Root inspected and independently executed discovery-smoke.cjs, redirecting only its result filename in memory to preserve the builder receipt. root-discovery-result.json records four fresh installedOpenCode1.18.32 debugskill processes, no inference: isolated baseline7/current5 removes only global/projectClaude sentinel skills and retains global/project.agents/native skills; actual production environment baseline32/current7 preserves all non-Claude skills and contains no .claude skill. All four exit0; isolated temporary root removed. No livewindow input, restart, prompt, personalconfiguration or permission changes were performed. The builder's earlier truncated-pipe parsing failure is retained separately and not represented as a product failure or success.
+
+Version-pinned upstream research confirms automatic global/projectCLAUDE.md fallback disable as well as Claude skill removal; actual prompt inspection/inference is not claimed. Explicit custompath configuration is not rewritten or prohibited. See upstream.json and ROOT-AUTHORITY-AND-RUNTIME.md for exact references and accepted eight-field owner-directed deviation.
+
+Current humanwindow uses copied oldservercode. Updating development source cannot affect it or already loadedtranscript content. Correct application after separately authorized refresh is a newly staged/relaunched Fusion runtime from current source and a genuinely fresh providerconversation. Merely NewChat inside currentoldstage cannot use the fix; resuming oldproviderconversation retains already loadedClaudecontent. Running session remains intentionally untouched. Numericalsoak, explicitowneracceptance, 06C andGit/Alpha remain outside this follow-up.
+
+
+## Bounded follow-up accepted — 2026-09-27 07:35 UTC
+
+Fresh builder `/root/builder06b/review06b_claude1` and root `/root/review06b_claude1` each terminal CLEAN, no material findings/advisories. Both read-only; no runtime operations or descendants, close_agent unavailable. Current three-path policy repair accepted after independent117test/fouractualdiscovery checks and exactidentity inspection. No further implementation or verification is indicated. Running humanwindow remains untouched and its copied server is deliberately old; see ROOT-FINAL-RUNTIME-SNAPSHOT.json. Application requires separately authorized updated launch/newconversation; no currentruntime refresh performed. Full06B/ownerjudgment/soak and06Cremain pending.

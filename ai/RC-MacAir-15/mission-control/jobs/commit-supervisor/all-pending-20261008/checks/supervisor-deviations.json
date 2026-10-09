@@ -1,0 +1,93 @@
+{
+  "at": "2026-10-09T01:29:00.864839+00:00",
+  "supervisor": "/root",
+  "owner_instruction": "Commit everything and make main up to date.",
+  "candidate_identity_sha256": "4a0ba37d3eca52a91fd0abe426ebe126447aeb31c0d1f734700df48f3cda8415",
+  "deviations": [
+    {
+      "id": "SR-D01",
+      "original_criterion": "M3 keeps server owner unchanged unless a separately evidenced necessary defect invalidates assumption",
+      "actual_change": "3-line bounded screenshot save correction: built-in crypto import, UUID filename suffix, exclusive write",
+      "reason_authority": "ALL-SCREENSHOT-001 direct reproduction + \u00a74.4/A12/M3 allowed exception",
+      "files": [
+        "fusion-studio-server/lib/screenshot/ws-handlers.js"
+      ],
+      "effect_checks": "Same-time public save isolation and forced-existing-path non-overwrite with correlated responses pass",
+      "risk": "Existing filename rejected rather than overwritten; returned path remains sole client authority",
+      "downstream_consumer": "Screenshot attachment producer and gallery; renew native/server/final gate and propagate modified integration identity",
+      "supervisor_classification": "accepted"
+    },
+    {
+      "id": "SR-D02",
+      "original_criterion": "Primary assigned files were handler and request-correlation test; mechanically necessary adjacent test permitted",
+      "actual_change": "Update generated broken-symlink pathname with stubbed UUID; require Protected view path denial message",
+      "reason_authority": "Name change otherwise makes old test target unrelated pathname; exclusive creation could mask policy denial if generic error accepted",
+      "files": [
+        "fusion-studio-server/test/screenshot-protected-view-path.test.js"
+      ],
+      "effect_checks": "Existing protected directory alias and final broken symlink remain denied; focused current 12 tests pass",
+      "risk": "Test-only; native/server product bytes unaffected by final assertion strengthening",
+      "downstream_consumer": "Fresh full-server oracle gate; root will rerun after terminal handoff",
+      "supervisor_classification": "accepted"
+    },
+    {
+      "id": "SR-D03",
+      "original_criterion": "Assigned bounded screenshot Wiki factual update after correction",
+      "actual_change": "Add server per-save timestamp/UUID and exclusive-create/correlated-error sentence; actual timestamp; one complete exclusive adjacent version",
+      "reason_authority": "Manager added exact article ownership; source owner now guarantees no overwrite via wx",
+      "files": [
+        "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+        "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/.versions/2026-10-08-181237.md"
+      ],
+      "effect_checks": "Preimage/source equality, 22 concrete source paths, link resolution and production HTML readback pass",
+      "risk": "No structure/navigation change; native visual article readback remains manager-owned",
+      "downstream_consumer": "Future screenshot builders, gallery/attachment consumers and fresh handoff/final reviewers",
+      "supervisor_classification": "accepted"
+    },
+    {
+      "id": "ALL-D04",
+      "original_criterion": "Commit everything and make main up to date.",
+      "actual_change": "Retain actual server database backup and Node compilation caches locally; add narrow ignore rules. Include synthetic 61,440-byte rehearsal recovery payloads.",
+      "reason_authority": "Owner authorized source/docs/evidence consolidation; actual runtime DB/cache are generated local data, and 167MB DB backup exceeds normal GitHub leaf limit.",
+      "files": [
+        ".gitignore"
+      ],
+      "effect_checks": "Current included max leaf14.4MB; excluded DB remains at original local path; original synthetic fixtures restored before identity03.",
+      "risk": "Historical absolute temp/log references remain dated and may not be portable; no database backup publication or profile replacement.",
+      "downstream_consumer": "GitHub checkout users and passive evidence consumers",
+      "supervisor_classification": "accepted"
+    },
+    {
+      "id": "ALL-D05",
+      "original_criterion": "Commit all current pending primary work and update main.",
+      "actual_change": "Consolidate pending canonical restart wrapper plus4helpers, current machine workspace configuration/state, MC skills/planning/setup/rehearsal and historical evidence records.",
+      "reason_authority": "Direct human all-pending consolidation instruction; current primary bytes are original worker/owner outputs, not newly invented operational role or setup acceptance.",
+      "files": [
+        "restart-fusion.sh",
+        "scripts/fusion-restart*.mjs",
+        "ai/RC-MacAir-15/System/",
+        "ai/RC-MacAir-15/mission-control/",
+        "ai/RC-MacAir-15/Captures/"
+      ],
+      "effect_checks": "Fresh client/server/renderer/Wiki/MC unit/index/syntax checks; canonical isolated startup remains later gate.",
+      "risk": "Passive archive source copies are not current active modules. Existing setup/roadmap acceptance states remain their own recorded gates.",
+      "downstream_consumer": "Development restart users, selected MC role consumers and future planning/evidence readers",
+      "supervisor_classification": "accepted"
+    },
+    {
+      "id": "ALL-D06",
+      "original_criterion": "Accepted65-file shared-material implementation with exact source-bound fixtures and required post-build verification.",
+      "actual_change": "Preserve delivered fixture updates unchanged; use accepted matching native observer dependency; repeat renderer after completed build and renew affected server/native/Wiki checks.",
+      "reason_authority": "Approved CHAT-MATERIAL-SPEC-01 verification sequence and actual source/fixture identity; later screenshot correction requires new integration identity.",
+      "files": [
+        "fusion-studio-client/e2e/",
+        "fusion-studio-server/native/secure-file-observer/build/Release/secure_file_observer.node"
+      ],
+      "effect_checks": "Fresh269renderer tests;221server suites3267passed1skip;8actual native PNGcaptures/saves4fixture Send/readbacks;7PageViewer readbacks.",
+      "risk": "Ignored native binary is local test dependency, not new tracked product delivery. Deterministic provider/admission seam is not certification of live public provider.",
+      "downstream_consumer": "Material UI/route regression maintainers and runtime handoff",
+      "supervisor_classification": "accepted"
+    }
+  ],
+  "limit": "This record supplies supervisor authority classifications only; no reviewer verdict is supplied."
+}

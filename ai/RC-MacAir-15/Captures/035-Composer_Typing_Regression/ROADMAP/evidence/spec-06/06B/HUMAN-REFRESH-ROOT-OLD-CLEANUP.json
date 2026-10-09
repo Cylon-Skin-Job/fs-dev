@@ -1,0 +1,18 @@
+{
+  "at": "2026-09-27T07:40:34.316110+00:00",
+  "oldRun": "human-1790491451072-fee1354e",
+  "status": "closed",
+  "closeReason": "SIGTERM",
+  "lingeringOwnedPids": [],
+  "retained": {
+    "evidenceRoot": true,
+    "profileRoot": true,
+    "project": true,
+    "stageRoot": true
+  },
+  "journalBytes": 3450797,
+  "oldPidsAbsent": {
+    "64110": true,
+    "64115": true
+  }
+}

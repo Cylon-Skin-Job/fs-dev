@@ -1,0 +1,134 @@
+{
+  "schema": 1,
+  "checkpoint_id": "S6-FIX-XY-COMMIT-READY-WAIT-02",
+  "job_id": "rehearsal-20261004-s6",
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "manager": "/root",
+  "phase": "waiting-owner",
+  "return": "COMMIT_READY_WAITING_OWNER",
+  "return_state": "COMMIT_READY_WAITING_OWNER",
+  "original_authority": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-original-authority.md",
+  "scope": "REHEARSAL_ONLY",
+  "predecessor_checkpoint": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/history/S6-FIRST-COMMIT-READY-WAIT-01/checkpoint.json",
+  "predecessor_alias_limit": "Historical return IN_PROGRESS/return_state COMMIT_READY_WAITING_OWNER discrepancy retained; native terminal confirms intentional first wait",
+  "predecessor_terminal": true,
+  "matching_schedules": [],
+  "next_safe_action": "Assigned root observes actual second native COMMIT_READY_WAITING_OWNER terminal and inspects concrete current packet. Any later controlled refusals/fault/interrupted recovery/cleanup or operations are separate authorized root assignments; no automatic resumption.",
+  "original_recovery": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery/manifest.json",
+  "original_sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb",
+  "first_fixed_snapshot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/first/recovery/manifest.json",
+  "first_fixed_sha256": "5bf3fb69c13aacfd60afcb384de2c9975fc917ad3f1f7a49b9176073b7b34d96",
+  "affected_prior_claims": "First code/Wiki/final/runtime current readiness invalidated upon X/Y mutation; firstwait historicaltimequalified retained. Provider originallabel sample not currentrevisedlabel evidence. Required helper55/17 unchanged surfaces reusable only matching dependencies.",
+  "actual_operation_authority": "NONE",
+  "actual_operations": [],
+  "last_check_utc": "2026-10-04T19:39:17.349595+00:00",
+  "candidate_identity": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-owner-runtime-identity.json",
+  "routed_authority": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-routed-standards.json",
+  "last_progress_utc": "2026-10-04T19:39:17.349595+00:00",
+  "code_handoff": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-code-handoff-acceptance.json",
+  "recovery_supplement": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/fix-xy-wiki-1/recovery/manifest.json",
+  "recovery_supplement_sha256": "5227a7a7d38dddec138aff13c16f2ee8a22bda1a53657f203a47d80857827617",
+  "wiki_identity": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-wiki-handoff-identity.json",
+  "wiki_handoff": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-wiki-handoff-acceptance.json",
+  "final_identity": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-final3-identity.json",
+  "material_finding": null,
+  "finding_scope": "Historical current-check provenance and final2 independence; both repaired forward, no product defect inferred.",
+  "current55_binding": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-python-current-2-bindings.json",
+  "finding_status": "Resolved: F-ALL5-01 complete renewed current55 accepted by actual fresh3 CLEAN; FINAL2-INDEPENDENCE-001/F-ALL5-02 invalid gate withheld and replaced by different fresh3 CLEAN/native END. Historical records preserved and qualified.",
+  "material_findings": [
+    {
+      "id": "F-ALL5-01",
+      "status": "resolved",
+      "scope": "required check provenance",
+      "acceptance": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-final-acceptance.json",
+      "qualification": "Historical first55/35-only and current-1 successful invocations preserved with incomplete provenance; no historical drift/failure established."
+    },
+    {
+      "id": "FINAL2-INDEPENDENCE-001",
+      "alias": "F-ALL5-02",
+      "status": "resolved",
+      "scope": "review independence",
+      "acceptance": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-final-acceptance.json",
+      "qualification": "Exposed final2 withheld, actual insufficient manager/child terminals retained; no product defect inferred; no contaminated acceptance counted."
+    }
+  ],
+  "runtime_hold": "Required actual revised private runtime accepted; all operations/later controls held for separate exact authority.",
+  "final_acceptance": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-final-acceptance.json",
+  "material_finding_status": "all material findings resolved forward; no unresolved material source/check/runtime gate or indispensable owner product decision",
+  "candidate_location": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "candidate_identity_sha256": "def301f6c8111aee84a6a450eb2e1898dd26dcd6df887a1462cefc0edff38e48",
+  "owned_paths": 130,
+  "full_input_inventory": 4355,
+  "target_ref": "refs/remotes/origin/agent/exact-workspace-paths",
+  "target_baseline": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "ordered_source_commits": [
+    {
+      "repo": "/Users/rccurtrightjr./projects/fs-dev",
+      "ref": "HEAD",
+      "commit": "d15792920731f85e45b743519d4af2b807d95a9c"
+    }
+  ],
+  "unresolved_material_findings": [],
+  "runtime_acceptance": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-runtime-acceptance.json",
+    "sha256": "206a7a9258d91b865d297f6df5889e9f2346be4001bdc175ee98b60b744bd795"
+  },
+  "runtime_source_bridge": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-runtime-source-post.json",
+    "sha256": "b186b06fedba8a0dac0dbbd342a5a291e164ac0ecf4a361c6a6232551278bb8d"
+  },
+  "runtime_identity": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-current-runtime-identity.json",
+    "sha256": "cf9974445ac36f0587b71c89d93b60f82300afed9636d6423f68cd491795d099"
+  },
+  "runtime_profile": "/private/tmp/mc-s6-commit-supervisor-20261004/profile",
+  "runtime_machine": "MC-S6",
+  "runtime_run": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-DlzcE3",
+  "runtime_server_url": "http://localhost:63400",
+  "runtime_main_pid": 31000,
+  "runtime_server_pid": 31008,
+  "runtime_selected_processes": 6,
+  "runtime_preview": "left running intentionally, Checklist revised labels/allfalse/3 remaining of 3",
+  "runtime_recovery_limit": "Code archive excludes separate profile DB/browser/cache/log effects; active restore guard NONE. No protected DB copy/restore.",
+  "fixed_candidate": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/fix-xy/recovery/manifest.json",
+    "sha256": "fd15619a9ebd65f9600e6867054ddd15dbaef589a607d2177c9f3528e33f5e9e"
+  },
+  "fixed_owned_paths": 130,
+  "fixed_payloads": 119,
+  "fixed_public_verify": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-fixed-verify-command.json",
+    "sha256": "f7a59370553ed2b402f0c97db207fdf7d852ea6e701e60e60d0ef5e7a9535a7c"
+  },
+  "owner_packet": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/owner-packet-fix-xy.md",
+    "sha256": "4262b884dccc10a10b53a43e1a96e00167a5557b85f88802c324414410c29870"
+  },
+  "hypothetical_operation_packet": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/hypothetical-operation-packet-fix-xy.json",
+    "sha256": "f73ae15d838964318f248c4ffe20339f7cafbe90ed17fbf60a841ed9bc356ed2"
+  },
+  "deviations": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-deviations.json",
+    "sha256": "144c172856b90cdbc23c6cc5f631da6068b5a17b6963b05a74bea5e61fea1647"
+  },
+  "owner_guard_status": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-owner-guard-status.json",
+    "sha256": "b578fb2ad4419f3f089da281f209361756b5a2393daf1b08ca2f8118a6c5c8da"
+  },
+  "actor_tree": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-actual-actor-tree.json",
+    "sha256": "9a80b1270697e484bb0e406ed5e49e813901bec7f5c3a235d7fb13b45105b1c1"
+  },
+  "historical_evidence_qualification": "First owner packet/checkpoint and all prior reports/raw receipts immutable. First return alias mismatch explicitly qualified by actual native first terminal. Historical55/35-only current reuse claims incomplete and not substituted for renewed current55. Historical Node executable bytes not reconstructed; current11 source support plus current executable selection retained with limits.",
+  "authority_scope": "REHEARSAL_ONLY exact X/Y; actual Git/commit/push/PR/merge/rebase/cherry-pick/remote/landing/adoption/Alpha NONE",
+  "actual_local_commit_ids": [],
+  "self_lifecycle": "Intentional final owner-wait response immediately after saving packet; actual self native completion must be observed by parent, not fabricated in preterminal file.",
+  "owner_packet_correction": {
+    "kind": "one factual copied historical checkpoint SHA mention",
+    "record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-owner-packet-mention-correction.json",
+    "prior_packet_preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/history/S6-FIX-XY-COMMIT-READY-WAIT-02/owner-packet.md",
+    "corrected_current_packet_history": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/history/S6-FIX-XY-COMMIT-READY-WAIT-02/owner-packet-correction-1.md",
+    "source_check_runtime_changed": false
+  }
+}

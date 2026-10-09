@@ -1,0 +1,269 @@
+# Commit Supervisor — design discussion and implementation handoff
+
+> Current role name: **Commit Supervisor**, under [D-024](decisions.md#d-024--commit-supervisor-and-one-integrated-workflow-spec). Review and Merge below is the historical name used by the original discussion and currently installed identifiers. The executable workflow will be specified in [SPEC-COMMIT-SUPERVISOR-01](planning/commit-supervisor/SPEC.md); writing that SPEC does not install or run it.
+
+Recorded by **Codex side chat (ephemeral)** on 2026-10-03, America/Los_Angeles.
+
+This document captures the owner's direction and the proposed workflow from the side conversation. The owner initially requested implementation, then redirected the task: “Let's just create a thorough markdown file of what we discussed and I will hop back into the main chat.” This is a design handoff. No new profiles, skills, review runs, integration candidates, commits, pushes, app launches or monitoring cycles were created by this task.
+
+Read this alongside [the earlier hierarchy handoff](review-and-merge-handoff.md). That file describes the surrounding planning and implementation hierarchy; this document develops the Review and Merge branch. Where they differ, the newer owner direction recorded here governs this branch. Unrelated planning, per-SPEC acceptance and monitoring rules remain intact.
+
+## Owner's intended experience
+
+The owner wants to enter at the end, inspect the proposed result, use the running development app, and say either **commit** or **fix X and Y**.
+
+The integration agent should do the necessary investigation, reviews, final corrections and Wiki updates before that handoff. It should apply the owner's established heuristics and intent without asking the owner to approve every technical deviation from the SPEC. A technically suboptimal implementation should be corrected where the evidence and assignment support that correction.
+
+The owner's direction is especially relevant to statements such as “this is fine as long as you don't plan to…” and “at some point you should…”. If actual future plans make the limitation consequential, evaluate it now. If a necessary improvement has no better assigned upcoming build, there should be an evidenced reason for postponement. Vague future cleanup is insufficient.
+
+This does not authorize guessing missing product intent, implementing speculative future features or silently expanding into a different build. Necessary owner choices must be surfaced with the affected behavior and consequence. Technical judgment should be autonomous within established intent; genuinely unspecified intent remains explicit.
+
+The final response should mean: **the concrete candidate is ready to inspect and commit, its required reviews and checks are complete, and the development app is running from that candidate for owner testing.** A process launch alone does not establish readiness.
+
+## Existing definitions and source authority
+
+The following sources were inspected during the discussion:
+
+- [Review and Merge skill](.agents/skills/mc-review-and-merge/SKILL.md) and [profile](.codex/agents/mc-review-and-merge.toml): bounded intake, candidate preparation, integration evidence, owner wait before commit/push and publication receipts already exist.
+- [Local configuration](.codex/config.toml): existing local role registrations. This document does not add registrations.
+- [Local instructions](AGENTS.md), [session contract](session-contract.md), and [decisions](decisions.md): D-021 retains the owner publication gate, D-022 establishes independent planning worker-handoff reviews, and D-023 governs Mission Control's role and Status/Monitor cycle boundaries.
+- [SPEC review gate](.agents/skills/mc-spec-review-gate/SKILL.md): useful clean-room principles for material findings, fresh review, repair and preservation of valid evidence. Its approved-SPEC execution scope is distinct from this proposed integration workflow.
+- [Owner profile and design philosophy](../Wiki/000-Wiki_Guidance/005-User_Profile_Preferences_and_Design_Philosophy/PAGE.md): technical-debt judgment, reuse, module boundaries, implementation discretion and design preferences.
+- [Updating Wiki Content](../Wiki/000-Wiki_Guidance/003-Updating_Wikis/PAGE.md) and [Wiki Audit Workflow](../Wiki/000-Wiki_Guidance/004-Audit_Workflow/PAGE.md): page history, metadata, generated sections and staged audit rules.
+- [Sync Wiki Context](../Wiki/008-Workflows/001-Sync_Wiki_Context/PAGE.md): five research assignments and an accountable editor for refreshing the Wiki Guide when its structure or coverage changes.
+- [Wiki Update](../Wiki/008-Workflows/002-Wiki_Update/PAGE.md), [Wiki entry instructions](../Wiki/AGENTS.md), [shared Wiki session contract](../Wiki/.agents/wiki-session-contract.md) and [supervisor skill](../Wiki/.agents/skills/wiki-update/SKILL.md): the separate manually invoked Research → Repair → fresh independent Audit protocol. These sources were checked during the subsequent Wiki handoff reconciliation; reading them does not start a run.
+- Shared clean-room reviewer definition: `/Users/rccurtrightjr./.codex/agents/clean-room-reviewer.toml`.
+- Development restart procedure: `/Users/rccurtrightjr./.codex/skills/fusion-electron-restart/SKILL.md`.
+
+Source authority should be resolved for each actual integration job: current owner direction, applicable accepted SPECs and decisions, current Wiki/standards, checkout instructions, actual code and verification evidence. Old proposals and status labels cannot supply missing acceptance or publication authority.
+
+The active code-standards route is `ai/<machine>/Wiki/005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md`. The assigned reviewers and workers must read the relevant standards for the actual change. This side conversation did not perform a deep codebase or standards audit.
+
+The subsequent Wiki-design handoff identifies the local Wiki Update package above. Its current instructions confirm that it is distinct from Sync Wiki Context and from historical background wiki-manager procedures. The original uncertainty about an additional Wiki protocol now has a concrete source for further implementation work.
+
+**Wiki handoff reconciliation:** received from task `01a0e646-4503-72b1-9732-636244689e17`; checked against the local Wiki instructions, supervisor skill, workflow overview and session contract. The handoff attributes to the owner a manual entry: launch Wiki Update Supervisor, run a change-detection script, then coordinate autonomous research, repair and audit within that run. The current package verifies manual invocation and the role sequence; the proposed factual change-detection script is not implemented by this reconciliation. No new owner decision or invocation is inferred from the delegated message.
+
+Wiki Update owns bounded source research, disjoint article repair and fresh independent audit. Completion requires resolved in-scope material findings, a clean independent audit and matching final source/article hashes. Preserve complete `.versions/` preimages, timestamp actual edits only, keep implemented facts distinct from approved future direction and open choices, stage navigation generation in a disposable copy, and retain operational evidence in `.wiki-runs/`. This protocol has no Mission Control, post-commit dispatch or timer dependency.
+
+The handoff reports a September 27–28 inspection of `fusion-studio-server/scripts/wiki.js` and the server Wiki audit/tree libraries: the audit maintained navigation and `.audit-state.json`, rather than factual freshness; the CLI/server-root imports and hardcoded workspace/view dependencies complicate relocation. Those are dated observations, not a fresh code audit. Moving/decoupling that tooling into Wiki is separately scoped work. The old counts of 195 pages, 156 last-modified fields and 57 empty source lists likewise require refresh before use; empty source lists can be valid guidance.
+
+The proposed scan is read-only: compare `metadata.source-files` content hashes against each article's last factual-review source baseline, including relevant dirty/untracked inputs. Report changed/deleted/renamed sources, invalid metadata, unknown baselines and possibly undocumented new files. Metadata mapping is a starting point; research/audit must inspect omissions and affected callers/consumers. A source mutation indicates a review candidate, not proof that prose is stale. Successful factual review records the source fingerprints/baseline and page hash; scanning alone must not advance that baseline. A rebuildable index may accelerate detection, but these storage/status choices remain recommendations to refine.
+
+`metadata.last-modified` describes an actual article edit, including navigation or frontmatter changes; it is not a factual-verification date. Date comparison can bootstrap candidates but cannot reliably cover uncommitted changes. Missing review baselines remain unknown, with no invented timestamps. Keep detection separate from navigation-writing operations. No script was moved/implemented and no Wiki Update run was started by the originating handoff or this reconciliation.
+
+## Proposed hierarchy
+
+The owner proposed a Code Review Orchestrator with Standards Compliance, Forward Compatibility, Integrations & Dependencies and Wiki Impact responsibilities. The expanded structure below is the implementation proposal, including an explicit behavior/verification lens and separate repair workers.
+
+```text
+Mission Control
+└── Review and Merge — existing mc-review-and-merge
+    ├── Intake, integration-unit assessment and recovery checkpoint
+    ├── Initial Code Review Orchestrator — proposed subordinate manager
+    │   ├── Fresh Behavior & Verification reviewer
+    │   ├── Fresh Standards Compliance reviewer
+    │   ├── Fresh Integrations & Dependencies reviewer
+    │   ├── Fresh Forward Compatibility reviewer
+    │   ├── Fresh Wiki Impact reviewer
+    │   └── Fresh conditional specialist(s), when the change warrants them
+    ├── Bounded implementation worker(s)
+    │   └── Manager-assigned fresh worker-handoff review
+    ├── Bounded Wiki update worker
+    │   └── Manager-assigned fresh documentation-handoff review
+    ├── Final Code Review Orchestrator — fresh final evaluation
+    │   └── Fresh reviewers covering the complete final candidate
+    ├── Development app launch and runtime verification
+    ├── Owner checkpoint — waiting-owner, ready to inspect and commit
+    └── Only authorized publication and integration receipts
+```
+
+Review managers coordinate evidence and findings. Reviewers inspect; implementation and Wiki workers edit their assigned files. Review managers do not certify edits they authored. Workers do not acquire authority to launch wider builds, manage Mission Control or approve publication.
+
+These are responsibilities and proposed execution roles, not a claim that every child profile is installed. A separate profile for each review lens is probably unnecessary: the existing clean-room reviewer can receive a precise lens-specific assignment. A reusable Code Review Orchestrator and a bounded integration worker may provide the needed separation. Profile names and packaging remain implementation choices for the main chat.
+
+The existing roadmap hierarchy stays separate. Planning worker-handoff, stage and release validation do not certify executable code. The Implementation Supervisor's final-roadmap review remains necessary in its own workflow; the combined integration candidate still requires this integration review.
+
+## Intake and recoverable checkpoint
+
+When an integration request arrives, establish the job before making repairs. Record accepted work IDs, whether the integration unit contains one or several SPECs, source and target baselines, prerequisite evidence, assigned checkout, writer ownership and the exact scope of permitted changes.
+
+A checkpoint is possible without creating a Git commit. Prefer preparing the candidate in an isolated checkout or preview while preserving the source checkout and shared target. Save a recovery manifest and the assigned input preimages before preparation. Include tracked dirty input, relevant untracked input and any existing staged changes that affect the candidate; a HEAD SHA alone cannot identify uncommitted work.
+
+The recovery manifest should identify:
+
+- Repository root, actual checkout/worktree path, branch and HEAD.
+- Source commit IDs, target revision and applicable SPEC/decision revisions.
+- Owned paths and the existing dirty/staged/untracked state within the assignment.
+- Recoverable patch/copy locations, including binary files where applicable.
+- Input fingerprints and the method used to reproduce the candidate.
+- Other active writers or unrelated changes that must be preserved.
+- Runtime data used for testing and whether a separate fixture/profile snapshot exists.
+- The safe restoration procedure and its limits.
+
+Do not use an ordinary merge, cherry-pick, rebase or “checkpoint commit” before the owner's commit authorization. Some Git operations create commits indirectly. Preparation must also avoid advancing the shared target branch.
+
+Recovery means restoring the job's owned candidate to its recorded state, or abandoning an isolated preview while preserving its report. It does not mean resetting a shared checkout and erasing another writer's changes. If concurrent changes prevent safe restoration, stop and report the collision rather than force a reset.
+
+Code recovery and runtime-data recovery are different. A code checkpoint does not undo database migrations, external side effects or test writes to a real profile. Use authorized isolated fixtures where needed and record any additional recovery requirement before those effects occur. Preserve the development and Alpha databases; never imply that a patch backup protects them.
+
+## Initial review lenses and ordering
+
+First establish the candidate identity, authority, baseline and scope. Then review independent concerns in parallel where the runtime and assignment permit it. Review findings are consolidated before repair workers receive assignments.
+
+| Lens | Primary question | Expected evidence |
+|---|---|---|
+| Behavior & Verification | Does the combined candidate produce the intended behavior, and are the important failure and regression paths checked? | Accepted outcomes, relevant code paths, test results, meaningful gaps and reproducible failures. |
+| Standards Compliance | Does the implementation meet applicable code standards and owner design heuristics? | Specific rules, module boundaries, consistency with shared mechanisms and concrete maintainability consequences. |
+| Integrations & Dependencies | Are contracts, ordering, persistence and consumers compatible on the proposed target? | Changed interfaces, producers/consumers, migrations, conflict resolutions, blast radius and prerequisite release conditions. |
+| Forward Compatibility | Does this design obstruct or complicate actual known future work? | Accepted plans, established extension points, specific foreseeable incompatibility and the cost of leaving it unresolved. |
+| Wiki Impact | What documentation becomes inaccurate or incomplete, and what needs to change? | Canonical pages, source references, changed behavior, existing workflows and documentation obligations. |
+
+Conditional specialists should be commissioned when a concrete risk warrants them: security/trust boundaries, persistence/migration safety, performance/resource lifecycle, packaging or another affected domain. They should have bounded questions rather than a standing mandate to audit the whole application.
+
+Behavior & Verification is a proposed addition to the owner's four named lenses. Without it, a candidate could satisfy standards and documentation expectations while failing the intended user behavior.
+
+Forward Compatibility must distinguish known upcoming work from hypothetical future uses. It should identify brittleness created by real plans without inventing abstractions or implementing future features as part of review.
+
+Wiki Impact can identify obligations early. Final page edits should follow settled code repairs so the Wiki describes the final candidate. Dependent review work should not pretend to be independent merely to maximize parallelism.
+
+## Applying heuristics and disposing of deviations
+
+Routine technical deviations should be resolved by the agent using the owner's established intent and heuristics. Record the original SPEC expectation, the implemented correction, why it better satisfies the governing intent, and any dependency or verification effect. Reporting a deviation does not automatically make it an owner approval request.
+
+The working preference is to resolve evidenced avoidable debt now when the assignment can safely do so. Reuse established mechanisms; fix known contract weaknesses and misleading documentation; avoid creating a brittle seam that actual upcoming work will immediately have to undo.
+
+A deferral needs a concrete reason. Suitable evidence could be a named approved SPEC that owns the same correction, a prerequisite that makes a safe fix impossible now, or a boundary where the desired behavior is not yet decided. Include the responsible work item and observable release condition. “Someone should improve this later” is not a disposition.
+
+Autonomy has a boundary. If a repair requires choosing previously unspecified product behavior, incompatible user semantics, a different architectural direction or a materially expanded integration unit, surface that issue. The main agent should recognize missing intent itself; it must not rely exclusively on a reviewer to find it.
+
+Advisory recommendations can remain without blocking a gate when they are speculative or optional. Concrete violations of accepted standards, known intent or necessary compatibility obligations are material. Make the owner's debt preference part of the review assignment so it is evaluated as an actual requirement, not presented as unsolicited polish.
+
+## Consolidated repair and Wiki updates
+
+The Code Review Orchestrator returns an evidence-backed findings ledger. Review and Merge reconciles overlapping findings and contradictions against source authority, then assigns a coherent repair packet. Do not give workers competing fixes for the same files.
+
+Implementation workers own bounded files and outcomes. They receive relevant sources, applicable heuristics, candidate identity, findings, dependency contracts and verification requirements. They preserve other sessions' changes, self-check their work, record technical deviations and return exact changed-file and verification evidence.
+
+Their substantive outputs require manager-assigned independent handoff review before acceptance. This review asks whether the repair satisfies its specific assignment and whether its report is trustworthy. It does not replace evaluation of the complete final candidate.
+
+If multiple workers are useful, separate their write scopes and coordinate shared seams explicitly. A single worker is preferable when fixes are tightly coupled. The hierarchy supports parallelism where ownership and dependencies permit it; it does not require artificial splitting.
+
+The Wiki worker receives the settled behavior and the Wiki Impact report. Follow current page update and audit rules:
+
+- Preserve a complete preimage under `.versions/` before a substantive page rewrite.
+- Maintain current frontmatter and actual UTC modification times on edited pages.
+- Update source references and affected cross-links.
+- Preserve generated marker blocks; use the documented staged audit/generation procedure.
+- Import only intended generated changes, excluding audit runtime state.
+- Validate the changed pages and report the actual coverage checked.
+
+Use Sync Wiki Context when changes affect the Wiki Guide's structure or coverage. Its five read-only research assignments and accountable editor are a specific workflow, not a requirement to refresh the entire Guide for every code change. The existing Document Sweep skill reviews Launchpad documentation; it is not a substitute for canonical Wiki editing.
+
+Use the Wiki Update package as the source for its separately assigned research/repair/audit procedures and article rules. Its full supervisor run remains manually invoked; the Review and Merge design does not add automatic Wiki Update dispatch, timers or a post-commit hook. An integration job's bounded Wiki editing/review can follow those procedures without claiming that the separate full Wiki Update run occurred. Once factual change detection exists, its candidate list can inform Wiki Impact; required integration documentation coverage cannot depend solely on declared source mappings or an unknown scan baseline.
+
+## Clean-room gates and repair loop
+
+Use clean-room discipline at distinct junctures, with the question appropriate to each gate:
+
+| Gate | What it establishes |
+|---|---|
+| Initial review | The proposed integration's defects, obligations and repair needs against its actual authority and baseline. |
+| Implementation worker handoff | The bounded repair satisfies its assignment and supplies usable evidence. |
+| Wiki worker handoff | Changed documentation accurately describes the settled behavior and follows the applicable Wiki procedure. |
+| Final combined-candidate review | The complete repaired code, integration decisions, Wiki changes and verification evidence satisfy the integration unit. |
+| Runtime verification | The development app actually runs from the reviewed candidate and supports the owner's acceptance testing. |
+
+The final combined review is independent of the initial reviewers and of the repair workers. It must cover all applicable lenses and changed seams, including documentation. Whether that uses several fresh lens reviewers or a fresh combined reviewer plus risk specialists can be decided from scope, but coverage cannot silently disappear.
+
+Reviewers start fresh without the author's conversation, another reviewer's history or a desired verdict. Give them the original authority, bounded assignment, current candidate and raw evidence. Review managers retain the ledger and reconcile findings after receiving the independent reports.
+
+A material finding should state the violated requirement or necessary missing intent, direct evidence, affected scope and concrete consequence. Preserve raw reviewer output and its disposition. A green self-check is not an independent gate.
+
+After material findings, repair forward and commission fresh review of the repaired scope. Preserve valid unaffected evidence, but recheck changed dependencies and shared seams. A fresh final review must still assess the complete assembled result. Do not manufacture a pass by imposing an arbitrary review-count ceiling. Stop after the first materially clean applicable pass; do not request endless confirmation reviews.
+
+Missing review capability, missing required evidence, unresolved material defects and missing necessary intent are explicit unmet gates. Do not rename them “ready”. Intentional owner or dependency waits must not be restarted as failed runs.
+
+This side conversation prohibits subagents, so no independent review was performed here. The main chat must distinguish implementation of these definitions from live evidence that the workflow works.
+
+## Candidate identity and evidence invalidation
+
+Every check and review must identify the candidate it evaluated. Include the target baseline, source revisions, owned changed-file list and reproducible fingerprints for uncommitted content. Record relevant build/test commands, results, logs and skipped checks with reasons.
+
+Changes after review can invalidate evidence: repairs, new source commits, target advancement, generated documentation changes or changed runtime/configuration assumptions. Compare the current candidate and target to the gate's recorded inputs before the owner handoff and again before an authorized publication operation.
+
+Re-evaluate the affected scope when an input changes. Avoid repeating unrelated checks whose validity is preserved, but do not reuse a clean verdict for different bytes or different integration seams. If the owner requests fixes after testing, reopen the repair loop and issue an updated acceptance packet.
+
+## Final development-app handoff
+
+Once code, Wiki and the final review are settled, use the existing Fusion Electron development restart procedure for the intended candidate checkout and machine identity. The procedure rebuilds and starts the development app and server; it is distinct from Alpha deployment.
+
+Verify the actual checkout and runtime identity, the server's startup/health, renderer connection and relevant candidate behavior. Record the server URL, logs, build result and any remaining testing limits. Verify that required generation or startup did not alter reviewed source bytes without a corresponding recheck.
+
+The owner receives a concise “ready to commit” response with:
+
+- What changed and why, including consequential autonomous corrections.
+- Where the candidate lives and which app/server is running.
+- What to inspect or exercise in the app.
+- The completed review/check summary and any remaining advisory notes.
+- The detailed report location and recovery checkpoint.
+- The exact next action awaiting the owner's decision.
+
+If the app cannot launch correctly, readiness remains unmet. A clean static review cannot substitute for the promised running-app handoff.
+
+The task then enters `waiting-owner` and ends its turn. Do not keep a polling loop active, restart the task for inactivity or treat the owner's deliberation as failure.
+
+## Owner approval, publication and dependencies
+
+The gate precedes **every commit-producing operation and push**. Preparation, clean reviews, Full Access, another agent's recommendation, Mission Control dispatch and an automation wakeup do not supply owner approval.
+
+If the owner says “commit”, follow that scope. Do not infer authority to push, publish a PR, merge it, deploy Alpha or accept the next SPEC. Verify the approved candidate and target are still current before acting; material changes require renewed evidence and an updated owner packet.
+
+If the owner says “fix X and Y”, retain the checkpoint and candidate history, route the corrections, re-evaluate affected evidence and return to the same running-app approval gate.
+
+Where the authorized job includes publication, distinguish local commit, remote push, PR creation, PR merge and actually landed integration in the receipt. Attach a created PR through the existing Codex artifact workflow. After a successful Fusion Studio GitHub push, ask the repository-required Alpha follow-up; do not perform Alpha work without current confirmation.
+
+A completed SPEC is not automatically a complete integration unit. Accepted criteria and dependencies determine whether several SPECs must land together. Conversely, unrelated work should not be held without evidence that it belongs to the same unit.
+
+Only actual landed integration can satisfy a landing dependency. Consumer adoption needs its own evidence. Name the affected roadmap/consumer and release condition; a bulletin entry is not delivered notification. Send messages or create follow-on tasks only under the applicable explicit authority and supported communication rules.
+
+Mission Control's D-023 cycle remains separate: it stops before its next action and on a tracked build completion, including a Review and Merge handoff. This integration workflow does not silently re-arm monitoring or remove a supervisor's per-SPEC owner checkpoint.
+
+## Durable job records and recovery
+
+Use an owned job folder, for example `jobs/review-and-merge/<job-id>/`, under the assigned controller home. This path is a proposal, not an existing live job. Review and Merge owns its job records; Mission Control owns central monitoring and dispatch summaries.
+
+Suggested records are:
+
+| Record | Contents |
+|---|---|
+| Assignment | Job/work IDs, verified task identity, authority, controller home, product checkout, integration unit, writer scope, prerequisites and report destination. |
+| Checkpoint | Source/target identity, input preimages, fingerprints, recovery method, runtime-data limits and preserved unrelated changes. |
+| Findings ledger | Finding ID, gate/lens, authority, evidence, consequence, repair owner, disposition, resulting bytes and recheck evidence. |
+| Verification log | Exact commands, candidate identity, results, logs, skipped checks and invalidation decisions. |
+| Owner packet | Resulting behavior, important changes, reviews, running-app details, recovery point and precisely proposed Git operations. |
+| Publication receipt | Owner authorization source, actual commits/destinations/PR, landed baseline, adoption status and unresolved holds. |
+| Resume checkpoint | Current phase, active writers, pending gate, last safe state, next action and observable release condition. |
+
+Possible phases include intake, initial-review, repair, wiki-update, final-review, runtime-check, waiting-owner, waiting-dependency, unmet-gate and authorized-publication. These are proposed workflow states, not new central registry values. Choose schema names consistently when implementing.
+
+A successor reads the job packet, establishes whether prior workers are active and confirms the candidate and authority before resuming. It must not duplicate writers, interpret an expected wait as failure or repeat already valid work solely because the previous context filled.
+
+Keep session identity separate from work identity. Use only verified task UUIDs. An ephemeral side chat must not invent one or register itself as the operational Mission Control task.
+
+## Implementation work for the main chat
+
+The next work is workflow setup, not a live product integration:
+
+1. Reconcile this newer design with the existing Review and Merge skill/profile and the earlier hierarchy handoff.
+2. Put the durable authority, checkpoint, review, repair, Wiki, runtime and owner-gate contract in an appropriate shared reference; keep entry skills concise.
+3. Define the Code Review Orchestrator and bounded editing responsibility. Reuse the shared clean-room reviewer for precise lenses rather than adding a profile for every heading.
+4. Add explicit worker-handoff and final combined-candidate clean-room gates, including fresh-review rules, materiality, evidence invalidation and failure/wait behavior.
+5. Wire current Wiki article procedures, the identified manual Wiki Update protocol and the development restart procedure. Preserve manual Wiki Update activation; relocating/decoupling its script and implementing factual change detection are separate work, not implicit prerequisites or delivered features of this setup.
+6. Add job templates and scoped local skill/profile registrations. Preserve invoking model/effort, existing roles and side-chat limitations.
+7. Record the new owner direction and update affected instructions, session contract, deployment, handoff, TODO and static index without disturbing parallel assignments.
+8. Validate skill metadata, configuration references, links and the working-memory index.
+9. Run an isolated rehearsal in an authorized main session: intake checkpoint, a material finding, bounded repair, independent re-review, Wiki update, running candidate, owner wait, fix request and safe recovery. Exercise failure cases without publishing or touching Alpha.
+
+MC-T09 remains open until the required workflow and isolated rehearsal are demonstrated. Static definition checks alone do not prove delegation, review independence, recovery or the final app handoff.
+
+No implementation was carried out in this side conversation after the owner redirected the task to this document. The main chat can use this file as the concrete discussion record and implementation starting point.

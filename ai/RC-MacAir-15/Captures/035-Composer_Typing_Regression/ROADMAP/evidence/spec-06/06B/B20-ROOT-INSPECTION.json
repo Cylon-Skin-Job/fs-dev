@@ -1,0 +1,30 @@
+{
+  "at": "2026-09-27T03:33:25.435556+00:00",
+  "source": {
+    "count": 1957,
+    "manifestSha256": "326555b1e0b465e19a0170a2e032dcac0e02b51ee9f6f80048425ceea3bff9c8",
+    "mismatches": []
+  },
+  "build": {
+    "count": 200,
+    "manifestSha256": "b070d633863382e48ea2f6d677a92cfe65b9a4dea79caa87975711c109c70b03",
+    "mismatches": []
+  },
+  "exactDeltaMatches": true,
+  "changedPaths": [
+    "fusion-studio-client/e2e/app-composition-keys.spec.ts",
+    "fusion-studio-client/e2e/chat-surface-isolation.spec.ts",
+    "fusion-studio-client/src/components/App.tsx",
+    "fusion-studio-client/src/components/ChatInput.tsx",
+    "fusion-studio-client/src/lib/composition-key.ts"
+  ],
+  "predecessorMismatches": [],
+  "browser": {
+    "command": "node node_modules/@playwright/test/cli.js test e2e/chat-surface-isolation.spec.ts e2e/app-composition-keys.spec.ts --config playwright.chat-architecture.config.ts",
+    "cwd": "fusion-studio-client",
+    "exit": 0,
+    "passed": 23,
+    "durationSeconds": 8.6,
+    "skipped": 0
+  }
+}

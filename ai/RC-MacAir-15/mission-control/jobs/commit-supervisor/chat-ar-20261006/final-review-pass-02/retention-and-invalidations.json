@@ -1,0 +1,279 @@
+{
+  "at": "2026-10-06T23:09:56.338522+00:00",
+  "previous_tree": "1befa26e94a3487ef91d309665ff389b2e959b65",
+  "current_tree": "1c80f83c6c4b2b61e42c4dbb988c1f942b672ade",
+  "exact_delta": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md",
+      "before": [
+        "100644",
+        "ccf1ac39cab5c67b756b2c86665f67ebc493361f"
+      ],
+      "after": [
+        "100644",
+        "441285d978daaee194b9c9cdfb864cff4a80b731"
+      ]
+    }
+  ],
+  "current_bindings": "current-byte-inspection.json",
+  "retained_raw_reports": [
+    {
+      "path": "retained-code-raw.md",
+      "identity": "/root/chat_commit_final_review/final_code",
+      "covered_original_tree": "1befa26e94a3487ef91d309665ff389b2e959b65",
+      "scope": "Code/runtime evidence lenses; all code/config/test/fixture dependencies unchanged",
+      "sha256": "62b7e3183b8a00728b44f42bc6c01c4f10bb053d776d1772a6b4bad0d002089f"
+    },
+    {
+      "path": "retained-docs-raw.md",
+      "identity": "/root/chat_commit_final_review/final_docs",
+      "covered_original_tree": "1befa26e94a3487ef91d309665ff389b2e959b65",
+      "scope": "Whole documentation/package coverage EXCLUDING current restart article and affected publication closure; historical finding preserved unchanged",
+      "sha256": "6da8085c3068514b7482bbf5477cdbbb4180d56fcf73dc5c11fcfda7ebfff4c2"
+    }
+  ],
+  "retained_claims": [
+    "Pass-01 code review clean for unchanged code/test/config/fixtures, not a relabeled whole-tree prior review",
+    "Pass-01 broader documentation/static JSON/history/current Wiki/source/link closure except affected article; exact sole article tree delta and unchanged 1668 dependency rows",
+    "34 focused screenshot/106 cumulative renderer checks and client build; all 17 raw logs hash-match, 4 cumulative oracles and existing reader exact EOF trim proof unchanged",
+    "Original 19focused186pass/221server3265pass/oneexistingKimiTODOskip/nativepretest; guarded realserver two lanes; original owner OpenCode 2 new chats/3 exchanges/passive reopening on unchanged 832 server/Electron dependencies",
+    "Five original planning JSON companions and all authority/standards exact; source original 1659 rows unchanged; previous original746-source comparison receipt remains immutable",
+    "Five article Wiki handoff and seven full adjacent histories; 19 affected pages/199 sources/seven new version dependencies exact",
+    "Original/repair/FIN-D01/screenshot deviation dispositions retained with existing residual limits"
+  ],
+  "invalidated_claims": [
+    {
+      "claim": "Pass-01 whole-candidate final identity",
+      "reason": "New tree and ownership selector identity, replaced by maintained pass-02 final current-byte gate; prior result remains findings on prior tree"
+    },
+    {
+      "claim": "Pass-01 current restart article publication claims/metadata/source dependencies",
+      "reason": "Exact target baseline article restored; current article removed from publication selectors. Fresh independent affected current review required"
+    },
+    {
+      "claim": "Earlier 26-focused cancellation/build and historical cumulative gesture/capability failures",
+      "reason": "Still superseded by current34/106/build; no new invalidation or relabel"
+    }
+  ],
+  "reruns": [],
+  "proportionate_skips": [
+    "No broad code/server/browser suites or build reruns for sole exact-baseline Markdown exclusion; unchanged dependency readbacks justify retention",
+    "No archival scripts, historical claim recertification, raw Capture035 diagnostics, broad native/provider/runtime operation",
+    "No navigation generation: no title/link/description change; affected live navigation inspected by fresh reviewer",
+    "Canonical app/native capture/current Wiki rendering remain later root runtime handoff"
+  ],
+  "limits": {
+    "current_renderer": "34focused/106cumulative/build exit0 raw hash checked; sole pure-reader EOF trim retained on independent exact equality proof",
+    "retained_original": "19focused186pass;221server3265pass+oneexistingKimiTODOskip+nativepretest; guarded actualserver2lanes; original realownerOpenCode2NewChat3exchanges/passivereopen",
+    "dependencies": "832server/Electron comparisons+4originaloracles exact;746source manifest current/prefix comparisons exact;5planningJSON exact; affected screenshot/Wiki checks separately renewed",
+    "wiki": "19focusedpages/5changed/7versionpreimages/199files/304source refs/115links;2navigation runs recorded;419publicationJSON parses and225staged Wiki bindings independently checked",
+    "invalidated": "Earlier pre-retained-view build/26focused and failed gesture/capability runs remain dated raw. No current clean claim from them. Source/target/config/fixture dependencies checked; no further drift found.",
+    "reviewer_reruns": "No tests/builds/runtime/archival execution by review team; read-only parsing/listing/hash/source inspection only, aside from disclosed write-tree exceptions",
+    "skip_limits": [
+      "Current candidate native app/capture/Wiki rendering separate later Supervisor gate",
+      "Configured fixture built-app boot test excluded; Electron capture/save ACK controlled",
+      "45minute soak unperformed and owner waived",
+      "Normal fixture owner-drain fallback is not unconditional graceful shutdown proof",
+      "FIN-D01 old developer DB physical/logical equality unproved; only fresh comparisons retained, background-write attribution remains inference; no copy/restore",
+      "Passive workflow runtime/nested spawning unverified;TOML manual inspection, tomllib unavailable",
+      "Historical relative locators outside published unit remain advisory; raw/static archival tools not executed"
+    ]
+  },
+  "prior_original_evidence_receipt_sha256": "b11ebf109d4c0dca7388170d61649afe6b89bb0b7bf30aa4e409d7fe680461b5",
+  "prior_seal": {
+    "seal_sha256": "724eb2948a9126b33272d25229c72ed8d9ee490e01052715e4398d7bc2da14ab",
+    "member_count": 13,
+    "mismatches": []
+  },
+  "leaf_seal": {
+    "seal_sha256": "2682b2df8a60c3a5f04c5fb0bb9d139978ac4d4c7b3c8200cf6c1b4e3b8e67ed",
+    "member_count": 83,
+    "mismatches": []
+  },
+  "all_prior_deviation_accounting": {
+    "original_accepted": [
+      "D-01",
+      "D-02",
+      "D-03"
+    ],
+    "repair_accepted": [
+      "DEV-R1-01",
+      "DEV-R1-02",
+      "DEV-R1-03",
+      "DEV-R2-01",
+      "DEV-R2-02",
+      "DEV-R2-03",
+      "DEV-R2-04",
+      "R3-D01",
+      "R3-D02",
+      "R3-D03",
+      "R3-D04",
+      "R3-D05",
+      "R3-D06",
+      "R3-D08",
+      "R3-D09"
+    ],
+    "repair_downstream_impact": [
+      "R3-D07"
+    ],
+    "measurement_accepted": [
+      "FIN-D01"
+    ],
+    "screenshot_current_accepted": {
+      "worker": "/root/screenshot_repair",
+      "classificationAuthority": "Commit Supervisor /root",
+      "deviations": [
+        {
+          "id": "SCR-D01",
+          "originalCriterion": "CHAT-AR-SPEC-01 A-03/R-04/S2/8.5 and CHAT-AR-REPAIR-01 section4 preserve direct capture, request-ID PNG acknowledgment, exact pending workspace/thread attachment, actual owner cancellation and independent views.",
+          "actualMechanics": "Resolve header Main owner from currentPanel qualified population/selection in one state snapshot, falling back to currentThreadId only when qualified Main is unavailable. Connected composer supplies exact view/group/thread/host and committed mount token. Revalidate all owners before capture and after each await.",
+          "reasonAuthority": "IR-CHAT-001 original raw reproduction shows qualified New Chat leaves Legacy null/prior; global-only comparator rejects visible composer. Manager validated correction under original authority.",
+          "files": [
+            "src/screenshots/chatScreenshotCapture.ts",
+            "src/components/chat/ConnectedChatComposer.tsx",
+            "src/components/chat/ChatSurface.tsx"
+          ],
+          "effectsChecks": "New Chat null/prior composer and header capture/path/owner checks, mismatched ACK rejection, actual owner cancellation, independent view tests; focused34 and cumulative106 pass.",
+          "risk": "No new durable identity or protocol; correct owners derive existing state and callback lifetime. Current screenshot controller is bounded to current workspace/qualified address.",
+          "downstreamConsumer": "Screenshot Capture/Composer Wiki and whole-candidate renderer runtime handoff; manager owns both.",
+          "proposedClassification": "accepted",
+          "classification": "accepted",
+          "managerReason": "Necessary bounded technical integration under existing owner screenshot preservation; current independent handoff and required checks clean; no new product intent."
+        },
+        {
+          "id": "SCR-D02",
+          "originalCriterion": "Preserve every existing rendered screenshot action under original screenshot contract; no Main-only owner limitation was approved.",
+          "actualMechanics": "Validate Side against exact open managed placement plus view/workspace/group/thread and mounted lifetime; explicit Main component uses hydrated session membership independently of same-view rail selection. Extract existing pure placement reader unchanged into lib/chat/side-chat-placements.ts and update its existing consumers.",
+          "reasonAuthority": "Manager clarified existing Side action and original original-spec scope. Existing reader in sideChatBridge imports UI/registration behavior; controller must reuse authoritative placement reader without introducing that import cycle or duplicating policy. Additional exact preimages captured before writes.",
+          "files": [
+            "src/lib/chat/side-chat-placements.ts",
+            "src/components/chat/sideChatBridge.ts",
+            "src/components/chat/useSideChatRailAdapter.ts",
+            "src/components/chat/ChatSurfaceComponentMount.tsx",
+            "src/screenshots/chatScreenshotCapture.ts"
+          ],
+          "effectsChecks": "Existing Side isolation/native/adapterless/placement-recovery/Move suites retained; exact session independent capture and placement-close/unmount cancellation checks pass. Fresh review01 independently found relocated parser byte equality before EOF trim.",
+          "risk": "Import relocation affects three existing consumers; all updated and client build/cumulative tests pass. No provider, persistence/schema, descriptor or UI capability added.",
+          "downstreamConsumer": "Side component consumer imports and Composer/Screenshot Capture docs; no new external caller.",
+          "proposedClassification": "accepted",
+          "classification": "accepted",
+          "managerReason": "Necessary bounded technical integration under existing owner screenshot preservation; current independent handoff and required checks clean; no new product intent."
+        },
+        {
+          "id": "SCR-D03",
+          "originalCriterion": "Cumulative composer/component checks must use accepted current source contracts and preserve prompt/threadId/no persisted-or-outbound surfaceId invariant.",
+          "actualMechanics": "Correct two stale screenshot-menu source assertions to accepted explicit footer prop names. Install existing product-send capability for the component-registration fake socket lifecycle, matching current production admission. Keep all original behavioral invariants/assertions.",
+          "reasonAuthority": "Existing footer already used explicit onAddAttachment/onInsertText before this repair. Initial cumulative failure correctly refused prompt because the old isolated fixture lacked transport admission capability. Manager froze/verified both additional test leaves and authorized bounded mechanics.",
+          "files": [
+            "e2e/chat-composer-screenshot-menu.spec.ts",
+            "e2e/chat-component-registration.spec.ts"
+          ],
+          "effectsChecks": "Historical cumulative97pass/1fail retained. Component rerun7pass and final cumulative106pass; source invariant unchanged.",
+          "risk": "Test-controlled authenticated binding represents fixture lifecycle only; no raw production-send bypass or real provider proof inferred.",
+          "downstreamConsumer": "Current architecture regression lane; no product changes from fixture repair.",
+          "proposedClassification": "accepted",
+          "classification": "accepted",
+          "managerReason": "Necessary bounded technical integration under existing owner screenshot preservation; current independent handoff and required checks clean; no new product intent."
+        },
+        {
+          "id": "SCR-D04",
+          "originalCriterion": "IR-CHAT-001 cancellation on actual owning view/activity change during capture and save applies even when content chat component remains mounted.",
+          "actualMechanics": "Require shell currentPanel for string owning-view Main and Side owners. Connected screenshot token observes that existing active-view owner so leave/return invalidates the prior async capture. Null/Legacy intentional contexts stay explicit. Add eight tests over real retained WorkspacePanel/ContentArea/ViewTabBar/resolver/component mounts, changing only actual setCurrentPanel while same surfaceId and open placement remain.",
+          "reasonAuthority": "Fresh independent screenshot-handoff-01 material finding and manager validation of actual caller chain; old useChatSessionHost default activity remains true when WorkspacePanel hides retained ContentArea. Exact current correction preimages captured and verified before edits.",
+          "files": [
+            "src/screenshots/chatScreenshotCapture.ts",
+            "src/components/chat/ConnectedChatComposer.tsx",
+            "e2e/threaded-chat-host.spec.ts"
+          ],
+          "effectsChecks": "Earlier26pass/build cannot establish retained-view cancellation. Corrected focused34pass plus final cumulative106pass and rebuilt client succeed; no mocked activity/unmount substitute in the new eight tests.",
+          "risk": "Screenshot lifetime observes existing shell view identity; same-view unrelated Main selection remains independent for Side/explicit Main session. No guessed null-view policy or broad host/UI activity change.",
+          "downstreamConsumer": "Fresh handoff02, manager Wiki correction and current renderer runtime handoff.",
+          "proposedClassification": "accepted",
+          "classification": "accepted",
+          "managerReason": "Necessary bounded technical integration under existing owner screenshot preservation; current independent handoff and required checks clean; no new product intent."
+        },
+        {
+          "id": "SCR-D05",
+          "originalCriterion": "Preserve current reviewed/tested identities and expose any final byte change and check limitations truthfully.",
+          "actualMechanics": "Root authorized trimming only one final extra newline from the new reader after saving exact pretrim bytes. Readback verifies pretrim == final + newline; runtime tokens/statements/imports/assertions unchanged.",
+          "reasonAuthority": "Final no-index whitespace check identified new blank line at EOF. Root coordinated review02 and explicitly retained functional106/34/build checks for this sole semantic-neutral trim; canonical runtime later rebuilds.",
+          "files": [
+            "src/lib/chat/side-chat-placements.ts"
+          ],
+          "effectsChecks": "Initial no-index exit3 warning preserved; final output empty, exit1 for new-file difference, whitespace failure bit absent. Pretrim hash93878e20774164e6c0e5840caba3ffcb0c135829e08d945500bf8ad72ddad7b9; final109d5f63baf402c39dddf8cc96a93a95d2108e1988fca5dca99a7ad263b417e1.",
+          "risk": "No behavioral change. Tests/build used pretrim identity and are explicitly retained on exact one-byte comparison; no false current-byte relabel.",
+          "downstreamConsumer": "Review02 rehash and manager current runtime rebuild.",
+          "proposedClassification": "accepted",
+          "classification": "accepted",
+          "managerReason": "Necessary bounded technical integration under existing owner screenshot preservation; current independent handoff and required checks clean; no new product intent."
+        }
+      ]
+    },
+    "wiki_extension": {
+      "classification": "accepted bounded mechanical recovery extension",
+      "effect": "5scopedarticle edits/7completeadjacentpreimages;2generatedEventsdescriptions;14retainedfocusedpages; root recovery/landing includes seven leaves",
+      "authority": "Manager owned Wiki handoff packet and exact current recovery inventories",
+      "limit": "No generated Guidance/emptylegacySystemManager adoption; no runtime claim"
+    },
+    "operational_deferral": {
+      "finding": "OTHER-MD-02",
+      "paths": [
+        "ai/RC-MacAir-15/mission-control/launchpad/chat-harness-repair-and-testing/AGENTS.md",
+        "ai/RC-MacAir-15/mission-control/launchpad/chat-harness-repair-and-testing/index.json",
+        "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/AGENTS.md",
+        "ai/RC-MacAir-15/mission-control/launchpad/governed-events-and-ledger/AGENTS.md",
+        "ai/RC-MacAir-15/mission-control/launchpad/governed-events-and-ledger/index.json",
+        "ai/RC-MacAir-15/mission-control/launchpad/plugin-foundation/AGENTS.md",
+        "ai/RC-MacAir-15/mission-control/launchpad/plugin-foundation/index.json",
+        "ai/RC-MacAir-15/mission-control/launchpad/plugin-views-and-provisioning/AGENTS.md",
+        "ai/RC-MacAir-15/mission-control/launchpad/plugin-views-and-provisioning/index.json"
+      ],
+      "source_unchanged": true,
+      "current_source_preimages_preserved": "frozen-source-inventory.json and initial-review raw inventories",
+      "candidate_action": "new8leaves absent; trackedChat AGENTS restored to3356 baseline",
+      "resolver": "separate MC framework owner acceptance and closed dependency unit",
+      "baseline_missing_routes": "pre-existing trackedChat routes remain disclosed; not a new active package"
+    },
+    "publication_companion_closure": {
+      "classification": "accepted packaging correction",
+      "effect": "Five exact original planning/acceptance JSON companions added without rewriting original authority; all other planning subtree files retained",
+      "evidence": "planning-authority-closure-readback.json"
+    },
+    "new_process_exceptions": [
+      {
+        "id": "FINAL-PROC-CODE-001",
+        "actor": "/root/chat_commit_final_review/final_code",
+        "command": "git write-tree",
+        "scope": "isolated candidate index/object namespace",
+        "result": "returned pre-existing supplied tree1befa26e94a3487ef91d309665ff389b2e959b65",
+        "classification": "disclosed review-process exception",
+        "effect": "No observed work-product, index semantic/raw current observation, source raw index or product-ref drift; entire object-store byte equality not established."
+      },
+      {
+        "id": "FINAL-PROC-DOC-001",
+        "actor": "/root/chat_commit_final_review/final_docs",
+        "command": "git write-tree",
+        "scope": "isolated candidate index/object namespace",
+        "result": "returned pre-existing supplied tree1befa26e94a3487ef91d309665ff389b2e959b65",
+        "classification": "disclosed review-process exception",
+        "effect": "Same subsequent direct no-drift findings; no unconditional zero-write-capable-command claim."
+      }
+    ],
+    "new_product_review_finding": "FINAL-DOC-001 remains open; selected restoration not yet performed",
+    "full_field_sources": [
+      "candidate planning/startup-integrity-repair/implementation/final-integration/COMPLETE-DEVIATION-AND-PATH-APPENDIX.md",
+      "candidate planning/startup-integrity-repair/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "candidate planning/chokidar-retirement-and-harness-launch/spec/implementation/SLICE-AND-DEVIATION-LEDGER.md",
+      "job/accepted-screenshot-deviations.json",
+      "job/wiki-editor/coverage.json and current-byte-evidence.json"
+    ],
+    "downstream": "R3-D07 preserves current versus dated receipt selection; new baseline article deferral follows separate pending support package. No feature or publication authority granted."
+  },
+  "new_restoration_deviations": {
+    "classification_authority": "Commit Supervisor /root accepted fresh handoff restart-wiki-handoff-acceptance.json",
+    "product": "Exact target baseline assembly exclusion in place of prose rewrite; legacy metadata/empty source-files/no timestamp unchanged; no new version required because full immutable preimage preserved; source current article and dated versions unchanged",
+    "process": "Restoration leaf disclosed one pre-GO git write-tree returning pre-existing1bef tree; no semantic/raw index/ref/product drift observed; entire object-store equality not established. Fresh handoff reviewer initial source rev-parse omitted optional-locks env, no index refresh and exact protected source index later verified. No new pass-02 metadata-writing Git commands",
+    "evidence_limits": "Leaf parser fallback/output limits fully disclosed in sealed raw records; affected actual check succeeded; preparation raw conversation logs not invented as retained files",
+    "downstream": "Deferred current article and five support files remain separate pending cohesive MC setup acceptance; no new MC adoption, publication feature or runtime health claim"
+  }
+}

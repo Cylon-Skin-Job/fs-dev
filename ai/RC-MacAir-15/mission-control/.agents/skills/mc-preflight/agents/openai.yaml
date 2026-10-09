@@ -1,0 +1,4 @@
+interface:
+  display_name: "MC Preflight"
+  short_description: "Check readiness for First Draft or Roadmap Creation"
+  default_prompt: "Use $mc-preflight inline to assess this workfolder or supplied packet for the intended First Draft or Roadmap Creation handoff, preserving open questions and returning readiness without dispatching work."

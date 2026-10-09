@@ -1,0 +1,33 @@
+[
+  {
+    "page": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+    "version": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/.versions/2026-10-06-151519.md",
+    "version_preimage_kind": "absent",
+    "absence_verified_at": "2026-10-06T22:15:19.053279+00:00",
+    "preimage_sha256": "6479876356a66d6d654a2987eaa1acce410365149e1277f7a08daf8b8642b0be",
+    "preimage_bytes": 4767,
+    "preimage_mode": "0o644",
+    "reason": "Self-check clarified destination-change cancellation versus view-bound Main selection; Side and explicit component captures remain independent of outer Main selection.",
+    "old": "A workspace, owning-view, selected Main Chat or session change cancels attachment.",
+    "new": "A change to the destination workspace, owning view or chat session cancels attachment; changing the selected Thread group also cancels a view-bound Main capture.",
+    "version_readback_sha256": "6479876356a66d6d654a2987eaa1acce410365149e1277f7a08daf8b8642b0be",
+    "version_readback_mode": "0o644",
+    "final_sha256": "57b85d4acc3034dbc2a64fec9994effa98386419d41bcd6dcc526fbcd6a96d18",
+    "last_modified": "2026-10-06T22:15:19Z",
+    "final_bytes": 4846
+  },
+  {
+    "page": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md",
+    "version": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/.versions/2026-10-06-151519.md",
+    "version_preimage_kind": "absent",
+    "absence_verified_at": "2026-10-06T22:15:19.053468+00:00",
+    "preimage_sha256": "47d4dd1f4033cccd7c7285f0ae21ef422bdbb7f14f22f092e6148b3a804d8777",
+    "preimage_bytes": 5437,
+    "preimage_mode": "0o644",
+    "reason": "Self-check clarified destination-change cancellation versus view-bound Main selection; Side and explicit component captures remain independent of outer Main selection.",
+    "old": "A changed workspace, owning view, Main selection or session, an inactive or unmounted composer, or a closed Side Chat placement cancels attachment with a fixed safe status.",
+    "new": "A changed destination workspace, owning view or chat session, an inactive or unmounted composer, or a closed Side Chat placement cancels attachment with a fixed safe status. Changing the selected Thread group also cancels a view-bound Main capture.",
+    "version_readback_sha256": "47d4dd1f4033cccd7c7285f0ae21ef422bdbb7f14f22f092e6148b3a804d8777",
+    "version_readback_mode": "0o644"
+  }
+]

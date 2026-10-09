@@ -1,0 +1,7 @@
+{"at":1790308760570,"type":"session-start","threadId":"2026-09-24T20-59-20-351","sessionKey":"[\"fresh-project\",\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790308696612-b061d25225-SVnrnw/fault-server-admission-workspace/fresh-project\",\"2026-09-24T20-59-20-351\"]","externalProcess":false}
+{"at":1790308761011,"type":"gate","gate":"before-admission","owner":"server","occurrence":1}
+{"at":1790308761192,"type":"gate","gate":"before-stop","owner":"adapter","occurrence":1}
+{"at":1790308761192,"type":"gate","gate":"after-stop","owner":"adapter","occurrence":1}
+{"at":1790308761192,"type":"gate","gate":"before-shutdown","owner":"adapter","occurrence":1}
+{"at":1790308761192,"type":"gate","gate":"after-shutdown","owner":"adapter","occurrence":1}
+{"at":1790308761192,"type":"session-retired","threadId":"2026-09-24T20-59-20-351","sessionKey":"[\"fresh-project\",\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790308696612-b061d25225-SVnrnw/fault-server-admission-workspace/fresh-project\",\"2026-09-24T20-59-20-351\"]","retainedSessions":0}

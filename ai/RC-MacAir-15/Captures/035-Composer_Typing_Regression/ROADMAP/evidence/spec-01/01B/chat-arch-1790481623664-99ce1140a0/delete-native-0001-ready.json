@@ -1,0 +1,21 @@
+{
+  "status": "failed",
+  "operator": "agent",
+  "ownerAcceptance": false,
+  "runId": "chat-arch-1790481623664-99ce1140a0",
+  "pid": 41953,
+  "windowId": 1,
+  "title": "ISOLATED ACCEPTANCE — chat-arch-1790481623664-99ce1140a0",
+  "profile": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790481623664-99ce1140a0-DqXLAB/soak-profile",
+  "workspace": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790481623664-99ce1140a0-DqXLAB/soak-workspace",
+  "groupId": "tg-e7cf2cc7-a3f4-4281-bb32-65924c0838d7",
+  "sequence": 1,
+  "nonce": "09303457-8b90-4202-88f3-ef46dec0b3a3",
+  "startedAt": 1790481647698,
+  "deadlineAt": 1790481767698,
+  "ackPath": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790481623664-99ce1140a0/delete-native-0001-ack.json",
+  "endedAt": 1790481767703,
+  "failure": {
+    "message": "native Delete ACK deadline elapsed"
+  }
+}

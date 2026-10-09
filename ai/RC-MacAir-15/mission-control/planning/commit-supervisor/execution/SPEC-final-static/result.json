@@ -1,0 +1,129 @@
+{
+  "at": "2026-10-05T03:30:31.391317+00:00",
+  "role_profiles": {
+    "mc-first-draft": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-first-draft.toml",
+      "sha256": "162a8e56052c336cb64ead7678a0993195212d1aa5bbdccd2f94b2fa1bf8acb1"
+    },
+    "mc-roadmap-supervisor": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-roadmap-supervisor.toml",
+      "sha256": "87ef4b42e4528ca2fc0a3cc3e21defe53668124fca2e793006fdbb744abe957e"
+    },
+    "mc-spec-orchestrator": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-spec-orchestrator.toml",
+      "sha256": "222ac40daf48e667b492f23c5da8b34dc538e87ae8401c96116d996465f9aae8"
+    },
+    "mc-spec-slice-builder": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-spec-slice-builder.toml",
+      "sha256": "73670ee0c58e4a34dde11fc34cb20b765f92041bff18de4ae0ee24ad5d178af4"
+    },
+    "mc-draft-supervisor": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-draft-supervisor.toml",
+      "sha256": "76d33b854e3cc722bf696564098c6b324d65e167145bd5d3e1c1620f2ad824c0"
+    },
+    "mc-roadmap-creation-supervisor": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-roadmap-creation-supervisor.toml",
+      "sha256": "28bf81e248dc9ca2b00be022fe46e790cb61a50ed372cde0c30015e8b9cf3e84"
+    },
+    "mc-planning-stage-orchestrator": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-planning-stage-orchestrator.toml",
+      "sha256": "10e36b82384309ea3cf3fe601fcf772b170a38cf7ce38b447a409bf318b65899"
+    },
+    "mc-roadmap-author": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-roadmap-author.toml",
+      "sha256": "94c848b64792603005e7a3e48ab11a82ed41c00d557d7b6026f1f8ffda18a42c"
+    },
+    "mc-planning-validator": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-planning-validator.toml",
+      "sha256": "3ee83e49b9017314b007739c90211fac267384f2a368364da9e70ac407efe683"
+    },
+    "mc-commit-supervisor": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-supervisor.toml",
+      "sha256": "01887fdc12c962be5a7438b513836e6269cff1f9683b7a17c2edfbf2aa961044"
+    },
+    "mc-code-review-orchestrator": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-code-review-orchestrator.toml",
+      "sha256": "1e06b777794a371a2620a7df3d97caaeb95cb67652b18461e1db6f9744b653e0"
+    },
+    "mc-commit-repair-worker": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-repair-worker.toml",
+      "sha256": "90d9830f49a41ca63712aca1096a31f9224b9bb06d6adea60a9d715b1364fc81"
+    }
+  },
+  "profile_count": 12,
+  "no_added_model_effort_pins": true,
+  "skill_validators": 8,
+  "index_documents": 21,
+  "python_AST_sources": {
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py": "d85c8ae1828bfe94426bde87527ddc3430d720604c78cfdab775db5982dabc58",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py": "15a250fb476407020a98740d443e95b612d075515a3500740d6ed56f2222d496",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/snapshot_restore.py": "37c75d19a2217759086be00274f14d589a5bb64bb6905f323db7ba1969674c2c",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/snapshot_state.py": "a38ffed0cca07299031c2709773caf33ea9065785bf114b6352141fb3310689b",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/install_rehearsal_fixture.py": "5d47ce4a60d80c78975bb322f12b6f3516b17050046022096cab38cfc33b0fd2",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_recovery_smoke.py": "82c3a378e38f47a03b07956e72abbb9b1313a6563a7e3cc06ee62eab705e6ee2",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_wiki_recovery_smoke.py": "f7a46a1701da0c7cf1bdf1eeb1ce3eaf72197bdef4b0783c63ae3d20c155ccb5",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/snapshot_fixture.py": "79e1cfa9975f1e0b4e2040dd8b259543d207b3a770ee08ce9f171f5f22fbc2d4",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_job_snapshot.py": "a7f2413aff9807a495c3cd697f14ab813fa254beb8632ea7c2c49b68929010e6",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_review_packet.py": "7830ec4b4d0b10cbab76e2403bdfceacf78f334e4777835daaaa2fc4e8746504",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_wiki_handoff.py": "5a35d5586b11af10fea182f3ec45f44c19a14117223e7a54d5328b5e7afe4269",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/wiki_fixture.py": "cd2a1024f2acad7844a06406b7ff3f1794a016da21ffdd2d04abfae859e7a6de"
+  },
+  "links": 292,
+  "fragments": 12,
+  "accepted_prefixes_exact": true,
+  "source_baseline_total": 15965,
+  "owned_original_exclusions": [
+    "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md",
+    "ai/RC-MacAir-15/mission-control/.agents/skills/mc-review-and-merge/SKILL.md",
+    "ai/RC-MacAir-15/mission-control/.agents/skills/mc-review-and-merge/agents/openai.yaml",
+    "ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-implementation-supervisor/SKILL.md",
+    "ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-review-gate/SKILL.md",
+    "ai/RC-MacAir-15/mission-control/.agents/skills/mission-control/SKILL.md",
+    "ai/RC-MacAir-15/mission-control/.agents/skills/monitor/SKILL.md",
+    "ai/RC-MacAir-15/mission-control/.agents/skills/status/references/report-format.md",
+    "ai/RC-MacAir-15/mission-control/.codex/agents/mc-review-and-merge.toml",
+    "ai/RC-MacAir-15/mission-control/.codex/config.toml",
+    "ai/RC-MacAir-15/mission-control/AGENTS.md",
+    "ai/RC-MacAir-15/mission-control/deployment.md",
+    "ai/RC-MacAir-15/mission-control/handoff.md",
+    "ai/RC-MacAir-15/mission-control/index.json",
+    "ai/RC-MacAir-15/mission-control/mission-control.md",
+    "ai/RC-MacAir-15/mission-control/record-templates.md",
+    "ai/RC-MacAir-15/mission-control/registry.md",
+    "ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "ai/RC-MacAir-15/mission-control/session-contract.md",
+    "ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "ai/RC-MacAir-15/mission-control/todo.md",
+    "restart-fusion.sh"
+  ],
+  "unowned_entries_checked": 15942,
+  "unowned_exact_entries": 15941,
+  "later_live_UI_state_changes": [
+    {
+      "path": "ai/RC-MacAir-15/System/Views/002-file-viewer/state/state.json",
+      "baseline": {
+        "mode": 384,
+        "kind": "file",
+        "sha256": "a3d0bd604ca496a8924c11e120f84fe12ea0a1ffd7c6c58452c007ade8f02345"
+      },
+      "current": {
+        "kind": "file",
+        "mode": 384,
+        "sha256": "a5795ffa17dcf9db35d5a70082f7e79d55d570a34b4357bf7849107d965e0f94"
+      },
+      "current_mtime_UTC": "2026-10-04T22:01:09.029208+00:00",
+      "dev": 16777230,
+      "ino": 259045826
+    }
+  ],
+  "preservation_qualification": "15941 unowned entries exact; single known file-viewer runtime state changed22:01Z after controlled rehearsal and before final tests. Preserved current state; root/server/profile identities persist, no causal owner-action attribution or broad byte freeze claimed.",
+  "absences_checked": 68,
+  "cache_entries_checked": 193,
+  "HEAD": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "physical_source_index": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+  "source_refs_config_remotes_reflogs_equal": true,
+  "paused_nonmatching_schedules_unchanged": 5,
+  "real_restart_article_owned_later": "Original article excluded only now after explicit S6 authored closeout; preimage/version separately checked",
+  "result": "FINAL_STATIC_AND_SOURCE_PRESERVATION_PASSED"
+}

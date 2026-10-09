@@ -1,0 +1,3 @@
+# Actual first owner-wait terminal
+
+Codex side chat (ephemeral), 2026-10-04T16:23:12.479416+00:00; /root. Actual native FINAL_ANSWER from /root/s6_supervisor_candidate_1 returns COMMIT_READY_WAITING_OWNER. Full concrete packet/current raw gates/runtime/helpers/deviations/operation/recovery/protection evidence independently inspected. Root public fixed verify and read-only live preview pass. Current phase waiting-owner/return_state COMMIT_READY_WAITING_OWNER is authoritative; legacy return alias remains IN_PROGRESS, preserved historically and clarified for successor. Actual commit/push/landing/production adoption/Alpha NONE. Next authorized action: labeled private fixture X/Y and fresh explicit replacement. No actual Git permission is requested or granted.

@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-04T13:11:54.096459+00:00",
+  "status": "READY_FOR_ORCHESTRATOR_REVIEW (PREPARATION ONLY)",
+  "artifact_edits_after_clean": false,
+  "reviewer_terminal": "/root/s6_builder/s6_prep_review_1 CLEAN; close_agent unavailable",
+  "metadata_provenance": "hash-verified exact provisional reconstruction after terminal append, authorized housekeeping only",
+  "files": {
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-builder.md": "76a260281711a1788942abd78cd394d55cb944bf19563497467eec5b8ba33f60",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-builder-review-1.md": "d59c8fc04246fe8d38a447398754034d95d450424421acc3effbcc5e24005bd7",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/prep-freeze.json": "ecaa405bd30b1fb5bbe1ef44a0f271971c7fe72d55a833f7abb6bae8cdc8a7b5",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/frozen-provisional-builder-preimage.md": "a6be0229a4cc0e9818266f1b8dc6e513135d647a7f4204a91a6ea2fe01ffe85a",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/report-only-finalization.json": "b842ed8fd5c1eee55062f699ac066ffe49df53d9fb6e283e42196155204f6436",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/terminal-readback.json": "e871777782b4ab00c5a4ffe1480e7f1b2a68461cc885caff734e2afdf03a4794",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/review-lifecycle.json": "df9b9e159601af155c60463979e32a9be74238fbed8c2e1018283617ff78c48c",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/postreview-frozen-readback.json": "2a96a24e37a00419d676500b76b183bee99f84f7c6086a1613b8b185a59f430b",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/postreview-preservation-summary.json": "1746d168983a746853ac2e150b9e6add3d955d4726da64169d96ace3c8735e11"
+  }
+}

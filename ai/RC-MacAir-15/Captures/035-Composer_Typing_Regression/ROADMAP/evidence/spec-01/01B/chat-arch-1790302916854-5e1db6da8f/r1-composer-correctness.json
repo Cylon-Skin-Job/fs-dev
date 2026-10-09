@@ -1,0 +1,12 @@
+{
+  "caseId": "R1-COMPOSER-CORRECTNESS",
+  "status": "passed",
+  "observations": [
+    "coverage discovery fails closed when any zero-count target is misspelled or unavailable",
+    "measurement focus establishment retries boundedly and fails explicitly when unavailable or lost",
+    "same-session duplicate mounts retain one exact shared draft while other sessions stay isolated",
+    "selection, composition, paste/drop input types, emoji, autocomplete and resize retain exact text",
+    "draft-only updates invoke the connected composer and zero history/header/completed formatter work"
+  ],
+  "privateContentRecorded": false
+}

@@ -1,0 +1,18 @@
+{
+  "runId": "chat-arch-1790384584000-1d32b89d68",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R9-WATCHED-FOREGROUND-SETUP",
+      "code": 0,
+      "signal": null,
+      "pid": 24891,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 65994
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

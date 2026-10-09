@@ -1,0 +1,14 @@
+{
+  "actor": "/root/s6_supervisor_candidate_1",
+  "started": "2026-10-04T16:07:25.337529+00:00",
+  "finished": "2026-10-04T16:07:25.387677+00:00",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "command": [
+    "node",
+    "jobs/commit-supervisor/rehearsal-20261004-s6/first_runtime_identity.mjs",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-current-runtime-identity.json"
+  ],
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "file:///Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/first_runtime_identity.mjs:10\nconst storage=execFileSync('lsof',['-a','-p',String(current.serverPid),'-Fn'],{encoding:'utf8'}).split('\n                                                                                                       ^\n\nSyntaxError: Invalid or unexpected token\n    at compileSourceTextModule (node:internal/modules/esm/utils:305:16)\n    at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:98:18)\n    at #translate (node:internal/modules/esm/loader:467:20)\n    at afterLoad (node:internal/modules/esm/loader:523:29)\n    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:528:12)\n    at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:571:36)\n    at afterResolve (node:internal/modules/esm/loader:619:52)\n    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:625:12)\n    at onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:32)\n    at TracingChannel.tracePromise (node:diagnostics_channel:350:14)\n\nNode.js v25.6.1\n"
+}

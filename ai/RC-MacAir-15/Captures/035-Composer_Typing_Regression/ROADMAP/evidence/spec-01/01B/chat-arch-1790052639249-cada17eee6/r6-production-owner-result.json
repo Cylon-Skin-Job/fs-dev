@@ -1,0 +1,485 @@
+{
+  "status": "passed",
+  "characterization": true,
+  "startupPanelReadiness": "exact-rail-before-activation",
+  "systemSetupReadiness": {
+    "id": "R5-SYSTEM-FIXTURE-READINESS",
+    "sourceCapsuleVerified": true,
+    "boundedRebind": false,
+    "initial": null,
+    "final": {
+      "workspaceLabel": "R5 System Fixture",
+      "chatWorkspaceId": "system-files",
+      "connected": true,
+      "projectionFrames": [
+        {
+          "workspaceId": "system-files",
+          "unavailable": false,
+          "viewIds": [
+            "capture-viewer",
+            "file-viewer",
+            "wiki-viewer",
+            "issues-viewer",
+            "agents-viewer",
+            "system-viewer"
+          ]
+        }
+      ],
+      "railTitles": [
+        "Captures",
+        "Files",
+        "Wiki",
+        "Issues",
+        "Agents",
+        "System"
+      ]
+    }
+  },
+  "authenticatedShell": true,
+  "publicRouteResults": [
+    {
+      "id": "R5-NO-TARGET-CONSUMER",
+      "toast": "Chat target unavailable",
+      "successToastClaimed": false,
+      "visibleFailure": true,
+      "attachmentPills": 0,
+      "sourcePanelMatches": true,
+      "sourcePathFixtureContained": true,
+      "sourcePathSha256": "247799bb374f168d738e72c83f1be871bc452631526c18444a839e593f018f86",
+      "deliveredPathSha256": null,
+      "exactSourceAttachmentApplied": false,
+      "orderingObserverSupported": true,
+      "resultMutationObserved": false,
+      "successMutationObserved": false,
+      "resultBeforeSuccess": false,
+      "resultMutationSequence": null,
+      "successMutationSequence": null,
+      "targetThreadId": "",
+      "draftLength": 0,
+      "outgoingDelta": {
+        "shell-auth:proof": 0,
+        "office:palette_get": 0,
+        "state:get": 0,
+        "thread:list": 0,
+        "screenshot:list": 0,
+        "file_content_request": 0,
+        "set_panel": 0,
+        "file_tree_request": 0,
+        "state:set": 0,
+        "workspace:state_push": 0
+      }
+    },
+    {
+      "id": "R5-FILE-ACTION",
+      "toast": "Link attached to chat",
+      "successToastClaimed": true,
+      "visibleFailure": false,
+      "attachmentPills": 1,
+      "sourcePanelMatches": true,
+      "sourcePathFixtureContained": true,
+      "sourcePathSha256": "247799bb374f168d738e72c83f1be871bc452631526c18444a839e593f018f86",
+      "deliveredPathSha256": "247799bb374f168d738e72c83f1be871bc452631526c18444a839e593f018f86",
+      "exactSourceAttachmentApplied": true,
+      "orderingObserverSupported": true,
+      "resultMutationObserved": true,
+      "successMutationObserved": true,
+      "resultBeforeSuccess": true,
+      "resultMutationSequence": 1,
+      "successMutationSequence": 2,
+      "targetThreadId": "2026-09-21T21-51-48-254",
+      "draftLength": 0,
+      "outgoingDelta": {
+        "shell-auth:proof": 0,
+        "office:palette_get": 0,
+        "state:get": 0,
+        "thread:list": 0,
+        "screenshot:list": 0,
+        "file_content_request": 0,
+        "set_panel": 0,
+        "file_tree_request": 0,
+        "state:set": 0,
+        "workspace:state_push": 0,
+        "thread:open-assistant": 0,
+        "thread:open": 0,
+        "state:worksurface_get": 0
+      }
+    },
+    {
+      "id": "R5-TEXT-INSERT",
+      "exactDraftMutation": true,
+      "elapsedMs": 316,
+      "expectedDraftLength": 40,
+      "observedDraftLength": 40,
+      "expectedDraftSha256": "c8a5dbcb807bbcf7a439f27c9c0fab097604e29906cf855e9b7f62dca6d29c4d",
+      "observedDraftSha256": "c8a5dbcb807bbcf7a439f27c9c0fab097604e29906cf855e9b7f62dca6d29c4d",
+      "visibleFailure": false,
+      "contentRecorded": false
+    },
+    {
+      "id": "R5-WIKI-ACTION",
+      "toast": "Link attached to chat",
+      "successToastClaimed": true,
+      "visibleFailure": false,
+      "attachmentPills": 1,
+      "sourcePanelMatches": true,
+      "sourcePathFixtureContained": true,
+      "sourcePathSha256": "7f7c6b1d7b0cc9c1c71b3b94f3fd4bb33d2691abf76e2b4c60203e13facd4997",
+      "deliveredPathSha256": "7f7c6b1d7b0cc9c1c71b3b94f3fd4bb33d2691abf76e2b4c60203e13facd4997",
+      "exactSourceAttachmentApplied": true,
+      "orderingObserverSupported": true,
+      "resultMutationObserved": true,
+      "successMutationObserved": false,
+      "resultBeforeSuccess": true,
+      "resultMutationSequence": 1,
+      "successMutationSequence": null,
+      "targetThreadId": "2026-09-21T21-51-50-770",
+      "draftLength": 0,
+      "outgoingDelta": {
+        "shell-auth:proof": 0,
+        "office:palette_get": 0,
+        "state:get": 0,
+        "thread:list": 0,
+        "screenshot:list": 0,
+        "file_content_request": 0,
+        "set_panel": 0,
+        "file_tree_request": 0,
+        "state:set": 0,
+        "workspace:state_push": 0,
+        "thread:open-assistant": 0,
+        "thread:open": 0,
+        "state:worksurface_get": 0,
+        "thread:warm": 0,
+        "state:worksurface_put": 0
+      }
+    },
+    {
+      "id": "R5-OFFICE-ACTION",
+      "toast": "Link attached to chat",
+      "successToastClaimed": true,
+      "visibleFailure": false,
+      "attachmentPills": 1,
+      "sourcePanelMatches": true,
+      "sourcePathFixtureContained": true,
+      "sourcePathSha256": "9f7dbb24bdde592d5e121c19a70a1c4a6360e83dd1271a18eb2cdb6bb1db55f1",
+      "deliveredPathSha256": "9f7dbb24bdde592d5e121c19a70a1c4a6360e83dd1271a18eb2cdb6bb1db55f1",
+      "exactSourceAttachmentApplied": true,
+      "orderingObserverSupported": true,
+      "resultMutationObserved": true,
+      "successMutationObserved": true,
+      "resultBeforeSuccess": true,
+      "resultMutationSequence": 1,
+      "successMutationSequence": 2,
+      "targetThreadId": "2026-09-21T21-51-54-471",
+      "draftLength": 0,
+      "outgoingDelta": {
+        "shell-auth:proof": 0,
+        "office:palette_get": 0,
+        "state:get": 0,
+        "thread:list": 0,
+        "screenshot:list": 0,
+        "file_content_request": 0,
+        "set_panel": 0,
+        "file_tree_request": 0,
+        "state:set": 0,
+        "workspace:state_push": 0,
+        "thread:open-assistant": 0,
+        "thread:open": 0,
+        "state:worksurface_get": 0,
+        "thread:warm": 0,
+        "state:worksurface_put": 0
+      }
+    },
+    {
+      "id": "R5-SOURCE-SWITCH",
+      "toast": "",
+      "successToastClaimed": false,
+      "visibleFailure": false,
+      "attachmentPills": 1,
+      "sourcePanelMatches": true,
+      "sourcePathFixtureContained": true,
+      "sourcePathSha256": "247799bb374f168d738e72c83f1be871bc452631526c18444a839e593f018f86",
+      "deliveredPathSha256": "247799bb374f168d738e72c83f1be871bc452631526c18444a839e593f018f86",
+      "exactSourceAttachmentApplied": true,
+      "orderingObserverSupported": true,
+      "resultMutationObserved": true,
+      "successMutationObserved": false,
+      "resultBeforeSuccess": true,
+      "resultMutationSequence": 1,
+      "successMutationSequence": null,
+      "targetThreadId": "2026-09-21T21-51-48-254",
+      "draftLength": 0,
+      "outgoingDelta": {
+        "shell-auth:proof": 0,
+        "office:palette_get": 0,
+        "state:get": 0,
+        "thread:list": 0,
+        "screenshot:list": 0,
+        "file_content_request": 0,
+        "set_panel": 3,
+        "file_tree_request": 0,
+        "state:set": 0,
+        "workspace:state_push": 3,
+        "thread:open-assistant": 0,
+        "thread:open": 0,
+        "state:worksurface_get": 0,
+        "thread:warm": 0,
+        "state:worksurface_put": 3
+      },
+      "destinationUnaffected": true,
+      "destinationBeforeCount": 0,
+      "destinationAfterCount": 1
+    },
+    {
+      "id": "R5-SYSTEM-PROMPT-NEW",
+      "entryPointAvailable": true,
+      "wrongWorkspaceTarget": true,
+      "visibleFailure": true,
+      "overlayStillOpen": true,
+      "outgoingDelta": {
+        "shell-auth:proof": 0,
+        "office:palette_get": 0,
+        "state:get": 0,
+        "thread:list": 0,
+        "screenshot:list": 0,
+        "file_content_request": 0,
+        "set_panel": 0,
+        "file_tree_request": 0,
+        "state:set": 0,
+        "workspace:state_push": 0,
+        "thread:open-assistant": 0,
+        "thread:open": 0,
+        "state:worksurface_get": 0,
+        "thread:warm": 0,
+        "state:worksurface_put": 3,
+        "workspace:switch_requested": 1
+      }
+    },
+    {
+      "id": "R5-SYSTEM-PROMPT-NEW-SUCCESS",
+      "promptActionEmitted": true,
+      "promptResolveSent": 1,
+      "promptResolved": 1,
+      "threadOpenSent": 1,
+      "threadOpened": 1,
+      "draftLength": 687,
+      "exactResolvedDraft": true,
+      "targetThreadId": "2026-09-21T21-51-58-568",
+      "successToastClaimed": false,
+      "visibleFailure": false,
+      "overlayStillOpen": false,
+      "contentRecorded": false,
+      "authenticatedSystemWorkspace": true,
+      "systemSetupBoundedRebind": false,
+      "stagedPromptSha256": "3566d297f6627c155ec6b08b7093f9987c94d4e4f73feaf968567d0e63197aab",
+      "newTarget": true,
+      "commandResultApplied": true,
+      "resultObservedBeforeSuccess": true,
+      "resultMutationSequence": 1,
+      "successMutationSequence": null,
+      "sameMutationBatch": false,
+      "resultMutationObserved": true,
+      "successMutationObserved": false
+    }
+  ],
+  "fixtures": {
+    "f3": {
+      "id": "F3-DETERMINISTIC-WORKSPACE-V1",
+      "counts": {
+        "smallFiles": 1000,
+        "captureFolders": 100,
+        "wikiPages": 100,
+        "officeDocuments": 20
+      },
+      "totalContentBytes": 11059200,
+      "manifestHash": "421c0ef8f5e255bb333a82a9f26d28c74eb2c8d55e95fc262ad241ed45740079"
+    }
+  },
+  "r5Classification": "observed-no-false-success",
+  "reproducedDefects": [],
+  "r6ProductionBoundary": {
+    "id": "R6-PRODUCTION-ACTION-OWNER",
+    "status": "executed",
+    "ownerRoute": "authenticated SystemViewer fusion:chat-action",
+    "promptAwaiting": true,
+    "promptHeldResponses": 4,
+    "promptNoStaleCreate": true,
+    "promptDestinationDraftPreserved": true,
+    "promptOperationListenersRemoved": true,
+    "promptNoExtraPromptDispatch": true,
+    "promptOriginThreadPreserved": true,
+    "promptOriginDraftPreserved": true,
+    "promptNoVisibleSuccess": true,
+    "competingFrameReceived": true,
+    "competingHeldResponses": 4,
+    "completionOperationListenersAttached": 0,
+    "competingDidNotConsumeOriginal": true,
+    "competingTargetPreserved": true,
+    "competingDraftPreserved": true,
+    "completionExactThread": true,
+    "completionDraftPresent": true,
+    "completionExactDraft": true,
+    "completionListenersRemoved": true,
+    "completionNoExtraPromptDispatch": true,
+    "completionNoExtraThreadCreate": true,
+    "createHeldResponses": 4,
+    "createDestinationDraftPreserved": true,
+    "createOperationListenersRemoved": true,
+    "createNoExtraPromptDispatch": true,
+    "createNoExtraThreadCreate": true,
+    "createOriginalTargetOutcome": "cancelled",
+    "createVisibleClaimConsistent": true,
+    "createServerGroupPreserved": true,
+    "createCancelledGroupClean": true,
+    "requestErrorSettledOnce": true,
+    "promptTimeoutSettledOnce": true,
+    "contentRecorded": false,
+    "listeners": {
+      "sentTypes": {
+        "shell-auth:proof": 3,
+        "office:palette_get": 7,
+        "state:get": 6,
+        "thread:list": 30,
+        "screenshot:list": 3,
+        "file_content_request": 420,
+        "set_panel": 16,
+        "file_tree_request": 693,
+        "state:set": 4,
+        "workspace:state_push": 14,
+        "prompt:resolve": 6,
+        "thread:open-assistant": 3,
+        "thread:open": 7,
+        "workspace:switch_requested": 4,
+        "state:worksurface_get": 6
+      },
+      "receivedTypes": {
+        "shell-auth:challenge": 3,
+        "connected": 3,
+        "workspace:init": 3,
+        "panel_config": 7,
+        "shell-auth:authenticated": 3,
+        "office:palette_state": 5,
+        "screenshot:list": 3,
+        "thread:list": 42,
+        "panel_changed": 14,
+        "file_content_response": 407,
+        "file_tree_response": 685,
+        "state:result": 7,
+        "error": 4,
+        "prompt:resolved": 5,
+        "thread:created": 3,
+        "thread:opened": 10,
+        "wire_ready": 3,
+        "workspace:switched": 4,
+        "state:worksurface_result": 6,
+        "wire_disconnected": 1,
+        "prompt:resolve_error": 1
+      },
+      "fusionActionAdds": 1,
+      "fusionActionRemoves": 0,
+      "socketMessageAdds": 228,
+      "socketMessageRemoves": 225,
+      "actionEvents": [
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "workspace-manager.workspace-creation",
+          "target": "new",
+          "delivery": "insert"
+        },
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "workspace-manager.workspace-creation",
+          "target": "new",
+          "delivery": "insert"
+        },
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "workspace-manager.workspace-creation",
+          "target": "new",
+          "delivery": "insert"
+        },
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "workspace-manager.workspace-creation",
+          "target": "new",
+          "delivery": "insert"
+        },
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "fixture.missing-prompt",
+          "target": "new",
+          "delivery": "insert"
+        },
+        {
+          "panel": null,
+          "path": null,
+          "promptId": "workspace-manager.workspace-creation",
+          "target": "new",
+          "delivery": "insert"
+        }
+      ],
+      "listenerBalance": 3
+    },
+    "classification": "authenticated-production-action-owner-lifetime-executed",
+    "laterOwner": "SPEC-03/03B"
+  },
+  "systemAttemptSnapshot": {
+    "phase": "after-create-click",
+    "radio": [
+      {
+        "value": "New Folder",
+        "checked": true
+      },
+      {
+        "value": "Choose Existing Folder",
+        "checked": false
+      }
+    ],
+    "name": "R5 Synthetic Workspace",
+    "selectedFolder": null,
+    "overlay": true,
+    "actionEvents": [
+      {
+        "panel": null,
+        "path": null,
+        "promptId": "workspace-manager.workspace-creation",
+        "target": "new",
+        "delivery": "insert"
+      }
+    ],
+    "sentFrames": [
+      {
+        "type": "prompt:resolve",
+        "requestId": "chat-action-muc765eh-1"
+      }
+    ],
+    "sentDelta": {
+      "prompt:resolve": 1
+    },
+    "receivedDelta": {},
+    "errorFrames": [
+      {
+        "requestId": null,
+        "code": null,
+        "message": "No active workspace",
+        "workspaceEpoch": null
+      }
+    ],
+    "toast": null,
+    "activeThreadId": null,
+    "chatWorkspaceId": "system-files",
+    "workspaceLabel": "R5 System Fixture",
+    "resolvedCommandObserved": false
+  },
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": null
+}

@@ -1,0 +1,30 @@
+{
+  "command": [
+    "git",
+    "-C",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+    "for-each-ref",
+    "--format=%(refname)%00%(objectname)"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "GIT_LITERAL_PATHSPECS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "started": "2026-10-04T19:50:16.349806+00:00",
+  "finished": "2026-10-04T19:50:16.354168+00:00",
+  "exit_code": 0,
+  "stdout": "refs/heads/agent/exact-workspace-paths\u0000d15792920731f85e45b743519d4af2b807d95a9c\nrefs/remotes/origin/HEAD\u0000551a74313d099724cdb3d76ead04e940ae88f223\nrefs/remotes/origin/agent/alpha-office-editor-promotion\u0000feb740b6fd45246a69cdd4cbae76d18adcbc1cbe\nrefs/remotes/origin/agent/alpha-packaged-log-path\u000087231c62b03d58f6eefa65472f2f2a6e559406bc\nrefs/remotes/origin/agent/exact-workspace-paths\u0000551a74313d099724cdb3d76ead04e940ae88f223\nrefs/remotes/origin/agent/oe009-complete-office-work\u00005434527aeb8bc1426e2ef46c83db6739fc68ba5a\nrefs/remotes/origin/agent/rcc-0108-roadmap\u0000501eb35379ac0278f9aa20ef7f6b99a16241bac1\nrefs/remotes/origin/agent/universal-view-tab-bar-spec\u0000806b33521907ed4b51cf792d5ef664fe319ea349\nrefs/remotes/origin/archive/rcc-0108-dirty-state\u0000888025748036180c3cdf4749fcd749e17a149bec\nrefs/remotes/origin/archive/universal-view-tab-bar-wip\u00006565c01a123644d99d987171248a6d7b09f8105b\nrefs/remotes/origin/codex/implement-tabs03-tab-target-placem\u000022cc435230a209531378c17db56ba17db323e8bf\nrefs/remotes/origin/codex/prov01-accepted-source\u0000acf12dafe7499b04995617e5d9c1512775e5ba12\nrefs/remotes/origin/codex/prov01-integration\u00002a275a344588b7e604ad666433dff98818c69380\nrefs/remotes/origin/main\u0000737293389d202bd327362a75cce991e5cbb53391\n",
+  "stderr": "",
+  "stdout_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/before-candidate-refs.stdout",
+    "sha256": "b1c2358cc8dde4e628fa5e5c605324de2a5c142bddbece9b400d50a507904bdf",
+    "size": 1226
+  },
+  "stderr_raw": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/before-candidate-refs.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  }
+}

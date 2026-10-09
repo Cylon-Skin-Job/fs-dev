@@ -1,0 +1,23 @@
+{
+  "at": "2026-10-04T16:23:12.479416+00:00",
+  "owner": "/root",
+  "scope": "ROOT_INSPECTION_EXCLUDED_FROM_FRESH_GATES",
+  "actual_direct_child": "/root/s6_supervisor_candidate_1",
+  "terminal_observation": "Actual native FINAL_ANSWER COMMIT_READY_WAITING_OWNER delivered to root; all direct children and descendants terminal/nonconflicting in actual Supervisor tree/previous root observations. close_agent unavailable.",
+  "full_owner_packet_operation_packet_report_deviations_current_helpers_raw_gates_and_runtime_inspected": true,
+  "exact_current_evidence_index_files": 34,
+  "index_hash_mismatches": [],
+  "owner_packet_sha256": "be1b988ced2b88b6e309e03f2831e2c8938034a1c79aeb3c8d0a75f50eb5fde9",
+  "checkpoint_sha256": "214621bcc2c6e6a70c415e4f8c2610a4c49454f2538e4f6671eaf382b1fe54aa",
+  "current_identity_sha256": "fa91eb339a518ebb0cf878f5f15d0df3f2d5e5309cdf0eadab2c030b1f499a58",
+  "fixed_manifest_sha256": "5bf3fb69c13aacfd60afcb384de2c9975fc917ad3f1f7a49b9176073b7b34d96",
+  "independent_root_checks": [
+    "S6-root-first-fixed-verify.json",
+    "S6-root-first-live-inspection.json",
+    "S6-root-first-owner-live-readback.json",
+    "S6-root-first-final-source-inspection.json"
+  ],
+  "candidate_gate_result": "No material issue from full source/raw/operation/recoverability/protection inspection. Actual first ownerwait is complete as rehearsal fact only; outer S6/whole SPEC completion remains pending.",
+  "checkpoint_alias_limit": "Legacy return field remains IN_PROGRESS while current return_state explicitly COMMIT_READY_WAITING_OWNER and phase waiting-owner; actual native final and next-safe-action confirm intentional wait. Preserve historical bytes; successor shall use one unambiguous current return/state representation.",
+  "actual_commit_push_landing_adoption_Alpha": "NONE"
+}

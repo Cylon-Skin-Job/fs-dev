@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-04T12:59:35.201357+00:00",
+  "prep_freeze_sha256": "ecaa405bd30b1fb5bbe1ef44a0f271971c7fe72d55a833f7abb6bae8cdc8a7b5",
+  "owned_checked": 1037,
+  "dependencies_checked": 46,
+  "candidate_leaves_checked": 126,
+  "python_ast_checked": [
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/install_rehearsal_fixture.py",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_recovery_smoke.py",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_wiki_recovery_smoke.py"
+  ],
+  "assessment": "Current provenance validation only; builder and root preparation gates still required, actual S6 chain unstarted"
+}

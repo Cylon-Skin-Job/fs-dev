@@ -1,0 +1,6 @@
+{"at":1789984518771,"type":"session-start","threadId":"2026-09-21T02-55-18-562","sessionKey":"[\"fresh-project\",\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1789984511079-721fcfffe6-qZnVVt/fault-server-admission-workspace/fresh-project\",\"2026-09-21T02-55-18-562\"]","externalProcess":false}
+{"at":1789984519053,"type":"gate","gate":"before-admission","owner":"server","occurrence":1}
+{"at":1789984519158,"type":"gate","gate":"before-stop","owner":"adapter","occurrence":1}
+{"at":1789984519158,"type":"gate","gate":"after-stop","owner":"adapter","occurrence":1}
+{"at":1789984519158,"type":"gate","gate":"before-shutdown","owner":"adapter","occurrence":1}
+{"at":1789984519159,"type":"gate","gate":"after-shutdown","owner":"adapter","occurrence":1}

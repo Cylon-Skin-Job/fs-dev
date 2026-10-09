@@ -1,0 +1,15 @@
+{
+  "runId": "server-full-1790305828231-5b7f4ca8",
+  "status": "failed",
+  "result": {
+    "code": 1,
+    "signal": null,
+    "pid": 77395,
+    "timedOut": false,
+    "interrupted": false,
+    "leakedOwnedPids": [],
+    "elapsedMs": 158898
+  },
+  "failure": "focused backend exit=1, timeout=false, interrupted=false, leaked=",
+  "ownedRunRootRemoved": true
+}

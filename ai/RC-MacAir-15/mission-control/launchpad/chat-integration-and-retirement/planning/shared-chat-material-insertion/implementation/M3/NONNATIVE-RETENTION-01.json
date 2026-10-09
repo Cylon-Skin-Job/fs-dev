@@ -1,0 +1,923 @@
+{
+  "at": "2026-10-07T22:40:54.209018+00:00",
+  "scope": "Retain terminal root build/full-server/focused/renderer/Wiki nonnative checks after scenario-only locator/project-ready/readonly-input observation changes. Scenario file is not imported/consumed by those checks; no production/renderer/Wiki source or package/native/Electron dependencies changed. Native always renewed on current helper.",
+  "priorSealSha256": "6fcef6edfdf2439a45eec626a1d854ed67db209b7c78988a6aeaa48a713fd316",
+  "currentSealSha256": "35cda972a106468eaa279c60da9ef51fc04ec23333f03de4226269b84e14ad07",
+  "helperBefore": {
+    "path": "fusion-studio-client/e2e/chat-material-native-scenario.mjs",
+    "sha256": "a1164a5a1a9ad80f30ab443630f376bdc99d9559d63f3d37ee9fdab7780c625f",
+    "bytes": 22303,
+    "lines": 224,
+    "mode": "0o644"
+  },
+  "helperCurrent": {
+    "path": "fusion-studio-client/e2e/chat-material-native-scenario.mjs",
+    "sha256": "4ab717d3a9e848a0e33fdc664e9e5455b063ec55b26d3dc69ab05a81d550308d",
+    "bytes": 23228,
+    "lines": 231,
+    "mode": "0o644"
+  },
+  "source64": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/.versions/2026-10-07-131816.md",
+      "expected": "57b85d4acc3034dbc2a64fec9994effa98386419d41bcd6dcc526fbcd6a96d18",
+      "current": "57b85d4acc3034dbc2a64fec9994effa98386419d41bcd6dcc526fbcd6a96d18",
+      "same": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+      "expected": "2ca9937fd14648f9af85e6b3effd151c0107811b4eadacb551a7938ef00b4ceb",
+      "current": "2ca9937fd14648f9af85e6b3effd151c0107811b4eadacb551a7938ef00b4ceb",
+      "same": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/.versions/2026-10-07-131816.md",
+      "expected": "6c5c3847270c0bef52f0e858216f54d602472a9400cddcf2c97a39c5d15e437e",
+      "current": "6c5c3847270c0bef52f0e858216f54d602472a9400cddcf2c97a39c5d15e437e",
+      "same": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md",
+      "expected": "db5cf6e804b9b100142b0caf9f22d2039ab97eab6e17d87fca24ef835f5f6a10",
+      "current": "db5cf6e804b9b100142b0caf9f22d2039ab97eab6e17d87fca24ef835f5f6a10",
+      "same": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/.versions/2026-10-07-131816.md",
+      "expected": "15799e9a2e44e64a6cc84c2c22eb5c269748296f7889d43295b665f15fe0a8d1",
+      "current": "15799e9a2e44e64a6cc84c2c22eb5c269748296f7889d43295b665f15fe0a8d1",
+      "same": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md",
+      "expected": "c7fb7b31252fe7fa3fd4ac990c03831ebe075867f912c6244694a637a0f1a55f",
+      "current": "c7fb7b31252fe7fa3fd4ac990c03831ebe075867f912c6244694a637a0f1a55f",
+      "same": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/.versions/2026-10-07-131816.md",
+      "expected": "7e437183acb807a6c6579ebc834ed2f8df1e1f94b39a027d034c0e6db0ac9966",
+      "current": "7e437183acb807a6c6579ebc834ed2f8df1e1f94b39a027d034c0e6db0ac9966",
+      "same": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md",
+      "expected": "71585cb63d185136da2dec2379630718be91283b0a69938115cf76251db9a821",
+      "current": "71585cb63d185136da2dec2379630718be91283b0a69938115cf76251db9a821",
+      "same": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/.versions/2026-10-07-131816.md",
+      "expected": "d036f9470ee0e4a2a1fe5bc38fa4d156e9e67f2bf88e05fda522cfc5d95c43da",
+      "current": "d036f9470ee0e4a2a1fe5bc38fa4d156e9e67f2bf88e05fda522cfc5d95c43da",
+      "same": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/001-Wiki_Viewer_UI_Context/.versions/2026-10-07-131816.md",
+      "expected": "6e80d5d97934d1c20ce1275da416737c96753d6cab1b3da2f5a83ab86855ad75",
+      "current": "6e80d5d97934d1c20ce1275da416737c96753d6cab1b3da2f5a83ab86855ad75",
+      "same": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/001-Wiki_Viewer_UI_Context/PAGE.md",
+      "expected": "b4ba96fbe02a02b9c343f34bcb7de6e8cb2362cdda20dfcd9896fc9eb0235ac9",
+      "current": "b4ba96fbe02a02b9c343f34bcb7de6e8cb2362cdda20dfcd9896fc9eb0235ac9",
+      "same": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/002-File_Viewer_UI_Context/.versions/2026-10-07-131816.md",
+      "expected": "cc8ecf54353331709f5ecc2dac0b21dd4fe6a2b42c589b3fcfb5459c720d7c8e",
+      "current": "cc8ecf54353331709f5ecc2dac0b21dd4fe6a2b42c589b3fcfb5459c720d7c8e",
+      "same": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/002-File_Viewer_UI_Context/PAGE.md",
+      "expected": "fa1cbc58c49cc09fe505a3c4fd4df4b9c358d7a9bd0b77437faf091c77d7e102",
+      "current": "fa1cbc58c49cc09fe505a3c4fd4df4b9c358d7a9bd0b77437faf091c77d7e102",
+      "same": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/PAGE.md",
+      "expected": "955d09f7f9aba6928e7c41d9b462912705aad70d39b869ca3d24d062435610b6",
+      "current": "955d09f7f9aba6928e7c41d9b462912705aad70d39b869ca3d24d062435610b6",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-architecture/observation-boundaries.spec.ts",
+      "expected": "0a28ed231dc357f2dd783b709e90a69af458d6a8c5b3e393b10dca5c50a9d53d",
+      "current": "0a28ed231dc357f2dd783b709e90a69af458d6a8c5b3e393b10dca5c50a9d53d",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-composer-screenshot-menu.spec.ts",
+      "expected": "2ecbbe3513bbdd6f8604e7966a3c32a6aba3a5fd498a79189512b94df0ea6af9",
+      "current": "2ecbbe3513bbdd6f8604e7966a3c32a6aba3a5fd498a79189512b94df0ea6af9",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-diagnostic-actions.slice-c.spec.ts",
+      "expected": "81ab28b1758b7531f9c8bf9fe023f9edc1bb13afa641bfe6afcd09d35d662c44",
+      "current": "81ab28b1758b7531f9c8bf9fe023f9edc1bb13afa641bfe6afcd09d35d662c44",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-material-insertion.spec.ts",
+      "expected": "300459ad3ad4b96af3cea5fb06db45d3beadb09b569d3f9205f3cf2060cd30be",
+      "current": "300459ad3ad4b96af3cea5fb06db45d3beadb09b569d3f9205f3cf2060cd30be",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-material-wiki.spec.ts",
+      "expected": "901f513af5c3a3e3d3df4149e00b76ce2232752c543346a05f8b9cd4f0ed0806",
+      "current": "901f513af5c3a3e3d3df4149e00b76ce2232752c543346a05f8b9cd4f0ed0806",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-send-transport.spec.ts",
+      "expected": "d87ae7b1394036bea8155ffb3b20bf0f034552fe45eede325270181d90b53a16",
+      "current": "d87ae7b1394036bea8155ffb3b20bf0f034552fe45eede325270181d90b53a16",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-surface-identity.spec.ts",
+      "expected": "62677ea808ac57ff4b446e449e5078b5e159f2ddf42706306677606e2e0ebfa2",
+      "current": "62677ea808ac57ff4b446e449e5078b5e159f2ddf42706306677606e2e0ebfa2",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-surface-isolation.spec.ts",
+      "expected": "068fc92d53e295594b2485db3026a408e41e7ba936940831c18f75501c34c7cf",
+      "current": "068fc92d53e295594b2485db3026a408e41e7ba936940831c18f75501c34c7cf",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/prompt-ownership.slice-c.spec.ts",
+      "expected": "ed20ebf2c83121b5d2cda9dd33e86c310713fc0ea995dda1e47cb74555879d8d",
+      "current": "ed20ebf2c83121b5d2cda9dd33e86c310713fc0ea995dda1e47cb74555879d8d",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/support/chat-material-fixture.tsx",
+      "expected": "15df63f3cca60673e6ac8e9087ad9b96975a086288670d24d700bcb45feecced",
+      "current": "15df63f3cca60673e6ac8e9087ad9b96975a086288670d24d700bcb45feecced",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/support/chat-material-screenshot-cases.ts",
+      "expected": "29fe664ed3dc2e5d7a26934d5af0d3d1f7562922a6fac777bf3409ec82e9cd41",
+      "current": "29fe664ed3dc2e5d7a26934d5af0d3d1f7562922a6fac777bf3409ec82e9cd41",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/support/chat-material-source-cases.ts",
+      "expected": "8b53c4fa34d63c28b5b68cacd1d297dc216096f2b2f19f9c8082ed354638d3f4",
+      "current": "8b53c4fa34d63c28b5b68cacd1d297dc216096f2b2f19f9c8082ed354638d3f4",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/support/chat-material-source-fixture.ts",
+      "expected": "f943754af174b19bc3ee4a12f1971d842f2c1da158b476f659816023f2e79435",
+      "current": "f943754af174b19bc3ee4a12f1971d842f2c1da158b476f659816023f2e79435",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/threaded-chat-host.spec.ts",
+      "expected": "6df2877b40e33bb4a986711738167e99c954527147c9e97f425fbdb417ee39ec",
+      "current": "6df2877b40e33bb4a986711738167e99c954527147c9e97f425fbdb417ee39ec",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/clipboard/ClipboardTrigger.tsx",
+      "expected": "0d9bd2e83fc3d898c74311fff87074c21f3098391c967c81d6ac1ffd3a41164f",
+      "current": "0d9bd2e83fc3d898c74311fff87074c21f3098391c967c81d6ac1ffd3a41164f",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/ChatInput.tsx",
+      "expected": "a980e99c197b239da795fac4d764b4d54e85bff5c1d0c2039e326206ab415990",
+      "current": "a980e99c197b239da795fac4d764b4d54e85bff5c1d0c2039e326206ab415990",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/MessageList.tsx",
+      "expected": "822d2743061fb616e855c6b5d6ecf6eb03aa025aa9a3b0b03f9a7acd51b31303",
+      "current": "822d2743061fb616e855c6b5d6ecf6eb03aa025aa9a3b0b03f9a7acd51b31303",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/SendToChatButton.tsx",
+      "expected": "26e5008817f8fb841a8b14d9d783a2b3411cb395678cc5e9bf247a6071679302",
+      "current": "26e5008817f8fb841a8b14d9d783a2b3411cb395678cc5e9bf247a6071679302",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatAreaFooter.tsx",
+      "expected": "5a93c1b349d53b8cb773a7062d8e3373a23b68684cdb910c9af05ec0660fb380",
+      "current": "5a93c1b349d53b8cb773a7062d8e3373a23b68684cdb910c9af05ec0660fb380",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx",
+      "expected": "a061f65a25fe75458838cc7c7d1a9aff47fe05189bc1a30aacfb2bf230c01488",
+      "current": "a061f65a25fe75458838cc7c7d1a9aff47fe05189bc1a30aacfb2bf230c01488",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatDiagnosticDetails.tsx",
+      "expected": "d2c157d1ba1cf1c537ef980d95ca85cdb83cf3464806e2cfcb987edaf685aa9f",
+      "current": "d2c157d1ba1cf1c537ef980d95ca85cdb83cf3464806e2cfcb987edaf685aa9f",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatSurface.tsx",
+      "expected": "4b795b878034c03634f29a50a28c3ada6a83bf84422e011f311517d8370d1d56",
+      "current": "4b795b878034c03634f29a50a28c3ada6a83bf84422e011f311517d8370d1d56",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx",
+      "expected": "b32b696609b0b42f8e88c9bd08c346bd48903f31f351e41479b10d1d7513ceb3",
+      "current": "b32b696609b0b42f8e88c9bd08c346bd48903f31f351e41479b10d1d7513ceb3",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx",
+      "expected": "5432630c2dd0876bc69ec2952aa66a985cfea3f4614f2e06563545744747b56e",
+      "current": "5432630c2dd0876bc69ec2952aa66a985cfea3f4614f2e06563545744747b56e",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/chatSurfaceContract.ts",
+      "expected": "990717911e5eabc22df83d4a6738b2ecbf9851d88b8ce9b26ca439d482cb9f5b",
+      "current": "990717911e5eabc22df83d4a6738b2ecbf9851d88b8ce9b26ca439d482cb9f5b",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useChatMountInteractions.ts",
+      "expected": "3febde36c48ee58131506b51d3a3b9cbf490c87b92a2965dbdd3e2137c1d0814",
+      "current": "3febde36c48ee58131506b51d3a3b9cbf490c87b92a2965dbdd3e2137c1d0814",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useChatSessionActions.ts",
+      "expected": "dd293ba33e12e891d112aff9153989901f8b7256164cc407f34f20ec53632734",
+      "current": "dd293ba33e12e891d112aff9153989901f8b7256164cc407f34f20ec53632734",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useChatSessionHost.ts",
+      "expected": "67060e0790a1052b78ef27aadf24a1029c2753ac481628c8f0973684bdce61bc",
+      "current": "67060e0790a1052b78ef27aadf24a1029c2753ac481628c8f0973684bdce61bc",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useComposerMaterialSource.ts",
+      "expected": "03a973bf7b957c791820ce4fc3103f1164066eec62588ca5ef2e5f31fa3c58b8",
+      "current": "03a973bf7b957c791820ce4fc3103f1164066eec62588ca5ef2e5f31fa3c58b8",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useMountedChatBinding.ts",
+      "expected": "2db870162c34ae974ca8330f971fa9452f9ef07e000f096e1114a6dd6a13f9be",
+      "current": "2db870162c34ae974ca8330f971fa9452f9ef07e000f096e1114a6dd6a13f9be",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts",
+      "expected": "6e7793ad865bb3fbea8ea1b1a179204b330c98477af5c2d5d679d33d9b81a49c",
+      "current": "6e7793ad865bb3fbea8ea1b1a179204b330c98477af5c2d5d679d33d9b81a49c",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useViewChatHost.ts",
+      "expected": "9763ce0d749a063236fa94c6a5e7162f5bcc68dc01402141592533bc2436861b",
+      "current": "9763ce0d749a063236fa94c6a5e7162f5bcc68dc01402141592533bc2436861b",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/hover-icon-modal/useHoverIconModal.ts",
+      "expected": "6d8e7d291198f92a1d72d330ea864e45bc603dae2eaf032c02e8bf5335cd2942",
+      "current": "6d8e7d291198f92a1d72d330ea864e45bc603dae2eaf032c02e8bf5335cd2942",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-action-controller.ts",
+      "expected": "ca5c4baceba6d432ee2ea296ae5d5c2ff2b124acb9b16a478b62711191012133",
+      "current": "ca5c4baceba6d432ee2ea296ae5d5c2ff2b124acb9b16a478b62711191012133",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-action-creation.ts",
+      "expected": "5b476d81e138e470e4644a452e68d39619ad87483aa3b3759a4e37b9bf2ff913",
+      "current": "5b476d81e138e470e4644a452e68d39619ad87483aa3b3759a4e37b9bf2ff913",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-action.ts",
+      "expected": "aa4208dc0d875399b0e5c396714cdd9e0aabbd484563ef72d9eaef71320548db",
+      "current": "aa4208dc0d875399b0e5c396714cdd9e0aabbd484563ef72d9eaef71320548db",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-material-commit.ts",
+      "expected": "9ca48a31e7e1acb3a1a98d452ccf4b0480101a2d36d94b076a8107f1a3d67a37",
+      "current": "9ca48a31e7e1acb3a1a98d452ccf4b0480101a2d36d94b076a8107f1a3d67a37",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-material-source.ts",
+      "expected": "13600decc8bea3101925522b1dfe25bbe9a4eb191046c53d6dc1d8f7a034d4fc",
+      "current": "13600decc8bea3101925522b1dfe25bbe9a4eb191046c53d6dc1d8f7a034d4fc",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/lib/chat-material-target.ts",
+      "expected": "79020c5de3b860ba72486eacf434f8ec04341e0a4417e62c045afd1bf62009ad",
+      "current": "79020c5de3b860ba72486eacf434f8ec04341e0a4417e62c045afd1bf62009ad",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/lib/ws/thread-handlers.ts",
+      "expected": "5b63d2f06074b2dad8d43ea7acf8f38769ddf9081868178a407203a95e92a390",
+      "current": "5b63d2f06074b2dad8d43ea7acf8f38769ddf9081868178a407203a95e92a390",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/mic/MicTrigger.tsx",
+      "expected": "40b63def35f6fbb8ae95a6161a623d11be5e21ab5566f82a409edbb6ca46499a",
+      "current": "40b63def35f6fbb8ae95a6161a623d11be5e21ab5566f82a409edbb6ca46499a",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/mic/VoiceRecorder.tsx",
+      "expected": "c2b39311791d3a20b247f771c9f385565bb4fe1405fbb8f4667d610746cbc981",
+      "current": "c2b39311791d3a20b247f771c9f385565bb4fe1405fbb8f4667d610746cbc981",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/mic/useAudioCapture.ts",
+      "expected": "dae950577ccdcb4f9e13335edb3502386dc6316cc80154665a0e21c2a9f58046",
+      "current": "dae950577ccdcb4f9e13335edb3502386dc6316cc80154665a0e21c2a9f58046",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/recent-files/RecentFilesTrigger.tsx",
+      "expected": "5956cf2d5846a916233b45e5b2d1a45124d538016e0b5598986cd26ea9ecb0f6",
+      "current": "5956cf2d5846a916233b45e5b2d1a45124d538016e0b5598986cd26ea9ecb0f6",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/screenshots/ScreenshotsTrigger.tsx",
+      "expected": "6a51901241fee836d19f4adfa1dcde572f10763d590372596da357ced422613f",
+      "current": "6a51901241fee836d19f4adfa1dcde572f10763d590372596da357ced422613f",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/screenshots/chatScreenshotCapture.ts",
+      "expected": "5e1018214c45a16ff1f40391e2749fa6cc2ed34a20f3291f7f8ebd52fa585712",
+      "current": "5e1018214c45a16ff1f40391e2749fa6cc2ed34a20f3291f7f8ebd52fa585712",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/state/panelStore.ts",
+      "expected": "7b9ecb8386524a89c7b235bcce70ca94613ae611370871d569343f329768b609",
+      "current": "7b9ecb8386524a89c7b235bcce70ca94613ae611370871d569343f329768b609",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/state/panelStoreTypes.ts",
+      "expected": "762c7fa2b26923fabb0e2d4585d625417d17e333709b9fd9bdb3c9e8ca97b8bb",
+      "current": "762c7fa2b26923fabb0e2d4585d625417d17e333709b9fd9bdb3c9e8ca97b8bb",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/state/slices/chatSurfaceSlice.ts",
+      "expected": "0ee04ae43e3e68b88f29b548bb6ad5fe25b0e1a3c5e091e9d40a2af14971a854",
+      "current": "0ee04ae43e3e68b88f29b548bb6ad5fe25b0e1a3c5e091e9d40a2af14971a854",
+      "same": true
+    },
+    {
+      "path": "fusion-studio-client/src/state/slices/mountedChatState.ts",
+      "expected": "9302850d0488b37740a4a1ec989da370d8e06073362bdd7e6f549f3bd8767a8a",
+      "current": "9302850d0488b37740a4a1ec989da370d8e06073362bdd7e6f549f3bd8767a8a",
+      "same": true
+    }
+  ],
+  "rootDependencies": [
+    {
+      "receipt": "implementation/M3/orchestrator-checks/build-01.json",
+      "receiptSha256": "918ec82b791a2854247bb4bedeb37dbb15bc5c0f87d3a80ff9826e960d0b9e4b",
+      "dependencies": [
+        {
+          "path": "fusion-studio-client/package.json",
+          "expected": "9b9e9c906358afd17eb5027af187fbe2030c537a9536d6d0d6fbcf64fb70dfb0",
+          "current": "9b9e9c906358afd17eb5027af187fbe2030c537a9536d6d0d6fbcf64fb70dfb0",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-client/package-lock.json",
+          "expected": "bf84fb48fd5b41b169afea6bc23acba4a1466255dd4c8679c2119cad55f593f4",
+          "current": "bf84fb48fd5b41b169afea6bc23acba4a1466255dd4c8679c2119cad55f593f4",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/package.json",
+          "expected": "15113c033b6deb5622aa8a5213042bcb1b67e82d87f63df3b006efc9640717db",
+          "current": "15113c033b6deb5622aa8a5213042bcb1b67e82d87f63df3b006efc9640717db",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/package-lock.json",
+          "expected": "33dd6068bc27b3689394c6d17b1cb2514b0d4cfa3804313dc02b9604e3dcbe7f",
+          "current": "33dd6068bc27b3689394c6d17b1cb2514b0d4cfa3804313dc02b9604e3dcbe7f",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-client/node_modules/.package-lock.json",
+          "expected": "dfe5c94d3ae739adf81e9b89d1bdc9d15dae5b79f54f8e77bf2d800cba77294b",
+          "current": "dfe5c94d3ae739adf81e9b89d1bdc9d15dae5b79f54f8e77bf2d800cba77294b",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/node_modules/.package-lock.json",
+          "expected": "6fbc3f2e64977a2e50ccf991c71b0bb9769e542d7498bb55fcfae0c1605d8245",
+          "current": "6fbc3f2e64977a2e50ccf991c71b0bb9769e542d7498bb55fcfae0c1605d8245",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-client/node_modules/electron/package.json",
+          "expected": "d8e71feee3508f91dbfa46214451b462ed9bb181c04099f7aeac8d544ad4c295",
+          "current": "d8e71feee3508f91dbfa46214451b462ed9bb181c04099f7aeac8d544ad4c295",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+          "expected": "c86c2701f15ca66ba460f4cdcd7ebcab0b5133a4cc299295f02108b3754e9eed",
+          "current": "c86c2701f15ca66ba460f4cdcd7ebcab0b5133a4cc299295f02108b3754e9eed",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/node_modules/better-sqlite3/build/Release/better_sqlite3.node",
+          "expected": "beaae109810a34bb2d4e9c924bd23e268ac64b6b3db4a5b5f668042a0fa77e9e",
+          "current": "beaae109810a34bb2d4e9c924bd23e268ac64b6b3db4a5b5f668042a0fa77e9e",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/index.js",
+          "expected": "3b8c93ed7cc31cbe294b7f0a81729a458ed029726f51009029c622b26d6c6be2",
+          "current": "3b8c93ed7cc31cbe294b7f0a81729a458ed029726f51009029c622b26d6c6be2",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/binding.gyp",
+          "expected": "c660385eeefbd59db21ce1433f1a6f8eebd088cf72a8cb675c4ebeda61e0795e",
+          "current": "c660385eeefbd59db21ce1433f1a6f8eebd088cf72a8cb675c4ebeda61e0795e",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/secure_file_observer.c",
+          "expected": "113ddf43102c205c175ed56699b95fd03cf2857b9896231d349c16514039ffd0",
+          "current": "113ddf43102c205c175ed56699b95fd03cf2857b9896231d349c16514039ffd0",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/runtime-smoke.js",
+          "expected": "b0eb8261146ee444981223b2e96064fb4cc0a598f0ff23f8cd21e04a9a0043f7",
+          "current": "b0eb8261146ee444981223b2e96064fb4cc0a598f0ff23f8cd21e04a9a0043f7",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/build/Release/secure_file_observer.node",
+          "expected": "c9aa17eb72b253235ea6eb1b4c6a639e455939d9e8b070129a25c587c9c69d11",
+          "current": "c9aa17eb72b253235ea6eb1b4c6a639e455939d9e8b070129a25c587c9c69d11",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/node_modules/node-gyp/package.json",
+          "expected": "d19b594bcbf958f80ec6863a44be2c5bd3ad84077c1de5f57b18168014fa97bd",
+          "current": "d19b594bcbf958f80ec6863a44be2c5bd3ad84077c1de5f57b18168014fa97bd",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/node_modules/node-gyp/bin/node-gyp.js",
+          "expected": "733bdbf2080c31a67d94cb8f7123110f44b0a3e2be24b8e575754af550eee6bf",
+          "current": "733bdbf2080c31a67d94cb8f7123110f44b0a3e2be24b8e575754af550eee6bf",
+          "same": true
+        }
+      ],
+      "mismatches": []
+    },
+    {
+      "receipt": "implementation/M3/orchestrator-checks/renderer-01.json",
+      "receiptSha256": "8cde2c41a1b1a44460bf716cdb77bebff688281ad39bfef72fd7188a4cd5fed0",
+      "dependencies": [
+        {
+          "path": "fusion-studio-client/package.json",
+          "expected": "9b9e9c906358afd17eb5027af187fbe2030c537a9536d6d0d6fbcf64fb70dfb0",
+          "current": "9b9e9c906358afd17eb5027af187fbe2030c537a9536d6d0d6fbcf64fb70dfb0",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-client/package-lock.json",
+          "expected": "bf84fb48fd5b41b169afea6bc23acba4a1466255dd4c8679c2119cad55f593f4",
+          "current": "bf84fb48fd5b41b169afea6bc23acba4a1466255dd4c8679c2119cad55f593f4",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/package.json",
+          "expected": "15113c033b6deb5622aa8a5213042bcb1b67e82d87f63df3b006efc9640717db",
+          "current": "15113c033b6deb5622aa8a5213042bcb1b67e82d87f63df3b006efc9640717db",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/package-lock.json",
+          "expected": "33dd6068bc27b3689394c6d17b1cb2514b0d4cfa3804313dc02b9604e3dcbe7f",
+          "current": "33dd6068bc27b3689394c6d17b1cb2514b0d4cfa3804313dc02b9604e3dcbe7f",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-client/node_modules/.package-lock.json",
+          "expected": "dfe5c94d3ae739adf81e9b89d1bdc9d15dae5b79f54f8e77bf2d800cba77294b",
+          "current": "dfe5c94d3ae739adf81e9b89d1bdc9d15dae5b79f54f8e77bf2d800cba77294b",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/node_modules/.package-lock.json",
+          "expected": "6fbc3f2e64977a2e50ccf991c71b0bb9769e542d7498bb55fcfae0c1605d8245",
+          "current": "6fbc3f2e64977a2e50ccf991c71b0bb9769e542d7498bb55fcfae0c1605d8245",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-client/node_modules/electron/package.json",
+          "expected": "d8e71feee3508f91dbfa46214451b462ed9bb181c04099f7aeac8d544ad4c295",
+          "current": "d8e71feee3508f91dbfa46214451b462ed9bb181c04099f7aeac8d544ad4c295",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+          "expected": "c86c2701f15ca66ba460f4cdcd7ebcab0b5133a4cc299295f02108b3754e9eed",
+          "current": "c86c2701f15ca66ba460f4cdcd7ebcab0b5133a4cc299295f02108b3754e9eed",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/node_modules/better-sqlite3/build/Release/better_sqlite3.node",
+          "expected": "beaae109810a34bb2d4e9c924bd23e268ac64b6b3db4a5b5f668042a0fa77e9e",
+          "current": "beaae109810a34bb2d4e9c924bd23e268ac64b6b3db4a5b5f668042a0fa77e9e",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/index.js",
+          "expected": "3b8c93ed7cc31cbe294b7f0a81729a458ed029726f51009029c622b26d6c6be2",
+          "current": "3b8c93ed7cc31cbe294b7f0a81729a458ed029726f51009029c622b26d6c6be2",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/binding.gyp",
+          "expected": "c660385eeefbd59db21ce1433f1a6f8eebd088cf72a8cb675c4ebeda61e0795e",
+          "current": "c660385eeefbd59db21ce1433f1a6f8eebd088cf72a8cb675c4ebeda61e0795e",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/secure_file_observer.c",
+          "expected": "113ddf43102c205c175ed56699b95fd03cf2857b9896231d349c16514039ffd0",
+          "current": "113ddf43102c205c175ed56699b95fd03cf2857b9896231d349c16514039ffd0",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/runtime-smoke.js",
+          "expected": "b0eb8261146ee444981223b2e96064fb4cc0a598f0ff23f8cd21e04a9a0043f7",
+          "current": "b0eb8261146ee444981223b2e96064fb4cc0a598f0ff23f8cd21e04a9a0043f7",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/build/Release/secure_file_observer.node",
+          "expected": "c9aa17eb72b253235ea6eb1b4c6a639e455939d9e8b070129a25c587c9c69d11",
+          "current": "c9aa17eb72b253235ea6eb1b4c6a639e455939d9e8b070129a25c587c9c69d11",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/node_modules/node-gyp/package.json",
+          "expected": "d19b594bcbf958f80ec6863a44be2c5bd3ad84077c1de5f57b18168014fa97bd",
+          "current": "d19b594bcbf958f80ec6863a44be2c5bd3ad84077c1de5f57b18168014fa97bd",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/node_modules/node-gyp/bin/node-gyp.js",
+          "expected": "733bdbf2080c31a67d94cb8f7123110f44b0a3e2be24b8e575754af550eee6bf",
+          "current": "733bdbf2080c31a67d94cb8f7123110f44b0a3e2be24b8e575754af550eee6bf",
+          "same": true
+        }
+      ],
+      "mismatches": []
+    },
+    {
+      "receipt": "implementation/M3/orchestrator-checks/server-focused-01.json",
+      "receiptSha256": "64fdf1e8b07697ea687f7f62792d6257ed548fa2df18a44d7cf4ebf52f57aa8a",
+      "dependencies": [
+        {
+          "path": "fusion-studio-client/package.json",
+          "expected": "9b9e9c906358afd17eb5027af187fbe2030c537a9536d6d0d6fbcf64fb70dfb0",
+          "current": "9b9e9c906358afd17eb5027af187fbe2030c537a9536d6d0d6fbcf64fb70dfb0",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-client/package-lock.json",
+          "expected": "bf84fb48fd5b41b169afea6bc23acba4a1466255dd4c8679c2119cad55f593f4",
+          "current": "bf84fb48fd5b41b169afea6bc23acba4a1466255dd4c8679c2119cad55f593f4",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/package.json",
+          "expected": "15113c033b6deb5622aa8a5213042bcb1b67e82d87f63df3b006efc9640717db",
+          "current": "15113c033b6deb5622aa8a5213042bcb1b67e82d87f63df3b006efc9640717db",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/package-lock.json",
+          "expected": "33dd6068bc27b3689394c6d17b1cb2514b0d4cfa3804313dc02b9604e3dcbe7f",
+          "current": "33dd6068bc27b3689394c6d17b1cb2514b0d4cfa3804313dc02b9604e3dcbe7f",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-client/node_modules/.package-lock.json",
+          "expected": "dfe5c94d3ae739adf81e9b89d1bdc9d15dae5b79f54f8e77bf2d800cba77294b",
+          "current": "dfe5c94d3ae739adf81e9b89d1bdc9d15dae5b79f54f8e77bf2d800cba77294b",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/node_modules/.package-lock.json",
+          "expected": "6fbc3f2e64977a2e50ccf991c71b0bb9769e542d7498bb55fcfae0c1605d8245",
+          "current": "6fbc3f2e64977a2e50ccf991c71b0bb9769e542d7498bb55fcfae0c1605d8245",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-client/node_modules/electron/package.json",
+          "expected": "d8e71feee3508f91dbfa46214451b462ed9bb181c04099f7aeac8d544ad4c295",
+          "current": "d8e71feee3508f91dbfa46214451b462ed9bb181c04099f7aeac8d544ad4c295",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+          "expected": "c86c2701f15ca66ba460f4cdcd7ebcab0b5133a4cc299295f02108b3754e9eed",
+          "current": "c86c2701f15ca66ba460f4cdcd7ebcab0b5133a4cc299295f02108b3754e9eed",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/node_modules/better-sqlite3/build/Release/better_sqlite3.node",
+          "expected": "beaae109810a34bb2d4e9c924bd23e268ac64b6b3db4a5b5f668042a0fa77e9e",
+          "current": "beaae109810a34bb2d4e9c924bd23e268ac64b6b3db4a5b5f668042a0fa77e9e",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/index.js",
+          "expected": "3b8c93ed7cc31cbe294b7f0a81729a458ed029726f51009029c622b26d6c6be2",
+          "current": "3b8c93ed7cc31cbe294b7f0a81729a458ed029726f51009029c622b26d6c6be2",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/binding.gyp",
+          "expected": "c660385eeefbd59db21ce1433f1a6f8eebd088cf72a8cb675c4ebeda61e0795e",
+          "current": "c660385eeefbd59db21ce1433f1a6f8eebd088cf72a8cb675c4ebeda61e0795e",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/secure_file_observer.c",
+          "expected": "113ddf43102c205c175ed56699b95fd03cf2857b9896231d349c16514039ffd0",
+          "current": "113ddf43102c205c175ed56699b95fd03cf2857b9896231d349c16514039ffd0",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/runtime-smoke.js",
+          "expected": "b0eb8261146ee444981223b2e96064fb4cc0a598f0ff23f8cd21e04a9a0043f7",
+          "current": "b0eb8261146ee444981223b2e96064fb4cc0a598f0ff23f8cd21e04a9a0043f7",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/build/Release/secure_file_observer.node",
+          "expected": "c9aa17eb72b253235ea6eb1b4c6a639e455939d9e8b070129a25c587c9c69d11",
+          "current": "c9aa17eb72b253235ea6eb1b4c6a639e455939d9e8b070129a25c587c9c69d11",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/node_modules/node-gyp/package.json",
+          "expected": "d19b594bcbf958f80ec6863a44be2c5bd3ad84077c1de5f57b18168014fa97bd",
+          "current": "d19b594bcbf958f80ec6863a44be2c5bd3ad84077c1de5f57b18168014fa97bd",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/node_modules/node-gyp/bin/node-gyp.js",
+          "expected": "733bdbf2080c31a67d94cb8f7123110f44b0a3e2be24b8e575754af550eee6bf",
+          "current": "733bdbf2080c31a67d94cb8f7123110f44b0a3e2be24b8e575754af550eee6bf",
+          "same": true
+        }
+      ],
+      "mismatches": []
+    },
+    {
+      "receipt": "implementation/M3/orchestrator-checks/server-full-01.json",
+      "receiptSha256": "b3458cbe0ee60fbc9508da3e357f2b9b5962837209a43adb6e5a25ba2f64a0f6",
+      "dependencies": [
+        {
+          "path": "fusion-studio-client/package.json",
+          "expected": "9b9e9c906358afd17eb5027af187fbe2030c537a9536d6d0d6fbcf64fb70dfb0",
+          "current": "9b9e9c906358afd17eb5027af187fbe2030c537a9536d6d0d6fbcf64fb70dfb0",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-client/package-lock.json",
+          "expected": "bf84fb48fd5b41b169afea6bc23acba4a1466255dd4c8679c2119cad55f593f4",
+          "current": "bf84fb48fd5b41b169afea6bc23acba4a1466255dd4c8679c2119cad55f593f4",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/package.json",
+          "expected": "15113c033b6deb5622aa8a5213042bcb1b67e82d87f63df3b006efc9640717db",
+          "current": "15113c033b6deb5622aa8a5213042bcb1b67e82d87f63df3b006efc9640717db",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/package-lock.json",
+          "expected": "33dd6068bc27b3689394c6d17b1cb2514b0d4cfa3804313dc02b9604e3dcbe7f",
+          "current": "33dd6068bc27b3689394c6d17b1cb2514b0d4cfa3804313dc02b9604e3dcbe7f",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-client/node_modules/.package-lock.json",
+          "expected": "dfe5c94d3ae739adf81e9b89d1bdc9d15dae5b79f54f8e77bf2d800cba77294b",
+          "current": "dfe5c94d3ae739adf81e9b89d1bdc9d15dae5b79f54f8e77bf2d800cba77294b",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/node_modules/.package-lock.json",
+          "expected": "6fbc3f2e64977a2e50ccf991c71b0bb9769e542d7498bb55fcfae0c1605d8245",
+          "current": "6fbc3f2e64977a2e50ccf991c71b0bb9769e542d7498bb55fcfae0c1605d8245",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-client/node_modules/electron/package.json",
+          "expected": "d8e71feee3508f91dbfa46214451b462ed9bb181c04099f7aeac8d544ad4c295",
+          "current": "d8e71feee3508f91dbfa46214451b462ed9bb181c04099f7aeac8d544ad4c295",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+          "expected": "c86c2701f15ca66ba460f4cdcd7ebcab0b5133a4cc299295f02108b3754e9eed",
+          "current": "c86c2701f15ca66ba460f4cdcd7ebcab0b5133a4cc299295f02108b3754e9eed",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/node_modules/better-sqlite3/build/Release/better_sqlite3.node",
+          "expected": "beaae109810a34bb2d4e9c924bd23e268ac64b6b3db4a5b5f668042a0fa77e9e",
+          "current": "beaae109810a34bb2d4e9c924bd23e268ac64b6b3db4a5b5f668042a0fa77e9e",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/index.js",
+          "expected": "3b8c93ed7cc31cbe294b7f0a81729a458ed029726f51009029c622b26d6c6be2",
+          "current": "3b8c93ed7cc31cbe294b7f0a81729a458ed029726f51009029c622b26d6c6be2",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/binding.gyp",
+          "expected": "c660385eeefbd59db21ce1433f1a6f8eebd088cf72a8cb675c4ebeda61e0795e",
+          "current": "c660385eeefbd59db21ce1433f1a6f8eebd088cf72a8cb675c4ebeda61e0795e",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/secure_file_observer.c",
+          "expected": "113ddf43102c205c175ed56699b95fd03cf2857b9896231d349c16514039ffd0",
+          "current": "113ddf43102c205c175ed56699b95fd03cf2857b9896231d349c16514039ffd0",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/runtime-smoke.js",
+          "expected": "b0eb8261146ee444981223b2e96064fb4cc0a598f0ff23f8cd21e04a9a0043f7",
+          "current": "b0eb8261146ee444981223b2e96064fb4cc0a598f0ff23f8cd21e04a9a0043f7",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/build/Release/secure_file_observer.node",
+          "expected": "c9aa17eb72b253235ea6eb1b4c6a639e455939d9e8b070129a25c587c9c69d11",
+          "current": "c9aa17eb72b253235ea6eb1b4c6a639e455939d9e8b070129a25c587c9c69d11",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/node_modules/node-gyp/package.json",
+          "expected": "d19b594bcbf958f80ec6863a44be2c5bd3ad84077c1de5f57b18168014fa97bd",
+          "current": "d19b594bcbf958f80ec6863a44be2c5bd3ad84077c1de5f57b18168014fa97bd",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/node_modules/node-gyp/bin/node-gyp.js",
+          "expected": "733bdbf2080c31a67d94cb8f7123110f44b0a3e2be24b8e575754af550eee6bf",
+          "current": "733bdbf2080c31a67d94cb8f7123110f44b0a3e2be24b8e575754af550eee6bf",
+          "same": true
+        }
+      ],
+      "mismatches": []
+    },
+    {
+      "receipt": "implementation/M3/orchestrator-checks/wiki-01.json",
+      "receiptSha256": "93889bea8c4509154caf10783236a68df0b55f071026b73620c737f1f1b13772",
+      "dependencies": [
+        {
+          "path": "fusion-studio-client/package.json",
+          "expected": "9b9e9c906358afd17eb5027af187fbe2030c537a9536d6d0d6fbcf64fb70dfb0",
+          "current": "9b9e9c906358afd17eb5027af187fbe2030c537a9536d6d0d6fbcf64fb70dfb0",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-client/package-lock.json",
+          "expected": "bf84fb48fd5b41b169afea6bc23acba4a1466255dd4c8679c2119cad55f593f4",
+          "current": "bf84fb48fd5b41b169afea6bc23acba4a1466255dd4c8679c2119cad55f593f4",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/package.json",
+          "expected": "15113c033b6deb5622aa8a5213042bcb1b67e82d87f63df3b006efc9640717db",
+          "current": "15113c033b6deb5622aa8a5213042bcb1b67e82d87f63df3b006efc9640717db",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/package-lock.json",
+          "expected": "33dd6068bc27b3689394c6d17b1cb2514b0d4cfa3804313dc02b9604e3dcbe7f",
+          "current": "33dd6068bc27b3689394c6d17b1cb2514b0d4cfa3804313dc02b9604e3dcbe7f",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-client/node_modules/.package-lock.json",
+          "expected": "dfe5c94d3ae739adf81e9b89d1bdc9d15dae5b79f54f8e77bf2d800cba77294b",
+          "current": "dfe5c94d3ae739adf81e9b89d1bdc9d15dae5b79f54f8e77bf2d800cba77294b",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/node_modules/.package-lock.json",
+          "expected": "6fbc3f2e64977a2e50ccf991c71b0bb9769e542d7498bb55fcfae0c1605d8245",
+          "current": "6fbc3f2e64977a2e50ccf991c71b0bb9769e542d7498bb55fcfae0c1605d8245",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-client/node_modules/electron/package.json",
+          "expected": "d8e71feee3508f91dbfa46214451b462ed9bb181c04099f7aeac8d544ad4c295",
+          "current": "d8e71feee3508f91dbfa46214451b462ed9bb181c04099f7aeac8d544ad4c295",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+          "expected": "c86c2701f15ca66ba460f4cdcd7ebcab0b5133a4cc299295f02108b3754e9eed",
+          "current": "c86c2701f15ca66ba460f4cdcd7ebcab0b5133a4cc299295f02108b3754e9eed",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/node_modules/better-sqlite3/build/Release/better_sqlite3.node",
+          "expected": "beaae109810a34bb2d4e9c924bd23e268ac64b6b3db4a5b5f668042a0fa77e9e",
+          "current": "beaae109810a34bb2d4e9c924bd23e268ac64b6b3db4a5b5f668042a0fa77e9e",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/index.js",
+          "expected": "3b8c93ed7cc31cbe294b7f0a81729a458ed029726f51009029c622b26d6c6be2",
+          "current": "3b8c93ed7cc31cbe294b7f0a81729a458ed029726f51009029c622b26d6c6be2",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/binding.gyp",
+          "expected": "c660385eeefbd59db21ce1433f1a6f8eebd088cf72a8cb675c4ebeda61e0795e",
+          "current": "c660385eeefbd59db21ce1433f1a6f8eebd088cf72a8cb675c4ebeda61e0795e",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/secure_file_observer.c",
+          "expected": "113ddf43102c205c175ed56699b95fd03cf2857b9896231d349c16514039ffd0",
+          "current": "113ddf43102c205c175ed56699b95fd03cf2857b9896231d349c16514039ffd0",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/runtime-smoke.js",
+          "expected": "b0eb8261146ee444981223b2e96064fb4cc0a598f0ff23f8cd21e04a9a0043f7",
+          "current": "b0eb8261146ee444981223b2e96064fb4cc0a598f0ff23f8cd21e04a9a0043f7",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/native/secure-file-observer/build/Release/secure_file_observer.node",
+          "expected": "c9aa17eb72b253235ea6eb1b4c6a639e455939d9e8b070129a25c587c9c69d11",
+          "current": "c9aa17eb72b253235ea6eb1b4c6a639e455939d9e8b070129a25c587c9c69d11",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/node_modules/node-gyp/package.json",
+          "expected": "d19b594bcbf958f80ec6863a44be2c5bd3ad84077c1de5f57b18168014fa97bd",
+          "current": "d19b594bcbf958f80ec6863a44be2c5bd3ad84077c1de5f57b18168014fa97bd",
+          "same": true
+        },
+        {
+          "path": "fusion-studio-server/node_modules/node-gyp/bin/node-gyp.js",
+          "expected": "733bdbf2080c31a67d94cb8f7123110f44b0a3e2be24b8e575754af550eee6bf",
+          "current": "733bdbf2080c31a67d94cb8f7123110f44b0a3e2be24b8e575754af550eee6bf",
+          "same": true
+        }
+      ],
+      "mismatches": []
+    }
+  ]
+}

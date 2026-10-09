@@ -1,0 +1,52 @@
+{
+  "at": "2026-09-27T00:52:15.732304+00:00",
+  "runId": "chat-arch-1790469656866-80e065ee8f",
+  "rootExists": false,
+  "recordedPids": [
+    {
+      "pid": 26077,
+      "exists": false
+    },
+    {
+      "pid": 26638,
+      "exists": false
+    },
+    {
+      "pid": 58370,
+      "exists": false
+    },
+    {
+      "pid": 59346,
+      "exists": false
+    },
+    {
+      "pid": 59949,
+      "exists": false
+    },
+    {
+      "pid": 80524,
+      "exists": false
+    },
+    {
+      "pid": 81136,
+      "exists": false
+    },
+    {
+      "pid": 81728,
+      "exists": false
+    }
+  ],
+  "fullCases": 6,
+  "fiveMinute": {
+    "exactRetention": true,
+    "characters": 9520,
+    "wallMs": 350717,
+    "inputP95Ms": 1.3000001907348633,
+    "rafP95Ms": 17.5,
+    "rafMaxMs": 21.5,
+    "longTasks": 0,
+    "focusValid": true,
+    "violations": []
+  },
+  "shortWindows": 10
+}

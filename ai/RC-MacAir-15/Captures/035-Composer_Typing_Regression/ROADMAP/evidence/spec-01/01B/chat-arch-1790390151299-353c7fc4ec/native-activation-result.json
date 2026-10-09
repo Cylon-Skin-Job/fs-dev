@@ -1,0 +1,44 @@
+{
+  "scope": "native-activation/protocol only; no typing, native-input or performance acceptance",
+  "identity": {
+    "pid": 66074,
+    "windowId": 1
+  },
+  "domFocus": "emulated by Playwright1.58.2",
+  "domVisibility": "affected by backgroundThrottling:false",
+  "observation": {
+    "status": "observation-completed-no-acceptance",
+    "startedAt": 1790390156774,
+    "endedAt": 1790390286774,
+    "durationMs": 130000,
+    "queries": 1250,
+    "failures": 0,
+    "lastCompleted": {
+      "observedAt": 1790390286703,
+      "state": {
+        "pid": 66074,
+        "windowId": 1,
+        "focused": false,
+        "visible": true,
+        "minimized": false,
+        "appHidden": false,
+        "appActive": false,
+        "ownedWindowIsKey": false
+      }
+    }
+  },
+  "records": 1254,
+  "overflow": 0,
+  "writeErrors": 0,
+  "protocolRecords": 2779,
+  "protocolWriteErrors": 0,
+  "protocol": {
+    "version": "1.58.2",
+    "overflow": 0,
+    "recordingErrors": 0,
+    "pendingCount": 0,
+    "errorResponses": 0,
+    "restored": true
+  },
+  "complete": true
+}

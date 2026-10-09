@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-09-26T00:45:15.369120+00:00",
+  "method": "read-only ioreg; retain only IOConsoleLocked",
+  "IOConsoleLocked": "No",
+  "runId": "chat-arch-1790383369332-8ec9918abf",
+  "measurementStarted": false,
+  "ownedRootExists": false,
+  "exactTokenProcesses": [],
+  "causalLimit": "owned focus acquired then hide/blur; screenshot bootstrap absent; no cause of hide established",
+  "sourceChanged": false
+}

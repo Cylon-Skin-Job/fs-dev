@@ -1,0 +1,53 @@
+/* Explicit, user-invoked diagnostic controls; always outside the error alert. */
+.rv-chat-diagnostic-details {
+  display: grid;
+  gap: var(--space-xs, 4px);
+  margin: var(--space-xs, 4px) 0 var(--space-md, 12px);
+  font-size: var(--font-size-xs, 12px);
+}
+
+.rv-chat-diagnostic-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs, 4px);
+}
+
+.rv-chat-diagnostic-actions button {
+  appearance: none;
+  border: var(--border-width, 1px) solid var(--border-subtle, currentColor);
+  border-radius: var(--radius-sm, 4px);
+  padding: var(--space-xs, 4px) var(--space-sm, 8px);
+  color: var(--text-secondary, currentColor);
+  background: var(--bg-secondary, transparent);
+  font: inherit;
+  cursor: pointer;
+}
+
+.rv-chat-diagnostic-actions button:hover:not(:disabled),
+.rv-chat-diagnostic-actions button:focus-visible:not(:disabled) {
+  color: var(--text-primary, currentColor);
+  background: var(--bg-hover, transparent);
+}
+
+.rv-chat-diagnostic-actions button:disabled {
+  cursor: default;
+  opacity: var(--opacity-disabled, 0.5);
+}
+
+.rv-chat-diagnostic-status {
+  color: var(--text-muted, var(--text-dim, currentColor));
+}
+
+.rv-chat-diagnostic-report {
+  max-height: var(--diagnostic-report-max-height, 320px);
+  overflow: auto;
+  margin: 0;
+  padding: var(--space-sm, 8px);
+  border: var(--border-width, 1px) solid var(--border-subtle, currentColor);
+  border-radius: var(--radius-sm, 4px);
+  color: var(--text-secondary, currentColor);
+  background: var(--bg-secondary, transparent);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: var(--font-size-xs, 12px) / var(--line-height-body, 1.5) var(--font-mono, monospace);
+}

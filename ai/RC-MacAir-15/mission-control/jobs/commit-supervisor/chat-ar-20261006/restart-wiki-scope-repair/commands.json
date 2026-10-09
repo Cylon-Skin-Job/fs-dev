@@ -1,0 +1,575 @@
+[
+  {
+    "argv": [
+      "python3",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+      "verify",
+      "--job",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/restart-wiki-deferral-recovery"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-001.stderr.bin",
+    "stdout_path": "command-001.stdout.bin",
+    "stdout_sha256": "8f33cbbc57c28ed288ef98da7c9c318851d9d70fc71f0b98cb840c9e7faedfe1"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "show",
+      "3356e1b73cc5d44028eac5baa02fd542a8bbc385:ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-002.stderr.bin",
+    "stdout_path": "command-002.stdout.bin",
+    "stdout_sha256": "fa7ecb9041a4d4c9f2f24cba9386b3e844a6dbe98c9af52063b05fe90345a9f0"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "ls-tree",
+      "3356e1b73cc5d44028eac5baa02fd542a8bbc385",
+      "--",
+      "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-003.stderr.bin",
+    "stdout_path": "command-003.stdout.bin",
+    "stdout_sha256": "c954897256bed1bef147767de32fb54a7f5864e47731358482def6fd22c32099"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "rev-parse",
+      "--absolute-git-dir"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-004.stderr.bin",
+    "stdout_path": "command-004.stdout.bin",
+    "stdout_sha256": "73e14bb4801ab317a881c90ee857bc3b3d550229001b9cf2a15360956a5f0c95"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-005.stderr.bin",
+    "stdout_path": "command-005.stdout.bin",
+    "stdout_sha256": "eb5bfaa032039807b580f812c24b1ea5e7fd19a7fe884c707293b11f9186b58f"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "symbolic-ref",
+      "HEAD"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-006.stderr.bin",
+    "stdout_path": "command-006.stdout.bin",
+    "stdout_sha256": "5524c8d142a3ed882fe05fd32edeb5281c7366708c62103f73098e341d437306"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "ls-files",
+      "--stage",
+      "-z"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-007.stderr.bin",
+    "stdout_path": "command-007.stdout.bin",
+    "stdout_sha256": "c0f94a231728a60499d9f7b11bcddf044b54f0ea9e8339d4d4688d4ab4daa098"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "show-ref",
+      "--head"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-008.stderr.bin",
+    "stdout_path": "command-008.stdout.bin",
+    "stdout_sha256": "d58ad86edf0cb7b98798f3205dd7feffd371b4f08ee994bb1168e2fd1bc12652"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/Users/rccurtrightjr./projects/fs-dev",
+      "rev-parse",
+      "--absolute-git-dir"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-009.stderr.bin",
+    "stdout_path": "command-009.stdout.bin",
+    "stdout_sha256": "e75ffdaaa6bd5761376bceeb9d58758cbf4a2df9f7b34692a5cc556db3b0cacb"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/Users/rccurtrightjr./projects/fs-dev",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-010.stderr.bin",
+    "stdout_path": "command-010.stdout.bin",
+    "stdout_sha256": "34f9e8be4e66d70e38a9db6e4c8bbccd8c55baeef42d34d30af2d1a59abd9aa5"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/Users/rccurtrightjr./projects/fs-dev",
+      "symbolic-ref",
+      "HEAD"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-011.stderr.bin",
+    "stdout_path": "command-011.stdout.bin",
+    "stdout_sha256": "6c852b0b1049db218f0e0a9e640331ed2f9482c8397f3d3361245d866dbc48ba"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/Users/rccurtrightjr./projects/fs-dev",
+      "ls-files",
+      "--stage",
+      "-z"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-012.stderr.bin",
+    "stdout_path": "command-012.stdout.bin",
+    "stdout_sha256": "d7a7443545c6eea1eba91b23480aa376bc0c5cc5dc1f1916a0db3be31972fa81"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/Users/rccurtrightjr./projects/fs-dev",
+      "show-ref",
+      "--head"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-013.stderr.bin",
+    "stdout_path": "command-013.stdout.bin",
+    "stdout_sha256": "01eeddf1d16b92a33f7363d9f061e52348c7b7f051d1715e2991e5d672fe9dc5"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "ls-files",
+      "--cached",
+      "--others",
+      "--exclude-standard",
+      "-z"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-014.stderr.bin",
+    "stdout_path": "command-014.stdout.bin",
+    "stdout_sha256": "b316596c26602928eb3a6b13a40dfe147cc74029e439358258bef9cfb85032dc"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "rev-parse",
+      "--absolute-git-dir"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-015.stderr.bin",
+    "stdout_path": "command-015.stdout.bin",
+    "stdout_sha256": "73e14bb4801ab317a881c90ee857bc3b3d550229001b9cf2a15360956a5f0c95"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-016.stderr.bin",
+    "stdout_path": "command-016.stdout.bin",
+    "stdout_sha256": "eb5bfaa032039807b580f812c24b1ea5e7fd19a7fe884c707293b11f9186b58f"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "symbolic-ref",
+      "HEAD"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-017.stderr.bin",
+    "stdout_path": "command-017.stdout.bin",
+    "stdout_sha256": "5524c8d142a3ed882fe05fd32edeb5281c7366708c62103f73098e341d437306"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "ls-files",
+      "--stage",
+      "-z"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-018.stderr.bin",
+    "stdout_path": "command-018.stdout.bin",
+    "stdout_sha256": "c0f94a231728a60499d9f7b11bcddf044b54f0ea9e8339d4d4688d4ab4daa098"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "show-ref",
+      "--head"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-019.stderr.bin",
+    "stdout_path": "command-019.stdout.bin",
+    "stdout_sha256": "d58ad86edf0cb7b98798f3205dd7feffd371b4f08ee994bb1168e2fd1bc12652"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/Users/rccurtrightjr./projects/fs-dev",
+      "rev-parse",
+      "--absolute-git-dir"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-020.stderr.bin",
+    "stdout_path": "command-020.stdout.bin",
+    "stdout_sha256": "e75ffdaaa6bd5761376bceeb9d58758cbf4a2df9f7b34692a5cc556db3b0cacb"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/Users/rccurtrightjr./projects/fs-dev",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-021.stderr.bin",
+    "stdout_path": "command-021.stdout.bin",
+    "stdout_sha256": "34f9e8be4e66d70e38a9db6e4c8bbccd8c55baeef42d34d30af2d1a59abd9aa5"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/Users/rccurtrightjr./projects/fs-dev",
+      "symbolic-ref",
+      "HEAD"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-022.stderr.bin",
+    "stdout_path": "command-022.stdout.bin",
+    "stdout_sha256": "6c852b0b1049db218f0e0a9e640331ed2f9482c8397f3d3361245d866dbc48ba"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/Users/rccurtrightjr./projects/fs-dev",
+      "ls-files",
+      "--stage",
+      "-z"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-023.stderr.bin",
+    "stdout_path": "command-023.stdout.bin",
+    "stdout_sha256": "d7a7443545c6eea1eba91b23480aa376bc0c5cc5dc1f1916a0db3be31972fa81"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/Users/rccurtrightjr./projects/fs-dev",
+      "show-ref",
+      "--head"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-024.stderr.bin",
+    "stdout_path": "command-024.stdout.bin",
+    "stdout_sha256": "01eeddf1d16b92a33f7363d9f061e52348c7b7f051d1715e2991e5d672fe9dc5"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "rev-parse",
+      "--absolute-git-dir"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-025.stderr.bin",
+    "stdout_path": "command-025.stdout.bin",
+    "stdout_sha256": "73e14bb4801ab317a881c90ee857bc3b3d550229001b9cf2a15360956a5f0c95"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-026.stderr.bin",
+    "stdout_path": "command-026.stdout.bin",
+    "stdout_sha256": "eb5bfaa032039807b580f812c24b1ea5e7fd19a7fe884c707293b11f9186b58f"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "symbolic-ref",
+      "HEAD"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-027.stderr.bin",
+    "stdout_path": "command-027.stdout.bin",
+    "stdout_sha256": "5524c8d142a3ed882fe05fd32edeb5281c7366708c62103f73098e341d437306"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "ls-files",
+      "--stage",
+      "-z"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-028.stderr.bin",
+    "stdout_path": "command-028.stdout.bin",
+    "stdout_sha256": "c0f94a231728a60499d9f7b11bcddf044b54f0ea9e8339d4d4688d4ab4daa098"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "show-ref",
+      "--head"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-029.stderr.bin",
+    "stdout_path": "command-029.stdout.bin",
+    "stdout_sha256": "d58ad86edf0cb7b98798f3205dd7feffd371b4f08ee994bb1168e2fd1bc12652"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/Users/rccurtrightjr./projects/fs-dev",
+      "rev-parse",
+      "--absolute-git-dir"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-030.stderr.bin",
+    "stdout_path": "command-030.stdout.bin",
+    "stdout_sha256": "e75ffdaaa6bd5761376bceeb9d58758cbf4a2df9f7b34692a5cc556db3b0cacb"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/Users/rccurtrightjr./projects/fs-dev",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-031.stderr.bin",
+    "stdout_path": "command-031.stdout.bin",
+    "stdout_sha256": "34f9e8be4e66d70e38a9db6e4c8bbccd8c55baeef42d34d30af2d1a59abd9aa5"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/Users/rccurtrightjr./projects/fs-dev",
+      "symbolic-ref",
+      "HEAD"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-032.stderr.bin",
+    "stdout_path": "command-032.stdout.bin",
+    "stdout_sha256": "6c852b0b1049db218f0e0a9e640331ed2f9482c8397f3d3361245d866dbc48ba"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/Users/rccurtrightjr./projects/fs-dev",
+      "ls-files",
+      "--stage",
+      "-z"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-033.stderr.bin",
+    "stdout_path": "command-033.stdout.bin",
+    "stdout_sha256": "d7a7443545c6eea1eba91b23480aa376bc0c5cc5dc1f1916a0db3be31972fa81"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/Users/rccurtrightjr./projects/fs-dev",
+      "show-ref",
+      "--head"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-034.stderr.bin",
+    "stdout_path": "command-034.stdout.bin",
+    "stdout_sha256": "01eeddf1d16b92a33f7363d9f061e52348c7b7f051d1715e2991e5d672fe9dc5"
+  },
+  {
+    "argv": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+      "ls-files",
+      "--cached",
+      "--others",
+      "--exclude-standard",
+      "-z"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stderr": "",
+    "stderr_path": "command-035.stderr.bin",
+    "stdout_path": "command-035.stdout.bin",
+    "stdout_sha256": "b316596c26602928eb3a6b13a40dfe147cc74029e439358258bef9cfb85032dc"
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "runId": "chat-arch-1789975791812-256fab3d9d",
+  "status": "failed",
+  "results": [
+    {
+      "id": "R3-LOST-ACK-STATUS",
+      "code": 1,
+      "signal": null,
+      "pid": 58487,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 7582
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "R3-LOST-ACK-STATUS exited 1",
+    "stack": "Error: R3-LOST-ACK-STATUS exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:361:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

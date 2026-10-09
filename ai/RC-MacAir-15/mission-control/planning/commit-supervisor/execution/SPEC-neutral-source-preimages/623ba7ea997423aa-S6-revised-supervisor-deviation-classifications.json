@@ -1,0 +1,505 @@
+{
+  "at": "2026-10-04T19:50:59.705332+00:00",
+  "actor": "/root",
+  "scope": "ROOT_CLASSIFICATIONS_EXCLUDED_FROM_FRESH_CORRECTNESS_GATES",
+  "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-deviations.json",
+  "source_sha256": "144c172856b90cdbc23c6cc5f631da6068b5a17b6963b05a74bea5e61fea1647",
+  "entries": [
+    {
+      "id": "FIX-XY-CODE-D1",
+      "original_criterion": "Original draft label Draft report; revised X supersedes only that label, retaining draft identity and all original semantics.",
+      "actual_change": "Changed draft visible label to Review report; review/send IDs and labels remain unchanged.",
+      "reason_authority": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-original-authority.md and C/planning/commit-supervisor/execution/S6-fix-xy-event.json /X.",
+      "files": [
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js"
+      ],
+      "effect": "Current hydration and checkbox writes still use draft/review/send.",
+      "checks": "39 current-source samples, original numerical/reversal/reload/all-states oracles; two syntax checks; four-delta readback.; actual evidence/fix-xy-runtime-acceptance.json exact current commands/observations",
+      "risk": "Actual revised public UI, reset immediate persistence/reload, canonical preinitializer reset and built-in Wiki verified; disposable fixture only, no production adoption.",
+      "downstream_consumer": "Checklist iframe, Checklist Guide, fresh code/Wiki/final/runtime gates.",
+      "supervisor_disposition": "accepted within explicit X/Y scope; actual runtime downstream impact validated",
+      "classification": "accepted",
+      "root_evidence": [
+        "S6-root-revised-final3-inspection.json",
+        "S6-root-revised-actual-runtime-inspection.json",
+        "S6-root-second-fixed-verify.json",
+        "S6-second-owner-terminal.json"
+      ],
+      "root_qualification": "Accepted within the bounded explicitly steered private fixture and recorded procedure. Historical incomplete check/exposed gate claims remain withdrawn or qualified; renewed current evidence accepted forward only. Actual native source/check/runtime/packet inspected. OuterS6/finalSPEC gates remain separate."
+    },
+    {
+      "id": "FIX-XY-CODE-D2",
+      "original_criterion": "Y requires Reset completion to uncheck all retained rows, update exact summary, persist immediately and survive ordinary reload.",
+      "actual_change": "Added one native Reset button, explicit view callback, reset mutation in existing controller and reused persistCompletion for both completion and reset. Added variable-backed local button CSS.",
+      "reason_authority": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-code-1-assignment.md and C/planning/commit-supervisor/execution/S6-fix-xy-event.json /Y; existing controller owns private fixture completion state/localStorage.",
+      "files": [
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js",
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js",
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css",
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html"
+      ],
+      "effect": "Each reset click persists [] once and synchronously renders allfalse/3 remaining of 3, retaining logical rows/IDs/labels; no listener accumulation across refresh.",
+      "checks": "Two-checked reset/reload; idempotent reset; postreset completion/reversal; all eight completion masks reset and reload; current-source module and HTML/style wiring checks.; actual evidence/fix-xy-runtime-acceptance.json exact current commands/observations",
+      "risk": "Actual revised public UI, reset immediate persistence/reload, canonical preinitializer reset and built-in Wiki verified; disposable fixture only, no production adoption.",
+      "downstream_consumer": "Bounded Wiki rewrite and actual public-route/reset/restart smoke.",
+      "supervisor_disposition": "accepted within explicit X/Y scope; actual runtime downstream impact validated",
+      "classification": "accepted",
+      "root_evidence": [
+        "S6-root-revised-final3-inspection.json",
+        "S6-root-revised-actual-runtime-inspection.json",
+        "S6-root-second-fixed-verify.json",
+        "S6-second-owner-terminal.json"
+      ],
+      "root_qualification": "Accepted within the bounded explicitly steered private fixture and recorded procedure. Historical incomplete check/exposed gate claims remain withdrawn or qualified; renewed current evidence accepted forward only. Actual native source/check/runtime/packet inspected. OuterS6/finalSPEC gates remain separate."
+    },
+    {
+      "id": "FIX-XY-CODE-D3",
+      "original_criterion": "Installed named worker procedure/profile with root inherited model/effort and verified effective permissions.",
+      "actual_change": "Used assigned supported default fallback; explicitly read and acknowledged exact installed SKILL and TOML developer instructions.",
+      "reason_authority": "Assignment plus session-contract.md Runtime and portability permits supported default with explicit exact paths.",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-checks.json"
+      ],
+      "effect": "Leaf scope retained; no children/external reviewers; effective danger-full-access/never came from host developer instructions, not local config inference.",
+      "checks": "Actual CWD, source/private Git roots, parent assignment and collaboration inventory; all loaded revisions recorded.",
+      "risk": "Native TOML loader/concrete model/effort values are not exposed and no such assertion is made.",
+      "downstream_consumer": "Manager lifecycle and fresh independent handoff.",
+      "supervisor_disposition": "accepted within original explicit scope, procedural/history limits preserved",
+      "classification": "accepted",
+      "root_evidence": [
+        "S6-root-revised-final3-inspection.json",
+        "S6-root-revised-actual-runtime-inspection.json",
+        "S6-root-second-fixed-verify.json",
+        "S6-second-owner-terminal.json"
+      ],
+      "root_qualification": "Accepted within the bounded explicitly steered private fixture and recorded procedure. Historical incomplete check/exposed gate claims remain withdrawn or qualified; renewed current evidence accepted forward only. Actual native source/check/runtime/packet inspected. OuterS6/finalSPEC gates remain separate."
+    },
+    {
+      "id": "FIX-XY-CODE-D4",
+      "original_criterion": "Meaningful current-source self-check plus retained valid required55/17 evidence; actual successful runtime must be real.",
+      "actual_change": "Added unique VM/minimal-DOM/in-memory-storage scenario and read-only postflight helpers. Historical35 listed entries have30 unique paths; historical55 reuse did not bind all executed Python discovery/import/fixture/review_packet/Wiki parser inputs. Those original claims remain historical qualified successful invocations. Current55 uses a newly executed discovery run with complete unique before/after bindings and actual Node coverage.",
+      "reason_authority": "Leaf assignment explicitly separates current-source checks from later Supervisor actual runtime and directs rerun only invalidated checks.",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-scenarios.mjs",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-postflight.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-commands.json"
+      ],
+      "effect": "39 source scenarios, two syntax commands and exact four-delta readback remain current. Current Python55 exit0/OK: 3808 unique dependencies equal before/after, all55 expected test names executed, all82 actual file:// JavaScript modules prebound. Retained Node17 has11 unique current local source bindings.",
+      "checks": "Immutable code-command-only derivative /0-/3; evidence/fix-xy-python-current-2-bindings.json, exact current-2 raw invocation/start/finish/cwd/exit/stdout/stderr plus pre2/post2; evidence/fix-xy-node17-current-bindings.json.",
+      "risk": "Original55-only reuse provenance is incomplete and cannot certify current55. Current standard-runtime/support dependency bindings and disposable fixtures do not certify actual product UI/runtime. Retained Node17 executable binary history was not independently bound; current selection is supplied, historical source bytes match.",
+      "downstream_consumer": "Fresh current all5 manager/reviewer must inspect new exact check provenance and limits; actual canonical/runtime gates remain required.",
+      "supervisor_disposition": "accepted current provenance correction; actual fresh3 independently validated; historical reuse claims qualified",
+      "classification": "accepted",
+      "root_evidence": [
+        "S6-root-revised-final3-inspection.json",
+        "S6-root-revised-actual-runtime-inspection.json",
+        "S6-root-second-fixed-verify.json",
+        "S6-second-owner-terminal.json"
+      ],
+      "root_qualification": "Accepted within the bounded explicitly steered private fixture and recorded procedure. Historical incomplete check/exposed gate claims remain withdrawn or qualified; renewed current evidence accepted forward only. Actual native source/check/runtime/packet inspected. OuterS6/finalSPEC gates remain separate."
+    },
+    {
+      "id": "FIX-XY-CODE-D5",
+      "original_criterion": "Every Git invocation uses GIT_OPTIONAL_LOCKS=0.",
+      "actual_change": "Initial orientation command pwd; git rev-parse --show-toplevel omitted the environment flag. Every later Git read and snapshot invocation explicitly used the flag; no Git write operation occurred.",
+      "reason_authority": "Procedural oversight disclosed; revision-only command performed before mutation.",
+      "files": [],
+      "effect": "Source and candidate index/ref/config fingerprints remain identical to fixed-first after repair; no index refresh/write observed.",
+      "checks": "Final read-only snapshot-state protected/ref equality and source index file f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966.",
+      "risk": "No observed state impact; this note cannot retroactively change the initial invocation.",
+      "downstream_consumer": "Manager procedural accounting; independent gate unaffected.",
+      "supervisor_disposition": "accepted within original explicit scope, procedural/history limits preserved",
+      "classification": "accepted",
+      "root_evidence": [
+        "S6-root-revised-final3-inspection.json",
+        "S6-root-revised-actual-runtime-inspection.json",
+        "S6-root-second-fixed-verify.json",
+        "S6-second-owner-terminal.json"
+      ],
+      "root_qualification": "Accepted within the bounded explicitly steered private fixture and recorded procedure. Historical incomplete check/exposed gate claims remain withdrawn or qualified; renewed current evidence accepted forward only. Actual native source/check/runtime/packet inspected. OuterS6/finalSPEC gates remain separate."
+    },
+    {
+      "id": "FIX-XY-WIKI-D6",
+      "original_criterion": "Guide must explain revised label and Reset while retaining every original fact, full exclusive version and actual quoted UTC metadata; root/Navigation exact bytes and times retained.",
+      "actual_change": "Rewrote only existing Guide; added index.html as direct native-button source owner. Created exact declared .versions/2026-10-04-095624.md with complete1620-byte previous Guide SHAa3d372eb before replacement. Current Guide SHA5f093725, quoted2026-10-04T17:06:34Z.",
+      "reason_authority": "Original authority plus X/Y Wiki steering and new immutable130 union declared absent version before creation.",
+      "files": [
+        "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md",
+        "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-095624.md"
+      ],
+      "effect": "Current reader facts updated in place; complete first fixed Guide retained; root/Navigation remain exact bytes/mtime/authoredtime.",
+      "checks": "Five raw source/document commands: public130 verification,114-dependency precheck, exclusive full preimage/write with recheck, full130 comparison and YAML/source/link checks, actual client gray-matter parse.; actual evidence/fix-xy-runtime-acceptance.json exact current commands/observations",
+      "risk": "Actual revised public UI, reset immediate persistence/reload, canonical preinitializer reset and built-in Wiki verified; disposable fixture only, no production adoption.",
+      "downstream_consumer": "Fresh original-three-page gate, different final all5 gate and actual Wiki navigation/reload.",
+      "supervisor_disposition": "accepted within explicit X/Y scope; actual runtime downstream impact validated",
+      "classification": "accepted",
+      "root_evidence": [
+        "S6-root-revised-final3-inspection.json",
+        "S6-root-revised-actual-runtime-inspection.json",
+        "S6-root-second-fixed-verify.json",
+        "S6-second-owner-terminal.json"
+      ],
+      "root_qualification": "Accepted within the bounded explicitly steered private fixture and recorded procedure. Historical incomplete check/exposed gate claims remain withdrawn or qualified; renewed current evidence accepted forward only. Actual native source/check/runtime/packet inspected. OuterS6/finalSPEC gates remain separate."
+    },
+    {
+      "id": "FIX-XY-WIKI-D7",
+      "original_criterion": "Installed Wiki worker procedure/profile under manager-assigned bounded leaf reuse.",
+      "actual_change": "Supported default leaf explicitly loaded exact installed Wiki Repair SKILL/TOML developer instructions plus complete assigned methods; no children.",
+      "reason_authority": "Exact leaf assignment and session/Supervisor integration fallback contracts.",
+      "files": [
+        "workers/fix-xy-wiki-1.md"
+      ],
+      "effect": "Actual CWD, host danger-full-access/never, root inheritance/no overrides acknowledged; native loader/concrete settings unexposed.",
+      "checks": "Loaded current revisions and prewrite identity acknowledgment; mechanical full candidate boundaries.",
+      "risk": "No native named-profile loader claim is available.",
+      "downstream_consumer": "Supervisor actual lifecycle and fresh independent gate.",
+      "supervisor_disposition": "accepted within original explicit scope, procedural/history limits preserved",
+      "classification": "accepted",
+      "root_evidence": [
+        "S6-root-revised-final3-inspection.json",
+        "S6-root-revised-actual-runtime-inspection.json",
+        "S6-root-second-fixed-verify.json",
+        "S6-second-owner-terminal.json"
+      ],
+      "root_qualification": "Accepted within the bounded explicitly steered private fixture and recorded procedure. Historical incomplete check/exposed gate claims remain withdrawn or qualified; renewed current evidence accepted forward only. Actual native source/check/runtime/packet inspected. OuterS6/finalSPEC gates remain separate."
+    },
+    {
+      "id": "FIX-XY-WIKI-D8",
+      "original_criterion": "All Git reads require GIT_OPTIONAL_LOCKS=0.",
+      "actual_change": "Wiki leaf sole initial revision-only git rev-parse root discovery omitted explicit environment; subsequent helper/runner calls explicitly supply it.",
+      "reason_authority": "Worker disclosed procedural oversight; no Git write operation requested.",
+      "files": [],
+      "effect": "No observed source/candidate index/ref/config change; exact pre/post integrity readbacks retained.",
+      "checks": "Full130 prewrite verification and later index/ref/config equality.",
+      "risk": "Read-only environment omission cannot be retroactively removed.",
+      "downstream_consumer": "Supervisor procedural accounting; current gate dependencies remain explicit.",
+      "supervisor_disposition": "accepted within original explicit scope, procedural/history limits preserved",
+      "classification": "accepted",
+      "root_evidence": [
+        "S6-root-revised-final3-inspection.json",
+        "S6-root-revised-actual-runtime-inspection.json",
+        "S6-root-second-fixed-verify.json",
+        "S6-second-owner-terminal.json"
+      ],
+      "root_qualification": "Accepted within the bounded explicitly steered private fixture and recorded procedure. Historical incomplete check/exposed gate claims remain withdrawn or qualified; renewed current evidence accepted forward only. Actual native source/check/runtime/packet inspected. OuterS6/finalSPEC gates remain separate."
+    },
+    {
+      "id": "FIX-XY-SUPERVISOR-D9",
+      "original_criterion": "Actual newly installed Commit Supervisor entry/profile with exact instructions and effective settings.",
+      "actual_change": "Supported default actual runtime actor explicitly loaded exact installed Supervisor SKILL/TOML developer instructions, CWD verified and host settings acknowledged.",
+      "reason_authority": "Exact root executable assignment explicitly directs supported default fallback; host named profile unavailable.",
+      "files": [
+        "activation-fix-xy.json",
+        "lifecycle-fix-xy.json"
+      ],
+      "effect": "Bounded Supervisor process and authorized children; root inheritance/no overrides; concrete model/effort/native loader metadata remain unexposed.",
+      "checks": "Prewrite loading/identity acknowledgement and actual native predecessor terminal observation.",
+      "risk": "No fabricated native-loader/settings metadata.",
+      "downstream_consumer": "Second actual owner wait and root-observed native terminal.",
+      "supervisor_disposition": "accepted within original explicit scope, procedural/history limits preserved",
+      "classification": "accepted",
+      "root_evidence": [
+        "S6-root-revised-final3-inspection.json",
+        "S6-root-revised-actual-runtime-inspection.json",
+        "S6-root-second-fixed-verify.json",
+        "S6-second-owner-terminal.json"
+      ],
+      "root_qualification": "Accepted within the bounded explicitly steered private fixture and recorded procedure. Historical incomplete check/exposed gate claims remain withdrawn or qualified; renewed current evidence accepted forward only. Actual native source/check/runtime/packet inspected. OuterS6/finalSPEC gates remain separate."
+    },
+    {
+      "id": "FIX-XY-SUPERVISOR-D10",
+      "original_criterion": "Actual revised UI keeps original reversal/reload/all0/all3 and proves Reset immediate persistence/reload plus canonical reset before initializer.",
+      "actual_change": "Unique job-local immutable live helper derivative retains original reversal shell reload before Reset, adds actual iframe localStorage [] assertion and revised Guide checks. Separate pre-restart helper requires priortrue/false/false/count2; separate postrestart helper requires revised labels/allfalse/count3 before initializer.",
+      "reason_authority": "Original runtime criteria plus X/Y label/reset; source inspection showed maintained helper fix mode needed explicit retained reversal reload observation.",
+      "files": [
+        "fix_xy_live_smoke.mjs",
+        "fix_xy_live_readback.mjs",
+        "fix_xy_pre_restart_readback.mjs"
+      ],
+      "effect": "Installed helpers remain unchanged; actual UI/server/CDP used later with stricter current oracles.",
+      "checks": "Source read/syntax commands; actual runtime remains later mandatory.; actual evidence/fix-xy-runtime-acceptance.json exact current commands/observations",
+      "risk": "Actual revised public UI, reset immediate persistence/reload, canonical preinitializer reset and built-in Wiki verified; disposable fixture only, no production adoption.",
+      "downstream_consumer": "Different final review and Supervisor actual runtime; current hashes pinned separately.",
+      "supervisor_disposition": "accepted within explicit X/Y scope; actual runtime downstream impact validated",
+      "classification": "accepted",
+      "root_evidence": [
+        "S6-root-revised-final3-inspection.json",
+        "S6-root-revised-actual-runtime-inspection.json",
+        "S6-root-second-fixed-verify.json",
+        "S6-second-owner-terminal.json"
+      ],
+      "root_qualification": "Accepted within the bounded explicitly steered private fixture and recorded procedure. Historical incomplete check/exposed gate claims remain withdrawn or qualified; renewed current evidence accepted forward only. Actual native source/check/runtime/packet inspected. OuterS6/finalSPEC gates remain separate."
+    },
+    {
+      "id": "FIX-XY-SUPERVISOR-D11",
+      "original_criterion": "Protect source/unowned caches/index/refs and normal/Alpha, while preserving assigned root E and Supervisor J writes.",
+      "actual_change": "Initial entry comparison excluding only J flagged13 authorized root E records. Corrected comparison explicitly excludes entire assigned E and J; raw snapshots retained.",
+      "reason_authority": "Root owns disjoint E coordination/control records under exact assignment; our candidate-only effects do not own E.",
+      "files": [
+        "evidence/fix-xy-entry-protection-comparison.json"
+      ],
+      "effect": "Comparison scope aligns with authorized concurrent writers; no observed outside-J/E/source-cache/index/ref/protected-process change.",
+      "checks": "Retained entry and first protection raw snapshots; explicit excluded namespaces and outside differences recorded.; evidence/fix-xy-runtime-protection-comparison.json outsideJ/E unchanged and whole20tests separately pre/post bound",
+      "risk": "Authorized E/J writes are not protection failures; scope correction does not hide outside differences.",
+      "downstream_consumer": "Fresh pre/post runtime protection comparisons with exact same namespaces.",
+      "supervisor_disposition": "accepted scope correction; actual runtime protection impact validated",
+      "classification": "accepted",
+      "root_evidence": [
+        "S6-root-revised-final3-inspection.json",
+        "S6-root-revised-actual-runtime-inspection.json",
+        "S6-root-second-fixed-verify.json",
+        "S6-second-owner-terminal.json"
+      ],
+      "root_qualification": "Accepted within the bounded explicitly steered private fixture and recorded procedure. Historical incomplete check/exposed gate claims remain withdrawn or qualified; renewed current evidence accepted forward only. Actual native source/check/runtime/packet inspected. OuterS6/finalSPEC gates remain separate."
+    },
+    {
+      "id": "FIX-XY-SUPERVISOR-D12",
+      "original_criterion": "Preserve immutable historical predecessor and make current return fields consistent.",
+      "actual_change": "First historical checkpoint has return IN_PROGRESS and return_state COMMIT_READY_WAITING_OWNER, preserved exactly. Actual native first terminal supplied; unique current successor checkpoint uses aligned return/return_state.",
+      "reason_authority": "Exact root confirms actual first native terminal before labeled X/Y; preserving first history prohibits retroactive rewriting.",
+      "files": [
+        "checkpoint-fix-xy.json"
+      ],
+      "effect": "Historical alias discrepancy disclosed without reopening intake or treating intentional wait as interrupted execution.",
+      "checks": "Historical checkpoint/packet hashes and native terminal evidence; current unique checkpoint readback.",
+      "risk": "Readers must use actual first native terminal and qualified history rather than the old alias alone.",
+      "downstream_consumer": "Current second owner operation packet and later separately authorized recovery.",
+      "supervisor_disposition": "accepted within original explicit scope, procedural/history limits preserved",
+      "classification": "accepted",
+      "root_evidence": [
+        "S6-root-revised-final3-inspection.json",
+        "S6-root-revised-actual-runtime-inspection.json",
+        "S6-root-second-fixed-verify.json",
+        "S6-second-owner-terminal.json"
+      ],
+      "root_qualification": "Accepted within the bounded explicitly steered private fixture and recorded procedure. Historical incomplete check/exposed gate claims remain withdrawn or qualified; renewed current evidence accepted forward only. Actual native source/check/runtime/packet inspected. OuterS6/finalSPEC gates remain separate."
+    },
+    {
+      "id": "FIX-XY-REVIEW-D13",
+      "original_criterion": "Fresh read-only original-three-page reviewer, all Git reads optional-lock-free, exact current dependencies and no prior diagnoses.",
+      "actual_change": "Reviewer disclosed initial revision-only Git root read without explicit GIT_OPTIONAL_LOCKS=0 and one corrected in-memory comparison helper error; subsequent current readbacks succeeded. Read-only VM source verification reproduced39 samples;55/17 retained, no runtime or file writes.",
+      "reason_authority": "Procedural disclosures in actual fresh native terminal; original affected review permits independent source mechanics.",
+      "files": [],
+      "effect": "No observed source/candidate index/ref/config/files/profile effects; current130/58/config/status/35 dependency equality recorded.",
+      "checks": "Fresh terminal direct metadata/link/preimage/recovery/current-state checks and read-only source scenario exit0.",
+      "risk": "Initial invocation omission preserved honestly; corrected in-memory error does not replace final successful readback.",
+      "downstream_consumer": "Supervisor classification and different fresh final current coverage; no prior gate verdict supplied to final manager.",
+      "supervisor_disposition": "accepted within original explicit scope, procedural/history limits preserved",
+      "classification": "accepted",
+      "root_evidence": [
+        "S6-root-revised-final3-inspection.json",
+        "S6-root-revised-actual-runtime-inspection.json",
+        "S6-root-second-fixed-verify.json",
+        "S6-second-owner-terminal.json"
+      ],
+      "root_qualification": "Accepted within the bounded explicitly steered private fixture and recorded procedure. Historical incomplete check/exposed gate claims remain withdrawn or qualified; renewed current evidence accepted forward only. Actual native source/check/runtime/packet inspected. OuterS6/finalSPEC gates remain separate."
+    },
+    {
+      "id": "FIX-XY-SUPERVISOR-D14",
+      "original_criterion": "Required checks carry actual discovery/import/executed support dependencies, current source bytes, selected runtime identity, exact raw invocation/time/exit/log binding. Historical receipts remain immutable.",
+      "actual_change": "Created unique dependency capture helpers; conservatively bound all nine local Python files, discovered55 names, Python standard runtime, Wiki CLI/server support, gray-matter/optional package graph, esprima, selected executables and source Git metadata. V8 coverage established every executed JavaScript module. First closure diagnostic found an absent optional sqlite3 driver; second closure treated static conditional absences explicitly; current-1 successful55 trace found esprima missing from prebindings; current-2 prebound it and repeated55 with all82 modules bound.",
+      "reason_authority": "Workflow Evidence reuse and exact current check provenance under bounded Supervisor assignment; check-only evidence repair, no product/source/Wiki/runtime/control mutation.",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/python_suite_js_dependencies.mjs",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/python_suite_js_dependencies_v2.mjs",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/python_suite_js_dependencies_v3.mjs",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/python_suite_bindings.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/python_suite_bindings_v2.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-python-current-2-bindings.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-node17-current-bindings.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-check-protection-comparison.json"
+      ],
+      "effect": "Current55 actual pass supplies renewed current provenance. Historical first55/current-1 passes and diagnostic receipts preserved; no historical drift or test failure asserted. No candidate130/index/ref/config or outside-J/E/source caches/protected process changes occurred.",
+      "checks": "Exact current-2 command receipt exit0/55; pre2/post2 3808 unique hashes/modes equal; V8 82 actual files all bound; Node17 source closure fingerprints all historical equal; source/protection readbacks outside entire assigned J/E unchanged.",
+      "risk": "Static conditional missing driver branches are not executed successes. Bound generated fixture literals describe disposable temporary state, not product readiness. Python/Node checks do not replace revised actual canonical app/runtime gate.",
+      "downstream_consumer": "Fresh new final manager and independent all5 reviewer; later mandatory actual runtime and precise second owner packet.",
+      "supervisor_disposition": "accepted current provenance correction; actual fresh3 independently validated; historical reuse claims qualified",
+      "classification": "accepted",
+      "root_evidence": [
+        "S6-root-revised-final3-inspection.json",
+        "S6-root-revised-actual-runtime-inspection.json",
+        "S6-root-second-fixed-verify.json",
+        "S6-second-owner-terminal.json"
+      ],
+      "root_qualification": "Accepted within the bounded explicitly steered private fixture and recorded procedure. Historical incomplete check/exposed gate claims remain withdrawn or qualified; renewed current evidence accepted forward only. Actual native source/check/runtime/packet inspected. OuterS6/finalSPEC gates remain separate."
+    },
+    {
+      "id": "FIX-XY-REVIEW-D15",
+      "original_criterion": "Fresh final reviewer receives no prior manager/author assessments or correctness observations; disregard cannot restore consumed independence. Actual raw/native terminals retained before replacement.",
+      "actual_change": "Manager2 sent an interim no-material-finding assessment plus evaluated V8/source observations; immediate disregard correction followed. Supervisor withheld the gate and required exact message/raw preservation and actual insufficient-evidence/native END. A different fresh manager3/reviewer uses original/current/raw/neutral technicalv2 only and strict logistics-only messages.",
+      "reason_authority": "Original executable successor independence packaging, installed review-manager fresh-gate rule, exact final2 assignment and actual ordered messages; root separately validated breach. Root assessment is excluded from fresh gate.",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-manager-2.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-manager-2-lifecycle.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-reviewer-2.raw.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-final2-terminal-and-neutral-current.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-final-review-assignment-3.md"
+      ],
+      "effect": "Invalid final2 acceptance withheld; no materially clean independent final pass counted. Source130/index/status/config and current55/17 dependencies unchanged; no product defect inferred.",
+      "checks": "Direct actual FINAL_ANSWER and own exact-prefix native completed manager+child; exact ordered messages retained; rawchild9abe3ae8\u2026 and finalmanager773fa1f0\u2026 read; current3808/11 equal before fresh dispatch.",
+      "risk": "Consumed assessment cannot be removed by instruction; historical observations cannot supply replacement review correctness.",
+      "downstream_consumer": "Different fresh finalmanager3/all5, then mandatory runtime and second precise owner wait.",
+      "finding": "FINAL2-INDEPENDENCE-001 / F-ALL5-02",
+      "severity": "material for final review independence",
+      "confidence": "high from direct exact messages",
+      "supervisor_disposition": "repair_required historical gate; resolved by actual different fresh3 CLEAN/native END, no contaminated acceptance counted",
+      "classification": "accepted",
+      "root_evidence": [
+        "S6-root-revised-final3-inspection.json",
+        "S6-root-revised-actual-runtime-inspection.json",
+        "S6-root-second-fixed-verify.json",
+        "S6-second-owner-terminal.json"
+      ],
+      "root_qualification": "Accepted within the bounded explicitly steered private fixture and recorded procedure. Historical incomplete check/exposed gate claims remain withdrawn or qualified; renewed current evidence accepted forward only. Actual native source/check/runtime/packet inspected. OuterS6/finalSPEC gates remain separate."
+    },
+    {
+      "id": "FIX-XY-FINAL-MANAGER3-D15",
+      "original_criterion": "Read complete required dependency metadata without dumping baseline/package inventories; preserve bounded useful output.",
+      "actual_change": "Several early metadata-inspection snippets printed nested inventories/path sets, producing truncated tool output. Later inspections used targeted source chunks, selected fields and exact programmatic all-record comparisons.",
+      "reason_authority": "Manager read-only inspection/output-scoping oversight; executable assignment explicitly prohibits inventory dumping.",
+      "files": [],
+      "effect": "Transient oversized tool output only; no candidate/source/profile or evidence mutation. Required local source reads and full current fingerprint/discovery/import/V8 comparisons were separately completed.",
+      "checks": "All130/77/1 final fingerprints; all3808 support equality; exact55 raw names;82 executed modules;11 Node source paths; all original recovery payloads and required local/direct support reads.",
+      "risk": "The noisy/truncated outputs do not establish exhaustive source coverage by themselves; only completed targeted reads and exact successful comparison results support this report.",
+      "downstream_consumer": "Supervisor procedural accounting; no remaining source gate or runtime requirement is waived.",
+      "manager_proposed_classification": "downstream_impact",
+      "manager_disposition": "Advisory; high confidence in read-only effects and final comparisons. No concrete candidate impact or unresolved required read is established.",
+      "supervisor_disposition": "accepted procedural advisory; completed corrected reads/comparisons, no observed source impact",
+      "classification": "accepted",
+      "root_evidence": [
+        "S6-root-revised-final3-inspection.json",
+        "S6-root-revised-actual-runtime-inspection.json",
+        "S6-root-second-fixed-verify.json",
+        "S6-second-owner-terminal.json"
+      ],
+      "root_qualification": "Accepted within the bounded explicitly steered private fixture and recorded procedure. Historical incomplete check/exposed gate claims remain withdrawn or qualified; renewed current evidence accepted forward only. Actual native source/check/runtime/packet inspected. OuterS6/finalSPEC gates remain separate."
+    },
+    {
+      "id": "FIX-XY-FINAL-MANAGER3-D16",
+      "original_criterion": "Read-only comparison helpers must use actual source schemas and valid paths.",
+      "actual_change": "One in-memory helper initially used a tuple load return as a dict; one narrow zsh glob search had no matches; one index comparison initially compared absent record with empty new-version index. Each was corrected through actual API/schema or explicit paths and exact existing/full-index checks. Final report prewrite readback initially expected null for detached identity, whose exact schema uses empty string; actual symbolic-ref exit1/empty output and identity empty string were then matched.",
+      "reason_authority": "Routine read-only inspection errors, corrected without rerunning effectful suites or touching candidate state.",
+      "files": [],
+      "effect": "Failed/overstrict transient inspection output, followed by successful comparisons; no writes or runtime effects.",
+      "checks": "Actual load signature read; all four unions/preparation payloads validated; six authorized differences; existing index/flags and exact full index/status bytes match.",
+      "risk": "Initial error output is not successful verification; the corrected successful readbacks are the evidence.",
+      "downstream_consumer": "Supervisor procedural accounting and current review provenance.",
+      "manager_proposed_classification": "downstream_impact",
+      "manager_disposition": "Advisory; high confidence in corrected current readback, no realistic candidate impact established.",
+      "supervisor_disposition": "accepted procedural advisory; completed corrected reads/comparisons, no observed source impact",
+      "classification": "accepted",
+      "root_evidence": [
+        "S6-root-revised-final3-inspection.json",
+        "S6-root-revised-actual-runtime-inspection.json",
+        "S6-root-second-fixed-verify.json",
+        "S6-second-owner-terminal.json"
+      ],
+      "root_qualification": "Accepted within the bounded explicitly steered private fixture and recorded procedure. Historical incomplete check/exposed gate claims remain withdrawn or qualified; renewed current evidence accepted forward only. Actual native source/check/runtime/packet inspected. OuterS6/finalSPEC gates remain separate."
+    },
+    {
+      "id": "FIX-XY-SUPERVISOR-D16",
+      "original_criterion": "Actual canonical current runtime process/profile identity and complete current source/check/protection before/after bindings must be retained.",
+      "actual_change": "Created immutable job-local runtime identity helper parameterized by actual verified run path and runtime integrity helper that permits only predeclared watcher2 creation. Installed helpers and product/source files remain unchanged.",
+      "reason_authority": "Assigned mandatory revised runtime/readback and predeclared private watcher2; inherited first runtime identity helper was bound to first run.",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix_xy_runtime_identity.mjs",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix_xy_runtime_integrity.py"
+      ],
+      "effect": "New run-DlzcE3 actual selected6-process tree/listeners/DB readback; all77/config/3808/11/whole20 and source/candidate indices/refs equal; sole watcher2 owned/status delta.",
+      "checks": "Runtime identity syntax and actual exit0; integrity pre/post actual exit0; raw current identity and bridge persisted.",
+      "risk": "Readbacks are timestamped live evidence, not authority for future process control or profile restoration; profile/DB is outside code recovery archive.",
+      "downstream_consumer": "Precise second owner packet and separately authorized root controls/recovery.",
+      "supervisor_disposition": "accepted procedural evidence derivative; actual current dependency/protection impact validated",
+      "classification": "accepted",
+      "root_evidence": [
+        "S6-root-revised-final3-inspection.json",
+        "S6-root-revised-actual-runtime-inspection.json",
+        "S6-root-second-fixed-verify.json",
+        "S6-second-owner-terminal.json"
+      ],
+      "root_qualification": "Accepted within the bounded explicitly steered private fixture and recorded procedure. Historical incomplete check/exposed gate claims remain withdrawn or qualified; renewed current evidence accepted forward only. Actual native source/check/runtime/packet inspected. OuterS6/finalSPEC gates remain separate."
+    },
+    {
+      "id": "FIX-XY-SUPERVISOR-D17",
+      "original_criterion": "Keep bounded output compact and inspect required records completely.",
+      "actual_change": "An archive filename discovery included payload inventory and was truncated; one combined process identity read was truncated. Corrected by selected schema reads and separately reading full current process identity; guessed external owner/preparation paths were absent and not used.",
+      "reason_authority": "Supervisor read-only output/path selection oversight during runtime archive preparation.",
+      "files": [],
+      "effect": "Transient noisy/failed read output only; no candidate/source/profile change from these reads.",
+      "checks": "Actual fixed and union owned-paths configurations read; full runtime identity reread; exact successful archive capture/verify and source/protection bindings used.",
+      "risk": "Truncated discovery is not verification or source coverage; no inventory dump is used as acceptance evidence.",
+      "downstream_consumer": "Owner packet provenance and procedural accounting.",
+      "supervisor_disposition": "accepted procedural advisory; corrected required reads, no unresolved scope/read gap",
+      "classification": "accepted",
+      "root_evidence": [
+        "S6-root-revised-final3-inspection.json",
+        "S6-root-revised-actual-runtime-inspection.json",
+        "S6-root-second-fixed-verify.json",
+        "S6-second-owner-terminal.json"
+      ],
+      "root_qualification": "Accepted within the bounded explicitly steered private fixture and recorded procedure. Historical incomplete check/exposed gate claims remain withdrawn or qualified; renewed current evidence accepted forward only. Actual native source/check/runtime/packet inspected. OuterS6/finalSPEC gates remain separate."
+    },
+    {
+      "id": "FIX-XY-SUPERVISOR-D18",
+      "original_criterion": "Actual canonical private build/restart exit0 and real revised smoke required.",
+      "actual_change": "Canonical build retained gray-matter eval, mixed dynamic/static import and >500kB chunk warnings; Electron console-message deprecation also logged. No product/build configuration change made.",
+      "reason_authority": "Established canonical restart command in bounded private candidate; warnings are observed current output, outside X/Y repair scope.",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-canonical-runtime-command.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-runtime-raw-files/launch.log"
+      ],
+      "effect": "Actual build/restart exit0 RUNTIME_VERIFIED; revised UI/Reset/Wiki/connection/watcher passed. Generic server/renderer logs limit diagnostic detail; direct actual UI/process/DB evidence supplies criteria.",
+      "checks": "Exact actual current command/time/exit plus preinitializer/UI/current identity/watcher/protection source bridge.",
+      "risk": "Warnings remain; they do not establish an observed X/Y acceptance failure and cannot be treated as full production readiness.",
+      "downstream_consumer": "Second owner packet fixture runtime limits.",
+      "supervisor_disposition": "accepted advisory; no requested product defect or scope expansion",
+      "classification": "accepted",
+      "root_evidence": [
+        "S6-root-revised-final3-inspection.json",
+        "S6-root-revised-actual-runtime-inspection.json",
+        "S6-root-second-fixed-verify.json",
+        "S6-second-owner-terminal.json"
+      ],
+      "root_qualification": "Accepted within the bounded explicitly steered private fixture and recorded procedure. Historical incomplete check/exposed gate claims remain withdrawn or qualified; renewed current evidence accepted forward only. Actual native source/check/runtime/packet inspected. OuterS6/finalSPEC gates remain separate."
+    },
+    {
+      "id": "FIX-XY-OWNER-PACKET-MENTION-01",
+      "original_criterion": "Precise owner packet/current and historical checkpoint provenance; preserve immutable evidence.",
+      "actual_change": "Corrected one copied hexadecimal character in the current packet historical first checkpoint mention; retained oldpacket/report/checkpoint/lifecycle preimages and separate correction snapshot.",
+      "reason_authority": "Root direct raw hash read identified typo; bounded factual correction authorized without source/runtime changes.",
+      "files": [
+        "J/owner-packet-fix-xy.md",
+        "J/supervisor-fix-xy-report.md",
+        "J/checkpoint-fix-xy.json",
+        "J/lifecycle-fix-xy.json",
+        "J/evidence/fix-xy-owner-packet-mention-correction.json",
+        "J/history/S6-FIX-XY-COMMIT-READY-WAIT-02/"
+      ],
+      "effect": "Current packet mention equals actual original214621\u2026 hash; historical preimages remain intact; candidate130/index/ref/authority/runtime unchanged.",
+      "checks": "Root exactone-character preimage/current comparison, all current/retained correction SHA bindings, current10 checkpoint fingerprint references and actual native second terminal.",
+      "risk": "Older preimage retains factual typo and is qualified by correction; no earlier source/check/runtime result recertified by document correction.",
+      "downstream_consumer": "Actual refusal/recovery and outerS6/final whole gates use corrected packet4262b884\u2026 and immutable original checkpoint actual hash.",
+      "classification": "accepted",
+      "root_evidence": [
+        "S6-second-owner-terminal.json"
+      ]
+    }
+  ],
+  "material_findings_historical_qualified": [
+    {
+      "id": "F-ALL5-01",
+      "status": "resolved by actual different fresh3 CLEAN/native END with current equality; preserved historical gap",
+      "scope": "required check provenance only",
+      "historical_limit": "Historical55/35-only claims retained qualified; no historical drift/test failure asserted"
+    },
+    {
+      "id": "FINAL2-INDEPENDENCE-001",
+      "alias": "F-ALL5-02",
+      "status": "resolved by actual different fresh3 CLEAN/native END with current equality; preserved historical gap",
+      "scope": "review independence only, no product defect"
+    }
+  ],
+  "new_owner_rulings": [],
+  "remaining_S6_work": "Actual refusal controls, guarded interruption/recovery and responsible builder realWiki/central factualcloseout, fresh outerS6 and whole gates."
+}

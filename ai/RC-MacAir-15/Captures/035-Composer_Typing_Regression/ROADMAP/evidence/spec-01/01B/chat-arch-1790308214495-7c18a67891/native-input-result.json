@@ -1,0 +1,76 @@
+{
+  "status": "failed",
+  "nativeMethods": [
+    {
+      "method": "macOS System Events keystroke to verified exact owned frontmost PID",
+      "exit": 0,
+      "error": ""
+    },
+    {
+      "method": "macOS Cmd+V with Electron OS clipboard",
+      "exit": 1,
+      "error": "156:188: execution error: Owned fixture is not frontmost (-2700)"
+    }
+  ],
+  "ownerAcceptance": "pending; explicit timestamped owner receipt required",
+  "capability": {
+    "at": "2026-09-25T03:50:14.833Z",
+    "locked": false
+  },
+  "fixture": {
+    "rendererLifetime": "fresh isolated candidate; not the post-soak renderer",
+    "f2": {
+      "id": "F2-DETERMINISTIC-HISTORY-V1",
+      "exchanges": 30,
+      "renderedMessages": 60,
+      "includes": [
+        "text",
+        "code",
+        "lists",
+        "tables",
+        "collapsed-tool-results",
+        "reply-metadata"
+      ],
+      "dense": {
+        "exchanges": 2,
+        "assistantPayloadBytes": 534528,
+        "sha256": "9b06d21b677d93e4479544db39cf56f86eb4d3cd25fb603740407f263e7420dc"
+      }
+    },
+    "f3": {
+      "id": "F3-DETERMINISTIC-WORKSPACE-V1",
+      "algorithm": "label-repeated-to-fixed-byte-count",
+      "counts": {
+        "smallFiles": 1000,
+        "captureFolders": 100,
+        "wikiPages": 100,
+        "officeDocuments": 20
+      },
+      "totalFiles": 1220,
+      "totalContentBytes": 11059200,
+      "root": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790308214495-7c18a67891-xajC5C/native-workspace/native-input",
+      "everyPathFixtureContained": true,
+      "manifestHash": "421c0ef8f5e255bb333a82a9f26d28c74eb2c8d55e95fc262ad241ed45740079"
+    },
+    "project": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790308214495-7c18a67891-xajC5C/native-workspace/native-input",
+    "profile": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790308214495-7c18a67891-xajC5C/native-profile",
+    "pid": 18586,
+    "threadId": "2026-09-24T20-50-17-550"
+  },
+  "keyboard": {
+    "expected": "native keyboard 2227ebc2",
+    "actual": "native keyboard 2227ebc2",
+    "exact": true
+  },
+  "failure": {
+    "code": "ERR_ASSERTION",
+    "message": "Expected values to be strictly equal:\n\n1 !== 0\n",
+    "stack": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/native-input-electron.mjs:55:12"
+  },
+  "lingering": [],
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  }
+}

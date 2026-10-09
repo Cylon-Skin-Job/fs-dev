@@ -1,0 +1,15 @@
+{
+  "command": [
+    "node",
+    "e2e/chat-material-native-scenario.mjs"
+  ],
+  "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/fusion-studio-client",
+  "started": "2026-10-09T01:13:05.233288+00:00",
+  "ended": "2026-10-09T01:13:25.409420+00:00",
+  "exit_code": 0,
+  "log": "/private/tmp/fusion-main-consolidation-95vxg0_h/native.log",
+  "evidence_root": "/private/tmp/fusion-main-consolidation-95vxg0_h/native-output",
+  "handler_before": "e1f0c2d5afe85a9f548a24b5f1696f3e23f15502371c71290f53d347cbfc5585",
+  "handler_after": "e1f0c2d5afe85a9f548a24b5f1696f3e23f15502371c71290f53d347cbfc5585",
+  "limit": "Actual PNG/capture/save/metadata, isolated staged deterministic provider/admission/ACK fixture; no public provider certification."
+}

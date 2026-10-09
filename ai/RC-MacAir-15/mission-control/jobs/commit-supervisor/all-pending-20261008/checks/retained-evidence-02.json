@@ -1,0 +1,49 @@
+{
+  "at": "2026-10-09T01:05:08.279542+00:00",
+  "correction": "First retained-evidence.json interpreted executable-binding rows as source paths and missing generated binary. Preserved first attempt; resolved executables correctly and copied scoped exact-hash native observer dependency from primary. No product edit.",
+  "checks": [
+    {
+      "receipt": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/server-full-01.json",
+      "exit_code": 0,
+      "hashed_dependency_count": 16,
+      "unhashed_executable_resolution_only": [
+        "node",
+        "python3",
+        "npm"
+      ],
+      "mismatches": [
+        "fusion-studio-server/native/secure-file-observer/build/Release/secure_file_observer.node"
+      ],
+      "limit": "Dated retained check, not a fresh rerun; source HEAD and all65 delivered files unchanged."
+    },
+    {
+      "receipt": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/server-focused-01.json",
+      "exit_code": 0,
+      "hashed_dependency_count": 16,
+      "unhashed_executable_resolution_only": [
+        "node",
+        "python3",
+        "npm"
+      ],
+      "mismatches": [
+        "fusion-studio-server/native/secure-file-observer/build/Release/secure_file_observer.node"
+      ],
+      "limit": "Dated retained check, not a fresh rerun; source HEAD and all65 delivered files unchanged."
+    },
+    {
+      "receipt": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/native-01.json",
+      "exit_code": 0,
+      "hashed_dependency_count": 16,
+      "unhashed_executable_resolution_only": [
+        "node",
+        "python3",
+        "npm"
+      ],
+      "mismatches": [
+        "fusion-studio-server/native/secure-file-observer/build/Release/secure_file_observer.node"
+      ],
+      "limit": "Dated retained check, not a fresh rerun; source HEAD and all65 delivered files unchanged."
+    }
+  ],
+  "server_tracked_diff": []
+}

@@ -1,0 +1,11 @@
+3fa9f991676a0dbfec3a38384ea2aba12b39ef4d1558b883f7081a7779a46808  fusion-studio-client/src/lib/chat/message-revisions.ts
+7233809abe98745defa8b136540ba76349688fd907e66b6f70c6d0b21822b78f  fusion-studio-client/src/types/chat.ts
+6573e55f2afa0af6a02618894cd4f77ba290ac7a2772d60c1e832a00112ec421  fusion-studio-client/src/state/slices/chatSlice.ts
+e75860cca0e9179fd9b1a51af57e141c52e0e9f0cb5dc54a6b46d3d8137a840b  fusion-studio-client/src/components/MessageList.tsx
+fe6e4a617970161b91936e00a97492fe3a7f24cf9681ede9af6c7875232683ee  fusion-studio-client/src/components/InstantSegmentRenderer.tsx
+0eebcb0b46110ce2e40555c58e2697a7f7ef469b60c6062ce12311167b163a27  fusion-studio-client/src/lib/ws/activity-stream-handler.ts
+ee5b4e8051d4b79b3c96def474d87699722de22316f4a67148bd02f4db723439  fusion-studio-client/src/lib/ws/snapshot-restore.ts
+b8489d4b124c134bbd5b70daa88127e218c662da00134e9c680af1492dcc51d3  fusion-studio-client/e2e/chat-surface-isolation.spec.ts
+4645f678780068b77bad22cb16af6744042f43b7248c024c09e70dd4dc8c96f5  fusion-studio-client/e2e/chat-architecture/r7-history-playwright.mjs
+c097749f91660f919397970b3cf1728b8713ffb368e5c4e72c2bc58c7e03e7a8  fusion-studio-client/e2e/chat-architecture/scenario-inventory.mjs
+5b03410f498bdca7d06968691db5e7a515ea652ef3b597c43839b289bc0ed87f  fusion-studio-client/e2e/chat-architecture/run.mjs

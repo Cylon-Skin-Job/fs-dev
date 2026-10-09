@@ -1,0 +1,42 @@
+{
+  "phase": "M1 Orchestrator independent inspection/checks complete; clean builder handoff and distinct acceptance pending",
+  "timestamp": "2026-10-07T16:04:51.326381+00:00",
+  "head": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "branch": "codex/chat-material-01",
+  "source_identity": "../SOURCE-IDENTITY.json",
+  "candidate_file_hashes_match": true,
+  "independently_read": [
+    "all M1 product diffs",
+    "all new target/commit/mounted projection/hook modules",
+    "complete changed connected composer/component mount/host/rail seams",
+    "existing action creation and explicit Send integration",
+    "workspaceStore authority and workspace handlers",
+    "real material fixture/test",
+    "changed identity/isolation fixtures",
+    "all 75-case renderer raw log and source/dependency receipt"
+  ],
+  "known_material_findings": [],
+  "preliminary_repair_history": "../../M1-PRELIMINARY-INSPECTION.json; source and delayed hydration/duplicate/authority cases inspected after repairs",
+  "checks": [
+    {
+      "receipt": "renderer-01.json",
+      "result": "75/75 passed; no source/dependency drift; isolated port64586"
+    },
+    {
+      "receipt": "build-01.json",
+      "result": "npm run build passed; current source match; dependency unchanged; preload own generated noise reconciled to identical HEAD",
+      "reconciliation": "derived-artifact-reconciliation-01.json"
+    }
+  ],
+  "pending": [
+    "complete clean builder handoff/gate receipt",
+    "fresh distinct Orchestrator acceptance review"
+  ],
+  "proof_limits": [
+    "renderer uses real hosts/consumer/stores with controlled transport/source",
+    "no native PNG or real ACK persistence claim",
+    "M2/M3 source migrations and Wiki/final mandatory checks remain required"
+  ],
+  "owner_or_publication_acceptance": false,
+  "deviation_classification": "deviations-01.json: M1-D01 through M1-D06 accepted as bounded mechanics; no new unrecorded product touch"
+}

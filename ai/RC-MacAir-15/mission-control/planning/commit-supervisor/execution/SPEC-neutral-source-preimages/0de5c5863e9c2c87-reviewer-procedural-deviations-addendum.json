@@ -1,0 +1,61 @@
+{
+  "at": "2026-10-04T21:54:44.336500+00:00",
+  "kind": "POSTTERMINAL_REPORT_ONLY_FACTS_NO_REVIEWED_BYTE_CHANGE",
+  "entries": [
+    {
+      "id": "S6-FULL-REVIEW-P01",
+      "original_requirement": "Fresh read-only original-authority review with exact current evidence, optional-lock-free Git reads and honest complete coverage",
+      "actual_change": "One initial pure root lookup omitted explicit GIT_OPTIONAL_LOCKS=0.",
+      "reason_authority": "Reviewer disclosed read-only revision lookup oversight; cannot retroactively alter original invocation.",
+      "files": [],
+      "checks": "Full reviewer independent final current source/candidate physical indexes matched f37b5bfc... and f60a305e...; no Git mutation observed.",
+      "observable_effect": "Read-only procedural diagnostics/corrections; no product/source/candidate/profile/Git/runtime mutation, no required outcome waived",
+      "risk": "No reconstruction of that initial environment; later exact comparisons support no observed state effect.",
+      "downstream_impact": "Retain full procedural limits at root full-S6 and whole-SPEC gates; report-only accounting requires no candidate repair or repeated gate",
+      "builder_proposed_classification": "downstream_impact",
+      "evidence": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/reviewer-1.raw.md",
+        "sha256": "7437bf65b0067e5e0ee3c819712ab04477a5579e078cc1368044835d88a0e403"
+      }
+    },
+    {
+      "id": "S6-FULL-REVIEW-P02",
+      "original_requirement": "Fresh read-only original-authority review with exact current evidence, optional-lock-free Git reads and honest complete coverage",
+      "actual_change": "Some inspection output was truncated; targeted reads and complete exact comparisons supplied subsequent coverage.",
+      "reason_authority": "Read-only output-scoping correction explicitly reported at native terminal.",
+      "files": [],
+      "checks": "All74authority/8docs/12raw/3309domain and176freeze fingerprints matched; complete original derivation and source mechanisms read.",
+      "observable_effect": "Read-only procedural diagnostics/corrections; no product/source/candidate/profile/Git/runtime mutation, no required outcome waived",
+      "risk": "Truncated first output was not successful coverage proof; corrected reads/current comparisons are the evidence.",
+      "downstream_impact": "Retain full procedural limits at root full-S6 and whole-SPEC gates; report-only accounting requires no candidate repair or repeated gate",
+      "builder_proposed_classification": "downstream_impact",
+      "evidence": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/reviewer-1.raw.md",
+        "sha256": "7437bf65b0067e5e0ee3c819712ab04477a5579e078cc1368044835d88a0e403"
+      }
+    },
+    {
+      "id": "S6-FULL-REVIEW-P03",
+      "original_requirement": "Fresh read-only original-authority review with exact current evidence, optional-lock-free Git reads and honest complete coverage",
+      "actual_change": "Two checker schema assumptions were corrected through source reads and exact comparisons, including current symlink representation.",
+      "reason_authority": "Read-only comparator correction, not a candidate product defect or source repair.",
+      "files": [],
+      "checks": "Current all4353 filesystem entries, original128 index/blob/work/mode/link/deletion/absence semantics and six immutable archive payload sets independently matched.",
+      "observable_effect": "Read-only procedural diagnostics/corrections; no product/source/candidate/profile/Git/runtime mutation, no required outcome waived",
+      "risk": "Initial checker errors are not successful proof; corrected source-backed comparison was completed before terminal CLEAN.",
+      "downstream_impact": "Retain full procedural limits at root full-S6 and whole-SPEC gates; report-only accounting requires no candidate repair or repeated gate",
+      "builder_proposed_classification": "downstream_impact",
+      "evidence": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/reviewer-1.raw.md",
+        "sha256": "7437bf65b0067e5e0ee3c819712ab04477a5579e078cc1368044835d88a0e403"
+      }
+    }
+  ],
+  "reviewed85_record_retained": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/deviations-neutral-v3.json",
+    "sha256": "dc7ff03c6bb903e71e323938fcb2c5f6a1ac8881dba652a557d4b7e229207953"
+  },
+  "total_contextual_S6_entries": 88,
+  "classification_owner": "Root separately; builder proposals only",
+  "no_gate_replay": "Terminal first clean pass retained; this adds its procedural facts only"
+}

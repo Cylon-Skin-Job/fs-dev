@@ -1,0 +1,16 @@
+{
+  "command": [
+    "npx",
+    "--no-install",
+    "jest",
+    "--runInBand"
+  ],
+  "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/fusion-studio-server",
+  "started": "2026-10-09T01:12:14.796694+00:00",
+  "ended": "2026-10-09T01:14:15.419617+00:00",
+  "exit_code": 0,
+  "log": "/private/tmp/fusion-main-consolidation-95vxg0_h/server-full.log",
+  "screenshot_handler_before": "e1f0c2d5afe85a9f548a24b5f1696f3e23f15502371c71290f53d347cbfc5585",
+  "screenshot_handler_after": "e1f0c2d5afe85a9f548a24b5f1696f3e23f15502371c71290f53d347cbfc5585",
+  "limit": "Direct Jest full suite; does not claim npm native-observer pretest."
+}

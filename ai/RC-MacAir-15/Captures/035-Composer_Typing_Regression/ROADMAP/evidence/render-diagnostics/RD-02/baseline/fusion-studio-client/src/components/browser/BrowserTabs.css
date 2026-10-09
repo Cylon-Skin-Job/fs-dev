@@ -1,0 +1,143 @@
+/* BrowserTabs — tab bar for the general web browser */
+
+.rv-browser-tabs {
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+  padding: 4px 4px 0 4px;
+  background: var(--panel-chrome-bg, #1a1a1a);
+  overflow-x: auto;
+  min-height: 36px;
+  position: relative;
+  z-index: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb, rgba(255, 255, 255, 0.15)) transparent;
+}
+
+.rv-browser-tabs::-webkit-scrollbar {
+  height: 4px;
+}
+
+.rv-browser-tabs::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.rv-browser-tabs::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb, rgba(255, 255, 255, 0.15));
+  border-radius: 2px;
+}
+
+/* Bottom border drawn as pseudo-element so active tab can cover it */
+.rv-browser-tabs::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Individual tab */
+.rv-browser-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 200px;
+  min-width: 80px;
+  padding: 8px 10px 10px;
+  border: none;
+  border-radius: 6px 6px 0 0;
+  background: transparent;
+  color: var(--text-dim, rgba(255, 255, 255, 0.6));
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background 0.15s, color 0.15s, transform 0.15s ease;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  transform: translateY(-2px);
+}
+
+.rv-browser-tab:hover {
+  background: var(--glass-md, rgba(255, 255, 255, 0.06));
+  color: var(--text-primary, #e0e0e0);
+}
+
+.rv-browser-tab.active {
+  background: var(--browser-active-surface);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-bottom: none;
+  color: var(--text-primary, #e0e0e0);
+  transform: translateY(0);
+  z-index: 2;
+}
+
+/* Tab title text */
+.rv-browser-tab-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  text-align: left;
+}
+
+/* Close button on tab */
+.rv-browser-tab-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+.rv-browser-tab-close:hover {
+  background: var(--glass-md, rgba(255, 255, 255, 0.08));
+  opacity: 1;
+}
+
+.rv-browser-tab-close .material-symbols-outlined {
+  font-size: 14px;
+}
+
+/* New tab button */
+.rv-browser-new-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-dim, rgba(255, 255, 255, 0.6));
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+  align-self: center;
+  transform: translateY(-2px);
+}
+
+.rv-browser-new-tab:hover {
+  background: var(--glass-md, rgba(255, 255, 255, 0.08));
+  color: var(--text-primary, #e0e0e0);
+}
+
+.rv-browser-new-tab .material-symbols-outlined {
+  font-size: 18px;
+}

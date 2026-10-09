@@ -1,0 +1,4 @@
+interface:
+  display_name: "MC Document Sweep"
+  short_description: "Review document changes for coverage and intent gaps"
+  default_prompt: "Use $mc-document-sweep to compare this documentation package with its last reviewed baseline and report new or unresolved gaps."

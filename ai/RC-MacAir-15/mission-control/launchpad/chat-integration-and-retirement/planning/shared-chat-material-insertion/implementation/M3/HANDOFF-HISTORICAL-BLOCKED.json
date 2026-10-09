@@ -1,0 +1,60 @@
+{
+  "at": "2026-10-07T20:59:59.346258+00:00",
+  "status": "BLOCKED",
+  "builder": "/root/m3_builder",
+  "manager": "/root",
+  "candidate": "sha256:65b324647b7e52f0426f7b2005849d053f4f239420fab07c848170b21ec1d3f3",
+  "slice": "M3",
+  "productFrozen": true,
+  "sourceSeal": "implementation/M3/SOURCE-SEAL.json",
+  "sourceSealSha256": "6fcef6edfdf2439a45eec626a1d854ed67db209b7c78988a6aeaa48a713fd316",
+  "builderReview": {
+    "status": "pending",
+    "reason": "Complete required native run pending unlocked desktop; no gate waived"
+  },
+  "requiredCompleted": [
+    "build-03",
+    "server-full-01",
+    "server-focused-01",
+    "renderer-05",
+    "wiki-02"
+  ],
+  "requiredPending": [
+    "Complete native actual8PNG/4gallery/2resource/4publicACK persistence run on unlocked desktop",
+    "Fresh materially CLEAN builder review after all required evidence"
+  ],
+  "capability": "implementation/M3/NATIVE-CAPABILITY.json",
+  "reports": [
+    "BUILDER-REPORT.md",
+    "CRITERIA.md",
+    "CALLER-INVENTORY.md",
+    "CALLER-SWEEP.json",
+    "DEVIATIONS.md",
+    "SELF-REVIEW.md",
+    "CHECKS.json",
+    "LIFECYCLE.json",
+    "UNCHANGED-DEPENDENCIES.json"
+  ],
+  "nextSafeAction": "After actual desktop unlock, run current complete native helper using root-stable dist; no product writes during root checks. Finalize reports and fresh clean-room builder gate before READY.",
+  "blockedReason": "Literal native execution impossibility: desktop IOConsoleLocked=true prevents actual focused Electron capture; complete native release evidence and subsequent fresh builder gate unavailable. Owner unlock request is pending with root.",
+  "nonNativeRootChecks": "implementation/M3/orchestrator-checks/NONNATIVE-CHECKS-01.json",
+  "nonNativeRootChecksSha256": "7fd8b106bc6bfdea46eeedb389dfd6309a56840fb7c7ca997e2dd9286c8bb036",
+  "reportBindings": {
+    "seal.py": "51aa2c7015e82dcbdbcbf431f4936cdc9adc54893cf499fd98d20ea565a28a53",
+    "LIFECYCLE.json": "dcae3b892a36e584a67a51060a728f27a76d6e13644e4d87c84b1b6d9e20ea20",
+    "CALLER-SWEEP.json": "92698c32cbce92ba1fd085dc71315394f792e4fd83eecddab352af53078884ae",
+    "CHECKS.json": "f57224db2a4aac8ec09c7281fb9db1ebaef4ce2574f4f47a8ac876fbc0509bf8",
+    "START.json": "2801b2f6b6a556b7ba40600bd0d275db394da1aa2ce41d32a01dc95e66c52250",
+    "CAPABILITY-CLEANUP.json": "023dcac34537a223081774bb23dcdba0471bb6865054622e5c8b15dc5270c329",
+    "UNCHANGED-DEPENDENCIES.json": "08c88f63e1ceb451f842231b180c04ab60858c8a6d0e99ddd95d3336492c0a32",
+    "SOURCE-SEAL.json": "6fcef6edfdf2439a45eec626a1d854ed67db209b7c78988a6aeaa48a713fd316",
+    "CRITERIA.md": "3ecad8f8849875bca9cf6f4f94010fa04b57e60c6c6ddc2be9e148d36428ac76",
+    "BUILDER-REPORT.md": "ea656da6f4440e85b6986c8aca6dbd81c9436c64a5849527084ce76de151770a",
+    "SELF-REVIEW.md": "5ace94f68347eb998d94b02bb4c64a157a278972d725086de877723875d9c8c4",
+    "CALLER-INVENTORY.md": "558a4092705ccb918c21240f6fbb80f3d007a74cfdd3192ebdd6080e2e63e8a2",
+    "caller-sweep.raw.txt": "787d9f8805d476c868920b8106867f25ce8faab7878e6daaf662b2b5cc8fa553",
+    "M3-slice.patch": "b7016b1009bb156dcbfc8f9eba8cf8126747c9cc6a54adf4e25572fd45ebd59a",
+    "NATIVE-CAPABILITY.json": "80e2cc775ffbe4a48fc3994b15c7ee86fc0361bbd43b3553e70f8cc9c757ce7d",
+    "DEVIATIONS.md": "f7acb28ecbcd9e0569ba36de1dba1089b6801d0435df931617f4f9bd9f6713d0"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-04T18:04:33.615852+00:00",
+  "actor": "/root",
+  "scope": "Independent F-ALL5-01 validation and complete raw manager/child inspection; not a clean final acceptance",
+  "actual_manager_terminal_observed_by_parent": true,
+  "actual_child_native_terminal_read_by_root": true,
+  "raw_files": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-manager-1.md",
+      "sha256": "1f6e0b388849baa43851f3a0531df49492d4374fd0bffd5be3949ed3f8d8200a",
+      "bytes": 61088
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-manager-1-lifecycle.json",
+      "sha256": "3cccdf9da658651ee42e11ef36fda44d92d95602bbe9e292e7b579017f6ac5a1",
+      "bytes": 16802
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/fix-xy-final-reviewer-1.raw.md",
+      "sha256": "19eb7a0531f276e19bf838f997047b14d08ed69b2e6cb8d389ad5f0eec315daa",
+      "bytes": 21111
+    }
+  ],
+  "finding": "F-ALL5-01 material current Python execution-support binding omission confirmed; no historic drift/test failure/product defect established",
+  "disposition": "repair_required",
+  "accepted_lower_source_mechanics": "Code/Wiki source/current39/syntax/metadata checks remain valid; runtime/newsecondownerwait held",
+  "next": "Supervisor actual complete pre/post dependency-bound55, fresh different all5 final manager/reviewer, then actual revised runtime"
+}

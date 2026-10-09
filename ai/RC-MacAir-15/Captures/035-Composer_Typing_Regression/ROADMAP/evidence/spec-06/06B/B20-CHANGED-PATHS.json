@@ -1,0 +1,22 @@
+{
+  "fusion-studio-client/e2e/app-composition-keys.spec.ts": {
+    "before": null,
+    "after": "234176219d786f5d7c2d9055bc5fdec43aa7906660093c4546e789b6b1e0a56b"
+  },
+  "fusion-studio-client/e2e/chat-surface-isolation.spec.ts": {
+    "before": "34829f503f207e3968d3e53183a7928009f5dc2c0ea6b25af76b1ca1d6b251c2",
+    "after": "c21e1f347d0f36f9ddf9d73586d4b99542c96caf293b38ff0e690a9afabb14f4"
+  },
+  "fusion-studio-client/src/components/App.tsx": {
+    "before": "6e58bcb8d5183cd7a05099ec6d463a26ce2defc10c07a7bf0b5e084b07730123",
+    "after": "ae70d077983470b3030d56162c35aa196dd184518e1cbe18bfb92e6f41c21745"
+  },
+  "fusion-studio-client/src/components/ChatInput.tsx": {
+    "before": "e7c0ea65648865dfbb63e09c3b816812d3234810635fbdaaf749b628b4687542",
+    "after": "f19c88c23acae8aedfa66f5766ba30bc69c4e9495d66f31f6b9b1e1647c71065"
+  },
+  "fusion-studio-client/src/lib/composition-key.ts": {
+    "before": null,
+    "after": "cda441bee97b92f850ee62432af5485c4fe04318f94c67e38d70ed14fab12f05"
+  }
+}

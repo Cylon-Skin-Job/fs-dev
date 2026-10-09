@@ -1,0 +1,358 @@
+{
+  "at": "2026-10-05T04:51:37.895307+00:00",
+  "scope": "Root owner-facing lifecycle inventory; complete accepted slice records plus actual whole-gate history. Forbidden fresh-review input.",
+  "builders": [
+    {
+      "slice": "S1",
+      "identity": "/root/s1_builder",
+      "state": "accepted",
+      "accepted_at": "2026-10-04T08:27:57.484935+00:00",
+      "terminal_record": null,
+      "terminal": null
+    },
+    {
+      "slice": "S2",
+      "identity": "/root/s2_builder",
+      "state": "accepted",
+      "accepted_at": "2026-10-04T09:38:33.151290+00:00",
+      "terminal_record": "terminal; close_agent unavailable",
+      "terminal": "READY_FOR_ORCHESTRATOR_REVIEW"
+    },
+    {
+      "slice": "S3",
+      "identity": "/root/s3_builder",
+      "state": "accepted",
+      "accepted_at": "2026-10-04T10:05:28.208649+00:00",
+      "terminal_record": "terminal; close_agent unavailable",
+      "terminal": "READY_FOR_ORCHESTRATOR_REVIEW"
+    },
+    {
+      "slice": "S4",
+      "identity": "/root/s4_builder",
+      "state": "accepted",
+      "accepted_at": "2026-10-04T10:48:39.821515+00:00",
+      "terminal_record": "terminal; close_agent unavailable",
+      "terminal": "READY_FOR_ORCHESTRATOR_REVIEW"
+    },
+    {
+      "slice": "S5",
+      "identity": "/root/s5_builder",
+      "state": "accepted",
+      "accepted_at": "2026-10-04T11:32:01.470585+00:00",
+      "terminal_record": "planning/commit-supervisor/execution/S5-terminal.json",
+      "terminal": true
+    },
+    {
+      "slice": "S6",
+      "identity": "/root/s6_builder",
+      "state": "accepted",
+      "accepted_at": "2026-10-05T03:21:12.390022+00:00",
+      "terminal_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-root-builder-terminal.json",
+      "terminal": null
+    }
+  ],
+  "reviewers": [
+    {
+      "slice": "S1",
+      "identity": "/root/s1_builder/s1_builder_review_1",
+      "gate": "builder",
+      "result": "CLEAN",
+      "terminal": true,
+      "close_agent": "unavailable",
+      "report": "planning/commit-supervisor/execution/S1-builder-review-1.md"
+    },
+    {
+      "slice": "S1",
+      "identity": "/root/s1_acceptance_1",
+      "gate": "orchestrator_acceptance",
+      "state": "terminal",
+      "fork_turns": "none",
+      "close_agent": "unavailable",
+      "result": "CLEAN",
+      "report": "planning/commit-supervisor/execution/S1-acceptance-review-1.md"
+    },
+    {
+      "slice": "S2",
+      "identity": "/root/s2_builder/s2_builder_review_1",
+      "gate": "builder",
+      "result": "FINDINGS",
+      "terminal": true,
+      "close_agent": "unavailable",
+      "report": "planning/commit-supervisor/execution/S2-builder-review-1.md",
+      "covered_identity": "planning/commit-supervisor/execution/S2-pass-1-authority/S2-current-files.json"
+    },
+    {
+      "slice": "S2",
+      "identity": "/root/s2_builder/s2_builder_review_2",
+      "gate": "builder",
+      "result": "FINDINGS",
+      "terminal": true,
+      "close_agent": "unavailable",
+      "report": "planning/commit-supervisor/execution/S2-builder-review-2.md",
+      "covered_identity": "planning/commit-supervisor/execution/S2-builder-pass-2-authority/S2-current-files.json"
+    },
+    {
+      "slice": "S2",
+      "identity": "/root/s2_builder/s2_builder_review_3",
+      "gate": "builder",
+      "state": "terminal",
+      "fork_turns": "none",
+      "close_agent": "unavailable",
+      "result": "FINDINGS",
+      "terminal": true,
+      "report": "planning/commit-supervisor/execution/S2-builder-review-3.md",
+      "covered_identity": "planning/commit-supervisor/execution/S2-builder-pass-3-authority/S2-current-files.json"
+    },
+    {
+      "slice": "S2",
+      "identity": "/root/s2_builder/s2_builder_review_4",
+      "gate": "builder",
+      "result": "CLEAN",
+      "terminal": true,
+      "close_agent": "unavailable",
+      "report": "planning/commit-supervisor/execution/S2-builder-review-4.md",
+      "covered_identity": "planning/commit-supervisor/execution/S2-builder-pass-4-authority/S2-current-files.json"
+    },
+    {
+      "slice": "S2",
+      "identity": "/root/s2_acceptance_1",
+      "gate": "orchestrator_acceptance",
+      "state": "terminal",
+      "fork_turns": "none",
+      "close_agent": "unavailable",
+      "result": "CLEAN",
+      "terminal": true,
+      "report": "planning/commit-supervisor/execution/S2-acceptance-review-1.md"
+    },
+    {
+      "slice": "S3",
+      "identity": "/root/s3_builder/s3_builder_review_1",
+      "agent_type": "clean-room-reviewer",
+      "fork_turns": "none",
+      "root_model_effort_inherited": true,
+      "override": false,
+      "result": "CLEAN",
+      "terminal_confirmed_by": "list_agents",
+      "close_agent": "unavailable",
+      "report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-builder-review-1.md",
+      "report_sha256": "ac49049f35daecc6ab255c529562d8432e679e8c685ad6f924e70dc4e976b92d"
+    },
+    {
+      "slice": "S3",
+      "identity": "/root/s3_acceptance_1",
+      "gate": "orchestrator_acceptance",
+      "state": "terminal",
+      "fork_turns": "none",
+      "close_agent": "unavailable",
+      "result": "CLEAN",
+      "terminal": true,
+      "report": "planning/commit-supervisor/execution/S3-acceptance-review-1.md"
+    },
+    {
+      "slice": "S4",
+      "identity": "/root/s4_builder/s4_builder_review_1",
+      "agent_type": "clean-room-reviewer",
+      "fork_turns": "none",
+      "root_model_effort_inherited": true,
+      "overrides": false,
+      "result": "CLEAN",
+      "terminal_confirmed_by": "list_agents completed",
+      "close_agent": "unavailable",
+      "raw_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-builder-review-1.md",
+      "raw_report_sha256": "3c2240dcb6d1bfbc42f978a4d874c4bee1064352e961183a367c3825f7c16b0e",
+      "inline_report_saved_by": "/root/s4_builder; exact raw terminal text",
+      "frozen_packet": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-pass-1/manifest.json"
+    },
+    {
+      "slice": "S4",
+      "identity": "/root/s4_acceptance_1",
+      "gate": "orchestrator_acceptance",
+      "state": "terminal",
+      "fork_turns": "none",
+      "close_agent": "unavailable",
+      "terminal": true,
+      "result": "CLEAN",
+      "report": "planning/commit-supervisor/execution/S4-acceptance-review-1.md",
+      "report_sha256": "290752bacfcd55b708f03f0b5dfe750fa05bab1919e4066699aee0f355290f1a"
+    },
+    {
+      "slice": "S4",
+      "identity": "/root/s4_builder/s4_race_review_1",
+      "gate": "builder_runtime_repair",
+      "result": "CLEAN",
+      "terminal": true,
+      "close_agent": "unavailable",
+      "report": "planning/commit-supervisor/execution/S4-race-builder-review-1.md",
+      "assessment_consumed": false,
+      "excluded_entry": "036"
+    },
+    {
+      "slice": "S4",
+      "identity": "/root/s4_race_acceptance_1",
+      "gate": "orchestrator_runtime_repair_acceptance",
+      "state": "terminal",
+      "fork_turns": "none",
+      "model_effort": "inherited root without override",
+      "read_only": true,
+      "assignment": "planning/commit-supervisor/execution/S4-race-acceptance-assignment.json",
+      "close_agent": "unavailable",
+      "result": "CLEAN",
+      "report": "planning/commit-supervisor/execution/S4-race-acceptance-review-1.md",
+      "report_sha256": "eef62419ce8a71b6d837ac9c5b543648edc1aa50ab90dc2ac9e9bf74355e5dde",
+      "terminal_at": "2026-10-04T12:34:44Z"
+    },
+    {
+      "slice": "S5",
+      "identity": "/root/s5_builder/s5_builder_review_1",
+      "gate": "builder",
+      "state": "terminal",
+      "fork_turns": "none",
+      "close_agent": "unavailable",
+      "frozen_packet": "planning/commit-supervisor/execution/S5-pass-1/manifest.json",
+      "frozen_packet_sha256": "68e34c0ebaa6b000b3fbfc5c0d62699013874d6fa5d3c65997e2244618f8d8ee",
+      "terminal": true,
+      "result": "CLEAN",
+      "terminal_evidence": "E/S5-terminal.json and E/S5/reviewer-lifecycle.json, native completed disposition",
+      "report": "planning/commit-supervisor/execution/S5-builder-review-1.md"
+    },
+    {
+      "slice": "S5",
+      "identity": "/root/s5_acceptance_1",
+      "gate": "orchestrator_acceptance",
+      "state": "terminal",
+      "fork_turns": "none",
+      "model_effort": "inherited without override",
+      "close_agent": "unavailable",
+      "terminal": true,
+      "result": "CLEAN",
+      "report": "planning/commit-supervisor/execution/S5-acceptance-review-1.md",
+      "report_sha256": "a4b1f7ccb54f09736c9043efb4ba32a5f951df124f28bdcb4f4feebe6b5d10d9"
+    },
+    {
+      "slice": "S6",
+      "identity": "/root/s6_builder/s6_prep_review_1",
+      "gate": "builder_preparation",
+      "result": "CLEAN",
+      "terminal": true,
+      "fork_turns": "none",
+      "close_agent": "unavailable",
+      "report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-builder-review-1.md",
+      "scope": "preparation only"
+    },
+    {
+      "slice": "S6",
+      "identity": "/root/s6_prep_acceptance_1",
+      "gate": "orchestrator_preparation_acceptance",
+      "result": "CLEAN",
+      "terminal": true,
+      "fork_turns": "none",
+      "close_agent": "unavailable",
+      "report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-preparation-acceptance-review-1.md",
+      "scope": "preparation only"
+    },
+    {
+      "slice": "S6",
+      "identity": "/root/s6_builder/s6_full_review_1",
+      "gate": "builder_full_S6",
+      "result": "CLEAN",
+      "terminal": true,
+      "fork_turns": "none",
+      "close_agent": "unavailable",
+      "report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/reviewer-1.raw.md",
+      "sha256": "7437bf65b0067e5e0ee3c819712ab04477a5579e078cc1368044835d88a0e403"
+    },
+    {
+      "slice": "S6",
+      "identity": "/root/s6_acceptance_1",
+      "gate": "orchestrator_full_S6_acceptance",
+      "result": "CLEAN",
+      "terminal": true,
+      "fork_turns": "none",
+      "close_agent": "unavailable",
+      "report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-acceptance-review-1.md",
+      "sha256": "6434b6a9192b87b4ee084394fa0de3077d12f07a1a4710bedcf57c47af67ea38"
+    }
+  ],
+  "S6_native_domain_tree": "S6-runtime-actor-ledger.json",
+  "S6_full_builder_terminal": "S6-root-builder-terminal.json",
+  "S6_current_acceptance_lifecycle": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance-lifecycle.json",
+  "close_agent": "Unavailable; actual native END recorded, no fabricated closure",
+  "pending": [],
+  "whole_SPEC_gates": [
+    {
+      "at": "2026-10-05T03:33:28.295342+00:00",
+      "actor": "/root/spec_final_review_1",
+      "manager": "/root",
+      "agent_type": "clean-room-reviewer",
+      "fork_turns": "none",
+      "model_effort_override": false,
+      "settings": "Inherited root; concrete model/effort/native loader metadata unexposed",
+      "permissions": "danger-full-access / never; strict read-only scope",
+      "assignment": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-assignment.md",
+      "sha256": "01ac88562314915786f7ab5934df0d6b06af66ae9ad0e9bb7101b75e3112bff7",
+      "native_state": "completed",
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-current-manifest.json",
+      "manifest_sha256": "4389d876a90a77f81a0543d8723f990c5b331575d6d8736c7e1bf8f202f4a248",
+      "predecessor": "Actual fresh root S6 reviewer completed with no children; current source frozen",
+      "close_agent": "Unavailable; no closure claimed",
+      "scope": "Original whole SPEC integration; one fresh independent pass, inline report only",
+      "terminal_observed_at": "2026-10-05T04:17:40.720749+00:00",
+      "native_terminal_result": "REVIEW_COMPLETE / FINDINGS concerning review-gate provenance",
+      "raw_report": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-review-1.raw.md",
+        "exists": true,
+        "kind": "file",
+        "mode": 33060,
+        "size": 27456,
+        "sha256": "b442816d3df04f7bda5433597518a775d7b08ee5071670339ba2c44c3f81027f"
+      },
+      "gate_admissible": false,
+      "finding": "R-P01: actual excluded conversation exposure in S5 inventory output",
+      "raw_capture": {
+        "method": "exact native agent_message payload from verified root rollout",
+        "rollout": "/Users/rccurtrightjr./.codex/sessions/2026/10/04/rollout-2026-10-04T00-58-05-01a105eb-8add-7e12-a454-a96b64465cca.jsonl",
+        "line": 11132,
+        "timestamp": "2026-10-05T04:06:59.768Z",
+        "message_id": "amsg_01a10a3e-55b8-7fe0-ad91-434664548c6e"
+      },
+      "children": [],
+      "repair": "Different fresh reviewer with strict file whitelist; no product change or test replay"
+    },
+    {
+      "at": "2026-10-05T04:19:08.643303+00:00",
+      "actor": "/root/spec_final_review_2",
+      "manager": "/root",
+      "agent_type": "clean-room-reviewer",
+      "fork_turns": "none",
+      "model_effort_override": false,
+      "settings": "Inherited root; concrete model/effort/native loader metadata unexposed",
+      "permissions": "danger-full-access / never; strict read-only scope",
+      "assignment": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-assignment-v2.md",
+      "assignment_sha256": "179d884255296b5a955fc4a41cd84b8d11bcd0816de638ef83f8c7c24bf10483",
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-current-manifest-v2.json",
+      "manifest_sha256": "3920ff4a7194cead10033f4e6e0ea58534b705564d16b6af46f10475b1476260",
+      "native_state": "completed",
+      "predecessor": "/root/spec_final_review_1 actual completed; excluded procedural gate; no children",
+      "close_agent": "Unavailable; no closure claimed",
+      "scope": "Original whole-SPEC independent review; strict exact-path whitelist; inline only",
+      "terminal_observed_at": "2026-10-05T04:48:45.497743+00:00",
+      "result": "REVIEW_COMPLETE / CLEAN",
+      "gate_admissible": true,
+      "children": [],
+      "raw_report": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+        "size": 21090,
+        "sha256": "403c11eda1663b11d538ad62891daebe043ac22923b24b15464f509c96429802"
+      },
+      "raw_capture": {
+        "method": "Exact native FINAL_ANSWER payload from verified root rollout; native completed independently observed via list_agents",
+        "line": 11526,
+        "timestamp": "2026-10-05T04:48:01.868Z",
+        "message_id": "amsg_01a10a63-e74c-75b0-97ad-eb8022e282a2"
+      },
+      "independence": "Fresh fork none; exact-path boundary and no excluded conversations/prior conclusions attested in native report"
+    }
+  ],
+  "terminal_result": "SPEC_READY_FOR_OWNER_REVIEW",
+  "final_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md"
+}

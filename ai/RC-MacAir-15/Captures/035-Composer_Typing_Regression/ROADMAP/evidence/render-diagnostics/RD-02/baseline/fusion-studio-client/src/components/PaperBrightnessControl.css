@@ -1,0 +1,113 @@
+/* Composable paper-brightness button + slider dropdown. */
+
+.rv-paper-brightness {
+  position: relative;
+}
+
+.rv-paper-brightness-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--chrome-accent);
+  cursor: pointer;
+  transition: background var(--transition-fast, 150ms);
+}
+
+.rv-paper-brightness-btn:hover,
+.rv-paper-brightness-btn--active {
+  background: var(--neutral-chrome-hover, rgba(255, 255, 255, 0.08));
+}
+
+.rv-paper-brightness-btn .material-symbols-outlined {
+  font-size: 16px;
+}
+
+.rv-paper-brightness-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: var(--z-dropdown, 200);
+  min-width: 176px;
+  padding: var(--space-sm, 8px) var(--space-md, 16px);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--radius-md, 10px);
+  background: var(--surface-elevated, #202020);
+  box-shadow: var(--shadow-medium, 0 8px 24px rgba(0, 0, 0, 0.35));
+  --rv-paper-brightness-ring-fill: var(--surface-elevated, #202020);
+}
+
+.rv-paper-brightness-control {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs, 4px);
+  height: 32px;
+  color: var(--chrome-accent);
+}
+
+.rv-paper-brightness-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  overflow: hidden;
+  color: var(--chrome-accent);
+}
+
+.rv-paper-brightness-icon .material-symbols-outlined {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.rv-paper-brightness-icon--ringed .material-symbols-outlined {
+  font-size: 16px;
+}
+
+.rv-paper-brightness-icon--ringed::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  border: 9px solid var(--rv-paper-brightness-ring-fill, #202020);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.rv-paper-brightness-slider-frame {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 96px;
+  height: 18px;
+}
+
+.rv-paper-brightness-slider {
+  width: 100%;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--accent-dim, var(--chrome-accent));
+  cursor: pointer;
+}
+
+.rv-paper-brightness-slider:focus-visible {
+  outline: 1px solid var(--accent-dim, var(--chrome-accent));
+  outline-offset: 2px;
+}
+
+.rv-paper-brightness-slider::-webkit-slider-thumb {
+  transform: scale(0.9);
+  transform-origin: center;
+}
+
+.rv-paper-brightness-slider::-moz-range-thumb {
+  transform: scale(0.9);
+  transform-origin: center;
+}

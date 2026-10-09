@@ -1,0 +1,27 @@
+{
+  "kind": "ACTUAL_PRIVATE_CHECKLIST_READBACK",
+  "mode": "owner-current",
+  "started": "2026-10-04T19:26:52.289Z",
+  "profile": "/private/tmp/mc-s6-commit-supervisor-20261004/profile",
+  "candidate": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "machine": "MC-S6",
+  "samples": [
+    {
+      "at": "2026-10-04T19:26:52.382Z",
+      "action": "current owner preview state",
+      "summary": "3 remaining of 3",
+      "rows": [
+        "Review report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        false,
+        false,
+        false
+      ]
+    }
+  ],
+  "sustainedConnected": true,
+  "finished": "2026-10-04T19:26:54.671Z"
+}

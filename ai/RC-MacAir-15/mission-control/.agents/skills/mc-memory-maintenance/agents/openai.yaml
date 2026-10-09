@@ -1,0 +1,4 @@
+interface:
+  display_name: "MC Memory Maintenance"
+  short_description: "Maintain durable records and folder schemas"
+  default_prompt: "Use $mc-memory-maintenance to reconcile the assigned records and validate the selected working folder."

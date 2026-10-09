@@ -1,0 +1,161 @@
+import { useEffect, useRef } from 'react';
+import { usePanelStore, clampPaneWidth } from '../state/panelStore';
+import type { Pane } from '../types';
+
+/**
+ * Resize handles — split into three concern-specific components.
+ *
+ * All three share a common drag primitive (`useResizeDrag`) that captures
+ * pointer events, coalesces via requestAnimationFrame, and writes through
+ * panelStore.setPaneWidth. Each wrapper supplies its own:
+ *   - `pane`: which width slot in viewStates[panel].widths it writes to.
+ *   - `edge`: which edge the handle sits on (determines the sign of the
+ *     drag delta — RIGHT-edge handles grow with +delta, LEFT-edge handles
+ *     grow with -delta).
+ *   - `defaultWidth`: initial width if nothing is stored for this pane.
+ *
+ * Keeping these as separate components means there's no
+ * cross-contamination between primary-chat, sidebar, and content-navigation
+ * resize logic — each one is independently testable.
+ */
+
+type Edge = 'right' | 'left';
+
+interface ResizeDragConfig {
+  panel: string;
+  pane: Pane;
+  edge: Edge;
+  defaultWidth: number;
+}
+
+interface DragState {
+  startX: number;
+  startWidth: number;
+  pointerId: number;
+  pendingWidth: number | null;
+  rafId: number | null;
+}
+
+function useResizeDrag({ panel, pane, edge, defaultWidth }: ResizeDragConfig) {
+  const setPaneWidth = usePanelStore((s) => s.setPaneWidth);
+  const commitPaneWidths = usePanelStore((s) => s.commitPaneWidths);
+  const dragRef = useRef<DragState | null>(null);
+
+  useEffect(() => {
+    return () => {
+      const d = dragRef.current;
+      if (d?.rafId != null) cancelAnimationFrame(d.rafId);
+      if (d != null) document.body.style.userSelect = '';
+      dragRef.current = null;
+    };
+  }, []);
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.button !== 0) return;
+    e.preventDefault();
+
+    const vs = usePanelStore.getState().viewStates[panel];
+    const startWidth = vs?.widths?.[pane] ?? defaultWidth;
+
+    e.currentTarget.setPointerCapture(e.pointerId);
+    dragRef.current = {
+      startX: e.clientX,
+      startWidth,
+      pointerId: e.pointerId,
+      pendingWidth: null,
+      rafId: null,
+    };
+
+    document.body.style.userSelect = 'none';
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const d = dragRef.current;
+    if (!d || e.pointerId !== d.pointerId) return;
+
+    const delta = e.clientX - d.startX;
+    // Right-edge handles (sidebar, primary chat): +delta grows the pane.
+    // Left-edge handles (file tree, content nav): -delta grows the pane
+    // (the left edge moves outward as the pointer moves leftward).
+    const signedDelta = edge === 'right' ? delta : -delta;
+    const dragMax = pane === 'leftSidebar'
+      ? Math.min(460, window.innerWidth * 0.25)
+      : undefined;
+    d.pendingWidth = clampPaneWidth(pane, d.startWidth + signedDelta, dragMax);
+
+    if (d.rafId != null) return;
+    d.rafId = requestAnimationFrame(() => {
+      const curr = dragRef.current;
+      if (!curr) return;
+      curr.rafId = null;
+      if (curr.pendingWidth != null) {
+        setPaneWidth(panel, pane, curr.pendingWidth);
+        curr.pendingWidth = null;
+      }
+    });
+  };
+
+  const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
+    const d = dragRef.current;
+    if (!d || e.pointerId !== d.pointerId) return;
+
+    if (d.rafId != null) {
+      cancelAnimationFrame(d.rafId);
+      d.rafId = null;
+    }
+    if (d.pendingWidth != null) {
+      setPaneWidth(panel, pane, d.pendingWidth);
+      d.pendingWidth = null;
+    }
+
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    }
+
+    dragRef.current = null;
+    document.body.style.userSelect = '';
+    commitPaneWidths(panel, pane);
+  };
+
+  return {
+    onPointerDown: handlePointerDown,
+    onPointerMove: handlePointerMove,
+    onPointerUp: endDrag,
+    onPointerCancel: endDrag,
+    'data-pane': pane as string,
+    className: 'rv-resize-handle',
+  };
+}
+
+// --- Concern-specific wrappers ---
+
+/** Threads sidebar (left column). Right-edge handle: drag right grows. */
+export function LeftSidebarResize({ panel }: { panel: string }) {
+  const props = useResizeDrag({ panel, pane: 'leftSidebar', edge: 'right', defaultWidth: 220 });
+  return <div {...props} />;
+}
+
+/** Primary chat column. Right-edge handle: drag right grows. */
+export function LeftChatResize({ panel }: { panel: string }) {
+  const props = useResizeDrag({ panel, pane: 'leftChat', edge: 'right', defaultWidth: 360 });
+  return <div {...props} />;
+}
+
+/** View's right column (e.g. file-viewer file tree). Left-edge handle.
+ *  Writes to widths.rightCol. */
+export function RightColResize({ panel }: { panel: string }) {
+  const props = useResizeDrag({ panel, pane: 'rightCol', edge: 'left', defaultWidth: 220 });
+  return <div {...props} />;
+}
+
+/** Content-owned left navigation (e.g. Wiki topics). Right-edge handle. */
+export function ContentNavLeftResize({ panel }: { panel: string }) {
+  const props = useResizeDrag({ panel, pane: 'contentNavLeft', edge: 'right', defaultWidth: 200 });
+  return <div {...props} />;
+}
+
+/** Content-owned right navigation (e.g. Wiki page tree). Left-edge handle. */
+export function ContentNavRightResize({ panel }: { panel: string }) {
+  const props = useResizeDrag({ panel, pane: 'contentNavRight', edge: 'left', defaultWidth: 220 });
+  return <div {...props} />;
+}

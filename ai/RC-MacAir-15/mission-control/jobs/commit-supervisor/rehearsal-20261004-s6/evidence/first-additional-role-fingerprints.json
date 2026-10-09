@@ -1,0 +1,32 @@
+{
+  "at": "2026-10-04T15:34:04.347886+00:00",
+  "actor": "/root/s6_supervisor_candidate_1",
+  "paths": {
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-repair-worker/SKILL.md": {
+      "exists": true,
+      "sha256": "f6aa836695ab3cfb22b256e0bc6c5df5cd64b1a65e2ca75654da59be3972daa9",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-repair-worker.toml": {
+      "exists": true,
+      "sha256": "90d9830f49a41ca63712aca1096a31f9224b9bb06d6adea60a9d715b1364fc81",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./.codex/agents/clean-room-reviewer.toml": {
+      "exists": true,
+      "sha256": "3ec16b52c4181728463ef4e1511ccbb2783dc6a9101921c04ba7bba454dd286e",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/config.toml": {
+      "exists": true,
+      "sha256": "21558b2f2eae1c44479ea7d5afe5e636a379b8b08f4a79c108715d99f9b81322",
+      "mode": "0o100644",
+      "kind": "file"
+    }
+  },
+  "purpose": "Additional exact installed instruction/loading provenance, distinct from native loader or effective rootsettings; no model overrides or settings changes",
+  "effective_permissions": "actual host danger-full-access/never, assignment scope remains separate"
+}

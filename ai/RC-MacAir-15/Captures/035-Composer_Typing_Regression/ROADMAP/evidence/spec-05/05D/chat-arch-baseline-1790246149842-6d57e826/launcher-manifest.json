@@ -1,0 +1,21 @@
+{
+  "runId": "chat-arch-baseline-1790246149842-6d57e826",
+  "kind": "server-focused",
+  "mode": null,
+  "token": "chat-architecture-owner-chat-arch-baseline-1790246149842-6d57e826",
+  "ownerPid": 11818,
+  "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-baseline-1790246149842-6d57e826-R7sq8a",
+  "supervisedCommand": [
+    "/opt/homebrew/Cellar/node/25.6.1/bin/node",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/owned-case-supervisor.mjs",
+    "chat-architecture-owner-chat-arch-baseline-1790246149842-6d57e826",
+    "11818",
+    "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-baseline-1790246149842-6d57e826-R7sq8a",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/fresh-workspace-baseline.mjs",
+    "chat-architecture-owner-chat-arch-baseline-1790246149842-6d57e826",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/chat-arch-baseline-1790246149842-6d57e826",
+    "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-baseline-1790246149842-6d57e826-R7sq8a"
+  ],
+  "parentLossPolicy": "01C supervisor watches owner PID including zombie state, kills target descendants and removes marked root",
+  "deadlineMs": 540000
+}

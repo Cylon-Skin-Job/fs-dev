@@ -1,0 +1,29 @@
+{
+  "kind": "ACTUAL_PRIVATE_CHECKLIST_READBACK",
+  "mode": "owner-current",
+  "started": "2026-10-04T19:20:09.164Z",
+  "profile": "/private/tmp/mc-s6-commit-supervisor-20261004/profile",
+  "candidate": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "machine": "MC-S6",
+  "samples": [
+    {
+      "at": "2026-10-04T19:20:09.366Z",
+      "action": "known persisted first-owner checked state immediately BEFORE canonical restart; no initializer or completion action",
+      "summary": "2 remaining of 3",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        false,
+        false
+      ]
+    }
+  ],
+  "initializer_invoked": false,
+  "completion_action_invoked": false,
+  "sustainedConnected": true,
+  "finished": "2026-10-04T19:20:11.634Z"
+}

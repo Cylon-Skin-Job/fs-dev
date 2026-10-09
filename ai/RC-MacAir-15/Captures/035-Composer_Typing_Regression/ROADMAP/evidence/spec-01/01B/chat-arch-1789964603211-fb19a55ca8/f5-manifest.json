@@ -1,0 +1,28 @@
+{
+  "id": "F5-CANONICAL-ADAPTER-V1",
+  "frameIntervalMs": 50,
+  "framesPerSecond": 20,
+  "maxTextFrameBytes": 200,
+  "events": [
+    "thinking",
+    "tool",
+    "usage",
+    "terminal"
+  ],
+  "faults": [
+    "before-admission",
+    "after-admission",
+    "before-ack",
+    "after-ack",
+    "before-dispatch",
+    "after-dispatch",
+    "before-turn-begin",
+    "after-turn-begin",
+    "before-stop",
+    "after-stop",
+    "before-save-ack",
+    "after-save-ack",
+    "before-shutdown",
+    "after-shutdown"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "status": "READY_FOR_ORCHESTRATOR_REVIEW",
+  "role": "S4-R2 responsible slice builder",
+  "builder": "/root/s4_builder",
+  "manager": "/root",
+  "report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-builder.md",
+  "report_sha256": "c66a6fdb1faba3f5ef582701c478efef87ec2152da015dfcc5dc4d2d898a00e2",
+  "current_files": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs",
+      "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+      "lines": 178,
+      "mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs",
+      "sha256": "9b4bb189ebff26ceaf9b899abafa75400ebbd5e9157f0a45468640d87459ad85",
+      "lines": 328,
+      "mode": 420
+    }
+  ],
+  "current_packet_identity": "sha256:3d36ef2d8e7edf9112b4eb79624f1a1f0dbf629e82c6c45ca78a6521fce79c23",
+  "filtered_manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-filtered-manifest.json",
+  "reviewer": "/root/s4_builder/s4_race_review_1",
+  "own_gate": "CLEAN",
+  "reviewer_terminal": true,
+  "close_agent": "unavailable",
+  "full_deviations": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-builder-deviations.json",
+  "checks": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-checks.json",
+  "raw_gate": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-builder-review-1.md",
+  "at": "2026-10-04T12:25:44.225301+00:00",
+  "next": "Root separate acceptance before S6 replay/resume"
+}

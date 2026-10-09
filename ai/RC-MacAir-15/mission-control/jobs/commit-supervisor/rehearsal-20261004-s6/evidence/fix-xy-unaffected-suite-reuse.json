@@ -1,0 +1,216 @@
+{
+  "at": "2026-10-04T16:33:00.047601+00:00",
+  "producer": "/root/s6_supervisor_fix_xy_1",
+  "origin": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-unaffected-suite-reuse.json",
+  "origin_sha256": "1618c5e2a61a34a0b2ac54eb0bcfbfceba7fc660e0b580de4a717e7c9c206aae",
+  "dependencies": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+      "sha256": "d85c8ae1828bfe94426bde87527ddc3430d720604c78cfdab775db5982dabc58",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/snapshot_restore.py",
+      "sha256": "37c75d19a2217759086be00274f14d589a5bb64bb6905f323db7ba1969674c2c",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/snapshot_state.py",
+      "sha256": "a38ffed0cca07299031c2709773caf33ea9065785bf114b6352141fb3310689b",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs",
+      "sha256": "9b4bb189ebff26ceaf9b899abafa75400ebbd5e9157f0a45468640d87459ad85",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh",
+      "sha256": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+      "mode": "0o100755"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs",
+      "sha256": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs",
+      "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs",
+      "sha256": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs",
+      "sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/restart-fusion.sh",
+      "sha256": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+      "mode": "0o100755"
+    },
+    {
+      "path": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart-probe.mjs",
+      "sha256": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart-processes.mjs",
+      "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart-target.mjs",
+      "sha256": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart.mjs",
+      "sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/install_rehearsal_fixture.py",
+      "sha256": "5d47ce4a60d80c78975bb322f12b6f3516b17050046022096cab38cfc33b0fd2",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/prepare_rehearsal_shell.mjs",
+      "sha256": "cd1005258b4d9668e591dca46245e9184174434b81b09dab7aca8ba407167a7b",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/authority.md",
+      "sha256": "d56710db1edba2ba6ef8798975fb1fb4808a301b0ea2e46bcb81d6645e251010",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/checklist-controller.js",
+      "sha256": "2b9276858645f88d423fb044816deb3b84049b1be09e74369353549d712f2412",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/checklist-guide.md",
+      "sha256": "e05c868a3f60d3975ce517c02ada96887d4671faed1640e203853bc545d58076",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/checklist-view.js",
+      "sha256": "a93d17d7fe8924d9cc077f4e973c3d94743796930c05c9c24bd76fec203d6b6f",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/checklist.css",
+      "sha256": "6e3d4171ec9dd14bff1d521f6d9df9b6afa25bfef0b336dba791e1f7fdfc3184",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/index.html",
+      "sha256": "c2ba834be53b0d84b17f2e2bbcde7e3b468ae05903c3b5179ef7070f342428d2",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/navigation-guide.md",
+      "sha256": "4fbe50677f55e83003d8af72f2db702c9ffcea3a514f82feacf56ea3c7983970",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_recovery_smoke.py",
+      "sha256": "82c3a378e38f47a03b07956e72abbb9b1313a6563a7e3cc06ee62eab705e6ee2",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs",
+      "sha256": "e11d5dec9ae3219648abcf86bc7651c32f6d3c08b9a7ffffeeef9740424db697",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_watcher_smoke.mjs",
+      "sha256": "f84f2cbe298cb0394751689f3694dd1a532a4ef8475233094b8b5dad406d8267",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_wiki_recovery_smoke.py",
+      "sha256": "f7a46a1701da0c7cf1bdf1eeb1ce3eaf72197bdef4b0783c63ae3d20c155ccb5",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/stop_rehearsal_runtime.mjs",
+      "sha256": "34ffc7d6fb4660679557c2f5aeffaaca0fb5428ae418b1c700ca4a6c32fd213e",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/final-python-suite.log",
+      "sha256": "2c18f0c89ac4725d16e570fd8c626264aa44d8d12b01bd57620ab1115a0aac0b",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/final-runtime-suite.log",
+      "sha256": "6a87a8b7b304e4d3543695899e73fe24166429657c41a1c6b2ba3a56d8a669d0",
+      "mode": "0o100644"
+    },
+    {
+      "path": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/restart-fusion.sh",
+      "exists": true,
+      "sha256": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+      "mode": "0o100755",
+      "kind": "file"
+    },
+    {
+      "path": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart.mjs",
+      "exists": true,
+      "sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    {
+      "path": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart-target.mjs",
+      "exists": true,
+      "sha256": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    {
+      "path": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart-processes.mjs",
+      "exists": true,
+      "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    {
+      "path": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/scripts/fusion-restart-probe.mjs",
+      "exists": true,
+      "sha256": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e",
+      "mode": "0o100644",
+      "kind": "file"
+    }
+  ],
+  "mismatches": [],
+  "raw": {
+    "final-python-suite.log": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/final-python-suite.log",
+      "sha256": "2c18f0c89ac4725d16e570fd8c626264aa44d8d12b01bd57620ab1115a0aac0b"
+    },
+    "final-runtime-suite.log": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/final-runtime-suite.log",
+      "sha256": "6a87a8b7b304e4d3543695899e73fe24166429657c41a1c6b2ba3a56d8a669d0"
+    }
+  },
+  "commands": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-python-suite-command.json",
+      "sha256": "e9c1b41ebd26c726451cec204e812eca2cc5a6c6785cdcfa35430624eb16aff1"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-node-suite-command.json",
+      "sha256": "6de2700a795aeb0632dff31348552fd0749a5b0e833765e37a56d0d575de2040"
+    }
+  ],
+  "coverage": "Unchanged55Python/17Node restart/review/recovery helper surface only; revisedsource requires newleaf checks and actualruntime separately",
+  "negative_scope": "Actual successfulapp readiness never injected; wrongpath/wrongprofile/deadserver/disconnected readiness refusal rawNode oracles unchanged"
+}

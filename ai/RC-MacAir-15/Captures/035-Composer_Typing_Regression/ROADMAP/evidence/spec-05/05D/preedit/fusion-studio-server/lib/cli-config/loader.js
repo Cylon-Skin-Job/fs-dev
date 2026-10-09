@@ -1,0 +1,146 @@
+/**
+ * CLI-config file loaders (CLI_CONFIG_SPEC §7b).
+ *
+ * Reads `ai/<machine>/System/config/cli.json` (workspace policy) and
+ * `ai/<machine>/System/Views/<prefix>-<viewId>/state/cli.json` (per-view display overrides).
+ * Missing or malformed files return `{}`; the resolver maps empty workspace
+ * policy to OpenCode-only.
+ */
+
+const path = require('path');
+const fs = require('fs').promises;
+const aiPaths = require('../workspace/ai-paths');
+const { assertGenericViewMutationAllowed } = require('../views/protected-path-policy');
+const views = require('../views');
+
+const OPENCODE_ONLY_CONFIG = Object.freeze({
+  defaultHarness: 'opencode',
+  harnesses: Object.freeze({
+    opencode: Object.freeze({
+      enabled: true,
+      name: 'OpenCode',
+      materialIcon: 'all_inclusive',
+      accentColor: '#10B981',
+      order: 0,
+    }),
+  }),
+});
+
+function defaultWorkspaceConfig() {
+  return {
+    defaultHarness: OPENCODE_ONLY_CONFIG.defaultHarness,
+    harnesses: {
+      opencode: { ...OPENCODE_ONLY_CONFIG.harnesses.opencode },
+    },
+  };
+}
+
+function workspacePath(projectRoot) {
+  return path.join(aiPaths.getSystemConfigRoot(projectRoot), 'cli.json');
+}
+
+function openCodeModelsPath(projectRoot) {
+  return path.join(aiPaths.getSystemConfigRoot(projectRoot), 'opencode-models.json');
+}
+
+function viewPath(projectRoot, viewId) {
+  const viewFolder = views.resolveViewRoot(projectRoot, viewId, {
+    includeHidden: true,
+    strictFilesystemErrors: true,
+    strictReadiness: true,
+  });
+  return viewFolder ? path.join(viewFolder, 'state', 'cli.json') : null;
+}
+
+async function readJsonOrEmpty(filePath, label) {
+  try {
+    const raw = await fs.readFile(filePath, 'utf8');
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) return parsed;
+    console.warn(`[cli-config] ${label} not a plain object: ${filePath} — treating as empty`);
+    return {};
+  } catch (err) {
+    if (err.code === 'ENOENT') return {};
+    console.warn(`[cli-config] invalid ${label} at ${filePath}: ${err.message} — treating as empty`);
+    return {};
+  }
+}
+
+async function loadWorkspaceConfig(projectRoot) {
+  return readJsonOrEmpty(workspacePath(projectRoot), 'workspace cli.json');
+}
+
+async function loadViewConfig(projectRoot, viewId) {
+  if (!viewId) return {};
+  const filePath = viewPath(projectRoot, viewId);
+  return filePath ? readJsonOrEmpty(filePath, `per-view cli.json (${viewId})`) : {};
+}
+
+/**
+ * Load the per-machine OpenCode model list from
+ * `ai/<machine>/System/config/opencode-models.json`.
+ *
+ * Shape mirrors the opencode model catalog:
+ *   { defaultProvider, providers: [{ id, label, defaultModel, models: [{ id, name, variants: string[] }] }] }
+ * Missing, malformed, or shape-invalid files resolve to `null` so callers
+ * fall back to the workspace cli.json model.
+ */
+async function loadOpenCodeModels(projectRoot) {
+  const raw = await readJsonOrEmpty(openCodeModelsPath(projectRoot), 'opencode-models.json');
+  if (!raw || typeof raw !== 'object') return null;
+
+  const providers = Array.isArray(raw.providers)
+    ? raw.providers
+        .filter((p) => p && typeof p === 'object' && Array.isArray(p.models))
+        .map((p) => ({
+          id: typeof p.id === 'string' && p.id.trim() ? p.id : null,
+          label: typeof p.label === 'string' && p.label.trim() ? p.label : null,
+          defaultModel: typeof p.defaultModel === 'string' && p.defaultModel.trim() ? p.defaultModel : null,
+          models: p.models
+            .filter((m) => m && typeof m === 'object' && typeof m.id === 'string' && m.id.trim())
+            .map((m) => ({
+              id: m.id.trim(),
+              name: typeof m.name === 'string' && m.name.trim() ? m.name.trim() : m.id.trim(),
+              variants: Array.isArray(m.variants)
+                ? m.variants.filter((v) => typeof v === 'string' && v.trim())
+                : [],
+            })),
+        }))
+        .filter((p) => p.models.length > 0)
+    : [];
+
+  const defaultProvider = typeof raw.defaultProvider === 'string' && raw.defaultProvider.trim()
+    ? raw.defaultProvider
+    : null;
+
+  if (providers.length === 0) return null;
+
+  return { defaultProvider, providers };
+}
+
+async function ensureWorkspaceFile(projectRoot) {
+  const file = workspacePath(projectRoot);
+  try {
+    await fs.access(file);
+  } catch {
+    const tmp = file + '.tmp';
+    await assertGenericViewMutationAllowed({
+      projectRoot,
+      paths: [path.dirname(file), file, tmp],
+    });
+    await fs.mkdir(path.dirname(file), { recursive: true });
+    await fs.writeFile(tmp, `${JSON.stringify(defaultWorkspaceConfig(), null, 2)}\n`);
+    await fs.rename(tmp, file);
+  }
+}
+
+module.exports = {
+  workspacePath,
+  viewPath,
+  openCodeModelsPath,
+  loadWorkspaceConfig,
+  loadViewConfig,
+  loadOpenCodeModels,
+  ensureWorkspaceFile,
+  defaultWorkspaceConfig,
+};

@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-09T01:31:19.062128+00:00",
+  "original_input_drift": [],
+  "HEAD": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "branch": "main",
+  "staged_paths": [],
+  "index_semantic_sha256": "948eaab32a4b86757ac27ac8e526fab33a8e3e37ba3618f1257a37fc623672cf",
+  "index_raw_sha256": "3066b55b6fea35be1a78e5c2975b457d4aac5428ce616f457bfc195c7d410ee7",
+  "candidate_identity_sha256": "4a0ba37d3eca52a91fd0abe426ebe126447aeb31c0d1f734700df48f3cda8415",
+  "current_recovery": {
+    "result": "VERIFIED",
+    "payloads_valid": true,
+    "matches_checkpoint": true,
+    "status_equal": true,
+    "current_sha256": "77aa2972f3bc8e061b5a1a2d0fadd3091591b94cdebe4068dcebf07e79418b3b",
+    "manifest_sha256": "989d72bed58168fe8b74ed2887b4101c88d8f588f64a2896584b7881941d6b3b"
+  }
+}

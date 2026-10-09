@@ -1,0 +1,18 @@
+{
+  "runId": "chat-arch-1789982223910-de33b7ccd7",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R6-LIFETIME-BOUNDARIES",
+      "code": 0,
+      "signal": null,
+      "pid": 79595,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 3040
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

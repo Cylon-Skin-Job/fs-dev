@@ -1,0 +1,205 @@
+{
+  "at": "2026-10-06T22:32:46.845789+00:00",
+  "unaffected_dependencies_checked": 832,
+  "unaffected_dependency_differences": [],
+  "cumulative_oracles_checked": 4,
+  "cumulative_oracle_differences": [],
+  "screenshot_raw_logs": [
+    {
+      "name": "initial-production-build",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/client-build.log",
+      "expected": "b91c88666b5cc0b00f9c4742533a7925d005b0f9c856c90f5838e786825e8a1c",
+      "actual": "b91c88666b5cc0b00f9c4742533a7925d005b0f9c856c90f5838e786825e8a1c",
+      "matches": true,
+      "exitCode": 0,
+      "summary": null
+    },
+    {
+      "name": "first-focused-screenshot",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/screenshot-focused.log",
+      "expected": "3d057531459d07e81ef2c782f014bcfca1222f83e615b96a70ac28422921fe86",
+      "actual": "3d057531459d07e81ef2c782f014bcfca1222f83e615b96a70ac28422921fe86",
+      "matches": true,
+      "exitCode": 1,
+      "summary": [
+        "3 failed",
+        "23 passed (34.2s)"
+      ]
+    },
+    {
+      "name": "focused-after-gesture-correction",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/screenshot-focused-rerun.log",
+      "expected": "945939e21f3e56edac80c924770898de51e4101d6ed3940b84a2cade31dd9f6d",
+      "actual": "945939e21f3e56edac80c924770898de51e4101d6ed3940b84a2cade31dd9f6d",
+      "matches": true,
+      "exitCode": 0,
+      "summary": [
+        "26 passed (12.8s)"
+      ]
+    },
+    {
+      "name": "first-cumulative",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/chat-cumulative.log",
+      "expected": "63eb307e9c383e517abfb272e602568ae09a52db260d9c90f6def7cd4a2b1786",
+      "actual": "63eb307e9c383e517abfb272e602568ae09a52db260d9c90f6def7cd4a2b1786",
+      "matches": true,
+      "exitCode": 1,
+      "summary": [
+        "1 failed",
+        "97 passed (53.6s)"
+      ]
+    },
+    {
+      "name": "component-fixture-after-capability-setup",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/component-rerun.log",
+      "expected": "0d0ce59149c646057aa74faa1ff2d6a3a486854eb3203ac329f8f62aa68523de",
+      "actual": "0d0ce59149c646057aa74faa1ff2d6a3a486854eb3203ac329f8f62aa68523de",
+      "matches": true,
+      "exitCode": 0,
+      "summary": [
+        "7 passed (5.7s)"
+      ]
+    },
+    {
+      "name": "current-focused-retained-view",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/screenshot-retained-view.log",
+      "expected": "f91f94872c9cdc0b624c46e75feb3a107224a87c40996f71e1455f534b448bea",
+      "actual": "f91f94872c9cdc0b624c46e75feb3a107224a87c40996f71e1455f534b448bea",
+      "matches": true,
+      "exitCode": 0,
+      "summary": [
+        "34 passed (42.4s)"
+      ]
+    },
+    {
+      "name": "current-retained-view-production-build",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/client-build-retained-view.log",
+      "expected": "ca73a51c9dc2393c3375c77658aa6a80c7a384b31d2042a15caaa5352d0aef6c",
+      "actual": "ca73a51c9dc2393c3375c77658aa6a80c7a384b31d2042a15caaa5352d0aef6c",
+      "matches": true,
+      "exitCode": 0,
+      "summary": null
+    },
+    {
+      "name": "current-cumulative",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/chat-cumulative-final.log",
+      "expected": "d85820a329fa8492551a96a59f41ff5303730f8c71e8eebb3d061748a0cd17f0",
+      "actual": "d85820a329fa8492551a96a59f41ff5303730f8c71e8eebb3d061748a0cd17f0",
+      "matches": true,
+      "exitCode": 0,
+      "summary": [
+        "106 passed (1.4m)"
+      ]
+    },
+    {
+      "name": "tracked-repair-whitespace",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/repair-diff-check.log",
+      "expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true,
+      "exitCode": 0,
+      "summary": null
+    },
+    {
+      "name": "new-leaf-whitespace-initial",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/new-leaf-diff-check.log",
+      "expected": "f7fe79bd60840e3cb747d646735c86cddbaaf9fe2272d43801f808f179198344",
+      "actual": "f7fe79bd60840e3cb747d646735c86cddbaaf9fe2272d43801f808f179198344",
+      "matches": true,
+      "exitCode": 3,
+      "summary": null
+    },
+    {
+      "name": "new-leaf-whitespace-final",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/new-leaf-diff-check-final.log",
+      "expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true,
+      "exitCode": 1,
+      "summary": null
+    },
+    {
+      "name": "test-owned-port-listeners-final",
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/screenshot-repair/test-port-listeners-final.log",
+      "expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true,
+      "exitCode": 1,
+      "summary": null
+    }
+  ],
+  "wiki_raw_logs": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/mechanical-checks.log",
+      "expected": "f390097dc4cc49356d3af2ea17b2de9e969ee60ca8a1e620d315f4f6d333025f",
+      "actual": "f390097dc4cc49356d3af2ea17b2de9e969ee60ca8a1e620d315f4f6d333025f",
+      "matches": true,
+      "exitCode": 0
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/diff-check.log",
+      "expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true,
+      "exitCode": 0
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/retirement-sweep.log",
+      "expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true,
+      "exitCode": 1
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/navigation-run-1.log",
+      "expected": "5af5469481ce6d8c93d94f91b5a928d56809bdab1c75a6aef85aca838ad1cfb9",
+      "actual": "5af5469481ce6d8c93d94f91b5a928d56809bdab1c75a6aef85aca838ad1cfb9",
+      "matches": true,
+      "exitCode": 0
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/navigation-run-2.log",
+      "expected": "46d2ada36ca25a904486865957973fd21cf118df8abbe880fcbbb4f7f6dbcef2",
+      "actual": "46d2ada36ca25a904486865957973fd21cf118df8abbe880fcbbb4f7f6dbcef2",
+      "matches": true,
+      "exitCode": 0
+    }
+  ],
+  "eof_trim_before_equals_after_plus_newline": true,
+  "eof_trim_current_hash": "109d5f63baf402c39dddf8cc96a93a95d2108e1988fca5dca99a7ad263b417e1",
+  "planning_authority_closure": [
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/SOURCES.json",
+      "source_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/INPUT-PACKET.json",
+      "source_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/CANDIDATE.json",
+      "source_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/startup-integrity-repair/implementation/final-integration/FINAL-ARTIFACT-FINGERPRINTS.json",
+      "source_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/chokidar-retirement-and-harness-launch/spec/CANDIDATE.json",
+      "source_matches": true,
+      "candidate_matches": true
+    }
+  ],
+  "evidence_hashes": {
+    "unaffected-evidence-dependencies.json": "9ffa19551b86394fd8e9863fae19bff42762ed2381de2f604660e0f7b5febd6a",
+    "cumulative-oracle-dependencies.json": "fab9460f83e2ba7e33fe71aa525119f95bd2332b7ce142d14f42dda7e552e125",
+    "screenshot-repair/checks.json": "64c2fd4cbce7eb44680bf777559fd82a3dc8620776713e662d9fdb522feefac7",
+    "wiki-editor/checks.json": "6dfeec9b854924e4ff1e32344649ddefa619efeb3e38543e0baf5b0d639b1c1f",
+    "screenshot-repair/eof-trim-readback.json": "315568ef7aaf8c0cdea37976c0b5322f03f963acf6f0194629fe9c75f695e1a6",
+    "planning-authority-closure-readback.json": "c61ca39846259bc97c8cc61844364f0f0173e1eb14052ac02eb2f0b36bf1b26b"
+  }
+}

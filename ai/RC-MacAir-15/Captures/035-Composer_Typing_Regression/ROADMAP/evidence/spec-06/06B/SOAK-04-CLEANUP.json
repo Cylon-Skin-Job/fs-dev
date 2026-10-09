@@ -1,0 +1,45 @@
+{
+  "at": "2026-09-27T04:03:28.999451+00:00",
+  "runId": "chat-arch-1790481623664-99ce1140a0",
+  "rootAbsent": true,
+  "ownedPidsAlive": {
+    "41197": false,
+    "41209": false,
+    "41953": false
+  },
+  "persistent55084Alive": true,
+  "sourceCount": 1957,
+  "buildCount": 200,
+  "mismatches": [],
+  "runResult": {
+    "runId": "chat-arch-1790481623664-99ce1140a0",
+    "status": "failed",
+    "results": [
+      {
+        "id": "R9-45-MINUTE-SOAK",
+        "code": 1,
+        "signal": null,
+        "pid": 41209,
+        "timedOut": false,
+        "interrupted": false,
+        "leakedOwnedPids": [],
+        "elapsedMs": 145545
+      }
+    ],
+    "ownedRunRootRemoved": true,
+    "failure": {
+      "name": "Error",
+      "message": "R9-45-MINUTE-SOAK exited 1",
+      "stack": "Error: R9-45-MINUTE-SOAK exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:498:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+    }
+  },
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "cycleCount": 0,
+  "workloadStartedAt": null,
+  "windowCount": 0,
+  "sampleCount": 0
+}

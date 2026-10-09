@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-04T11:27:34.628272+00:00",
+  "frozen_byte_entries_verified": 83,
+  "source_original_modes_verified": 82,
+  "report_only_completion": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-builder.md",
+      "reviewed_sha256": "9b0370440b5d555df1f0605bd85ca76c3cf0dc5f530922c8d853de5376d25ffd",
+      "current_sha256": "ec26b34b85cec6d7155ed9e1eb2a8fdfe0a097b54e4ee446742b1a73dde0a36c"
+    }
+  ],
+  "errors": [],
+  "interpretation": "Frozen evidence copies use copy modes; recorded mode belongs to original source. Candidate bytes unchanged after clean builder gate."
+}

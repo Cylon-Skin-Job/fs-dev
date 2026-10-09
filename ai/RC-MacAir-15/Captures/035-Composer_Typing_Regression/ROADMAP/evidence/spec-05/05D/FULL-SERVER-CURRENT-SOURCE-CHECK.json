@@ -1,0 +1,12 @@
+{
+  "runId": "server-full-1790254787486-e84370cd",
+  "command": [
+    "npm",
+    "test",
+    "--",
+    "--runInBand"
+  ],
+  "provider": "real current source; tests declare their own mocks",
+  "sourceCount": 1607,
+  "mismatches": []
+}

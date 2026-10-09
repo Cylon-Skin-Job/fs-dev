@@ -1,0 +1,49 @@
+{
+  "nameCheck": {
+    "actualNames": [
+      "harness-broadcaster",
+      "calendar-broadcaster",
+      "calendar-adapters",
+      "harness-status-revalidation",
+      "theme-css-bootstrap",
+      "cli-config-bootstrap",
+      "workspace-automation-pipeline"
+    ],
+    "unsupported": [
+      "workspace-automation-pipeline"
+    ],
+    "expectedButUnregistered": [
+      "workspace-watcher-trigger-pipeline"
+    ],
+    "normalMode": {
+      "registryError": "unknown isolated provenance startup effect: workspace-automation-pipeline",
+      "factoryRan": false
+    }
+  },
+  "readinessCheck": {
+    "mode": "current-production-factory-extracted-with-benign-effect-stubs-and-real-view-resolver",
+    "status": {
+      "status": "unavailable",
+      "verified": false
+    },
+    "oldResult": {
+      "started": false,
+      "reason": "view_registry_unavailable"
+    },
+    "oldFactoryCalls": 0,
+    "countsBeforeDirect": {
+      "readinessRequests": 1,
+      "leaseRequests": 0
+    },
+    "newFactory": {
+      "effects": [
+        "workspace-script-load",
+        "component-load",
+        "event-trigger-registration",
+        "runner-heartbeat-start"
+      ],
+      "readinessRequestsAdded": 0,
+      "leaseRequestsAdded": 0
+    }
+  }
+}

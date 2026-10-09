@@ -1,0 +1,109 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - complementary [ref=e6]:
+          - generic [ref=e7]:
+            - button "Hide threads" [ref=e8]: dock_to_right
+            - combobox "Thread view" [ref=e9] [cursor=pointer]:
+              - option "Active Threads" [selected]
+              - option "Archive"
+          - button "edit_squareNew chat" [ref=e10]
+          - separator [ref=e11]
+          - generic [ref=e12]:
+            - generic [ref=e13]:
+              - generic [ref=e14]:
+                - generic "Capture Alpha" [ref=e15]: Capture Alpha●
+                - button "More options" [ref=e16]: more_vert
+              - generic [ref=e18]: 1 msgs · 12/31/2025
+            - generic [ref=e19]:
+              - generic [ref=e20]:
+                - generic "Capture Beta" [ref=e21]: Capture Beta●
+                - button "More options" [ref=e22]: more_vert
+              - generic [ref=e24]: 1 msgs · 12/31/2025
+        - generic [ref=e25]:
+          - button "More options" [ref=e28]: event_list
+          - generic [ref=e32]: hi
+          - generic [ref=e34]:
+            - textbox "Ask about capture-viewer..." [ref=e38]
+            - generic [ref=e39]:
+              - generic [ref=e40]:
+                - button "Add" [ref=e42] [cursor=pointer]:
+                  - generic [ref=e43]: add
+                - button "Mode" [ref=e45]: shield_lockMode
+              - generic [ref=e46]:
+                - 'button "Context usage: 0%" [ref=e48]'
+                - button "DeepSeek V4 Flash" [ref=e50]: DeepSeek V4 Flashkeyboard_arrow_down
+                - button "Voice input (click to open)" [ref=e52] [cursor=pointer]:
+                  - generic [ref=e53]: mic
+                - button "Send message" [ref=e55]: arrow_upward
+      - alert [ref=e56]:
+        - generic [ref=e57]: errorNewer content was saved elsewhere for this thread.
+        - generic [ref=e58]: Discarding will discard the unsaved content captured for capture-group-a.
+        - generic [ref=e59]:
+          - button "Retry saving" [ref=e60]
+          - button "Discard unsaved changes" [ref=e61]
+    - generic [ref=e62]:
+      - generic [ref=e63]:
+        - tablist "Open captures" [ref=e64]:
+          - tab "alpha.md" [ref=e65] [cursor=pointer]:
+            - generic [ref=e66]: note_stack
+            - generic [ref=e67]: alpha.md
+          - button "Close alpha.md":
+            - generic: close
+          - tab "Side Chat" [selected] [ref=e68] [cursor=pointer]:
+            - generic [ref=e69]: tab
+            - generic [ref=e70]: Side Chat
+          - button "Close Side Chat" [ref=e71] [cursor=pointer]:
+            - generic [ref=e72]: close
+        - button "New capture tab" [ref=e73] [cursor=pointer]:
+          - generic [ref=e74]: add
+      - tabpanel "Side Chat" [ref=e75]:
+        - generic [ref=e76]:
+          - 'navigation "Location: Side Chat" [ref=e78]':
+            - list [ref=e79]:
+              - listitem "Side Chat" [ref=e80]:
+                - generic [ref=e81]: Side Chat
+          - generic [ref=e85]:
+            - generic [ref=e86]:
+              - generic [ref=e87]:
+                - button "Show threads" [ref=e88]: dock_to_right
+                - button "New chat" [ref=e89]: edit_square
+              - button "More options" [expanded] [ref=e91]: event_list
+            - generic [ref=e95]: hi
+            - generic [ref=e97]:
+              - textbox "Ask about chat-surface-component-chat-side:side..." [ref=e101]
+              - generic [ref=e102]:
+                - generic [ref=e103]:
+                  - button "Add" [ref=e105] [cursor=pointer]:
+                    - generic [ref=e106]: add
+                  - button "Mode" [ref=e108]: shield_lockMode
+                - generic [ref=e109]:
+                  - 'button "Context usage: 0%" [ref=e111]'
+                  - button "DeepSeek V4 Flash" [ref=e113]: DeepSeek V4 Flashkeyboard_arrow_down
+                  - button "Voice input (click to open)" [ref=e115] [cursor=pointer]:
+                    - generic [ref=e116]: mic
+                  - button "Send message" [ref=e118]: arrow_upward
+  - menu "Chat options" [ref=e119]:
+    - menuitem "Show threads" [active] [ref=e120] [cursor=pointer]:
+      - generic [ref=e121]: left_panel_open
+      - generic [ref=e122]: Show threads
+    - menuitem "Rename" [ref=e123] [cursor=pointer]:
+      - generic [ref=e124]: edit
+      - generic [ref=e125]: Rename
+    - menuitem "Copy Link" [ref=e126] [cursor=pointer]:
+      - generic [ref=e127]: link_2
+      - generic [ref=e128]: Copy Link
+    - menuitem "View Markdown" [ref=e129] [cursor=pointer]:
+      - generic [ref=e130]: docs
+      - generic [ref=e131]: View Markdown
+    - menuitem "Diagnostics" [ref=e132] [cursor=pointer]:
+      - generic [ref=e133]: terminal
+      - generic [ref=e134]: Diagnostics
+    - menuitem "Move Chat to Side Chat" [disabled] [ref=e135]:
+      - generic [ref=e136]: open_in_new
+      - generic [ref=e137]: Move Chat to Side Chat
+```

@@ -4,7 +4,11 @@
 
 ## Current understanding
 
-Current boundary, October 5, 2026: the owner keeps this home scoped to fixing the current last build. [D-008](DECISIONS.md#d-008--narrow-to-the-current-build-and-separate-follow-on-harness-work) records the revision. Subsequent broader OpenCode harness repair/testing follows in [its new home](../chat-harness-repair-and-testing/TICKET.md). Earlier synthesis below remains historical context; current repairs, verification, task ownership, acceptance and evidence stay here. Recorded by Codex side chat (ephemeral), 2026-10-05T16:19:23Z.
+October 7 current assignment: [D-009](DECISIONS.md#d-009--prepare-the-next-shared-chat-material-insertion-ticket-and-spec) authorizes the next [shared chat material insertion ticket/SPEC package](planning/shared-chat-material-insertion/PLANNING.md), with the explicit “Don't build” hold. Its original owner request preserves global active-chat versus composer-owned destinations, Main/Side parity, destination snapshot/revalidation, independent view/chat lifetime, source preparation, screenshot correlation and compose-only insertion. Detailed source inventory and future verification belong in that separate planning package. This note is working synthesis of the current direct assignment, not a history checkpoint or implementation approval.
+
+The prior retirement/startup-repair build is complete under [the October 7 handoff](HANDOFF-COMPLETED-BUILD-2026-10-07.md). Its reviewed source, owner acceptance, publication/deployment and evidence limits remain at their original receipts. The dated October 5 boundary below describes the completed assignment; broader harness and health work remain separately owned.
+
+Historical boundary, October 5, 2026: the owner keeps this home scoped to fixing the current last build. [D-008](DECISIONS.md#d-008--narrow-to-the-current-build-and-separate-follow-on-harness-work) records the revision. Subsequent broader OpenCode harness repair/testing follows in [its new home](../chat-harness-repair-and-testing/TICKET.md). Earlier synthesis below remains historical context; current repairs, verification, task ownership, acceptance and evidence stay here. Recorded by Codex side chat (ephemeral), 2026-10-05T16:19:23Z.
 
 ### Limited checkpoint — latest 20 settled turns, 2026-10-01
 

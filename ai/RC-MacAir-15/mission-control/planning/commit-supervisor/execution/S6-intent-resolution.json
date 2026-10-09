@@ -1,0 +1,18 @@
+{
+  "kind": "REHEARSAL_ONLY_INTENT_RESOLUTION",
+  "scope": "REHEARSAL_ONLY",
+  "issue": "FIXTURE_INTENT_01",
+  "at": "2026-10-04T13:56:41.350349+00:00",
+  "resolver": "/root",
+  "predecessor": "/root/s6_supervisor_intent_1",
+  "predecessor_host_terminal_observed": true,
+  "authority_sha256": "d56710db1edba2ba6ef8798975fb1fb4808a301b0ea2e46bcb81d6645e251010",
+  "chosen_format": "N remaining of 3",
+  "summaryFormat": "N remaining of 3",
+  "numerical_completion_reversal_visible_rows_retention_restart_intent": "All original settled requirements retained exactly",
+  "release_effect": "Only artificial fixture wording resolution after actual needs-owner; fresh assigned successor validates original/current inputs",
+  "future_fix_xy": "UNISSUED; eligible only after first actual COMMIT_READY_WAITING_OWNER",
+  "git_operation_authority": "NONE",
+  "source_shared_ref_index_alpha_authority": "NONE",
+  "human_owner_git_approval": false
+}

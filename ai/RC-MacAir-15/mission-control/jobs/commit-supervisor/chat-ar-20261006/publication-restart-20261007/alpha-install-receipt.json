@@ -1,0 +1,16 @@
+{
+  "at": "2026-10-07T08:24:49.400264+00:00",
+  "status": "ALPHA_INSTALLED",
+  "source_commit": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "installed": "/Applications/Fusion Studio Alpha.app",
+  "previous_bundle": "/Applications/Fusion Studio Alpha.previous-20261007T082439Z.app",
+  "old_main_pid": 48636,
+  "old_tree_stopped": true,
+  "bundle_leaf_hashes": {
+    "Contents/Info.plist": "9fc78838526451bb5e986e945eee4062c0b35543b1e3cb969e4ae363b673253f",
+    "Contents/Resources/app.asar": "baf15bf0a750b1965548872601f3b36927e2dd875f0c8ae6ef41a2f08a131194",
+    "Contents/MacOS/Fusion Studio Alpha": "c86c2701f15ca66ba460f4cdcd7ebcab0b5133a4cc299295f02108b3754e9eed"
+  },
+  "packaged_source_comparisons": 470,
+  "database_copy_restore_or_profile_reset": false
+}

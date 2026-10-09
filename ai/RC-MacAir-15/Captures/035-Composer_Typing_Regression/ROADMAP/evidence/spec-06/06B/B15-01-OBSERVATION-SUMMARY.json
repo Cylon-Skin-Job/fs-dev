@@ -1,0 +1,148 @@
+{
+  "runId": "chat-arch-1790424727550-6990c6e13f",
+  "rawRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790424727550-6990c6e13f",
+  "timelineRecords": 59,
+  "observationStartedAt": 1790424733031,
+  "observationEndedAt": 1790424748031,
+  "observationDurationMs": 15000,
+  "observationSamples": 30,
+  "sampleStates": {
+    "active-focused": 14,
+    "inactive-unfocused": 16
+  },
+  "events": [
+    {
+      "kind": "preload-installed-before-main",
+      "event": null,
+      "wallMs": 1790424732127,
+      "utc": "2026-09-26T12:12:12.127000+00:00"
+    },
+    {
+      "kind": "app-event",
+      "event": "will-finish-launching",
+      "wallMs": 1790424732159,
+      "utc": "2026-09-26T12:12:12.159000+00:00"
+    },
+    {
+      "kind": "app-event",
+      "event": "ready",
+      "wallMs": 1790424732179,
+      "utc": "2026-09-26T12:12:12.179000+00:00"
+    },
+    {
+      "kind": "window-event",
+      "event": "ready-to-show",
+      "wallMs": 1790424732858,
+      "utc": "2026-09-26T12:12:12.858000+00:00"
+    },
+    {
+      "kind": "app-event",
+      "event": "did-become-active",
+      "wallMs": 1790424732899,
+      "utc": "2026-09-26T12:12:12.899000+00:00"
+    },
+    {
+      "kind": "window-event",
+      "event": "focus",
+      "wallMs": 1790424732915,
+      "utc": "2026-09-26T12:12:12.915000+00:00"
+    },
+    {
+      "kind": "renderer-Connected",
+      "event": null,
+      "wallMs": 1790424733021,
+      "utc": "2026-09-26T12:12:13.021000+00:00"
+    },
+    {
+      "kind": "initial-activation-start",
+      "event": null,
+      "wallMs": 1790424733027,
+      "utc": "2026-09-26T12:12:13.027000+00:00"
+    },
+    {
+      "kind": "initial-activation-end",
+      "event": null,
+      "wallMs": 1790424733031,
+      "utc": "2026-09-26T12:12:13.031000+00:00"
+    },
+    {
+      "kind": "observation-start",
+      "event": null,
+      "wallMs": 1790424733031,
+      "utc": "2026-09-26T12:12:13.031000+00:00"
+    },
+    {
+      "kind": "window-event",
+      "event": "show",
+      "wallMs": 1790424733081,
+      "utc": "2026-09-26T12:12:13.081000+00:00"
+    },
+    {
+      "kind": "app-event",
+      "event": "did-resign-active",
+      "wallMs": 1790424739285,
+      "utc": "2026-09-26T12:12:19.285000+00:00"
+    },
+    {
+      "kind": "window-event",
+      "event": "blur",
+      "wallMs": 1790424739287,
+      "utc": "2026-09-26T12:12:19.287000+00:00"
+    },
+    {
+      "kind": "window-event",
+      "event": "hide",
+      "wallMs": 1790424747234,
+      "utc": "2026-09-26T12:12:27.234000+00:00"
+    },
+    {
+      "kind": "observation-end",
+      "event": null,
+      "wallMs": 1790424748031,
+      "utc": "2026-09-26T12:12:28.031000+00:00"
+    },
+    {
+      "kind": "close-request",
+      "event": null,
+      "wallMs": 1790424748032,
+      "utc": "2026-09-26T12:12:28.032000+00:00"
+    },
+    {
+      "kind": "app-event",
+      "event": "before-quit",
+      "wallMs": 1790424748142,
+      "utc": "2026-09-26T12:12:28.142000+00:00"
+    },
+    {
+      "kind": "app-event",
+      "event": "before-quit",
+      "wallMs": 1790424748190,
+      "utc": "2026-09-26T12:12:28.190000+00:00"
+    },
+    {
+      "kind": "window-event",
+      "event": "closed",
+      "wallMs": 1790424748305,
+      "utc": "2026-09-26T12:12:28.305000+00:00"
+    },
+    {
+      "kind": "app-event",
+      "event": "will-quit",
+      "wallMs": 1790424748306,
+      "utc": "2026-09-26T12:12:28.306000+00:00"
+    },
+    {
+      "kind": "close-completion",
+      "event": null,
+      "wallMs": 1790424748673,
+      "utc": "2026-09-26T12:12:28.673000+00:00"
+    },
+    {
+      "kind": "fixture-cleanup-completion",
+      "event": null,
+      "wallMs": 1790424748764,
+      "utc": "2026-09-26T12:12:28.764000+00:00"
+    }
+  ],
+  "interpretation": "Successful activation followed by loss during observation; no initiator/cause established. No typing/performance or owner acceptance."
+}

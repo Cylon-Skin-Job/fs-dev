@@ -1,0 +1,50 @@
+[
+  {
+    "source": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-bFErPY/target.json",
+    "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-runtime-raw-files/0-target.json",
+    "sha256": "8a34dbed36c02d46454bfd3afb5d9180d0985c0f48d3cfcaba6181bed654f664",
+    "bytes": 1103,
+    "copied_at": "2026-10-04T16:09:42.596591+00:00",
+    "qualification": "Exact raw time-qualified snapshot; selected live logs may append later"
+  },
+  {
+    "source": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-bFErPY/verified.json",
+    "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-runtime-raw-files/1-verified.json",
+    "sha256": "b36f10d56f7ff9f600743113b5d4c1051a5853cf5fc0c081b0c70ea5c4451c25",
+    "bytes": 3012,
+    "copied_at": "2026-10-04T16:09:42.596840+00:00",
+    "qualification": "Exact raw time-qualified snapshot; selected live logs may append later"
+  },
+  {
+    "source": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-bFErPY/launch.log",
+    "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-runtime-raw-files/2-launch.log",
+    "sha256": "02497f6c2fbd4d04d66ce7cb7f1ff5164270a4442adc26af3d14218ab2f6518d",
+    "bytes": 22225,
+    "copied_at": "2026-10-04T16:09:42.597191+00:00",
+    "qualification": "Exact raw time-qualified snapshot; selected live logs may append later"
+  },
+  {
+    "source": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-bFErPY/tmp/fusion-electron.log",
+    "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-runtime-raw-files/3-fusion-electron.log",
+    "sha256": "93ce2199d5ebc38aa1c03f0873f3d7829fc471661590f506156e1189c92067ff",
+    "bytes": 876,
+    "copied_at": "2026-10-04T16:09:42.597501+00:00",
+    "qualification": "Exact raw time-qualified snapshot; selected live logs may append later"
+  },
+  {
+    "source": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-bFErPY/tmp/electron-renderer.log",
+    "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-runtime-raw-files/4-electron-renderer.log",
+    "sha256": "608ae016e35ffdadca4198320120fcb2b7e254046fb069fdb6f9fbc5203ff498",
+    "bytes": 13144,
+    "copied_at": "2026-10-04T16:09:42.597745+00:00",
+    "qualification": "Exact raw time-qualified snapshot; selected live logs may append later"
+  },
+  {
+    "source": "/private/tmp/mc-s6-commit-supervisor-20261004/profile/server-live.log",
+    "archive": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-runtime-raw-files/5-server-live.log",
+    "sha256": "c14778096750638f32b9cf14617c7bae427010edb391140853d4c103c0972e65",
+    "bytes": 132782,
+    "copied_at": "2026-10-04T16:09:42.599912+00:00",
+    "qualification": "Exact raw time-qualified snapshot; selected live logs may append later"
+  }
+]

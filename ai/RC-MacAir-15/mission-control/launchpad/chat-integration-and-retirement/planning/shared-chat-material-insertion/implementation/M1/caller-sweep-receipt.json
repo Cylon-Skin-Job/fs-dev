@@ -1,0 +1,21 @@
+{
+  "HEAD": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "command": [
+    "rg",
+    "-n",
+    "dispatchChatAction|fusion:chat-insert|captureAndAttachScreenshot|addPendingAttachment|setDraft|onInsert|sourceViewId|currentPrimaryOwner|ScreenshotAttachmentOwner",
+    "fusion-studio-client/src"
+  ],
+  "exit": 0,
+  "source_sha256": {
+    "fusion-studio-client/src/lib/chat-action.ts": "f8b15ee9e83cd85f4075f10e66cf7f0f9ea5e162c415a822bf3be0c72cfaa1b2",
+    "fusion-studio-client/src/lib/chat-action-controller.ts": "79697686cf6b55661c87d8eab05db21f43253b2f4f4b965b079c1f424cfad39a",
+    "fusion-studio-client/src/components/SendToChatButton.tsx": "26e5008817f8fb841a8b14d9d783a2b3411cb395678cc5e9bf247a6071679302",
+    "fusion-studio-client/src/screenshots/chatScreenshotCapture.ts": "18eb2caf9261a19d30ad35c5ac36a64c51ee22e08567e8cfb2ac48d84e9b12f1",
+    "fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx": "38de9af221baa8f40b24dd1edc1f198e60c0a85eff23c2b46544293a0485ee12",
+    "fusion-studio-client/src/components/chat/useChatSessionActions.ts": "1d03a3276b1ad0248bebe280d1c02a2420efe5c184fd09a6af3a111bf11dfa3b",
+    "fusion-studio-client/src/components/chat/useChatMountInteractions.ts": "331e8eb45262408d58632a81b3ad939ab1ae7f76bd92ae74fd83ceb6803c99ea",
+    "fusion-studio-client/e2e/threaded-chat-host.spec.ts": "4c2cdef55c38b815cf8d35ed5bcac3c04bf595db5d6126ae6f83f704f17ccb30"
+  },
+  "sweep_sha256": "68290bd7ba21b79c5650446b0233ed0558cf508abc64b989873586562385c87c"
+}

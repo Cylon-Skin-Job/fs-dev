@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-07T23:43:53.216787+00:00",
+  "id": "ROOT-EXEC-04",
+  "classification": "accepted",
+  "original_SPEC_text": "SPEC09 final report/evidence handoff on current integrated bytes; preserve exact current source and recorded original attempts.",
+  "actual_change": "Root generated optional combined handoff patch for65 delivered paths. First untracked headers lost a slash and reverse check failed; an unconditional success recording was corrected preserving premature record. Corrected02 patch uses exact a/b headers and succeeds readonly reverse check. No product/test/helper authority/oracle edits.",
+  "reason": "Make uncommitted wholecandidate conveniently reviewable without creating commits; evidence packaging correction was root-owned.",
+  "files": [
+    "INTEGRATED-CANDIDATE.patch",
+    "INTEGRATED-CANDIDATE-PATCH.json",
+    "INTEGRATED-CANDIDATE-PATCH-PREMATURE-01.json",
+    "INTEGRATED-CANDIDATE-02.patch",
+    "INTEGRATED-CANDIDATE-PATCH-02.json"
+  ],
+  "tests": "git apply --check --reverse corrected02 returns0; original returns1; current65 source hashes unchanged. Git check only, no application/index/ref changes.",
+  "observable_effect": "Corrected02 artifact addresses all45 tracked +20 new delivered files. Failed original is historical, not deliverable patch.",
+  "risk": "No runtime/product impact; wrong original patch could not apply. Final manifest points only corrected02 and explicitly preserves original failure.",
+  "downstream_SPEC_impact": "Compatible evidence-only packaging correction, no downstream behavior change.",
+  "required_gates": "Current code/runtime gates remain valid; final reviewer receives this fact/record as supplemental new raw artifact."
+}

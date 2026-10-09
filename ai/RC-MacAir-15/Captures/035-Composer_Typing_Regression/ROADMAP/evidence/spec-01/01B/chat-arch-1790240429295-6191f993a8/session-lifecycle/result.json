@@ -1,0 +1,15 @@
+{
+  "runId": "R8-MIRROR-RECOVERY",
+  "status": "passed",
+  "result": {
+    "code": 0,
+    "signal": null,
+    "pid": 44803,
+    "timedOut": false,
+    "interrupted": false,
+    "leakedOwnedPids": [],
+    "elapsedMs": 8499
+  },
+  "failure": null,
+  "ownedRunRootRemoved": true
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fusion://schemas/projection/resource-changed/v1",
+  "title": "ResourceChangedV1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "type",
+    "version",
+    "eventId",
+    "operationId",
+    "workspaceId",
+    "resourceId",
+    "resourceKind",
+    "operation",
+    "panel",
+    "path",
+    "occurredAt",
+    "workspaceEpoch"
+  ],
+  "properties": {
+    "type": { "const": "resource:changed" },
+    "version": { "const": 1 },
+    "eventId": { "$ref": "#/$defs/uuid" },
+    "operationId": { "$ref": "#/$defs/uuid" },
+    "workspaceId": { "$ref": "#/$defs/boundedId" },
+    "resourceId": { "$ref": "#/$defs/uuid" },
+    "resourceKind": { "const": "file" },
+    "operation": { "enum": ["create", "modify"] },
+    "panel": { "const": "file-viewer" },
+    "path": { "$ref": "#/$defs/path" },
+    "occurredAt": { "type": "integer", "minimum": 0 },
+    "workspaceEpoch": { "$ref": "#/$defs/uuid" }
+  },
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "boundedId": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "path": { "type": "string", "minLength": 1, "maxLength": 4096 }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "runId": "chat-arch-1790243230514-3c7a93bc36",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R7-R8-RUNTIME-OWNERSHIP",
+      "code": 0,
+      "signal": null,
+      "pid": 14490,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 12561
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

@@ -1,0 +1,41 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - button "Show threads" [ref=e8]: dock_to_right
+        - button "New chat" [active] [ref=e9]: edit_square
+      - button "More options" [ref=e11]: event_list
+    - generic [ref=e14]: Start a conversation
+    - generic [ref=e16]:
+      - textbox "Ask about isolation-a..." [ref=e20]
+      - generic [ref=e21]:
+        - generic [ref=e22]:
+          - button "Add" [ref=e24] [cursor=pointer]:
+            - generic [ref=e25]: add
+          - button "Mode" [ref=e27]: shield_lockMode
+        - generic [ref=e28]:
+          - 'button "Context usage: 0%" [ref=e30]'
+          - button "DeepSeek V4 Flash" [ref=e32]: DeepSeek V4 Flashkeyboard_arrow_down
+          - button "Voice input (click to open)" [ref=e34] [cursor=pointer]:
+            - generic [ref=e35]: mic
+          - button "Send message" [ref=e37]: arrow_upward
+  - generic [ref=e39]:
+    - button "More options" [ref=e42]: event_list
+    - generic [ref=e45]: Start a conversation
+    - generic [ref=e47]:
+      - textbox "Ask about isolation-b..." [ref=e51]
+      - generic [ref=e52]:
+        - generic [ref=e53]:
+          - button "Add" [ref=e55] [cursor=pointer]:
+            - generic [ref=e56]: add
+          - button "Mode" [ref=e58]: shield_lockMode
+        - generic [ref=e59]:
+          - 'button "Context usage: 0%" [ref=e61]'
+          - button "DeepSeek V4 Flash" [ref=e63]: DeepSeek V4 Flashkeyboard_arrow_down
+          - button "Voice input (click to open)" [ref=e65] [cursor=pointer]:
+            - generic [ref=e66]: mic
+          - button "Send message" [ref=e68]: arrow_upward
+```

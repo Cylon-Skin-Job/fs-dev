@@ -1,0 +1,25 @@
+{
+  "runId": "boot-1790139173127-0c1b821b",
+  "mode": "--working-return",
+  "port": 63364,
+  "baseURL": "http://127.0.0.1:63364",
+  "total": 1,
+  "byStatus": {
+    "expected": 1
+  },
+  "setupFailures": [],
+  "cases": [
+    {
+      "id": "working-activity.spec.ts > @working in-flight return restores original startedAt over an already-revealed baseline",
+      "file": "working-activity.spec.ts",
+      "status": "expected",
+      "projectName": "isolated-boot-chromium",
+      "results": [
+        {
+          "status": "passed",
+          "error": null
+        }
+      ]
+    }
+  ]
+}

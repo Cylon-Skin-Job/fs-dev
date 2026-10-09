@@ -1,0 +1,16 @@
+{
+  "findingId": "IR-CHAT-001",
+  "reviewer": "/root/chat_commit_initial_review",
+  "mode": "initial",
+  "candidateStagedTree": "44b2592705cdbc35620207e579113ede27a4a787",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev",
+  "execution": "node stdin; actual esbuild-transpiled chatScreenshotCapture.ts evaluated in a VM; stubbed store, socket, Electron capture, attachment constructor and toast are external dependencies; actual helper/guards unmodified",
+  "raw": {
+    "chunk_id": "a654e6",
+    "wall_time_seconds": 0.000006083,
+    "exit_code": 0,
+    "original_token_count": 195,
+    "output": "{\"legacyCurrentThreadId\":null,\"selectedGroup\":\"new-group\",\"requestedThreadId\":\"new-thread\",\"result\":null,\"captureCalls\":0,\"requests\":0,\"attachments\":0,\"toasts\":[\"Screenshot was not attached because the chat changed.\"]}\n{\"legacyCurrentThreadId\":\"prior-thread\",\"selectedGroup\":\"new-group\",\"requestedThreadId\":\"new-thread\",\"result\":null,\"captureCalls\":0,\"requests\":0,\"attachments\":0,\"toasts\":[\"Screenshot was not attached because the chat changed.\"]}\n{\"legacyCurrentThreadId\":\"new-thread\",\"selectedGroup\":\"new-group\",\"requestedThreadId\":\"new-thread\",\"result\":{\"panel\":\"screenshots\",\"relativePath\":\"Data/Screenshots/capture.png\",\"absolutePath\":\"/scratch/ai/Test/Data/Screenshots/capture.png\"},\"captureCalls\":1,\"requests\":1,\"attachments\":1,\"toasts\":[\"Screenshot attached to chat.\"]}\n"
+  },
+  "scope": "No live app/provider or source writes. Diagnostic proves owner guard behavior and request/attachment effects in memory; full UI not operated."
+}

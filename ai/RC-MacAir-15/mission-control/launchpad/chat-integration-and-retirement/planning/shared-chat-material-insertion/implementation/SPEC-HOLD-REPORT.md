@@ -1,0 +1,27 @@
+# CHAT-MATERIAL-SPEC-01 execution hold
+
+SPEC Orchestrator `/root`, Codex side chat (ephemeral). RESULT: **BLOCKED** on an external native desktop capability. This is an incomplete implementation handoff, not SPEC_READY_FOR_OWNER_REVIEW or owner acceptance.
+
+M1 and M2 are accepted through distinct clean builder/root acceptance gates. M3 product, tests and the exact seven Wiki edits are frozen in the managed worktree `/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev`, branch `codex/chat-material-01`, HEAD `a4a4262587a7f72f89f5b9b9c2f54878fe5381bb`. Current 65-file integrated source seal is `6fcef6edfdf2439a45eec626a1d854ed67db209b7c78988a6aeaa48a713fd316`; all hashes were independently checked unchanged. No product commit, push, publication, Alpha operation, checkpoint change or next SPEC occurred.
+
+## Current evidence
+
+Root independently inspected the screenshot/consumer/composer delta, migrated regression fixtures, canonical article changes and surrounding source/server/Electron boundaries. Fresh client build PASS; full direct Jest 221 suites / 3265 tests passed / 1 skipped; focused server 3 suites / 10 passed; complete exact renderer lane 269 passed; actual production PageViewer readback of all seven articles PASS. All five command receipts/raw hashes/dependencies and 191 built renderer artifacts are bound in [NONNATIVE-CHECKS-01.json](M3/orchestrator-checks/NONNATIVE-CHECKS-01.json). Direct Jest did not run npm native pretest; the unchanged local ignored observer build is separately bound. Test-owned renderer/Wiki ports are retired.
+
+Native08/09 proved four real File-host global/own Main/Side PNG captures and two gallery actions per run, with signature/dimensions/hash/request/path/rendered-pill/non-target observations. Those attempts failed later and remain partial evidence. Complete adapterless/native Side resource and subsequent public Send/real ACK/SQLite readback proof has not passed. Native10–13 were prevented from acquiring window focus after the desktop locked at 2026-10-07T20:47:20Z. Current native14 checks the lock precondition and proves its own marked root is removed without starting a fixture; it is cleanup evidence, not native success. All fourteen attempt receipts and cleanup observations are retained.
+
+The resource fixture's retained hidden production Wiki DOM-button dispatch is expressly limited to actual handler/store ownership; visible renderer A04 remains separate. Deterministic staged provider/ACK delay seams are only ordinary acceptance regression, not real provider certification. Source capture/save/persistence owners are actual and unchanged. No capture/save/store substitute discharges native proof.
+
+Root's provisional scope classifications for all nine M3 deviations are in [deviations-01.json](M3/orchestrator-checks/deviations-01.json): D01–D08 accepted bounded mechanics with pending release gates; D09 repair_required for required execution evidence, not a new feature or owner intent ruling. The initially reported ROOT-M3-01 cleanup concern was withdrawn after checking the frozen current final block and native14 receipt: it was a stale-revision reading and no repair is needed. The original/corrected observation is preserved.
+
+Read-only protected runtime comparison remains 18 same identities, one old isolated renderer already absent before M3, zero changed. This is preservation observation, not app-health attribution. See [protected-runtime-01.json](M3/orchestrator-checks/protected-runtime-01.json). No active builder/reviewer remains. close_agent is unavailable; terminal lifecycle is recorded. Root-owned server dependency symlink and ignored worktree native build remain for authorized resumption and must be removed/disposed only after final checks and candidate reconciliation; no shared node_modules were rebuilt.
+
+## Required resumption
+
+The pending owner action is to unlock the Mac. On actual unlock, recheck current source/authority/dist and resume `/root/m3_builder` for this same M3 assignment. Any source repair must be announced, sealed and renew affected checks. Finish the complete normal native lane and cleanup, then obtain a fresh builder clean-room gate. Root must complete independent native/current-source inspection, obtain a distinct fresh M3 acceptance gate, accept M3, run the full post-accepted SPEC integration suite/runtime and obtain a distinct fresh final integration review. Whole-SPEC R01–R10/A01–A17 remain pending until those gates complete. Human completion acceptance and publication remain separate.
+
+[mc-orchestrator](/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-orchestrator/SKILL.md) says: “Return `BLOCKED` only for a genuine execution impossibility.” This hold applies that rule to unavailable native window focus; [SPEC §7](../SPEC.md#7-exact-verification-and-proportional-invalidation) requires actual native proof and does not permit a failed or unperformed required run to discharge acceptance. The asynchronous unlock request is pending; elapsed time is not an answer or permission.
+
+## Resumption — 2026-10-07T22:35:04.354095+00:00
+
+Historical hold released on owner confirmation and actual IOConsoleLocked=false. Root started the owner-requested four-hour caffeinate assertion and verified unchanged 65-file source and 191-file built-renderer inputs. Same M3 builder resumed for complete actual native evidence and fresh builder gate. See [resume receipt](orchestrator-checks/M3-resume-01.json); no acceptance or publication is implied.

@@ -1,0 +1,34 @@
+# Fresh SPEC05 final integration review packet — dispatch after final gates
+
+Read-only clean-room-reviewer, inherited model/effort. Gate is final SPEC05 integration for owner-approved CHAT-AR-4641ca5897f0, after accepted SPEC04 and ordered05A–D. No editing, workload, external provider, live profile/window/DB, port3001, commit/push/Alpha or06 execution. Coordinate with root before any needed reproduction. Apply spec-review-gate first-clean fail-forward policy. No prior reviewer conclusions supplied as evidence.
+
+Read complete SPEC05 and its mandatory ROADMAP/BUNDLE-INDEX/AUTHORITY-AND-DECISIONS/ARCHITECTURE/GUIDANCE/VALIDATION/ISSUES/RELEASE-MANIFEST in this ROADMAP. Release approval supersedes stale draft headers. Read root/server AGENTS and active Chat overview/routed source Wiki. Read full active code standards hub and001/002/003/004/005/006/007/008 pages. No new standards waiver. Dirty accepted01–04 bytes are prerequisites; GitHEAD is not the implementation baseline.
+
+Review current integrated source manifest, per-slice preedit/source manifests and diffs, immediate dependencies, owner graph, fault matrix, raw final commands/receipts/cleanup and final report/deviation ledger. Root will append exact run identities and manifest at dispatch. Reuse valid raw evidence independently; do not run redundant workloads merely to duplicate test counts.
+
+Final contract: ThreadManager narrow workspace-qualified facade; lifecycle/group membership and exclusive lease boundaries; rollback and atomic receipt/activity acceptance; capacity/concurrent exact activation/retirement; HistoryFile sole canonical exchange writer; disposable mirrors and conditional revision acknowledgement; idempotent SQL/file/ACK/restart recovery; authorized receipt deletion and no resurrection; existing file-backed worksurface placement; old Move source history retained plus cold empty Main and portable model copy. Canonical ThreadRuntimeManager sole runtime map and immutable generation/thread/turn/drain ownership across interactive/headless routes. No whole-parent God-object dependency, provider-specific rewrite, copied worksurface SQL or general provenance redesign. All changed/extracted05 production owners coherent and<=400lines; explicit bounded graph with external edges, not unsupported whole-repo DAG claim.
+
+Review exact Stop/provider-exit/save delivery across the05A/C/D boundary, including slow/failed save, provider close failure, real inert proxy, truthful ACK, finite listener/timer retention, duplicate delivery race and exact replacement/connection/session isolation. Review passive/eager route semantics and exact Side historyOnly reconnect preserving Main/rail selection and pending user intent across accepted04/02. Verify source-backed Wiki changes agree with code while preserving unrelated/historical provenance.
+
+Full current integration must include V-BACKEND (actual six-flow owned UI and source/readback suites), V-SUBMIT, V-ACTIONS, V-BUILD, full unfiltered isolated server npm test -- --runInBand with native pretest, plus current architecture/lifecycle checks. Confirm failures retained and interpreted honestly; no adapter masks actual provider unit source; no assertion removed. Verify all applicable final commands actually passed on relevant bytes and owned processes/roots were cleaned.
+
+Assess every deviation as accepted/repair_required/owner_ruling_required/downstream_impact at root level. Pay particular attention to no-reload fresh-workspace failure baseline diagnostic, unknown intermittent direct SQLite lock, and any restart hydration diagnostic; unknown causes must remain unknown. Existing empty Kimi TODO skip isn't behavior proof. Deterministic GUI provider and finite late-delivery deadline must be explicit. No06 performance/soak/native-input or original freeze-symptom acceptance claim.
+
+Return final SPEC integration gate disposition, current manifest identity, actual independent inspection/evidence, material findings with all four anchors (contract/path/impact/direct evidence), advisories separately, deviations/downstream compatibility and residuals. CLEAN only when current applicable checks pass and no material issue remains. Do not provide owner/supervisor acceptance or start next SPEC. Record no edits/workloads/descendants and terminal lifecycle; close_agent unavailable if still absent.
+
+## Current final dispatch evidence
+
+All slices reaccepted before all five final commands on current bytes. No writer/workload active. Current integrated105-file digest da6ecbffec10d9f79951ecf6c2fb65996eb2a8ebfb341c5f26bd31458ca4ea73;05D78-file digest5fe5337047401bf19aed7a4c90d6d82cd0fb6d0e5a4ade5c1bfea980b5394792. Use neutral05D/CURRENT-REPORT/CURRENT-DEVIATIONS; root classification ORCHESTRATOR-DEVIATION-ASSESSMENT establishes disposition, not independent correctness. Do not read prior verdicts. Full report../../SPEC-05-IMPLEMENTATION-REPORT.md; raw commands FINAL-VERIFICATION.json; independent audit FINAL-EVIDENCE-AUDIT.json; cross-slice inspection CROSS-SLICE-INSPECTION.md.
+
+Final raw artifacts under evidence/spec-01/01B unless01C specified:
+- backend chat-arch-1790255487009-f51dcf83f5: six cases,6actual UIflows,26runtime/550tests,24mirror/413,15session/282, graph2/store4.
+- submission chat-arch-1790255544092-3ef44b09e3:7cases.
+- actions chat-arch-1790255639018-264b288937:6cases.
+-01C/server-full-1790255827447-30e97acc:214suites/3180pass/oneunchangedKimiTODOskip; mandatory nativecompile/link, realprovider source;1607dependencies match.
+- integration-build-2.log:exit0, existingchunkwarning.
+-05D/architecture-lifecycle-final-4.log:17pass/0skip; no subsequent source change.
+- root runtime chat-arch-1790254963625-4c3ac1a639:26suites550tests; FINAL-F1-RECOVERY-CHECK.cjs/final-f1-recovery.log repeated actual SessionManager timeout trigger,0helpers across3retries. Earlier observed-exit recovery evidence remains current for unchanged lifecycle owners.
+
+Final three-file delta05D/FINAL-REPAIR.diff: existing event waiter cancel in finally, six meaningful regression cases and runner inventory. Independently review full SPEC cross-slice integration plus evented waiter disposal on success/failure, preserved external/lifecycle observers/custom promise/retained owner, late exit/replacement isolation. Default compat provider owns _waitForTermination; evented fallback is separately supported. No new runtime map or broad removeAllListeners.
+
+D01–D18 classified; D07/D12/D16 remain known downstream issue/unknown causes. Preserve5s iterator settlement+explicit retry,30s truthful late saved delivery, established freshworkspace reload precondition, bootstrap/style warnings, deterministicprovider limit, existing skip. No06performance/soak/nativeinput/original symptom acceptance. Source hashes and cleanup receipts all match, but independently inspect raw evidence and code; do not infer correctness from prior reviewer results.

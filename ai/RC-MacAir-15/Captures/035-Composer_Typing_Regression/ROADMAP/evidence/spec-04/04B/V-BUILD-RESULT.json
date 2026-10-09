@@ -1,0 +1,11 @@
+{
+  "command": "npm run build",
+  "cwd": "fusion-studio-client",
+  "status": "passed",
+  "modulesTransformed": 1941,
+  "completedAtLocal": "2026-09-22",
+  "notes": [
+    "TypeScript project build and Vite production build completed with exit code 0.",
+    "Only existing dependency eval, mixed dynamic/static import, and chunk-size warnings were emitted."
+  ]
+}

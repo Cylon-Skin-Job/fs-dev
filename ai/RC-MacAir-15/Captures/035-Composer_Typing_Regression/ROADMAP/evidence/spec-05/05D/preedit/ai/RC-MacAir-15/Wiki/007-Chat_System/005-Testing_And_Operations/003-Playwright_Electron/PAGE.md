@@ -1,0 +1,37 @@
+---
+name: Chat Electron Playwright
+description: Target structure for future Electron Playwright coverage.
+metadata:
+  last-modified: "2026-09-19T10:34:31Z"
+  incoming-edges:
+    - Chat Testing And Operations
+    - Chat Smoke Tests
+  outgoing-edges:
+    - Fusion Restart
+  source-files:
+    - fusion-studio-client/electron/main.cjs
+  connected-skills: []
+  related-trigger-files: []
+---
+
+Electron Playwright should be a separate test lane from browser Playwright.
+
+Current Side Chat shell coverage also exists in `fusion-studio-client/e2e/side-chat-electron-smoke.mjs`, an isolated script described in [Testing And Operations](../PAGE.md). Its presence does not mean the future dedicated lane below exists or that it passed during the source-only documentation review.
+
+Target structure:
+
+```text
+fusion-studio-client/playwright.electron.config.ts
+fusion-studio-client/e2e-electron/
+```
+
+Run single-worker after `npm run build`. Launch `electron/main.cjs` with
+isolated environment:
+
+```text
+FUSION_APP_USER_DATA=<temp-dir>
+FUSION_LOCAL_MACHINE=playwright-e2e
+```
+
+Use this lane when the real app shell, preload, custom protocol, packaged
+paths, or Electron-owned server lifecycle matters.

@@ -1,0 +1,84 @@
+{
+  "kind": "PUBLIC_UI_OBSERVATION",
+  "mode": "observe",
+  "candidate": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "profile": "/private/tmp/mc-s6-commit-supervisor-20261004/profile",
+  "machine": "MC-S6",
+  "samples": [
+    {
+      "action": "all incomplete",
+      "summary": "3 remaining",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "action": "first completed",
+      "summary": "3 remaining",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "action": "second completed",
+      "summary": "3 remaining",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        true,
+        false
+      ]
+    },
+    {
+      "action": "first reversed",
+      "summary": "3 remaining",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        false,
+        true,
+        false
+      ]
+    },
+    {
+      "action": "shell reload",
+      "summary": "3 remaining",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        false,
+        true,
+        false
+      ]
+    }
+  ],
+  "started": "2026-10-04T11:45:54.908Z",
+  "articleText": "arrow_back\narrow_forward\nChecklist Guide\nmenu_book\nWiki Guide\nlink_2\nchat_paste_go\nCHECKLIST\n◉\nChecklist Guide\nlink_2\nchat_paste_go\n○\nNavigation Guide\nlink_2\nchat_paste_go\nChecklist Guide\n\nHow to complete and revisit the disposable checklist.\n\nChecklist Guide\n\nThe checklist begins with Draft report, Review sources and Send summary.\nSelect a task checkbox to complete it. Completed tasks disappear from the list,\nso the summary counts the task rows still shown. Refreshing the view starts a\nnew list with every task incomplete.\n\nOpen the built-in Wiki view to return to this guide. See the\nNavigation Guide for movement between views.\n\nINCOMING EDGES\n\nNone\n\nOUTGOING EDGES\n\nNone\n\nSOURCE FILES\n\nNone\n\nCONNECTED SKILLS\n\nNone\n\nRELATED TRIGGER FILES\n\nNone\n\nlink_2\nchat_paste_go\nchrome_reader_mode\nChecklist Guide\nNo child pages loaded\nlink_2\nchat_paste_go",
+  "articleReload": "Checklist Guide",
+  "finished": "2026-10-04T11:45:58.137Z",
+  "sustainedConnectedAfterNavigationReload": true
+}

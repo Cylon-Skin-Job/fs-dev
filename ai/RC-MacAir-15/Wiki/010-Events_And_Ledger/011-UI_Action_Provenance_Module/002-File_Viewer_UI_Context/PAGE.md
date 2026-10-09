@@ -12,7 +12,12 @@ metadata:
     - fusion-studio-client/src/lib/resource-path.ts
     - fusion-studio-client/src/lib/chat-action-controller.ts
     - fusion-studio-client/src/components/chat/useChatSessionActions.ts
-  last-modified: "2026-09-28T04:56:08Z"
+    - fusion-studio-client/src/lib/chat-action.ts
+    - fusion-studio-client/src/lib/chat-material-target.ts
+    - fusion-studio-client/src/lib/chat-material-commit.ts
+    - fusion-studio-client/src/state/slices/mountedChatState.ts
+    - fusion-studio-client/src/components/chat/useMountedChatBinding.ts
+  last-modified: "2026-10-07T20:18:16Z"
 ---
 
 Status: the underlying provenance assessment was source-inspected on 2026-09-19; this cleanup rechecked attachment staging and send ownership against the current development source. The connected File owner supplies optional tab/component context to mediated saves; File reading and Chat attachment staging exist. A File prompt-with-resource `ui.action` adapter is not implemented. Tests were inspected, not rerun; no live UI or Alpha claim is made.
@@ -24,6 +29,12 @@ Status: the underlying provenance assessment was source-inspected on 2026-09-19;
 The reader does not reconstruct tab identity from global legacy file-store tabs, navigation history, an attachment ID or a React key. The server sanitizer checks bounded shape and workspace echo, not actual current tab existence. The saved record is a historical snapshot with no live view-state writeback. [UI Action And Context Provenance](../../003-Provenance_Model/007-UI_Action_And_Context_Provenance_Schema/PAGE.md) gives the full reader → store → save route → durable operation/fact → query chain.
 
 The policy-ready `FileDocumentPresenter` and fallback `FileViewer` consume the central File content store. They are readers/attachment surfaces, not current mediated text-save editors. Production Office/Email saves use the store; their initiating panel does not automatically match the connected File owner. Thus the carrier's support for File tab context is not evidence of a File save gesture or all-view context coverage.
+
+## Source resource and composer destination
+
+Global **Send to Chat** captures the last actually active eligible open mounted Main or Side composer before resource preparation. The source panel/root/path describes the attachment subject, independently of that destination. A source button taking DOM focus does not redirect it; missing/stale activity has no Main/Legacy fallback. Shared begin/commit validates the captured binding and writes through existing exact-session stores. A retained owner survives unrelated view/focus changes; actual lifetime or authority loss cancels permanently.
+
+Staging prepares a pill for review/editing and creates no prompt, chat or general `ui.action` fact. Ordinary Send remains a separate server-owned acceptance and persistence boundary; existing attachment order, metadata, receipt clearing and provenance retain their owners. Captured insertion destination is operational authority, not a new UI provenance envelope or a claim about active resource context at later send.
 
 ## Current attachments and future pair
 

@@ -1,0 +1,29 @@
+{
+  "recorded_at": "2026-09-26T02:05:13Z",
+  "purpose": "Source fingerprints for local skill/profile creation; not a runtime registry.",
+  "sources": {
+    "/Users/rccurtrightjr./.codex/skills/roadmap-creator/SKILL.md": "b73d0a559cab7a77fc89b452c886bcd4737c768e473cf9ef0e23ec129a60687b",
+    "/Users/rccurtrightjr./.codex/skills/roadmap-creator/agents/openai.yaml": "56d68d6a1475e11a301d395a2a31b9a85ce4f532575fffb70257415983e2bab9",
+    "/Users/rccurtrightjr./.codex/skills/roadmap-implementation-supervisor/SKILL.md": "35ee8670a2be6bba061fa389016f4b00e925391f65e5909df4760cfb64a9af0a",
+    "/Users/rccurtrightjr./.codex/skills/roadmap-implementation-supervisor/agents/openai.yaml": "f9c96708046b9d5867833e1b5ac8130df44f122c3e39884be05dfef1e27399d5",
+    "/Users/rccurtrightjr./.codex/skills/orchestrator/SKILL.md": "84e8bee6cf8cc2363330f73df568d6fbf1366fd406a28a58c97688c177d42198",
+    "/Users/rccurtrightjr./.codex/skills/orchestrator/agents/openai.yaml": "c5762adeb50abca468459571f1c31cf8941e6f5079bc5d5de4b9239b7793f8c2",
+    "/Users/rccurtrightjr./.codex/skills/spec-review-gate/SKILL.md": "4332677863d2f80c3079c0d2507ed1e8e60b2b7629df8a8d7f31249c536bb6c0",
+    "/Users/rccurtrightjr./.codex/skills/spec-review-gate/agents/openai.yaml": "a6b4a363c2d13451ec01bf10dd50b590d1f493f4aff8f983f2ce4d0a59ac7759",
+    "/Users/rccurtrightjr./.codex/skills/capture/SKILL.md": "ecf6b086faacac20d31c84b61b956161b15ed9f3e68c9cb8a47cd9e18060492f",
+    "/Users/rccurtrightjr./.codex/skills/capture/agents/openai.yaml": "224c7924c579da471da565e7a6e85390b4580868736755bf1cebe803f6082ef4",
+    "/Users/rccurtrightjr./.codex/skills/checkpoint/SKILL.md": "87e8a4e38b9678dcfb08e8011b65faf397c745b2283128abb38c9b97cd967d6a",
+    "/Users/rccurtrightjr./.codex/skills/checkpoint/agents/openai.yaml": "bd2c18c1ed2aa84ea9530cf7ad624ffe92f5132be98ecc9e6dc79afd58c5860f",
+    "/Users/rccurtrightjr./.codex/agents/spec-slice-builder.toml": "8a68ab3498aa5ee52d66e3142cc8d0061e3432c702be16485c64d8b0147b7345",
+    "/Users/rccurtrightjr./.codex/skills/second-brain/SKILL.md": "34b51c705edfab51f177891b9460699d60b0a7795320c4e3f430a0ca3c6b5760",
+    "/Users/rccurtrightjr./.codex/skills/second-brain/scripts/validate_index.py": "098185cdd3009f12edec395bd69086b78628f489362383153ae60cc0b3aefe07",
+    "/Users/rccurtrightjr./.codex/skills/second-brain/scripts/route_capture.py": "dc80522ff3a05d96e8b846bfc240ffff5b7552d422a9b16eda27c0751d943855",
+    "/Users/rccurtrightjr./.codex/skills/launchpad/SKILL.md": "8c7c3cf9c2115ea2380ac30a57867e7c12510e72bacf9a9ad149e86f63cbf019",
+    "/Users/rccurtrightjr./.codex/skills/launchpad/agents/openai.yaml": "5a26756dc093dfd6298e173b3b9f47bdac36f20ea082565904a23fa6e18c8171",
+    "/Users/rccurtrightjr./.codex/skills/launchpad/references/software.md": "58b737af62b24ebdc1f33a161145b20f759b73985db74abf297595ccc3ed85d4",
+    "/Users/rccurtrightjr./.codex/skills/launchpad/references/media-production.md": "f000ed797fb4ac4b8f0d8ee55b2734f546196ff8542a5f0f8843727bdf80f4c8",
+    "/Users/rccurtrightjr./.codex/skills/launchpad/references/operating-procedures.md": "fcb7c43a68375d10fcf806e343ed0ba588d221955d8e9bdef4ba06c6e2d88ead",
+    "/Users/rccurtrightjr./.codex/skills/launchpad/references/research-writing.md": "7dc23a0cc853849015f3c845dd489575da870e392ea11dfcefc71fcf62de5737",
+    "/Users/rccurtrightjr./.codex/skills/launchpad/references/schema-derivation.md": "2c7b46bea072b1624c746a4065c6bbdc3080a913d18fc4658d75bddaa57a0b51"
+  }
+}

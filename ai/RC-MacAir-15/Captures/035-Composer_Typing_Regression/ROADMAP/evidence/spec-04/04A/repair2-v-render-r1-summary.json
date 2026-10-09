@@ -1,0 +1,39 @@
+{
+  "runId": "chat-arch-1790133916558-82b5890715",
+  "status": "passed",
+  "repeatTrials": 3,
+  "measurementWindows": 10,
+  "coverageTargetsDiscovered": [
+    "ChatAreaFooter",
+    "ChatAreaHeader",
+    "ContentArea",
+    "InstantSegmentRenderer",
+    "MessageList",
+    "ThreadRail",
+    "renderTextInstant"
+  ],
+  "exactRetentionWindows": 10,
+  "typingInterval": "keyboard.type",
+  "typingIntervalOutboundFrames": 0,
+  "typingIntervalFrameTypes": [],
+  "formatterInvocations": 0,
+  "targetComponentRenders": 0,
+  "longTasks": 0,
+  "maxInputP95Ms": 0.8,
+  "maxInputMs": 0.9,
+  "maxNextRafP95Ms": 14.0,
+  "maxNextRafMs": 17.9,
+  "chatAreaFooterPositiveControlTotal": 680,
+  "correctness": {
+    "coverageAuthenticity": "2/2 passed",
+    "playwrightInputAndLocality": "2/2 passed"
+  },
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true,
+    "ownedRunRootRemoved": true
+  },
+  "primaryEvidence": "evidence/spec-01/01B/chat-arch-1790133916558-82b5890715"
+}

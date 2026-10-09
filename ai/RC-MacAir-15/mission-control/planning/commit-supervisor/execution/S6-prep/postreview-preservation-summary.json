@@ -1,0 +1,134 @@
+{
+  "result": "PASS",
+  "source_head_refs_index_cache_equal": true,
+  "current_unowned_baseline": 12706,
+  "root_execution_evidence_drift": {
+    "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-builder-review-1.md": {
+      "before": null,
+      "after": {
+        "exists": true,
+        "sha256": "d59c8fc04246fe8d38a447398754034d95d450424421acc3effbcc5e24005bd7",
+        "dev": 16777230,
+        "ino": 258923333,
+        "mode": 33188,
+        "size": 4388
+      }
+    },
+    "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-orchestrator-prep-provenance.json": {
+      "before": null,
+      "after": {
+        "exists": true,
+        "sha256": "04dd5c9fa74c8426814a508ac2038cf6aefd8269575bdd9075568ad35cbe1dad",
+        "dev": 16777230,
+        "ino": 258915587,
+        "mode": 33188,
+        "size": 838
+      }
+    },
+    "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-supervisor-intake-draft.md": {
+      "before": {
+        "exists": true,
+        "sha256": "05239796b75c6954358cbf9e7ff6c3d7c5427dc9496e41657d9261ed3aa14657",
+        "dev": 16777230,
+        "ino": 258901945,
+        "mode": 33188,
+        "size": 6522
+      },
+      "after": {
+        "exists": true,
+        "sha256": "598029b49f7e8af17f4742f5e55068afbd97590faac529ae6c3b723e879980d8",
+        "dev": 16777230,
+        "ino": 258901945,
+        "mode": 33188,
+        "size": 7323
+      }
+    },
+    "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-orchestrator-prep-checks.json": {
+      "before": null,
+      "after": {
+        "exists": true,
+        "sha256": "186dc77a270a52c742621afb22536e56e51fd1b36227b144ebc9242e0750add2",
+        "dev": 16777230,
+        "ino": 258915230,
+        "mode": 33188,
+        "size": 6090
+      }
+    }
+  },
+  "root_execution_provenance": "manager/raw review report creation; not a product-source unchanged claim",
+  "protected_processes": [
+    {
+      "pid": 48636,
+      "identity_equal": true,
+      "cwd_executable_equal": true
+    },
+    {
+      "pid": 48653,
+      "identity_equal": true,
+      "cwd_executable_equal": true
+    },
+    {
+      "pid": 77002,
+      "identity_equal": true,
+      "cwd_executable_equal": true
+    },
+    {
+      "pid": 77007,
+      "identity_equal": true,
+      "cwd_executable_equal": true
+    }
+  ],
+  "protected_storage": {
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/Preferences": {
+      "same_inode_dev": true,
+      "same_hash": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/Local State": {
+      "same_inode_dev": true,
+      "same_hash": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server-data/fusion.db": {
+      "same_inode_dev": true,
+      "same_hash": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server-data/fusion.db-wal": {
+      "same_inode_dev": true,
+      "same_hash": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server.port": {
+      "same_inode_dev": true,
+      "same_hash": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/Preferences": {
+      "same_inode_dev": true,
+      "same_hash": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/Local State": {
+      "same_inode_dev": true,
+      "same_hash": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server-data/fusion.db": {
+      "same_inode_dev": true,
+      "same_hash": false
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server-data/fusion.db-wal": {
+      "same_inode_dev": true,
+      "same_hash": true
+    },
+    "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server.port": {
+      "same_inode_dev": true,
+      "same_hash": true
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/data/fusion.db": {
+      "same_inode_dev": true,
+      "same_hash": false
+    }
+  },
+  "volatile_hash_drift": "read raw comparisons without causal attribution",
+  "evidence_path_ownership": {
+    "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-builder-review-1.md": "/root/s6_builder exact inline reviewer report packaging",
+    "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-orchestrator-prep-provenance.json": "/root manager coordination/raw checking",
+    "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-supervisor-intake-draft.md": "/root manager coordination/raw checking",
+    "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-orchestrator-prep-checks.json": "/root manager coordination/raw checking"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "at": "2026-10-07T00:21:26.184905+00:00",
+  "path": "ai/RC-MacAir-15/System/Views/002-file-viewer/state/state.json",
+  "source_preimage": {
+    "path": "ai/RC-MacAir-15/System/Views/002-file-viewer/state/state.json",
+    "kind": "file",
+    "mode": 384,
+    "sha256": "8d4d4aa4601ee8515e9ecf8451a8beb076217bdbe3ea81f124f9ba92d5abb881",
+    "bytes": 2760
+  },
+  "current_to_preserve": {
+    "path": "ai/RC-MacAir-15/System/Views/002-file-viewer/state/state.json",
+    "kind": "file",
+    "mode": 384,
+    "sha256": "0037e645eb7532ca7edddad148b4c54724bc61f33dce7005cb79244435aa27f0",
+    "bytes": 2760
+  },
+  "modified_at": "2026-10-06T23:50:06.973102+00:00",
+  "candidate_actual_first_launch": "2026-10-07T00:11:06Z",
+  "relation": "Unselected runtime view-state changed during interruption, before candidate actual launch. Preserve current owner/app state. Never stage, copy, reset or restore this file. No selected byte/gate drift.",
+  "original_unselected_snapshot_retained_sha256": "3a5b20a2bbf2fe1cd15ae3c673c5bd96b3253259d8d961c0082640ef6ea0811b",
+  "unchanged_other_rows": 20302,
+  "new_preoperation_snapshot": "primary-unselected-preoperation-pass-02.json"
+}

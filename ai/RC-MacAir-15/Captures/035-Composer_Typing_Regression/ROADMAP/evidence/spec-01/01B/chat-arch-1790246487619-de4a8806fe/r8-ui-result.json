@@ -1,0 +1,115 @@
+{
+  "status": "passed",
+  "flows": {
+    "create": {
+      "groupId": "tg-f832cf5e-dad7-4518-9e20-65caad6d6880",
+      "threadId": "2026-09-24T03-41-31-828",
+      "mirror": true
+    },
+    "send": {
+      "accepted": true,
+      "receipt": true,
+      "exchangeId": 1
+    },
+    "stop": {
+      "partial": true,
+      "reason": "interrupted",
+      "threadId": "2026-09-24T03-41-31-828"
+    },
+    "move": {
+      "original": "2026-09-24T03-41-31-828",
+      "newMain": "th-ef909870-f60f-4166-bddb-3b302fccccdf",
+      "memberCount": 2,
+      "sourceHistoryRetained": true,
+      "fileReadback": true
+    },
+    "reconnect": {
+      "authenticatedHydration": true,
+      "sourcePromptVisible": true,
+      "oneExchange": true
+    },
+    "delete": {
+      "groupAndBothPeersRemoved": true,
+      "receiptsRemoved": true,
+      "mirrorsRemoved": true,
+      "worksurfaceRemoved": true
+    }
+  },
+  "screenshots": [
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790246487619-de4a8806fe/r8-ui-moved.png"
+  ],
+  "frameCounts": {
+    "shell-auth:challenge": 3,
+    "connected": 3,
+    "workspace:init": 3,
+    "panel_config": 4,
+    "shell-auth:authenticated": 3,
+    "screenshot:list": 3,
+    "file_content_response": 136,
+    "error": 3,
+    "workspace:create_manifest": 1,
+    "workspace:created": 1,
+    "workspace:added": 1,
+    "workspace:registry_changed": 1,
+    "workspace:switched": 1,
+    "file_tree_response": 129,
+    "office:palette_state": 3,
+    "state:result": 11,
+    "thread:list": 8,
+    "panel_changed": 4,
+    "thread:created": 1,
+    "thread:opened": 4,
+    "state:worksurface_result": 3,
+    "wire_ready": 1,
+    "message:sent": 1,
+    "turn_begin": 1,
+    "thread:state_changed": 2,
+    "step_begin": 1,
+    "thinking": 1,
+    "tool_call": 1,
+    "tool_call_args": 1,
+    "tool_result": 1,
+    "status_update": 1,
+    "content": 65,
+    "screenshot:updated": 1,
+    "screenshot:data": 2,
+    "turn_end": 1,
+    "exchange_metadata": 1,
+    "chat-turn:saved": 1,
+    "wire_disconnected": 1,
+    "thread:action:completed": 2,
+    "thread:members": 1
+  },
+  "errors": [
+    {
+      "type": "error",
+      "message": "No active workspace"
+    },
+    {
+      "type": "error",
+      "message": "Message handling failed"
+    },
+    {
+      "type": "error",
+      "message": "No active workspace"
+    }
+  ],
+  "consoleErrors": [
+    "[SharedStyles] Failed to load workspace styles: Error: Panel \"__settings__\" is not filesystem-backed\n    at Proxy.R (fusion-shell://app/assets/index-CnJOhnDq.js:124:82063)\n    at l (fusion-shell://app/assets/index-CnJOhnDq.js:124:76176)\n    at WebSocket.xe (fusion-shell://app/assets/index-CnJOhnDq.js:124:76406)",
+    "[WS] handler_error",
+    "[WS] handler_error",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "[WS] handler_error",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "lingering": [],
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "kind": "REHEARSAL_ONLY_FIX_X_Y",
+  "at": "2026-10-04T16:23:12.479416+00:00",
+  "resolver": "/root",
+  "authority": "Owner-approved SPEC-COMMIT-SUPERVISOR-01 S6 actual bounded rehearsal; earlier intentional firstwait actual terminal observed",
+  "predecessor": "/root/s6_supervisor_candidate_1",
+  "terminal_evidence": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-first-owner-terminal.json",
+  "first_packet": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/owner-packet-first.md",
+  "first_packet_sha256": "be1b988ced2b88b6e309e03f2831e2c8938034a1c79aeb3c8d0a75f50eb5fde9",
+  "first_checkpoint_sha256": "214621bcc2c6e6a70c415e4f8c2610a4c49454f2538e4f6671eaf382b1fe54aa",
+  "current_identity_sha256": "fa91eb339a518ebb0cf878f5f15d0df3f2d5e5309cdf0eadab2c030b1f499a58",
+  "retained_fixed_manifest_sha256": "5bf3fb69c13aacfd60afcb384de2c9975fc917ad3f1f7a49b9176073b7b34d96",
+  "X": {
+    "stable_task_id": "draft",
+    "previous_label": "Draft report",
+    "new_label": "Review report",
+    "scope": "Supersedes only original draft label in revised disposable fixture; historical provider receipts immutable."
+  },
+  "Y": {
+    "button_label": "Reset completion",
+    "behavior": "Uncheck all three retained rows; immediately update N remaining of 3, immediately persist, survive ordinary reload; document in existing Guide with complete exclusive version."
+  },
+  "summaryFormat": "N remaining of 3",
+  "retained_invariants": [
+    "stable IDs draft/review/send",
+    "Review sources and Send summary labels",
+    "all3rows visible",
+    "reversible completion and count3\u21922\u21921\u21922/all0/all3",
+    "ordinaryreload persistence",
+    "fullcanonicalrestart resets allfalse before helper initializes",
+    "retained root/Navigation bytes/times",
+    "immutable original/supplement preimages and original provider/intent history"
+  ],
+  "required": "Fresh affected code/Wiki/original-coverage handoffs, different final manager/all5 review and actual canonical build/restart/UI/Wiki/watch2/protection/current revised packet then second intentional ownerwait. Retain valid unaffected evidence without replay.",
+  "known_real_checked_precondition": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-root-first-owner-live-readback.json",
+  "actual_human_Git_approval": false,
+  "actual_operation_authority": "NONE",
+  "actual_operations": [],
+  "production_landing_adoption_Alpha": "NONE"
+}

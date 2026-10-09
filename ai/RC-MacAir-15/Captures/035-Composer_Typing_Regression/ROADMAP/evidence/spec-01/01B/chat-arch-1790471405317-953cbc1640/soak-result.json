@@ -1,0 +1,749 @@
+{
+  "status": "failed",
+  "windows": [],
+  "cycles": [],
+  "samples": [],
+  "durationMs": 2700000,
+  "errors": [],
+  "observationAdapter": {
+    "excludedRuntimeLogs": {
+      "server-live.log": true,
+      "server.log": true,
+      "wire-debug.log": true,
+      "wire-debug.log.old": true
+    },
+    "renderer": "index-Bvce9TIn.js",
+    "originalRendererSha256": "4ade8c83785a8c708b4f6317b45eb158a9df8b7888530cb835c8131404e02777",
+    "observedRendererSha256": "76d452dcd82621916ee402f59d5f3790686b17a9645b6f3948d067b459e5dc50",
+    "server": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790471405317-953cbc1640/soak-server-resources.ndjson",
+    "mode": "read-only counts; fixture-only stage observation, bounded 16 thread IDs"
+  },
+  "fixtures": {
+    "f2": {
+      "id": "F2-DETERMINISTIC-HISTORY-V1",
+      "exchanges": 30,
+      "renderedMessages": 60,
+      "includes": [
+        "text",
+        "code",
+        "lists",
+        "tables",
+        "collapsed-tool-results",
+        "reply-metadata"
+      ],
+      "dense": {
+        "exchanges": 2,
+        "assistantPayloadBytes": 534528,
+        "sha256": "9b06d21b677d93e4479544db39cf56f86eb4d3cd25fb603740407f263e7420dc"
+      }
+    },
+    "f3": {
+      "id": "F3-DETERMINISTIC-WORKSPACE-V1",
+      "algorithm": "label-repeated-to-fixed-byte-count",
+      "counts": {
+        "smallFiles": 1000,
+        "captureFolders": 100,
+        "wikiPages": 100,
+        "officeDocuments": 20
+      },
+      "totalFiles": 1220,
+      "totalContentBytes": 11059200,
+      "root": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790471405317-953cbc1640-P1HB3N/soak-workspace/sustained-project",
+      "everyPathFixtureContained": true,
+      "manifestHash": "421c0ef8f5e255bb333a82a9f26d28c74eb2c8d55e95fc262ad241ed45740079"
+    },
+    "f5": {
+      "frameIntervalMs": 50,
+      "textFrames": 10000,
+      "maxCharacters": 200
+    }
+  },
+  "identity": {
+    "baseThreadId": "2026-09-26T18-10-10-039",
+    "baseGroupId": "tg-b80b56eb-c559-42fc-a204-bfbff4d6ec26",
+    "denseThreadId": "2026-09-26T18-10-10-242",
+    "project": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790471405317-953cbc1640-P1HB3N/soak-workspace/sustained-project"
+  },
+  "routes": {
+    "sequence": 37,
+    "frames": [
+      {
+        "sequence": 1,
+        "at": 1790471414609,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj4g9bi-0",
+        "groupId": "tg-b696a7b4-eba3-4909-8cc6-d1d8a0922fee",
+        "lane": "content",
+        "contentRevision": "wsr_e07d8c4b42475e4ad4007770221a2e70",
+        "placementRevision": "wsr_2fb5913889319fb672e72c8a2e8e37c5"
+      },
+      {
+        "sequence": 2,
+        "at": 1790471415552,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-switch-muj4g9nk-1",
+        "groupId": "tg-b696a7b4-eba3-4909-8cc6-d1d8a0922fee",
+        "lane": "content",
+        "contentRevision": "wsr_dd9479bc9497c97a628eceb084813705",
+        "placementRevision": "wsr_2fb5913889319fb672e72c8a2e8e37c5"
+      },
+      {
+        "sequence": 3,
+        "at": 1790471415635,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj4ga2o-2",
+        "groupId": "tg-b80b56eb-c559-42fc-a204-bfbff4d6ec26",
+        "lane": "content",
+        "contentRevision": "wsr_7a58c941a7ced54061bb8053ce8df5f3",
+        "placementRevision": "wsr_2884999793d9f6f19841c34c330bd14a"
+      },
+      {
+        "sequence": 4,
+        "at": 1790471416977,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-switch-muj4gb5z-3",
+        "groupId": "tg-b80b56eb-c559-42fc-a204-bfbff4d6ec26",
+        "lane": "content",
+        "contentRevision": "wsr_b6eef87ee8cd6299c4da4dd2b91bd7d3",
+        "placementRevision": "wsr_2884999793d9f6f19841c34c330bd14a"
+      },
+      {
+        "sequence": 5,
+        "at": 1790471417149,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj4gb69-4",
+        "groupId": "tg-b696a7b4-eba3-4909-8cc6-d1d8a0922fee",
+        "lane": "content",
+        "contentRevision": "wsr_dd9479bc9497c97a628eceb084813705",
+        "placementRevision": "wsr_2fb5913889319fb672e72c8a2e8e37c5"
+      },
+      {
+        "sequence": 6,
+        "at": 1790471417292,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-switch-muj4gber-5",
+        "groupId": "tg-b696a7b4-eba3-4909-8cc6-d1d8a0922fee",
+        "lane": "content",
+        "contentRevision": "wsr_0b7db5a6770b88240479c440b83294ba",
+        "placementRevision": "wsr_2fb5913889319fb672e72c8a2e8e37c5"
+      },
+      {
+        "sequence": 7,
+        "at": 1790471417307,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj4gbf1-6",
+        "groupId": "tg-b80b56eb-c559-42fc-a204-bfbff4d6ec26",
+        "lane": "content",
+        "contentRevision": "wsr_b6eef87ee8cd6299c4da4dd2b91bd7d3",
+        "placementRevision": "wsr_2884999793d9f6f19841c34c330bd14a"
+      },
+      {
+        "sequence": 8,
+        "at": 1790471417606,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj4gbn0-7",
+        "groupId": "tg-a8fda85f-54c1-456c-a6de-6136ccd1f9e2",
+        "lane": "content",
+        "contentRevision": null,
+        "placementRevision": null
+      },
+      {
+        "sequence": 9,
+        "at": 1790471417739,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-switch-muj4gbqa-8",
+        "groupId": "tg-b80b56eb-c559-42fc-a204-bfbff4d6ec26",
+        "lane": "content",
+        "contentRevision": "wsr_9e235cd6bf62f8adc06f9a4f21881d1e",
+        "placementRevision": "wsr_2884999793d9f6f19841c34c330bd14a"
+      },
+      {
+        "sequence": 10,
+        "at": 1790471417822,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj4gbrg-9",
+        "groupId": "tg-a8fda85f-54c1-456c-a6de-6136ccd1f9e2",
+        "lane": "content",
+        "contentRevision": null,
+        "placementRevision": null
+      },
+      {
+        "sequence": 11,
+        "at": 1790471418043,
+        "direction": "inbound",
+        "type": "thread:action:completed",
+        "action": "move_chat_to_side",
+        "requestId": "7eb6890d-c020-49ef-b66c-0518ba69c619",
+        "threadId": "2026-09-26T18-10-17-480",
+        "groupId": "tg-a8fda85f-54c1-456c-a6de-6136ccd1f9e2"
+      },
+      {
+        "sequence": 12,
+        "at": 1790471418045,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj4gbzv-a",
+        "groupId": "tg-a8fda85f-54c1-456c-a6de-6136ccd1f9e2",
+        "lane": "content",
+        "contentRevision": "wsr_cbc436e0a2c9ee916b9ee3f7ed6c0655",
+        "placementRevision": "wsr_3b9d3937a57acf395c73e7d352cdb934"
+      },
+      {
+        "sequence": 13,
+        "at": 1790471419049,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "2b68c39e705d8f783ffc9855a5c3ef4e",
+        "threadId": "2026-09-26T18-10-17-480"
+      },
+      {
+        "sequence": 14,
+        "at": 1790471419459,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "2b68c39e705d8f783ffc9855a5c3ef4e",
+        "threadId": "2026-09-26T18-10-17-480",
+        "turnId": "3ac1910b-7887-46a2-bb1e-13cedb7cdd32"
+      },
+      {
+        "sequence": 15,
+        "at": 1790471419466,
+        "direction": "inbound",
+        "type": "turn_begin",
+        "threadId": "2026-09-26T18-10-17-480",
+        "turnId": "3ac1910b-7887-46a2-bb1e-13cedb7cdd32"
+      },
+      {
+        "sequence": 16,
+        "at": 1790471419614,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "bf5d1deb78a401e5f0c6c736b728463c",
+        "threadId": "th-3a85f795-8e64-4167-884a-b0d4ce4a8559"
+      },
+      {
+        "sequence": 17,
+        "at": 1790471420022,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "bf5d1deb78a401e5f0c6c736b728463c",
+        "threadId": "th-3a85f795-8e64-4167-884a-b0d4ce4a8559",
+        "turnId": "3ef1c9f3-55e0-4114-965a-464bf54bc5e4"
+      },
+      {
+        "sequence": 18,
+        "at": 1790471420025,
+        "direction": "inbound",
+        "type": "turn_begin",
+        "threadId": "th-3a85f795-8e64-4167-884a-b0d4ce4a8559",
+        "turnId": "3ef1c9f3-55e0-4114-965a-464bf54bc5e4"
+      },
+      {
+        "sequence": 19,
+        "at": 1790471421386,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-flush-muj4gek3-b",
+        "groupId": "tg-a8fda85f-54c1-456c-a6de-6136ccd1f9e2",
+        "lane": "content",
+        "contentRevision": "wsr_c7f1a67e529287e1ff81537d6c73219a",
+        "placementRevision": "wsr_3b9d3937a57acf395c73e7d352cdb934"
+      },
+      {
+        "sequence": 20,
+        "at": 1790471421513,
+        "direction": "inbound",
+        "type": "turn_end",
+        "threadId": "2026-09-26T18-10-17-480",
+        "turnId": "3ac1910b-7887-46a2-bb1e-13cedb7cdd32"
+      },
+      {
+        "sequence": 21,
+        "at": 1790471421754,
+        "direction": "inbound",
+        "type": "chat-turn:saved",
+        "threadId": "2026-09-26T18-10-17-480",
+        "turnId": "3ac1910b-7887-46a2-bb1e-13cedb7cdd32"
+      },
+      {
+        "sequence": 22,
+        "at": 1790471422487,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "4c7b193bc4f28ce0ebe29049da889bb8",
+        "threadId": "2026-09-26T18-10-17-480"
+      },
+      {
+        "sequence": 23,
+        "at": 1790471422895,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "4c7b193bc4f28ce0ebe29049da889bb8",
+        "threadId": "2026-09-26T18-10-17-480",
+        "turnId": "b33ed2eb-d69d-41f8-b84f-8c753f6df28f"
+      },
+      {
+        "sequence": 24,
+        "at": 1790471422897,
+        "direction": "inbound",
+        "type": "turn_begin",
+        "threadId": "2026-09-26T18-10-17-480",
+        "turnId": "b33ed2eb-d69d-41f8-b84f-8c753f6df28f"
+      },
+      {
+        "sequence": 25,
+        "at": 1790471423044,
+        "direction": "inbound",
+        "type": "turn_end",
+        "threadId": "th-3a85f795-8e64-4167-884a-b0d4ce4a8559",
+        "turnId": "3ef1c9f3-55e0-4114-965a-464bf54bc5e4"
+      },
+      {
+        "sequence": 26,
+        "at": 1790471423286,
+        "direction": "inbound",
+        "type": "chat-turn:saved",
+        "threadId": "th-3a85f795-8e64-4167-884a-b0d4ce4a8559",
+        "turnId": "3ef1c9f3-55e0-4114-965a-464bf54bc5e4"
+      },
+      {
+        "sequence": 27,
+        "at": 1790471424011,
+        "direction": "inbound",
+        "type": "turn_end",
+        "threadId": "2026-09-26T18-10-17-480",
+        "turnId": "b33ed2eb-d69d-41f8-b84f-8c753f6df28f"
+      },
+      {
+        "sequence": 28,
+        "at": 1790471424253,
+        "direction": "inbound",
+        "type": "chat-turn:saved",
+        "threadId": "2026-09-26T18-10-17-480",
+        "turnId": "b33ed2eb-d69d-41f8-b84f-8c753f6df28f"
+      },
+      {
+        "sequence": 29,
+        "at": 1790471424378,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-placement-close-muj4ggve-c",
+        "groupId": "tg-a8fda85f-54c1-456c-a6de-6136ccd1f9e2",
+        "lane": "placement",
+        "contentRevision": "wsr_c7f1a67e529287e1ff81537d6c73219a",
+        "placementRevision": "wsr_300b27dda252673110aaef1c14dec440"
+      },
+      {
+        "sequence": 30,
+        "at": 1790471424746,
+        "direction": "inbound",
+        "type": "thread:action:completed",
+        "action": "open_member_in_side",
+        "requestId": "f5b014c3-da45-4a9c-94e6-37e4acef99bd",
+        "threadId": "2026-09-26T18-10-17-480",
+        "groupId": "tg-a8fda85f-54c1-456c-a6de-6136ccd1f9e2"
+      },
+      {
+        "sequence": 31,
+        "at": 1790471424748,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj4gh62-d",
+        "groupId": "tg-a8fda85f-54c1-456c-a6de-6136ccd1f9e2",
+        "lane": "content",
+        "contentRevision": "wsr_c7f1a67e529287e1ff81537d6c73219a",
+        "placementRevision": "wsr_3cf95e6566861ad8ba9d849a26795f73"
+      },
+      {
+        "sequence": 32,
+        "at": 1790471427921,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj4gjik-e",
+        "groupId": "tg-a8fda85f-54c1-456c-a6de-6136ccd1f9e2",
+        "lane": "content",
+        "contentRevision": "wsr_c7f1a67e529287e1ff81537d6c73219a",
+        "placementRevision": "wsr_3cf95e6566861ad8ba9d849a26795f73"
+      },
+      {
+        "sequence": 33,
+        "at": 1790471428063,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj4gjq0-f",
+        "groupId": "tg-a8fda85f-54c1-456c-a6de-6136ccd1f9e2",
+        "lane": "content",
+        "contentRevision": "wsr_c7f1a67e529287e1ff81537d6c73219a",
+        "placementRevision": "wsr_3cf95e6566861ad8ba9d849a26795f73"
+      },
+      {
+        "sequence": 34,
+        "at": 1790471429574,
+        "direction": "inbound",
+        "type": "thread:action:completed",
+        "action": "delete",
+        "requestId": "3fce2b99-2dfd-43dc-a7a1-5faed10edb83",
+        "threadId": "th-3a85f795-8e64-4167-884a-b0d4ce4a8559",
+        "groupId": "tg-a8fda85f-54c1-456c-a6de-6136ccd1f9e2"
+      },
+      {
+        "sequence": 35,
+        "at": 1790471429997,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj4gkzn-g",
+        "groupId": "tg-b696a7b4-eba3-4909-8cc6-d1d8a0922fee",
+        "lane": "content",
+        "contentRevision": "wsr_0b7db5a6770b88240479c440b83294ba",
+        "placementRevision": "wsr_2fb5913889319fb672e72c8a2e8e37c5"
+      },
+      {
+        "sequence": 36,
+        "at": 1790471430162,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-switch-muj4glc6-h",
+        "groupId": "tg-b696a7b4-eba3-4909-8cc6-d1d8a0922fee",
+        "lane": "content",
+        "contentRevision": "wsr_0dfede058b397684adfbfa69b567dc4f",
+        "placementRevision": "wsr_2fb5913889319fb672e72c8a2e8e37c5"
+      },
+      {
+        "sequence": 37,
+        "at": 1790471430260,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-muj4glci-i",
+        "groupId": "tg-b80b56eb-c559-42fc-a204-bfbff4d6ec26",
+        "lane": "content",
+        "contentRevision": "wsr_9e235cd6bf62f8adc06f9a4f21881d1e",
+        "placementRevision": "wsr_2884999793d9f6f19841c34c330bd14a"
+      }
+    ],
+    "content": {
+      "2026-09-26T18-10-17-480": {
+        "count": 62,
+        "firstAt": 1790471419471,
+        "maxCharacters": 28,
+        "lastAt": 1790471423993
+      },
+      "th-3a85f795-8e64-4167-884a-b0d4ce4a8559": {
+        "count": 58,
+        "firstAt": 1790471420031,
+        "maxCharacters": 28,
+        "lastAt": 1790471422986
+      }
+    },
+    "errors": [],
+    "worksurfaces": [
+      {
+        "cycle": "warmup",
+        "label": "before-reconnect",
+        "bindings": {
+          "sustained-project::capture-viewer": {
+            "workspaceId": "sustained-project",
+            "viewId": "capture-viewer",
+            "threadGroupId": "tg-a8fda85f-54c1-456c-a6de-6136ccd1f9e2",
+            "adapterId": "capture-viewer",
+            "adapterVersion": 1,
+            "contentRevision": "wsr_c7f1a67e529287e1ff81537d6c73219a",
+            "placementRevision": "wsr_3cf95e6566861ad8ba9d849a26795f73"
+          }
+        },
+        "pending": {},
+        "conflicts": {},
+        "entries": [
+          "sustained-project::capture-viewer::tg-b696a7b4-eba3-4909-8cc6-d1d8a0922fee",
+          "sustained-project::capture-viewer::tg-b80b56eb-c559-42fc-a204-bfbff4d6ec26",
+          "sustained-project::capture-viewer::tg-a8fda85f-54c1-456c-a6de-6136ccd1f9e2"
+        ],
+        "remote": {}
+      },
+      {
+        "cycle": "warmup",
+        "label": "after-reconnect",
+        "bindings": {
+          "sustained-project::capture-viewer": {
+            "workspaceId": "sustained-project",
+            "viewId": "capture-viewer",
+            "threadGroupId": "tg-a8fda85f-54c1-456c-a6de-6136ccd1f9e2",
+            "adapterId": "capture-viewer",
+            "adapterVersion": 1,
+            "contentRevision": "wsr_c7f1a67e529287e1ff81537d6c73219a",
+            "placementRevision": "wsr_3cf95e6566861ad8ba9d849a26795f73"
+          }
+        },
+        "pending": {},
+        "conflicts": {},
+        "entries": [
+          "sustained-project::capture-viewer::tg-b696a7b4-eba3-4909-8cc6-d1d8a0922fee",
+          "sustained-project::capture-viewer::tg-b80b56eb-c559-42fc-a204-bfbff4d6ec26",
+          "sustained-project::capture-viewer::tg-a8fda85f-54c1-456c-a6de-6136ccd1f9e2"
+        ],
+        "remote": {}
+      },
+      {
+        "cycle": "warmup",
+        "label": "after-delete",
+        "bindings": {
+          "sustained-project::capture-viewer": {
+            "workspaceId": "sustained-project",
+            "viewId": "capture-viewer",
+            "threadGroupId": "tg-b696a7b4-eba3-4909-8cc6-d1d8a0922fee",
+            "adapterId": "capture-viewer",
+            "adapterVersion": 1,
+            "contentRevision": null,
+            "placementRevision": null
+          }
+        },
+        "pending": {},
+        "conflicts": {},
+        "entries": [
+          "sustained-project::capture-viewer::tg-b696a7b4-eba3-4909-8cc6-d1d8a0922fee",
+          "sustained-project::capture-viewer::tg-b80b56eb-c559-42fc-a204-bfbff4d6ec26"
+        ],
+        "remote": {}
+      }
+    ]
+  },
+  "calibration": {
+    "counts": {
+      "renderTextInstant": 32,
+      "MessageList": 2,
+      "InstantSegmentRenderer": 32,
+      "ChatAreaHeader": 18,
+      "ThreadRail": 19,
+      "ContentArea": 9,
+      "ChatAreaFooter": 16
+    },
+    "discovered": [
+      "ChatAreaFooter",
+      "ChatAreaHeader",
+      "ContentArea",
+      "InstantSegmentRenderer",
+      "MessageList",
+      "ThreadRail",
+      "renderTextInstant"
+    ]
+  },
+  "attributionCalibration": {
+    "enabled": false,
+    "counts": {
+      "2026-09-26T18-10-10-242": 1,
+      "2026-09-26T18-10-10-039": 1
+    },
+    "overflow": 0
+  },
+  "setupBootstrap": {
+    "requiredLifecycle": [
+      "screenshot:capture",
+      "screenshot:updated",
+      "screenshot:request",
+      "screenshot:data"
+    ],
+    "quietMs": 500,
+    "documentId": "441ab6e5-2b60-4a46-9236-88033c8c07bd",
+    "finalTrafficSequence": 897,
+    "lifecycle": [
+      {
+        "sequence": 894,
+        "atMs": 1630.7,
+        "direction": "outbound",
+        "type": "screenshot:capture"
+      },
+      {
+        "sequence": 895,
+        "atMs": 1635.3,
+        "direction": "inbound",
+        "type": "screenshot:updated"
+      },
+      {
+        "sequence": 896,
+        "atMs": 1635.5,
+        "direction": "outbound",
+        "type": "screenshot:request"
+      },
+      {
+        "sequence": 897,
+        "atMs": 1637.8,
+        "direction": "inbound",
+        "type": "screenshot:data"
+      }
+    ]
+  },
+  "observerCalibration": [
+    75
+  ],
+  "warmup": {
+    "number": "warmup",
+    "groupId": "tg-a8fda85f-54c1-456c-a6de-6136ccd1f9e2",
+    "memberIds": [
+      "2026-09-26T18-10-17-480",
+      "th-3a85f795-8e64-4167-884a-b0d4ce4a8559"
+    ],
+    "sideSend": {
+      "prompt": {
+        "sequence": 13,
+        "at": 1790471419049,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "2b68c39e705d8f783ffc9855a5c3ef4e",
+        "threadId": "2026-09-26T18-10-17-480"
+      },
+      "ack": {
+        "sequence": 14,
+        "at": 1790471419459,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "2b68c39e705d8f783ffc9855a5c3ef4e",
+        "threadId": "2026-09-26T18-10-17-480",
+        "turnId": "3ac1910b-7887-46a2-bb1e-13cedb7cdd32"
+      }
+    },
+    "mainSend": {
+      "prompt": {
+        "sequence": 16,
+        "at": 1790471419614,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "bf5d1deb78a401e5f0c6c736b728463c",
+        "threadId": "th-3a85f795-8e64-4167-884a-b0d4ce4a8559"
+      },
+      "ack": {
+        "sequence": 17,
+        "at": 1790471420022,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "bf5d1deb78a401e5f0c6c736b728463c",
+        "threadId": "th-3a85f795-8e64-4167-884a-b0d4ce4a8559",
+        "turnId": "3ef1c9f3-55e0-4114-965a-464bf54bc5e4"
+      }
+    },
+    "sideStop": {
+      "receipt": {
+        "request_id": "2b68c39e705d8f783ffc9855a5c3ef4e",
+        "turn_id": "3ac1910b-7887-46a2-bb1e-13cedb7cdd32",
+        "outcome": "accepted"
+      },
+      "exchangeId": 33
+    },
+    "mainStop": {
+      "receipt": {
+        "request_id": "bf5d1deb78a401e5f0c6c736b728463c",
+        "turn_id": "3ef1c9f3-55e0-4114-965a-464bf54bc5e4",
+        "outcome": "accepted"
+      },
+      "exchangeId": 34
+    },
+    "resumedSide": {
+      "prompt": {
+        "sequence": 22,
+        "at": 1790471422487,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "4c7b193bc4f28ce0ebe29049da889bb8",
+        "threadId": "2026-09-26T18-10-17-480"
+      },
+      "ack": {
+        "sequence": 23,
+        "at": 1790471422895,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "4c7b193bc4f28ce0ebe29049da889bb8",
+        "threadId": "2026-09-26T18-10-17-480",
+        "turnId": "b33ed2eb-d69d-41f8-b84f-8c753f6df28f"
+      }
+    },
+    "resumedSideStop": {
+      "receipt": {
+        "request_id": "4c7b193bc4f28ce0ebe29049da889bb8",
+        "turn_id": "b33ed2eb-d69d-41f8-b84f-8c753f6df28f",
+        "outcome": "accepted"
+      },
+      "exchangeId": 35
+    },
+    "faults": [
+      "authenticated socket close/reconnect"
+    ],
+    "viewSwitches": 2,
+    "move": true,
+    "sideCloseReopen": true,
+    "delete": true
+  },
+  "failure": {
+    "message": "R1 staged Electron focus unavailable after 48 attempts: {\"available\":true,\"focused\":false,\"visible\":true,\"minimized\":false,\"windowId\":1,\"url\":\"fusion-shell://app/\"}",
+    "stack": "Error: R1 staged Electron focus unavailable after 48 attempts: {\"available\":true,\"focused\":false,\"visible\":true,\"minimized\":false,\"windowId\":1,\"url\":\"fusion-shell://app/\"}\n    at establishFocusedWindow (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/window-focus.mjs:23:17)\n    at async prepareFinalSoakWindow (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/soak-preparation.mjs:12:26)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/soak-electron.mjs:133:44",
+    "dom": {
+      "body": "AI source\nLocal: RC-MacAir-15\narrow_drop_down\nConnected\nchevron_left\nSustained Input Fixture\nchevron_right\ncontrol_camera\nfirst_page\nlast_page\ndiscover_tune\nhub\nmacOS Connectors\nmail\nApple Mail\ncalendar_month\nApple Calendar\nnote_stack\nApple Notes\ntask_alt\nApple Reminders\nClose\nopen_run\ncode_blocks\nfull_coverage\nbusiness_messages\nrobot_2\ndescription\nsettings\ndock_to_right\nActive Threads\nArchive\nedit_square\nNew chat\n2026-09-26T18-10-10\nmore_vert\n0 msgs · just now\n2026-09-26T18-10-10\nmore_vert\n0 msgs · just now\nevent_list\nSynthetic user request 1\nDeterministic exchange 1\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t1\nconst exchange = 1;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 1\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 2\nDeterministic exchange 2\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t2\nconst exchange = 2;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 2\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 3\nDeterministic exchange 3\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t3\nconst exchange = 3;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 3\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 4\nDeterministic exchange 4\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t4\nconst exchange = 4;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 4\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 5\nDeterministic exchange 5\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t5\nconst exchange = 5;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 5\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 6\nDeterministic exchange 6\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t6\nconst exchange = 6;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 6\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 7\nDeterministic exchange 7\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t7\nconst exchange = 7;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 7\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 8\nDeterministic exchange 8\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t8\nconst exchange = 8;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 8\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 9\nDeterministic exchange 9\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t9\nconst exchange = 9;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 9\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 10\nDeterministic exchange 10\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t10\nconst exchange = 10;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 10\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 11\nDeterministic exchange 11\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t11\nconst exchange = 11;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 11\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 12\nDeterministic exchange 12\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t12\nconst exchange = 12;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 12\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 13\nDeterministic exchange 13\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t13\nconst exchange = 13;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 13\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 14\nDeterministic exchange 14\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t14\nconst exchange = 14;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 14\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 15\nDeterministic exchange 15\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t15\nconst exchange = 15;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 15\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 16\nDeterministic exchange 16\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t16\nconst exchange = 16;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 16\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 17\nDeterministic exchange 17\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t17\nconst exchange = 17;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 17\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 18\nDeterministic exchange 18\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t18\nconst exchange = 18;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 18\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 19\nDeterministic exchange 19\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t19\nconst exchange = 19;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 19\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 20\nDeterministic exchange 20\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t20\nconst exchange = 20;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 20\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 21\nDeterministic exchange 21\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t21\nconst exchange = 21;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 21\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 22\nDeterministic exchange 22\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t22\nconst exchange = 22;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 22\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 23\nDeterministic exchange 23\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t23\nconst exchange = 23;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 23\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 24\nDeterministic exchange 24\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t24\nconst exchange = 24;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 24\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 25\nDeterministic exchange 25\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t25\nconst exchange = 25;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 25\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 26\nDeterministic exchange 26\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t26\nconst exchange = 26;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 26\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 27\nDeterministic exchange 27\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t27\nconst exchange = 27;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 27\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 28\nDeterministic exchange 28\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t28\nconst exchange = 28;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 28\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 29\nDeterministic exchange 29\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t29\nconst exchange = 29;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 29\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 30\nDeterministic exchange 30\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t30\nconst exchange = 30;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 30\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nadd\nshield_lock\nDeepSeek V4 Flash\nkeyboard_arrow_down\nmic\narrow_upward\nopen_run\nCAPTURE\nclose\nadd\nCapture\nchevron_right\nDocuments and Artifacts\nsearch\nDocument and Artifact Capture\nHome\nRecent\nStarred\nArchive\nFIXTURE\n1\nkid_star\n\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat arch",
+      "surfaces": [
+        {
+          "thread": "2026-09-26T18-10-10-039",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        }
+      ]
+    }
+  },
+  "ownedFocus": {
+    "pid": 39651,
+    "windowId": 1,
+    "events": [
+      {
+        "type": "installed",
+        "at": 1790471412230,
+        "focused": true,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      },
+      {
+        "type": "show",
+        "at": 1790471412291,
+        "focused": true,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      }
+    ],
+    "overflow": 0
+  },
+  "lingeringOwnedPids": [],
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  }
+}

@@ -1,0 +1,38 @@
+.rv-capture-viewer-searching {
+  display: flex;
+  min-height: 420px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 28px;
+  color: var(--accent-dim, var(--text-primary, #eee));
+}
+
+.rv-capture-viewer-searching-text {
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.rv-capture-viewer-searching-pinwheel {
+  opacity: 0.92;
+}
+
+.rv-capture-viewer-recent-results {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.rv-capture-viewer-recent-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.rv-capture-viewer-recent-section-title {
+  color: var(--text-dim, rgba(255, 255, 255, 0.62));
+  font-size: 0.8125rem;
+  font-weight: 600;
+}

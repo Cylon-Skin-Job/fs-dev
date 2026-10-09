@@ -1,0 +1,7 @@
+interface:
+  display_name: "MC SPEC Review Gate"
+  short_description: "Fail-forward review for automated SPEC execution"
+  default_prompt: "Use $mc-spec-review-gate to review current bytes, route repairs until clean, and record every SPEC deviation without arbitrary instability or pass-count blockers."
+
+policy:
+  allow_implicit_invocation: false

@@ -88,11 +88,13 @@ describe('screenshot generated-file protected view boundary', () => {
 
   test('public file capture denies a broken final symlink into a protected tree', async () => {
     jest.useFakeTimers().setSystemTime(Date.parse('2026-01-02T03:04:05Z'));
+    const saveId = '00000000-0000-4000-8000-000000000001';
+    const randomUUIDSpy = jest.spyOn(require('crypto'), 'randomUUID').mockReturnValue(saveId);
     try {
       const screenshotDir = path.join(root, 'ai', 'Test-Machine', 'Data', 'Screenshots');
       fs.unlinkSync(screenshotDir);
       fs.mkdirSync(screenshotDir);
-      const generatedPath = path.join(screenshotDir, 'fusion-capture-2026-01-02T03-04-05-000Z.png');
+      const generatedPath = path.join(screenshotDir, `fusion-capture-2026-01-02T03-04-05-000Z-${saveId}.png`);
       const protectedFutureFile = path.join(canonicalRoot, 'future.png');
       fs.symlinkSync(protectedFutureFile, generatedPath);
       const createScreenshotHandlers = require('../lib/screenshot/ws-handlers');
@@ -109,8 +111,11 @@ describe('screenshot generated-file protected view boundary', () => {
 
       expect(fs.lstatSync(generatedPath).isSymbolicLink()).toBe(true);
       expect(fs.existsSync(protectedFutureFile)).toBe(false);
-      expect(ws.sent).toEqual([expect.objectContaining({ type: 'screenshot:error' })]);
+      expect(ws.sent).toEqual([expect.objectContaining({
+        type: 'screenshot:error', message: 'Protected view path',
+      })]);
     } finally {
+      randomUUIDSpy.mockRestore();
       jest.useRealTimers();
     }
   });

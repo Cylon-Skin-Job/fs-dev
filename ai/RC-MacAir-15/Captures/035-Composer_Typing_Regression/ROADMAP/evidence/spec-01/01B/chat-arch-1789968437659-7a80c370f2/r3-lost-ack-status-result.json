@@ -1,0 +1,129 @@
+{
+  "caseId": "R3-LOST-ACK-STATUS",
+  "status": "blocked",
+  "authenticatedShell": true,
+  "fixture": "F5",
+  "owner": "SPEC-02/02B",
+  "missingContracts": [
+    "request-id",
+    "receipt-persistence",
+    "authenticated-status-recovery"
+  ],
+  "assertionsEvaluated": false,
+  "statusEndpointFabricated": false,
+  "promptContentRecorded": false,
+  "promptSha256": "1878db8758064d1c11a863ff37100ea7bf5040017559b2f60166ff0ca532d459",
+  "transport": {
+    "beforeReconnect": {
+      "sentTypes": {
+        "shell-auth:proof": 1,
+        "office:palette_get": 1,
+        "state:get": 2,
+        "thread:list": 8,
+        "screenshot:list": 1,
+        "file_content_request": 53,
+        "set_panel": 2,
+        "file_tree_request": 65,
+        "state:set": 5,
+        "workspace:state_push": 1,
+        "thread:open-assistant": 1,
+        "thread:open": 1,
+        "state:worksurface_get": 1,
+        "thread:warm": 1,
+        "prompt": 1
+      },
+      "receivedTypes": {
+        "shell-auth:challenge": 1,
+        "connected": 1,
+        "workspace:init": 1,
+        "panel_config": 1,
+        "shell-auth:authenticated": 1,
+        "office:palette_state": 1,
+        "screenshot:list": 1,
+        "thread:list": 10,
+        "panel_changed": 2,
+        "file_content_response": 53,
+        "file_tree_response": 65,
+        "state:result": 7,
+        "error": 1,
+        "thread:created": 1,
+        "thread:opened": 2,
+        "wire_ready": 1,
+        "state:worksurface_result": 1,
+        "turn_begin": 1,
+        "thread:state_changed": 2,
+        "step_begin": 1,
+        "thinking": 1,
+        "tool_call": 1,
+        "tool_call_args": 1,
+        "tool_result": 1,
+        "status_update": 1,
+        "content": 3,
+        "turn_end": 1,
+        "exchange_metadata": 1,
+        "chat-turn:saved": 1
+      },
+      "promptRequestIds": [
+        null
+      ],
+      "acceptanceRequestIds": [],
+      "statusRequests": []
+    },
+    "afterReconnect": {
+      "sentTypes": {
+        "shell-auth:proof": 1,
+        "office:palette_get": 1,
+        "state:get": 1,
+        "thread:list": 7,
+        "screenshot:list": 1,
+        "file_content_request": 51,
+        "set_panel": 1,
+        "file_tree_request": 63,
+        "state:set": 2,
+        "state:worksurface_get": 2,
+        "thread:open": 1
+      },
+      "receivedTypes": {
+        "shell-auth:challenge": 1,
+        "connected": 1,
+        "workspace:init": 1,
+        "panel_config": 1,
+        "shell-auth:authenticated": 1,
+        "office:palette_state": 1,
+        "thread:list": 8,
+        "screenshot:list": 1,
+        "panel_changed": 1,
+        "file_content_response": 51,
+        "file_tree_response": 63,
+        "state:result": 3,
+        "state:worksurface_result": 2,
+        "thread:opened": 1
+      },
+      "promptRequestIds": [],
+      "acceptanceRequestIds": [],
+      "statusRequests": []
+    }
+  },
+  "observations": {
+    "acceptanceAckDropped": true,
+    "requestIdAvailable": false,
+    "correlatedAcceptanceAvailable": false,
+    "statusRecoveryAvailable": false,
+    "userBubbleCount": 1,
+    "providerDispatchCount": 1,
+    "persistence": {
+      "exchangeCount": 1,
+      "activityCount": 1,
+      "receiptTables": [],
+      "receiptRows": 0
+    }
+  },
+  "violations": [],
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": null
+}

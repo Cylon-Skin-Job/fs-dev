@@ -1,0 +1,38 @@
+{
+  "status": "failed",
+  "flows": {},
+  "screenshots": [],
+  "frameCounts": {
+    "shell-auth:challenge": 1,
+    "connected": 1,
+    "workspace:init": 1,
+    "panel_config": 2,
+    "shell-auth:authenticated": 1,
+    "screenshot:list": 1,
+    "file_content_response": 83,
+    "error": 4,
+    "workspace:create_manifest": 1,
+    "workspace:created": 1,
+    "workspace:added": 1,
+    "workspace:registry_changed": 1,
+    "workspace:switched": 1,
+    "file_tree_response": 66,
+    "office:palette_state": 1,
+    "state:result": 6,
+    "thread:list": 4,
+    "panel_changed": 3,
+    "screenshot:updated": 1,
+    "screenshot:data": 1,
+    "state:error": 1
+  },
+  "failure": {
+    "message": "timed out waiting for public New Chat",
+    "stack": "Error: timed out waiting for public New Chat\n    at waitFor (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs:31:9)\n    at async createChat (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs:90:3)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r8-ui-electron.mjs:31:17"
+  },
+  "lingering": [],
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  }
+}

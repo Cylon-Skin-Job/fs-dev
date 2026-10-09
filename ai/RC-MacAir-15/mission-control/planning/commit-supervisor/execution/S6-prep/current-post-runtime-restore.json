@@ -1,0 +1,34 @@
+{
+  "kind": "PREPARATION_RESTORE_AFTER_OWNED_STOP",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        ".agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "restore",
+        "--job",
+        "planning/commit-supervisor/execution/S6-prep/current-recovery/preparation-recovery",
+        "--repo",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/candidate"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"result\": \"RESTORED\", \"index_worktree_equal\": true, \"status_equal\": true, \"restored_sha256\": \"8224bb4f8eb2fcd4cb4c0bb58501f8e07a706d6a004d292d20149fb0ae558b80\", \"manifest_sha256\": \"dc6581818f806735d58b7bd02fc6895e16633ed8c1b8b9509e2b0b496e54a81f\"}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        ".agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "planning/commit-supervisor/execution/S6-prep/current-recovery/preparation-recovery"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"result\": \"VERIFIED\", \"payloads_valid\": true, \"matches_checkpoint\": true, \"status_equal\": true, \"current_sha256\": \"913c3e698135f38260d2903c63e4c6a0651f4efb68cf3389f8409a1ccc67a497\", \"manifest_sha256\": \"dc6581818f806735d58b7bd02fc6895e16633ed8c1b8b9509e2b0b496e54a81f\"}\n",
+      "stderr": ""
+    }
+  ],
+  "watcher_leaf": "captured absent; removed by restore; raw actual event remains in private profile/evidence"
+}

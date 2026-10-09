@@ -1,0 +1,6 @@
+interface:
+  display_name: "MC Launchpad"
+  short_description: "Resume and shape pre-roadmap project work"
+  default_prompt: "Use $mc-launchpad to survey this project, restore where we left off, and continue shaping it toward a roadmap-ready handoff."
+policy:
+  allow_implicit_invocation: true

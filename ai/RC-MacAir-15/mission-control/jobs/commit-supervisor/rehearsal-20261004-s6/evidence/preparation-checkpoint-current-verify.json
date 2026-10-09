@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-04T13:35:42.186710+00:00",
+  "command": [
+    "python3.12",
+    "-B",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+    "verify",
+    "--job",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/final-recovery/preparation-recovery"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"result\": \"VERIFIED\", \"payloads_valid\": true, \"matches_checkpoint\": true, \"status_equal\": true, \"current_sha256\": \"7d606b465c4f2d0086b170d230a7dd26d2c2367cb961725e22dcab12a5786e59\", \"manifest_sha256\": \"fb124d573bfb76944718c9784643d8a925e24d70ce7042b9455f0b56b3073975\"}\n",
+  "stderr": ""
+}

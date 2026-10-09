@@ -1,0 +1,58 @@
+{
+  "at": "2026-10-04T20:42:02.985717+00:00",
+  "actor": "/root/s6_supervisor_recovery_1",
+  "actual_public_guard_refusal": {
+    "result": "REFUSED",
+    "reason": "unrelated entries changed; restore is non-mutating"
+  },
+  "original_manifest_sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb",
+  "receipt": {
+    "actor": "/root/s6_supervisor_recovery_1",
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "command": [
+      "python3.12",
+      "-B",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+      "guard",
+      "--job",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/public-controls/original",
+      "--repo",
+      "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+      "--ownership-file",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/ownership-original-premature.json"
+    ],
+    "started": "2026-10-04T20:42:00.024053+00:00",
+    "finished": "2026-10-04T20:42:00.534027+00:00",
+    "exit_code": 1,
+    "environment_overrides": {
+      "GIT_OPTIONAL_LOCKS": "0",
+      "GIT_LITERAL_PATHSPECS": "1",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "inherited_git_variables_removed": "ALL GIT_* repository/index/object/alternate variables",
+    "stdout_raw": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/original-actual-scope-guard-refusal.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "stderr_raw": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/original-actual-scope-guard-refusal.stderr",
+      "sha256": "ab36748ba86c1d9528db5faa30a928914af87702c798e61392bb0fc1936f878d",
+      "size": 86
+    }
+  },
+  "actual_out_of_original_scope_Wiki_versions": [
+    "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-080936.md",
+    "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-095624.md"
+  ],
+  "full_candidate_index_work_ref_protected_exact": true,
+  "candidate_and_source_physical_indexes_exact": true,
+  "source11977_cache193_history1844_archive6_exact": true,
+  "source_scoped_status_exact": true,
+  "source_exclusions": [
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/",
+    "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/"
+  ],
+  "before": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/original-premature-before.json",
+  "after": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/original-premature-after.json"
+}

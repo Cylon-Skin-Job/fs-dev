@@ -1,0 +1,12 @@
+{"at":1791404600796,"type":"session-start","threadId":"2026-10-07T13-23-20-557","sessionKey":"[\"material-project\",\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-wFHxPs/material-native-workspace/material-project\",\"2026-10-07T13-23-20-557\"]","externalProcess":false}
+{"at":1791404601801,"type":"session-start","threadId":"th-75d2269b-8bb6-4ebe-974f-40cd8f932083","sessionKey":"[\"material-project\",\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-wFHxPs/material-native-workspace/material-project\",\"th-75d2269b-8bb6-4ebe-974f-40cd8f932083\"]","externalProcess":false}
+{"at":1791404632104,"type":"gate","gate":"before-stop","owner":"adapter","occurrence":1}
+{"at":1791404632104,"type":"gate","gate":"after-stop","owner":"adapter","occurrence":1}
+{"at":1791404632104,"type":"gate","gate":"before-shutdown","owner":"adapter","occurrence":1}
+{"at":1791404632104,"type":"gate","gate":"after-shutdown","owner":"adapter","occurrence":1}
+{"at":1791404632104,"type":"session-retired","threadId":"2026-10-07T13-23-20-557","sessionKey":"[\"material-project\",\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-wFHxPs/material-native-workspace/material-project\",\"2026-10-07T13-23-20-557\"]","retainedSessions":1}
+{"at":1791404632106,"type":"gate","gate":"before-stop","owner":"adapter","occurrence":2}
+{"at":1791404632106,"type":"gate","gate":"after-stop","owner":"adapter","occurrence":2}
+{"at":1791404632106,"type":"gate","gate":"before-shutdown","owner":"adapter","occurrence":2}
+{"at":1791404632106,"type":"gate","gate":"after-shutdown","owner":"adapter","occurrence":2}
+{"at":1791404632106,"type":"session-retired","threadId":"th-75d2269b-8bb6-4ebe-974f-40cd8f932083","sessionKey":"[\"material-project\",\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-wFHxPs/material-native-workspace/material-project\",\"th-75d2269b-8bb6-4ebe-974f-40cd8f932083\"]","retainedSessions":0}

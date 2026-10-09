@@ -1,0 +1,35 @@
+{
+  "state": "REVIEW_COMPLETE",
+  "result": "clean",
+  "mode": "final",
+  "pass": 2,
+  "at": "2026-10-06T23:16:54.775214+00:00",
+  "tree": "1c80f83c6c4b2b61e42c4dbb988c1f942b672ade",
+  "files": {
+    "affected-evidence.json": "446403f5f0b81d85832a51896c4938c7f41fed6f1536151b9907872e03f11345",
+    "affected-raw.md": "1de2a94dbd77cce0cead26ec70c03b9546add88a7bc77ff0928571641d5cf519",
+    "affected-validation.json": "adb4a6be3887caa2de48604a8e543b03a7211c2d68d625583faee2c28c1863c4",
+    "assignment.json": "45bcb7df0985d81966d98ea9b8ecaea2559f029cfb5f6be35e514a8b7035025a",
+    "current-byte-inspection.json": "76fb0e37b94f869fbff2839ce83c0b912ac6877648ee83c432a0436686ccaafa",
+    "final-byte-inspection.json": "009fb7b8f0b90a9a0165223bae56cea835459339c876220a6d9b2cc59f6af080",
+    "finalize-report.py": "3bbbead60fb3a564ae0e8c81d9b80d37447371ac06b04f09ed8381a4220bb245",
+    "inspect-current.py": "5bf1d922d3a19ccd0284f8d794ea9208a7a7934392e887f265a8d85a6157b925",
+    "report.md": "383600a1238b1318dac82e12f65f1843589b14d84da43f3c990735020ea7dd5d",
+    "retained-code-raw.md": "62b7e3183b8a00728b44f42bc6c01c4f10bb053d776d1772a6b4bad0d002089f",
+    "retained-docs-raw.md": "6da8085c3068514b7482bbf5477cdbbb4180d56fcf73dc5c11fcfda7ebfff4c2",
+    "retention-and-invalidations.json": "208458f8203d5182130fcd2ef204b457f4cc919956a7d2455e5da5bfd0c79594",
+    "review-complete.json": "481b39bdc562c673d195b7bc3648b9890e40f6a6ef2af86707190ff055eeeeaa",
+    "reviewer-lifecycle.json": "d37b39d7782412bcd3dc7cfa76b2ca90ac05982a38d4e8fc34641512d6a57d25"
+  },
+  "raw_reports_unchanged": true,
+  "reviewers_terminal": true,
+  "resolved_material_ids": [
+    "FINAL-DOC-001"
+  ],
+  "pending_material_ids": [],
+  "advisory_ids": [
+    "FINAL-DOC-A01"
+  ],
+  "runtime_or_owner_operation_approval_granted": false,
+  "stop_all_report_writes_after_seal": true
+}

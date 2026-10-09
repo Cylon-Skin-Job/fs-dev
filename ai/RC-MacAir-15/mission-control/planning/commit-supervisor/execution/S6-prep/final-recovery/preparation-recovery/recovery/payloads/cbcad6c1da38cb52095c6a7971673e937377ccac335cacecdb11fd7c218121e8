@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "dataSource": "none",
+  "root": {
+    "type": "none"
+  },
+  "chat": {
+    "type": "threaded",
+    "position": "right"
+  }
+}

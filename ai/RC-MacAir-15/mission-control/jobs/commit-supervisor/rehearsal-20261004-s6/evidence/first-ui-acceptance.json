@@ -1,0 +1,112 @@
+{
+  "kind": "PUBLIC_UI_OBSERVATION",
+  "mode": "acceptance",
+  "candidate": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "profile": "/private/tmp/mc-s6-commit-supervisor-20261004/profile",
+  "machine": "MC-S6",
+  "samples": [
+    {
+      "action": "all incomplete",
+      "summary": "3 remaining of 3",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "action": "first completed",
+      "summary": "2 remaining of 3",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "action": "second completed",
+      "summary": "1 remaining of 3",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        true,
+        false
+      ]
+    },
+    {
+      "action": "first reversed",
+      "summary": "2 remaining of 3",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        false,
+        true,
+        false
+      ]
+    },
+    {
+      "action": "shell reload",
+      "summary": "2 remaining of 3",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        false,
+        true,
+        false
+      ]
+    },
+    {
+      "action": "all complete",
+      "summary": "0 remaining of 3",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "action": "all incomplete again",
+      "summary": "3 remaining of 3",
+      "rows": [
+        "Draft report",
+        "Review sources",
+        "Send summary"
+      ],
+      "checks": [
+        false,
+        false,
+        false
+      ]
+    }
+  ],
+  "started": "2026-10-04T16:03:57.384Z",
+  "articleText": "arrow_back\narrow_forward\nChecklist Guide\nmenu_book\nWiki Guide\nlink_2\nchat_paste_go\nCHECKLIST\n◉\nChecklist Guide\nlink_2\nchat_paste_go\n○\nNavigation Guide\nlink_2\nchat_paste_go\nChecklist Guide\n\nHow to complete and revisit the disposable checklist.\n\nChecklist Guide\n\nThe checklist contains Draft report, Review sources and Send summary. Select a task checkbox to complete it; clear the checkbox to make it incomplete again. All three task rows and their checkboxes remain visible, including completed tasks.\n\nThe summary uses N remaining of 3, where N counts incomplete tasks. With all tasks incomplete it reads 3 remaining of 3. Complete Draft report to reach 2 remaining of 3, then Review sources to reach 1 remaining of 3; clear Draft report to return to 2 remaining of 3. Completing every task reaches 0 remaining of 3, and clearing every checkbox returns to 3 remaining of 3.\n\nAn ordinary iframe or shell reload within the same profile retains completion. After the example above, reloading keeps Review sources checked, Draft report and Send summary incomplete, and the summary at 2 remaining of 3. A full canonical development restart clears browser storage, including Local Storage and Session Storage, so the checklist starts with all three tasks incomplete and 3 remaining of 3.\n\nOpen the built-in Wiki view to return to this guide. See the Navigation Guide for movement between views.\n\nINCOMING EDGES\n\nNone\n\nOUTGOING EDGES\n\nNone\n\nSOURCE FILES\nrehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js\nrehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js\nscripts/fusion-restart-target.mjs\nscripts/fusion-restart.mjs\nCONNECTED SKILLS\n\nNone\n\nRELATED TRIGGER FILES\n\nNone\n\nlink_2\nchat_paste_go\nchrome_reader_mode\nChecklist Guide\nNo child pages loaded\nlink_2\nchat_paste_go",
+  "articleReload": "Checklist Guide",
+  "finished": "2026-10-04T16:04:00.874Z",
+  "sustainedConnectedAfterNavigationReload": true
+}

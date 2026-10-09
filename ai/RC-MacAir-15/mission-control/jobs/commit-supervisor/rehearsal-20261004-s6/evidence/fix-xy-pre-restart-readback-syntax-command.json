@@ -1,0 +1,14 @@
+{
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "started": "2026-10-04T17:06:29.021517+00:00",
+  "finished": "2026-10-04T17:06:29.067274+00:00",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "command": [
+    "node",
+    "--check",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix_xy_pre_restart_readback.mjs"
+  ],
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": ""
+}

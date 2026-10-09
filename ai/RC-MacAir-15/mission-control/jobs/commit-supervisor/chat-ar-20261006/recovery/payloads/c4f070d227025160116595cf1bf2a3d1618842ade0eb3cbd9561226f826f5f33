@@ -1,0 +1,67 @@
+---
+id: RCC-0106
+title: 'Consolidate app copy actions onto managed clipboard history path'
+assignee: rccurtrightjr
+created: 2026-06-21T00:00:00.000Z
+author: rccurtrightjr
+state: open
+priority: medium
+---
+
+Replace older direct clipboard writes with the managed clipboard API so app-owned copy actions consistently write to both the system clipboard and Fusion Studio clipboard history.
+
+## Problem
+
+The app currently has two copy paths:
+
+- Older/direct path: `navigator.clipboard.writeText(...)`
+- Newer/managed path: `writeAndRecord(text, source)`
+
+The direct path writes to the system clipboard but does not intentionally record to clipboard history. It may only appear in history if the optional clipboard monitor catches it later, which is not equivalent to a deliberate app-owned clipboard record.
+
+## Known Direct Copy Callers
+
+- Thread link copy in `fusion-studio-client/src/components/sidebar/useSidebar.ts`
+- Wiki reference copy in `fusion-studio-client/src/components/Fusion/WikiDetail.tsx`
+- Resource/file path copy in `fusion-studio-client/src/lib/resource-path.ts`
+
+## Target Shape
+
+All app-owned copy actions should use the managed clipboard path:
+
+```ts
+writeAndRecord(text, source)
+```
+
+Use clear source labels so clipboard history can explain where an entry came from, for example:
+
+- `thread-link`
+- `wiki-reference`
+- `resource-path`
+- `assistant-reply`
+- `assistant-reply-chat-id`
+- `assistant-reply-note`
+
+## Scope
+
+- Replace direct app-owned `navigator.clipboard.writeText(...)` calls where the app is intentionally copying content for the user.
+- Preserve current user-facing feedback such as toasts or copied-state styling.
+- Keep `writeAndRecord` itself as the low-level place that calls `navigator.clipboard.writeText`.
+- Do not change browser-native copy behavior outside app-owned buttons/actions.
+- Do not change clipboard history storage design.
+
+## Gotchas
+
+- Some existing copy actions are response-driven. Thread link copy asks the server for `thread:link`, then copies the returned file path. The managed write should happen after the response is received.
+- The thread link response is also reused for "view markdown" behavior through `threadLinkIntent`; only the copy intent should write to clipboard history.
+- The managed API is async. Existing synchronous helpers such as `copyResourcePath()` may need to become async or explicitly handle promise errors.
+- Avoid duplicate history entries if the clipboard monitor is enabled. If duplicates happen, fix dedupe in the clipboard backend rather than returning to direct writes.
+
+## Acceptance Criteria
+
+- Thread link copy writes to system clipboard and clipboard history.
+- Wiki reference copy writes to system clipboard and clipboard history.
+- Resource/file path copy writes to system clipboard and clipboard history.
+- Existing toasts or visual copied feedback still work.
+- Direct `navigator.clipboard.writeText(...)` remains only inside clipboard infrastructure or clearly documented browser-native fallback code.
+- Assistant reply chrome uses `writeAndRecord` from its first implementation.

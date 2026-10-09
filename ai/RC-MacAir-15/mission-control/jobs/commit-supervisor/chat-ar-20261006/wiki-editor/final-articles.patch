@@ -1,0 +1,134 @@
+--- ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md pre-leaf
++++ ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md final
+@@ -2,7 +2,7 @@
+ name: Chat Runtime Model
+ description: Explains how chat threads are opened, warmed, streamed, stopped, persisted, and resumed. Use this page when changing runtime state or thread lifecycle behavior.
+ metadata:
+-  last-modified: "2026-09-29T07:12:08Z"
++  last-modified: "2026-10-06T22:14:26Z"
+   source-files:
+     - fusion-studio-client/src/components/WorkspacePanel.tsx
+     - fusion-studio-client/src/components/chat/useChatSessionActions.ts
+@@ -52,7 +52,6 @@
+     - fusion-studio-server/lib/thread-groups/chat-capable-views.js
+     - fusion-studio-server/lib/thread/session-manager.js
+     - fusion-studio-server/lib/thread/thread-lifecycle-controller.js
+-  last-modified: "2026-09-28T04:56:08Z"
+ ---
+ 
+ Cleanup review: current renderer host composition and replaced source owners were rechecked against development source. Older verification dates and unrelated runtime claims retain their stated scope; no runtime or Alpha validation was performed in this pass.
+--- ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md pre-leaf
++++ ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md final
+@@ -1,8 +1,16 @@
+ ---
+ name: Screenshot Capture
+-description: App captures, macOS screenshot imports, optional CLI access, and storage limits.
++description: Direct app captures, exact chat attachments, saved-image gallery, workspace previews, and storage limits.
+ metadata:
+   source-files:
++    - fusion-studio-client/src/state/chatFileLinkStore.ts
++    - fusion-studio-client/src/lib/chat/side-chat-placements.ts
++    - fusion-studio-client/src/state/slices/chatSurfaceSlice.ts
++    - fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx
++    - fusion-studio-client/src/components/chat/ChatSurface.tsx
++    - fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx
++    - fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx
++    - fusion-studio-client/src/components/App.tsx
+     - fusion-studio-server/lib/screenshot/ws-handlers.js
+     - fusion-studio-client/electron/ipc/capture-handlers.cjs
+     - fusion-studio-client/electron/ipc/screenshot-handlers.cjs
+@@ -10,12 +18,18 @@
+     - fusion-studio-client/src/screenshots/ScreenshotsTrigger.tsx
+     - fusion-studio-client/src/hooks/useScreenshotCapture.ts
+     - fusion-studio-server/lib/workspace/screenshot-service.js
+-  last-modified: "2026-09-28T04:25:27Z"
++  last-modified: "2026-10-06T22:15:19Z"
+ ---
+ 
+ ## In-app captures and attachments
+ 
+-In the desktop app, **Take screenshot** captures the focused Fusion Studio window. The server saves a PNG under the active workspace's `ai/<machine>/Data/Screenshots/`, and the current chat receives a pending file attachment. The Screenshots gallery lists image files from that workspace folder and can attach an existing one. Workspace preview images are separate: they capture the app panel on workspace changes and are stored as one PNG row per workspace in SQLite for the ribbon and carousel.
++In the desktop app, **Take screenshot** captures the focused Fusion Studio window. The capture controller snapshots the destination chat and socket before awaiting native capture, then sends `screenshot:file-capture` with that workspace and a request ID. The server validates the active workspace and saves a PNG under its `ai/<machine>/Data/Screenshots/`. Only the matching `screenshot:file-captured` response supplies the saved path for a pending attachment in that exact workspace and chat session; an unrelated response cannot attach a file.
++
++The composer Add menu supplies its explicit workspace, view, Thread group, chat session and mounted-surface lifetime. The view's Main Chat follows its selected Thread group and current primary session. A Main Chat mounted as an explicit content component keeps its hydrated session independently of the outer thread rail. A Side Chat keeps its own session and open service-managed placement, so changing Main Chat selection cannot redirect its capture. The global header camera resolves the selected Main Chat in the active view; it falls back to the current Legacy session only when no qualified Main Chat is available.
++
++The controller checks ownership before capture and again after native capture and saving. A change to the destination workspace, owning view or chat session cancels attachment; changing the selected Thread group also cancels a view-bound Main capture. Connected composers also cancel when they become inactive or unmount, or when their Side Chat placement closes. A content component retained in a hidden view cannot finish a capture for that view; switching away and back does not revive the old composer capture. Cancellation before the save request leaves no new saved file. Cancellation while the save is pending can leave the PNG in the workspace gallery, but it does not attach it to another chat.
++
++The Screenshots gallery lists image files from the workspace folder and can attach an existing one. Workspace preview images are separate: they capture the app panel on workspace changes and are stored as one PNG row per workspace in SQLite for the ribbon and carousel.
+ 
+ ## macOS screenshots
+ 
+--- ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md pre-leaf
++++ ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md final
+@@ -3,6 +3,11 @@
+ description: Composer behavior, send/stop/finalization button states, and attachment/input rules.
+ metadata:
+   source-files:
++    - fusion-studio-client/src/lib/chat/side-chat-placements.ts
++    - fusion-studio-client/src/state/slices/chatSurfaceSlice.ts
++    - fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx
++    - fusion-studio-client/src/components/chat/ChatSurface.tsx
++    - fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx
+     - fusion-studio-client/src/components/ChatInput.tsx
+     - fusion-studio-client/src/components/ChatArea.css
+     - fusion-studio-client/src/components/chat/ChatAreaFooter.tsx
+@@ -14,7 +19,7 @@
+     - fusion-studio-client/src/screenshots/chatScreenshotCapture.ts
+     - fusion-studio-client/src/hooks/useFileAutocomplete.ts
+     - fusion-studio-client/src/lib/chat-file-links/file-autocomplete-match.ts
+-  last-modified: "2026-09-28T04:56:08Z"
++  last-modified: "2026-10-06T22:15:19Z"
+ ---
+ 
+ The composer is the user input and turn control surface. `ChatAreaFooter.tsx` presents the input and Send/Stop/finalization states. `useChatSessionHost.ts` composes the session identity and presentation; `useChatSessionActions.ts` supplies exact-session send, Stop, attachment and diagnostic Ask AI actions, and `ConnectedChatComposer.tsx` subscribes to the addressed draft, attachments and submission state; `chatComposerDraftStore.ts` and `chatFileLinkStore.ts` retain their respective owner-keyed data.
+@@ -41,10 +46,9 @@
+ Pending acceptance survives an owning chat surface's temporary unmount/remount,
+ including a side-chat content-tab switch, because the exact session owns it.
+ 
+-Screenshot capture snapshots `{workspaceId, threadId, surface}` before its
+-first await and revalidates that owner after capture and save. If the chat
+-changes, the attachment is cancelled with a fixed safe status rather than
+-being added to the new chat.
++The Add menu's **Take screenshot** action snapshots this composer's exact workspace, view, Thread group, chat session and mounted-surface lifetime before its first await. The view's Main Chat follows the selected Thread group and current primary session; an explicit Main content component keeps its hydrated session independently of the outer rail. A Side Chat keeps its own session and open service-managed placement when Main Chat selection changes.
++
++Ownership is checked before capture, after native capture and after the correlated saved-PNG response. A changed destination workspace, owning view or chat session, an inactive or unmounted composer, or a closed Side Chat placement cancels attachment with a fixed safe status. Changing the selected Thread group also cancels a view-bound Main capture. Content components retained in a hidden view are cancelled too; returning to the same view or session does not revive that old capture. If saving has already begun, its PNG can remain in the gallery, but no attachment is added to another chat. The global header camera has its own Main Chat/Legacy resolution; [Screenshot Capture](../../../004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md#in-app-captures-and-attachments) owns that behavior and the separate gallery and workspace-preview paths.
+ 
+ ## Diagnostic Ask AI
+ 
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md pre-leaf
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md final
+@@ -10,7 +10,7 @@
+     - fusion-studio-server/lib/file-mutations/reported-ui-context.js
+     - fusion-studio-server/lib/agent-provenance/resource-observer.js
+     - fusion-studio-server/lib/ledger/event-ledger.js
+-  last-modified: "2026-09-19T11:52:20Z"
++  last-modified: "2026-10-06T22:14:26Z"
+ ---
+ 
+ Status: reconciled on 2026-09-19 across the 24 Events And Ledger articles and the bounded System/provenance subjects in three supporting articles. The inspected development checkout is `/Users/rccurtrightjr./projects/fs-dev`, at HEAD `88637d11c65be53d4f2ad0f049f64a07fa3db1de`, with dirty working files. Claims follow the inspected working bytes rather than HEAD alone; unrelated concurrent changes were preserved. This is source and documentation inspection, not a product test, runtime pass, whole-app storage audit or whole-wiki certification. Installed Alpha is a separate, unverified baseline. Generated navigation below is a topic map, not proof that every described subsystem exists.
+@@ -51,9 +51,9 @@
+ - [Resource Events And Render Sync](../005-Resource_Events_And_Render_Sync/PAGE.md) - Trace mediated text saves through governed projections to the two mounted File Viewer consumers; distinguish reconnect and dirty-buffer limits.
+ - [File Versioning](../006-File_Versioning/PAGE.md) - Distinguish required mediated-save preimages, post-tool observation checkpoints and Git checkpoints from future general versioning and restore.
+ - [Correlation And Causality](../007-Correlation_And_Causality/PAGE.md) - Interpret durable operation links, reported UI context and observed resource history without turning temporal association into causal proof.
+-- [Change Storm Control](../008-Change_Storm_Control/PAGE.md) - Current watcher and checkpoint limits, future change-storm summaries, and unresolved compaction policy.
++- [Change Storm Control](../008-Change_Storm_Control/PAGE.md) - Legacy bus and checkpoint limits, future change-storm summaries, and unresolved compaction policy.
+ - [Assistant Query And Review Loops](../009-Assistant_Query_And_Review_Loops/PAGE.md) - How future workers can inspect conversations, tool calls, file versions, and failures to surface concrete improvements.
+-- [Structure](../010-Structure/PAGE.md) - File and module map for event bus, ledger, watcher, resource sync, metadata collectors, and future versioning work.
++- [Structure](../010-Structure/PAGE.md) - File and module map for event bus, ledger, resource sync, metadata collectors, and future versioning work.
+ - [UI Action Provenance Module](../011-UI_Action_Provenance_Module/PAGE.md) - Implemented save-context carrier and future shared UI-action design, including Wiki and File adapter boundaries.
+ <!-- section-toc:end -->
+ 
+--- ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md pre-leaf
++++ ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md final
+@@ -4,10 +4,9 @@
+ metadata:
+   source-files:
+     - fusion-studio-server/lib/event-bus.js
+-    - fusion-studio-server/lib/event-bus.js
+     - fusion-studio-server/lib/event-registry/seed-catalog.js
+     - fusion-studio-server/lib/agent-provenance/checkpoint-repository.js
+-  last-modified: "2026-09-19T11:52:20Z"
++  last-modified: "2026-10-06T22:14:26Z"
+ ---
+ 
+ Status: source inspected on 2026-09-19 in the development checkout. Legacy bus guards and bounded tool checkpoints exist. The generic workspace watcher and its rename heuristics have since been retired. A governed storm detector, durable storm-batch schema and compaction policy are not implemented in the inspected owners. No runtime or load test was run.

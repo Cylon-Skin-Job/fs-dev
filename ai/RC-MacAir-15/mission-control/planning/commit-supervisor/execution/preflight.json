@@ -1,0 +1,339 @@
+{
+  "timestamp": "2026-10-04T07:59:57.603834+00:00",
+  "repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "branch": "agent/exact-workspace-paths",
+  "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "index_sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+  "status_sha256": "a7a7e0d3f5daf910488627d95a20f730884fded306929fd1f73a13fd418cea22",
+  "sources": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/AGENTS.md",
+      "approved_hash": "41dc4e9dc4d58e7505cb6fc37b500129502231293894b5f90eda9398315e001d",
+      "current_hash": "41dc4e9dc4d58e7505cb6fc37b500129502231293894b5f90eda9398315e001d",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh",
+      "approved_hash": "a02c0fa38ffcd89e488ef1785cf83dd2f3476230d8fbaf4916063e9dcedd7380",
+      "current_hash": "a02c0fa38ffcd89e488ef1785cf83dd2f3476230d8fbaf4916063e9dcedd7380",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md",
+      "approved_hash": "67a88a237b1113daca286791354977f795b3791fd56d80aa192b7bbf0e2784ff",
+      "current_hash": "67a88a237b1113daca286791354977f795b3791fd56d80aa192b7bbf0e2784ff",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/session-contract.md",
+      "approved_hash": "a6190c66ddd6f511b76b7c257c415c39f52aa3466246b324b4db05637bd3482c",
+      "current_hash": "a6190c66ddd6f511b76b7c257c415c39f52aa3466246b324b4db05637bd3482c",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/decisions.md",
+      "approved_hash": "d2cc057a1bfd79455fc420a996a19316403afc35ea446593f3d704ca8222b7ff",
+      "current_hash": "d2cc057a1bfd79455fc420a996a19316403afc35ea446593f3d704ca8222b7ff",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+      "approved_hash": "7e9bcfa884c2e20c180173885667fe1ad8d1cf31c15aca6c9737a0bd2aa387d8",
+      "current_hash": "7e9bcfa884c2e20c180173885667fe1ad8d1cf31c15aca6c9737a0bd2aa387d8",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+      "approved_hash": "daf13e49f75279cc21610abad6762212b132fa4810c1cd6f14057cbcb54e3521",
+      "current_hash": "daf13e49f75279cc21610abad6762212b132fa4810c1cd6f14057cbcb54e3521",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/conversation-evidence.md",
+      "approved_hash": "f08c376c586792e56deccaa49d19cb16b6e163d996e862db408cfd8c9e224f6e",
+      "current_hash": "f08c376c586792e56deccaa49d19cb16b6e163d996e862db408cfd8c9e224f6e",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/record-templates.md",
+      "approved_hash": "e97b95cfeeb9b6bc2b1667781904f87ca459d157eb71f6256f66ae1c8d9ac87c",
+      "current_hash": "e97b95cfeeb9b6bc2b1667781904f87ca459d157eb71f6256f66ae1c8d9ac87c",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/config.toml",
+      "approved_hash": "755c39322d94bd17c50597ec90c18c743164425734725b97ddf4e5df6dfc78ee",
+      "current_hash": "755c39322d94bd17c50597ec90c18c743164425734725b97ddf4e5df6dfc78ee",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-review-and-merge.toml",
+      "approved_hash": "93c097025c51ba233b191bc3a7d5e5461848be4de4b98f587311b9be95428f63",
+      "current_hash": "93c097025c51ba233b191bc3a7d5e5461848be4de4b98f587311b9be95428f63",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/reports/author-assignment.md",
+      "approved_hash": "8677188baed633fdbf8a05c79c4afcab839b66ab2c1fcda76655dcc71ff89a6e",
+      "current_hash": "8677188baed633fdbf8a05c79c4afcab839b66ab2c1fcda76655dcc71ff89a6e",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-author/SKILL.md",
+      "approved_hash": "6bbc04d37cedf7096f2da2de8be7ac29def302fb192870c0869c1e00a0d35581",
+      "current_hash": "6bbc04d37cedf7096f2da2de8be7ac29def302fb192870c0869c1e00a0d35581",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-planning-stage/SKILL.md",
+      "approved_hash": "fbef99148a1b863543dd85ccdc6a3a115808232534a282c670a001b56e147de5",
+      "current_hash": "fbef99148a1b863543dd85ccdc6a3a115808232534a282c670a001b56e147de5",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-planning-validation/SKILL.md",
+      "approved_hash": "3c0018b06c015bbab337e38fb9de56b8278a9ddff6bce183e7a353904bbffbde",
+      "current_hash": "3c0018b06c015bbab337e38fb9de56b8278a9ddff6bce183e7a353904bbffbde",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-creator/references/planning-contract.md",
+      "approved_hash": "ce471fe594051c7c375c1f371c0ebe4af18b65639f740ad3d95c918a70b9e5ad",
+      "current_hash": "ce471fe594051c7c375c1f371c0ebe4af18b65639f740ad3d95c918a70b9e5ad",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-creator/scripts/candidate_manifest.py",
+      "approved_hash": "ef91c9cbb57c7fd6b873d0a25d8498b7febac96a99bda1742b5993275fca1297",
+      "current_hash": "ef91c9cbb57c7fd6b873d0a25d8498b7febac96a99bda1742b5993275fca1297",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-review-and-merge/SKILL.md",
+      "approved_hash": "87cead992de90ce053b9a739640ba2410c0ca2ef875d481483690198f966b43c",
+      "current_hash": "87cead992de90ce053b9a739640ba2410c0ca2ef875d481483690198f966b43c",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-review-gate/SKILL.md",
+      "approved_hash": "bf99f11b6d23b6d4b02662309b82736847b9869b86689af6206e9bff17e137d5",
+      "current_hash": "bf99f11b6d23b6d4b02662309b82736847b9869b86689af6206e9bff17e137d5",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-orchestrator/SKILL.md",
+      "approved_hash": "2cf5f52c9ce9a795a66ee3cf97e7cb3b37bbbc9bc59f3f073f1a12cddcab100c",
+      "current_hash": "2cf5f52c9ce9a795a66ee3cf97e7cb3b37bbbc9bc59f3f073f1a12cddcab100c",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-slice-builder/SKILL.md",
+      "approved_hash": "c4ca4bf6f739ea4bea811b6de41cbea6685ad0abd89543f77df33a8e95ccca94",
+      "current_hash": "c4ca4bf6f739ea4bea811b6de41cbea6685ad0abd89543f77df33a8e95ccca94",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-implementation-supervisor/SKILL.md",
+      "approved_hash": "f514a07a4cc3d12eb2a2a1fef76ca76821bc32c13f97ba755f2e090a2cd6f4cd",
+      "current_hash": "f514a07a4cc3d12eb2a2a1fef76ca76821bc32c13f97ba755f2e090a2cd6f4cd",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mission-control/SKILL.md",
+      "approved_hash": "26715ee00d19611665e54e635f7a344a2c9e6a21a360865379ecf2ffd47d2265",
+      "current_hash": "26715ee00d19611665e54e635f7a344a2c9e6a21a360865379ecf2ffd47d2265",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/monitor/SKILL.md",
+      "approved_hash": "a749c02ac0422bf3f7a3207fb93e7ff477b966667843c50ae73f36745e2be4e7",
+      "current_hash": "a749c02ac0422bf3f7a3207fb93e7ff477b966667843c50ae73f36745e2be4e7",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/status/references/report-format.md",
+      "approved_hash": "e87bffd6dd656bd94334ef9d6365aa0b6e266e4b3d8a7f62b2701bde74e48480",
+      "current_hash": "e87bffd6dd656bd94334ef9d6365aa0b6e266e4b3d8a7f62b2701bde74e48480",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-memory-maintenance/SKILL.md",
+      "approved_hash": "d4dac3b13b575800a8751ac6973533dd1ec6e9da03dc4af7497f7c6163cfacba",
+      "current_hash": "d4dac3b13b575800a8751ac6973533dd1ec6e9da03dc4af7497f7c6163cfacba",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-memory-maintenance/references/records.md",
+      "approved_hash": "a1eaaff8ada20e4e7e48b8d59708ee9b39a31132a12af3ca0152f3008ce6b61f",
+      "current_hash": "a1eaaff8ada20e4e7e48b8d59708ee9b39a31132a12af3ca0152f3008ce6b61f",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/AGENTS.md",
+      "approved_hash": "9d353611f3b5ac94efa92048d1c0f8879d71786bcf1b641f915a0f695f5ef697",
+      "current_hash": "9d353611f3b5ac94efa92048d1c0f8879d71786bcf1b641f915a0f695f5ef697",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/.agents/wiki-session-contract.md",
+      "approved_hash": "b5147866ebec7e7f65de1f5f114f14166fe86ccbd8263f1e6ab584f4ec952d00",
+      "current_hash": "b5147866ebec7e7f65de1f5f114f14166fe86ccbd8263f1e6ab584f4ec952d00",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/.agents/skills/wiki-update/SKILL.md",
+      "approved_hash": "77aaa158fde575f474dac66d14669c9c60215b8455c532c9f9703bba03dada31",
+      "current_hash": "77aaa158fde575f474dac66d14669c9c60215b8455c532c9f9703bba03dada31",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/.agents/skills/wiki-research/SKILL.md",
+      "approved_hash": "26ee803266813cae416278ededccb98f9030a84806e28e29abd7cef951ef3736",
+      "current_hash": "26ee803266813cae416278ededccb98f9030a84806e28e29abd7cef951ef3736",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/.agents/skills/wiki-repair/SKILL.md",
+      "approved_hash": "3fb23901204ffb2789c84a2229bb91dae14bc55cad611178788c5a96537bef70",
+      "current_hash": "3fb23901204ffb2789c84a2229bb91dae14bc55cad611178788c5a96537bef70",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/.agents/skills/wiki-audit/SKILL.md",
+      "approved_hash": "0e43872db5681508f23ccf2fecf5d8fc1969a6585bb987f81f4cce876c66799e",
+      "current_hash": "0e43872db5681508f23ccf2fecf5d8fc1969a6585bb987f81f4cce876c66799e",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/001-Style_Guide/PAGE.md",
+      "approved_hash": "28ae2301be3115e22b6d69691fb5208e2625945998393071874b9a1fbee70629",
+      "current_hash": "28ae2301be3115e22b6d69691fb5208e2625945998393071874b9a1fbee70629",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/003-Updating_Wikis/PAGE.md",
+      "approved_hash": "ec1739e2d693c07c5691fa3624b200915ea1c65257a09b75c853ff1c181a1a78",
+      "current_hash": "ec1739e2d693c07c5691fa3624b200915ea1c65257a09b75c853ff1c181a1a78",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/PAGE.md",
+      "approved_hash": "2ea02f01a6b71621e59c7b198e53af019194cc4620efdb0ffd8a7199cdadc637",
+      "current_hash": "2ea02f01a6b71621e59c7b198e53af019194cc4620efdb0ffd8a7199cdadc637",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/005-User_Profile_Preferences_and_Design_Philosophy/PAGE.md",
+      "approved_hash": "45fa9f630563d79935d5a461b308c823c0db3ded5c23817ba6d4c8a06c794ed5",
+      "current_hash": "45fa9f630563d79935d5a461b308c823c0db3ded5c23817ba6d4c8a06c794ed5",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/008-Workflows/001-Sync_Wiki_Context/PAGE.md",
+      "approved_hash": "d5a263e3a3856b3bce71a0c2043bf05daeb3538abd94fc1b297d96b89bc69127",
+      "current_hash": "d5a263e3a3856b3bce71a0c2043bf05daeb3538abd94fc1b297d96b89bc69127",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/008-Workflows/002-Wiki_Update/PAGE.md",
+      "approved_hash": "18a2d00238e098f8816b71c3fb9bc36117d5d85aeaa5372e121c9b2439b1e0b3",
+      "current_hash": "18a2d00238e098f8816b71c3fb9bc36117d5d85aeaa5372e121c9b2439b1e0b3",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md",
+      "approved_hash": "de3995c68ae84f3b0fa389c6af0327e21dd08f30ac9ffbc7548b76f80ac393d7",
+      "current_hash": "de3995c68ae84f3b0fa389c6af0327e21dd08f30ac9ffbc7548b76f80ac393d7",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/001-Architecture_Routing/PAGE.md",
+      "approved_hash": "4c5fcbf62912c9e8ff6d3d0e1ec07016145e1f1c90c792a162dfcc3ca1b0bfba",
+      "current_hash": "4c5fcbf62912c9e8ff6d3d0e1ec07016145e1f1c90c792a162dfcc3ca1b0bfba",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md",
+      "approved_hash": "bd3e7be468289ac0a6ee6502cd8b9fc340f03fd7568deb59370ed00cc3b2a7a3",
+      "current_hash": "bd3e7be468289ac0a6ee6502cd8b9fc340f03fd7568deb59370ed00cc3b2a7a3",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/008-Testing_And_Smoke_Slices/PAGE.md",
+      "approved_hash": "e7319750bd27b7ccdad8e5e451b9779044e8fc7a713fc6d461113b409b39018d",
+      "current_hash": "e7319750bd27b7ccdad8e5e451b9779044e8fc7a713fc6d461113b409b39018d",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/037-Plugin_Integration_And_Parallel_Roadmaps/integration-jobs.md",
+      "approved_hash": "d25edcbe8b088ac46e9e5307e825dfe145fffdf4fdfea415a847ce1c2729d3db",
+      "current_hash": "d25edcbe8b088ac46e9e5307e825dfe145fffdf4fdfea415a847ce1c2729d3db",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/skills/fusion-electron-restart/SKILL.md",
+      "approved_hash": "bf4a3dba3a1f2f5bf41c3d91197adfbd31fa0cb9f60adb67069599fad008e91a",
+      "current_hash": "bf4a3dba3a1f2f5bf41c3d91197adfbd31fa0cb9f60adb67069599fad008e91a",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/skills/clean-room-loop/SKILL.md",
+      "approved_hash": "a16158bb172c37e19e45430edd46ee92cb8de9f992c8558e04053dfb926b9cf5",
+      "current_hash": "a16158bb172c37e19e45430edd46ee92cb8de9f992c8558e04053dfb926b9cf5",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/agents/clean-room-reviewer.toml",
+      "approved_hash": "3ec16b52c4181728463ef4e1511ccbb2783dc6a9101921c04ba7bba454dd286e",
+      "current_hash": "3ec16b52c4181728463ef4e1511ccbb2783dc6a9101921c04ba7bba454dd286e",
+      "drift": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+      "current_hash": "bfbc5ac1aa30c10ef47deaa9cf6f942877d17b05456843942dbc0f848dd84b92",
+      "baseline_extra": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+      "current_hash": "e1708e4552a0b7df52d41b6bf0e5bd3937f5a75d80d06f7c35e8055f46f54bb3",
+      "baseline_extra": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+      "current_hash": "32aaf7037f0b0944d39722ae0e58915b870cc6812a66af161ff369d9a9a90e2c",
+      "baseline_extra": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+      "current_hash": "2553e8bd9abb3bf0e86577932e2bcae3f43ae0af3d31be4c2b2729fd66e2307b",
+      "baseline_extra": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+      "current_hash": "660ccbf5773b920ee6e15c3b8422105c8090c1eafd79a9e071616770877bd542",
+      "baseline_extra": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/index.json",
+      "current_hash": "2ee83e813649dd06b5b0cd3c9b83b2bdb04c17aa2e67bda8432331cb91e4e889",
+      "baseline_extra": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/status/SKILL.md",
+      "current_hash": "82f9aed69505869a05b08e7ca917e235058ecbce5ccea5e0e2a51e83c09587eb",
+      "baseline_extra": true
+    }
+  ],
+  "permissions": {
+    "sandbox_mode": "danger-full-access",
+    "approval_policy": "never",
+    "evidence": "effective developer/environment permissions"
+  },
+  "runtime": {
+    "concurrency_slots": 12,
+    "close_agent": "unavailable",
+    "root_task": "01a105eb-8add-7e12-a454-a96b64465cca",
+    "identity_evidence": "list_threads active task matches exact CWD and assignment",
+    "model_effort": "inherited; no override; exact runtime value unexposed"
+  }
+}

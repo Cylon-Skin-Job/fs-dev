@@ -1,0 +1,36 @@
+{
+  "recordedAt": "2026-09-27T06:16:23.328130+00:00",
+  "authority": "Supervisor reports explicit owner request for forthcoming human test",
+  "requestedRuntime": {
+    "model": "togetherai/deepseek-ai/DeepSeek-V4.1-Flash",
+    "variant": "high",
+    "thinking": true,
+    "reasoningEffort": "high"
+  },
+  "supervisorReportedChanges": {
+    "cli.json": "default model/variant; thinking retained",
+    "opencode-models.json": "Together provider/model low/high/max added; defaultProvider togetherai; other providers preserved"
+  },
+  "supervisorReportedValidation": [
+    "Installed OpenCode catalog confirms exact model and high maps to reasoningEffort high",
+    "Together credential entry exists; no credential value accessed or printed here",
+    "Fusion resolveCliConfig and validatePortableSelection pass exact requested runtime"
+  ],
+  "configurationFiles": {
+    "ai/RC-MacAir-15/System/config/cli.json": {
+      "exists": true,
+      "currentSha256": "8a160b32a5556218ee18a14c0d3553e074286d7d72bdc40ed59b5fd08c8e4c32",
+      "inB20SourceManifest": false,
+      "b20Sha256": null
+    },
+    "ai/RC-MacAir-15/System/config/opencode-models.json": {
+      "exists": true,
+      "currentSha256": "0bb94d432cca1d3d011ab14543c9dcaa61ec75fa9aa80cc081775aa96f00007a",
+      "inB20SourceManifest": false,
+      "b20Sha256": null
+    }
+  },
+  "scope": "Configuration provenance only; no inference/restart/Alpha/existing-thread rewrite/product or fixture edit/test/acceptance authorized by notification",
+  "futureUse": "Carry these owner-authorized settings into subsequently authorized human-test preparation; assess configuration dependencies separately from unchanged product checks",
+  "nativeCapability": "Still blocked pending demonstrated native health; no soak launch"
+}

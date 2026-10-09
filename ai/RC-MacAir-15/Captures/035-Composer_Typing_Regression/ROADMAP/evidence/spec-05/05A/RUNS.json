@@ -1,0 +1,74 @@
+[
+  {
+    "log": "backend-run.log",
+    "runId": "chat-arch-1790238755189-91f5a80a19",
+    "rawRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790238755189-91f5a80a19",
+    "status": "failed",
+    "caseCount": 1,
+    "ownedRunRootRemoved": true,
+    "leakedOwnedPids": []
+  },
+  {
+    "log": "backend-run-2.log",
+    "runId": "chat-arch-1790238790469-2d43df88d2",
+    "rawRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790238790469-2d43df88d2",
+    "status": "passed",
+    "caseCount": 1,
+    "ownedRunRootRemoved": true,
+    "leakedOwnedPids": []
+  },
+  {
+    "log": "backend-run-3.log",
+    "runId": "chat-arch-1790238865781-662b473f6a",
+    "rawRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790238865781-662b473f6a",
+    "status": "passed",
+    "caseCount": 1,
+    "ownedRunRootRemoved": true,
+    "leakedOwnedPids": []
+  },
+  {
+    "log": "submit-run.log",
+    "runId": "chat-arch-1790238893930-7ea1561c1b",
+    "rawRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790238893930-7ea1561c1b",
+    "status": "passed",
+    "caseCount": 7,
+    "ownedRunRootRemoved": true,
+    "leakedOwnedPids": []
+  },
+  {
+    "log": "backend-run-4.log",
+    "runId": "chat-arch-1790239156782-e4a1f72a74",
+    "rawRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790239156782-e4a1f72a74",
+    "status": "passed",
+    "caseCount": 1,
+    "ownedRunRootRemoved": true,
+    "leakedOwnedPids": []
+  },
+  {
+    "log": "backend-run-5.log",
+    "runId": "chat-arch-1790239187260-0f8a1ee9f0",
+    "rawRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790239187260-0f8a1ee9f0",
+    "status": "passed",
+    "caseCount": 1,
+    "ownedRunRootRemoved": true,
+    "leakedOwnedPids": []
+  },
+  {
+    "log": "submit-run-2.log",
+    "runId": "chat-arch-1790239219947-899d51ba36",
+    "rawRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790239219947-899d51ba36",
+    "status": "passed",
+    "caseCount": 7,
+    "ownedRunRootRemoved": true,
+    "leakedOwnedPids": []
+  },
+  {
+    "log": "backend-run-6.log",
+    "runId": "chat-arch-1790239308422-d7368490e4",
+    "rawRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790239308422-d7368490e4",
+    "status": "passed",
+    "caseCount": 1,
+    "ownedRunRootRemoved": true,
+    "leakedOwnedPids": []
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "root": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor",
+  "candidateId": "sha256:c12ff1fff3c391e5183eea219553c547a91e461d9cb114c21719b37cfe209d02",
+  "artifacts": [
+    {
+      "path": "SPEC.md",
+      "sha256": "6d7b351db87e535b0950f94c42c61d503a3ac3fef6587299dfc024c7887df664"
+    }
+  ]
+}

@@ -1,0 +1,242 @@
+{
+  "status": "failed",
+  "windows": [],
+  "cycles": [],
+  "samples": [],
+  "durationMs": 2700000,
+  "errors": [],
+  "observationAdapter": {
+    "renderer": "index-D_35dGzh.js",
+    "server": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790305529051-ba2339316e/soak-server-resources.ndjson",
+    "mode": "read-only counts; fixture-only stage append"
+  },
+  "fixtures": {
+    "f2": {
+      "id": "F2-DETERMINISTIC-HISTORY-V1",
+      "exchanges": 30,
+      "renderedMessages": 60,
+      "includes": [
+        "text",
+        "code",
+        "lists",
+        "tables",
+        "collapsed-tool-results",
+        "reply-metadata"
+      ],
+      "dense": {
+        "exchanges": 2,
+        "assistantPayloadBytes": 534528,
+        "sha256": "9b06d21b677d93e4479544db39cf56f86eb4d3cd25fb603740407f263e7420dc"
+      }
+    },
+    "f3": {
+      "id": "F3-DETERMINISTIC-WORKSPACE-V1",
+      "algorithm": "label-repeated-to-fixed-byte-count",
+      "counts": {
+        "smallFiles": 1000,
+        "captureFolders": 100,
+        "wikiPages": 100,
+        "officeDocuments": 20
+      },
+      "totalFiles": 1220,
+      "totalContentBytes": 11059200,
+      "root": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790305529051-ba2339316e-z0GZVj/soak-workspace/sustained-project",
+      "everyPathFixtureContained": true,
+      "manifestHash": "421c0ef8f5e255bb333a82a9f26d28c74eb2c8d55e95fc262ad241ed45740079"
+    },
+    "f5": {
+      "frameIntervalMs": 50,
+      "textFrames": 10000,
+      "maxCharacters": 200
+    }
+  },
+  "identity": {
+    "baseThreadId": "2026-09-24T20-05-32-319",
+    "baseGroupId": "tg-0abfb3f2-4b41-4c7e-97f6-11821ff0e272",
+    "denseThreadId": "2026-09-24T20-05-32-520",
+    "project": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790305529051-ba2339316e-z0GZVj/soak-workspace/sustained-project"
+  },
+  "routes": {
+    "frames": [
+      {
+        "at": 1790305536830,
+        "direction": "inbound",
+        "type": "thread:action:completed",
+        "action": "move_chat_to_side",
+        "requestId": "1a1a2a5d-80c1-4062-b7a5-8081a29c32a4",
+        "threadId": "2026-09-24T20-05-36-349"
+      },
+      {
+        "at": 1790305537820,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "c6e17b721a04196030b3b6372b25e438",
+        "threadId": "2026-09-24T20-05-36-349"
+      },
+      {
+        "at": 1790305538229,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "c6e17b721a04196030b3b6372b25e438",
+        "threadId": "2026-09-24T20-05-36-349",
+        "turnId": "d6fcb89d-4472-48d3-8e95-b6340613699a"
+      },
+      {
+        "at": 1790305538237,
+        "direction": "inbound",
+        "type": "turn_begin",
+        "threadId": "2026-09-24T20-05-36-349",
+        "turnId": "d6fcb89d-4472-48d3-8e95-b6340613699a"
+      },
+      {
+        "at": 1790305538402,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "2036258455a8f43bb8d94974b5ce4e9c",
+        "threadId": "th-d92776bb-c5e7-4763-9f7b-294878d772f0"
+      },
+      {
+        "at": 1790305538810,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "2036258455a8f43bb8d94974b5ce4e9c",
+        "threadId": "th-d92776bb-c5e7-4763-9f7b-294878d772f0",
+        "turnId": "65b4853f-8bf1-4c0e-96d7-0f00c912fe91"
+      },
+      {
+        "at": 1790305538815,
+        "direction": "inbound",
+        "type": "turn_begin",
+        "threadId": "th-d92776bb-c5e7-4763-9f7b-294878d772f0",
+        "turnId": "65b4853f-8bf1-4c0e-96d7-0f00c912fe91"
+      },
+      {
+        "at": 1790305540264,
+        "direction": "inbound",
+        "type": "turn_end",
+        "threadId": "2026-09-24T20-05-36-349",
+        "turnId": "d6fcb89d-4472-48d3-8e95-b6340613699a"
+      },
+      {
+        "at": 1790305540506,
+        "direction": "inbound",
+        "type": "chat-turn:saved",
+        "threadId": "2026-09-24T20-05-36-349",
+        "turnId": "d6fcb89d-4472-48d3-8e95-b6340613699a"
+      },
+      {
+        "at": 1790305540614,
+        "direction": "inbound",
+        "type": "turn_end",
+        "threadId": "th-d92776bb-c5e7-4763-9f7b-294878d772f0",
+        "turnId": "65b4853f-8bf1-4c0e-96d7-0f00c912fe91"
+      },
+      {
+        "at": 1790305540859,
+        "direction": "inbound",
+        "type": "chat-turn:saved",
+        "threadId": "th-d92776bb-c5e7-4763-9f7b-294878d772f0",
+        "turnId": "65b4853f-8bf1-4c0e-96d7-0f00c912fe91"
+      },
+      {
+        "at": 1790305541380,
+        "direction": "inbound",
+        "type": "thread:action:completed",
+        "action": "open_member_in_side",
+        "requestId": "ec9c4db4-c595-4f07-905f-e763d7da01a7",
+        "threadId": "2026-09-24T20-05-36-349"
+      }
+    ],
+    "content": {
+      "2026-09-24T20-05-36-349": {
+        "count": 40,
+        "firstAt": 1790305538250,
+        "maxCharacters": 28,
+        "lastAt": 1790305540243
+      },
+      "th-d92776bb-c5e7-4763-9f7b-294878d772f0": {
+        "count": 36,
+        "firstAt": 1790305538818,
+        "maxCharacters": 28,
+        "lastAt": 1790305540613
+      }
+    },
+    "errors": []
+  },
+  "calibration": {
+    "counts": {
+      "renderTextInstant": 152,
+      "MessageList": 4,
+      "InstantSegmentRenderer": 32,
+      "ChatAreaHeader": 20,
+      "ThreadRail": 28,
+      "ContentArea": 9,
+      "ChatAreaFooter": 18
+    },
+    "discovered": [
+      "ChatAreaFooter",
+      "ChatAreaHeader",
+      "ContentArea",
+      "InstantSegmentRenderer",
+      "MessageList",
+      "ThreadRail",
+      "renderTextInstant"
+    ]
+  },
+  "bootstrap": {
+    "status": "not-applicable-to-non-timing-lifecycle-check"
+  },
+  "observerCalibration": [
+    67,
+    75,
+    74,
+    76
+  ],
+  "failure": {
+    "message": "timed out waiting for group SQL deletion",
+    "stack": "Error: timed out waiting for group SQL deletion\n    at waitFor (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs:31:9)\n    at async deleteGroup (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/soak-actions.mjs:64:3)\n    at async lifecycleCycle (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/soak-actions.mjs:106:3)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/soak-electron.mjs:110:19",
+    "dom": {
+      "body": "AI source\nLocal: RC-MacAir-15\narrow_drop_down\nConnected\nchevron_left\nSustained Input Fixture\nchevron_right\ncontrol_camera\nfirst_page\nlast_page\ndiscover_tune\nhub\nmacOS Connectors\nmail\nApple Mail\ncalendar_month\nApple Calendar\nnote_stack\nApple Notes\ntask_alt\nApple Reminders\nClose\nopen_run\ncode_blocks\nfull_coverage\nbusiness_messages\nrobot_2\ndescription\nsettings\ndock_to_right\nActive Threads\nArchive\nedit_square\nNew chat\nth-d92776bb-c5e7-4763-9f7b-294878d772f0\nmore_vert\n2 msgs · just now\n2026-09-24T20-05-32\nmore_vert\n0 msgs · just now\n2026-09-24T20-05-32\nmore_vert\n0 msgs · just now\nevent_list\ncycle warmup Main stream\nlightbulb\nThinkingarrow_drop_down\nDeterministic fixture reasoning\ndescription\nReadarrow_drop_down\nfixture.txt\n\nDeterministic fixture reply frame-2 frame-3 frame-4 frame-5 frame-6 frame-7 frame-8 frame-9 frame-10 frame-11 frame-12 frame-13 frame-14 frame-15 frame-16 frame-17 frame-18 frame-19 frame-20 frame-21 frame-22 frame-23 frame-24 frame-25 frame-26 frame-27 frame-28 frame-29 frame-30 frame-31 frame-32 frame-33 frame-34 frame-35 frame-36\n\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nadd\nshield_lock\nDeepSeek V4 Flash\nkeyboard_arrow_down\nmic\narrow_upward\nopen_run\nCAPTURE\nclose\nopen_run\nSide Chat\nclose\nadd\nSide Chat\ndock_to_right\nedit_square\nevent_list\ncycle warmup Side stream\nlightbulb\nThinkingarrow_drop_down\nDeterministic fixture reasoning\ndescription\nReadarrow_drop_down\nfixture result\n\nDeterministic fixture reply frame-2 frame-3 frame-4 frame-5 frame-6 frame-7 frame-8 frame-9 frame-10 frame-11 frame-12 frame-13 frame-14 frame-15 frame-16 frame-17 frame-18 frame-19 frame-20 frame-21 frame-22 frame-23 frame-24 frame-25 frame-26 frame-27 frame-28 frame-29 frame-30 frame-31 frame-32 frame-33 frame-34 frame-35 frame-36 frame-37 frame-38 frame-39 frame-40\n\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nadd\nshield_lock\nMode\nDeepSeek V4 Flash\nkeyboard_arrow_down\nmic\narrow_upward\nopen_run\nSustained Input Fixture\ncancel\nadd\nAdd",
+      "surfaces": [
+        {
+          "thread": "th-d92776bb-c5e7-4763-9f7b-294878d772f0",
+          "host": "main"
+        },
+        {
+          "thread": "2026-09-24T20-05-36-349",
+          "host": "side-tab"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        }
+      ]
+    }
+  },
+  "lingeringOwnedPids": [],
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  }
+}

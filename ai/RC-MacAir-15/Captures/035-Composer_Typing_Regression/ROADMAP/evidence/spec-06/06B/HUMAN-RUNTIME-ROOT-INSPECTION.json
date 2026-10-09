@@ -1,0 +1,99 @@
+{
+  "at": "2026-09-27T06:44:59.129574+00:00",
+  "sessionStatus": "ready",
+  "runId": "human-1790491451072-fee1354e",
+  "pid": 64115,
+  "driverPid": 64110,
+  "title": "HUMAN TEST \u2014 human-1790491451072-fee1354e",
+  "requested": {
+    "harness": "opencode",
+    "model": "togetherai/deepseek-ai/DeepSeek-V4.1-Flash",
+    "variant": "high",
+    "thinking": true
+  },
+  "observedProvider": {
+    "pid": 64184,
+    "model": "togetherai/deepseek-ai/DeepSeek-V4.1-Flash",
+    "variant": "high",
+    "thinking": true,
+    "observedAt": 1790491456837
+  },
+  "smoke": {
+    "receipt": {
+      "request_id": "2abc3a4ca0287208cfa7ef0cdc7a6461",
+      "turn_id": "e29cde9d-ff38-4107-b2bb-e249e816ca56",
+      "outcome": "accepted"
+    },
+    "exchangeId": 1,
+    "reply": "HUMAN_SESSION_READY"
+  },
+  "eventBytes": 53746,
+  "recordCount": 114,
+  "driverHeartbeats": 48,
+  "rendererBatches": 45,
+  "lastDriverHeartbeat": {
+    "at": 1790491499114,
+    "kind": "driver-heartbeat",
+    "gapMs": 1002,
+    "lastRendererBatchAt": 1790491498352
+  },
+  "lastRendererBatchAt": 1790491515349,
+  "resourceSamples": 4,
+  "lastNativeWindows": [
+    {
+      "windowId": 1,
+      "focused": true,
+      "visible": true,
+      "minimized": false
+    }
+  ],
+  "lastResourceAt": 1790491497761,
+  "wireTypes": [
+    "chat-turn:saved",
+    "content",
+    "error",
+    "message:sent",
+    "prompt",
+    "step_begin",
+    "thread:state_changed",
+    "turn_begin",
+    "turn_end",
+    "wire_ready"
+  ],
+  "liveness": {
+    "driver": {
+      "alive": true,
+      "expectedIdentity": true
+    },
+    "electron": {
+      "alive": true,
+      "expectedIdentity": true
+    }
+  },
+  "databaseFile": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/human-1790491451072-fee1354e-dLMOat/profile/server-data/fusion.db",
+  "savedAssistantText": "HUMAN_SESSION_READY",
+  "receipt": [
+    "accepted",
+    "e29cde9d-ff38-4107-b2bb-e249e816ca56"
+  ],
+  "growthCheck": {
+    "at": "2026-09-27T06:45:16.633853+00:00",
+    "beforeBytes": 53746,
+    "afterBytes": 70784,
+    "grew": true
+  },
+  "safeWireErrors": [
+    {
+      "at": 1790491453963,
+      "kind": "wire",
+      "direction": "inbound",
+      "type": "error"
+    },
+    {
+      "at": 1790491453963,
+      "kind": "wire",
+      "direction": "inbound",
+      "type": "error"
+    }
+  ]
+}

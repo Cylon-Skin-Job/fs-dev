@@ -1,0 +1,37 @@
+[
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/003-Rendering_And_Lifecycle/004-Stop_And_Interrupted_Turns/PAGE.md",
+    "before": "f7817bf2551399fb4fbb4e63d1f308964427f7cc2eaf3fc53ff29b2adb6a7ad5",
+    "after": "a677a24bdcdb92ddce46bd592c449a405daf9acc50ef23265c8886b2f7aee340"
+  },
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md",
+    "before": "f3078dcb3ef41636926f3436e9b8368d58f4ff38db5e471cc8aec8bac7535b1f",
+    "after": "656e04467c71c769abf2cf06261a3604910a4a413743a9452432134bfc60055a"
+  },
+  {
+    "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/007-Structure/PAGE.md",
+    "before": "ec5654c71b97903ffee04f5d21dd6dec78b92a46704961bc04e96bfb1ca293b1",
+    "after": "a04c9693a684b7a1a168ba000ee138c8120272e3e3e4bb6f777a0042292fda28"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/server-focused-regressions.mjs",
+    "before": "f758ac1b256d57c17f1e64a1cdc3c900c80bcc2a25cfbb6f996c7f5eb0987048",
+    "after": "899cbb254eb3f5b2fa8bfab2cc149cc4762cd130c01254a6c5bb339575e24c15"
+  },
+  {
+    "path": "fusion-studio-server/lib/thread/session-lifecycle.js",
+    "before": "1f44b024f4f5c7bad45ccc1b454e5d5e47efb0bed4137c5ef49508f724327480",
+    "after": "747b27becdf523f4083f7ccac3ea066bd7b128129d600fccb948fee8a498a62f"
+  },
+  {
+    "path": "fusion-studio-server/lib/thread/session-manager.js",
+    "before": "5d57cbaac93740c359ced1e76559d8c2df51128c63f1cc6163b428860e12291b",
+    "after": "5deb7a676b4a6f24b879b3f4d1db751b467e60feb383f5e99cd3c0855de3d59b"
+  },
+  {
+    "path": "fusion-studio-server/test/thread/exited-drain-retirement.test.js",
+    "before": null,
+    "after": "1600f902b8a7781d971084369e2d6cf17a6cb7bebdf8f6e2048c85bdf4ef2801"
+  }
+]

@@ -1,0 +1,483 @@
+{
+  "current_files": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-code-review-orchestrator/SKILL.md",
+      "sha256": "61a2e611803aa918b22b9356e19f1d863a3e7a6ac05cf9cc491f41e175d16129",
+      "lines": 51
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-code-review-orchestrator/agents/openai.yaml",
+      "sha256": "24a3b0515c3c858cf7af6a3a3887a2b943b4a6bf4ea799b33faef87cc38517a8",
+      "lines": 4
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-code-review-orchestrator.toml",
+      "sha256": "1e06b777794a371a2620a7df3d97caaeb95cb67652b18461e1db6f9744b653e0",
+      "lines": 3
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-repair-worker/SKILL.md",
+      "sha256": "f6aa836695ab3cfb22b256e0bc6c5df5cd64b1a65e2ca75654da59be3972daa9",
+      "lines": 50
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-repair-worker/agents/openai.yaml",
+      "sha256": "71f4602466de516b59a8fabbb225a61a51dcfe7922deb2a46e08b95ba39cd47b",
+      "lines": 4
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-repair-worker.toml",
+      "sha256": "90d9830f49a41ca63712aca1096a31f9224b9bb06d6adea60a9d715b1364fc81",
+      "lines": 3
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-review-gate/SKILL.md",
+      "sha256": "cc738b3ecebca875b1f6d4460d26c3185dd3b3dd2a93550086742995a0c6c56a",
+      "lines": 109
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+      "sha256": "96d9b148f37b9bb87f18bd1f55fd84a29f05961b0161d7c2a0298512c172560c",
+      "lines": 303
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+      "sha256": "15a250fb476407020a98740d443e95b612d075515a3500740d6ed56f2222d496",
+      "lines": 250
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_review_packet.py",
+      "sha256": "7830ec4b4d0b10cbab76e2403bdfceacf78f334e4777835daaaa2fc4e8746504",
+      "lines": 378
+    }
+  ],
+  "AST_TOML_links": "pass",
+  "S1_bytes": "unchanged",
+  "records": [
+    {
+      "smoke": "initial-material",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-4/initial-material.json"
+      ],
+      "state": "repair",
+      "result": "findings"
+    },
+    {
+      "smoke": "fresh-worker-handoff",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-4/fresh-worker-handoff.json"
+      ],
+      "state": "handoff-validated",
+      "result": "clean"
+    },
+    {
+      "smoke": "fresh-final",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-4/fresh-final.json"
+      ],
+      "state": "review-complete",
+      "result": "clean"
+    },
+    {
+      "smoke": "target-drift",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-4/target-drift.json"
+      ],
+      "state": "unmet-gate",
+      "result": "insufficient-evidence"
+    },
+    {
+      "smoke": "missing-reviewer",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-4/missing-reviewer.json"
+      ],
+      "state": "unmet-gate",
+      "result": "insufficient-evidence"
+    },
+    {
+      "smoke": "missing-intent",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-4/missing-intent.json"
+      ],
+      "state": "needs-owner",
+      "result": "insufficient-evidence"
+    },
+    {
+      "smoke": "missing-prerequisite",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-4/missing-prerequisite.json"
+      ],
+      "state": "waiting-dependency",
+      "result": "insufficient-evidence"
+    },
+    {
+      "smoke": "incomplete-handoff",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-4/incomplete-handoff.json"
+      ],
+      "state": "unmet-gate",
+      "result": "insufficient-evidence"
+    },
+    {
+      "smoke": "hold-with-material",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-4/hold-with-material.json"
+      ],
+      "state": "needs-owner",
+      "result": "insufficient-evidence"
+    },
+    {
+      "smoke": "shortened-handoff",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-4/shortened-handoff.json"
+      ],
+      "state": "unmet-gate",
+      "result": "insufficient-evidence"
+    },
+    {
+      "smoke": "reopened-current-finding",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-4/reopened-current-finding.json"
+      ],
+      "state": "repair",
+      "result": "findings"
+    },
+    {
+      "smoke": "advisory-reclassification",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+        "--packet",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S2-smoke-pass-4/advisory-reclassification.json"
+      ],
+      "state": "review-complete",
+      "result": "clean"
+    },
+    {
+      "argv": [
+        "/Users/rccurtrightjr./.local/bin/uv",
+        "run",
+        "--offline",
+        "--with",
+        "PyYAML",
+        "python",
+        "/Users/rccurtrightjr./.codex/skills/.system/skill-creator/scripts/quick_validate.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-code-review-orchestrator"
+      ],
+      "exit": 0,
+      "stdout": "Skill is valid!\n"
+    },
+    {
+      "argv": [
+        "/Users/rccurtrightjr./.local/bin/uv",
+        "run",
+        "--offline",
+        "--with",
+        "PyYAML",
+        "python",
+        "/Users/rccurtrightjr./.codex/skills/.system/skill-creator/scripts/quick_validate.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-repair-worker"
+      ],
+      "exit": 0,
+      "stdout": "Skill is valid!\n"
+    },
+    {
+      "argv": [
+        "/Users/rccurtrightjr./.local/bin/uv",
+        "run",
+        "--offline",
+        "--with",
+        "PyYAML",
+        "python",
+        "/Users/rccurtrightjr./.codex/skills/.system/skill-creator/scripts/quick_validate.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-review-gate"
+      ],
+      "exit": 0,
+      "stdout": "Skill is valid!\n"
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests",
+        "-p",
+        "test_review_packet.py",
+        "-v"
+      ],
+      "exit": 0,
+      "log": "S2-orchestrator-tests-pass4.log"
+    },
+    {
+      "reproduction": "CR-S2-R3-01",
+      "output": {
+        "agent_gate_proof": false,
+        "candidate": {
+          "authority": {
+            "SPEC": "approved"
+          },
+          "configuration": {
+            "profile": "disposable"
+          },
+          "fixtures": {
+            "oracle": "correct"
+          },
+          "owned": {
+            "code.py": {
+              "index": "base",
+              "mode": "100644",
+              "worktree": "fixed"
+            }
+          },
+          "preparation": "replay-owned-bytes",
+          "sources": [
+            "source-1"
+          ],
+          "target": "target-1"
+        },
+        "dispatch_actions": [],
+        "dispositions": {
+          "F1": [
+            {
+              "actor": "fixture-manager",
+              "evidence": "fixture/repro.log",
+              "status": "open"
+            },
+            {
+              "actor": "fixture-writer",
+              "status": "repair-reported"
+            },
+            {
+              "actor": "fixture-manager",
+              "candidate": {
+                "authority": {
+                  "SPEC": "approved"
+                },
+                "configuration": {
+                  "profile": "disposable"
+                },
+                "fixtures": {
+                  "oracle": "correct"
+                },
+                "owned": {
+                  "code.py": {
+                    "index": "base",
+                    "mode": "100644",
+                    "worktree": "fixed"
+                  }
+                },
+                "preparation": "replay-owned-bytes",
+                "sources": [
+                  "source-1"
+                ],
+                "target": "target-1"
+              },
+              "handoff_id": "F1-handoff",
+              "reviewers": [
+                "fixture-handoff-reviewer"
+              ],
+              "status": "handoff-validated"
+            },
+            {
+              "actor": "fixture-final-orchestrator",
+              "candidate": {
+                "authority": {
+                  "SPEC": "approved"
+                },
+                "configuration": {
+                  "profile": "disposable"
+                },
+                "fixtures": {
+                  "oracle": "correct"
+                },
+                "owned": {
+                  "code.py": {
+                    "index": "base",
+                    "mode": "100644",
+                    "worktree": "fixed"
+                  }
+                },
+                "preparation": "replay-owned-bytes",
+                "sources": [
+                  "source-1"
+                ],
+                "target": "target-1"
+              },
+              "dependencies": {
+                "authority": {
+                  "SPEC": "approved"
+                },
+                "configuration": {
+                  "profile": "disposable"
+                },
+                "fixtures": {
+                  "oracle": "correct"
+                },
+                "owned": {
+                  "code.py": {
+                    "index": "base",
+                    "mode": "100644",
+                    "worktree": "fixed"
+                  }
+                },
+                "preparation": "replay-owned-bytes",
+                "sources": [
+                  "source-1"
+                ],
+                "target": "target-1"
+              },
+              "finding_evidence": "fixture/repro.log",
+              "next_action": "Retain advisory; no repair required",
+              "reason": "Independent validation establishes optional polish",
+              "status": "advisory",
+              "time": "2026-10-04T00:00:00Z",
+              "validation_evidence": "fixture/reclassification.md"
+            }
+          ]
+        },
+        "findings": [
+          {
+            "assigned_paths": [
+              "code.py"
+            ],
+            "authority": "approved behavior criterion",
+            "confidence": "medium",
+            "evidence": "fixture/repro.log",
+            "id": "F1",
+            "impact": "accepted input returns incorrect result",
+            "path": "code.py",
+            "severity": "high",
+            "validated": true
+          },
+          {
+            "assigned_paths": [
+              "code.py"
+            ],
+            "authority": "approved behavior criterion",
+            "confidence": "medium",
+            "evidence": "fixture/repro.log",
+            "id": "F1",
+            "impact": "Optional polish; accepted behavior passes",
+            "path": "code.py",
+            "severity": "advisory",
+            "validated": false
+          }
+        ],
+        "gaps": [],
+        "hold_packet": null,
+        "invalidated": [],
+        "raw_reports": [
+          {
+            "clean_room": true,
+            "dependencies": {
+              "authority": {
+                "SPEC": "approved"
+              },
+              "configuration": {
+                "profile": "disposable"
+              },
+              "fixtures": {
+                "oracle": "correct"
+              },
+              "owned": {
+                "code.py": {
+                  "index": "base",
+                  "mode": "100644",
+                  "worktree": "fixed"
+                }
+              },
+              "preparation": "replay-owned-bytes",
+              "sources": [
+                "source-1"
+              ],
+              "target": "target-1"
+            },
+            "findings": [
+              {
+                "assigned_paths": [
+                  "code.py"
+                ],
+                "authority": "approved behavior criterion",
+                "confidence": "medium",
+                "evidence": "fixture/repro.log",
+                "id": "F1",
+                "impact": "Optional polish; accepted behavior passes",
+                "path": "code.py",
+                "severity": "advisory",
+                "validated": false
+              }
+            ],
+            "identity": "fixture-final-reviewer",
+            "lenses": [
+              "Behavior & Verification",
+              "Standards Compliance",
+              "Integrations & Dependencies",
+              "Forward Compatibility",
+              "Wiki Impact"
+            ],
+            "raw_path": "fixture/review-1.md",
+            "read_only": true,
+            "result": "findings",
+            "root_inherited": true,
+            "terminal": true
+          }
+        ],
+        "repair_packet": null,
+        "result": "clean",
+        "return": "REVIEW_COMPLETE",
+        "state": "review-complete",
+        "unaffected": [
+          "behavior"
+        ]
+      }
+    }
+  ]
+}

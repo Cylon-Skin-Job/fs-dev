@@ -1,0 +1,47 @@
+{
+  "at": "2026-10-04T19:30:58.350761+00:00",
+  "actor": "/root",
+  "scope": "actual revised S6 runtime inspection; second terminal still pending",
+  "raw_sha256": {
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-pre-restart-checked-command.json": "8bcb5fc0d624a56bccf73d590e1dd4037c9f83206b2866a46ab62fa759380f34",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-pre-restart-checked.json": "f63643604a8540e4078408a1519030ff2f9f8ee6394a3a9c722626848907fbce",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-canonical-runtime-command.json": "dc6f916c0f0a24b76d1575f512759e3429d57236c4e9696aa94cf9d2dc5f0668",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-preinitializer-reset-command.json": "08701b4bd52239a09df78c0a4c11befed4f63cfc2271d8f3687b967a58cc5313",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-preinitializer-reset.json": "14168e09b2b9c27f01079a03c27335587bdb78b8cc88a6dd10392d59ae4605cf",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-ui-acceptance-command.json": "9030fab5c178f400013178e3103cc29c72055d9ebdf2e55e304bca13dcb62b3a",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-ui-acceptance.json": "aabbff3ddae3021cd1ae8b283b427a6c4ce51cbf30583b7287f8f4abb2cd4250",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-watcher-command.json": "9dc246ffd7d9b15d02d8f6f10c9aae51a4c7ff599e814de48f5175ab81d3ccf9",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-watcher.json": "3159a4401269379762a70bc8ac928e07b058a3b4d191fe5b87fc726342685014",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-current-runtime-identity.json": "cf9974445ac36f0587b71c89d93b60f82300afed9636d6423f68cd491795d099",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-owner-current-command.json": "1fef4ed3a0c45e9946f10ce2b579daf42834700a4f98bfb33d158c0d9e19b763",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-owner-current.json": "0321318b7c5005ae7dfd3742cbed031fd94b182686f0ad2aad6e66b2dc8b37de",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-protection-pre-runtime.json": "3b2eda35dc1b6c3e21f4591518bd243341e2ef4ee8f8870a4bd760a927c94ba2",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-protection-post-runtime.json": "277d508ad5741f9f7d527b0d8603bd247beb2a181eb45334b7ee00155d678ce4",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-runtime-source-pre.json": "b2cae64fa04a5a2432ba31f5d62bbfa4b4f549726f23040f18be014941959587",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-runtime-source-post.json": "b186b06fedba8a0dac0dbbd342a5a291e164ac0ecf4a361c6a6232551278bb8d"
+  },
+  "actual_canonical_build_exit": 0,
+  "pre_restart_known_checked_before_action": true,
+  "post_restart_allfalse_before_initializer": true,
+  "original_sequence_reversal_reload_endpoints": true,
+  "reset_immediate_save_and_reload": true,
+  "actual_Wiki_render_navigation_reload_connected": true,
+  "ordinary_watcher_event": "6de2f0e5-263c-4adb-92ca-15f4902dd2b5",
+  "runtime_current_main_server": [
+    31000,
+    31008
+  ],
+  "source_refs_index193caches_normal_Alpha4processes_equal": true,
+  "normal_Alpha11storage_identity_equal": true,
+  "expected_only_owned_runtime_delta": [
+    "rehearsal-workspace/ai/MC-S6/watcher-proof-runtime-2.md"
+  ],
+  "source_check_bindings_same": true,
+  "screenshots_visually_inspected": [
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-ui-acceptance.json.png",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-owner-current.json.png"
+  ],
+  "second_fixed_archive_packet_native_terminal_pending": true,
+  "commit_push_authorization": "NONE",
+  "limits": "Private actual app runtime only. Source suite historical qualifications retained. Live normal/Alpha database hashes are volatile; verified identity boundaries, no restoration."
+}

@@ -1,0 +1,86 @@
+{
+  "at": "2026-09-27T07:43:07.357246+00:00",
+  "threadId": "2026-09-27T00-40-17-717",
+  "changes": [
+    {
+      "at": 1790494818360,
+      "utc": "2026-09-27T07:40:18.360000+00:00",
+      "disabled": false,
+      "timeOrigin": 1790494817319.6
+    },
+    {
+      "at": 1790494820360,
+      "utc": "2026-09-27T07:40:20.360000+00:00",
+      "disabled": true,
+      "timeOrigin": 1790494817319.6
+    },
+    {
+      "at": 1790494821360,
+      "utc": "2026-09-27T07:40:21.360000+00:00",
+      "disabled": false,
+      "timeOrigin": 1790494817319.6
+    },
+    {
+      "at": 1790494851359,
+      "utc": "2026-09-27T07:40:51.359000+00:00",
+      "disabled": true,
+      "timeOrigin": 1790494817319.6
+    },
+    {
+      "at": 1790494871360,
+      "utc": "2026-09-27T07:41:11.360000+00:00",
+      "disabled": false,
+      "timeOrigin": 1790494817319.6
+    }
+  ],
+  "latestHeartbeat": {
+    "sequence": 106,
+    "at": 1790494986059,
+    "performanceAt": 92054.59999990463,
+    "timeOrigin": 1790494894004.6,
+    "kind": "heartbeat",
+    "gapMs": 1000.2000002861023,
+    "visibility": "visible",
+    "documentHasFocus": true,
+    "sendButtons": 5,
+    "stopButtons": 0
+  },
+  "latestComposers": [
+    {
+      "threadId": "2026-09-27T00-40-17-717",
+      "disabled": false,
+      "length": 0,
+      "valueTruncated": false
+    },
+    {
+      "threadId": "",
+      "disabled": true,
+      "length": 0,
+      "valueTruncated": false
+    },
+    {
+      "threadId": "",
+      "disabled": true,
+      "length": 0,
+      "valueTruncated": false
+    },
+    {
+      "threadId": "",
+      "disabled": true,
+      "length": 0,
+      "valueTruncated": false
+    },
+    {
+      "threadId": "",
+      "disabled": true,
+      "length": 0,
+      "valueTruncated": false
+    }
+  ],
+  "notes": [
+    "Four unbound composers are also sampled and remain disabled; target exact thread.",
+    "A second public prompt occurred after READY and completed; no agent post-READY input was performed.",
+    "About20-second disabled interval follows that terminal; cause not established, no repair in this runtime refresh.",
+    "Document timeOrigin changed; observer reinstalled. Actor/cause not attributed."
+  ]
+}

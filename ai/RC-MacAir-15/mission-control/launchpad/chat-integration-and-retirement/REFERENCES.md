@@ -161,3 +161,15 @@
 - **Supports:** Three candidate outcomes, four cards, proposed order/smokes, standards coverage and bounded deferral constraints. All four draft review perspectives covered; no material finding or new owner product decision required.
 - **Limitations:** No executable roadmap, product change, test/build pass or consumer release. R1–R4 remain Creator technical work. Current memory reconciliation follows the preserved original intake snapshot; it does not rewrite that historical snapshot or the reviewed draft. Current product source must be rechecked before executable release.
 - **Related:** D-004–D-006, I-001, I-003, I-004, I-009, I-011.
+
+### REF-014 — Reviewed next shared chat material insertion candidate
+
+- **Kind:** owner_directed_planning_and_independent_review
+- **Status:** inspected; RELEASE_READY for owner discussion, implementation held.
+- **Source:** [Literal owner request](planning/shared-chat-material-insertion/OWNER-REQUEST.md), D-009, current source/standards guidance and separately reviewed investigations.
+- **Locator:** [Ticket](planning/shared-chat-material-insertion/TICKET.md), [SPEC](planning/shared-chat-material-insertion/SPEC.md), [manifest](planning/shared-chat-material-insertion/CANDIDATE.json), [source evidence](planning/shared-chat-material-insertion/reports/author-source-evidence.json), [stage handoff](planning/shared-chat-material-insertion/reports/STAGE-REPORT.md), [release report](planning/shared-chat-material-insertion/reports/RELEASE-VALIDATION-01.md).
+- **Revision:** candidate `sha256:65b324647b7e52f0426f7b2005849d053f4f239420fab07c848170b21ec1d3f3`; SPEC SHA-256 `063562058007928d07477913a1ba05e43a2d191d6e42a0e9cb1d6a6e5c71659e`; TICKET `730b6c92efa396eeb3abdc5ee6c522c692c790db9c288346d141ad57817e0074`; release report `de3ae8e92601794105b436a3610949ea7ebd2eabe145ac1be6c808e7e2c35754`. Product source baseline `main@a4a4262587a7f72f89f5b9b9c2f54878fe5381bb`.
+- **Checked:** 2026-10-07T10:49:28.672944+00:00; supervisor read full current worker/stage/release reports, accepted their evidenced distinct roles/coverage and checked manifest identity. Release independently examined all four perspectives and current sources.
+- **Supports:** source-grounded one-ticket/one-SPEC planning readiness, complete current owner coverage, caller/ownership/destination contracts, three ordered slices, meaningful future tests/native/Wiki gates and bounded evidence renewal. CMH-001 resolved with original receipts preserved.
+- **Limitations:** no implementation approval or product correctness/test/build/native/provider/current-runtime certification. Mutable supervisor coordination/routing postdates dated source inventory without changing normative requirements; actual future integration inputs require renewed checks. “Don't build” remains effective. No checkpoint/history completeness or new main identity is claimed.
+- **Related:** D-009, B-006, [PLANNING](planning/shared-chat-material-insertion/PLANNING.md), prior [completed-build handoff](HANDOFF-COMPLETED-BUILD-2026-10-07.md).

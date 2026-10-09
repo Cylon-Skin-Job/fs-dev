@@ -1,0 +1,540 @@
+{
+  "at": "2026-10-04T20:44:49.970341+00:00",
+  "actor": "/root/s6_supervisor_recovery_1",
+  "all128_base_modes_oids_blob_bytes_or_absences_exact": true,
+  "owned": {
+    "HANDOFF.md": {
+      "actual_base": [
+        {
+          "mode": "100644",
+          "kind": "blob",
+          "oid": "537a77e2183a56f868c8698f394f5081f1d851ef",
+          "sha256": "81cd3622f762573bd8aac05b34b2eae99eeb8d2294e7959774358f52b12472db"
+        }
+      ],
+      "absent_base_exact": false
+    },
+    "README.md": {
+      "actual_base": [
+        {
+          "mode": "100644",
+          "kind": "blob",
+          "oid": "03fe283c94dfeb68f3c4a2b38dbfd25c0cff4d9e",
+          "sha256": "cf925f299e244964ca105de96b8e1813ea57c6c53b0fd351853a46c55d795904"
+        }
+      ],
+      "absent_base_exact": false
+    },
+    "ai/MC-S6/System/config/README.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "ai/MC-S6/System/config/cli.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "ai/MC-S6/System/state/README.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "ai/MC-S6/System/state/state.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "ai/MC-S6/System/styles/README.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "ai/MC-S6/System/styles/capture-viewer.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "ai/MC-S6/System/styles/components.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "ai/MC-S6/System/styles/file-viewer.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "ai/MC-S6/System/styles/office-viewer.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "ai/MC-S6/System/styles/themes.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "ai/MC-S6/System/styles/themes.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "ai/MC-S6/System/styles/tints.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "ai/MC-S6/System/styles/variables.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "ai/MC-S6/System/styles/views.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "ai/MC-S6/System/triggers/README.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-inputs/checkpoint.bin": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-inputs/executable.sh": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-inputs/future-addition.txt": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-inputs/link": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-inputs/odd '\" $ ;\t\n -- path.bin": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-inputs/staged.txt": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Agents/registry.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Captures/README.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Data/Workspace-db/workspace.db": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/closed/RCC-0080.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/closed/RCC-0081.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/closed/RCC-0082.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/closed/RCC-0083.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/closed/RCC-0084.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/closed/RCC-0085.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/closed/RCC-0086.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/content/sync.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/content/tickets.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0071.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0072.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0073.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0074.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0076.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0077.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0078.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0079.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0087.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0088.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0089.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0090.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0091.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0092.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0093.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0094.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0095.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0096.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/inbox/RCC-0097.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Issues/scripts/create-ticket.js": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/001-capture-viewer/content.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/001-capture-viewer/manifest.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/001-capture-viewer/onboarding/README.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/001-capture-viewer/state/state.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/001-capture-viewer/styles/icon.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/001-capture-viewer/styles/layout.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/001-capture-viewer/styles/layout.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/002-file-viewer/content.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/002-file-viewer/manifest.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/002-file-viewer/onboarding/README.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/002-file-viewer/state/state.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/002-file-viewer/styles/icon.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/002-file-viewer/styles/layout.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/002-file-viewer/styles/layout.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/content.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/manifest.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/onboarding/README.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/state/state.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/styles/icon.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/styles/layout.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/styles/layout.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/003-wiki-viewer/styles/themes.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/004-issues-viewer/content.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/004-issues-viewer/manifest.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/004-issues-viewer/onboarding/README.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/004-issues-viewer/state/state.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/004-issues-viewer/styles/icon.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/004-issues-viewer/styles/layout.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/004-issues-viewer/styles/layout.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/005-agents-viewer/content.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/005-agents-viewer/manifest.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/005-agents-viewer/onboarding/README.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/005-agents-viewer/state/state.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/005-agents-viewer/styles/icon.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/005-agents-viewer/styles/layout.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/005-agents-viewer/styles/layout.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/content.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/manifest.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/onboarding/README.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/state/state.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/styles/icon.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/styles/layout.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/config/README.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/config/cli.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/state/README.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/state/state.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/styles/README.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/styles/capture-viewer.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/styles/components.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/styles/file-viewer.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/styles/office-viewer.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/styles/themes.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/styles/themes.json": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/styles/tints.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/styles/variables.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/styles/views.css": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/System/triggers/README.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/PAGE.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/002-Navigation_Guide/PAGE.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/Wiki/PAGE.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/watcher-proof-current.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/watcher-proof-runtime-1.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/watcher-proof-runtime-2.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "rehearsal-workspace/ai/MC-S6/watcher-proof.md": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "restart-fusion.sh": {
+      "actual_base": [
+        {
+          "mode": "100755",
+          "kind": "blob",
+          "oid": "0de074c720a7187821349c8b13d525845edf2376",
+          "sha256": "a02c0fa38ffcd89e488ef1785cf83dd2f3476230d8fbaf4916063e9dcedd7380"
+        }
+      ],
+      "absent_base_exact": false
+    },
+    "scripts/fusion-restart-probe.mjs": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "scripts/fusion-restart-processes.mjs": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "scripts/fusion-restart-target.mjs": {
+      "actual_base": [],
+      "absent_base_exact": true
+    },
+    "scripts/fusion-restart.mjs": {
+      "actual_base": [],
+      "absent_base_exact": true
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "observed_at": "2026-10-07T20:53:07.510419+00:00",
+  "source": "m3_builder bounded ioreg report",
+  "IOConsoleLocked": true,
+  "reported_lock_timestamp": 1791406040,
+  "reported_lock_utc": "2026-10-07T20:47:20Z",
+  "affected_requirement": "SPEC section7 complete actual native camera/global resource/gallery/Main/Side/adapterless and subsequent public Send/ACK SQLite proof",
+  "progress": "Native08/09 actual File-host capture and gallery readbacks retained as partial evidence; complete native lane has not passed. Full renderer/server/build/Wiki pass reports remain subject to root inspection and independent gates.",
+  "next_safe_action": "Owner unlocks desktop; builder resumes complete actual native lane. Independent source/report review and frozen-byte nonnative checks may continue.",
+  "owner_request": "Asynchronous unlock request sent; required capability pending, no permission inferred from elapsed time.",
+  "control_scope": "No lock-screen interaction, live owner app/profile changes, capture substitutes or requirement waiver."
+}

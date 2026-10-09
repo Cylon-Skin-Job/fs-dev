@@ -1,0 +1,11 @@
+{
+  "runId": "server-full-1790245073906-c8b2740a",
+  "command": [
+    "npm",
+    "test",
+    "--",
+    "--runInBand"
+  ],
+  "dependencyCount": 1600,
+  "mismatches": []
+}

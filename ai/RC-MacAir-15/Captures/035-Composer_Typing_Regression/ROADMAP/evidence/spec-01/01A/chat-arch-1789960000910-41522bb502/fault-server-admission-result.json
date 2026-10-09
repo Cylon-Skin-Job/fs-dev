@@ -1,0 +1,743 @@
+{
+  "status": "passed",
+  "proof": {
+    "mode": "server-admission",
+    "authenticated": true,
+    "serverRejected": true,
+    "adapterNotDispatched": true,
+    "port": 58788,
+    "frames": [
+      {
+        "type": "shell-auth:challenge",
+        "message": null
+      },
+      {
+        "type": "connected",
+        "message": "Thread-enabled connection established"
+      },
+      {
+        "type": "workspace:init",
+        "message": null
+      },
+      {
+        "type": "panel_config",
+        "message": null
+      },
+      {
+        "type": "shell-auth:authenticated",
+        "message": null
+      },
+      {
+        "type": "error",
+        "message": "No active workspace"
+      },
+      {
+        "type": "screenshot:list",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "error",
+        "message": "No active workspace"
+      },
+      {
+        "type": "error",
+        "message": "Message handling failed"
+      },
+      {
+        "type": "workspace:create_manifest",
+        "message": null
+      },
+      {
+        "type": "workspace:created",
+        "message": null
+      },
+      {
+        "type": "workspace:added",
+        "message": null
+      },
+      {
+        "type": "workspace:registry_changed",
+        "message": null
+      },
+      {
+        "type": "workspace:switched",
+        "message": null
+      },
+      {
+        "type": "panel_config",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "shell-auth:challenge",
+        "message": null
+      },
+      {
+        "type": "connected",
+        "message": "Thread-enabled connection established"
+      },
+      {
+        "type": "workspace:init",
+        "message": null
+      },
+      {
+        "type": "panel_config",
+        "message": null
+      },
+      {
+        "type": "shell-auth:authenticated",
+        "message": null
+      },
+      {
+        "type": "office:palette_state",
+        "message": null
+      },
+      {
+        "type": "screenshot:list",
+        "message": null
+      },
+      {
+        "type": "thread:list",
+        "message": null
+      },
+      {
+        "type": "thread:list",
+        "message": null
+      },
+      {
+        "type": "panel_changed",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "state:result",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "thread:list",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "state:result",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "thread:list",
+        "message": null
+      },
+      {
+        "type": "thread:list",
+        "message": null
+      },
+      {
+        "type": "thread:list",
+        "message": null
+      },
+      {
+        "type": "thread:list",
+        "message": null
+      },
+      {
+        "type": "thread:list",
+        "message": null
+      },
+      {
+        "type": "thread:list",
+        "message": null
+      },
+      {
+        "type": "panel_changed",
+        "message": null
+      },
+      {
+        "type": "error",
+        "message": "No active workspace"
+      },
+      {
+        "type": "state:result",
+        "message": null
+      },
+      {
+        "type": "state:result",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "state:result",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "state:result",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "file_content_response",
+        "message": null
+      },
+      {
+        "type": "thread:created",
+        "message": null
+      },
+      {
+        "type": "thread:list",
+        "message": null
+      },
+      {
+        "type": "thread:opened",
+        "message": null
+      },
+      {
+        "type": "state:worksurface_result",
+        "message": null
+      },
+      {
+        "type": "file_tree_response",
+        "message": null
+      },
+      {
+        "type": "wire_ready",
+        "message": null
+      },
+      {
+        "type": "thread:opened",
+        "message": null
+      },
+      {
+        "type": "state:result",
+        "message": null
+      },
+      {
+        "type": "error",
+        "message": "Message could not be saved"
+      },
+      {
+        "type": "screenshot:updated",
+        "message": null
+      },
+      {
+        "type": "screenshot:data",
+        "message": null
+      }
+    ]
+  },
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": null
+}

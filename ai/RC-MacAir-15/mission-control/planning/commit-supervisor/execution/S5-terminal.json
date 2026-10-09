@@ -1,0 +1,429 @@
+{
+  "status": "READY_FOR_ORCHESTRATOR_REVIEW",
+  "slice": "S5",
+  "work_id": "SPEC-COMMIT-SUPERVISOR-01",
+  "builder": "/root/s5_builder",
+  "manager": "/root",
+  "signed_by": "Codex side chat (ephemeral)",
+  "at": "2026-10-04T11:19:41.241283+00:00",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "actual_memory_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "implementation_root": "/Users/rccurtrightjr./projects/fs-dev",
+  "branch": "agent/exact-workspace-paths",
+  "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "index_sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+  "role_skill": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-slice-builder/SKILL.md",
+  "approval_receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/approval-receipt.md",
+  "accepted_prerequisites": [
+    "S1",
+    "S2",
+    "S3",
+    "S4"
+  ],
+  "root_model_effort_inherited": true,
+  "model_or_effort_override": false,
+  "effective_permissions": {
+    "sandbox": "danger-full-access",
+    "approval": "never"
+  },
+  "builder_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-builder.md",
+  "builder_report_sha256": "ec26b34b85cec6d7155ed9e1eb2a8fdfe0a097b54e4ee446742b1a73dde0a36c",
+  "current_manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/current-manifest.json",
+  "current_manifest_sha256": "e61a55051eb1981a6375230669ebd367fca7cb5b5eb7f900a4dc8c31187b7936",
+  "frozen_pass": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-pass-1/manifest.json",
+  "frozen_pass_sha256": "68e34c0ebaa6b000b3fbfc5c0d62699013874d6fa5d3c65997e2244618f8d8ee",
+  "final_readback": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/final-readback.json",
+  "final_readback_sha256": "dcb7c67eb3a4ea985ff15fca76daa1ecdb83fa4bde1b7527d35bb4e20db95747",
+  "changed_files": [
+    {
+      "relative": "AGENTS.md",
+      "action": "modified",
+      "before_sha256": "67a88a237b1113daca286791354977f795b3791fd56d80aa192b7bbf0e2784ff",
+      "current_sha256": "54cb3ff16f0fae8847341ba38f53af6afd6aa6d84ac4ddb7df9e20faf13888dc",
+      "mode": 420
+    },
+    {
+      "relative": "session-contract.md",
+      "action": "modified",
+      "before_sha256": "a6190c66ddd6f511b76b7c257c415c39f52aa3466246b324b4db05637bd3482c",
+      "current_sha256": "d82d5a815a94f8c27b64d1d90aa0085790e3d98408c011e86d6126dd1bd9b570",
+      "mode": 420
+    },
+    {
+      "relative": "record-templates.md",
+      "action": "modified",
+      "before_sha256": "e97b95cfeeb9b6bc2b1667781904f87ca459d157eb71f6256f66ae1c8d9ac87c",
+      "current_sha256": "41a4de158caea4cd1512b839150db77735d3a36cdfbe4fb688059bc8a86732e7",
+      "mode": 420
+    },
+    {
+      "relative": "mission-control.md",
+      "action": "modified",
+      "before_sha256": "ddbbac98f1fba1a5598e1d81ae9b43976f44de0221c22fa4b773afec7e272b12",
+      "current_sha256": "daff3be04e4c9db92098517de4a7866fb7f9cb86532d1bd60eab6d6f78272f13",
+      "mode": 420
+    },
+    {
+      "relative": "deployment.md",
+      "action": "modified",
+      "before_sha256": "bfbc5ac1aa30c10ef47deaa9cf6f942877d17b05456843942dbc0f848dd84b92",
+      "current_sha256": "7c5c447fc48805dcbea283e1bd7c5e4290b3443496abdb2876c6ccf460fe41b1",
+      "mode": 420
+    },
+    {
+      "relative": "skills-and-agents.md",
+      "action": "modified",
+      "before_sha256": "e1708e4552a0b7df52d41b6bf0e5bd3937f5a75d80d06f7c35e8055f46f54bb3",
+      "current_sha256": "41fe2c81f6da2ed87e4fd625e60044988fd10c5725da33446ebc360f6ab8cba9",
+      "mode": 420
+    },
+    {
+      "relative": "handoff.md",
+      "action": "modified",
+      "before_sha256": "32aaf7037f0b0944d39722ae0e58915b870cc6812a66af161ff369d9a9a90e2c",
+      "current_sha256": "52ed4a92ffef4a3f6ecd2f128f5e5886a2d1ed496d841e9f83a38481360da937",
+      "mode": 420
+    },
+    {
+      "relative": "todo.md",
+      "action": "modified",
+      "before_sha256": "2553e8bd9abb3bf0e86577932e2bcae3f43ae0af3d31be4c2b2729fd66e2307b",
+      "current_sha256": "aca67f27b5c1cd4c75e5e8ebfc388c446ff505a9581719e239d6ed40087a49b1",
+      "mode": 420
+    },
+    {
+      "relative": "registry.md",
+      "action": "modified",
+      "before_sha256": "660ccbf5773b920ee6e15c3b8422105c8090c1eafd79a9e071616770877bd542",
+      "current_sha256": "e3ffc6d20ff9d31dfe1b0a7f5bbbeabe3351cee9a3c4ec9bc8f990c080dd08ea",
+      "mode": 420
+    },
+    {
+      "relative": "index.json",
+      "action": "modified",
+      "before_sha256": "2ee83e813649dd06b5b0cd3c9b83b2bdb04c17aa2e67bda8432331cb91e4e889",
+      "current_sha256": "c93b4e279488456bd2e81b2836f8e1e11a80301af0f0b3d1ba521f9acfbdb460",
+      "mode": 420
+    },
+    {
+      "relative": ".codex/config.toml",
+      "action": "modified",
+      "before_sha256": "755c39322d94bd17c50597ec90c18c743164425734725b97ddf4e5df6dfc78ee",
+      "current_sha256": "21558b2f2eae1c44479ea7d5afe5e636a379b8b08f4a79c108715d99f9b81322",
+      "mode": 420
+    },
+    {
+      "relative": ".codex/agents/mc-review-and-merge.toml",
+      "action": "deleted",
+      "before_sha256": "93c097025c51ba233b191bc3a7d5e5461848be4de4b98f587311b9be95428f63",
+      "current_sha256": null,
+      "mode": null
+    },
+    {
+      "relative": ".agents/skills/mc-review-and-merge/SKILL.md",
+      "action": "deleted",
+      "before_sha256": "87cead992de90ce053b9a739640ba2410c0ca2ef875d481483690198f966b43c",
+      "current_sha256": null,
+      "mode": null
+    },
+    {
+      "relative": ".agents/skills/mc-review-and-merge/agents/openai.yaml",
+      "action": "deleted",
+      "before_sha256": "640034388851f2bc1fccb0c761c4c6ab0e8a24bc17918d8561df76981740a704",
+      "current_sha256": null,
+      "mode": null
+    },
+    {
+      "relative": ".agents/skills/mission-control/SKILL.md",
+      "action": "modified",
+      "before_sha256": "26715ee00d19611665e54e635f7a344a2c9e6a21a360865379ecf2ffd47d2265",
+      "current_sha256": "49ad5a39b4ca9bc70194f7268b55d7e859c8a1edb6af2398f4cf7499f6972acd",
+      "mode": 420
+    },
+    {
+      "relative": ".agents/skills/monitor/SKILL.md",
+      "action": "modified",
+      "before_sha256": "a749c02ac0422bf3f7a3207fb93e7ff477b966667843c50ae73f36745e2be4e7",
+      "current_sha256": "ddd24895961ae68a0adc53a61f9a1722b9169b6b89da12c9960c0a7816831425",
+      "mode": 420
+    },
+    {
+      "relative": ".agents/skills/status/references/report-format.md",
+      "action": "modified",
+      "before_sha256": "e87bffd6dd656bd94334ef9d6365aa0b6e266e4b3d8a7f62b2701bde74e48480",
+      "current_sha256": "3cd603a9c454f2a2458b09af2d50ec416768cfa5202f1bd2bf783f26dbf5d557",
+      "mode": 420
+    },
+    {
+      "relative": ".agents/skills/mc-roadmap-implementation-supervisor/SKILL.md",
+      "action": "modified",
+      "before_sha256": "f514a07a4cc3d12eb2a2a1fef76ca76821bc32c13f97ba755f2e090a2cd6f4cd",
+      "current_sha256": "aeff519d09551470d8aadbf6a223bbee89729d96184726addef155492a3b1f38",
+      "mode": 420
+    },
+    {
+      "relative": ".agents/skills/mc-commit-supervisor/references/workflow.md",
+      "action": "modified",
+      "before_sha256": "77f805037ed1384e3a387cb246d95df95fc2e0858755a63e95228d684403c6a7",
+      "current_sha256": "27aab53da9edbed9f6ee8ceb4917d7c7531a7de914a3c2df7fb2196b6bd4a20c",
+      "mode": 420
+    },
+    {
+      "relative": ".agents/skills/mc-commit-supervisor/references/job-template.md",
+      "action": "modified",
+      "before_sha256": "2631f5ba8734a764ca3a4c9bb11b4bf1a8375b81331c259a9f5d35ceab6de5a3",
+      "current_sha256": "21bf5a6b99bb333115c43b594996810159a7a34ddaa360936895cf1ce95d35f8",
+      "mode": 420
+    },
+    {
+      "relative": ".agents/skills/mc-commit-supervisor/SKILL.md",
+      "action": "added",
+      "before_sha256": null,
+      "current_sha256": "b4ec0266a8d72f573dd4f3670c671a856ee5cc98b6942aad48683fa22fb14d68",
+      "mode": 420
+    },
+    {
+      "relative": ".agents/skills/mc-commit-supervisor/agents/openai.yaml",
+      "action": "added",
+      "before_sha256": null,
+      "current_sha256": "1b938e91f8799afb36273459f1172b18b7e45aceed5b9cb2b81af9d9c86ce82d",
+      "mode": 420
+    },
+    {
+      "relative": ".codex/agents/mc-commit-supervisor.toml",
+      "action": "added",
+      "before_sha256": null,
+      "current_sha256": "01887fdc12c962be5a7438b513836e6269cff1f9683b7a17c2edfbf2aa961044",
+      "mode": 420
+    },
+    {
+      "relative": ".agents/skills/mc-commit-supervisor/references/owner-publication.md",
+      "action": "added",
+      "before_sha256": null,
+      "current_sha256": "e443f0a689532a42ababb29bf6729a49dc56ba91f6727364f46faafb1ae19785",
+      "mode": 420
+    },
+    {
+      "relative": "review-and-merge-design.md",
+      "action": "modified",
+      "before_sha256": "5694da42dabb5e5ca14f95fb35f559c8b2e54c6f0f287db57cb71372de9fe79f",
+      "current_sha256": "de9ee5cf8ba042caa0ea452b6b67c791ac40bdcf76cbf4a04c0d2555fcb63a68",
+      "mode": 420
+    },
+    {
+      "relative": "review-and-merge-handoff.md",
+      "action": "modified",
+      "before_sha256": "86041f2634b107fc85f7c15d0f397b59ad8fb0b648ae9990a7b7e592977fa22e",
+      "current_sha256": "c752f13b4ba459793a178aee789cf6bd42bf1c39184f2b045b17494980176198",
+      "mode": 420
+    }
+  ],
+  "acceptance_mapping": [
+    {
+      "id": "S5-C1",
+      "original": "entry resolves exact bindings and permissions, explicit skill loading/fallback, no invented task API arguments",
+      "implementation": [
+        ".agents/skills/mc-commit-supervisor/SKILL.md",
+        ".codex/agents/mc-commit-supervisor.toml",
+        ".codex/config.toml",
+        "session-contract.md"
+      ],
+      "checks": [
+        "seven skill validators",
+        "all twelve TOML role mappings and existing paths",
+        "UI YAML seven",
+        "clean independent five-lens review"
+      ],
+      "result": "passed definitions; actual role loading is S6"
+    },
+    {
+      "id": "S5-C2",
+      "original": "stopped-cycle evidence, deduplication and prerequisite evidence",
+      "implementation": [
+        ".agents/skills/mc-commit-supervisor/SKILL.md",
+        ".agents/skills/mc-commit-supervisor/references/workflow.md",
+        ".agents/skills/mc-commit-supervisor/references/job-template.md"
+      ],
+      "checks": [
+        "cutover native/durable inventory",
+        "current workflow and prerequisite sources",
+        "clean independent review"
+      ],
+      "result": "passed; construction did not activate a cycle"
+    },
+    {
+      "id": "S5-C3",
+      "original": "all states/returns and precise candidate/operation owner packet; end-turn owner wait; fix-X/Y reopening; final pre-operation safety; separate receipts/adoption/Alpha gate",
+      "implementation": [
+        ".agents/skills/mc-commit-supervisor/references/owner-publication.md",
+        ".agents/skills/mc-commit-supervisor/references/workflow.md",
+        ".agents/skills/mc-commit-supervisor/references/job-template.md"
+      ],
+      "checks": [
+        "current byte and criterion review",
+        "accepted workflow/template prefix equality",
+        "fifty-five Python tests and fourteen Node fixture tests",
+        "clean independent review"
+      ],
+      "result": "passed definitions; actual hold/fix/runtime/replacement exercises remain S6"
+    },
+    {
+      "id": "S5-C4",
+      "original": "Inventory active legacy callers and live jobs before cutover. Historical D-021\u2013D-024 text and old reports retain provenance/searchable alias. Existing legacy job locations/IDs are not bulk renamed",
+      "implementation": [
+        "current callers and records in current-manifest.json",
+        "safe deletion of legacy skill/UI/profile",
+        "complete preimages outside discovery"
+      ],
+      "checks": [
+        "native listing and pertinent readbacks",
+        "durable jobs/cycles/registry and matching schedule inventory",
+        "sixty-one remaining aliases classified",
+        "whole active-caller sweep"
+      ],
+      "result": "passed; no actual legacy job/writer/awaiting handoff found within disclosed native bounds"
+    },
+    {
+      "id": "S5-C5",
+      "original": "quick_validate.py for top-level skill; Python tomllib parses config and all affected profiles and verifies referenced file existence; targeted rg over active local callers confirms canonical entry, with each remaining alias classified historical/job evidence; resolve Markdown links and exact indexed H2 headings; run existing validate_index.py",
+      "implementation": [
+        "all twenty-six manifest paths"
+      ],
+      "checks": [
+        "S5/checks.json",
+        "S5/ui-and-fragments.json",
+        "S5/legacy-classification.json",
+        "S5/all-active-caller-sweep.log"
+      ],
+      "result": "passed; 7 skills, 12 profiles, 259 links, 12 fragments, 21 indexed documents"
+    },
+    {
+      "id": "S5-C6",
+      "original": "No model pin/global config change, no auto-dispatch/re-arm. Mark MC-T09 installed/rehearsal pending, never complete from static checks.",
+      "implementation": [
+        ".codex/config.toml",
+        "deployment.md",
+        "todo.md",
+        "handoff.md",
+        "registry.md",
+        "all active callers"
+      ],
+      "checks": [
+        "non-agent config exactly unchanged",
+        "all profiles no model override",
+        "current record review and clean independent gate",
+        "unchanged source HEAD/index/unowned baseline"
+      ],
+      "result": "passed; no activation, persistent task, schedule, publication or Alpha operation"
+    }
+  ],
+  "checks": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/checks.json",
+  "supplemental_checks": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/ui-and-fragments.json",
+  "self_review": "all owned current-byte diffs and integration seams read; guarded preimage/hash/mode writes; legacy removal last; no material repairs needed",
+  "reviewer_history": [
+    {
+      "identity": "/root/s5_builder/s5_builder_review_1",
+      "type": "clean-room-reviewer",
+      "fork_turns": "none",
+      "overrides": false,
+      "result": "CLEAN",
+      "material_findings": [],
+      "authority_blockers": [],
+      "report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5-builder-review-1.md",
+      "report_sha256": "d446413631a4b8b29bb13304c49114c5d1c397e3fa9c2d2b821ef052e98a80a9",
+      "lifecycle": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/reviewer-lifecycle.json"
+    }
+  ],
+  "lifecycle": {
+    "review_passes": 1,
+    "terminal": true,
+    "close_agent": "unavailable",
+    "prior_agent_confirmation": "none before first spawn; completed before handoff",
+    "first_clean_stop": true,
+    "no_further_builder_children": true
+  },
+  "deviations": [
+    {
+      "id": "S5-D1",
+      "original_text": "finish shared workflow/template",
+      "actual": "add cohesive references/owner-publication.md with entry/workflow/template routes while preserving accepted shared prefixes",
+      "reason": "purposeful owner/publication responsibility and workflow below 400 lines",
+      "authority": "approved S5 owner-gate scope plus explicit root permission for cohesive reference",
+      "files": [
+        ".agents/skills/mc-commit-supervisor/SKILL.md",
+        ".agents/skills/mc-commit-supervisor/references/owner-publication.md",
+        ".agents/skills/mc-commit-supervisor/references/workflow.md",
+        ".agents/skills/mc-commit-supervisor/references/job-template.md"
+      ],
+      "tests": [
+        "local links",
+        "current hashes and byte-identical accepted prefixes",
+        "clean criterion review"
+      ],
+      "effect": "supplies precise attended operation and successor contract without disturbing accepted sections",
+      "risk": "package deployment must retain referenced file",
+      "downstream": "S6 loads reference and exercises hold/fix/owner wait/stale approval; publication stays separately owner-authorized",
+      "proposed_classification": "accepted; root owns authoritative ruling"
+    },
+    {
+      "id": "S5-D2",
+      "original_text": "active references in C/AGENTS.md, session-contract.md, record-templates.md, .agents/skills/mission-control/SKILL.md, applicable status/monitor callers",
+      "actual": "also migrate four current charter phrases in mission-control.md to canonical Commit Supervisor",
+      "reason": "active role charter still selected legacy integration name",
+      "authority": "explicit root bounded active-caller assignment",
+      "files": [
+        "mission-control.md"
+      ],
+      "tests": [
+        "legacy sweep/classification",
+        "exact indexed H2 and local links",
+        "clean criterion review"
+      ],
+      "effect": "current charter agrees with installed sole canonical entry; historical hierarchy and alias retained",
+      "risk": "none beyond bounded current-name migration; no new dispatch authority",
+      "downstream": "S6 and later controller use canonical route",
+      "proposed_classification": "accepted; root owns authoritative ruling"
+    },
+    {
+      "id": "S5-D3",
+      "original_text": "S5 active caller/link migration; S3 accepted design/handoff paths omitted from advisory S5 expected-file list",
+      "actual": "mechanically retarget removed skill/profile links and obsolete MC-T09 anchor; add current cutover provenance in historical design/handoff",
+      "reason": "retired entry/profile removal would otherwise leave dangling current destinations",
+      "authority": "explicit root approval for mechanically necessary correction",
+      "files": [
+        "review-and-merge-design.md",
+        "review-and-merge-handoff.md"
+      ],
+      "tests": [
+        "all current Markdown destinations and heading fragments",
+        "unchanged indexed H2/source fingerprints",
+        "clean criterion review"
+      ],
+      "effect": "historical role wording remains provenanced and searchable; present links resolve canonical destinations",
+      "risk": "only affected link/hash evidence invalidated; accepted S3 Wiki behavior and fixture/oracle unchanged",
+      "downstream": "current dependency hashes/raw links included in S5 gate; S6 retains accepted Wiki contracts",
+      "proposed_classification": "accepted; root owns authoritative ruling"
+    }
+  ],
+  "findings_or_dispositions": [],
+  "skipped_required_s5_checks": [],
+  "adapters": [
+    "Python 3.12 -B supplies tomllib; existing cached PyYAML read-only with bytecode disabled; no install/reset/dependency write",
+    "supported default agent + exact absolute skill/session/workflow paths if new runtime role name is unavailable; actual adapter loading proof belongs to S6",
+    "native inventory bounded to 50 recent plus all pinned, corroborated by durable jobs/registry/cycles/schedules and pertinent readbacks",
+    "read-only reviewer returned report inline; builder persisted verbatim; close_agent unavailable"
+  ],
+  "runtime_evidence": "55 Python and 14 Node bounded/injected fixtures passed; no actual app launch or integration-role workflow rehearsal in S5",
+  "residual_limits": [
+    "S6 actual role loading/delegation, fresh review/repair/Wiki identity tree, live isolated app behavior and recovery remain required",
+    "MC-T09 installed/rehearsal pending; no completion from S5 static/fixture checks",
+    "future publication and Alpha operations require distinct exact owner authority; S6 cannot authorize them"
+  ],
+  "no_operational_mc": true,
+  "no_persistent_chat_or_timer": true,
+  "no_git_mutation": true,
+  "no_alpha_operation": true,
+  "no_s6_started": true,
+  "next_safe_action": "root independently accepts or returns this exact S5 candidate; builder stops and does not begin S6",
+  "root_acceptance_granted": false
+}

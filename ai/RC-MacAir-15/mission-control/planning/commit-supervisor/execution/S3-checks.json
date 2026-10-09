@@ -1,0 +1,13 @@
+[
+  {
+    "command": [
+      "python3",
+      ".agents/skills/mc-memory-maintenance/scripts/validate_index.py",
+      "."
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stdout": "Working-memory validation passed: 21 documents in /Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control\n",
+    "stderr": ""
+  }
+]

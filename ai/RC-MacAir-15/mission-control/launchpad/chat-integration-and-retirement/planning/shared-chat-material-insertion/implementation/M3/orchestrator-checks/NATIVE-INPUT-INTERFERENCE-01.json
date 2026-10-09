@@ -1,0 +1,235 @@
+{
+  "at": "2026-10-07T22:52:40.062134+00:00",
+  "source_seal_sha256": "35cda972a106468eaa279c60da9ef51fc04ec23333f03de4226269b84e14ad07",
+  "attempts": [
+    {
+      "attempt": "native-01",
+      "raw_receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/orchestrator-checks/native-01/native-receipt.json",
+      "sha256": "a10c755211b769e1dcd89e241c2d9ed407435d19f89cc422d4059bcab6f5a07e",
+      "status": "FAIL",
+      "started": "2026-10-07T22:45:34.332Z",
+      "ended": "2026-10-07T22:45:41.040Z",
+      "error": {
+        "name": "AssertionError",
+        "message": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'MAIN file-viewer',\n+   'SIDE file-viewerpa'\n-   'SIDE file-viewer'\n  ]\n"
+      },
+      "typed_single_character_input_count": 2,
+      "input_events": [
+        {
+          "at": 1791413139930,
+          "type": "beforeinput",
+          "trusted": true,
+          "inputType": "insertText",
+          "dataLength": 16,
+          "threadId": "th-1a35355b-a6d9-4ab1-b0c4-8f2efaf86a2b"
+        },
+        {
+          "at": 1791413139931,
+          "type": "input",
+          "trusted": true,
+          "inputType": "insertText",
+          "dataLength": 16,
+          "threadId": "th-1a35355b-a6d9-4ab1-b0c4-8f2efaf86a2b"
+        },
+        {
+          "at": 1791413139964,
+          "type": "beforeinput",
+          "trusted": true,
+          "inputType": "insertText",
+          "dataLength": 16,
+          "threadId": "2026-10-07T15-45-38-254"
+        },
+        {
+          "at": 1791413139964,
+          "type": "input",
+          "trusted": true,
+          "inputType": "insertText",
+          "dataLength": 16,
+          "threadId": "2026-10-07T15-45-38-254"
+        },
+        {
+          "at": 1791413140060,
+          "type": "keydown",
+          "trusted": true,
+          "keyClass": "other",
+          "threadId": "2026-10-07T15-45-38-254"
+        },
+        {
+          "at": 1791413140060,
+          "type": "beforeinput",
+          "trusted": true,
+          "inputType": "insertText",
+          "dataLength": 1,
+          "threadId": "2026-10-07T15-45-38-254"
+        },
+        {
+          "at": 1791413140061,
+          "type": "input",
+          "trusted": true,
+          "inputType": "insertText",
+          "dataLength": 1,
+          "threadId": "2026-10-07T15-45-38-254"
+        },
+        {
+          "at": 1791413140164,
+          "type": "keydown",
+          "trusted": true,
+          "keyClass": "other",
+          "threadId": "2026-10-07T15-45-38-254"
+        },
+        {
+          "at": 1791413140164,
+          "type": "beforeinput",
+          "trusted": true,
+          "inputType": "insertText",
+          "dataLength": 1,
+          "threadId": "2026-10-07T15-45-38-254"
+        },
+        {
+          "at": 1791413140164,
+          "type": "input",
+          "trusted": true,
+          "inputType": "insertText",
+          "dataLength": 1,
+          "threadId": "2026-10-07T15-45-38-254"
+        },
+        {
+          "at": 1791413140214,
+          "type": "keyup",
+          "trusted": true,
+          "keyClass": "other",
+          "threadId": "2026-10-07T15-45-38-254"
+        },
+        {
+          "at": 1791413140251,
+          "type": "keyup",
+          "trusted": true,
+          "keyClass": "other",
+          "threadId": "2026-10-07T15-45-38-254"
+        }
+      ],
+      "cleanup": {
+        "dbQuickCheck": "ok",
+        "portFileRemoved": true,
+        "fixtureRootsRemoved": true
+      },
+      "lingeringOwnedPids": []
+    },
+    {
+      "attempt": "native-02",
+      "raw_receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/orchestrator-checks/native-02/native-receipt.json",
+      "sha256": "58e466300e67206a1550069f42820a686b525b2fea9e3959077c30c50c8e8d1e",
+      "status": "FAIL",
+      "started": "2026-10-07T22:47:32.774Z",
+      "ended": "2026-10-07T22:47:41.836Z",
+      "error": {
+        "name": "AssertionError",
+        "message": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'MAIN file-viewer',\n+   'SIDE file-viewerth'\n-   'SIDE file-viewer'\n  ]\n"
+      },
+      "typed_single_character_input_count": 2,
+      "input_events": [
+        {
+          "at": 1791413260749,
+          "type": "beforeinput",
+          "trusted": true,
+          "inputType": "insertText",
+          "dataLength": 16,
+          "threadId": "th-9db89285-548d-41d8-b398-9a6768e5328c"
+        },
+        {
+          "at": 1791413260750,
+          "type": "input",
+          "trusted": true,
+          "inputType": "insertText",
+          "dataLength": 16,
+          "threadId": "th-9db89285-548d-41d8-b398-9a6768e5328c"
+        },
+        {
+          "at": 1791413260791,
+          "type": "beforeinput",
+          "trusted": true,
+          "inputType": "insertText",
+          "dataLength": 16,
+          "threadId": "2026-10-07T15-47-39-175"
+        },
+        {
+          "at": 1791413260792,
+          "type": "input",
+          "trusted": true,
+          "inputType": "insertText",
+          "dataLength": 16,
+          "threadId": "2026-10-07T15-47-39-175"
+        },
+        {
+          "at": 1791413260935,
+          "type": "keydown",
+          "trusted": true,
+          "keyClass": "other",
+          "threadId": "2026-10-07T15-47-39-175"
+        },
+        {
+          "at": 1791413260935,
+          "type": "beforeinput",
+          "trusted": true,
+          "inputType": "insertText",
+          "dataLength": 1,
+          "threadId": "2026-10-07T15-47-39-175"
+        },
+        {
+          "at": 1791413260935,
+          "type": "input",
+          "trusted": true,
+          "inputType": "insertText",
+          "dataLength": 1,
+          "threadId": "2026-10-07T15-47-39-175"
+        },
+        {
+          "at": 1791413261026,
+          "type": "keyup",
+          "trusted": true,
+          "keyClass": "other",
+          "threadId": "2026-10-07T15-47-39-175"
+        },
+        {
+          "at": 1791413261041,
+          "type": "keydown",
+          "trusted": true,
+          "keyClass": "other",
+          "threadId": "2026-10-07T15-47-39-175"
+        },
+        {
+          "at": 1791413261041,
+          "type": "beforeinput",
+          "trusted": true,
+          "inputType": "insertText",
+          "dataLength": 1,
+          "threadId": "2026-10-07T15-47-39-175"
+        },
+        {
+          "at": 1791413261041,
+          "type": "input",
+          "trusted": true,
+          "inputType": "insertText",
+          "dataLength": 1,
+          "threadId": "2026-10-07T15-47-39-175"
+        },
+        {
+          "at": 1791413261114,
+          "type": "keyup",
+          "trusted": true,
+          "keyClass": "other",
+          "threadId": "th-9db89285-548d-41d8-b398-9a6768e5328c"
+        }
+      ],
+      "cleanup": {
+        "dbQuickCheck": "ok",
+        "portFileRemoved": true,
+        "fixtureRootsRemoved": true
+      },
+      "lingeringOwnedPids": []
+    }
+  ],
+  "classification": "Required runs failed exact non-target preservation during directly observed ordinary trusted keyboard input. No product/oracle correction justified from these runs. Same current native scenario must PASS in an idle keyboard window.",
+  "distinct_builder_native17_limit": "No passive input observation existed in builder native17; do not attribute its trailing-space symptom to keyboard or product.",
+  "owner_request": "Five-minute keyboard-idle availability clarification pending; independent work continues."
+}

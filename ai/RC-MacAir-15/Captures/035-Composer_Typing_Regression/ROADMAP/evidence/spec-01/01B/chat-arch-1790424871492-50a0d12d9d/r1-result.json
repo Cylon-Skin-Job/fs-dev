@@ -1,0 +1,348 @@
+{
+  "status": "focus-prerequisite-pending",
+  "characterization": false,
+  "repeatTrials": 3,
+  "coverageCalibration": {
+    "discovered": [
+      "ChatAreaFooter",
+      "ChatAreaHeader",
+      "ContentArea",
+      "InstantSegmentRenderer",
+      "MessageList",
+      "ThreadRail",
+      "renderTextInstant"
+    ],
+    "invocationCounts": {
+      "renderTextInstant": 32,
+      "MessageList": 2,
+      "InstantSegmentRenderer": 32,
+      "ChatAreaHeader": 18,
+      "ThreadRail": 19,
+      "ContentArea": 9,
+      "ChatAreaFooter": 16
+    },
+    "hydrationRetries": 0
+  },
+  "observerCalibration": [
+    75
+  ],
+  "measurements": [
+    {
+      "id": "R1-STARTUP-F2-F3",
+      "trial": 1,
+      "configuredCharacters": 68,
+      "configuredDelayMs": 25,
+      "wallMs": 1924,
+      "exactRetention": true,
+      "promptSha256": "5c6133e4472cb6fb826e075bc7f76f7f0882ab42f7f31d2401e5c11abe93bb32",
+      "promptContentRecorded": false,
+      "inputCount": 68,
+      "inputP95Ms": 0.7999997138977051,
+      "inputMaxMs": 1.200000286102295,
+      "nextRafCount": 68,
+      "nextRafP95Ms": 11.699999809265137,
+      "nextRafMaxMs": 12.599999904632568,
+      "domMutations": 204,
+      "longTaskObserverSupported": true,
+      "longTaskCount": 0,
+      "longTaskMaxMs": null,
+      "reactCommitCount": 204,
+      "wsSent": 0,
+      "outboundFrameTypes": [],
+      "outboundFrameObservationInterval": "keyboard.type",
+      "visibilityState": "visible",
+      "componentRenderEvidence": {
+        "MessageList": 0,
+        "InstantSegmentRenderer": 0,
+        "ChatAreaHeader": 0,
+        "ThreadRail": 0,
+        "ContentArea": 0
+      },
+      "formatterInvocationEvidence": {
+        "renderTextInstant": 0
+      },
+      "coveragePositiveControl": {
+        "ChatAreaFooter": 68
+      },
+      "coverageTargetsDiscovered": [
+        "ChatAreaFooter",
+        "ChatAreaHeader",
+        "ContentArea",
+        "InstantSegmentRenderer",
+        "MessageList",
+        "ThreadRail",
+        "renderTextInstant"
+      ],
+      "formatterFunctionsObserved": [
+        "renderTextInstant"
+      ],
+      "formatterInvocationCount": 0,
+      "formatterCountMethod": "cdp-precise-function-coverage",
+      "formatterObservationAvailable": true,
+      "focusEvidence": {
+        "interval": {
+          "startedAt": 1790424890225,
+          "endedAt": 1790424892149,
+          "available": true,
+          "events": [],
+          "overflow": 0,
+          "valid": true,
+          "interruptions": []
+        },
+        "establishment": {
+          "attempts": 1,
+          "elapsedMs": 4,
+          "observation": {
+            "available": true,
+            "focused": true,
+            "visible": true,
+            "minimized": false,
+            "windowId": 1,
+            "title": "ISOLATED ACCEPTANCE — chat-arch-1790424871492-50a0d12d9d",
+            "url": "fusion-shell://app/"
+          }
+        },
+        "beforeTyping": {
+          "available": true,
+          "focused": true,
+          "visible": true,
+          "minimized": false,
+          "windowId": 1,
+          "title": "ISOLATED ACCEPTANCE — chat-arch-1790424871492-50a0d12d9d",
+          "url": "fusion-shell://app/"
+        },
+        "afterTyping": {
+          "available": true,
+          "focused": true,
+          "visible": true,
+          "minimized": false,
+          "windowId": 1,
+          "title": "ISOLATED ACCEPTANCE — chat-arch-1790424871492-50a0d12d9d",
+          "url": "fusion-shell://app/"
+        }
+      },
+      "screenshotBootstrap": {
+        "requiredLifecycle": [
+          "screenshot:capture",
+          "screenshot:updated",
+          "screenshot:request",
+          "screenshot:data"
+        ],
+        "quietMs": 500,
+        "documentId": "2e0f898d-9543-43e2-b01c-ff67bf3e0323",
+        "finalTrafficSequence": 895,
+        "lifecycle": [
+          {
+            "sequence": 892,
+            "atMs": 1661.0999999046326,
+            "direction": "outbound",
+            "type": "screenshot:capture"
+          },
+          {
+            "sequence": 893,
+            "atMs": 1665.5999999046326,
+            "direction": "inbound",
+            "type": "screenshot:updated"
+          },
+          {
+            "sequence": 894,
+            "atMs": 1665.6999998092651,
+            "direction": "outbound",
+            "type": "screenshot:request"
+          },
+          {
+            "sequence": 895,
+            "atMs": 1668,
+            "direction": "inbound",
+            "type": "screenshot:data"
+          }
+        ]
+      },
+      "observationStatus": "measured"
+    },
+    {
+      "id": "R1-WARM-F2-F3",
+      "trial": 1,
+      "configuredCharacters": 68,
+      "configuredDelayMs": 25,
+      "wallMs": 1915,
+      "exactRetention": true,
+      "promptSha256": "5c6133e4472cb6fb826e075bc7f76f7f0882ab42f7f31d2401e5c11abe93bb32",
+      "promptContentRecorded": false,
+      "inputCount": 68,
+      "inputP95Ms": 0.6000003814697266,
+      "inputMaxMs": 0.7999997138977051,
+      "nextRafCount": 68,
+      "nextRafP95Ms": 13.199999809265137,
+      "nextRafMaxMs": 14.900000095367432,
+      "domMutations": 204,
+      "longTaskObserverSupported": true,
+      "longTaskCount": 0,
+      "longTaskMaxMs": null,
+      "reactCommitCount": 204,
+      "wsSent": 0,
+      "outboundFrameTypes": [],
+      "outboundFrameObservationInterval": "keyboard.type",
+      "visibilityState": "visible",
+      "componentRenderEvidence": {
+        "MessageList": 0,
+        "InstantSegmentRenderer": 0,
+        "ChatAreaHeader": 0,
+        "ThreadRail": 0,
+        "ContentArea": 0
+      },
+      "formatterInvocationEvidence": {
+        "renderTextInstant": 0
+      },
+      "coveragePositiveControl": {
+        "ChatAreaFooter": 68
+      },
+      "coverageTargetsDiscovered": [
+        "ChatAreaFooter",
+        "ChatAreaHeader",
+        "ContentArea",
+        "InstantSegmentRenderer",
+        "MessageList",
+        "ThreadRail",
+        "renderTextInstant"
+      ],
+      "formatterFunctionsObserved": [
+        "renderTextInstant"
+      ],
+      "formatterInvocationCount": 0,
+      "formatterCountMethod": "cdp-precise-function-coverage",
+      "formatterObservationAvailable": true,
+      "focusEvidence": {
+        "interval": {
+          "startedAt": 1790424893931,
+          "endedAt": 1790424895846,
+          "available": true,
+          "events": [],
+          "overflow": 0,
+          "valid": true,
+          "interruptions": []
+        },
+        "establishment": {
+          "attempts": 0,
+          "observation": {
+            "available": true,
+            "focused": true,
+            "visible": true,
+            "minimized": false,
+            "windowId": 1,
+            "title": "ISOLATED ACCEPTANCE — chat-arch-1790424871492-50a0d12d9d",
+            "url": "fusion-shell://app/"
+          }
+        },
+        "beforeTyping": {
+          "available": true,
+          "focused": true,
+          "visible": true,
+          "minimized": false,
+          "windowId": 1,
+          "title": "ISOLATED ACCEPTANCE — chat-arch-1790424871492-50a0d12d9d",
+          "url": "fusion-shell://app/"
+        },
+        "afterTyping": {
+          "available": true,
+          "focused": true,
+          "visible": true,
+          "minimized": false,
+          "windowId": 1,
+          "title": "ISOLATED ACCEPTANCE — chat-arch-1790424871492-50a0d12d9d",
+          "url": "fusion-shell://app/"
+        }
+      },
+      "screenshotBootstrap": {
+        "requiredLifecycle": [
+          "screenshot:capture",
+          "screenshot:updated",
+          "screenshot:request",
+          "screenshot:data"
+        ],
+        "quietMs": 500,
+        "documentId": "2e0f898d-9543-43e2-b01c-ff67bf3e0323",
+        "finalTrafficSequence": 895,
+        "lifecycle": [
+          {
+            "sequence": 892,
+            "atMs": 1661.0999999046326,
+            "direction": "outbound",
+            "type": "screenshot:capture"
+          },
+          {
+            "sequence": 893,
+            "atMs": 1665.5999999046326,
+            "direction": "inbound",
+            "type": "screenshot:updated"
+          },
+          {
+            "sequence": 894,
+            "atMs": 1665.6999998092651,
+            "direction": "outbound",
+            "type": "screenshot:request"
+          },
+          {
+            "sequence": 895,
+            "atMs": 1668,
+            "direction": "inbound",
+            "type": "screenshot:data"
+          }
+        ]
+      },
+      "observationStatus": "measured"
+    }
+  ],
+  "ownedFocus": {
+    "pid": 25859,
+    "windowId": 1,
+    "events": [
+      {
+        "type": "installed",
+        "at": 1790424883089,
+        "focused": true,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      },
+      {
+        "type": "show",
+        "at": 1790424883129,
+        "focused": true,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      },
+      {
+        "type": "hide",
+        "at": 1790424905397,
+        "focused": true,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      },
+      {
+        "type": "blur",
+        "at": 1790424905699,
+        "focused": false,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      }
+    ],
+    "overflow": 0
+  },
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": {
+    "name": "Error",
+    "code": "R1_FOCUS_LOST_BEFORE_TYPING",
+    "message": "R1-SETTLED45-F2-F3 prepared document: staged Electron lost OS focus immediately before typing: {\"available\":true,\"focused\":false,\"visible\":true,\"minimized\":false,\"windowId\":1,\"title\":\"ISOLATED ACCEPTANCE — chat-arch-1790424871492-50a0d12d9d\",\"url\":\"fusion-shell://app/\"}",
+    "observation": null,
+    "stack": "Error: R1-SETTLED45-F2-F3 prepared document: staged Electron lost OS focus immediately before typing: {\"available\":true,\"focused\":false,\"visible\":true,\"minimized\":false,\"windowId\":1,\"title\":\"ISOLATED ACCEPTANCE — chat-arch-1790424871492-50a0d12d9d\",\"url\":\"fusion-shell://app/\"}\n    at assertFocusedBeforeTyping (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/window-focus.mjs:33:17)\n    at measureWindow (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r1-electron.mjs:201:31)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r1-electron.mjs:388:21"
+  }
+}

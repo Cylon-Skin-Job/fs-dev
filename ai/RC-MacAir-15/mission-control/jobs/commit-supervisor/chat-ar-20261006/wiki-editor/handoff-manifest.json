@@ -1,0 +1,210 @@
+{
+  "state": "READY_FOR_HANDOFF_REVIEW",
+  "worker": "/root/integration_wiki_editor",
+  "manager": "/root",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "actual_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "source_read_only": "/Users/rccurtrightjr./projects/fs-dev",
+  "candidate": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+  "head": "3356e1b73cc5d44028eac5baa02fd542a8bbc385",
+  "branch": "codex/chat-retirement-and-startup-repair",
+  "model_effort": "inherited root; no override",
+  "all_candidate_writes_frozen": true,
+  "owned_articles": [
+    {
+      "page": "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md",
+      "preimage_sha256": "ec38f18dc55ffb9d59f46683116aae158f2cf2643ae76a99a6f26df2d9f6d293",
+      "final_sha256": "47e449cc8809a756958cc0947f4de66d5679b0375ad6c85a4a3caa6829b02946",
+      "last_modified": "2026-10-06T22:14:26Z",
+      "bytes": 42443,
+      "mode": "0o644"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+      "preimage_sha256": "b0b3a19ca50b7ef657f5429e8643a9f1aee75a6f72573d60482a2cc3ca915e5d",
+      "final_sha256": "57b85d4acc3034dbc2a64fec9994effa98386419d41bcd6dcc526fbcd6a96d18",
+      "last_modified": "2026-10-06T22:15:19Z",
+      "bytes": 4846,
+      "mode": "0o644"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/PAGE.md",
+      "preimage_sha256": "45001a1860a4f92133b724d2c7e6077ae3e8162cb01006cf0b472a1c97ea4c50",
+      "final_sha256": "6c5c3847270c0bef52f0e858216f54d602472a9400cddcf2c97a39c5d15e437e",
+      "last_modified": "2026-10-06T22:15:19Z",
+      "bytes": 5513,
+      "mode": "0o644"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md",
+      "preimage_sha256": "9c5cfbecaf10e7db72586dd2bdcc83cb6d65db5874313f26c822c125e9dc9047",
+      "final_sha256": "958dd740990d80ea878e58f603f1bb3d5208b6afc9fc723ce771b4f3864ce0be",
+      "last_modified": "2026-10-06T22:14:26Z",
+      "bytes": 7774,
+      "mode": "0o644"
+    },
+    {
+      "page": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md",
+      "preimage_sha256": "78a9d4aa551b312053796e83b94b69f218d6cfc4abc55f279d6e11329692cea4",
+      "final_sha256": "7d29228d2e9f5b91bae0fe558f7b0f8c172aaa7a1a4bb4d47091c6545768e4ea",
+      "last_modified": "2026-10-06T22:14:26Z",
+      "bytes": 3620,
+      "mode": "0o644"
+    }
+  ],
+  "owned_versions": [
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/.versions/2026-10-06-151426.md",
+      "sha256": "ec38f18dc55ffb9d59f46683116aae158f2cf2643ae76a99a6f26df2d9f6d293",
+      "bytes": 42483,
+      "mode": "644",
+      "absentBeforeCreation": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/.versions/2026-10-06-151426.md",
+      "sha256": "b0b3a19ca50b7ef657f5429e8643a9f1aee75a6f72573d60482a2cc3ca915e5d",
+      "bytes": 2654,
+      "mode": "644",
+      "absentBeforeCreation": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/.versions/2026-10-06-151426.md",
+      "sha256": "45001a1860a4f92133b724d2c7e6077ae3e8162cb01006cf0b472a1c97ea4c50",
+      "bytes": 4117,
+      "mode": "644",
+      "absentBeforeCreation": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-10-06-151426.md",
+      "sha256": "9c5cfbecaf10e7db72586dd2bdcc83cb6d65db5874313f26c822c125e9dc9047",
+      "bytes": 7788,
+      "mode": "644",
+      "absentBeforeCreation": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/.versions/2026-10-06-151426.md",
+      "sha256": "78a9d4aa551b312053796e83b94b69f218d6cfc4abc55f279d6e11329692cea4",
+      "bytes": 3664,
+      "mode": "644",
+      "absentBeforeCreation": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/.versions/2026-10-06-151519.md",
+      "sha256": "6479876356a66d6d654a2987eaa1acce410365149e1277f7a08daf8b8642b0be",
+      "bytes": 4767,
+      "mode": "644",
+      "absentBeforeCreation": true
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/004-Chat_UI/001-Composer/.versions/2026-10-06-151519.md",
+      "sha256": "47d4dd1f4033cccd7c7285f0ae21ef422bdbb7f14f22f092e6148b3a804d8777",
+      "bytes": 5437,
+      "mode": "644",
+      "absentBeforeCreation": true
+    }
+  ],
+  "source_page_dependency_binding_verified": true,
+  "navigation_stable": true,
+  "original_subject_count": 17,
+  "total_page_count": 19,
+  "leaf_checks": "PASS",
+  "fresh_independent_docs_review": "Required; commissioned by root after this handoff",
+  "files": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/report.md",
+      "sha256": "8f425842165eb53f59acb75fb857b4a7661cd24d8517e8e7f123438cb2e73c26"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/coverage.json",
+      "sha256": "1eb8d2b80e65b36950da9bde5233fcd9c2d0c004fe2c1fb8932d32eeb9eb0309"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/current-byte-evidence.json",
+      "sha256": "32165d2721365df4129b73cb94a10bcf3c1ede2a518ecbe00552adcef6c37c48"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/checks.json",
+      "sha256": "6dfeec9b854924e4ff1e32344649ddefa619efeb3e38543e0baf5b0d639b1c1f"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/final-articles.patch",
+      "sha256": "6c89d0161d23833384edce15dee8ca42102c2654e9a68ba03a0efee35143c895"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/pre-edit-freeze.json",
+      "sha256": "bd32d7b617af9178915e7d63f6dbda043f61c64a88059708dd688ff5d8a76dac"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/edit-receipt.json",
+      "sha256": "0cc177e5e80ba162d937273e860936c171819f8ac2d29ce4ff405791d3a302d1"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/version-extension-receipt.json",
+      "sha256": "1e3d9a7af96ea03cfdbd181941954a1fcb8a16196174c94777a5b70bdd2d6364"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/version-readback.json",
+      "sha256": "1b4f20b9f8d620483e7aeaca7a9ce1d81d4a633e320df9f71c0019ef3507a8f1"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/selfcheck-correction-preimage-absence.json",
+      "sha256": "1a6fc9f229a6276849b5042711c12301fed6a6b36d6da734124af2b01af0e511"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/selfcheck-correction-version-readback.json",
+      "sha256": "9e6a6b01a419d9891fd82f7a1be1f7b3cf71a8dfb1826da7aced7e76ad605f1f"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/selfcheck-correction-receipt.json",
+      "sha256": "e212f481046dacbde41f41f53832c75292fb94619eceeb4beaa3b84f8cc019c7"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/mechanical-checks.json",
+      "sha256": "f390097dc4cc49356d3af2ea17b2de9e969ee60ca8a1e620d315f4f6d333025f"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/navigation-checks.json",
+      "sha256": "ded923b30ebf3f790580af2ca46d946aedb063fda784c7e4b0c318f7058e3607"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/mechanical-checks.log",
+      "sha256": "f390097dc4cc49356d3af2ea17b2de9e969ee60ca8a1e620d315f4f6d333025f"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/retirement-sweep.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/navigation-run-1.log",
+      "sha256": "5af5469481ce6d8c93d94f91b5a928d56809bdab1c75a6aef85aca838ad1cfb9"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/navigation-run-2.log",
+      "sha256": "46d2ada36ca25a904486865957973fd21cf118df8abbe880fcbbb4f7f6dbcef2"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/source-evidence.log",
+      "sha256": "fca8f53b9f3a9ae29037e2578652e1ba539a57e0ae53680b1e3a4045eaf465f5"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/check-wiki.cjs",
+      "sha256": "a46e8297a368deb88722f542dbb2ee0bd898dfd4b81c98f8a86285f62bc9644c"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/check-navigation.py",
+      "sha256": "ca60cdda8e637a5b60d5f00a30de67bead0362c3893cce291c02c7069e943af1"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/apply-bounded-edits.py",
+      "sha256": "6b1e43ef80984430ef6cae70120d89af0d1dff1fac6ace98f1730f49ad477b54"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/wiki-editor/finalize.py",
+      "sha256": "993917db92e74110edc2ba6f01b4b92b55f9b8c0dc256a845949840ef956d5e2"
+    }
+  ]
+}

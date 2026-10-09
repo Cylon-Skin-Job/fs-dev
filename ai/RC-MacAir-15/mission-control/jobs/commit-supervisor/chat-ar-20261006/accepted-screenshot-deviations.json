@@ -1,0 +1,90 @@
+{
+  "worker": "/root/screenshot_repair",
+  "classificationAuthority": "Commit Supervisor /root",
+  "deviations": [
+    {
+      "id": "SCR-D01",
+      "originalCriterion": "CHAT-AR-SPEC-01 A-03/R-04/S2/8.5 and CHAT-AR-REPAIR-01 section4 preserve direct capture, request-ID PNG acknowledgment, exact pending workspace/thread attachment, actual owner cancellation and independent views.",
+      "actualMechanics": "Resolve header Main owner from currentPanel qualified population/selection in one state snapshot, falling back to currentThreadId only when qualified Main is unavailable. Connected composer supplies exact view/group/thread/host and committed mount token. Revalidate all owners before capture and after each await.",
+      "reasonAuthority": "IR-CHAT-001 original raw reproduction shows qualified New Chat leaves Legacy null/prior; global-only comparator rejects visible composer. Manager validated correction under original authority.",
+      "files": [
+        "src/screenshots/chatScreenshotCapture.ts",
+        "src/components/chat/ConnectedChatComposer.tsx",
+        "src/components/chat/ChatSurface.tsx"
+      ],
+      "effectsChecks": "New Chat null/prior composer and header capture/path/owner checks, mismatched ACK rejection, actual owner cancellation, independent view tests; focused34 and cumulative106 pass.",
+      "risk": "No new durable identity or protocol; correct owners derive existing state and callback lifetime. Current screenshot controller is bounded to current workspace/qualified address.",
+      "downstreamConsumer": "Screenshot Capture/Composer Wiki and whole-candidate renderer runtime handoff; manager owns both.",
+      "proposedClassification": "accepted",
+      "classification": "accepted",
+      "managerReason": "Necessary bounded technical integration under existing owner screenshot preservation; current independent handoff and required checks clean; no new product intent."
+    },
+    {
+      "id": "SCR-D02",
+      "originalCriterion": "Preserve every existing rendered screenshot action under original screenshot contract; no Main-only owner limitation was approved.",
+      "actualMechanics": "Validate Side against exact open managed placement plus view/workspace/group/thread and mounted lifetime; explicit Main component uses hydrated session membership independently of same-view rail selection. Extract existing pure placement reader unchanged into lib/chat/side-chat-placements.ts and update its existing consumers.",
+      "reasonAuthority": "Manager clarified existing Side action and original original-spec scope. Existing reader in sideChatBridge imports UI/registration behavior; controller must reuse authoritative placement reader without introducing that import cycle or duplicating policy. Additional exact preimages captured before writes.",
+      "files": [
+        "src/lib/chat/side-chat-placements.ts",
+        "src/components/chat/sideChatBridge.ts",
+        "src/components/chat/useSideChatRailAdapter.ts",
+        "src/components/chat/ChatSurfaceComponentMount.tsx",
+        "src/screenshots/chatScreenshotCapture.ts"
+      ],
+      "effectsChecks": "Existing Side isolation/native/adapterless/placement-recovery/Move suites retained; exact session independent capture and placement-close/unmount cancellation checks pass. Fresh review01 independently found relocated parser byte equality before EOF trim.",
+      "risk": "Import relocation affects three existing consumers; all updated and client build/cumulative tests pass. No provider, persistence/schema, descriptor or UI capability added.",
+      "downstreamConsumer": "Side component consumer imports and Composer/Screenshot Capture docs; no new external caller.",
+      "proposedClassification": "accepted",
+      "classification": "accepted",
+      "managerReason": "Necessary bounded technical integration under existing owner screenshot preservation; current independent handoff and required checks clean; no new product intent."
+    },
+    {
+      "id": "SCR-D03",
+      "originalCriterion": "Cumulative composer/component checks must use accepted current source contracts and preserve prompt/threadId/no persisted-or-outbound surfaceId invariant.",
+      "actualMechanics": "Correct two stale screenshot-menu source assertions to accepted explicit footer prop names. Install existing product-send capability for the component-registration fake socket lifecycle, matching current production admission. Keep all original behavioral invariants/assertions.",
+      "reasonAuthority": "Existing footer already used explicit onAddAttachment/onInsertText before this repair. Initial cumulative failure correctly refused prompt because the old isolated fixture lacked transport admission capability. Manager froze/verified both additional test leaves and authorized bounded mechanics.",
+      "files": [
+        "e2e/chat-composer-screenshot-menu.spec.ts",
+        "e2e/chat-component-registration.spec.ts"
+      ],
+      "effectsChecks": "Historical cumulative97pass/1fail retained. Component rerun7pass and final cumulative106pass; source invariant unchanged.",
+      "risk": "Test-controlled authenticated binding represents fixture lifecycle only; no raw production-send bypass or real provider proof inferred.",
+      "downstreamConsumer": "Current architecture regression lane; no product changes from fixture repair.",
+      "proposedClassification": "accepted",
+      "classification": "accepted",
+      "managerReason": "Necessary bounded technical integration under existing owner screenshot preservation; current independent handoff and required checks clean; no new product intent."
+    },
+    {
+      "id": "SCR-D04",
+      "originalCriterion": "IR-CHAT-001 cancellation on actual owning view/activity change during capture and save applies even when content chat component remains mounted.",
+      "actualMechanics": "Require shell currentPanel for string owning-view Main and Side owners. Connected screenshot token observes that existing active-view owner so leave/return invalidates the prior async capture. Null/Legacy intentional contexts stay explicit. Add eight tests over real retained WorkspacePanel/ContentArea/ViewTabBar/resolver/component mounts, changing only actual setCurrentPanel while same surfaceId and open placement remain.",
+      "reasonAuthority": "Fresh independent screenshot-handoff-01 material finding and manager validation of actual caller chain; old useChatSessionHost default activity remains true when WorkspacePanel hides retained ContentArea. Exact current correction preimages captured and verified before edits.",
+      "files": [
+        "src/screenshots/chatScreenshotCapture.ts",
+        "src/components/chat/ConnectedChatComposer.tsx",
+        "e2e/threaded-chat-host.spec.ts"
+      ],
+      "effectsChecks": "Earlier26pass/build cannot establish retained-view cancellation. Corrected focused34pass plus final cumulative106pass and rebuilt client succeed; no mocked activity/unmount substitute in the new eight tests.",
+      "risk": "Screenshot lifetime observes existing shell view identity; same-view unrelated Main selection remains independent for Side/explicit Main session. No guessed null-view policy or broad host/UI activity change.",
+      "downstreamConsumer": "Fresh handoff02, manager Wiki correction and current renderer runtime handoff.",
+      "proposedClassification": "accepted",
+      "classification": "accepted",
+      "managerReason": "Necessary bounded technical integration under existing owner screenshot preservation; current independent handoff and required checks clean; no new product intent."
+    },
+    {
+      "id": "SCR-D05",
+      "originalCriterion": "Preserve current reviewed/tested identities and expose any final byte change and check limitations truthfully.",
+      "actualMechanics": "Root authorized trimming only one final extra newline from the new reader after saving exact pretrim bytes. Readback verifies pretrim == final + newline; runtime tokens/statements/imports/assertions unchanged.",
+      "reasonAuthority": "Final no-index whitespace check identified new blank line at EOF. Root coordinated review02 and explicitly retained functional106/34/build checks for this sole semantic-neutral trim; canonical runtime later rebuilds.",
+      "files": [
+        "src/lib/chat/side-chat-placements.ts"
+      ],
+      "effectsChecks": "Initial no-index exit3 warning preserved; final output empty, exit1 for new-file difference, whitespace failure bit absent. Pretrim hash93878e20774164e6c0e5840caba3ffcb0c135829e08d945500bf8ad72ddad7b9; final109d5f63baf402c39dddf8cc96a93a95d2108e1988fca5dca99a7ad263b417e1.",
+      "risk": "No behavioral change. Tests/build used pretrim identity and are explicitly retained on exact one-byte comparison; no false current-byte relabel.",
+      "downstreamConsumer": "Review02 rehash and manager current runtime rebuild.",
+      "proposedClassification": "accepted",
+      "classification": "accepted",
+      "managerReason": "Necessary bounded technical integration under existing owner screenshot preservation; current independent handoff and required checks clean; no new product intent."
+    }
+  ]
+}

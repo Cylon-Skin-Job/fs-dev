@@ -1,0 +1,3278 @@
+[
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/acceptance-repair-focused-1.log",
+    "sha256": "cda6935475a8e5270627a95bd96fb101877f323b821a62fda53fb2e1145a7e00",
+    "runs": [
+      {
+        "runId": "server-focused-1790251717488-3e8274a0",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-focused-1790251717488-3e8274a0",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-focused-1790251717488-3e8274a0/launcher-result.json",
+            "result": {
+              "runId": "server-focused-1790251717488-3e8274a0",
+              "kind": "server-focused",
+              "mode": null,
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 70365,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 8671
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-focused-1790251717488-3e8274a0/result.json",
+            "result": {
+              "runId": "server-focused-1790251717488-3e8274a0",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 70503,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 7283
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/actions-1.log",
+    "sha256": "d95a016e7ff859585e68169ad922750e0e3293e0ba29dd7aade4917fe7c74657",
+    "runs": [
+      {
+        "runId": "chat-arch-1790246814226-37d367e66f",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790246814226-37d367e66f",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790246814226-37d367e66f/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790246814226-37d367e66f",
+              "status": "failed",
+              "results": [
+                {
+                  "id": "R5-R6-PUBLIC-ACTIONS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 39641,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 44774
+                },
+                {
+                  "id": "R5-CURRENT-ACTIONS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 44998,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 14585
+                },
+                {
+                  "id": "R6-PRODUCTION-ACTION-OWNER",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 46887,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 45535
+                },
+                {
+                  "id": "R5-DIAGNOSTIC-APPEND",
+                  "code": 1,
+                  "signal": null,
+                  "pid": 52299,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 39026
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": {
+                "name": "Error",
+                "message": "R5-DIAGNOSTIC-APPEND exited 1",
+                "stack": "Error: R5-DIAGNOSTIC-APPEND exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:446:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/actions-2.log",
+    "sha256": "520d1d163940f348494f183477f5f2b8585620da9b3efa67c494056e3758eef9",
+    "runs": [
+      {
+        "runId": "chat-arch-1790247088404-eae1bfed3d",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790247088404-eae1bfed3d",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790247088404-eae1bfed3d/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790247088404-eae1bfed3d",
+              "status": "passed",
+              "results": [
+                {
+                  "id": "R5-R6-PUBLIC-ACTIONS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 56792,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 45203
+                },
+                {
+                  "id": "R5-CURRENT-ACTIONS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 62198,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 14587
+                },
+                {
+                  "id": "R6-PRODUCTION-ACTION-OWNER",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 64084,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 45562
+                },
+                {
+                  "id": "R5-DIAGNOSTIC-APPEND",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 69606,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 3355
+                },
+                {
+                  "id": "R5-CURRENT-OWNER",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 70013,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 2782
+                },
+                {
+                  "id": "R6-LIFETIME-BOUNDARIES",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 70349,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 45001
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": null
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/actions-3.log",
+    "sha256": "e9cfff1aa563a2059cfccee740dce7de4c91912d19c5ad69e280248bb0b16ad9",
+    "runs": [
+      {
+        "runId": "chat-arch-1790249291578-eec390bbc5",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790249291578-eec390bbc5",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790249291578-eec390bbc5/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790249291578-eec390bbc5",
+              "status": "passed",
+              "results": [
+                {
+                  "id": "R5-R6-PUBLIC-ACTIONS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 34374,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 44936
+                },
+                {
+                  "id": "R5-CURRENT-ACTIONS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 39788,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 14739
+                },
+                {
+                  "id": "R6-PRODUCTION-ACTION-OWNER",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 41754,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 44944
+                },
+                {
+                  "id": "R5-DIAGNOSTIC-APPEND",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 47116,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 3442
+                },
+                {
+                  "id": "R5-CURRENT-OWNER",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 47540,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 2683
+                },
+                {
+                  "id": "R6-LIFETIME-BOUNDARIES",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 47866,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 44471
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": null
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/actions-4.log",
+    "sha256": "fb6febcc03104fa499134ac53110ae769560bf97b03d61610fe333ea15cd2cad",
+    "runs": [
+      {
+        "runId": "chat-arch-1790252112173-0c32ecfc1a",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790252112173-0c32ecfc1a",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790252112173-0c32ecfc1a/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790252112173-0c32ecfc1a",
+              "status": "passed",
+              "results": [
+                {
+                  "id": "R5-R6-PUBLIC-ACTIONS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 6053,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 46981
+                },
+                {
+                  "id": "R5-CURRENT-ACTIONS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 11668,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 14724
+                },
+                {
+                  "id": "R6-PRODUCTION-ACTION-OWNER",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 13571,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 44751
+                },
+                {
+                  "id": "R5-DIAGNOSTIC-APPEND",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 18913,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 3411
+                },
+                {
+                  "id": "R5-CURRENT-OWNER",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 19322,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 2832
+                },
+                {
+                  "id": "R6-LIFETIME-BOUNDARIES",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 19675,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 48121
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": null
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/actions-5.log",
+    "sha256": "8a51972c05dd0f75e9d903baae0861d037e47c63d663c6f423f87d0fdd32aa95",
+    "runs": [
+      {
+        "runId": "chat-arch-1790254605946-9c9da2f6e0",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790254605946-9c9da2f6e0",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790254605946-9c9da2f6e0/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790254605946-9c9da2f6e0",
+              "status": "passed",
+              "results": [
+                {
+                  "id": "R5-R6-PUBLIC-ACTIONS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 6040,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 44478
+                },
+                {
+                  "id": "R5-CURRENT-ACTIONS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 11390,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 14656
+                },
+                {
+                  "id": "R6-PRODUCTION-ACTION-OWNER",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 13286,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 45765
+                },
+                {
+                  "id": "R5-DIAGNOSTIC-APPEND",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 18743,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 3271
+                },
+                {
+                  "id": "R5-CURRENT-OWNER",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 19139,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 2771
+                },
+                {
+                  "id": "R6-LIFETIME-BOUNDARIES",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 19477,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 45750
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": null
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/architecture-1.log",
+    "sha256": "18e9973fc21dd13b3a7847b361ae1abce2af367595efa7b05f28bd93a9b3c22e",
+    "runs": []
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/architecture-2.log",
+    "sha256": "9ef6d42604d7de44820c505df4973558bf43a898dfb64a6cdd2fe46566443a79",
+    "runs": []
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/architecture-lifecycle-final-2.log",
+    "sha256": "f72739aeaddc268ec176e7bc1c05c170a5463db4cd615485596f34949d247c59",
+    "runs": []
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/architecture-lifecycle-final-3.log",
+    "sha256": "174b86deb075888d05287c5875b9ffd6b50e10090369d917a0dd451b2b001cf5",
+    "runs": []
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/architecture-lifecycle-final-4.log",
+    "sha256": "1772e96199b034e1bee813a642eec8eb8139e9c377b0f82b4164d871ac5fabf3",
+    "runs": []
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/architecture-lifecycle-final.log",
+    "sha256": "09e34a1a9c9d23a94651daaceeef2c71be3e17d323b6a02d374f30edd7b3737f",
+    "runs": []
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/backend-2.log",
+    "sha256": "9ad5174e85149864cca7ab9f26199439858c6de5df8d4967fd88e122a7fc8d67",
+    "runs": [
+      {
+        "runId": "chat-arch-1790244629328-7abb2724a4",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790244629328-7abb2724a4",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790244629328-7abb2724a4/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790244629328-7abb2724a4",
+              "status": "failed",
+              "results": [
+                {
+                  "id": "R7-R8-RUNTIME-OWNERSHIP",
+                  "code": 1,
+                  "signal": null,
+                  "pid": 50113,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 6015
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": {
+                "name": "Error",
+                "message": "R7-R8-RUNTIME-OWNERSHIP exited 1",
+                "stack": "Error: R7-R8-RUNTIME-OWNERSHIP exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:422:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+              }
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790244629328-7abb2724a4/session-lifecycle/result.json",
+            "result": {
+              "runId": "R7-R8-RUNTIME-OWNERSHIP",
+              "status": "failed",
+              "result": {
+                "code": 1,
+                "signal": null,
+                "pid": 50214,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 4943
+              },
+              "failure": "focused backend exit=1, timeout=false, interrupted=false, leaked=",
+              "ownedRunRootRemoved": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/backend-3.log",
+    "sha256": "049e8b7e08cb1e820721fe73b5c495804399995638d3d375379538a9dff4bdf3",
+    "runs": [
+      {
+        "runId": "chat-arch-1790244675844-4a1b698527",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790244675844-4a1b698527",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790244675844-4a1b698527/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790244675844-4a1b698527",
+              "status": "failed",
+              "results": [
+                {
+                  "id": "R7-R8-RUNTIME-OWNERSHIP",
+                  "code": 1,
+                  "signal": null,
+                  "pid": 51277,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 12080
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": {
+                "name": "Error",
+                "message": "R7-R8-RUNTIME-OWNERSHIP exited 1",
+                "stack": "Error: R7-R8-RUNTIME-OWNERSHIP exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:422:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+              }
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790244675844-4a1b698527/session-lifecycle/result.json",
+            "result": {
+              "runId": "R7-R8-RUNTIME-OWNERSHIP",
+              "status": "failed",
+              "result": {
+                "code": 1,
+                "signal": null,
+                "pid": 51334,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 11381
+              },
+              "failure": "focused backend exit=1, timeout=false, interrupted=false, leaked=",
+              "ownedRunRootRemoved": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/backend-full-1.log",
+    "sha256": "e925d44d30c137fe7f2181d52cbf698a4ebaf9fb213b88bb5153d802fed6cc2e",
+    "runs": [
+      {
+        "runId": "chat-arch-1790245295723-9495e3d1b9",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790245295723-9495e3d1b9",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790245295723-9495e3d1b9/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790245295723-9495e3d1b9",
+              "status": "failed",
+              "results": [
+                {
+                  "id": "R8-OWNER-GRAPH",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 82900,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 124
+                },
+                {
+                  "id": "R8-UI-LIFECYCLE",
+                  "code": 1,
+                  "signal": null,
+                  "pid": 82924,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 34477
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": {
+                "name": "Error",
+                "message": "R8-UI-LIFECYCLE exited 1",
+                "stack": "Error: R8-UI-LIFECYCLE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:434:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/backend-full-10.log",
+    "sha256": "45bc74ff24166fc93d443fecca008d97c6efb469d5a24b8c447659c57fc475f8",
+    "runs": [
+      {
+        "runId": "chat-arch-1790251760536-8eb47164cc",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790251760536-8eb47164cc",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790251760536-8eb47164cc/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790251760536-8eb47164cc",
+              "status": "passed",
+              "results": [
+                {
+                  "id": "R8-OWNER-GRAPH",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 71796,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 119
+                },
+                {
+                  "id": "R8-EXACT-MEMBER-HYDRATION",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 71820,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 1574
+                },
+                {
+                  "id": "R8-UI-LIFECYCLE",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 72012,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 9865
+                },
+                {
+                  "id": "R7-R8-RUNTIME-OWNERSHIP",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 73268,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 13039
+                },
+                {
+                  "id": "R8-MIRROR-RECOVERY",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 75142,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 12269
+                },
+                {
+                  "id": "R8-SESSION-LIFECYCLE",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 76940,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 9924
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": null
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790251760536-8eb47164cc/r8-mirror-recovery/result.json",
+            "result": {
+              "runId": "R8-MIRROR-RECOVERY",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 75210,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 11485
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790251760536-8eb47164cc/r7-r8-runtime-ownership/result.json",
+            "result": {
+              "runId": "R7-R8-RUNTIME-OWNERSHIP",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 73358,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 12055
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790251760536-8eb47164cc/r8-session-lifecycle/result.json",
+            "result": {
+              "runId": "R8-SESSION-LIFECYCLE",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 77019,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 9051
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/backend-full-11.log",
+    "sha256": "9b0bc1ea9bb9dbe091626dc8245c8cd6e8ec2f2b24d7deeaf8d5b663e98a26da",
+    "runs": [
+      {
+        "runId": "chat-arch-1790251945970-12d0d6a6bd",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790251945970-12d0d6a6bd",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790251945970-12d0d6a6bd/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790251945970-12d0d6a6bd",
+              "status": "passed",
+              "results": [
+                {
+                  "id": "R8-OWNER-GRAPH",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 88875,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 121
+                },
+                {
+                  "id": "R8-EXACT-MEMBER-HYDRATION",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 88899,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 1366
+                },
+                {
+                  "id": "R8-UI-LIFECYCLE",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 89068,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 9072
+                },
+                {
+                  "id": "R7-R8-RUNTIME-OWNERSHIP",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 90226,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 12929
+                },
+                {
+                  "id": "R8-MIRROR-RECOVERY",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 92109,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 12313
+                },
+                {
+                  "id": "R8-SESSION-LIFECYCLE",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 93936,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 9742
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": null
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790251945970-12d0d6a6bd/r8-mirror-recovery/result.json",
+            "result": {
+              "runId": "R8-MIRROR-RECOVERY",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 92177,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 11517
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790251945970-12d0d6a6bd/r7-r8-runtime-ownership/result.json",
+            "result": {
+              "runId": "R7-R8-RUNTIME-OWNERSHIP",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 90305,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 12038
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790251945970-12d0d6a6bd/r8-session-lifecycle/result.json",
+            "result": {
+              "runId": "R8-SESSION-LIFECYCLE",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 94004,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 8962
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/backend-full-12.log",
+    "sha256": "6e44e7820e4c1129b83fab6c3a35c7dc7b97da97b256aa5bdd078da2bf9dde1f",
+    "runs": [
+      {
+        "runId": "chat-arch-1790254437535-3ca8f0d2af",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790254437535-3ca8f0d2af",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790254437535-3ca8f0d2af/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790254437535-3ca8f0d2af",
+              "status": "passed",
+              "results": [
+                {
+                  "id": "R8-OWNER-GRAPH",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 88688,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 119
+                },
+                {
+                  "id": "R8-EXACT-MEMBER-HYDRATION",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 88712,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 1417
+                },
+                {
+                  "id": "R8-UI-LIFECYCLE",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 88900,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 10536
+                },
+                {
+                  "id": "R7-R8-RUNTIME-OWNERSHIP",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 90231,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 12912
+                },
+                {
+                  "id": "R8-MIRROR-RECOVERY",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 92106,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 12314
+                },
+                {
+                  "id": "R8-SESSION-LIFECYCLE",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 93920,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 9808
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": null
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790254437535-3ca8f0d2af/r8-mirror-recovery/result.json",
+            "result": {
+              "runId": "R8-MIRROR-RECOVERY",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 92174,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 11538
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790254437535-3ca8f0d2af/r7-r8-runtime-ownership/result.json",
+            "result": {
+              "runId": "R7-R8-RUNTIME-OWNERSHIP",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 90310,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 12020
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790254437535-3ca8f0d2af/r8-session-lifecycle/result.json",
+            "result": {
+              "runId": "R8-SESSION-LIFECYCLE",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 93988,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 9075
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/backend-full-2.log",
+    "sha256": "b2aecdc963220598391b85f748fa84228ab7da4cfa160e24861b69a0943f74c5",
+    "runs": [
+      {
+        "runId": "chat-arch-1790245830645-882e3cf27d",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790245830645-882e3cf27d",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790245830645-882e3cf27d/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790245830645-882e3cf27d",
+              "status": "failed",
+              "results": [
+                {
+                  "id": "R8-OWNER-GRAPH",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 2715,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 122
+                },
+                {
+                  "id": "R8-UI-LIFECYCLE",
+                  "code": 1,
+                  "signal": null,
+                  "pid": 2739,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 37509
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": {
+                "name": "Error",
+                "message": "R8-UI-LIFECYCLE exited 1",
+                "stack": "Error: R8-UI-LIFECYCLE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:437:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/backend-full-3.log",
+    "sha256": "e8748b8c48253c018985da3ae79e33d142191d59bfba542f49d69c08aaac311a",
+    "runs": [
+      {
+        "runId": "chat-arch-1790245931419-62e458802d",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790245931419-62e458802d",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790245931419-62e458802d/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790245931419-62e458802d",
+              "status": "failed",
+              "results": [
+                {
+                  "id": "R8-OWNER-GRAPH",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 7128,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 117
+                },
+                {
+                  "id": "R8-UI-LIFECYCLE",
+                  "code": 1,
+                  "signal": null,
+                  "pid": 7152,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 38467
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": {
+                "name": "Error",
+                "message": "R8-UI-LIFECYCLE exited 1",
+                "stack": "Error: R8-UI-LIFECYCLE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:437:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/backend-full-4.log",
+    "sha256": "8fe33a403a0d35b41b2c179cbd0f28cd3d2e615a884d83249ce61477f3414506",
+    "runs": [
+      {
+        "runId": "chat-arch-1790246487619-de4a8806fe",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790246487619-de4a8806fe",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790246487619-de4a8806fe/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790246487619-de4a8806fe",
+              "status": "failed",
+              "results": [
+                {
+                  "id": "R8-OWNER-GRAPH",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 16161,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 123
+                },
+                {
+                  "id": "R8-UI-LIFECYCLE",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 16185,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 10664
+                },
+                {
+                  "id": "R7-R8-RUNTIME-OWNERSHIP",
+                  "code": 1,
+                  "signal": null,
+                  "pid": 17531,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 12889
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": {
+                "name": "Error",
+                "message": "R7-R8-RUNTIME-OWNERSHIP exited 1",
+                "stack": "Error: R7-R8-RUNTIME-OWNERSHIP exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:437:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+              }
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790246487619-de4a8806fe/session-lifecycle/result.json",
+            "result": {
+              "runId": "R7-R8-RUNTIME-OWNERSHIP",
+              "status": "failed",
+              "result": {
+                "code": 1,
+                "signal": null,
+                "pid": 17610,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 11969
+              },
+              "failure": "focused backend exit=1, timeout=false, interrupted=false, leaked=",
+              "ownedRunRootRemoved": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/backend-full-5.log",
+    "sha256": "8425679a37d6c4cd52fd1ed894e84a9afdc9e73f0783d287dcab78b35548e062",
+    "runs": [
+      {
+        "runId": "chat-arch-1790246583792-5c6619e306",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790246583792-5c6619e306",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790246583792-5c6619e306/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790246583792-5c6619e306",
+              "status": "failed",
+              "results": [
+                {
+                  "id": "R8-OWNER-GRAPH",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 19472,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 119
+                },
+                {
+                  "id": "R8-UI-LIFECYCLE",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 19496,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 9401
+                },
+                {
+                  "id": "R7-R8-RUNTIME-OWNERSHIP",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 20691,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 12317
+                },
+                {
+                  "id": "R8-MIRROR-RECOVERY",
+                  "code": 1,
+                  "signal": null,
+                  "pid": 22500,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 654
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": {
+                "name": "Error",
+                "message": "R8-MIRROR-RECOVERY exited 1",
+                "stack": "Error: R8-MIRROR-RECOVERY exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:437:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+              }
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790246583792-5c6619e306/session-lifecycle/result.json",
+            "result": {
+              "runId": "R7-R8-RUNTIME-OWNERSHIP",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 20759,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 11512
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/backend-full-6.log",
+    "sha256": "d73f40891e88a716326cd1a77ce87809e90663281ac578cbba9eaefb3a34481e",
+    "runs": [
+      {
+        "runId": "chat-arch-1790246658557-26c2b4b933",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790246658557-26c2b4b933",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790246658557-26c2b4b933/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790246658557-26c2b4b933",
+              "status": "passed",
+              "results": [
+                {
+                  "id": "R8-OWNER-GRAPH",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 22643,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 118
+                },
+                {
+                  "id": "R8-EXACT-MEMBER-HYDRATION",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 22667,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 1669
+                },
+                {
+                  "id": "R8-UI-LIFECYCLE",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 22864,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 8875
+                },
+                {
+                  "id": "R7-R8-RUNTIME-OWNERSHIP",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 24000,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 12574
+                },
+                {
+                  "id": "R8-MIRROR-RECOVERY",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 25833,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 12154
+                },
+                {
+                  "id": "R8-SESSION-LIFECYCLE",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 27621,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 9975
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": null
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790246658557-26c2b4b933/r8-mirror-recovery/result.json",
+            "result": {
+              "runId": "R8-MIRROR-RECOVERY",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 25890,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 11406
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790246658557-26c2b4b933/r7-r8-runtime-ownership/result.json",
+            "result": {
+              "runId": "R7-R8-RUNTIME-OWNERSHIP",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 24068,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 11776
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790246658557-26c2b4b933/r8-session-lifecycle/result.json",
+            "result": {
+              "runId": "R8-SESSION-LIFECYCLE",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 27689,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 9141
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/backend-full-7.log",
+    "sha256": "9155f50526da253f9b62a605bd541aa7957d169c54ac27e5fdf2e22ed3a42651",
+    "runs": [
+      {
+        "runId": "chat-arch-1790247358232-7e15aa5250",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790247358232-7e15aa5250",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790247358232-7e15aa5250/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790247358232-7e15aa5250",
+              "status": "passed",
+              "results": [
+                {
+                  "id": "R8-OWNER-GRAPH",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 85570,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 127
+                },
+                {
+                  "id": "R8-EXACT-MEMBER-HYDRATION",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 85597,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 1475
+                },
+                {
+                  "id": "R8-UI-LIFECYCLE",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 85777,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 10222
+                },
+                {
+                  "id": "R7-R8-RUNTIME-OWNERSHIP",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 87079,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 12973
+                },
+                {
+                  "id": "R8-MIRROR-RECOVERY",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 88960,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 12251
+                },
+                {
+                  "id": "R8-SESSION-LIFECYCLE",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 90752,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 9785
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": null
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790247358232-7e15aa5250/r8-mirror-recovery/result.json",
+            "result": {
+              "runId": "R8-MIRROR-RECOVERY",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 89017,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 11511
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790247358232-7e15aa5250/r7-r8-runtime-ownership/result.json",
+            "result": {
+              "runId": "R7-R8-RUNTIME-OWNERSHIP",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 87147,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 12126
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790247358232-7e15aa5250/r8-session-lifecycle/result.json",
+            "result": {
+              "runId": "R8-SESSION-LIFECYCLE",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 90820,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 8966
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/backend-full-8.log",
+    "sha256": "1eefde29a5da18cb3c173e9c9bb78bc33d737e46268d33faaf2f39d058164417",
+    "runs": [
+      {
+        "runId": "chat-arch-1790248507344-b53a576c8d",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790248507344-b53a576c8d",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790248507344-b53a576c8d/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790248507344-b53a576c8d",
+              "status": "failed",
+              "results": [
+                {
+                  "id": "R8-OWNER-GRAPH",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 134,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 132
+                },
+                {
+                  "id": "R8-EXACT-MEMBER-HYDRATION",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 158,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 1485
+                },
+                {
+                  "id": "R8-UI-LIFECYCLE",
+                  "code": 1,
+                  "signal": null,
+                  "pid": 370,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 915
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": {
+                "name": "Error",
+                "message": "R8-UI-LIFECYCLE exited 1",
+                "stack": "Error: R8-UI-LIFECYCLE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:446:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/backend-full-9.log",
+    "sha256": "67d793588c03e39f05376f8fb17e41502a5c47cc34edfd77d6530af849a939c0",
+    "runs": [
+      {
+        "runId": "chat-arch-1790248665103-80b19e0572",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790248665103-80b19e0572",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790248665103-80b19e0572/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790248665103-80b19e0572",
+              "status": "passed",
+              "results": [
+                {
+                  "id": "R8-OWNER-GRAPH",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 670,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 125
+                },
+                {
+                  "id": "R8-EXACT-MEMBER-HYDRATION",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 700,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 1425
+                },
+                {
+                  "id": "R8-UI-LIFECYCLE",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 903,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 10684
+                },
+                {
+                  "id": "R7-R8-RUNTIME-OWNERSHIP",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 2269,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 13105
+                },
+                {
+                  "id": "R8-MIRROR-RECOVERY",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 4212,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 12372
+                },
+                {
+                  "id": "R8-SESSION-LIFECYCLE",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 6009,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 9899
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": null
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790248665103-80b19e0572/r8-mirror-recovery/result.json",
+            "result": {
+              "runId": "R8-MIRROR-RECOVERY",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 4291,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 11511
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790248665103-80b19e0572/r7-r8-runtime-ownership/result.json",
+            "result": {
+              "runId": "R7-R8-RUNTIME-OWNERSHIP",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 2361,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 12105
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790248665103-80b19e0572/r8-session-lifecycle/result.json",
+            "result": {
+              "runId": "R8-SESSION-LIFECYCLE",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 6077,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 9097
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/backend-initial.log",
+    "sha256": "69c615e3913d0ee51e3d768a834aeb5c2d4a43b098c811d68c9a5a185c05d645",
+    "runs": [
+      {
+        "runId": "chat-arch-1790244550231-92bf59817d",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790244550231-92bf59817d",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790244550231-92bf59817d/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790244550231-92bf59817d",
+              "status": "failed",
+              "results": [
+                {
+                  "id": "R7-R8-RUNTIME-OWNERSHIP",
+                  "code": 130,
+                  "signal": null,
+                  "pid": 42912,
+                  "timedOut": false,
+                  "interrupted": true,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 64392
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": {
+                "name": "Error",
+                "message": "R7-R8-RUNTIME-OWNERSHIP interrupted",
+                "stack": "Error: R7-R8-RUNTIME-OWNERSHIP interrupted\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:420:49"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/build-2.log",
+    "sha256": "a5246cc2392b0407ea39617172737747695a937348dfcaa45b74524685415a53",
+    "runs": []
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/build-3.log",
+    "sha256": "9915c29aa08502b406457cd128b71cb17a2794067a7a164675cf2a39c1c8034e",
+    "runs": []
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/build-4.log",
+    "sha256": "f0d5293a9dc4c75ddd9a4aa78eeafc353bef9f92068b0cbf983a93827df6921a",
+    "runs": []
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/build-5.log",
+    "sha256": "7a7cb8afdef72d5f08b0cf3f6e203400a7c747d82a995570f98d5855c764a4e2",
+    "runs": []
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/build.log",
+    "sha256": "cdfed60e27bc33e058ea3011143d21e4afc62f06762f0f4c272b0520ddb07b63",
+    "runs": []
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/final-repair-focused-1.log",
+    "sha256": "f89b1f8663ce7d48b06f20b54dcb22433d6d299421a9ccf2749fc811166df608",
+    "runs": [
+      {
+        "runId": "server-focused-1790254221080-9dc13c50",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-focused-1790254221080-9dc13c50",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-focused-1790254221080-9dc13c50/launcher-result.json",
+            "result": {
+              "runId": "server-focused-1790254221080-9dc13c50",
+              "kind": "server-focused",
+              "mode": null,
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 87285,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 7894
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-focused-1790254221080-9dc13c50/result.json",
+            "result": {
+              "runId": "server-focused-1790254221080-9dc13c50",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 87355,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 7091
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/fresh-workspace-baseline-2.log",
+    "sha256": "194c988a2d5afc4c85095fb21f6e972148aa00a0b70bcd2b1696fd591600a443",
+    "runs": []
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/fresh-workspace-baseline.log",
+    "sha256": "2c47b8f723ab1806fca3b9695e1a45d2451a10894d38cf206f932c21cbba45db",
+    "runs": []
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/late-draft-diagnostic-1.log",
+    "sha256": "adda6558f68bd8887c84aec9f58b315c881c81c09b200bab07ae719afb2cc657",
+    "runs": [
+      {
+        "runId": "chat-arch-1790248915365-db12557df3",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790248915365-db12557df3",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790248915365-db12557df3/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790248915365-db12557df3",
+              "status": "passed",
+              "results": [
+                {
+                  "id": "R4-LATE-DRAFT-RECOVERY",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 17269,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 27017
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": null
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/late-draft-diagnostic-2.log",
+    "sha256": "15cb8cbcf37a1d65bfa07cd5a58b6b0c12d76be296c178fae93ccfcb6b12cf8c",
+    "runs": [
+      {
+        "runId": "chat-arch-1790248982204-069a98a1df",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790248982204-069a98a1df",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790248982204-069a98a1df/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790248982204-069a98a1df",
+              "status": "passed",
+              "results": [
+                {
+                  "id": "R4-LATE-DRAFT-RECOVERY",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 20583,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 26962
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": null
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/orchestrator-f1-recovery.log",
+    "sha256": "d259e19544ab44786cdd9895786393a9f42e90fffbc339bb9177e9d482182792",
+    "runs": []
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/orchestrator-review-01-repro.log",
+    "sha256": "a7f04e93c6f95c62adbd159cfa50f39aa913a63fdcdd15bffe4f3b0c020e0750",
+    "runs": []
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/orchestrator-targeted-1.log",
+    "sha256": "047ab67c336f5c6127e51cf5b532e71482ee1e6cc61122f2a18459b62bd1394a",
+    "runs": [
+      {
+        "runId": "chat-arch-1790247537174-b95b0beb6c",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790247537174-b95b0beb6c",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790247537174-b95b0beb6c/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790247537174-b95b0beb6c",
+              "status": "passed",
+              "results": [
+                {
+                  "id": "R8-OWNER-GRAPH",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 94345,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 117
+                },
+                {
+                  "id": "R8-EXACT-MEMBER-HYDRATION",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 94369,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 1368
+                },
+                {
+                  "id": "R8-UI-LIFECYCLE",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 94537,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 9444
+                },
+                {
+                  "id": "R7-R8-RUNTIME-OWNERSHIP",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 95847,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 12922
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": null
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790247537174-b95b0beb6c/r7-r8-runtime-ownership/result.json",
+            "result": {
+              "runId": "R7-R8-RUNTIME-OWNERSHIP",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 95920,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 12095
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/orchestrator-targeted-2.log",
+    "sha256": "564a329e602ae7274be9dca813ebe00ae88c25a9a01611e83d2bf52445baf447",
+    "runs": [
+      {
+        "runId": "chat-arch-1790249623519-aef785127e",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790249623519-aef785127e",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790249623519-aef785127e/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790249623519-aef785127e",
+              "status": "passed",
+              "results": [
+                {
+                  "id": "R8-UI-LIFECYCLE",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 65026,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 10609
+                },
+                {
+                  "id": "R7-R8-RUNTIME-OWNERSHIP",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 66388,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 12890
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": null
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790249623519-aef785127e/r7-r8-runtime-ownership/result.json",
+            "result": {
+              "runId": "R7-R8-RUNTIME-OWNERSHIP",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 66456,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 12075
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/orchestrator-targeted-3.log",
+    "sha256": "8262f131fc379ae99b775c95d8ced23ca51981873666e76f26fcc022f2f2d8eb",
+    "runs": [
+      {
+        "runId": "chat-arch-1790252475283-525765dfb8",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790252475283-525765dfb8",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790252475283-525765dfb8/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790252475283-525765dfb8",
+              "status": "passed",
+              "results": [
+                {
+                  "id": "R8-UI-LIFECYCLE",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 37112,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 9607
+                },
+                {
+                  "id": "R7-R8-RUNTIME-OWNERSHIP",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 38338,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 12896
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": null
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790252475283-525765dfb8/r7-r8-runtime-ownership/result.json",
+            "result": {
+              "runId": "R7-R8-RUNTIME-OWNERSHIP",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 38408,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 12066
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/orchestrator-targeted-4.log",
+    "sha256": "8e66f0e07596eda26b49bc4dce3be4ab2aa922b23d5ef4b7e08a76844b110c9c",
+    "runs": [
+      {
+        "runId": "chat-arch-1790254963625-4c3ac1a639",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790254963625-4c3ac1a639",
+        "results": []
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/review1-focused-1.log",
+    "sha256": "75f9d73d852fd34082c3ed5246fe5dff7f77f905b3fbe10aafcfd33f86781f1c",
+    "runs": [
+      {
+        "runId": "server-focused-1790248420813-73051354",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-focused-1790248420813-73051354",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-focused-1790248420813-73051354/launcher-result.json",
+            "result": {
+              "runId": "server-focused-1790248420813-73051354",
+              "kind": "server-focused",
+              "mode": null,
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 98562,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 8634
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-focused-1790248420813-73051354/result.json",
+            "result": {
+              "runId": "server-focused-1790248420813-73051354",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 98705,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 7274
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/server-full-1.log",
+    "sha256": "6888e72a464dcb35fc15cd68884e26350bd82c7abe8d6fd0b786dc8c96b69717",
+    "runs": [
+      {
+        "runId": "server-full-1790244792742-eebc838e",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-full-1790244792742-eebc838e",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-full-1790244792742-eebc838e/launcher-result.json",
+            "result": {
+              "runId": "server-full-1790244792742-eebc838e",
+              "kind": "server-full",
+              "mode": null,
+              "result": {
+                "code": 1,
+                "signal": null,
+                "pid": 53189,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 81810
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-full-1790244792742-eebc838e/result.json",
+            "result": {
+              "runId": "server-full-1790244792742-eebc838e",
+              "status": "failed",
+              "result": {
+                "code": 1,
+                "signal": null,
+                "pid": 53257,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 80966
+              },
+              "failure": "focused backend exit=1, timeout=false, interrupted=false, leaked=",
+              "ownedRunRootRemoved": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/server-full-2.log",
+    "sha256": "2fd5752752fbb5a03ede267cfff78ec04c8d6d34fa806304abe8b39e0fed9d66",
+    "runs": [
+      {
+        "runId": "server-full-1790244924373-ef8da64b",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-full-1790244924373-ef8da64b",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-full-1790244924373-ef8da64b/launcher-result.json",
+            "result": {
+              "runId": "server-full-1790244924373-ef8da64b",
+              "kind": "server-full",
+              "mode": null,
+              "result": {
+                "code": 1,
+                "signal": null,
+                "pid": 63257,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 79178
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-full-1790244924373-ef8da64b/result.json",
+            "result": {
+              "runId": "server-full-1790244924373-ef8da64b",
+              "status": "failed",
+              "result": {
+                "code": 1,
+                "signal": null,
+                "pid": 63400,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 77674
+              },
+              "failure": "focused backend exit=1, timeout=false, interrupted=false, leaked=",
+              "ownedRunRootRemoved": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/server-full-3.log",
+    "sha256": "a5e735da06c4e959a7a877448dae2dabd15620b946be7cb256316e4e4bb7da3d",
+    "runs": [
+      {
+        "runId": "server-full-1790245073906-c8b2740a",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-full-1790245073906-c8b2740a",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-full-1790245073906-c8b2740a/launcher-result.json",
+            "result": {
+              "runId": "server-full-1790245073906-c8b2740a",
+              "kind": "server-full",
+              "mode": null,
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 73161,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 77838
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-full-1790245073906-c8b2740a/result.json",
+            "result": {
+              "runId": "server-full-1790245073906-c8b2740a",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 73276,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 76592
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/server-full-4.log",
+    "sha256": "e50cd80185666784c8c986907af3894b5b99a8146603f4f102f3cfb4d995f5ff",
+    "runs": [
+      {
+        "runId": "server-full-1790247257988-f913eb92",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-full-1790247257988-f913eb92",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-full-1790247257988-f913eb92/launcher-result.json",
+            "result": {
+              "runId": "server-full-1790247257988-f913eb92",
+              "kind": "server-full",
+              "mode": null,
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 75737,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 79126
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-full-1790247257988-f913eb92/result.json",
+            "result": {
+              "runId": "server-full-1790247257988-f913eb92",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 75851,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 77819
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/server-full-5.log",
+    "sha256": "723eea0cc726cded18d2699f4582fe24a57313ac7288327dc9a73669f0eedcd6",
+    "runs": [
+      {
+        "runId": "server-full-1790249472433-a074af07",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-full-1790249472433-a074af07",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-full-1790249472433-a074af07/launcher-result.json",
+            "result": {
+              "runId": "server-full-1790249472433-a074af07",
+              "kind": "server-full",
+              "mode": null,
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 53236,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 78584
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-full-1790249472433-a074af07/result.json",
+            "result": {
+              "runId": "server-full-1790249472433-a074af07",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 53337,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 77345
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/server-full-6.log",
+    "sha256": "1fd93f5769c380db348c887b5f13540b8b525c4b59faeed564bdf9eeaf174cc3",
+    "runs": [
+      {
+        "runId": "server-full-1790252292977-ba95081d",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-full-1790252292977-ba95081d",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-full-1790252292977-ba95081d/launcher-result.json",
+            "result": {
+              "runId": "server-full-1790252292977-ba95081d",
+              "kind": "server-full",
+              "mode": null,
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 25411,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 78766
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-full-1790252292977-ba95081d/result.json",
+            "result": {
+              "runId": "server-full-1790252292977-ba95081d",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 25512,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 77530
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/server-full-7.log",
+    "sha256": "89cafb0d9a8c6e7a76cfd961d6922a271eef44847c24453668f491e68eac4361",
+    "runs": [
+      {
+        "runId": "server-full-1790254787486-e84370cd",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-full-1790254787486-e84370cd",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-full-1790254787486-e84370cd/launcher-result.json",
+            "result": {
+              "runId": "server-full-1790254787486-e84370cd",
+              "kind": "server-full",
+              "mode": null,
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 24948,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 78123
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          },
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/server-full-1790254787486-e84370cd/result.json",
+            "result": {
+              "runId": "server-full-1790254787486-e84370cd",
+              "status": "passed",
+              "result": {
+                "code": 0,
+                "signal": null,
+                "pid": 25060,
+                "timedOut": false,
+                "interrupted": false,
+                "leakedOwnedPids": [],
+                "elapsedMs": 76815
+              },
+              "failure": null,
+              "ownedRunRootRemoved": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/submit-1.log",
+    "sha256": "7f03d8b0463c9ad7f84b75584a4a2d0804bbf4494032299a4725969222a15fd7",
+    "runs": [
+      {
+        "runId": "chat-arch-1790246715221-5831d058d2",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790246715221-5831d058d2",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790246715221-5831d058d2/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790246715221-5831d058d2",
+              "status": "passed",
+              "results": [
+                {
+                  "id": "R2-NO-ENQUEUE",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 29228,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 6633
+                },
+                {
+                  "id": "R3-LOST-ACK-STATUS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 30237,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 7786
+                },
+                {
+                  "id": "R3-RECONNECT-UI",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 31233,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 11230
+                },
+                {
+                  "id": "R4-DISTINCT-ATTEMPTS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 32626,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 11332
+                },
+                {
+                  "id": "R4-DISTINCT-RECEIPTS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 34025,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 11420
+                },
+                {
+                  "id": "R4-LATE-DRAFT-RECOVERY",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 35438,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 25528
+                },
+                {
+                  "id": "R4-DUPLICATE-MISMATCH",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 38535,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 8413
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": null
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/submit-2.log",
+    "sha256": "40f408eba895ae8953b526f4b6775f42295178e166a5027b5f9183baa6e7f295",
+    "runs": [
+      {
+        "runId": "chat-arch-1790248760785-a2c9cfb94d",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790248760785-a2c9cfb94d",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790248760785-a2c9cfb94d/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790248760785-a2c9cfb94d",
+              "status": "failed",
+              "results": [
+                {
+                  "id": "R2-NO-ENQUEUE",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 7601,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 6952
+                },
+                {
+                  "id": "R3-LOST-ACK-STATUS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 8676,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 7905
+                },
+                {
+                  "id": "R3-RECONNECT-UI",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 9689,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 11122
+                },
+                {
+                  "id": "R4-DISTINCT-ATTEMPTS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 11097,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 10898
+                },
+                {
+                  "id": "R4-DISTINCT-RECEIPTS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 12461,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 11598
+                },
+                {
+                  "id": "R4-LATE-DRAFT-RECOVERY",
+                  "code": 1,
+                  "signal": null,
+                  "pid": 13887,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 26874
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": {
+                "name": "Error",
+                "message": "R4-LATE-DRAFT-RECOVERY exited 1",
+                "stack": "Error: R4-LATE-DRAFT-RECOVERY exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:446:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/submit-3.log",
+    "sha256": "7f72771f04f233ab36fa66f562c332706009df0d82a44a2cd6d0c4ce93d6f3a2",
+    "runs": [
+      {
+        "runId": "chat-arch-1790249193906-46d1da44bd",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790249193906-46d1da44bd",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790249193906-46d1da44bd/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790249193906-46d1da44bd",
+              "status": "passed",
+              "results": [
+                {
+                  "id": "R2-NO-ENQUEUE",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 23944,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 7325
+                },
+                {
+                  "id": "R3-LOST-ACK-STATUS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 25051,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 7411
+                },
+                {
+                  "id": "R3-RECONNECT-UI",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 26034,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 10708
+                },
+                {
+                  "id": "R4-DISTINCT-ATTEMPTS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 27365,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 10881
+                },
+                {
+                  "id": "R4-DISTINCT-RECEIPTS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 28712,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 10636
+                },
+                {
+                  "id": "R4-LATE-DRAFT-RECOVERY",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 30037,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 25759
+                },
+                {
+                  "id": "R4-DUPLICATE-MISMATCH",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 33233,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 8538
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": null
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/submit-4.log",
+    "sha256": "8b2adb4570257fa1dc87de2e45cc672630b211d5e62191cfce87bb95d67d7198",
+    "runs": [
+      {
+        "runId": "chat-arch-1790251828847-b87fff2722",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790251828847-b87fff2722",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790251828847-b87fff2722/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790251828847-b87fff2722",
+              "status": "passed",
+              "results": [
+                {
+                  "id": "R2-NO-ENQUEUE",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 78508,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 6302
+                },
+                {
+                  "id": "R3-LOST-ACK-STATUS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 79503,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 7816
+                },
+                {
+                  "id": "R3-RECONNECT-UI",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 80517,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 11294
+                },
+                {
+                  "id": "R4-DISTINCT-ATTEMPTS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 81915,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 11478
+                },
+                {
+                  "id": "R4-DISTINCT-RECEIPTS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 83325,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 10947
+                },
+                {
+                  "id": "R4-LATE-DRAFT-RECOVERY",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 84683,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 25381
+                },
+                {
+                  "id": "R4-DUPLICATE-MISMATCH",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 87751,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 8450
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": null
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/submit-5.log",
+    "sha256": "6e86fdf75afbae7e1a06b5e01a9af7775617f46a26bb2c568c761fef4fc2b33e",
+    "runs": [
+      {
+        "runId": "chat-arch-1790252017169-2772b54853",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790252017169-2772b54853",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790252017169-2772b54853/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790252017169-2772b54853",
+              "status": "passed",
+              "results": [
+                {
+                  "id": "R2-NO-ENQUEUE",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 95505,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 6878
+                },
+                {
+                  "id": "R3-LOST-ACK-STATUS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 96577,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 7249
+                },
+                {
+                  "id": "R3-RECONNECT-UI",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 97529,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 10537
+                },
+                {
+                  "id": "R4-DISTINCT-ATTEMPTS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 98838,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 10779
+                },
+                {
+                  "id": "R4-DISTINCT-RECEIPTS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 278,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 11408
+                },
+                {
+                  "id": "R4-LATE-DRAFT-RECOVERY",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 1817,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 25339
+                },
+                {
+                  "id": "R4-DUPLICATE-MISMATCH",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 4932,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 8495
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": null
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/submit-6.log",
+    "sha256": "4272430de8555d848c5dec3d8ad34c106df695358db059cb93641bf096b9b565",
+    "runs": [
+      {
+        "runId": "chat-arch-1790254505627-e6dcba2009",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790254505627-e6dcba2009",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790254505627-e6dcba2009/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790254505627-e6dcba2009",
+              "status": "passed",
+              "results": [
+                {
+                  "id": "R2-NO-ENQUEUE",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 95487,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 6410
+                },
+                {
+                  "id": "R3-LOST-ACK-STATUS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 96497,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 7087
+                },
+                {
+                  "id": "R3-RECONNECT-UI",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 97432,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 11231
+                },
+                {
+                  "id": "R4-DISTINCT-ATTEMPTS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 98807,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 11303
+                },
+                {
+                  "id": "R4-DISTINCT-RECEIPTS",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 301,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 10588
+                },
+                {
+                  "id": "R4-LATE-DRAFT-RECOVERY",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 1756,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 25892
+                },
+                {
+                  "id": "R4-DUPLICATE-MISMATCH",
+                  "code": 0,
+                  "signal": null,
+                  "pid": 4936,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 8472
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": null
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/ui-2.log",
+    "sha256": "87fdf9a3a671f7c6803bd8b2340d8a2b57b16c7454f284db3b0aa3fe94db5cdd",
+    "runs": []
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/ui-3.log",
+    "sha256": "1eb1d8e2e5057c842127d80fa70e4c03d605211ebe78cc527b8fae8968d1cd52",
+    "runs": [
+      {
+        "runId": "chat-arch-1790245390345-a46ade30c0",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790245390345-a46ade30c0",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790245390345-a46ade30c0/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790245390345-a46ade30c0",
+              "status": "failed",
+              "results": [
+                {
+                  "id": "R8-UI-LIFECYCLE",
+                  "code": 1,
+                  "signal": null,
+                  "pid": 87024,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 37074
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": {
+                "name": "Error",
+                "message": "R8-UI-LIFECYCLE exited 1",
+                "stack": "Error: R8-UI-LIFECYCLE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:434:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/ui-4.log",
+    "sha256": "d2991ed3e7dce48308d3a5bef8012dad655b1219d807faab2fb5ae4a22ec92bc",
+    "runs": [
+      {
+        "runId": "chat-arch-1790245459213-2bd4867181",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790245459213-2bd4867181",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790245459213-2bd4867181/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790245459213-2bd4867181",
+              "status": "failed",
+              "results": [
+                {
+                  "id": "R8-UI-LIFECYCLE",
+                  "code": 1,
+                  "signal": null,
+                  "pid": 91276,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 38648
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": {
+                "name": "Error",
+                "message": "R8-UI-LIFECYCLE exited 1",
+                "stack": "Error: R8-UI-LIFECYCLE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:437:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/ui-5.log",
+    "sha256": "a5ff54f02f3cf708c2cb1c422f3a54eb3bd30c97732adf70483d8c4846628098",
+    "runs": [
+      {
+        "runId": "chat-arch-1790245673483-ca9b3cf2a6",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790245673483-ca9b3cf2a6",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790245673483-ca9b3cf2a6/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790245673483-ca9b3cf2a6",
+              "status": "failed",
+              "results": [
+                {
+                  "id": "R8-UI-LIFECYCLE",
+                  "code": 1,
+                  "signal": null,
+                  "pid": 95908,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 16350
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": {
+                "name": "Error",
+                "message": "R8-UI-LIFECYCLE exited 1",
+                "stack": "Error: R8-UI-LIFECYCLE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:437:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05D/ui-6.log",
+    "sha256": "98401e10f398a82b9a88a48413f9c88b156a9404eaf585a90c48e99f55ae0556",
+    "runs": [
+      {
+        "runId": "chat-arch-1790245773934-1588691e0e",
+        "evidenceRoot": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790245773934-1588691e0e",
+        "results": [
+          {
+            "path": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790245773934-1588691e0e/run-result.json",
+            "result": {
+              "runId": "chat-arch-1790245773934-1588691e0e",
+              "status": "failed",
+              "results": [
+                {
+                  "id": "R8-UI-LIFECYCLE",
+                  "code": 1,
+                  "signal": null,
+                  "pid": 98050,
+                  "timedOut": false,
+                  "interrupted": false,
+                  "leakedOwnedPids": [],
+                  "elapsedMs": 38663
+                }
+              ],
+              "ownedRunRootRemoved": true,
+              "failure": {
+                "name": "Error",
+                "message": "R8-UI-LIFECYCLE exited 1",
+                "stack": "Error: R8-UI-LIFECYCLE exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:437:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

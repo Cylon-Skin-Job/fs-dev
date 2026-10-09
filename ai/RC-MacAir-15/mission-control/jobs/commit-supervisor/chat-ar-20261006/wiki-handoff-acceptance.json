@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-06T22:28:08.491616+00:00",
+  "state": "HANDOFF_VALIDATED",
+  "worker": "/root/integration_wiki_editor",
+  "reviewer": "/root/wiki_handoff_review_01",
+  "raw_review_sha256": "da9a4dcb3808852a17c48b0346ad2f81526de582989c0a78b81a6b46b421a986",
+  "manifest_sha256": "8bee1efabab0b8b2d64209d987d8eb8d8b611c444edbbac0cbe8ee830a1df10e",
+  "pages": 5,
+  "versions": 7,
+  "coverage": 19,
+  "original_subjects": 17,
+  "checks": {
+    "strict_parse": 19,
+    "sources": 199,
+    "source_references": 304,
+    "links": 115,
+    "navigation_stable": true
+  },
+  "scope": "Wiki byte corrections accepted; wholecandidate and native runtime gates remain. Five original JSON authority/evidence companions recovered separately for publication coherence without changing authority bytes.",
+  "lifecycle": "Leaf/reviewer terminal, no closure API; all candidate writers inactive."
+}

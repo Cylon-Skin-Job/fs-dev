@@ -1,0 +1,28 @@
+{
+  "finding": "CDP calibration accepted discovered target names with zero invocation counts",
+  "manifestDigest": "d7b6fce3625a9869597ba5c1e2a27d5d13bd2fff872aada8b1f9090fa8bd8837",
+  "helperTests": "6/6 passed",
+  "lockedHostFullCommand": {
+    "runId": "chat-arch-1790137441145-e6c35ab531",
+    "status": "focus-prerequisite-unavailable-after-positive-calibration",
+    "coverageCalibration": {
+      "renderTextInstant": 152,
+      "MessageList": 4,
+      "InstantSegmentRenderer": 32,
+      "ChatAreaHeader": 20,
+      "ThreadRail": 27,
+      "ContentArea": 27,
+      "ChatAreaFooter": 18
+    },
+    "measurementWindowsStarted": 0,
+    "failureCode": "R1_FOCUS_UNAVAILABLE",
+    "cleanup": "clean"
+  },
+  "correctnessRun": {
+    "runId": "chat-arch-1790137472384-9ca7bcfa8d",
+    "helperAuthenticity": "6/6 passed",
+    "inputAndLocality": "2/2 passed",
+    "status": "passed"
+  },
+  "productSourceChanged": false
+}

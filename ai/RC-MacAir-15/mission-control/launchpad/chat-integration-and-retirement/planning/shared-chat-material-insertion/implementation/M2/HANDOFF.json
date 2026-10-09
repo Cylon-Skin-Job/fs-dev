@@ -1,0 +1,265 @@
+{
+  "status": "READY_FOR_ORCHESTRATOR_REVIEW",
+  "gate": "M2 builder-owned CLEAN; orchestrator acceptance pending",
+  "at": "2026-10-07T17:15:24.203956+00:00",
+  "writer": "Codex side chat (ephemeral)",
+  "runtime_child": "/root/m2_builder",
+  "manager": "/root",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "memory_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement",
+  "implementation_checkout": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev",
+  "branch": "codex/chat-material-01",
+  "HEAD": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "slice": "M2 only CHAT-MATERIAL-SPEC-01",
+  "changed_files": {
+    "fusion-studio-client/e2e/chat-composer-screenshot-menu.spec.ts": {
+      "baseline": "baseline HEAD",
+      "before_sha256": "93db83a1f751645778b55f4c54b50d5372fbfd4a9acc8e363b8b71bb23a1f03a",
+      "after_sha256": "38747c2864276049bdc26fac20ce8b47e9ce2fffd40040e28a9186832c3d8e9f",
+      "line_count": 122
+    },
+    "fusion-studio-client/e2e/chat-material-insertion.spec.ts": {
+      "baseline": "M1 accepted pre-M2 working bytes",
+      "before_sha256": "7b43c20093a9c9b47af7aa261921da35c5da940b00cf90118154b8c53c464a6a",
+      "after_sha256": "39c62635d9575c60413e6f896831737c6de9207046e84b74cb463578a2ecfcdf",
+      "line_count": 310
+    },
+    "fusion-studio-client/e2e/support/chat-material-fixture.tsx": {
+      "baseline": "M1 accepted pre-M2 working bytes",
+      "before_sha256": "c1dbf2ecf9ac862f16fd5b99ea58963de3d990371ff1a3504d08b45449ed33e8",
+      "after_sha256": "042fc3880ad53a4eda1950102ed38730e17db8fe85d9773f1aae8d4ac9895d1e",
+      "line_count": 165
+    },
+    "fusion-studio-client/e2e/support/chat-material-source-cases.ts": {
+      "baseline": "new M2 file",
+      "before_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after_sha256": "8b53c4fa34d63c28b5b68cacd1d297dc216096f2b2f19f9c8082ed354638d3f4",
+      "line_count": 276
+    },
+    "fusion-studio-client/e2e/support/chat-material-source-fixture.ts": {
+      "baseline": "new M2 file",
+      "before_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after_sha256": "a6570656cbfd0068324c1367a1b49df5bc17f8555d86acc6ac43983beb9958ae",
+      "line_count": 103
+    },
+    "fusion-studio-client/src/clipboard/ClipboardTrigger.tsx": {
+      "baseline": "baseline HEAD",
+      "before_sha256": "1f68e64c75570d3109598ea8be243f4699db4020aa8d05e88b8c58456574e087",
+      "after_sha256": "0d9bd2e83fc3d898c74311fff87074c21f3098391c967c81d6ac1ffd3a41164f",
+      "line_count": 256
+    },
+    "fusion-studio-client/src/components/ChatInput.tsx": {
+      "baseline": "baseline HEAD",
+      "before_sha256": "f19c88c23acae8aedfa66f5766ba30bc69c4e9495d66f31f6b9b1e1647c71065",
+      "after_sha256": "a980e99c197b239da795fac4d764b4d54e85bff5c1d0c2039e326206ab415990",
+      "line_count": 364
+    },
+    "fusion-studio-client/src/components/MessageList.tsx": {
+      "baseline": "baseline HEAD",
+      "before_sha256": "14f4a03763243843cc9e3f8a717a4a0b823c8d7235b05fcc761f51938b8a45cb",
+      "after_sha256": "822d2743061fb616e855c6b5d6ecf6eb03aa025aa9a3b0b03f9a7acd51b31303",
+      "line_count": 323
+    },
+    "fusion-studio-client/src/components/chat/ChatAreaFooter.tsx": {
+      "baseline": "baseline HEAD",
+      "before_sha256": "ca3ea908b75ed70543bdd96659a65f5253d1cd5260330fb793b403610c5c43e8",
+      "after_sha256": "215a11c7bbd2c1251a990043e607efce1caa401e05b1f5e12d7bda5486a3ba2c",
+      "line_count": 157
+    },
+    "fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx": {
+      "baseline": "baseline HEAD",
+      "before_sha256": "9d61acd10d826a53a2fed5d2c3b4a185721d5ef364632713454b679909a15cd1",
+      "after_sha256": "67739bd009abf10819f673e91af042f06ed5678a1f75f6b951dd95baf4d4019d",
+      "line_count": 91
+    },
+    "fusion-studio-client/src/components/chat/ChatDiagnosticDetails.tsx": {
+      "baseline": "baseline HEAD",
+      "before_sha256": "83ba6c13413f5c7d75d741d351632c4fd5691c47662f6ebe59d45bd57cf212f5",
+      "after_sha256": "d2c157d1ba1cf1c537ef980d95ca85cdb83cf3464806e2cfcb987edaf685aa9f",
+      "line_count": 193
+    },
+    "fusion-studio-client/src/components/chat/ChatSurface.tsx": {
+      "baseline": "M1 accepted pre-M2 working bytes",
+      "before_sha256": "930a7f9d9b9c1eba391ffbf37c44e778e14f464dc20fa0d35205611dc6077520",
+      "after_sha256": "4b795b878034c03634f29a50a28c3ada6a83bf84422e011f311517d8370d1d56",
+      "line_count": 108
+    },
+    "fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx": {
+      "baseline": "M1 accepted pre-M2 working bytes",
+      "before_sha256": "38de9af221baa8f40b24dd1edc1f198e60c0a85eff23c2b46544293a0485ee12",
+      "after_sha256": "951317b1234c712e62a91a044afd8a242d362cd0d2c27724563a8ff5730e1a58",
+      "line_count": 171
+    },
+    "fusion-studio-client/src/components/chat/chatSurfaceContract.ts": {
+      "baseline": "M1 accepted pre-M2 working bytes",
+      "before_sha256": "9687c16e7321218b46af9e76aba0561b4b547da96de5887ffc5b20bc85c06302",
+      "after_sha256": "990717911e5eabc22df83d4a6738b2ecbf9851d88b8ce9b26ca439d482cb9f5b",
+      "line_count": 176
+    },
+    "fusion-studio-client/src/components/chat/useChatMountInteractions.ts": {
+      "baseline": "baseline HEAD",
+      "before_sha256": "331e8eb45262408d58632a81b3ad939ab1ae7f76bd92ae74fd83ceb6803c99ea",
+      "after_sha256": "3febde36c48ee58131506b51d3a3b9cbf490c87b92a2965dbdd3e2137c1d0814",
+      "line_count": 80
+    },
+    "fusion-studio-client/src/components/chat/useChatSessionActions.ts": {
+      "baseline": "M1 accepted pre-M2 working bytes",
+      "before_sha256": "1d03a3276b1ad0248bebe280d1c02a2420efe5c184fd09a6af3a111bf11dfa3b",
+      "after_sha256": "dd293ba33e12e891d112aff9153989901f8b7256164cc407f34f20ec53632734",
+      "line_count": 303
+    },
+    "fusion-studio-client/src/components/chat/useChatSessionHost.ts": {
+      "baseline": "M1 accepted pre-M2 working bytes",
+      "before_sha256": "1586fb2a84b5fc3edc5d4a2e0dd8f7b8fbc78979fa604b75c6217f463be7e6e3",
+      "after_sha256": "67060e0790a1052b78ef27aadf24a1029c2753ac481628c8f0973684bdce61bc",
+      "line_count": 200
+    },
+    "fusion-studio-client/src/components/chat/useComposerMaterialSource.ts": {
+      "baseline": "new M2 file",
+      "before_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after_sha256": "03a973bf7b957c791820ce4fc3103f1164066eec62588ca5ef2e5f31fa3c58b8",
+      "line_count": 83
+    },
+    "fusion-studio-client/src/components/chat/useMountedChatBinding.ts": {
+      "baseline": "M1 accepted pre-M2 working bytes",
+      "before_sha256": "4281b983986f0d1dfb6fd2cc64011a591e5ce394517f3ad846dbeb1d518ec006",
+      "after_sha256": "2db870162c34ae974ca8330f971fa9452f9ef07e000f096e1114a6dd6a13f9be",
+      "line_count": 21
+    },
+    "fusion-studio-client/src/components/hover-icon-modal/useHoverIconModal.ts": {
+      "baseline": "baseline HEAD",
+      "before_sha256": "f02f300503bd231c6faed73ded6579da926b5bd0801666822aca7240a7ef1b34",
+      "after_sha256": "6d8e7d291198f92a1d72d330ea864e45bc603dae2eaf032c02e8bf5335cd2942",
+      "line_count": 252
+    },
+    "fusion-studio-client/src/lib/chat-material-source.ts": {
+      "baseline": "new M2 file",
+      "before_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after_sha256": "13600decc8bea3101925522b1dfe25bbe9a4eb191046c53d6dc1d8f7a034d4fc",
+      "line_count": 13
+    },
+    "fusion-studio-client/src/mic/MicTrigger.tsx": {
+      "baseline": "baseline HEAD",
+      "before_sha256": "d510d5d160eb86fbd5c233a84a66b011909682900f0262588aefa8f12ef3cdfd",
+      "after_sha256": "40b63def35f6fbb8ae95a6161a623d11be5e21ab5566f82a409edbb6ca46499a",
+      "line_count": 301
+    },
+    "fusion-studio-client/src/mic/VoiceRecorder.tsx": {
+      "baseline": "baseline HEAD",
+      "before_sha256": "1f2cb750a8b36f88acc829c0fd4321f94f36fb4bd784ccd143076e60efbb7129",
+      "after_sha256": "c2b39311791d3a20b247f771c9f385565bb4fe1405fbb8f4667d610746cbc981",
+      "line_count": 127
+    },
+    "fusion-studio-client/src/mic/useAudioCapture.ts": {
+      "baseline": "baseline HEAD",
+      "before_sha256": "35ddac01b398705a3ff4b12788750e5d86680c46248afdd1bbe3e76e095d8499",
+      "after_sha256": "dae950577ccdcb4f9e13335edb3502386dc6316cc80154665a0e21c2a9f58046",
+      "line_count": 372
+    },
+    "fusion-studio-client/src/recent-files/RecentFilesTrigger.tsx": {
+      "baseline": "baseline HEAD",
+      "before_sha256": "7ffa38a6d129f77ffda6d417c393197d5ccac9d32d8a86d059e49baec9c36496",
+      "after_sha256": "5956cf2d5846a916233b45e5b2d1a45124d538016e0b5598986cd26ea9ecb0f6",
+      "line_count": 266
+    },
+    "fusion-studio-client/src/screenshots/ScreenshotsTrigger.tsx": {
+      "baseline": "baseline HEAD",
+      "before_sha256": "47c1883432b7c203f4b0ac20992d8e8efc353b4d68e3cb3bd5b5f75415359926",
+      "after_sha256": "6a51901241fee836d19f4adfa1dcde572f10763d590372596da357ced422613f",
+      "line_count": 274
+    }
+  },
+  "source_seal_sha256": "7177c3cc452e4391e3c5e31bb682532c358b7ade99e252a4cbc54b3029b82883",
+  "checks": {
+    "build": "checks/build-11.json exit0",
+    "renderer": "checks/renderer-12.json exit0 165 passed",
+    "material_cases": 74,
+    "structural": "checks/structural-13.json exit0",
+    "failure_reproduction": "checks/diagnostic-negative-10.json exit1 2 failed on old product; fixed in current bytes and tests",
+    "all_raw_failures_preserved": true
+  },
+  "reviewers": [
+    {
+      "identity": "/root/m2_builder/builder_review_01",
+      "terminal": "REVIEW_COMPLETE/findings",
+      "report": "BUILDER-REVIEW-01.md",
+      "repair": "Diagnostic source-unavailable state preserved and direct public failure assertions added"
+    },
+    {
+      "identity": "/root/m2_builder/builder_review_02",
+      "terminal": "REVIEW_COMPLETE/CLEAN",
+      "report": "BUILDER-REVIEW-02.md"
+    }
+  ],
+  "lifecycle": "Both reviewers terminal; close_agent absent; deps preserved; owned ports retired; no active builder checks",
+  "deviations": "M2-D01\u2013D08 detailed proposed records in DEVIATIONS.json; root classifies; M1-D01\u2013D06 accepted upstream unchanged",
+  "residuals": "M3 direct cameras/native PNG/save/Wiki plus required final full-server/native/whole-SPEC owner gates pending; browser/media fixtures do not prove actual hardware/provider/persistence",
+  "stopping_condition": "Builder stops writing now; no commits/publication/live app/Alpha/scheduling/persistent messaging/identity/planning edits/next slice work",
+  "next_safe_action": "Independent root M2 acceptance/deviation classification before fresh M3 dispatch",
+  "reports": {
+    "BUILDER-REPORT.md": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/BUILDER-REPORT.md",
+      "sha256": "cf4a0a6d16d2ad83119374c3f39ab713ecc02eb0c4ad21c4483944eb90df7b04"
+    },
+    "SOURCE-SEAL.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/SOURCE-SEAL.json",
+      "sha256": "7177c3cc452e4391e3c5e31bb682532c358b7ade99e252a4cbc54b3029b82883"
+    },
+    "M2-slice.patch": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/M2-slice.patch",
+      "sha256": "2dd542f33818191999fa33a9d0b8da8276b9f6c71c472229bb239886e67ba43a"
+    },
+    "DEVIATIONS.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/DEVIATIONS.json",
+      "sha256": "866a78b66e0b3ec9bb0a9d6a81417c877405a8c149d5bc164a41296578441500"
+    },
+    "CHECK-LIFECYCLE.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/CHECK-LIFECYCLE.json",
+      "sha256": "0cbe0f0654179100d0cb37d99625737e42bb2097bdcc2184b117cb6358798f06"
+    },
+    "PRELOAD-RECONCILIATION.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/PRELOAD-RECONCILIATION.json",
+      "sha256": "622c4d0194895cb5c7c68222a9a51d9f55b3d2376a0fcbf59fee5807a3c07889"
+    },
+    "BUILD-OUTPUT.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/BUILD-OUTPUT.json",
+      "sha256": "ecf5632b705395899a7ede773b0f0895522d271920b55e6b5be8d3c54409d3b2"
+    },
+    "FROZEN-CHECK.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/FROZEN-CHECK.json",
+      "sha256": "16f246f4814b730cd115d9a3897c2862a4f485567b4431ed08c632ee570372f7"
+    },
+    "REVIEW-LIFECYCLE.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/REVIEW-LIFECYCLE.json",
+      "sha256": "66fea64049bb2a52b573622a9c5cf2b9347396fd4c345332fe9e0aea3e8ceafc"
+    },
+    "BUILDER-REVIEW-01.md": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/BUILDER-REVIEW-01.md",
+      "sha256": "be8498dd365a1801b9f726240445db4fdeefb15231ef9d8ca89fece456b3014a"
+    },
+    "BUILDER-REVIEW-02.md": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/BUILDER-REVIEW-02.md",
+      "sha256": "8518882a3842e453e007a2b76f401be0896e55ec475d7b17e3fc648e5d022d68"
+    },
+    "caller-sweep-final.txt": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/caller-sweep-final.txt",
+      "sha256": "c5c0a38474acb0e0d94d949512f8696a092be92acf7a8ec5d810fdceb285b8aa"
+    },
+    "checks/build-11.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/build-11.json",
+      "sha256": "2e9442abf0a84fd1bcf4e8fd96c5d6f2679b23eaf31300493b90fe966580840c"
+    },
+    "checks/renderer-12.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/renderer-12.json",
+      "sha256": "acd2ec8a2a82e3cc26cd16bd444c59d6a381039b2bb7cf8b9a590f504ced58c7"
+    },
+    "checks/structural-13.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/structural-13.json",
+      "sha256": "07781d40304b9e9bde7c5b895a69f3a24c87f3f615e46011f3f46d8fd84823ab"
+    },
+    "checks/diagnostic-negative-10.json": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/diagnostic-negative-10.json",
+      "sha256": "85f91a5a1378c51f8f275281662afe471d2ac3eacb1d48a77282d82b5e8e03de"
+    }
+  }
+}

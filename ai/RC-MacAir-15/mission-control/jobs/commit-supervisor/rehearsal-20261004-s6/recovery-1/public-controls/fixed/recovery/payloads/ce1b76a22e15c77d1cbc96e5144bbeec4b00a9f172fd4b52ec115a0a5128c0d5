@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "dataSource": "Captures",
+  "root": {
+    "type": "workspace-relative",
+    "path": "ai/${machine}/Captures"
+  },
+  "chat": {
+    "type": "threaded",
+    "position": "right"
+  },
+  "tabs": {
+    "schemaVersion": 1,
+    "initial": { "kind": "launcher", "launcherId": "capture.home" },
+    "plus": { "enabled": true },
+    "empty": {
+      "tabLabel": "New Capture Tab",
+      "locationLabel": "New Capture Tab",
+      "launcherIds": ["capture.home"]
+    },
+    "location": { "omitTerminalNames": [], "historyControls": "none" },
+    "newTab": { "blankKind": "home", "autoOpenDrawer": false }
+  }
+}

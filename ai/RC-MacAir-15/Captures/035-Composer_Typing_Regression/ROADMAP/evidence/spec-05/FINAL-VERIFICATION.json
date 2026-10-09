@@ -1,0 +1,73 @@
+{
+  "state": "CLEAN \u2014 final execution, source/cleanup audit and fresh independent integration review complete",
+  "manifestSha256": "da6ecbffec10d9f79951ecf6c2fb65996eb2a8ebfb341c5f26bd31458ca4ea73",
+  "checks": [
+    {
+      "gate": "backend",
+      "command": "node fusion-studio-client/e2e/chat-architecture/run.mjs --suite backend --mode enforce",
+      "status": "passed",
+      "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/integration-backend-2.log",
+      "exit": 0,
+      "runId": "chat-arch-1790255487009-f51dcf83f5"
+    },
+    {
+      "gate": "submit",
+      "command": "node fusion-studio-client/e2e/chat-architecture/run.mjs --suite submit --mode enforce",
+      "status": "passed",
+      "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/integration-submit-2.log",
+      "exit": 0,
+      "runId": "chat-arch-1790255544092-3ef44b09e3"
+    },
+    {
+      "gate": "actions",
+      "command": "node fusion-studio-client/e2e/chat-architecture/run.mjs --suite actions --mode enforce",
+      "status": "passed",
+      "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/integration-actions-2.log",
+      "exit": 0,
+      "runId": "chat-arch-1790255639018-264b288937"
+    },
+    {
+      "gate": "build",
+      "command": "npm --prefix fusion-studio-client run build",
+      "status": "passed",
+      "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/integration-build-2.log",
+      "exit": 0
+    },
+    {
+      "gate": "server",
+      "command": "node fusion-studio-client/e2e/chat-architecture/owned-regression-launcher.mjs server-full",
+      "status": "passed",
+      "log": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/integration-server-2.log",
+      "exit": 0,
+      "runId": "server-full-1790255827447-30e97acc",
+      "suites": 214,
+      "testsPassed": 3180,
+      "testsSkipped": 1,
+      "nativePretest": true
+    }
+  ],
+  "sourceFiles": 105,
+  "retainedApplicableEvidence": {
+    "architectureLifecycle": {
+      "log": "05D/architecture-lifecycle-final-4.log",
+      "passed": 17,
+      "skip": 0,
+      "reason": "No source/runner change since final current17-case run; full final backend repeats architecture graph sensitivity."
+    },
+    "independentFailureRecovery": {
+      "log": "final-f1-recovery.log",
+      "exit": 0
+    },
+    "skip": "Existing empty Kimi TODO placeholder; no new skips"
+  },
+  "historicalExecutionNote": "First final passes on104-file4e2f5c80... are in FINAL-VERIFICATION-01.json and FINAL-EVIDENCE-AUDIT-01.json. D18 affects server termination; required final commands below run after renewed lower acceptance.",
+  "finalReview": {
+    "reviewer": "/root/review05_final_integration_2",
+    "result": "CLEAN",
+    "record": "FINAL-REVIEW-02.md",
+    "materialFindings": 0,
+    "newAdvisories": 0,
+    "terminal": true,
+    "closeAgent": "unavailable"
+  }
+}

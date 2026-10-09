@@ -1,0 +1,96 @@
+{
+  "observed_at": "2026-10-06 23:07:39 UTC",
+  "rows": [
+    {
+      "id": "01a10cd0-6a6e-76d3-b7a0-dce612d1be30",
+      "status": "idle",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "title": "🖥️ MC - Schedule"
+    },
+    {
+      "id": "01a10cda-f556-7733-954b-132a648d8d11",
+      "status": "active",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "title": "🚀 1. Chokidar removal and repairs"
+    },
+    {
+      "id": "01a10cf2-cd72-7c50-af8d-27588c6a17e6",
+      "status": "notLoaded",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-harness-repair-and-testing",
+      "title": "Track OpenCode failure modes"
+    },
+    {
+      "id": "01a0ea32-f152-77a2-afc2-b73e8976685a",
+      "status": "notLoaded",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement",
+      "title": "Map Fusion–OpenCode chat failure states"
+    },
+    {
+      "id": "01a1042c-09df-7473-a1e1-f458eee6b93d",
+      "status": "notLoaded",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement",
+      "title": "Orchestrator: Chokidar retirement and…"
+    },
+    {
+      "id": "01a105eb-8add-7e12-a454-a96b64465cca",
+      "status": "idle",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "title": "Implement commit supervisor SPEC"
+    },
+    {
+      "id": "01a0ec68-3e37-78f0-8b59-4b2a536befbc",
+      "status": "notLoaded",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/plugin-foundation",
+      "title": "Find script trigger boundaries"
+    },
+    {
+      "id": "01a0ddfd-81fe-7e03-8786-e514d762a797",
+      "status": "notLoaded",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev",
+      "title": "🚀 Mission Control"
+    },
+    {
+      "id": "01a0f9b4-eb49-7383-b46c-80af64a16b6b",
+      "status": "notLoaded",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement",
+      "title": "Plan thread family view binding"
+    },
+    {
+      "id": "01a0e6c9-e4e0-7872-9268-9a77a76f0c57",
+      "status": "notLoaded",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement",
+      "title": "Resume chat integration work"
+    },
+    {
+      "id": "01a0e659-1933-7c30-b7ff-50476ea94d17",
+      "status": "notLoaded",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "title": "Provision Launchpad folders"
+    },
+    {
+      "id": "01a0c1c8-6e85-7f83-8d67-2cb5c1476007",
+      "status": "notLoaded",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev",
+      "title": "Run roadmap supervisor"
+    },
+    {
+      "id": "01a0b8c0-3a24-7ef3-b63b-7000b11d46e0",
+      "status": "notLoaded",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev",
+      "title": "Look over my wiki. Here is the issue, I need it to reflect cold established fact. But I also may need a pivot to aspirationally defining what new features should look like and how the app will behave. \n\nEverything has gotten very big and complex. The wiki is stale."
+    },
+    {
+      "id": "01a0e629-8d24-75b3-a26a-85c68bb40e3c",
+      "status": "notLoaded",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev",
+      "title": "Run wiki fact reassignment"
+    },
+    {
+      "id": "01a0d761-d42c-7df3-9111-613bcb5b01b9",
+      "status": "notLoaded",
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev",
+      "title": "Plan Fusion Server Roadmap"
+    }
+  ],
+  "active_other_writers": []
+}

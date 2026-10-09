@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-07T00:29:34.167079+00:00",
+  "repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "argv": [
+    "git",
+    "-C",
+    "/Users/rccurtrightjr./projects/fs-dev",
+    "add",
+    "-A",
+    "-f",
+    "--pathspec-from-file=/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/04-source-stage-paths.z",
+    "--pathspec-file-nul"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "finding": "R1 wall-time enforcement depended on unverified OS focus",
+  "independentFailedRunsRetained": [
+    "chat-arch-1790134943915-593b3bc5bd",
+    "chat-arch-1790135231454-f851d1f150"
+  ],
+  "lastFocusedPassingRun": "chat-arch-1790133916558-82b5890715",
+  "currentLockedHostFullCommand": {
+    "runId": "chat-arch-1790136116775-c09e77fb49",
+    "status": "failed-prerequisite",
+    "code": "R1_FOCUS_UNAVAILABLE",
+    "measurementWindowsStarted": 0,
+    "observation": {
+      "available": true,
+      "focused": false,
+      "visible": true,
+      "minimized": false,
+      "windowId": 1,
+      "title": "Fusion Studio",
+      "url": "fusion-shell://app/"
+    },
+    "cleanup": {
+      "lingering": [],
+      "dbQuickCheck": "ok",
+      "portFileRemoved": true,
+      "fixtureRootsRemoved": true,
+      "ownedRunRootRemoved": true
+    }
+  },
+  "correctnessRun": {
+    "runId": "chat-arch-1790136157276-44fa4c0199",
+    "status": "passed",
+    "coverageAndFocusUnits": "5/5 passed",
+    "playwrightInputAndLocality": "2/2 passed",
+    "ownedRunRootRemoved": true
+  },
+  "wallThresholdChanged": false,
+  "productSourceChanged": false,
+  "finalSourceUsesExternalFocusAutomation": false
+}

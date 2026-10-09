@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-04T12:16:28.139415+00:00",
+  "reviewer": "/root/s4_builder/s4_race_review_1",
+  "correction": "Broad evidence glob captured manager preliminary assessment; original freeze preserved, source and frozen entry036 explicitly excluded.",
+  "builder_message": "Explicit source/entry exclusion and request for actual assessment consumption status before completion. No manager conclusion was sent.",
+  "reviewer_raw_response": "I have not read entry 036 or its source assessment content. I saw only its manifest path/hash and hashed its raw bytes without displaying or interpreting them. I will exclude it completely from substantive review and record it as unread/excluded in the terminal result.",
+  "assessment_consumed": false,
+  "disposition": "Continue same fresh reviewer with explicit exclusion; no product bytes/checks changed.",
+  "filtered_packet_identity": "sha256:3d36ef2d8e7edf9112b4eb79624f1a1f0dbf629e82c6c45ca78a6521fce79c23"
+}

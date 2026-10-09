@@ -1,0 +1,15 @@
+{
+  "caseId": "R5-CURRENT-OWNER",
+  "status": "passed",
+  "actualModules": [
+    "chat-action",
+    "chat-action-controller",
+    "chatSubmissionStore"
+  ],
+  "observations": [
+    "duplicate mounts insert once in the exact captured session",
+    "later view selection leaves sibling draft unchanged",
+    "send queues an exact prompt and reports pending, never accepted before server acknowledgement"
+  ],
+  "privateContentRecorded": false
+}

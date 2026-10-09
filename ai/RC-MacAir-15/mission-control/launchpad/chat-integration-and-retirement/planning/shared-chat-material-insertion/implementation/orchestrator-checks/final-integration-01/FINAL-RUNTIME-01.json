@@ -1,0 +1,16 @@
+{
+  "at": "2026-10-07T23:26:00.190946+00:00",
+  "id": "FINAL-RUNTIME-01",
+  "status": "investigating; required renderer gate pending",
+  "raw_receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-01.json",
+  "raw_sha256": "d47c13aec545583c2459e12cf9042d9bf495642bf25a14c3169415e669494059",
+  "raw_log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-01.log",
+  "raw_log_sha256": "adf811ef030dfaa5f06eb09e814894fff57bb361120315bcb515fbb917ec33e5",
+  "case": "definitely refused prompt keeps the draft and releases only its provisional attempt",
+  "source": "fusion-studio-client/e2e/chat-send-transport.spec.ts:420",
+  "direct_observation": "Timeout filling disabled composer; snapshot says No thread selected with seeded Capture Alpha/Beta rows. Occurs before refusal injection or Send, so refused-prompt assertion was not exercised.",
+  "causal_attribution": "Unconfirmed. Do not declare product defect or load cause from this trace alone.",
+  "runtime_overlap": "Renderer lane overlapped separate Wiki/native tests near later cases; all isolated with own ports/profiles. Mere overlap does not prove cause.",
+  "next_action": "Repeat unchanged exact case alone, then complete exact full16-suite lane alone. M3 builder performs read-only bounded source/trace investigation. Product/oracles frozen; required failed receipt retained, no waived test.",
+  "other_final_checks": "Fresh build/fullserver/focusedserver/Wiki/native pass and remain scoped valid absent dependency changes."
+}

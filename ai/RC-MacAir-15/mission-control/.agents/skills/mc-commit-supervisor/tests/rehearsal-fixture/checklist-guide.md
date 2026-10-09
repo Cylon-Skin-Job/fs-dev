@@ -1,0 +1,17 @@
+---
+name: Checklist Guide
+description: How to complete and revisit the disposable checklist.
+metadata:
+  source-files: []
+  last-modified: "2026-10-04T11:40:00Z"
+---
+
+# Checklist Guide
+
+The checklist begins with Draft report, Review sources and Send summary.
+Select a task checkbox to complete it. Completed tasks disappear from the list,
+so the summary counts the task rows still shown. Refreshing the view starts a
+new list with every task incomplete.
+
+Open the built-in Wiki view to return to this guide. See the
+[Navigation Guide](../002-Navigation_Guide/PAGE.md) for movement between views.

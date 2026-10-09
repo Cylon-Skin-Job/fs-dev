@@ -1,0 +1,15 @@
+{
+  "test": "actual disposable Node tree ownership/termination preserves another live profile",
+  "fixture": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-aw58s4",
+  "injected": true,
+  "files": [
+    {
+      "path": "fusion-studio-client/electron/main.cjs",
+      "bytes": "require('node:child_process').spawn(process.execPath, [\"/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-restart-S4-aw58s4/fusion-studio-server/server.js\"], {stdio:'ignore'}); setInterval(() => {}, 1000);"
+    },
+    {
+      "path": "fusion-studio-server/server.js",
+      "bytes": "setInterval(() => {}, 1000);"
+    }
+  ]
+}

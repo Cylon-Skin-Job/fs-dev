@@ -1,0 +1,24 @@
+{
+  "actor": "/root",
+  "argv": [
+    "/opt/homebrew/bin/node",
+    "--check",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/stop_rehearsal_runtime.mjs"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "started_at": "2026-10-05T03:23:27.380450+00:00",
+  "finished_at": "2026-10-05T03:23:27.417831+00:00",
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "",
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "executable": {
+    "exists": true,
+    "kind": "symlink",
+    "mode": "0o120755",
+    "sha256": "344397e6aa48976f46b3748aef30b8536f2fc05ba5888826b69923c84ca6d4c3"
+  }
+}

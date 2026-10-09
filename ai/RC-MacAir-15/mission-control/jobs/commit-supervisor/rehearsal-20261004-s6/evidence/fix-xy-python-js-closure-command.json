@@ -1,0 +1,13 @@
+{
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "started": "2026-10-04T17:59:58.179483+00:00",
+  "finished": "2026-10-04T17:59:58.529853+00:00",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "command": [
+    "node",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/python_suite_js_dependencies.mjs"
+  ],
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "node:internal/modules/cjs/loader:1455\n  const err = new Error(message);\n              ^\n\nError: Cannot find module 'sqlite3'\nRequire stack:\n- /Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules/knex/lib/dialects/sqlite3/index.js\n    at Module._resolveFilename (node:internal/modules/cjs/loader:1455:15)\n    at require.resolve (node:internal/modules/helpers:163:19)\n    at scan (file:///Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/python_suite_js_dependencies.mjs:18:121)\n    at visitNode2 (/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/typescript/lib/typescript.js:32449:18)\n    at forEachChildInReturnStatement (/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/typescript/lib/typescript.js:32702:12)\n    at Object.forEachChild (/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/typescript/lib/typescript.js:32970:35)\n    at scan (file:///Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/python_suite_js_dependencies.mjs:21:6)\n    at visitNodes (/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/typescript/lib/typescript.js:32457:22)\n    at forEachChildInBlock (/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/typescript/lib/typescript.js:32927:10)\n    at Object.forEachChild (/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/typescript/lib/typescript.js:32970:35) {\n  code: 'MODULE_NOT_FOUND',\n  requireStack: [\n    '/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules/knex/lib/dialects/sqlite3/index.js'\n  ]\n}\n\nNode.js v25.6.1\n"
+}

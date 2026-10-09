@@ -1,0 +1,4570 @@
+{
+  "config": {
+    "configFile": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/playwright.boot.config.ts",
+    "rootDir": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e",
+    "forbidOnly": true,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/boot-1790000778602-baccd35f-b5x5g2/playwright-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "isolated-boot-chromium",
+        "name": "isolated-boot-chromium",
+        "testDir": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 45000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/boot-1790000778602-baccd35f/playwright-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "runAgents": "none",
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.58.2",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "chat-surface-identity.spec.ts",
+      "file": "chat-surface-identity.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "ChatSurface explicitly consumes an identity/model/actions contract",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:21.651Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "454a263f49fcf1b8d408-4774ab5319aee5b3ec65",
+          "file": "chat-surface-identity.spec.ts",
+          "line": 41,
+          "column": 1
+        },
+        {
+          "title": "ChatSurface module imports no app store, socket, controller, service, filesystem, or tab owner",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:21.664Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "454a263f49fcf1b8d408-21019f8c3a1881b8e65e",
+          "file": "chat-surface-identity.spec.ts",
+          "line": 58,
+          "column": 1
+        },
+        {
+          "title": "surfaceId never enters canonical action envelopes, results, or fan-out",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:21.680Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "454a263f49fcf1b8d408-487e1249721ab2986e50",
+          "file": "chat-surface-identity.spec.ts",
+          "line": 83,
+          "column": 1
+        },
+        {
+          "title": "late thread:opened and usage for thread B cannot mutate thread A displayed state",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 154,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[WS] thread:opened: surface- exchanges: \u001b[33m0\u001b[39m history: \u001b[90mundefined\u001b[39m contextUsage: \u001b[33m0.9\u001b[39m\n"
+                    },
+                    {
+                      "text": "[WS] Restoring context snapshot: { threadId: \u001b[32m'surface-identity-b'\u001b[39m, contextUsage: \u001b[33m0.9\u001b[39m, tokenUsage: \u001b[1mnull\u001b[22m }\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:21.684Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "454a263f49fcf1b8d408-700f070405942dcd5a13",
+          "file": "chat-surface-identity.spec.ts",
+          "line": 165,
+          "column": 1
+        },
+        {
+          "title": "model selection is pending by exact thread, promoted by exact ack, and rejection restores the prior value",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[WS] thread:opened: surface- exchanges: \u001b[33m0\u001b[39m history: \u001b[90mundefined\u001b[39m contextUsage: \u001b[90mundefined\u001b[39m\n"
+                    },
+                    {
+                      "text": "[WS] Restoring context snapshot: { threadId: \u001b[32m'surface-identity-a'\u001b[39m, contextUsage: \u001b[33m0\u001b[39m, tokenUsage: \u001b[1mnull\u001b[22m }\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:21.843Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "454a263f49fcf1b8d408-2d2e29659a35bfe14799",
+          "file": "chat-surface-identity.spec.ts",
+          "line": 207,
+          "column": 1
+        },
+        {
+          "title": "passive thread:open request carries the group identity and never warms",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:21.850Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "454a263f49fcf1b8d408-7833ed8471bf5825457a",
+          "file": "chat-surface-identity.spec.ts",
+          "line": 277,
+          "column": 1
+        },
+        {
+          "title": "two mounts of one session share session truth but keep DOM/menu/focus state separate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 991,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:21.855Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "454a263f49fcf1b8d408-5c5ebeb801edd931e386",
+          "file": "chat-surface-identity.spec.ts",
+          "line": 428,
+          "column": 1
+        },
+        {
+          "title": "surfaceId is minted at mount, never persisted, and collapse/expand preserves it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 154,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:23.198Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "454a263f49fcf1b8d408-8b9da671204b47f93974",
+          "file": "chat-surface-identity.spec.ts",
+          "line": 460,
+          "column": 1
+        },
+        {
+          "title": "contract mints distinct transient surface ids per runtime mount generation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:23.356Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "454a263f49fcf1b8d408-7341b171454e6a45b4dd",
+          "file": "chat-surface-identity.spec.ts",
+          "line": 484,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "chat-surface-isolation.spec.ts",
+      "file": "chat-surface-isolation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "two simultaneously mounted explicit surfaces have distinct transient surfaceIds and hosts",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 807,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:23.367Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "305a1117f5e6f92ab155-3a3677bfdf0cc502713e",
+          "file": "chat-surface-isolation.spec.ts",
+          "line": 266,
+          "column": 1
+        },
+        {
+          "title": "Send in each surface emits a prompt frame with its exact threadId and acknowledged model snapshot",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 158,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:24.178Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "305a1117f5e6f92ab155-eaf46722d466af9de87b",
+          "file": "chat-surface-isolation.spec.ts",
+          "line": 278,
+          "column": 1
+        },
+        {
+          "title": "two mounts of one session share one pending attempt and one accepted bubble",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 177,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:24.339Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "305a1117f5e6f92ab155-c03776c471288aaa82e8",
+          "file": "chat-surface-isolation.spec.ts",
+          "line": 305,
+          "column": 1
+        },
+        {
+          "title": "ACK cleanup preserves a stable-ID attachment removed and readded while pending",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 158,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:24.519Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "305a1117f5e6f92ab155-b2c45c9da407c88fa82a",
+          "file": "chat-surface-isolation.spec.ts",
+          "line": 341,
+          "column": 1
+        },
+        {
+          "title": "interleaved live frames for both threads render only their own content, thinking, tools, usage, Todos, errors, and saved turns",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 228,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:24.680Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "305a1117f5e6f92ab155-553f07c66e7c0ac63aee",
+          "file": "chat-surface-isolation.spec.ts",
+          "line": 369,
+          "column": 1
+        },
+        {
+          "title": "Stop targets one active session and leaves the other session untouched",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 178,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:24.911Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "305a1117f5e6f92ab155-665d798fba6aa104d87b",
+          "file": "chat-surface-isolation.spec.ts",
+          "line": 486,
+          "column": 1
+        },
+        {
+          "title": "usage/readiness are per-thread and a wire_ready for one session never marks the other",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 155,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:25.092Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "305a1117f5e6f92ab155-c0d0fa8d47f06144bf0f",
+          "file": "chat-surface-isolation.spec.ts",
+          "line": 504,
+          "column": 1
+        },
+        {
+          "title": "model/variant pending, acknowledgement, rejection, and hydration stay per thread",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 161,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:25.251Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "305a1117f5e6f92ab155-463ec45d9ef6caab090a",
+          "file": "chat-surface-isolation.spec.ts",
+          "line": 526,
+          "column": 1
+        },
+        {
+          "title": "drafts and attachments remain per workspace/thread owner stores and never cross surfaces",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 153,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:25.415Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "305a1117f5e6f92ab155-ae5e76abf3c2562d1c87",
+          "file": "chat-surface-isolation.spec.ts",
+          "line": 582,
+          "column": 1
+        },
+        {
+          "title": "opening a menu on surface A leaves surface B DOM/menu/focus untouched",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 174,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:25.571Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "305a1117f5e6f92ab155-14bb490d00e0998c321c",
+          "file": "chat-surface-isolation.spec.ts",
+          "line": 618,
+          "column": 1
+        },
+        {
+          "title": "Chat/Threads collapse and content collapse/expand preserve both surface identities and state",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 154,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:25.748Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "305a1117f5e6f92ab155-bd39a174924188f84b60",
+          "file": "chat-surface-isolation.spec.ts",
+          "line": 639,
+          "column": 1
+        },
+        {
+          "title": "the pending-new-thread connecting state is surface-owned and never leaks to another mount",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 153,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:25.905Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "305a1117f5e6f92ab155-98261f72e05e15ffa214",
+          "file": "chat-surface-isolation.spec.ts",
+          "line": 673,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "move-chat-to-side-chat.spec.ts",
+      "file": "move-chat-to-side-chat.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "SPEC-04 Move Chat to Side Chat",
+          "file": "move-chat-to-side-chat.spec.ts",
+          "line": 60,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the visible Main Chat menu emits one canonical move_chat_to_side intent",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 45000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "isolated-boot-chromium",
+                  "projectName": "isolated-boot-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1370,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-21T14:26:26.067Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3e4e87c80637d54462ca-be89236340ef892d430b",
+              "file": "move-chat-to-side-chat.spec.ts",
+              "line": 61,
+              "column": 3
+            },
+            {
+              "title": "the moved member renders centered in a Side Chat tab through fusion.chat-surface",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 45000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "isolated-boot-chromium",
+                  "projectName": "isolated-boot-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 446,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-21T14:26:27.440Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3e4e87c80637d54462ca-4be7f1da1aef0a02ba0d",
+              "file": "move-chat-to-side-chat.spec.ts",
+              "line": 90,
+              "column": 3
+            },
+            {
+              "title": "a placement-only broadcast after a failed delivery materializes the Side Chat without another trigger",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 45000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "isolated-boot-chromium",
+                  "projectName": "isolated-boot-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 342,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-21T14:26:27.890Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3e4e87c80637d54462ca-2b03a106c3e2ce01b7eb",
+              "file": "move-chat-to-side-chat.spec.ts",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "Move is unavailable while the session has an unresolved finalizing Stop boundary",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 45000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "isolated-boot-chromium",
+                  "projectName": "isolated-boot-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 356,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-21T14:26:28.235Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3e4e87c80637d54462ca-21b466afe0ab091129c5",
+              "file": "move-chat-to-side-chat.spec.ts",
+              "line": 181,
+              "column": 3
+            },
+            {
+              "title": "the delivered placement survives a rail remount (restart/readback)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 45000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "isolated-boot-chromium",
+                  "projectName": "isolated-boot-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 352,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-21T14:26:28.594Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3e4e87c80637d54462ca-0ca86f64affdfd754276",
+              "file": "move-chat-to-side-chat.spec.ts",
+              "line": 196,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "prompt-ownership.slice-c.spec.ts",
+      "file": "prompt-ownership.slice-c.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Slice C: identical attachment IDs remain isolated by workspace and thread owner",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:28.956Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "11c2ce45cfe640082cd8-b200a27d8c88a6cb0f41",
+          "file": "prompt-ownership.slice-c.spec.ts",
+          "line": 18,
+          "column": 1
+        },
+        {
+          "title": "correlated message:sent commits once; unmatched, deleted and foreign ownership cannot recreate state",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:28.959Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "11c2ce45cfe640082cd8-a946b9d3c5db341b0d6a",
+          "file": "prompt-ownership.slice-c.spec.ts",
+          "line": 33,
+          "column": 1
+        },
+        {
+          "title": "Slice C: workspace activation evicts only the departed workspace attachment owners",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:28.963Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "11c2ce45cfe640082cd8-30fe27fc297fb9407bd1",
+          "file": "prompt-ownership.slice-c.spec.ts",
+          "line": 82,
+          "column": 1
+        },
+        {
+          "title": "accepted receipt bubble survives a late open and yields once to the saved turn",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[WS] thread:opened: prompt-o exchanges: \u001b[33m0\u001b[39m history: \u001b[90mundefined\u001b[39m contextUsage: \u001b[90mundefined\u001b[39m\n"
+                    },
+                    {
+                      "text": "[WS] Restoring context snapshot: { threadId: \u001b[32m'prompt-owner-a'\u001b[39m, contextUsage: \u001b[33m0\u001b[39m, tokenUsage: \u001b[1mnull\u001b[22m }\n"
+                    },
+                    {
+                      "text": "[WS] thread:opened: prompt-o exchanges: \u001b[33m1\u001b[39m history: \u001b[90mundefined\u001b[39m contextUsage: \u001b[90mundefined\u001b[39m\n"
+                    },
+                    {
+                      "text": "[WS] Loading \u001b[33m1\u001b[39m exchanges (rich format)\n"
+                    },
+                    {
+                      "text": "[WS] Restoring context snapshot: { threadId: \u001b[32m'prompt-owner-a'\u001b[39m, contextUsage: \u001b[33m0\u001b[39m, tokenUsage: \u001b[1mnull\u001b[22m }\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:28.966Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "11c2ce45cfe640082cd8-4e2469517eb79418c6d3",
+          "file": "prompt-ownership.slice-c.spec.ts",
+          "line": 99,
+          "column": 1
+        },
+        {
+          "title": "a live turn bound before its ACK does not retain an accepted execution watch",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:28.971Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "11c2ce45cfe640082cd8-3a4851eea57b9c95407f",
+          "file": "prompt-ownership.slice-c.spec.ts",
+          "line": 144,
+          "column": 1
+        },
+        {
+          "title": "accepted pre-begin failure releases Stop without letting an older failure clear a newer send",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 436,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:28.974Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "11c2ce45cfe640082cd8-4dddfafaab68ed9bae6b",
+          "file": "prompt-ownership.slice-c.spec.ts",
+          "line": 168,
+          "column": 1
+        },
+        {
+          "title": "acknowledged pre-begin restart queries interrupted receipt and keeps a later send independent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4295,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:29.413Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "11c2ce45cfe640082cd8-b594be3277589601a7f8",
+          "file": "prompt-ownership.slice-c.spec.ts",
+          "line": 207,
+          "column": 1
+        },
+        {
+          "title": "Slice C: composer drafts swap immediately by thread and preserve pending retry ownership",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 788,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:33.712Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "11c2ce45cfe640082cd8-33c493dd9703cde68915",
+          "file": "prompt-ownership.slice-c.spec.ts",
+          "line": 247,
+          "column": 1
+        },
+        {
+          "title": "Slice C: deferred screenshot cancels when its workspace and thread owner changes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:34.506Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "11c2ce45cfe640082cd8-8a59aece95dd0c7bcbf4",
+          "file": "prompt-ownership.slice-c.spec.ts",
+          "line": 284,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "side-chat-isolation.spec.ts",
+      "file": "side-chat-isolation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "SPEC-04 04C Main/Side isolation",
+          "file": "side-chat-isolation.spec.ts",
+          "line": 73,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Main Chat B and Side Chat A mount as distinct sessions",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 45000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "isolated-boot-chromium",
+                  "projectName": "isolated-boot-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 389,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-21T14:26:34.519Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "623b27021135b45b6b2e-03c5199682026f80c62d",
+              "file": "side-chat-isolation.spec.ts",
+              "line": 74,
+              "column": 3
+            },
+            {
+              "title": "a send for one member never lands in the other",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 45000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "isolated-boot-chromium",
+                  "projectName": "isolated-boot-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 401,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-21T14:26:34.914Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "623b27021135b45b6b2e-0d9dbfb395353083305d",
+              "file": "side-chat-isolation.spec.ts",
+              "line": 108,
+              "column": 3
+            },
+            {
+              "title": "every Side Chat frame carries durable identities only and no surfaceId",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 45000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "isolated-boot-chromium",
+                  "projectName": "isolated-boot-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 381,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-21T14:26:35.321Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "623b27021135b45b6b2e-d70445bd8b9a1764ed41",
+              "file": "side-chat-isolation.spec.ts",
+              "line": 140,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "side-chat-placement-recovery.spec.ts",
+      "file": "side-chat-placement-recovery.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "SPEC-04 04C Side Chat close disposition and recovery",
+          "file": "side-chat-placement-recovery.spec.ts",
+          "line": 54,
+          "column": 6,
+          "specs": [
+            {
+              "title": "closing a Side Chat records a durable closed disposition, removes the tab, and keeps the member",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 45000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "isolated-boot-chromium",
+                  "projectName": "isolated-boot-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 497,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-21T14:26:35.712Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "68bba3ca8d5499cdff51-28087e37a5a7fbc0bea3",
+              "file": "side-chat-placement-recovery.spec.ts",
+              "line": 55,
+              "column": 3
+            },
+            {
+              "title": "restart/readback does not resurrect a closed Side Chat",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 45000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "isolated-boot-chromium",
+                  "projectName": "isolated-boot-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 503,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-21T14:26:36.215Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "68bba3ca8d5499cdff51-c0985a13e7147dc1960d",
+              "file": "side-chat-placement-recovery.spec.ts",
+              "line": 96,
+              "column": 3
+            },
+            {
+              "title": "an explicit member action reopens a closed Side Chat without a new placement",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 45000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "isolated-boot-chromium",
+                  "projectName": "isolated-boot-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 702,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-21T14:26:36.724Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "68bba3ca8d5499cdff51-7aee9b372cf4aca5f882",
+              "file": "side-chat-placement-recovery.spec.ts",
+              "line": 124,
+              "column": 3
+            },
+            {
+              "title": "a failed close disposition is a classified non-destructive warning and keeps the tab",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 45000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "isolated-boot-chromium",
+                  "projectName": "isolated-boot-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 386,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-21T14:26:37.432Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "68bba3ca8d5499cdff51-ede63f14ea76e3508604",
+              "file": "side-chat-placement-recovery.spec.ts",
+              "line": 166,
+              "column": 3
+            },
+            {
+              "title": "a placement-only broadcast for a closed placement never reopens the tab",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 45000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "isolated-boot-chromium",
+                  "projectName": "isolated-boot-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 686,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-21T14:26:37.823Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "68bba3ca8d5499cdff51-6b15db37200b90b4b226",
+              "file": "side-chat-placement-recovery.spec.ts",
+              "line": 184,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "threaded-chat-host.spec.ts",
+      "file": "threaded-chat-host.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "ThreadRail is a portable population/menu boundary with no store or socket access",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:38.526Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "90aa42786905e09c1c46-ffaf6794470493ce37d6",
+          "file": "threaded-chat-host.spec.ts",
+          "line": 87,
+          "column": 1
+        },
+        {
+          "title": "ThreadedChat composes exactly one ThreadRail with one ChatSurface",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:38.543Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "90aa42786905e09c1c46-e0f9bd2f799054f244e2",
+          "file": "threaded-chat-host.spec.ts",
+          "line": 118,
+          "column": 1
+        },
+        {
+          "title": "the connected view host owns qualified list/open correlation and never touches the Legacy store",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:38.549Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "90aa42786905e09c1c46-219b047ed9300346bfa3",
+          "file": "threaded-chat-host.spec.ts",
+          "line": 127,
+          "column": 1
+        },
+        {
+          "title": "the dead un-gated ThreadJumpDropdown is removed",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:38.555Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "90aa42786905e09c1c46-f7ba451d85c7c39cc617",
+          "file": "threaded-chat-host.spec.ts",
+          "line": 140,
+          "column": 1
+        },
+        {
+          "title": "open-request correlation is per-request/per-population, not a single slot",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:38.560Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "90aa42786905e09c1c46-d3bde9c1d6d21e49df4a",
+          "file": "threaded-chat-host.spec.ts",
+          "line": 150,
+          "column": 1
+        },
+        {
+          "title": "thread:list fills only the echoed view population and keeps Legacy explicit",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:38.565Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "90aa42786905e09c1c46-7b7714c141e7867ecbf8",
+          "file": "threaded-chat-host.spec.ts",
+          "line": 158,
+          "column": 1
+        },
+        {
+          "title": "thread:list fills only its echoed {workspaceId, viewId} population",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[WS] thread:list received: \u001b[33m1\u001b[39m thread groups\n"
+                    },
+                    {
+                      "text": "[WS] Deferring MRU thread open until workspace:init\n"
+                    },
+                    {
+                      "text": "[WS] thread:list received: \u001b[33m1\u001b[39m thread groups\n"
+                    },
+                    {
+                      "text": "[WS] Deferring MRU thread open until workspace:init\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:38.570Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "90aa42786905e09c1c46-4f592906667d09791a10",
+          "file": "threaded-chat-host.spec.ts",
+          "line": 199,
+          "column": 1
+        },
+        {
+          "title": "a late list/open for view B cannot fill or select view A",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[WS] thread:list received: \u001b[33m1\u001b[39m thread groups\n"
+                    },
+                    {
+                      "text": "[WS] Deferring MRU thread open until workspace:init\n"
+                    },
+                    {
+                      "text": "[WS] thread:opened: thread-b exchanges: \u001b[33m0\u001b[39m history: \u001b[90mundefined\u001b[39m contextUsage: \u001b[90mundefined\u001b[39m\n"
+                    },
+                    {
+                      "text": "[WS] Restoring context snapshot: { threadId: \u001b[32m'thread-beta'\u001b[39m, contextUsage: \u001b[33m0\u001b[39m, tokenUsage: \u001b[1mnull\u001b[22m }\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:38.576Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "90aa42786905e09c1c46-ea6679dc7768f1c35a28",
+          "file": "threaded-chat-host.spec.ts",
+          "line": 226,
+          "column": 1
+        },
+        {
+          "title": "thread:opened updates only its own population selection and retires its request",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[WS] thread:opened: thread-b exchanges: \u001b[33m0\u001b[39m history: \u001b[90mundefined\u001b[39m contextUsage: \u001b[90mundefined\u001b[39m\n"
+                    },
+                    {
+                      "text": "[WS] Restoring context snapshot: { threadId: \u001b[32m'thread-beta'\u001b[39m, contextUsage: \u001b[33m0\u001b[39m, tokenUsage: \u001b[1mnull\u001b[22m }\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:38.582Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "90aa42786905e09c1c46-4664f36c9798668d48c3",
+          "file": "threaded-chat-host.spec.ts",
+          "line": 266,
+          "column": 1
+        },
+        {
+          "title": "Legacy viewId:null is explicit and never borrows a view population",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[WS] thread:list received: \u001b[33m1\u001b[39m thread groups\n"
+                    },
+                    {
+                      "text": "[WS] Deferring MRU thread open until workspace:init\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:38.587Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "90aa42786905e09c1c46-508ab8f7a83f7c1ca038",
+          "file": "threaded-chat-host.spec.ts",
+          "line": 293,
+          "column": 1
+        },
+        {
+          "title": "restart/readback restores keyed populations and selections through the handler path",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[WS] thread:list received: \u001b[33m1\u001b[39m thread groups\n"
+                    },
+                    {
+                      "text": "[WS] Deferring MRU thread open until workspace:init\n"
+                    },
+                    {
+                      "text": "[WS] thread:list received: \u001b[33m1\u001b[39m thread groups\n"
+                    },
+                    {
+                      "text": "[WS] Deferring MRU thread open until workspace:init\n"
+                    },
+                    {
+                      "text": "[WS] thread:list received: \u001b[33m1\u001b[39m thread groups\n"
+                    },
+                    {
+                      "text": "[WS] Deferring MRU thread open until workspace:init\n"
+                    },
+                    {
+                      "text": "[WS] thread:opened: thread-a exchanges: \u001b[33m0\u001b[39m history: \u001b[90mundefined\u001b[39m contextUsage: \u001b[90mundefined\u001b[39m\n"
+                    },
+                    {
+                      "text": "[WS] Restoring context snapshot: { threadId: \u001b[32m'thread-alpha'\u001b[39m, contextUsage: \u001b[33m0\u001b[39m, tokenUsage: \u001b[1mnull\u001b[22m }\n"
+                    },
+                    {
+                      "text": "[WS] thread:opened: thread-b exchanges: \u001b[33m0\u001b[39m history: \u001b[90mundefined\u001b[39m contextUsage: \u001b[90mundefined\u001b[39m\n"
+                    },
+                    {
+                      "text": "[WS] Restoring context snapshot: { threadId: \u001b[32m'thread-beta'\u001b[39m, contextUsage: \u001b[33m0\u001b[39m, tokenUsage: \u001b[1mnull\u001b[22m }\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:38.593Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "90aa42786905e09c1c46-0463b2258a1ec98c1552",
+          "file": "threaded-chat-host.spec.ts",
+          "line": 318,
+          "column": 1
+        },
+        {
+          "title": "accepted rename updates the composite Legacy and view populations, not only threads",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[WS] thread:list received: \u001b[33m1\u001b[39m thread groups\n"
+                    },
+                    {
+                      "text": "[WS] Deferring MRU thread open until workspace:init\n"
+                    },
+                    {
+                      "text": "[WS] thread:list received: \u001b[33m1\u001b[39m thread groups\n"
+                    },
+                    {
+                      "text": "[WS] Deferring MRU thread open until workspace:init\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:38.598Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "90aa42786905e09c1c46-ccacee517ee9d7cdcf97",
+          "file": "threaded-chat-host.spec.ts",
+          "line": 385,
+          "column": 1
+        },
+        {
+          "title": "accepted delete removes the row and clears the qualified selection",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:38.604Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "90aa42786905e09c1c46-01d55414f90b30b75ad6",
+          "file": "threaded-chat-host.spec.ts",
+          "line": 419,
+          "column": 1
+        },
+        {
+          "title": "a row mutation acked for one population never mutates an unrelated population",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[WS] thread:list received: \u001b[33m1\u001b[39m thread groups\n"
+                    },
+                    {
+                      "text": "[WS] Deferring MRU thread open until workspace:init\n"
+                    },
+                    {
+                      "text": "[WS] thread:list received: \u001b[33m1\u001b[39m thread groups\n"
+                    },
+                    {
+                      "text": "[WS] Deferring MRU thread open until workspace:init\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:38.610Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "90aa42786905e09c1c46-f295e6fe33eb87d64527",
+          "file": "threaded-chat-host.spec.ts",
+          "line": 469,
+          "column": 1
+        },
+        {
+          "title": "accepted create inserts into an initialized Legacy population without double-adding",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[WS] thread:list received: \u001b[33m1\u001b[39m thread groups\n"
+                    },
+                    {
+                      "text": "[WS] Deferring MRU thread open until workspace:init\n"
+                    },
+                    {
+                      "text": "[WS] thread:list received: \u001b[33m2\u001b[39m thread groups\n"
+                    },
+                    {
+                      "text": "[WS] Deferring MRU thread open until workspace:init\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:38.616Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "90aa42786905e09c1c46-21eebba78fa252d7a3f6",
+          "file": "threaded-chat-host.spec.ts",
+          "line": 515,
+          "column": 1
+        },
+        {
+          "title": "two view-bound hosts restore independent selected rows and transcripts",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 820,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:38.621Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "90aa42786905e09c1c46-34298255efde586e4912",
+          "file": "threaded-chat-host.spec.ts",
+          "line": 698,
+          "column": 1
+        },
+        {
+          "title": "rendered hosts isolate a late list/open for view B from view A",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 171,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:39.446Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "90aa42786905e09c1c46-a5071f0d2869640d26ad",
+          "file": "threaded-chat-host.spec.ts",
+          "line": 738,
+          "column": 1
+        },
+        {
+          "title": "hidden inactive panels issue no list request and do not steal selection",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 285,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:39.622Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "90aa42786905e09c1c46-ee997a515e1096f51c59",
+          "file": "threaded-chat-host.spec.ts",
+          "line": 777,
+          "column": 1
+        },
+        {
+          "title": "ThreadRail rows emit canonical thread:open and thread:action intents",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 322,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:39.912Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "90aa42786905e09c1c46-f0a384c7d6214346a8a0",
+          "file": "threaded-chat-host.spec.ts",
+          "line": 828,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "working-activity.spec.ts",
+      "file": "working-activity.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "@routing routing: turn_begin initializes a thread panel with no current turn",
+          "ok": true,
+          "tags": [
+            "routing"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1191,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:40.251Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-b4a73d252b7cbddd49d4",
+          "file": "working-activity.spec.ts",
+          "line": 29,
+          "column": 1
+        },
+        {
+          "title": "@routing routing: same-turnId duplicate begin is idempotent and never resets streamed output",
+          "ok": true,
+          "tags": [
+            "routing"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1179,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:41.447Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-614f8c9be71d127ada0a",
+          "file": "working-activity.spec.ts",
+          "line": 41,
+          "column": 1
+        },
+        {
+          "title": "@routing routing: different-active-turnId begin rejected without reset",
+          "ok": true,
+          "tags": [
+            "routing"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1642,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:42.634Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-33e9481ca493da8921fe",
+          "file": "working-activity.spec.ts",
+          "line": 54,
+          "column": 1
+        },
+        {
+          "title": "@routing routing: wrong-thread and wrong-turn frames drop before any store or helper mutation",
+          "ok": true,
+          "tags": [
+            "routing"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3087,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:44.284Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-67b9bf019f1f915289f4",
+          "file": "working-activity.spec.ts",
+          "line": 67,
+          "column": 1
+        },
+        {
+          "title": "@routing routing: status_update enforces the addressed current turnId",
+          "ok": true,
+          "tags": [
+            "routing"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 396,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:47.381Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-fae31dc22a15ddb53eda",
+          "file": "working-activity.spec.ts",
+          "line": 92,
+          "column": 1
+        },
+        {
+          "title": "@routing routing: interleaved A/B content, tool args, grouping, subagent and terminal events stay isolated",
+          "ok": true,
+          "tags": [
+            "routing"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2126,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:47.789Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-cf0a434ac6269b85ce1e",
+          "file": "working-activity.spec.ts",
+          "line": 107,
+          "column": 1
+        },
+        {
+          "title": "@routing routing: one turn terminalization leaves the other pair fully intact",
+          "ok": true,
+          "tags": [
+            "routing"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1730,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:49.930Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-1dca9b242dca9f236337",
+          "file": "working-activity.spec.ts",
+          "line": 136,
+          "column": 1
+        },
+        {
+          "title": "@routing routing: post-terminal chat-turn:saved and metadata correlate to completed messages",
+          "ok": true,
+          "tags": [
+            "routing"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 337,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:51.668Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-90ac6bfc65872d0f249f",
+          "file": "working-activity.spec.ts",
+          "line": 155,
+          "column": 1
+        },
+        {
+          "title": "@frontier frontier: in-flight snapshot at N installs every baseline segment already revealed",
+          "ok": true,
+          "tags": [
+            "frontier"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 424,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:52.015Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-58b26dcc4f47b970df04",
+          "file": "working-activity.spec.ts",
+          "line": 181,
+          "column": 1
+        },
+        {
+          "title": "@frontier frontier: unfinished catch-up baseline defers reply chrome to its error terminal tail",
+          "ok": true,
+          "tags": [
+            "frontier"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 428,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:52.449Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-f23579ccca2638577672",
+          "file": "working-activity.spec.ts",
+          "line": 194,
+          "column": 1
+        },
+        {
+          "title": "@frontier frontier: events at or below N never replay over the installed baseline",
+          "ok": true,
+          "tags": [
+            "frontier"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2618,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:52.890Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-f0509ec82632e26e8268",
+          "file": "working-activity.spec.ts",
+          "line": 197,
+          "column": 1
+        },
+        {
+          "title": "@frontier frontier: N+1/N+2 apply exactly once in streamSeq order",
+          "ok": true,
+          "tags": [
+            "frontier"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1213,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:55.523Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-8534406e29b0f3bdd9fc",
+          "file": "working-activity.spec.ts",
+          "line": 212,
+          "column": 1
+        },
+        {
+          "title": "@frontier frontier: N+2 before N+1 stays buffered until N+1 lands then drains contiguously",
+          "ok": true,
+          "tags": [
+            "frontier"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1734,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:56.752Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-79085c0ad7dedda113b0",
+          "file": "working-activity.spec.ts",
+          "line": 221,
+          "column": 1
+        },
+        {
+          "title": "@frontier frontier: newer snapshot advances through a buffered gap without duplication or loss",
+          "ok": true,
+          "tags": [
+            "frontier"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1274,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:58.501Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-0c6f9344d72180ed9111",
+          "file": "working-activity.spec.ts",
+          "line": 233,
+          "column": 1
+        },
+        {
+          "title": "@frontier frontier: live events arriving before hydration buffer and drain contiguously onto the snapshot",
+          "ok": true,
+          "tags": [
+            "frontier"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1315,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:26:59.788Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-00a9ca3ea98598d6a04e",
+          "file": "working-activity.spec.ts",
+          "line": 248,
+          "column": 1
+        },
+        {
+          "title": "@frontier frontier: an older snapshot cannot regress visible content tool or terminal state",
+          "ok": true,
+          "tags": [
+            "frontier"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 863,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:01.118Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-8f90d2b030f97d1d3e81",
+          "file": "working-activity.spec.ts",
+          "line": 265,
+          "column": 1
+        },
+        {
+          "title": "@frontier frontier: whole-turn order follows streamSeq across equal lower and greater activityRevision mixes",
+          "ok": true,
+          "tags": [
+            "frontier"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1211,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:01.994Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-0a4af81fe9edbf81227a",
+          "file": "working-activity.spec.ts",
+          "line": 278,
+          "column": 1
+        },
+        {
+          "title": "@frontier frontier: completed return takes the instant rendering path",
+          "ok": true,
+          "tags": [
+            "frontier"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 383,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:03.221Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-952e1c0396b97d42cb47",
+          "file": "working-activity.spec.ts",
+          "line": 295,
+          "column": 1
+        },
+        {
+          "title": "@frontier frontier: terminal-snapshot save race yields exactly one completed message without duplicate content",
+          "ok": true,
+          "tags": [
+            "frontier"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 356,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:03.619Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-26f646f3a075a1fca8a7",
+          "file": "working-activity.spec.ts",
+          "line": 309,
+          "column": 1
+        },
+        {
+          "title": "@frontier frontier: hydrating and draining thread A cannot reset or delay thread B",
+          "ok": true,
+          "tags": [
+            "frontier"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1414,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:03.989Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-b98712364e02e796c368",
+          "file": "working-activity.spec.ts",
+          "line": 320,
+          "column": 1
+        },
+        {
+          "title": "@routing complement(node): chat-turn:saved attaches exchange metadata without duplicate rows — reason: merged exchangeId/metadata are invisible in today’s DOM",
+          "ok": true,
+          "tags": [
+            "routing"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:05.419Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-d5ef790d867c5d92353b",
+          "file": "working-activity.spec.ts",
+          "line": 343,
+          "column": 1
+        },
+        {
+          "title": "@routing complement(browser console): diagnostic report logs ids-only via the exported redactMessageForLog seam — reason: imports of ws-client cannot load under the Node runner (module-time window reference), so the packet’s chosen alternative proves the seam’s exact output shape end-to-end through the packaged client’s own log line",
+          "ok": true,
+          "tags": [
+            "routing"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 439,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:05.440Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-323182f1fd56d27f92b7",
+          "file": "working-activity.spec.ts",
+          "line": 358,
+          "column": 1
+        },
+        {
+          "title": "@routing complement(node): requestChatTurnDiagnostic pending registry resolves on matched report and exact-route denial — reason: registry semantics need SPEC-05 UI to be DOM-visible",
+          "ok": true,
+          "tags": [
+            "routing"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:05.894Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-ec96970373bbdd36acf1",
+          "file": "working-activity.spec.ts",
+          "line": 380,
+          "column": 1
+        },
+        {
+          "title": "@working delayed first step keeps the orb fallback, then shows a truthful nonzero label",
+          "ok": true,
+          "tags": [
+            "working"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1367,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:05.914Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-dd3d119f5992f1f570f3",
+          "file": "support/working-activity-working-cases.ts",
+          "line": 59,
+          "column": 3
+        },
+        {
+          "title": "@working blank or opaque initial thinking keeps Working and creates no blank assistant row",
+          "ok": true,
+          "tags": [
+            "working"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1468,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:07.299Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-e75ba537d9b21a8decc1",
+          "file": "support/working-activity-working-cases.ts",
+          "line": 79,
+          "column": 3
+        },
+        {
+          "title": "@working readable thinking replaces Working",
+          "ok": true,
+          "tags": [
+            "working"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1596,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:08.784Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-c1795c8bb821e3fb19f2",
+          "file": "support/working-activity-working-cases.ts",
+          "line": 93,
+          "column": 3
+        },
+        {
+          "title": "@working assistant content replaces Working",
+          "ok": true,
+          "tags": [
+            "working"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1340,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:10.398Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-800111886464c287be21",
+          "file": "support/working-activity-working-cases.ts",
+          "line": 96,
+          "column": 3
+        },
+        {
+          "title": "@working tool-first output replaces Working",
+          "ok": true,
+          "tags": [
+            "working"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1218,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:11.758Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-0159ede527a8c761b6ba",
+          "file": "support/working-activity-working-cases.ts",
+          "line": 99,
+          "column": 3
+        },
+        {
+          "title": "@working output during orb collapse prevents a Working flash",
+          "ok": true,
+          "tags": [
+            "working"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1983,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:12.996Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-e4a10a236261eceed97b",
+          "file": "support/working-activity-working-cases.ts",
+          "line": 102,
+          "column": 3
+        },
+        {
+          "title": "@working a post-tool step appears after the already-revealed tool",
+          "ok": true,
+          "tags": [
+            "working"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2238,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:14.998Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-a80ed94ef0013db6d830",
+          "file": "support/working-activity-working-cases.ts",
+          "line": 121,
+          "column": 3
+        },
+        {
+          "title": "@working duplicate/stale step and stale snapshot cannot reset or resurrect cleared activity",
+          "ok": true,
+          "tags": [
+            "working"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2301,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:17.257Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-2bb2d864cb34f7a44dda",
+          "file": "support/working-activity-working-cases.ts",
+          "line": 154,
+          "column": 3
+        },
+        {
+          "title": "@working activity revision is strictly greater while valid output still follows streamSeq",
+          "ok": true,
+          "tags": [
+            "working"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1590,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:19.580Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-5cee41395afc5f0c3ef2",
+          "file": "support/working-activity-working-cases.ts",
+          "line": 197,
+          "column": 3
+        },
+        {
+          "title": "@working a harness with no step event retains the orb fallback",
+          "ok": true,
+          "tags": [
+            "working"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1169,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:21.196Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-12b37f2a107a35829b4a",
+          "file": "support/working-activity-working-cases.ts",
+          "line": 234,
+          "column": 3
+        },
+        {
+          "title": "@working in-flight return restores original startedAt over an already-revealed baseline",
+          "ok": false,
+          "tags": [
+            "working"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 10384,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.rv-working-activity').first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.rv-working-activity').first()\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.rv-working-activity').first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.rv-working-activity').first()\u001b[22m\n\n    at waitForWorking (/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/support/working-activity-working-cases.ts:17:47)\n    at /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/support/working-activity-working-cases.ts:179:11",
+                    "location": {
+                      "file": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/support/working-activity-working-cases.ts",
+                      "column": 47,
+                      "line": 17
+                    },
+                    "snippet": "  15 |\n  16 | async function waitForWorking(page: Page, timeout = 10_000): Promise<void> {\n> 17 |   await expect(page.locator(WORKING).first()).toBeVisible({ timeout });\n     |                                               ^\n  18 | }\n  19 |\n  20 | async function startStep(browser: Browser, startedAt = Date.now() - 2_200) {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/support/working-activity-working-cases.ts",
+                        "column": 47,
+                        "line": 17
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.rv-working-activity').first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.rv-working-activity').first()\u001b[22m\n\n\n  15 |\n  16 | async function waitForWorking(page: Page, timeout = 10_000): Promise<void> {\n> 17 |   await expect(page.locator(WORKING).first()).toBeVisible({ timeout });\n     |                                               ^\n  18 | }\n  19 |\n  20 | async function startStep(browser: Browser, startedAt = Date.now() - 2_200) {\n    at waitForWorking (/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/support/working-activity-working-cases.ts:17:47)\n    at /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/support/working-activity-working-cases.ts:179:11"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:22.389Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/boot-1790000778602-baccd35f-b5x5g2/playwright-output/working-activity--working--d639e-n-already-revealed-baseline-isolated-boot-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/boot-1790000778602-baccd35f-b5x5g2/playwright-output/working-activity--working--d639e-n-already-revealed-baseline-isolated-boot-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/support/working-activity-working-cases.ts",
+                    "column": 47,
+                    "line": 17
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-cc26ba8eb9dcaced33ce",
+          "file": "support/working-activity-working-cases.ts",
+          "line": 246,
+          "column": 3
+        },
+        {
+          "title": "@working completed return is instant and historical metadata never creates Working",
+          "ok": true,
+          "tags": [
+            "working"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 366,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:34.941Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-1ce637b0f2f115ffac2c",
+          "file": "support/working-activity-working-cases.ts",
+          "line": 286,
+          "column": 3
+        },
+        {
+          "title": "@working exposes one stable announcement while visual seconds change",
+          "ok": true,
+          "tags": [
+            "working"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2096,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:35.805Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-b963427e609ee9b96c36",
+          "file": "support/working-activity-working-cases.ts",
+          "line": 324,
+          "column": 3
+        },
+        {
+          "title": "@working reduced motion keeps the status visible and clamps hourglass animation",
+          "ok": true,
+          "tags": [
+            "working"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1290,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:37.909Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-7a5ca36bf2a432d534cf",
+          "file": "support/working-activity-working-cases.ts",
+          "line": 344,
+          "column": 3
+        },
+        {
+          "title": "@terminal-error no-output post-begin failure renders one safe error before reply chrome",
+          "ok": true,
+          "tags": [
+            "terminal-error"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 431,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:39.205Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-60619de1c42cdd96061e",
+          "file": "support/working-activity-terminal-cases.ts",
+          "line": 70,
+          "column": 3
+        },
+        {
+          "title": "@terminal-error partial text flushes immediately before the error",
+          "ok": true,
+          "tags": [
+            "terminal-error"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 347,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:39.643Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-43cad81d0ce45201a951",
+          "file": "support/working-activity-terminal-cases.ts",
+          "line": 84,
+          "column": 3
+        },
+        {
+          "title": "@terminal-error partial tool flushes immediately before the error",
+          "ok": true,
+          "tags": [
+            "terminal-error"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 353,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:40.000Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-ae1022c05f036ba35630",
+          "file": "support/working-activity-terminal-cases.ts",
+          "line": 87,
+          "column": 3
+        },
+        {
+          "title": "@terminal-error authentication has one inline row plus the existing notification",
+          "ok": true,
+          "tags": [
+            "terminal-error"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 364,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:40.359Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-0c7cabfbd13615abb748",
+          "file": "support/working-activity-terminal-cases.ts",
+          "line": 90,
+          "column": 3
+        },
+        {
+          "title": "@terminal-error pre-begin transport failure creates no transcript row",
+          "ok": true,
+          "tags": [
+            "terminal-error"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 602,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:40.731Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-20c40c2cc92734dc6e09",
+          "file": "support/working-activity-terminal-cases.ts",
+          "line": 109,
+          "column": 3
+        },
+        {
+          "title": "@terminal-error post-terminal companion never duplicates the authoritative inline row",
+          "ok": true,
+          "tags": [
+            "terminal-error"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 364,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:41.341Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-240d4616ddd6f4e367e8",
+          "file": "support/working-activity-terminal-cases.ts",
+          "line": 126,
+          "column": 3
+        },
+        {
+          "title": "@terminal-error wrong-turn terminal cannot mutate the active turn",
+          "ok": true,
+          "tags": [
+            "terminal-error"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1204,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:41.713Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-28d9e34875eefc546694",
+          "file": "support/working-activity-terminal-cases.ts",
+          "line": 144,
+          "column": 3
+        },
+        {
+          "title": "@terminal-error terminal snapshot before save renders exactly one message and error",
+          "ok": true,
+          "tags": [
+            "terminal-error"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 379,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:42.926Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-4fbe8b21a361b18f6631",
+          "file": "support/working-activity-terminal-cases.ts",
+          "line": 160,
+          "column": 3
+        },
+        {
+          "title": "@terminal-error typed live envelope and durable save metadata merge into one completed row",
+          "ok": true,
+          "tags": [
+            "terminal-error"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 356,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:43.314Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-bf3f8c3827a9ed90b64f",
+          "file": "support/working-activity-terminal-cases.ts",
+          "line": 191,
+          "column": 3
+        },
+        {
+          "title": "@terminal-error saved-history reopen renders one durable safe error",
+          "ok": true,
+          "tags": [
+            "terminal-error"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 350,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:43.679Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-6e27df89481b89d6f5fe",
+          "file": "support/working-activity-terminal-cases.ts",
+          "line": 214,
+          "column": 3
+        },
+        {
+          "title": "@terminal-error hostile raw envelope is sanitized before frontier buffering and logging",
+          "ok": true,
+          "tags": [
+            "terminal-error"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 807,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:44.041Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-087e20a60813bcb7894f",
+          "file": "support/working-activity-terminal-cases.ts",
+          "line": 228,
+          "column": 3
+        },
+        {
+          "title": "@terminal-error exactly one alert survives the later save rerender",
+          "ok": true,
+          "tags": [
+            "terminal-error"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 358,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:44.859Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-3f50d16dd0ec3ae905ab",
+          "file": "support/working-activity-terminal-cases.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "@terminal-error unscoped generic error cannot clear or terminalize another active turn",
+          "ok": true,
+          "tags": [
+            "terminal-error"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1194,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:45.229Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-5d5b42d3966d57a96924",
+          "file": "support/working-activity-terminal-cases.ts",
+          "line": 281,
+          "column": 3
+        },
+        {
+          "title": "@terminal-error same-prompt empty retry keeps distinct turn identities through snapshot/save",
+          "ok": true,
+          "tags": [
+            "terminal-error"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 337,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:46.436Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-b5d14125b59138a3abe9",
+          "file": "support/working-activity-terminal-cases.ts",
+          "line": 299,
+          "column": 3
+        },
+        {
+          "title": "@terminal-error View is explicit-only, uses the exact tuple, and report canaries never enter any console argument",
+          "ok": true,
+          "tags": [
+            "terminal-error"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 491,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:46.786Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-986e9c5d2d9017ae415a",
+          "file": "support/working-activity-diagnostic-cases.ts",
+          "line": 51,
+          "column": 3
+        },
+        {
+          "title": "@terminal-error Copy fetches only on activation and copies only the validated report",
+          "ok": true,
+          "tags": [
+            "terminal-error"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 481,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:47.289Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-ebede97bcc5f02d63ef8",
+          "file": "support/working-activity-diagnostic-cases.ts",
+          "line": 91,
+          "column": 3
+        },
+        {
+          "title": "@terminal-error Ask AI adds the report to the draft without sending a prompt",
+          "ok": true,
+          "tags": [
+            "terminal-error"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 385,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:47.784Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-991ac941330a431d979e",
+          "file": "support/working-activity-diagnostic-cases.ts",
+          "line": 149,
+          "column": 3
+        },
+        {
+          "title": "@terminal-error Ask AI cannot overwrite a server-owned pending acceptance",
+          "ok": true,
+          "tags": [
+            "terminal-error"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 540,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:48.184Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-424695d5044eaecd17de",
+          "file": "support/working-activity-diagnostic-cases.ts",
+          "line": 170,
+          "column": 3
+        },
+        {
+          "title": "@terminal-error missing expired or rejected diagnostic returns one fixed unavailable state",
+          "ok": true,
+          "tags": [
+            "terminal-error"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 412,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:48.740Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-538501ec6b442847a87a",
+          "file": "support/working-activity-diagnostic-cases.ts",
+          "line": 195,
+          "column": 3
+        },
+        {
+          "title": "@terminal-error malformed retrieved report fails closed without displaying its canary",
+          "ok": true,
+          "tags": [
+            "terminal-error"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 502,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:49.166Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-6f2b521f97c6ef31f3a8",
+          "file": "support/working-activity-diagnostic-cases.ts",
+          "line": 216,
+          "column": 3
+        },
+        {
+          "title": "@terminal-error exact-route request survives unmount/remount without a duplicate fetch",
+          "ok": true,
+          "tags": [
+            "terminal-error"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 622,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:49.685Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-369fae2912a06b89c6ac",
+          "file": "support/working-activity-diagnostic-cases.ts",
+          "line": 246,
+          "column": 3
+        },
+        {
+          "title": "@terminal-error complement(node): unavailable response requires the exact route tuple",
+          "ok": true,
+          "tags": [
+            "terminal-error"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 30,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-21T14:27:50.324Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-4c026fab31c93180946d",
+          "file": "support/working-activity-diagnostic-cases.ts",
+          "line": 268,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-21T14:26:21.065Z",
+    "duration": 89410.41600000001,
+    "expected": 120,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "started": "2026-10-09T01:40:25.123Z",
+  "candidate": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate",
+  "profile": "/private/tmp/fusion-main-consolidation-95vxg0_h/profile",
+  "machine": "RC-MacAir-15",
+  "serverUrl": "http://localhost:58994",
+  "source": "Canonical unmodified production app/server; observer-only socket subclass captures the real initialized transport. No provider/admission/ACK substitutions or public prompt.",
+  "workspace": {
+    "workspaceId": "fs-dev",
+    "activeRepoPath": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate",
+    "workspaceEpoch": "853e7a84-7a1e-4c31-8ef4-a60cfd355f5e",
+    "bindingRevision": 1
+  },
+  "saves": [
+    {
+      "requestId": "canonical-public-save-947f7640-9f38-46dc-9240-a91549c1d03f",
+      "path": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-09T01-40-27-348Z-0a3cac86-43c1-47dd-b403-b6b38f416c0e.png",
+      "bytes": 94492,
+      "sha256": "6671885e8a78155bc04f9ba8eb2b3c6139255723026c45cdc41c9d2467a6e264",
+      "width": 3200,
+      "height": 1944
+    },
+    {
+      "requestId": "canonical-public-save-611eac84-5646-4f46-88ce-47d84f297874",
+      "path": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/Data/Screenshots/fusion-capture-2026-10-09T01-40-27-348Z-c276d243-a316-4760-ae96-76760fcfd4c0.png",
+      "bytes": 9086,
+      "sha256": "5bf7f297bf00edead5ddb637564c39a9526e5d63430be34f113a64936b28fbd5",
+      "width": 360,
+      "height": 240
+    }
+  ],
+  "galleryFoundBoth": true,
+  "failure": {
+    "type": "screenshot:error",
+    "requestId": "canonical-public-save-4ccba924-0258-4607-903f-3552f3a77c1c",
+    "message": "Workspace mismatch or no active workspace"
+  },
+  "result": "passed",
+  "ownedCaptureFilesRemoved": true,
+  "ended": "2026-10-09T01:40:28.184Z"
+}

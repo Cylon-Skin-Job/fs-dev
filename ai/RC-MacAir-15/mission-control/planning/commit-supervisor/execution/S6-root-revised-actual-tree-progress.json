@@ -1,0 +1,48 @@
+{
+  "at": "2026-10-04T17:38:28.043192+00:00",
+  "actor": "/root",
+  "actual_native_observation": {
+    "identity": "/root/s6_supervisor_fix_xy_1/fix_xy_final_manager_1/fresh_all5_reviewer_1",
+    "status": "running",
+    "tool": "collaboration.list_agents exact prefix"
+  },
+  "manager_acknowledgment": {
+    "identity": "/root/s6_supervisor_fix_xy_1/fix_xy_final_manager_1",
+    "mode": "different installed final review manager, supported default",
+    "status": "running",
+    "fork_turns": "none",
+    "overrides": false,
+    "read_only_candidate": true,
+    "children_allowed": "fresh clean-room reviewers only; fork none; inline/read-only/no grandchildren",
+    "identity_sha256": "aefbc18b32b2815ced41b441e88627f443e0171115b9c8de1c642c5d294b7801",
+    "loading_acknowledged": true,
+    "loaded_skill_sha256": "61a2e611803aa918b22b9356e19f1d863a3e7a6ac05cf9cc491f41e175d16129",
+    "loaded_toml_sha256": "1e06b777794a371a2620a7df3d97caaeb95cb67652b18461e1db6f9744b653e0",
+    "actual_fresh_child": "/root/s6_supervisor_fix_xy_1/fix_xy_final_manager_1/fresh_all5_reviewer_1",
+    "fresh_child_status": "running as acknowledged by actual manager"
+  },
+  "earlier_direct_children": [
+    {
+      "identity": "/root/s6_supervisor_fix_xy_1/fix_xy_code_leaf_1",
+      "status": "completed",
+      "return_state": "READY_FOR_HANDOFF_REVIEW"
+    },
+    {
+      "identity": "/root/s6_supervisor_fix_xy_1/fix_xy_code_handoff_1",
+      "status": "completed",
+      "return_state": "REVIEW_COMPLETE/CLEAN"
+    },
+    {
+      "identity": "/root/s6_supervisor_fix_xy_1/fix_xy_wiki_leaf_1",
+      "status": "completed",
+      "return_state": "READY_FOR_HANDOFF_REVIEW"
+    },
+    {
+      "identity": "/root/s6_supervisor_fix_xy_1/fix_xy_wiki_handoff_1",
+      "status": "completed",
+      "return_state": "REVIEW_COMPLETE/CLEAN"
+    }
+  ],
+  "no_completion_claim": true,
+  "close_agent": "unavailable"
+}

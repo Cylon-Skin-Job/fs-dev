@@ -1,0 +1,18 @@
+{
+  "runId": "chat-arch-1790301357228-56b284f30a",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R8-PRE-RECEIPT-UPGRADE",
+      "code": 0,
+      "signal": null,
+      "pid": 42304,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 10378
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

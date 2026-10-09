@@ -1,0 +1,17 @@
+{
+  "at": "2026-09-27T02:50:54.085187+00:00",
+  "sourceEntries": 1952,
+  "buildEntries": 200,
+  "sourceManifestSha256": "5408a67e8409d896ea3a5ded6336917ca5aab88d802a0cedcdf4b0131b575143",
+  "changedPaths": [
+    "fusion-studio-client/e2e/chat-architecture/run.mjs",
+    "fusion-studio-client/e2e/chat-architecture/soak-actions.mjs",
+    "fusion-studio-client/e2e/chat-architecture/soak-delete-native.mjs",
+    "fusion-studio-client/e2e/chat-architecture/soak-delete-native.test.mjs",
+    "fusion-studio-client/e2e/chat-architecture/soak-electron.mjs"
+  ],
+  "predecessorCount": 3,
+  "codeInspection": "all five paths and immediate foreground helper integration read; no material issue found",
+  "tests": "pending native05 cleanup; no tests run during native session",
+  "acceptance": "pending tests and both fresh reviews; native cancellation finding separately blocking"
+}

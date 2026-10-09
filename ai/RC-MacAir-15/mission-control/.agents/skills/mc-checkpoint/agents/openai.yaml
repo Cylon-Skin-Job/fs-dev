@@ -1,0 +1,6 @@
+interface:
+  display_name: "MC Checkpoint"
+  short_description: "Checkpoint a Codex main task by turn ID"
+  default_prompt: "Use $mc-checkpoint to reconcile new turns from the registered main Codex task into durable working memory."
+policy:
+  allow_implicit_invocation: false

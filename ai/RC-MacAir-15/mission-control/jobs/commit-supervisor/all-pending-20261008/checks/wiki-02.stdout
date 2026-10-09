@@ -1,0 +1,16 @@
+[2m[WebServer] [22m(node:98966) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[2m[WebServer] [22m(Use `node --trace-warnings ...` to show where the warning was created)
+[2m[WebServer] [22m[Server] diagnostic_error
+[2m[WebServer] [22m[Server] diagnostic_error
+[2m[WebServer] [22m[Server] diagnostic_warning
+[2m[WebServer] [22m[Server] diagnostic_warning
+
+Running 1 test using 1 worker
+
+(node:99015) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:99015) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [fixture-only-chromium] › e2e/chat-material-wiki.spec.ts:17:1 › changed Wiki articles parse, render/read back through actual production viewer and link source paths (2.0s)
+
+  1 passed (4.0s)

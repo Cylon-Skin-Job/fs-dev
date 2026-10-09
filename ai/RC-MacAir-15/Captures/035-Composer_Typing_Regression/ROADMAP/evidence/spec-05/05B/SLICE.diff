@@ -1,0 +1,1373 @@
+--- before/fusion-studio-client/e2e/chat-architecture/run.mjs
++++ after/fusion-studio-client/e2e/chat-architecture/run.mjs
+@@ -27,6 +27,12 @@
+ const namedSuites = new Set(['baseline', 'submit', 'actions', 'render', 'backend', 'all', 'soak', 'shell']);
+ const namedModes = new Set(['characterize', 'enforce']);
+ const caseCatalog = {
++  'R8-MIRROR-RECOVERY': {
++    name: 'R8 mirror/delete/Move faults, receipt cascade and restart readback through isolated public routes',
++    suites: ['backend', 'all'],
++    program: path.join(import.meta.dirname, 'server-focused-regressions.mjs'),
++    scenarioIds: ['R8-MIRROR-RECOVERY'],
++  },
+   'R8-SESSION-LIFECYCLE': {
+     name: 'R8 session create/open/warm/close/capacity and transactional faults through isolated public routes',
+     suites: ['backend', 'all'],
+--- before/fusion-studio-client/e2e/chat-architecture/server-focused-regressions.mjs
++++ after/fusion-studio-client/e2e/chat-architecture/server-focused-regressions.mjs
+@@ -8,8 +8,17 @@
+ // Run the VALIDATION.md focused backend list against copied/staged code and a
+ // private migrated profile. npm test intentionally invokes its native pretest.
+ const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
+-const slice05A = process.env.FUSION_CHAT_ARCH_CASE_ID === 'R8-SESSION-LIFECYCLE';
++const slice05A = ['R8-SESSION-LIFECYCLE', 'R8-MIRROR-RECOVERY'].includes(process.env.FUSION_CHAT_ARCH_CASE_ID);
+ const testPaths = [
++  ...(process.env.FUSION_CHAT_ARCH_CASE_ID === 'R8-MIRROR-RECOVERY' ? [
++    'test/thread/thread-runtime-automation.test.js',
++    'test/ws/privileged-thread-handlers.test.js',
++    'test/ws/privileged-thread-persistence.integration.test.js',
++    'test/ws/thread-group-protocol.integration.test.js',
++    'test/thread/history-file.test.js', 'test/thread/audit-subscriber-chatlog-finalize.test.js',
++    'test/thread/thread-manager-chatlog-path.test.js',
++    'test/agent-provenance/exchange-bind-and-query.test.js', 'test/agent-provenance/exchange-binder.test.js',
++  ] : []),
+   'test/ws/prompt-canonical-route.integration.test.js',
+   'test/ws/privileged-thread-public-route.integration.test.js',
+   'test/thread/thread-runtime-controller.test.js',
+@@ -30,12 +39,19 @@
+   'fusion-studio-client/e2e/chat-architecture/owned-regression-lifecycle.test.mjs',
+   'fusion-studio-client/e2e/chat-architecture/fixture-lifecycle.mjs',
+   'fusion-studio-client/e2e/chat-architecture/stage-fixture.mjs',
++  'fusion-studio-server/lib/ws/thread-ws-handlers.js',
+   'fusion-studio-server/lib/thread/ThreadManager.js',
+   'fusion-studio-server/lib/thread/thread-runtime-controller.js',
++  'fusion-studio-server/lib/thread/thread-runtime-manager.js',
+   'fusion-studio-server/lib/thread/ThreadWebSocketHandler.js',
+   'fusion-studio-server/lib/thread/thread-runtime-automation.js',
+   'fusion-studio-server/lib/thread/session-manager.js',
+   'fusion-studio-server/lib/thread/session-lifecycle.js',
++  'fusion-studio-server/lib/thread/chatlog-mirror.js',
++  'fusion-studio-server/lib/thread/mirror-journal.js',
++  'fusion-studio-server/lib/thread/HistoryFile.js',
++  'fusion-studio-server/lib/thread-groups/repository.js',
++  'fusion-studio-server/lib/thread-groups/placement-delivery.js',
+   'fusion-studio-server/lib/thread/session-repository.js',
+   'fusion-studio-server/lib/thread-groups/session-transactions.js',
+   'fusion-studio-server/lib/thread-groups/service.js',
+--- before/fusion-studio-server/lib/thread-groups/placement-delivery.js
++++ after/fusion-studio-server/lib/thread-groups/placement-delivery.js
+@@ -134,10 +134,10 @@
+     // committed instruction without resurrecting an intentionally closed
+     // placement; only an explicit member action may reopen it.
+     if (existing && existing.disposition === 'closed') {
+-      return acknowledge(db, record, { alreadyMaterialized: false, closed: true });
++      return await acknowledge(db, record, { alreadyMaterialized: false, closed: true });
+     }
+     if (existing && existing.disposition === 'open' && sameDescriptor(existing.descriptor, descriptor)) {
+-      return acknowledge(db, record, { alreadyMaterialized: true });
++      return await acknowledge(db, record, { alreadyMaterialized: true });
+     }
+     await mutateManagedPlacement(projectRoot, record.viewId, record.groupId, {
+       placementId: record.sideChatPlacementId,
+@@ -145,7 +145,7 @@
+       descriptor,
+       expectedPlacementRevision: current.placementRevision ?? null,
+     });
+-    return acknowledge(db, record, { alreadyMaterialized: false });
++    return await acknowledge(db, record, { alreadyMaterialized: false });
+   } catch (error) {
+     const failureCode = classifyFailure(error);
+     try {
+--- before/fusion-studio-server/lib/thread-groups/repository.js
++++ after/fusion-studio-server/lib/thread-groups/repository.js
+@@ -344,11 +344,12 @@
+ }
+ 
+ async function markMirrorRecovery(db, {
+-  workspaceId, mirrorKey, operation, status, failureCode = null, now,
++  workspaceId, mirrorKey, operation, status, failureCode = null, now, expectedUpdatedAt = null,
+ }) {
+-  await db('thread_group_mirror_recovery')
+-    .where({ workspace_id: workspaceId, mirror_key: mirrorKey, operation })
+-    .update({ status, failure_code: failureCode, updated_at: now });
++  const query = db('thread_group_mirror_recovery')
++    .where({ workspace_id: workspaceId, mirror_key: mirrorKey, operation });
++  if (expectedUpdatedAt !== null) query.where('updated_at', expectedUpdatedAt);
++  return query.update({ status, failure_code: failureCode, updated_at: now });
+ }
+ 
+ async function listPendingMirrorRecovery(db, workspaceId) {
+--- before/fusion-studio-server/lib/thread-groups/session-transactions.js
++++ after/fusion-studio-server/lib/thread-groups/session-transactions.js
+@@ -82,4 +82,18 @@
+   });
+ }
+ 
+-module.exports = { createGroup, deleteSingleSession };
++// Admission shares only the mutation window, never the lifetime of a turn.
++// After this operation returns a prompt is IN_FLIGHT, so Delete is busy; a
++// completed warm is READY and can be fenced normally. Recheck after waiting.
++async function withSessionAdmission(workspaceId, threadId, operation) {
++  const db = require('../db').getDb();
++  const group = await repository.getGroupForThread(db, threadId);
++  return withGroupMutationLease(groupMutationLeaseKey(workspaceId, group?.group_id || threadId), async () => {
++    const row = await db('threads').where({ thread_id: threadId, workspace_id: workspaceId, scope: 'project' }).first();
++    if (!row) return null;
++    return operation();
++  });
++
++}
++
++module.exports = { createGroup, deleteSingleSession, withSessionAdmission };
+--- before/fusion-studio-server/lib/thread/HistoryFile.js
++++ after/fusion-studio-server/lib/thread/HistoryFile.js
+@@ -7,6 +7,7 @@
+  */
+ 
+ const { getDb } = require('../db');
++const mirrorJournal = require('./mirror-journal');
+ 
+ const SCHEMA_VERSION = '1.0.0';
+ let agentExchangeBinding = null;
+@@ -106,6 +107,7 @@
+           now: exchangeTs,
+         });
+       }
++      await mirrorJournal.invalidate(trx, threadId);
+       return Object.freeze({ exchangeId, seq, exchangeTs });
+     });
+     if (bindingAuthority) agentExchangeBinding.signal();
+--- before/fusion-studio-server/lib/thread/ThreadManager.js
++++ after/fusion-studio-server/lib/thread/ThreadManager.js
+@@ -13,15 +13,15 @@
+ 
+ const path = require('path');
+ const { ThreadIndex } = require('./ThreadIndex');
+-const { ChatFile } = require('./ChatFile');
++const { ChatlogMirror } = require('./chatlog-mirror');
+ const { HistoryFile } = require('./HistoryFile');
+ const { SessionLifecycle } = require('./session-lifecycle');
+ const { createGroup, deleteSingleSession } = require('../thread-groups/session-transactions');
+ const { SessionManager } = require('./session-manager');
+ const { RUNTIME_STATES, threadRuntimeManager } = require('./thread-runtime-manager');
+-const aiPaths = require('../workspace/ai-paths');
+ const { getDb } = require('../db');
+ const repository = require('../thread-groups/repository');
++const { groupMutationLeaseKey, withGroupMutationLease } = require('../thread-groups/group-mutation-lease');
+ const { createThreadGroupService } = require('../thread-groups/service');
+ const {
+   buildWorksurfaceCleanupKey,
+@@ -34,62 +34,6 @@
+ } = require('../thread-groups/placement-delivery');
+ const { runStableViewIdPreflight } = require('../views/stable-view-id-preflight');
+ 
+-function asPlainObject(value) {
+-  if (!value || typeof value !== 'object' || Array.isArray(value)) return {};
+-  return value;
+-}
+-
+-function assistantTextFromParts(parts) {
+-  if (!Array.isArray(parts)) return '';
+-  return parts
+-    .filter((part) => part?.type === 'text' && typeof part.content === 'string')
+-    .map((part) => part.content)
+-    .join('');
+-}
+-
+-function hasToolCallsFromParts(parts) {
+-  return Array.isArray(parts) && parts.some((part) => part?.type === 'tool_call');
+-}
+-
+-function withChatMirrorMetadata(threadId, exchange) {
+-  const metadata = { ...asPlainObject(exchange.metadata) };
+-  const existingMirror = asPlainObject(metadata.chatMirror);
+-  const turnId = metadata.turnId || existingMirror.turnId || null;
+-
+-  if (turnId && metadata.turnId === undefined) {
+-    metadata.turnId = turnId;
+-  }
+-
+-  metadata.chatMirror = {
+-    ...existingMirror,
+-    threadId,
+-    exchangeId: exchange.exchangeId,
+-    seq: exchange.seq,
+-    turnId,
+-  };
+-
+-  return metadata;
+-}
+-
+-function buildChatlogMessagesFromExchanges(threadId, exchanges) {
+-  return exchanges.flatMap((exchange) => {
+-    const parts = Array.isArray(exchange.assistant?.parts) ? exchange.assistant.parts : [];
+-    return [
+-      {
+-        role: 'user',
+-        content: exchange.user || '',
+-        hasToolCalls: false,
+-      },
+-      {
+-        role: 'assistant',
+-        content: assistantTextFromParts(parts),
+-        hasToolCalls: hasToolCallsFromParts(parts),
+-        metadata: withChatMirrorMetadata(threadId, exchange),
+-      },
+-    ];
+-  });
+-}
+-
+ // Default configuration
+ const DEFAULT_CONFIG = {
+   maxActiveSessions: 10,
+@@ -142,7 +86,7 @@
+         isMemberBusy: (...args) => this.isMemberBusy(...args),
+         stageNewSession: (...args) => this.stageNewSession(...args),
+         ensureSessionMirror: (...args) => this.ensureSessionMirror(...args),
+-        deleteGroup: (...args) => this.deleteGroup(...args),
++        deleteGroup: (...args) => this._deleteGroupWithinLease(...args),
+         retryMirrorCleanupForGroup: (...args) => this.retryMirrorCleanupForGroup(...args),
+         retryWorksurfaceCleanupForGroup: (...args) => this.retryWorksurfaceCleanupForGroup(...args),
+         retryPlacementDeliveryForGroup: (...args) => this.retryPlacementDeliveryForGroup(...args),
+@@ -156,9 +100,18 @@
+       this._sessionLifecycle = new SessionLifecycle({
+         workspaceId: this.workspaceId, projectId: this.projectId,
+         projectRoot: this.projectRoot, index: this.index, sessionManager: this.sessionManager,
++        mirror: this.chatlogMirror,
+       });
+     }
+     return this._sessionLifecycle;
++  }
++
++  get chatlogMirror() {
++    if (!this._chatlogMirror) this._chatlogMirror = new ChatlogMirror({
++      workspaceId: this.workspaceId, projectRoot: this.projectRoot, getDb,
++      getThread: (id) => this.index.get(id), readHistory: (id) => this.getRichHistory(id),
++    });
++    return this._chatlogMirror;
+   }
+ 
+   /**
+@@ -168,7 +121,7 @@
+    * @returns {string}
+    */
+   _getChatlogThreadsDir() {
+-    return path.join(aiPaths.getMachineAiRoot(this.projectRoot), 'Data', 'Chatlogs', 'threads');
++    return this.chatlogMirror.directory();
+   }
+ 
+   /**
+@@ -178,10 +131,7 @@
+    * @returns {ChatFile}
+    */
+   _createChatFile(threadId) {
+-    return new ChatFile({
+-      chatlogDir: this._getChatlogThreadsDir(),
+-      threadId,
+-    });
++    return this.chatlogMirror.file(threadId);
+   }
+ 
+   /**
+@@ -202,7 +152,7 @@
+ 
+   /** Deterministic, bounded mirror identity for the mirror-recovery record. */
+   _mirrorKey(threadId) {
+-    return `chatlog:${threadId}`;
++    return this.chatlogMirror.key(threadId);
+   }
+ 
+   /**
+@@ -232,29 +182,7 @@
+    * activation sweep.
+    */
+   async ensureSessionMirror(threadId) {
+-    const db = getDb();
+-    const mirrorKey = this._mirrorKey(threadId);
+-    try {
+-      await this.syncChatlogMirrorFromHistory(threadId);
+-      await repository.markMirrorRecovery(db, {
+-        workspaceId: this.workspaceId,
+-        mirrorKey,
+-        operation: 'create',
+-        status: 'complete',
+-        now: Date.now(),
+-      });
+-      return true;
+-    } catch (error) {
+-      await repository.markMirrorRecovery(db, {
+-        workspaceId: this.workspaceId,
+-        mirrorKey,
+-        operation: 'create',
+-        status: 'failed',
+-        failureCode: 'mirror_write_failed',
+-        now: Date.now(),
+-      });
+-      return false;
+-    }
++    return this.chatlogMirror.deliver(threadId, 'create');
+   }
+ 
+   /**
+@@ -274,32 +202,10 @@
+     await this._enforceSessionLimit();
+ 
+     const db = getDb();
+-    const mirrorKey = this._mirrorKey(threadId);
+     await createGroup({ db, workspaceId: this.workspaceId, sessions: this.sessionLifecycle },
+       threadId, name, options);
+ 
+-    // Mirror creation is a post-commit, recoverable instruction.
+-    const chatFile = this._createChatFile(threadId);
+-    try {
+-      await chatFile.write(name, []);
+-      await repository.markMirrorRecovery(db, {
+-        workspaceId: this.workspaceId,
+-        mirrorKey,
+-        operation: 'create',
+-        status: 'complete',
+-        now: Date.now(),
+-      });
+-    } catch (error) {
+-      console.error(`[ThreadManager] Chat mirror creation failed for ${threadId}:`, error?.message || error);
+-      await repository.markMirrorRecovery(db, {
+-        workspaceId: this.workspaceId,
+-        mirrorKey,
+-        operation: 'create',
+-        status: 'failed',
+-        failureCode: 'mirror_write_failed',
+-        now: Date.now(),
+-      });
+-    }
++    await this.ensureSessionMirror(threadId);
+ 
+     const entry = await this.index.get(threadId);
+     return { threadId, entry };
+@@ -372,24 +278,7 @@
+    * the sweep is idempotent and never touches SQLite or user files.
+    */
+   async _reconcileRetiredMirrors() {
+-    const db = getDb();
+-    const record = await db('system_config')
+-      .where('key', 'thread_group.retirement.041')
+-      .first();
+-    if (!record) return;
+-    let parsed;
+-    try {
+-      parsed = JSON.parse(record.value);
+-    } catch {
+-      return;
+-    }
+-    const threadIds = Array.isArray(parsed?.threadIds) ? parsed.threadIds.slice(0, 100) : [];
+-    const fsPromises = require('fs').promises;
+-    for (const threadId of threadIds) {
+-      if (typeof threadId !== 'string' || !threadId) continue;
+-      const chatFile = this._createChatFile(threadId);
+-      await fsPromises.rm(chatFile.filePath, { force: true }).catch(() => {});
+-    }
++    return this.chatlogMirror.reconcileRetired();
+   }
+ 
+   async _attachGroupToSession({ threadId, name, viewId, createdAt, updatedAt }) {
+@@ -430,49 +319,12 @@
+         kind: 'initial',
+         occurredAt: createdAt,
+       });
+-      await repository.insertMirrorRecovery(trx, {
+-        workspaceId: this.workspaceId,
+-        groupId: threadId,
+-        threadId,
+-        mirrorKey: this._mirrorKey(threadId),
+-        operation: 'create',
+-        status: 'pending',
+-        createdAt: now,
+-        updatedAt: now,
+-      });
++      await this.chatlogMirror.stage(trx, { threadId, groupId: threadId, operation: 'create' });
+     });
+   }
+ 
+   async _retryPendingMirrorRecovery() {
+-    const db = getDb();
+-    const pending = await repository.listPendingMirrorRecovery(db, this.workspaceId);
+-    const fsPromises = require('fs').promises;
+-    for (const record of pending) {
+-      try {
+-        if (record.operation === 'create') {
+-          await this.syncChatlogMirrorFromHistory(record.thread_id);
+-        } else {
+-          const chatFile = this._createChatFile(record.thread_id);
+-          await fsPromises.rm(chatFile.filePath, { force: true });
+-        }
+-        await repository.markMirrorRecovery(db, {
+-          workspaceId: this.workspaceId,
+-          mirrorKey: record.mirror_key,
+-          operation: record.operation,
+-          status: 'complete',
+-          now: Date.now(),
+-        });
+-      } catch (error) {
+-        await repository.markMirrorRecovery(db, {
+-          workspaceId: this.workspaceId,
+-          mirrorKey: record.mirror_key,
+-          operation: record.operation,
+-          status: 'failed',
+-          failureCode: 'mirror_unavailable',
+-          now: Date.now(),
+-        });
+-      }
+-    }
++    return this.chatlogMirror.recover();
+   }
+ 
+   /**
+@@ -593,14 +445,7 @@
+       await repository.renameGroup(db, groupRow.group_id, newName);
+     }
+ 
+-    // Rewrite the frontmatter name in place — filename is immutable in SPEC-24b.
+-    const chatFile = this._createChatFile(threadId);
+-    const parsed = await chatFile.read();
+-    if (parsed) {
+-      await chatFile.write(newName, parsed.messages);
+-    }
+-    // If parsed is null (file doesn't exist yet), there's nothing to rewrite.
+-    // SQLite has the name either way — the file will pick it up on first write.
++    await this.chatlogMirror.rename(threadId, newName);
+ 
+     return { threadId, entry };
+   }
+@@ -616,40 +461,7 @@
+       closeSession: (id) => this.closeSession(id),
+     }, threadId);
+     if (!retired) return false;
+-    const groupRow = retired.group;
+-    const mirrorKey = this._mirrorKey(threadId);
+-
+-    // Remove the markdown file. Filename is ${threadId}.md — no need to fetch
+-    // the entry or look up the name.
+-    const fsPromises = require('fs').promises;
+-    try {
+-      const chatFile = this._createChatFile(threadId);
+-      await fsPromises.rm(chatFile.filePath, { force: true });
+-      if (groupRow) {
+-        await repository.markMirrorRecovery(db, {
+-          workspaceId: this.workspaceId,
+-          mirrorKey,
+-          operation: 'delete',
+-          status: 'complete',
+-          now: Date.now(),
+-        });
+-      }
+-    } catch (err) {
+-      // ENOENT is fine — file may not exist yet for zero-message threads
+-      if (err.code !== 'ENOENT') {
+-        console.error(`Failed to delete chat file for ${threadId}:`, err);
+-        if (groupRow) {
+-          await repository.markMirrorRecovery(db, {
+-            workspaceId: this.workspaceId,
+-            mirrorKey,
+-            operation: 'delete',
+-            status: 'failed',
+-            failureCode: 'mirror_delete_failed',
+-            now: Date.now(),
+-          });
+-        }
+-      }
+-    }
++    await this.chatlogMirror.deliver(threadId, 'delete');
+ 
+     return true;
+   }
+@@ -676,12 +488,7 @@
+     const session = this.sessionManager.getSession(threadId);
+     if (session?.pendingActivation) return 'accepting';
+     if (session?.state === 'stopping') return 'stopping';
+-    const runtime = threadRuntimeManager.getRuntimeForResource(this._resourceRuntimeKey(threadId));
+-    if (runtime?.activeDrain) return 'draining';
+-    if (runtime?.state === RUNTIME_STATES.WARMING) return 'accepting';
+-    if (runtime?.state === RUNTIME_STATES.IN_FLIGHT) return 'active';
+-    if (runtime?.state === RUNTIME_STATES.STOPPING) return 'stopping';
+-    return null;
++    return threadRuntimeManager.getResourceBusyState(this._resourceRuntimeKey(threadId));
+   }
+ 
+   /**
+@@ -693,20 +500,8 @@
+    */
+   async _fenceGroupMember(threadId) {
+     const resourceKey = this._resourceRuntimeKey(threadId);
+-    try {
+-      await threadRuntimeManager.retireResourceDrains(resourceKey);
+-    } catch (_error) {
+-      // Provider termination below still owns the hard fence.
+-    }
+-    const session = this.sessionManager.getSession(threadId);
+-    if (session) {
+-      try {
+-        await this.closeSessionAndWait(threadId);
+-      } catch (_error) {
+-        // A failed provider close must not be treated as a successful fence;
+-        // the caller still proceeds only after the busy check proved terminal.
+-      }
+-    }
++    await threadRuntimeManager.retireResourceDrains(resourceKey);
++    if (this.sessionManager.getSession(threadId)) await this.closeSessionAndWait(threadId);
+     threadRuntimeManager.fenceResource(resourceKey);
+   }
+ 
+@@ -725,7 +520,12 @@
+    * @returns {Promise<{deleted: boolean, reason?: string, busy?: Array,
+    *   result?: object, members?: Array}>}
+    */
+-  async deleteGroup(groupId, { tombstoneExpiresAt = null, context = null } = {}) {
++  async deleteGroup(groupId, options = {}) {
++    return withGroupMutationLease(groupMutationLeaseKey(this.workspaceId, groupId),
++      () => this._deleteGroupWithinLease(groupId, options));
++  }
++
++  async _deleteGroupWithinLease(groupId, { tombstoneExpiresAt = null, context = null } = {}) {
+     const db = getDb();
+     const groupRow = await repository.getGroup(db, groupId);
+     if (!groupRow || groupRow.workspace_id !== this.workspaceId) {
+@@ -784,21 +584,15 @@
+       : now + DEFAULT_DELETE_TOMBSTONE_TTL_MS;
+ 
+     await db.transaction(async (trx) => {
++      const current = await repository.getGroup(trx, groupId);
++      const currentMembers = await repository.listMembers(trx, groupId);
++      if (!current || current.workspace_id !== this.workspaceId
++        || currentMembers.length !== members.length
++        || currentMembers.some((row) => !members.some((member) => member.thread_id === row.thread_id))) {
++        throw new Error('Group membership changed before deletion');
++      }
+       for (const member of memberRecords) {
+-        try {
+-          await repository.insertMirrorRecovery(trx, {
+-            workspaceId: this.workspaceId,
+-            groupId,
+-            threadId: member.threadId,
+-            mirrorKey: member.mirrorKey,
+-            operation: 'delete',
+-            status: 'pending',
+-            createdAt: now,
+-            updatedAt: now,
+-          });
+-        } catch (_error) {
+-          // A duplicate delete-recovery record from a retry is benign.
+-        }
++        await this.chatlogMirror.stage(trx, { threadId: member.threadId, groupId, operation: 'delete' });
+       }
+       if (viewId) {
+         await repository.insertWorksurfaceCleanup(trx, {
+@@ -853,8 +647,8 @@
+    * workspace pending-delete instructions. Used by new-request recovery and by
+    * startup/workspace reattach.
+    */
+-  async retryMirrorCleanupForGroup() {
+-    await this._retryPendingMirrorRecovery();
++  async retryMirrorCleanupForGroup(groupId) {
++    return this.chatlogMirror.recover(groupId);
+   }
+ 
+   /**
+@@ -913,21 +707,7 @@
+    * @returns {Promise<{updated: boolean, written: number, reason: string}>}
+    */
+   async syncChatlogMirrorFromHistory(threadId) {
+-    const entry = await this.index.get(threadId);
+-    if (!entry) {
+-      return { updated: false, written: 0, reason: 'thread-not-found' };
+-    }
+-
+-    const history = await this.getRichHistory(threadId);
+-    const exchanges = Array.isArray(history?.exchanges) ? history.exchanges : [];
+-    const expectedMessages = buildChatlogMessagesFromExchanges(threadId, exchanges);
+-    const chatFile = this._createChatFile(threadId);
+-    await chatFile.write(entry.name, expectedMessages);
+-    return {
+-      updated: true,
+-      written: expectedMessages.length,
+-      reason: exchanges.length > 0 ? 'rewritten-from-sqlite' : 'empty',
+-    };
++    return this.chatlogMirror.sync(threadId);
+   }
+ 
+   /**
+--- before/fusion-studio-server/lib/thread/chatlog-mirror.js
++++ after/fusion-studio-server/lib/thread/chatlog-mirror.js
+@@ -0,0 +1,174 @@
++'use strict';
++
++// Disposable Markdown projection and durable recovery instructions. SQLite
++// exchanges remain canonical; this owner never writes an exchange/session row.
++const path = require('path');
++const fs = require('fs').promises;
++const { ChatFile } = require('./ChatFile');
++const repository = require('../thread-groups/repository');
++const journal = require('./mirror-journal');
++const aiPaths = require('../workspace/ai-paths');
++
++function asPlainObject(value) {
++  if (!value || typeof value !== 'object' || Array.isArray(value)) return {};
++  return value;
++}
++
++function assistantTextFromParts(parts) {
++  if (!Array.isArray(parts)) return '';
++  return parts
++    .filter((part) => part?.type === 'text' && typeof part.content === 'string')
++    .map((part) => part.content)
++    .join('');
++}
++
++function hasToolCallsFromParts(parts) {
++  return Array.isArray(parts) && parts.some((part) => part?.type === 'tool_call');
++}
++
++function withChatMirrorMetadata(threadId, exchange) {
++  const metadata = { ...asPlainObject(exchange.metadata) };
++  const existingMirror = asPlainObject(metadata.chatMirror);
++  const turnId = metadata.turnId || existingMirror.turnId || null;
++
++  if (turnId && metadata.turnId === undefined) {
++    metadata.turnId = turnId;
++  }
++
++  metadata.chatMirror = {
++    ...existingMirror,
++    threadId,
++    exchangeId: exchange.exchangeId,
++    seq: exchange.seq,
++    turnId,
++  };
++
++  return metadata;
++}
++
++function buildChatlogMessagesFromExchanges(threadId, exchanges) {
++  return exchanges.flatMap((exchange) => {
++    const parts = Array.isArray(exchange.assistant?.parts) ? exchange.assistant.parts : [];
++    return [
++      {
++        role: 'user',
++        content: exchange.user || '',
++        hasToolCalls: false,
++      },
++      {
++        role: 'assistant',
++        content: assistantTextFromParts(parts),
++        hasToolCalls: hasToolCallsFromParts(parts),
++        metadata: withChatMirrorMetadata(threadId, exchange),
++      },
++    ];
++  });
++}
++
++class ChatlogMirror {
++  constructor({ workspaceId, projectRoot, getDb, getThread, readHistory }) {
++    Object.assign(this, { workspaceId, projectRoot, getDb, getThread, readHistory });
++    // Short-lived file operations only, never a second runtime/session map.
++    this.pendingWrites = new Map();
++  }
++
++  key(threadId) { return `chatlog:${threadId}`; }
++  directory() {
++    return path.join(aiPaths.getMachineAiRoot(this.projectRoot), 'Data', 'Chatlogs', 'threads');
++  }
++  file(threadId) { return new ChatFile({ chatlogDir: this.directory(), threadId }); }
++
++  async stage(trx, { threadId, groupId, operation }) {
++    const now = Date.now();
++    await repository.insertMirrorRecovery(trx, {
++      workspaceId: this.workspaceId, groupId, threadId, mirrorKey: this.key(threadId),
++      operation, status: 'pending', createdAt: now, updatedAt: now,
++    });
++  }
++
++  async serialize(threadId, operation) {
++    const previous = this.pendingWrites.get(threadId) || Promise.resolve();
++    const current = previous.catch(() => {}).then(operation);
++    this.pendingWrites.set(threadId, current);
++    try { return await current; }
++    finally { if (this.pendingWrites.get(threadId) === current) this.pendingWrites.delete(threadId); }
++  }
++
++  async write(threadId) {
++    const entry = await this.getThread(threadId);
++    if (!entry) return { updated: false, written: 0, reason: 'thread-not-found' };
++    const history = await this.readHistory(threadId);
++    const exchanges = Array.isArray(history?.exchanges) ? history.exchanges : [];
++    const messages = buildChatlogMessagesFromExchanges(threadId, exchanges);
++    await this.file(threadId).write(entry.name, messages);
++    return { updated: true, written: messages.length,
++      reason: exchanges.length ? 'rewritten-from-sqlite' : 'empty' };
++  }
++
++  async sync(threadId) {
++    return this.serialize(threadId, async () => {
++      const db = this.getDb();
++      await journal.invalidate(db, threadId);
++      const record = await journal.read(db, this.workspaceId, threadId);
++      const identity = { workspaceId: this.workspaceId, mirrorKey: this.key(threadId),
++        operation: 'create', expectedUpdatedAt: record?.updated_at ?? null };
++      try {
++        const result = await this.write(threadId);
++        await repository.markMirrorRecovery(db, { ...identity, status: 'complete', now: Date.now() });
++        return result;
++      } catch (error) {
++        try {
++          await repository.markMirrorRecovery(db, { ...identity, status: 'failed',
++            failureCode: 'mirror_write_failed', now: Date.now() });
++        } catch (_) { /* Pending instruction survives the ACK outage. */ }
++        throw error;
++      }
++    });
++  }
++
++  async rename(threadId) {
++    return this.sync(threadId);
++  }
++
++  async deliver(threadId, operation) {
++    const db = this.getDb();
++    const identity = { workspaceId: this.workspaceId, mirrorKey: this.key(threadId), operation };
++    try {
++      if (operation === 'create') { await this.sync(threadId); return true; }
++      await this.serialize(threadId, () => fs.rm(this.file(threadId).filePath, { force: true }));
++      await repository.markMirrorRecovery(db, { ...identity, status: 'complete', now: Date.now() });
++      return true;
++    } catch (error) {
++      // A failed acknowledgement (including a failed failure-status write)
++      // leaves the original committed journal retryable, never rejects commit.
++      try {
++        if (operation === 'create') return false;
++        await repository.markMirrorRecovery(db, { ...identity, status: 'failed',
++          failureCode: 'mirror_delete_failed', now: Date.now() });
++      } catch (_) { /* The original instruction is still durable. */ }
++      return false;
++    }
++  }
++
++  async recover(groupId = null) {
++    const pending = await repository.listPendingMirrorRecovery(this.getDb(), this.workspaceId);
++    for (const record of pending) {
++      if (groupId && record.group_id !== groupId) continue;
++      await this.deliver(record.thread_id, record.operation);
++    }
++  }
++
++  async reconcileRetired() {
++    const record = await this.getDb()('system_config').where('key', 'thread_group.retirement.041').first();
++    if (!record) return;
++    let parsed;
++    try { parsed = JSON.parse(record.value); } catch { return; }
++    const ids = Array.isArray(parsed?.threadIds) ? parsed.threadIds.slice(0, 100) : [];
++    for (const id of ids) {
++      if (typeof id !== 'string' || !id) continue;
++      await this.serialize(id, () => fs.rm(this.file(id).filePath, { force: true })).catch(() => {});
++    }
++  }
++}
++
++module.exports = { ChatlogMirror };
+--- before/fusion-studio-server/lib/thread/mirror-journal.js
++++ after/fusion-studio-server/lib/thread/mirror-journal.js
+@@ -0,0 +1,16 @@
++'use strict';
++
++// SQL-only write-intent seam shared by canonical exchange persistence and the
++// disposable projection owner. Use the caller's transaction, never a new DB.
++async function invalidate(trx, threadId) {
++  await trx('thread_group_mirror_recovery').where({ thread_id: threadId, operation: 'create' })
++    .update({ status: 'pending', failure_code: null,
++      updated_at: trx.raw('MAX(updated_at + 1, ?)', [Date.now()]) });
++}
++
++async function read(db, workspaceId, threadId) {
++  return db('thread_group_mirror_recovery').where({ workspace_id: workspaceId,
++    thread_id: threadId, operation: 'create' }).first();
++}
++
++module.exports = { invalidate, read };
+--- before/fusion-studio-server/lib/thread/session-lifecycle.js
++++ after/fusion-studio-server/lib/thread/session-lifecycle.js
+@@ -7,8 +7,8 @@
+ const { threadRuntimeManager } = require('./thread-runtime-manager');
+ 
+ class SessionLifecycle {
+-  constructor({ workspaceId, projectId, projectRoot, index, sessionManager }) {
+-    Object.assign(this, { workspaceId, projectId, projectRoot, index, sessionManager });
++  constructor({ workspaceId, projectId, projectRoot, index, sessionManager, mirror }) {
++    Object.assign(this, { workspaceId, projectId, projectRoot, index, sessionManager, mirror });
+   }
+ 
+   async deleteRows(trx, threadIds) {
+@@ -16,10 +16,7 @@
+   }
+ 
+   async stageDeletion(trx, threadId, groupId) {
+-    await repository.insertMirrorRecovery(trx, {
+-      workspaceId: this.workspaceId, groupId, threadId, mirrorKey: `chatlog:${threadId}`,
+-      operation: 'delete', status: 'pending', createdAt: Date.now(), updatedAt: Date.now(),
+-    });
++    await this.mirror.stage(trx, { threadId, groupId, operation: 'delete' });
+   }
+ 
+   async stageNewSession(trx, {
+@@ -32,16 +29,7 @@
+       harnessId,
+       harnessConfig,
+     });
+-    await repository.insertMirrorRecovery(trx, {
+-      workspaceId: this.workspaceId,
+-      groupId,
+-      threadId,
+-      mirrorKey: `chatlog:${threadId}`,
+-      operation: 'create',
+-      status: 'pending',
+-      createdAt: now,
+-      updatedAt: now,
+-    });
++    await this.mirror.stage(trx, { threadId, groupId, operation: 'create' });
+     return repository.epochFromIso(createdAt, now);
+   }
+ 
+--- before/fusion-studio-server/lib/thread/thread-runtime-automation.js
++++ after/fusion-studio-server/lib/thread/thread-runtime-automation.js
+@@ -293,7 +293,17 @@
+   const runtimeKey = getRuntimeKey(target);
+   let wireResult;
+   try {
+-    wireResult = await ensureAutomationWire(target, manager, runtimeKey);
++    const { withSessionAdmission } = require('../thread-groups/session-transactions');
++    wireResult = await withSessionAdmission(target.workspaceId, target.threadId, async () => {
++      const ready = await ensureAutomationWire(target, manager, runtimeKey);
++      if (ready.deferReason) return ready;
++      const state = threadRuntimeManager.getRuntimeState(runtimeKey);
++      if (state !== RUNTIME_STATES.READY) return { wire: null, deferReason: getDeferReason(state) || 'in_flight' };
++      threadRuntimeManager.markInFlight(runtimeKey);
++      return ready;
++    });
++    if (!wireResult) return { accepted: false, deferred: false, error: `Thread not found: ${target.threadId}`,
++      threadId: target.threadId, scope: target.scope };
+   } catch {
+     console.error('[ThreadRuntime] Automation warm-up failed', {
+       threadId: target.threadId,
+@@ -318,17 +328,6 @@
+   }
+   const { wire } = wireResult;
+ 
+-  if (threadRuntimeManager.getRuntimeState(runtimeKey) !== RUNTIME_STATES.READY) {
+-    return {
+-      accepted: false,
+-      deferred: true,
+-      reason: getDeferReason(threadRuntimeManager.getRuntimeState(runtimeKey)) || 'in_flight',
+-      threadId: target.threadId,
+-      scope: target.scope,
+-    };
+-  }
+-
+-  threadRuntimeManager.markInFlight(runtimeKey);
+   try {
+     await persistAutomationUserPrompt(manager, target, input);
+   } catch {
+--- before/fusion-studio-server/lib/thread/thread-runtime-controller.js
++++ after/fusion-studio-server/lib/thread/thread-runtime-controller.js
+@@ -283,7 +283,13 @@
+       || binding.session.workspaceBindingState === 'active');
+ }
+ 
+-async function ensureReadyRuntime({
++async function ensureReadyRuntime(options) {
++  const { withSessionAdmission } = require('../thread-groups/session-transactions');
++  return withSessionAdmission(options.runtimeKey.workspaceId, options.threadId,
++    () => ensureReadyRuntimeWithinLease(options));
++}
++
++async function ensureReadyRuntimeWithinLease({
+   ws,
+   session,
+   wireLifecycle,
+--- before/fusion-studio-server/lib/thread/thread-runtime-manager.js
++++ after/fusion-studio-server/lib/thread/thread-runtime-manager.js
+@@ -74,6 +74,16 @@
+   getRuntimeForResource(key) {
+     const matches = this._resourceRuntimes(key);
+     return matches.length === 1 ? matches[0][1] : null;
++  }
++
++  getResourceBusyState(key) {
++    for (const [, runtime] of this._resourceRuntimes(key)) {
++      if (runtime.activeDrain) return 'draining';
++      if (runtime.warmPromise || runtime.state === RUNTIME_STATES.WARMING) return 'accepting';
++      if (runtime.state === RUNTIME_STATES.IN_FLIGHT) return 'active';
++      if (runtime.state === RUNTIME_STATES.STOPPING) return 'stopping';
++    }
++    return null;
+   }
+ 
+   async retireResourceDrains(key) {
+--- before/fusion-studio-server/lib/ws/thread-ws-handlers.js
++++ after/fusion-studio-server/lib/ws/thread-ws-handlers.js
+@@ -379,14 +379,17 @@
+         // Creation/resume, its response frames, and provider admission are one
+         // workspace-leased operation. A queued workspace bind cannot split
+         // durable metadata from activation.
+-        if (await resumeLiveProvider(threadId, binding)) return;
+-        await spawnAndSetupWire({
+-          ws,
+-          session,
+-          wireLifecycle: { awaitHarnessReady, initializeWire, setupWireHandlers },
+-          threadId,
+-          projectRoot: binding.projectRoot,
+-          expectedBinding: binding,
++        const { withSessionAdmission } = require('../thread-groups/session-transactions');
++        await withSessionAdmission(binding.workspaceId, threadId, async () => {
++          if (await resumeLiveProvider(threadId, binding)) return;
++          await spawnAndSetupWire({
++            ws,
++            session,
++            wireLifecycle: { awaitHarnessReady, initializeWire, setupWireHandlers },
++            threadId,
++            projectRoot: binding.projectRoot,
++            expectedBinding: binding,
++          });
+         });
+       }, acceptedRequest.requestId);
+     },
+--- before/fusion-studio-server/test/thread/thread-activation-lifecycle.test.js
++++ after/fusion-studio-server/test/thread/thread-activation-lifecycle.test.js
+@@ -1,3 +1,10 @@
++// Unit persistence adapter: real lease/row validation is covered by isolated
++// public-route deletion/admission and submission integration tests.
++jest.mock('../../lib/thread-groups/session-transactions', () => ({
++  ...jest.requireActual('../../lib/thread-groups/session-transactions'),
++  withSessionAdmission: jest.fn(async (_workspaceId, _threadId, work) => work()),
++}));
++
+ 'use strict';
+ 
+ const { EventEmitter } = require('events');
+--- before/fusion-studio-server/test/thread/thread-group-delete-recovery.test.js
++++ after/fusion-studio-server/test/thread/thread-group-delete-recovery.test.js
+@@ -322,6 +322,14 @@
+       route: { threadId, workspaceId: WORKSPACE_ID },
+       control: { runtimeKey, drainId: 'stale-drain' },
+     });
++    const { createCanonicalChatEventApplier } = require('../../lib/wire/canonical-chat-event-applier');
++    const applier = createCanonicalChatEventApplier({ emit: (...args) => emitted.push(args),
++      checkSettingsBounce: () => null, generateTurnId: () => 'late-generated' });
++    applier.applyChatEvent({ type: 'status_update', payload: { tokenUsage: 100 } }, null, {
++      route: { threadId, workspaceId: WORKSPACE_ID },
++      control: { runtimeKey, drainId: 'stale-drain', touchThreadSession: () => manager.touchSession(threadId) },
++    });
++    expect(threadRuntimeManager.getRuntimeForResource(resourceKey)).toBeNull();
+     expect(emitted).toHaveLength(0);
+     expect(await db('exchanges').where({ thread_id: threadId })).toHaveLength(0);
+   });
+@@ -368,4 +376,76 @@
+     expect(await db('thread_group_members').where({ thread_id: threadId })).toHaveLength(0);
+     expect(await db('threads').where({ thread_id: threadId })).toHaveLength(0);
+   });
++
++  test('delete journal insertion failure rolls back sessions, history and receipt; retry cascades the receipt', async () => {
++    const manager = makeManager();
++    const { threadId, groupId } = await seed(manager);
++    await insertExchange(threadId);
++    const db = getDb();
++    await db('prompt_submission_receipts').insert({ workspace_id: WORKSPACE_ID, thread_id: threadId,
++      request_id: 'accepted-before-delete', generation: EPOCH, outcome: 'accepted', execution: 'completed',
++      created_at: 1, updated_at: 1 });
++    const repo = require('../../lib/thread-groups/repository');
++    const stage = jest.spyOn(repo, 'insertMirrorRecovery').mockRejectedValue(new Error('journal unavailable'));
++    try {
++      await expect(manager.threadGroups.deleteGroup({ threadGroupId: groupId, requestId: 'journal-fail' }))
++        .rejects.toThrow('journal unavailable');
++    } finally { stage.mockRestore(); }
++    for (const table of ['threads', 'exchanges', 'prompt_submission_receipts']) {
++      expect(await db(table).where({ thread_id: threadId })).toHaveLength(1);
++    }
++    expect(await db('thread_group_delete_tombstones')).toHaveLength(0);
++    expect(await manager.threadGroups.deleteGroup({ threadGroupId: groupId, requestId: 'journal-retry' }))
++      .toMatchObject({ ok: true });
++    expect(await db('prompt_submission_receipts').where({ thread_id: threadId })).toHaveLength(0);
++  });
++
++  test('failed drain retirement or provider close rejects deletion before SQL mutation', async () => {
++    const manager = makeManager();
++    const { threadId, groupId } = await seed(manager);
++    const retire = jest.spyOn(threadRuntimeManager, 'retireResourceDrains').mockRejectedValue(new Error('drain failed'));
++    try {
++      await expect(manager.threadGroups.deleteGroup({ threadGroupId: groupId })).rejects.toThrow('drain failed');
++    } finally { retire.mockRestore(); }
++    const session = jest.spyOn(manager.sessionManager, 'getSession').mockReturnValue({ state: 'active' });
++    const close = jest.spyOn(manager, 'closeSessionAndWait').mockRejectedValue(new Error('close failed'));
++    try {
++      await expect(manager.threadGroups.deleteGroup({ threadGroupId: groupId })).rejects.toThrow('close failed');
++    } finally { session.mockRestore(); close.mockRestore(); }
++    expect(await getDb()('threads').where({ thread_id: threadId })).toHaveLength(1);
++    expect(await getDb()('thread_group_delete_tombstones')).toHaveLength(0);
++  });
++
++  test('delete file ACK failure remains recoverable after SQLite close and reopen', async () => {
++    const manager = makeManager();
++    const { threadId, groupId } = await seed(manager);
++    const repo = require('../../lib/thread-groups/repository');
++    const mark = jest.spyOn(repo, 'markMirrorRecovery').mockRejectedValue(new Error('ACK unavailable'));
++    try {
++      expect(await manager.threadGroups.deleteGroup({ threadGroupId: groupId, requestId: 'delete-ack' }))
++        .toMatchObject({ ok: true, result: { deleted: true, cleanup: { status: 'pending' } } });
++    } finally { mark.mockRestore(); }
++    expect(fs.existsSync(manager._createChatFile(threadId).filePath)).toBe(false);
++    await closeDb(); await initDb();
++    const restarted = makeManager();
++    await restarted.ensureGroupsActivated();
++    expect(await restarted.threadGroups.deleteGroup({ threadGroupId: groupId, requestId: 'delete-ack-retry' }))
++      .toMatchObject({ ok: true, result: { cleanup: { status: 'complete' } } });
++    expect(await getDb()('threads').where({ thread_id: threadId })).toHaveLength(0);
++  });
++
++  test('a cold passive epoch cannot hide another epoch busy during Delete', async () => {
++    const manager = makeManager();
++    const { threadId, groupId } = await seed(manager);
++    const resource = { workspaceId: WORKSPACE_ID, projectRoot, threadId, scope: 'project' };
++    threadRuntimeManager.markInFlight({ ...resource, workspaceEpoch: 'active-epoch' });
++    threadRuntimeManager.ensureRuntime({ ...resource, workspaceEpoch: 'passive-epoch' });
++    try {
++      expect(await manager.threadGroups.deleteGroup({ threadGroupId: groupId, requestId: 'busy-epochs' }))
++        .toMatchObject({ ok: false, code: 'group_busy' });
++      expect(await getDb()('threads').where({ thread_id: threadId })).toHaveLength(1);
++      expect(threadRuntimeManager.getRuntimeState({ ...resource, workspaceEpoch: 'active-epoch' })).toBe('in_flight');
++    } finally { threadRuntimeManager.fenceResource(resource); }
++  });
++
+ });
+--- before/fusion-studio-server/test/thread/thread-manager-chatlog-sync.test.js
++++ after/fusion-studio-server/test/thread/thread-manager-chatlog-sync.test.js
+@@ -158,4 +158,107 @@
+     const entry = await manager.index.get(threadId);
+     expect(entry.messageCount).toBe(6);
+   });
++
++  test.each(['ack', 'file-and-ack'])('committed creation survives %s failure and DB reopen repairs its mirror', async (fault) => {
++    const repository = require('../../lib/thread-groups/repository');
++    const { ChatFile } = require('../../lib/thread/ChatFile');
++    const { getDb } = require('../../lib/db');
++    const mark = jest.spyOn(repository, 'markMirrorRecovery').mockRejectedValue(new Error('ACK unavailable'));
++    const write = fault === 'file-and-ack'
++      ? jest.spyOn(ChatFile.prototype, 'write').mockRejectedValue(new Error('file unavailable')) : null;
++    try {
++      await expect(manager.createThread('fault-mirror', 'Committed', { harnessId: 'opencode' }))
++        .resolves.toMatchObject({ threadId: 'fault-mirror' });
++      expect(await getDb()('threads').where({ thread_id: 'fault-mirror' })).toHaveLength(1);
++      expect((await getDb()('thread_group_mirror_recovery').first()).status).toBe('pending');
++    } finally { mark.mockRestore(); write?.mockRestore(); }
++    await closeDb();
++    await initDb();
++    const restarted = new ThreadManager({ projectRoot: tempRoot, workspaceId: 'workspace-chatlog-sync' });
++    await restarted.ensureGroupsActivated();
++    expect(await restarted.getHistory('fault-mirror')).toMatchObject({ name: 'Committed', messages: [] });
++    expect((await getDb()('thread_group_mirror_recovery').first()).status).toBe('complete');
++  });
++
++  test('a queued late projection cannot recreate a deleted mirror', async () => {
++    await createThread('late-mirror');
++    const original = manager.getRichHistory.bind(manager);
++    let release;
++    let entered;
++    const started = new Promise((resolve) => { entered = resolve; });
++    manager.getRichHistory = async (id) => {
++      entered();
++      await new Promise((resolve) => { release = resolve; });
++      return original(id);
++    };
++    const write = manager.syncChatlogMirrorFromHistory('late-mirror');
++    await started;
++    const deleting = manager.threadGroups.deleteGroup({ threadGroupId: 'late-mirror', requestId: 'delete-late' });
++    manager.getRichHistory = original;
++    release();
++    await write;
++    expect(await deleting).toMatchObject({ ok: true });
++    expect(fs.existsSync(manager._createChatFile('late-mirror').filePath)).toBe(false);
++    expect(await manager.syncChatlogMirrorFromHistory('late-mirror'))
++      .toMatchObject({ updated: false, reason: 'thread-not-found' });
++    expect(manager.chatlogMirror.pendingWrites.size).toBe(0);
++  });
++
++  test('a failed saved-exchange projection re-arms the write journal and restart exports exact history', async () => {
++    const { ChatFile } = require('../../lib/thread/ChatFile');
++    const { getDb } = require('../../lib/db');
++    await createThread('saved-mirror');
++    const saved = await addExchange('saved-mirror', 'durable question', 'durable answer', { turnId: 'saved-turn' });
++    const write = jest.spyOn(ChatFile.prototype, 'write').mockRejectedValue(new Error('file unavailable'));
++    try {
++      await expect(manager.syncChatlogMirrorFromHistory('saved-mirror')).rejects.toThrow('file unavailable');
++    } finally { write.mockRestore(); }
++    expect((await getDb()('thread_group_mirror_recovery').first()).status).toBe('failed');
++    await closeDb(); await initDb();
++    const restarted = new ThreadManager({ projectRoot: tempRoot, workspaceId: 'workspace-chatlog-sync' });
++    await restarted.ensureGroupsActivated();
++    const history = await restarted.getHistory('saved-mirror');
++    expect(history.messages.map((message) => message.content)).toEqual(['durable question', 'durable answer']);
++    expect(history.messages[1].metadata.chatMirror).toMatchObject({ exchangeId: saved.exchangeId, seq: saved.seq, turnId: 'saved-turn' });
++    expect((await getDb()('thread_group_mirror_recovery').first()).status).toBe('complete');
++  });
++
++  test('exchange commit before projection is durable across restart and journal failure rolls the exchange back', async () => {
++    const { getDb } = require('../../lib/db');
++    const journal = require('../../lib/thread/mirror-journal');
++    await createThread('crash-mirror');
++    const invalidate = jest.spyOn(journal, 'invalidate').mockRejectedValue(new Error('intent unavailable'));
++    try {
++      await expect(addExchange('crash-mirror', 'rolled back', 'never saved')).rejects.toThrow('intent unavailable');
++    } finally { invalidate.mockRestore(); }
++    expect(await getDb()('exchanges').where({ thread_id: 'crash-mirror' })).toHaveLength(0);
++    await addExchange('crash-mirror', 'committed before crash', 'recovered answer');
++    expect((await getDb()('thread_group_mirror_recovery').first()).status).toBe('pending');
++    // No sync call: simulate process loss immediately after canonical commit.
++    await closeDb(); await initDb();
++    const restarted = new ThreadManager({ projectRoot: tempRoot, workspaceId: 'workspace-chatlog-sync' });
++    await restarted.ensureGroupsActivated();
++    expect((await restarted.getHistory('crash-mirror')).messages.map((m) => m.content))
++      .toEqual(['committed before crash', 'recovered answer']);
++  });
++
++  test('an older export ACK cannot erase a newer exchange write intent', async () => {
++    const { ChatFile } = require('../../lib/thread/ChatFile');
++    const { getDb } = require('../../lib/db');
++    await createThread('race-mirror');
++    await addExchange('race-mirror', 'first', 'answer one');
++    const original = ChatFile.prototype.write;
++    const write = jest.spyOn(ChatFile.prototype, 'write').mockImplementationOnce(async function (...args) {
++      await addExchange('race-mirror', 'second', 'answer two');
++      return original.apply(this, args);
++    });
++    try { await manager.syncChatlogMirrorFromHistory('race-mirror'); }
++    finally { write.mockRestore(); }
++    expect((await getDb()('thread_group_mirror_recovery').first()).status).toBe('pending');
++    await manager._retryPendingMirrorRecovery();
++    expect((await manager.getHistory('race-mirror')).messages.map((m) => m.content))
++      .toEqual(['first', 'answer one', 'second', 'answer two']);
++    expect((await getDb()('thread_group_mirror_recovery').first()).status).toBe('complete');
++  });
++
+ });
+--- before/fusion-studio-server/test/thread/thread-runtime-automation.test.js
++++ after/fusion-studio-server/test/thread/thread-runtime-automation.test.js
+@@ -1,3 +1,10 @@
++// Unit persistence adapter: real lease/row validation is covered by isolated
++// public-route deletion/admission and submission integration tests.
++jest.mock('../../lib/thread-groups/session-transactions', () => ({
++  ...jest.requireActual('../../lib/thread-groups/session-transactions'),
++  withSessionAdmission: jest.fn(async (_workspaceId, _threadId, work) => work()),
++}));
++
+ 'use strict';
+ 
+ const fs = require('fs/promises');
+--- before/fusion-studio-server/test/thread/thread-runtime-controller.test.js
++++ after/fusion-studio-server/test/thread/thread-runtime-controller.test.js
+@@ -1,3 +1,10 @@
++// Unit persistence adapter: real lease/row validation is covered by isolated
++// public-route deletion/admission and submission integration tests.
++jest.mock('../../lib/thread-groups/session-transactions', () => ({
++  ...jest.requireActual('../../lib/thread-groups/session-transactions'),
++  withSessionAdmission: jest.fn(async (_workspaceId, _threadId, work) => work()),
++}));
++
+ 'use strict';
+ 
+ const fs = require('fs/promises');
+--- before/fusion-studio-server/test/ws/privileged-thread-handlers.test.js
++++ after/fusion-studio-server/test/ws/privileged-thread-handlers.test.js
+@@ -1,3 +1,10 @@
++// This transport-only fixture substitutes durable session admission. Real
++// lease/readback is exercised by the SQLite group/admission integration lane.
++jest.mock('../../lib/thread-groups/session-transactions', () => ({
++  ...jest.requireActual('../../lib/thread-groups/session-transactions'),
++  withSessionAdmission: jest.fn(async (_workspaceId, _threadId, work) => work()),
++}));
++
+ 'use strict';
+ 
+ const mockPerformAction = jest.fn();
+--- before/fusion-studio-server/test/ws/privileged-thread-public-route.integration.test.js
++++ after/fusion-studio-server/test/ws/privileged-thread-public-route.integration.test.js
+@@ -1,3 +1,10 @@
++// This transport-only fixture substitutes durable session admission. Real
++// lease/readback is exercised by the SQLite group/admission integration lane.
++jest.mock('../../lib/thread-groups/session-transactions', () => ({
++  ...jest.requireActual('../../lib/thread-groups/session-transactions'),
++  withSessionAdmission: jest.fn(async (_workspaceId, _threadId, work) => work()),
++}));
++
+ 'use strict';
+ 
+ const http = require('node:http');
+--- before/fusion-studio-server/test/ws/prompt-canonical-route.integration.test.js
++++ after/fusion-studio-server/test/ws/prompt-canonical-route.integration.test.js
+@@ -1,3 +1,10 @@
++// Unit persistence adapter: real lease/row validation is covered by isolated
++// public-route deletion/admission and submission integration tests.
++jest.mock('../../lib/thread-groups/session-transactions', () => ({
++  ...jest.requireActual('../../lib/thread-groups/session-transactions'),
++  withSessionAdmission: jest.fn(async (_workspaceId, _threadId, work) => work()),
++}));
++
+ /**
+  * Public prompt route → canonical drain ownership integration tests
+  * (RCC-0108 SPEC-01 Slice C, SPEC §5 items a–d).
+--- before/fusion-studio-server/test/ws/thread-group-move-side-chat.integration.test.js
++++ after/fusion-studio-server/test/ws/thread-group-move-side-chat.integration.test.js
+@@ -622,4 +622,122 @@
+     expect(Number(after.outbox.n)).toBe(0);
+     expect(await db('thread_group_action_results').where({ request_id: 'm-ineligible' })).toHaveLength(0);
+   });
++
++  test.each([false, true])('public Move survives mirror and placement ACK outage; replay preserves closed=%s', async (closed) => {
++    const h = await makeHarness(`ack-${closed}`);
++    const { threadId, groupId } = await seedViewBoundGroup(h);
++    const repo = require('../../lib/thread-groups/repository');
++    const mirror = jest.spyOn(repo, 'markMirrorRecovery').mockRejectedValue(new Error('mirror ACK unavailable'));
++    const placement = jest.spyOn(repo, 'markPlacementOutbox').mockRejectedValue(new Error('placement ACK unavailable'));
++    let ack;
++    try {
++      await h.handlers['thread:action']({ action: 'move_chat_to_side', requestId: 'move-ack',
++        threadGroupId: groupId, threadId, expectedPrimarySequence: 1 });
++      ack = firstOfType(h.ws, 'thread:action:completed');
++      expect(ack).toMatchObject({ action: 'move_chat_to_side' });
++      expect(await getDb()('thread_group_members').where({ group_id: groupId })).toHaveLength(2);
++      expect((await getDb()('thread_group_placement_outbox').where({ group_id: groupId }).first()).status).toBe('pending');
++    } finally { mirror.mockRestore(); placement.mockRestore(); }
++    const lane = () => readViewState(h.projectRoot, 'file-viewer').threadWorksurfaces[groupId].managedComponentPlacements;
++    expect(lane()[ack.sideChatPlacementId].disposition).toBe('open');
++    if (closed) {
++      const { mutateManagedPlacement } = require('../../lib/view-state/thread-worksurface');
++      await mutateManagedPlacement(h.projectRoot, 'file-viewer', groupId,
++        { placementId: ack.sideChatPlacementId, operation: 'close',
++          expectedPlacementRevision: readViewState(h.projectRoot, 'file-viewer').threadWorksurfaces[groupId].placementRevision });
++    }
++    await closeDb(); await initDb();
++    const restarted = new ThreadManager({ projectRoot: h.projectRoot, workspaceId: h.workspaceId });
++    await restarted.ensureGroupsActivated();
++    await restarted.retryPlacementDeliveryForGroup(groupId);
++    expect(Object.keys(lane())).toEqual([ack.sideChatPlacementId]);
++    expect(lane()[ack.sideChatPlacementId].disposition).toBe(closed ? 'closed' : 'open');
++    expect((await getDb()('thread_group_placement_outbox').where({ group_id: groupId }).first()).status).toBe('applied');
++    expect((await restarted.getRichHistory(ack.newMainThreadId))?.exchanges || []).toHaveLength(0);
++    expect(await getDb()('threads').where({ thread_id: threadId })).toHaveLength(1);
++  });
++
++  test.each(['warm', 'automation'])('Delete fences a concurrently requested %s before SQL deletion', async (lane) => {
++    const h = await makeHarness(`delete-${lane}`);
++    const { threadId, groupId } = await seedViewBoundGroup(h);
++    const { spawnThreadWire } = require('../../lib/harness/compat');
++    const beforeSpawns = spawnThreadWire.mock.calls.length;
++    let entered;
++    let release;
++    const reached = new Promise((resolve) => { entered = resolve; });
++    const gate = new Promise((resolve) => { release = resolve; });
++    const original = h.manager._fenceGroupMember.bind(h.manager);
++    const fence = jest.spyOn(h.manager, '_fenceGroupMember').mockImplementation(async (id) => {
++      entered(); await gate; return original(id);
++    });
++    const deleting = h.handlers['thread:action']({ action: 'delete', requestId: 'delete-admission', threadGroupId: groupId });
++    await reached;
++    const admission = lane === 'warm'
++      ? h.handlers['thread:warm']({ type: 'thread:warm', threadId })
++      : require('../../lib/thread/thread-runtime-automation').sendAutomationPrompt({
++        workspaceId: h.workspaceId, projectRoot: h.projectRoot, threadId }, 'late prompt');
++    await new Promise((resolve) => setImmediate(resolve));
++    release();
++    try { await deleting; await admission; } finally { fence.mockRestore(); }
++    expect(firstOfType(h.ws, 'thread:action:completed')).toMatchObject({ deleted: true });
++    expect(spawnThreadWire.mock.calls.length).toBe(beforeSpawns);
++    expect(await getDb()('threads').where({ thread_id: threadId })).toHaveLength(0);
++    const { threadRuntimeManager } = require('../../lib/thread/thread-runtime-manager');
++    expect(threadRuntimeManager.getRuntimeForResource({ workspaceId: h.workspaceId, projectRoot: h.projectRoot, threadId })).toBeNull();
++    expect(h.manager.getSession(threadId)).toBeUndefined();
++  });
++
++  test('public warm admitted first completes under the lease before Delete retires its provider', async () => {
++    const h = await makeHarness('warm-delete');
++    const { threadId, groupId } = await seedViewBoundGroup(h);
++    const { EventEmitter } = require('events');
++    const wire = new EventEmitter();
++    wire.kill = () => { wire.exitCode = 0; wire.emit('exit', 0); };
++    const { spawnThreadWire } = require('../../lib/harness/compat');
++    spawnThreadWire.mockReturnValueOnce(wire);
++    let entered; let release;
++    const reached = new Promise((resolve) => { entered = resolve; });
++    const gate = new Promise((resolve) => { release = resolve; });
++    const handlers = createThreadWsHandlers({ ws: h.ws, projectRoot: h.projectRoot,
++      session: makeSession(h.projectRoot, h.workspaceId), wireLifecycle: {
++        awaitHarnessReady: async () => { entered(); await gate; },
++        initializeWire: () => {}, setupWireHandlers: () => {},
++      }, getWorkspaceRecipients: () => [] });
++    const warming = handlers['thread:warm']({ type: 'thread:warm', threadId });
++    await reached;
++    const deleting = h.handlers['thread:action']({ action: 'delete', requestId: 'delete-after-warm', threadGroupId: groupId });
++    await new Promise((resolve) => setImmediate(resolve));
++    expect(await getDb()('threads').where({ thread_id: threadId })).toHaveLength(1);
++    release(); await warming; await deleting;
++    expect(firstOfType(h.ws, 'thread:action:completed')).toMatchObject({ deleted: true });
++    expect(h.manager.getSession(threadId)).toBeUndefined();
++    expect(wire.exitCode).toBe(0);
++  });
++
++  test('automation reserves IN_FLIGHT before releasing admission; public Delete rejects without mutation', async () => {
++    const h = await makeHarness('automation-delete');
++    const { threadId, groupId } = await seedViewBoundGroup(h);
++    const { EventEmitter } = require('events');
++    const wire = new EventEmitter();
++    wire._usesDirectCanonicalEvents = true;
++    wire._sendMessage = async function* () {};
++    wire.kill = () => { wire.exitCode = 0; wire.emit('exit', 0); };
++    require('../../lib/harness/compat').spawnThreadWire.mockReturnValueOnce(wire);
++    let entered; let release;
++    const reached = new Promise((resolve) => { entered = resolve; });
++    const gate = new Promise((resolve) => { release = resolve; });
++    const original = h.manager.addMessage.bind(h.manager);
++    const persist = jest.spyOn(h.manager, 'addMessage').mockImplementation(async (...args) => {
++      entered(); await gate; return original(...args);
++    });
++    const sending = require('../../lib/thread/thread-runtime-automation').sendAutomationPrompt({
++      workspaceId: h.workspaceId, projectRoot: h.projectRoot, threadId }, 'owned automation');
++    await reached;
++    await h.handlers['thread:action']({ action: 'delete', requestId: 'delete-during-automation', threadGroupId: groupId });
++    expect(firstOfType(h.ws, 'thread:action:error')).toMatchObject({ code: 'group_busy' });
++    expect(await getDb()('threads').where({ thread_id: threadId })).toHaveLength(1);
++    release();
++    try { await sending; } finally { persist.mockRestore(); await h.manager.closeSession(threadId); }
++  });
++
+ });
+--- before/fusion-studio-server/test/ws/thread-group-worksurface-cleanup.integration.test.js
++++ after/fusion-studio-server/test/ws/thread-group-worksurface-cleanup.integration.test.js
+@@ -455,4 +455,25 @@
+     // No entry existed, so no capsule file was created or rewritten.
+     expect(fs.existsSync(statePath(projectRoot, FILE_VIEW))).toBe(false);
+   });
++
++  test('public delete commits file cleanup despite ACK outage and restart acknowledges the absent entry', async () => {
++    const workspaceId = nextWorkspaceId();
++    const h = await makeHarness({ workspaceId, threadId: 't-ack', groupId: 'tg-ack' });
++    await putEntry(h);
++    const repo = require('../../lib/thread-groups/repository');
++    const mark = jest.spyOn(repo, 'markWorksurfaceCleanup').mockRejectedValue(new Error('ACK unavailable'));
++    try {
++      await h.threadHandlers['thread:action']({ action: 'delete', requestId: 'delete-ack', threadGroupId: 'tg-ack' });
++      expect(firstOfType(h.ws, 'thread:action:completed')).toMatchObject({ deleted: true });
++      expect((await cleanupRows(workspaceId))[0].status).toBe('pending');
++      expect(readViewState(FILE_VIEW).threadWorksurfaces ?? {}).not.toHaveProperty('tg-ack');
++    } finally { mark.mockRestore(); }
++    await closeDb(); await initDb();
++    const restarted = new ThreadManager({ projectRoot, workspaceId });
++    await restarted.ensureGroupsActivated();
++    expect((await cleanupRows(workspaceId))[0].status).toBe('applied');
++    expect(await getDb()('threads').where({ thread_id: 't-ack' })).toHaveLength(0);
++    expect(readViewState(FILE_VIEW).threadWorksurfaces ?? {}).not.toHaveProperty('tg-ack');
++  });
++
+ });

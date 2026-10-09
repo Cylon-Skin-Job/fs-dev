@@ -1,0 +1,105 @@
+{
+  "agent_gate_proof": false,
+  "candidate": {
+    "authority": {
+      "SPEC": "approved"
+    },
+    "configuration": {
+      "profile": "disposable"
+    },
+    "fixtures": {
+      "oracle": "correct"
+    },
+    "owned": {
+      "code.py": {
+        "index": "base",
+        "mode": "100644",
+        "worktree": "bad"
+      }
+    },
+    "preparation": "replay-owned-bytes",
+    "sources": [
+      "source-1"
+    ],
+    "target": "target-1"
+  },
+  "dispatch_actions": [],
+  "dispositions": {},
+  "findings": [],
+  "gaps": [],
+  "hold_packet": {
+    "affected_behavior": "consumer lacks required value",
+    "checked_sources": [
+      "fixture/decisions.md",
+      "fixture/proposals.md",
+      "history unavailable"
+    ],
+    "consumer": "consumer-1",
+    "evidence": [
+      "fixture/repro.log"
+    ],
+    "kind": "prerequisite",
+    "next_safe_action": "continue independent checks",
+    "preserved_progress": [
+      "unrelated checked seam"
+    ],
+    "provider": "provider-1",
+    "question": "Which accepted provider owns this missing result?",
+    "release_condition": "accepted provider revision and consumer readback pass",
+    "resolver": "owner/provider maintainer",
+    "route": "bounded requirement investigation",
+    "unknowns": [
+      "provider release"
+    ]
+  },
+  "invalidated": [],
+  "raw_reports": [
+    {
+      "clean_room": true,
+      "dependencies": {
+        "authority": {
+          "SPEC": "approved"
+        },
+        "configuration": {
+          "profile": "disposable"
+        },
+        "fixtures": {
+          "oracle": "correct"
+        },
+        "owned": {
+          "code.py": {
+            "index": "base",
+            "mode": "100644",
+            "worktree": "bad"
+          }
+        },
+        "preparation": "replay-owned-bytes",
+        "sources": [
+          "source-1"
+        ],
+        "target": "target-1"
+      },
+      "findings": [],
+      "identity": "fixture-reviewer-1",
+      "lenses": [
+        "Behavior & Verification",
+        "Standards Compliance",
+        "Integrations & Dependencies",
+        "Forward Compatibility",
+        "Wiki Impact"
+      ],
+      "raw_path": "fixture/review-1.md",
+      "read_only": true,
+      "result": "clean",
+      "root_inherited": true,
+      "terminal": true
+    }
+  ],
+  "repair_packet": null,
+  "result": "insufficient-evidence",
+  "return": "REVIEW_COMPLETE",
+  "state": "waiting-dependency",
+  "unaffected": [
+    "behavior"
+  ]
+}

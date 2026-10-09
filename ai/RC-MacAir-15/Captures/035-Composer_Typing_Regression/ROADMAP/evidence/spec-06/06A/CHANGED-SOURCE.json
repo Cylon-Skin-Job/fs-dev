@@ -1,0 +1,68 @@
+{
+  "changed": [
+    {
+      "path": "fusion-studio-client/src/components/MessageList.tsx",
+      "before": "e75860cca0e9179fd9b1a51af57e141c52e0e9f0cb5dc54a6b46d3d8137a840b",
+      "after": "49a448781a8aed83328b5b22c65f69dbb7b6fa53f4993dd5b8a3afa713ade528"
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/chatSurfaceContract.ts",
+      "before": "72f3e67af31bb8e04f2a3f26ab40189d95f9cd5398ec29d1fceb6e732c4d25cd",
+      "after": "20ec00158b54874044b5dc40a2b4c08aa4fae8e9d93072d3e4d4ec42c99b2c20"
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/useChatSessionActions.ts",
+      "before": "a7cbfdcd06c42edfa4ea36f8b5d9a6aa47ef80e50de54ed472cd0eccf413ffd0",
+      "after": "5cb75dcda8b1fb1723b1155e64f5221448a65aaf899be0241d97162a81f9e6f9"
+    },
+    {
+      "path": "fusion-studio-client/src/components/chat/ChatDiagnosticDetails.tsx",
+      "before": "1e2f75c5e1b384577d5dfb80c13a4f0c14bd248f57f3bf89c8b428145807ba60",
+      "after": "83ba6c13413f5c7d75d741d351632c4fd5691c47662f6ebe59d45bd57cf212f5"
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-architecture/stage-fixture.mjs",
+      "before": "4df67657dd1b6bad195db5e34a04b7d5d3f4e1152df9f153a694c88703b5a0e0",
+      "after": "ae46de0ff8302b429c1d1c6f612c190a796b0c3165cb07b4046dc79c47ef6d91"
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-architecture/run.mjs",
+      "before": "36fba326e4d0c7bdc199fd3e8219c1501148def32f28cce212b08ed38e99a033",
+      "after": "28f4e422a8d94727eb166cee1b0d495aeedc6cf6a72e5762513ea36bde999725"
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs",
+      "before": "dd7c2daf170e44280a7b5fb14c1b11a18ad83ea8187ae16d1667027aa6db3c05",
+      "after": "3b877aaa7abb2540f8a4d4d90b45b9e58ddf886f10ea4eb139b4bd663fd27ca5"
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-architecture/observation-contract.test.mjs",
+      "before": "7c09139012ac134d6d3765ab791a5996fd563d0ce04c74d2852d896b497f578b",
+      "after": "76ae2de11b1bb0e3ac4e46dbb52e247c0eb073a88449602ab82f757d7ccba0c6"
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-architecture/server-focused-regressions.mjs",
+      "before": "9d06bdddfe891bcf037b07bc06c631dd37a2f05625ae16d5709d20a6a20f7a81",
+      "after": "5dac3ac807c79a3879bb2b6d015d647818980befe89a02b824a353f073670164"
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-architecture/scenario-inventory.mjs",
+      "before": "6d3868ff97c99f6f9f48e6e65eaddd97416e9142333ed7a918d79fad0c603b2e",
+      "after": "395642c866e65cf8af71ec0781aeade7d370b4a3932142a477b6c8ced2c69760"
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-architecture/r5-r6-electron.mjs",
+      "before": "218a882d2c3046ac1bbcd7999d484251815d74442c44d669921601003489877d",
+      "after": "11c374170cc1cca7268fb1d32ee081f7d78649ad9db18607868a8a953d1b67b0"
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/ThreadWebSocketHandler.js",
+      "before": "ab3ea6c1286dc17a9259edac8671b7471d486a016e7033467815af27b6b9834d",
+      "after": "ba4e0bd76318256bb7c6df35ed81dd7db8eba24d74bf7bcd22580ec010ba40ff"
+    }
+  ],
+  "added": [
+    "fusion-studio-client/e2e/chat-architecture/r8-upgrade-electron.mjs",
+    "fusion-studio-server/test/thread/thread-panel-rebind.test.js"
+  ]
+}

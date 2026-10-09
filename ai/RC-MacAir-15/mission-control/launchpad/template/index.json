@@ -1,0 +1,624 @@
+{
+  "schema_version": 2,
+  "name": "Launchpad starter template — inert",
+  "description": "Reusable section prompts and record schemas; not an active project.",
+  "repository_root": "../../../../..",
+  "wiki_root": "../../../Wiki",
+  "documents": [
+    {
+      "path": "CAPTURE.md",
+      "kind": "conversational_memory",
+      "authority": "context",
+      "description": "Curated synthesis and open conversation threads.",
+      "lifecycle": "Adapt to the assigned domain, then maintain sourced records under the local role contract.",
+      "read_before": [],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Working Synthesis",
+          "description": "Working Synthesis"
+        },
+        {
+          "key": "s2",
+          "heading": "User Threads to Resume",
+          "description": "User Threads to Resume"
+        },
+        {
+          "key": "s3",
+          "heading": "Assistant Possibilities",
+          "description": "Assistant Possibilities"
+        },
+        {
+          "key": "s4",
+          "heading": "Decision Queue",
+          "description": "Decision Queue"
+        },
+        {
+          "key": "s5",
+          "heading": "Routed Outcomes",
+          "description": "Routed Outcomes"
+        },
+        {
+          "key": "s6",
+          "heading": "Capture History",
+          "description": "Capture History"
+        }
+      ],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": [
+          "CAP"
+        ],
+        "required_fields": [
+          "Origin",
+          "Type",
+          "Status",
+          "Source",
+          "Summary",
+          "Related"
+        ],
+        "field_values": {
+          "Origin": [
+            "user",
+            "assistant",
+            "mixed"
+          ],
+          "Status": [
+            "open",
+            "parked",
+            "routed",
+            "closed"
+          ]
+        }
+      }
+    },
+    {
+      "path": "INTENT.md",
+      "kind": "owner_intent",
+      "authority": "owner",
+      "description": "Owner purpose, desired outcomes, enduring goals and boundaries.",
+      "lifecycle": "Adapt to the assigned domain, then maintain sourced records under the local role contract.",
+      "read_before": [
+        "DECISIONS.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Purpose",
+          "description": "Purpose"
+        },
+        {
+          "key": "s2",
+          "heading": "Desired Outcomes",
+          "description": "Desired Outcomes"
+        },
+        {
+          "key": "s3",
+          "heading": "Enduring Goals",
+          "description": "Enduring Goals"
+        },
+        {
+          "key": "s4",
+          "heading": "Success Conditions",
+          "description": "Success Conditions"
+        },
+        {
+          "key": "s5",
+          "heading": "Constraints",
+          "description": "Constraints"
+        },
+        {
+          "key": "s6",
+          "heading": "Non-goals",
+          "description": "Non-goals"
+        }
+      ]
+    },
+    {
+      "path": "DECISIONS.md",
+      "kind": "owner_decisions",
+      "authority": "owner",
+      "description": "Explicit choices with source attribution and supersession.",
+      "lifecycle": "Adapt to the assigned domain, then maintain sourced records under the local role contract.",
+      "read_before": [],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Outcomes and Scope",
+          "description": "Outcomes and Scope"
+        },
+        {
+          "key": "s2",
+          "heading": "Approach and Constraints",
+          "description": "Approach and Constraints"
+        },
+        {
+          "key": "s3",
+          "heading": "Process and Coordination",
+          "description": "Process and Coordination"
+        }
+      ],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": [
+          "D"
+        ],
+        "required_fields": [
+          "Date",
+          "Category",
+          "Status",
+          "Source",
+          "Decision",
+          "Rationale",
+          "Implications",
+          "Supersedes",
+          "Related"
+        ],
+        "field_values": {
+          "Status": [
+            "active",
+            "superseded",
+            "revoked"
+          ]
+        }
+      }
+    },
+    {
+      "path": "ISSUES.md",
+      "kind": "verified_issues",
+      "authority": "analysis",
+      "description": "Sourced problems and consequential uncertainty about intent.",
+      "lifecycle": "Adapt to the assigned domain, then maintain sourced records under the local role contract.",
+      "read_before": [
+        "INTENT.md",
+        "DECISIONS.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Intent and Scope",
+          "description": "Intent and Scope"
+        },
+        {
+          "key": "s2",
+          "heading": "Approach and Dependencies",
+          "description": "Approach and Dependencies"
+        },
+        {
+          "key": "s3",
+          "heading": "Behavior and Verification",
+          "description": "Behavior and Verification"
+        },
+        {
+          "key": "s4",
+          "heading": "Documentation and Coordination",
+          "description": "Documentation and Coordination"
+        }
+      ],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": [
+          "I"
+        ],
+        "required_fields": [
+          "Category",
+          "Type",
+          "Severity",
+          "Status",
+          "Source",
+          "Observation",
+          "Affected scope",
+          "Consequence",
+          "Resolution needed",
+          "Owner",
+          "Next",
+          "Related"
+        ],
+        "field_values": {
+          "Type": [
+            "defect",
+            "inconsistency",
+            "contradiction",
+            "gap",
+            "risk",
+            "debt",
+            "ambiguity",
+            "missing_intent",
+            "interpretation_drift"
+          ],
+          "Severity": [
+            "blocking",
+            "high",
+            "medium",
+            "low",
+            "unassessed"
+          ],
+          "Status": [
+            "open",
+            "awaiting_owner",
+            "investigating",
+            "deferred",
+            "resolved",
+            "superseded"
+          ]
+        }
+      }
+    },
+    {
+      "path": "PROPOSALS.md",
+      "kind": "candidate_actions",
+      "authority": "proposal",
+      "description": "Candidate approaches and explicit decision links.",
+      "lifecycle": "Adapt to the assigned domain, then maintain sourced records under the local role contract.",
+      "read_before": [
+        "INTENT.md",
+        "DECISIONS.md",
+        "ISSUES.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Candidate Approaches",
+          "description": "Candidate Approaches"
+        },
+        {
+          "key": "s2",
+          "heading": "Validation and Follow-up",
+          "description": "Validation and Follow-up"
+        }
+      ],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": [
+          "P"
+        ],
+        "required_fields": [
+          "Category",
+          "Status",
+          "Source",
+          "Addresses",
+          "Proposal",
+          "Alternatives and tradeoffs",
+          "Dependencies",
+          "Decision",
+          "Related"
+        ],
+        "field_values": {
+          "Status": [
+            "proposed",
+            "approved",
+            "rejected",
+            "deferred",
+            "superseded"
+          ]
+        }
+      }
+    },
+    {
+      "path": "REFERENCES.md",
+      "kind": "evidence_corpus",
+      "authority": "evidence",
+      "description": "Sources, locators, provenance, claims supported and limitations.",
+      "lifecycle": "Adapt to the domain when relevant; preserve provenance and update affected records as evidence or authority changes.",
+      "read_before": [],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "User Statements and Conversation",
+          "description": "User Statements and Conversation"
+        },
+        {
+          "key": "s2",
+          "heading": "Code and Configuration",
+          "description": "Code and Configuration"
+        },
+        {
+          "key": "s3",
+          "heading": "Wiki and Standards",
+          "description": "Wiki and Standards"
+        },
+        {
+          "key": "s4",
+          "heading": "Runtime and Verification Evidence",
+          "description": "Runtime and Verification Evidence"
+        },
+        {
+          "key": "s5",
+          "heading": "External Sources and Prior Art",
+          "description": "External Sources and Prior Art"
+        },
+        {
+          "key": "s6",
+          "heading": "Prior Work and Supporting Artifacts",
+          "description": "Prior Work and Supporting Artifacts"
+        }
+      ],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": [
+          "REF"
+        ],
+        "required_fields": [
+          "Kind",
+          "Status",
+          "Source",
+          "Locator",
+          "Revision",
+          "Checked",
+          "Supports",
+          "Limitations",
+          "Related"
+        ],
+        "field_values": {
+          "Status": [
+            "uninspected",
+            "inspected",
+            "unavailable",
+            "superseded"
+          ]
+        }
+      }
+    },
+    {
+      "path": "CHANGE_SURFACE.md",
+      "kind": "change_surface",
+      "authority": "analysis",
+      "description": "Candidate impact across behavior, code, wiki, data and workflows.",
+      "lifecycle": "Adapt to the domain when relevant; preserve provenance and update affected records as evidence or authority changes.",
+      "read_before": [
+        "INTENT.md",
+        "DECISIONS.md",
+        "REFERENCES.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Product Behavior and Interaction",
+          "description": "Product Behavior and Interaction"
+        },
+        {
+          "key": "s2",
+          "heading": "Code, Services and Configuration",
+          "description": "Code, Services and Configuration"
+        },
+        {
+          "key": "s3",
+          "heading": "Data and Compatibility",
+          "description": "Data and Compatibility"
+        },
+        {
+          "key": "s4",
+          "heading": "Wiki and Documentation",
+          "description": "Wiki and Documentation"
+        },
+        {
+          "key": "s5",
+          "heading": "Planning, Tickets and Workflows",
+          "description": "Planning, Tickets and Workflows"
+        },
+        {
+          "key": "s6",
+          "heading": "Verification and Operational Surfaces",
+          "description": "Verification and Operational Surfaces"
+        }
+      ],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": [
+          "CS"
+        ],
+        "required_fields": [
+          "Category",
+          "Status",
+          "Source",
+          "Targets",
+          "Relationship",
+          "Basis",
+          "Evidence",
+          "Dependencies",
+          "Verification",
+          "Related"
+        ],
+        "field_values": {
+          "Status": [
+            "identified",
+            "candidate",
+            "deferred",
+            "superseded"
+          ]
+        }
+      }
+    },
+    {
+      "path": "CONTRACTS.md",
+      "kind": "interface_contracts",
+      "authority": "mixed_explicit_per_record",
+      "description": "Proposed or established guarantees with separate adoption evidence.",
+      "lifecycle": "Adapt to the domain when relevant; preserve provenance and update affected records as evidence or authority changes.",
+      "read_before": [
+        "INTENT.md",
+        "DECISIONS.md",
+        "REFERENCES.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Product Behavior and Interaction",
+          "description": "Product Behavior and Interaction"
+        },
+        {
+          "key": "s2",
+          "heading": "Interfaces and Data Exchange",
+          "description": "Interfaces and Data Exchange"
+        },
+        {
+          "key": "s3",
+          "heading": "State, Lifecycle and Compatibility",
+          "description": "State, Lifecycle and Compatibility"
+        },
+        {
+          "key": "s4",
+          "heading": "Documentation and Evidence",
+          "description": "Documentation and Evidence"
+        },
+        {
+          "key": "s5",
+          "heading": "Workflow and Coordination",
+          "description": "Workflow and Coordination"
+        },
+        {
+          "key": "s6",
+          "heading": "Verification and Acceptance",
+          "description": "Verification and Acceptance"
+        }
+      ],
+      "record_schema": {
+        "heading_level": 3,
+        "id_prefixes": [
+          "CT"
+        ],
+        "required_fields": [
+          "Category",
+          "Status",
+          "Source",
+          "Authority",
+          "Applies to",
+          "Guarantee",
+          "Boundaries",
+          "Verification",
+          "Adoption",
+          "Related"
+        ],
+        "field_values": {
+          "Status": [
+            "proposed",
+            "established",
+            "superseded",
+            "withdrawn"
+          ]
+        }
+      }
+    },
+    {
+      "path": "TICKET.md",
+      "kind": "intake_brief",
+      "authority": "sourced assignment summary; linked authority governs",
+      "description": "Initial objective, scope, evidence, authority and current return point.",
+      "lifecycle": "Adapt at intake; maintain compact pointers as work and authority evolve.",
+      "read_before": [
+        "INTENT.md",
+        "DECISIONS.md"
+      ],
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Problem or Objective",
+          "description": "Problem or Objective"
+        },
+        {
+          "key": "s2",
+          "heading": "Evidence and Reproduction",
+          "description": "Evidence and Reproduction"
+        },
+        {
+          "key": "s3",
+          "heading": "Scope and Exclusions",
+          "description": "Scope and Exclusions"
+        },
+        {
+          "key": "s4",
+          "heading": "Success Conditions",
+          "description": "Success Conditions"
+        },
+        {
+          "key": "s5",
+          "heading": "Unresolved Intent",
+          "description": "Unresolved Intent"
+        },
+        {
+          "key": "s6",
+          "heading": "Authority and Assignment",
+          "description": "Authority and Assignment"
+        },
+        {
+          "key": "s7",
+          "heading": "Progress and Return Point",
+          "description": "Progress and Return Point"
+        },
+        {
+          "key": "s8",
+          "heading": "Work and Review Record",
+          "description": "Work and Review Record"
+        }
+      ]
+    }
+  ],
+  "support_files": [
+    {
+      "path": "AGENTS.md",
+      "description": "Inert starter guidance; adapt before live use.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Two session roles",
+          "description": "Two session roles"
+        },
+        {
+          "key": "s2",
+          "heading": "Roles and authority",
+          "description": "Roles and authority"
+        },
+        {
+          "key": "s9",
+          "heading": "Ticket intake and unattended work",
+          "description": "Ticket intake and unattended work"
+        },
+        {
+          "key": "s3",
+          "heading": "Investigation governance",
+          "description": "Investigation governance"
+        },
+        {
+          "key": "s4",
+          "heading": "Use the starter documents to guide discussion",
+          "description": "Use the starter documents to guide discussion"
+        },
+        {
+          "key": "s8",
+          "heading": "Documentation sweeps",
+          "description": "Documentation sweeps"
+        },
+        {
+          "key": "s5",
+          "heading": "The files have different jobs",
+          "description": "The files have different jobs"
+        },
+        {
+          "key": "s6",
+          "heading": "Re-entry and coordination",
+          "description": "Re-entry and coordination"
+        },
+        {
+          "key": "s7",
+          "heading": "Main-task checkpoint and JSON cursor",
+          "description": "Main-task checkpoint and JSON cursor"
+        }
+      ]
+    },
+    {
+      "path": "BULLETIN.md",
+      "description": "Inert starter guidance; adapt before live use.",
+      "sections": [
+        {
+          "key": "s1",
+          "heading": "Coordination Notices",
+          "description": "Coordination Notices"
+        }
+      ]
+    },
+    {
+      "path": "index.json",
+      "description": "Static template schema; contains no live identities or state."
+    }
+  ]
+}

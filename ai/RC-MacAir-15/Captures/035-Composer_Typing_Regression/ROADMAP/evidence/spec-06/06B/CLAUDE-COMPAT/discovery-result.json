@@ -1,0 +1,257 @@
+{
+  "startedAt": "2026-09-27T07:31:07.061Z",
+  "root": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-claude-discovery-wzsQPc",
+  "command": [
+    "opencode",
+    "debug",
+    "skill"
+  ],
+  "runs": [
+    {
+      "label": "isolated-before",
+      "status": 0,
+      "signal": null,
+      "errorCode": null,
+      "stderrBytes": 0,
+      "skills": [
+        {
+          "name": "agents-global-canary",
+          "location": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-claude-discovery-wzsQPc/home/.agents/skills/agents-global-canary/SKILL.md"
+        },
+        {
+          "name": "agents-project-canary",
+          "location": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-claude-discovery-wzsQPc/project/.agents/skills/agents-project-canary/SKILL.md"
+        },
+        {
+          "name": "claude-global-canary",
+          "location": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-claude-discovery-wzsQPc/home/.claude/skills/claude-global-canary/SKILL.md"
+        },
+        {
+          "name": "claude-project-canary",
+          "location": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-claude-discovery-wzsQPc/project/.claude/skills/claude-project-canary/SKILL.md"
+        },
+        {
+          "name": "customize-opencode",
+          "location": "<built-in>"
+        },
+        {
+          "name": "native-global-canary",
+          "location": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-claude-discovery-wzsQPc/config/opencode/skills/native-global-canary/SKILL.md"
+        },
+        {
+          "name": "native-project-canary",
+          "location": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-claude-discovery-wzsQPc/project/.opencode/skills/native-project-canary/SKILL.md"
+        }
+      ]
+    },
+    {
+      "label": "isolated-current",
+      "status": 0,
+      "signal": null,
+      "errorCode": null,
+      "stderrBytes": 0,
+      "skills": [
+        {
+          "name": "agents-global-canary",
+          "location": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-claude-discovery-wzsQPc/home/.agents/skills/agents-global-canary/SKILL.md"
+        },
+        {
+          "name": "agents-project-canary",
+          "location": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-claude-discovery-wzsQPc/project/.agents/skills/agents-project-canary/SKILL.md"
+        },
+        {
+          "name": "customize-opencode",
+          "location": "<built-in>"
+        },
+        {
+          "name": "native-global-canary",
+          "location": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-claude-discovery-wzsQPc/config/opencode/skills/native-global-canary/SKILL.md"
+        },
+        {
+          "name": "native-project-canary",
+          "location": "/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-claude-discovery-wzsQPc/project/.opencode/skills/native-project-canary/SKILL.md"
+        }
+      ]
+    },
+    {
+      "label": "production-environment-before",
+      "status": 0,
+      "signal": null,
+      "errorCode": null,
+      "stderrBytes": 0,
+      "skills": [
+        {
+          "name": "async-await",
+          "location": "/Users/rccurtrightjr./.claude/skills/async-await/SKILL.md"
+        },
+        {
+          "name": "capture-artifacts-and-docs",
+          "location": "/Users/rccurtrightjr./.claude/skills/capture-artifacts-and-docs/SKILL.md"
+        },
+        {
+          "name": "claude-search",
+          "location": "/Users/rccurtrightjr./.claude/skills/claude-search/SKILL.md"
+        },
+        {
+          "name": "clean-room-loop",
+          "location": "/Users/rccurtrightjr./.claude/skills/clean-room-loop/SKILL.md"
+        },
+        {
+          "name": "css-conventions",
+          "location": "/Users/rccurtrightjr./.claude/skills/css-conventions/SKILL.md"
+        },
+        {
+          "name": "curiosity",
+          "location": "/Users/rccurtrightjr./.claude/skills/curiosity/SKILL.md"
+        },
+        {
+          "name": "customize-opencode",
+          "location": "<built-in>"
+        },
+        {
+          "name": "delegater",
+          "location": "/Users/rccurtrightjr./.config/opencode/skills/delegater/SKILL.md"
+        },
+        {
+          "name": "export-safety",
+          "location": "/Users/rccurtrightjr./.claude/skills/export-safety/SKILL.md"
+        },
+        {
+          "name": "flow",
+          "location": "/Users/rccurtrightjr./.claude/skills/flow/SKILL.md"
+        },
+        {
+          "name": "gitlab",
+          "location": "/Users/rccurtrightjr./.claude/skills/gitlab/SKILL.md"
+        },
+        {
+          "name": "gitlab-wiki",
+          "location": "/Users/rccurtrightjr./.claude/skills/gitlab-wiki/SKILL.md"
+        },
+        {
+          "name": "handoff",
+          "location": "/Users/rccurtrightjr./.claude/skills/handoff/SKILL.md"
+        },
+        {
+          "name": "html-conventions",
+          "location": "/Users/rccurtrightjr./.claude/skills/html-conventions/SKILL.md"
+        },
+        {
+          "name": "html-escaping",
+          "location": "/Users/rccurtrightjr./.claude/skills/html-escaping/SKILL.md"
+        },
+        {
+          "name": "js",
+          "location": "/Users/rccurtrightjr./.claude/skills/js/SKILL.md"
+        },
+        {
+          "name": "js-conventions",
+          "location": "/Users/rccurtrightjr./.claude/skills/js-conventions/SKILL.md"
+        },
+        {
+          "name": "launch",
+          "location": "/Users/rccurtrightjr./.claude/skills/launch/SKILL.md"
+        },
+        {
+          "name": "list",
+          "location": "/Users/rccurtrightjr./.claude/skills/list/SKILL.md"
+        },
+        {
+          "name": "material-icons",
+          "location": "/Users/rccurtrightjr./.claude/skills/material-icons/SKILL.md"
+        },
+        {
+          "name": "orchestrator",
+          "location": "/Users/rccurtrightjr./.config/opencode/skills/orchestrator/SKILL.md"
+        },
+        {
+          "name": "path-safety",
+          "location": "/Users/rccurtrightjr./.claude/skills/path-safety/SKILL.md"
+        },
+        {
+          "name": "refine",
+          "location": "/Users/rccurtrightjr./.claude/skills/refine/SKILL.md"
+        },
+        {
+          "name": "resume",
+          "location": "/Users/rccurtrightjr./.claude/skills/resume/SKILL.md"
+        },
+        {
+          "name": "review",
+          "location": "/Users/rccurtrightjr./.claude/skills/review/SKILL.md"
+        },
+        {
+          "name": "roadmap-creator",
+          "location": "/Users/rccurtrightjr./.config/opencode/skills/roadmap-creator/SKILL.md"
+        },
+        {
+          "name": "roadmap-implementation-supervisor",
+          "location": "/Users/rccurtrightjr./.config/opencode/skills/roadmap-implementation-supervisor/SKILL.md"
+        },
+        {
+          "name": "rulecheck",
+          "location": "/Users/rccurtrightjr./.claude/skills/rulecheck/SKILL.md"
+        },
+        {
+          "name": "slow-down",
+          "location": "/Users/rccurtrightjr./.claude/skills/slow-down/SKILL.md"
+        },
+        {
+          "name": "spec-review-gate",
+          "location": "/Users/rccurtrightjr./.config/opencode/skills/spec-review-gate/SKILL.md"
+        },
+        {
+          "name": "version-hygiene",
+          "location": "/Users/rccurtrightjr./.claude/skills/version-hygiene/SKILL.md"
+        },
+        {
+          "name": "workspace",
+          "location": "/Users/rccurtrightjr./.claude/skills/workspace/SKILL.md"
+        }
+      ]
+    },
+    {
+      "label": "production-environment-current",
+      "status": 0,
+      "signal": null,
+      "errorCode": null,
+      "stderrBytes": 0,
+      "skills": [
+        {
+          "name": "clean-room-loop",
+          "location": "/Users/rccurtrightjr./.config/opencode/skills/clean-room-loop/SKILL.md"
+        },
+        {
+          "name": "customize-opencode",
+          "location": "<built-in>"
+        },
+        {
+          "name": "delegater",
+          "location": "/Users/rccurtrightjr./.config/opencode/skills/delegater/SKILL.md"
+        },
+        {
+          "name": "orchestrator",
+          "location": "/Users/rccurtrightjr./.config/opencode/skills/orchestrator/SKILL.md"
+        },
+        {
+          "name": "roadmap-creator",
+          "location": "/Users/rccurtrightjr./.config/opencode/skills/roadmap-creator/SKILL.md"
+        },
+        {
+          "name": "roadmap-implementation-supervisor",
+          "location": "/Users/rccurtrightjr./.config/opencode/skills/roadmap-implementation-supervisor/SKILL.md"
+        },
+        {
+          "name": "spec-review-gate",
+          "location": "/Users/rccurtrightjr./.config/opencode/skills/spec-review-gate/SKILL.md"
+        }
+      ]
+    }
+  ],
+  "version": "1.18.32",
+  "status": "passed",
+  "cleanup": {
+    "rootAbsent": true
+  },
+  "completedAt": "2026-09-27T07:31:09.054Z"
+}

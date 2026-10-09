@@ -1,0 +1,42 @@
+{
+  "runId": "chat-arch-1789997745134-8e215f064c",
+  "status": "failed",
+  "results": [
+    {
+      "id": "R2-NO-ENQUEUE",
+      "code": 0,
+      "signal": null,
+      "pid": 72432,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 6887
+    },
+    {
+      "id": "R3-LOST-ACK-STATUS",
+      "code": 0,
+      "signal": null,
+      "pid": 73469,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 6890
+    },
+    {
+      "id": "R3-RECONNECT-UI",
+      "code": 1,
+      "signal": null,
+      "pid": 74375,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 6989
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "R3-RECONNECT-UI exited 1",
+    "stack": "Error: R3-RECONNECT-UI exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:368:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

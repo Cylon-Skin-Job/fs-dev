@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-07T22:35:21.293202+00:00",
+  "pid": 15210,
+  "command_exit": 0,
+  "owned_assertion_lines": [
+    "pid 15210(caffeinate): [0x0039b72f00019dc9] 00:00:56 PreventUserIdleSystemSleep named: \"caffeinate command-line tool\"",
+    "pid 15210(caffeinate): [0x0039b72f00059dca] 00:00:56 PreventUserIdleDisplaySleep named: \"caffeinate command-line tool\"",
+    "pid 15210(caffeinate): [0x0039b72f00079dcb] 00:00:56 PreventSystemSleep named: \"caffeinate command-line tool\"",
+    "pid 15210(caffeinate): [0x0039b72f00099dcc] 00:00:56 UserIsActive named: \"caffeinate command-line tool\"",
+    "pid 15210(caffeinate): [0x0039b72f000f9dcd] 00:00:56 PreventDiskIdle named: \"caffeinate command-line tool\""
+  ],
+  "limit": "Read-only owned process assertion observation; no permanent energy/lock policy change"
+}

@@ -1,0 +1,17 @@
+{
+  "actor": "/root/s6_supervisor_candidate_1",
+  "started": "2026-10-04T15:09:57.899288+00:00",
+  "finished": "2026-10-04T15:09:58.464270+00:00",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "command": [
+    "python3.12",
+    "-B",
+    ".agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+    "verify",
+    "--job",
+    "jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/first-wiki-1"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"result\": \"VERIFIED\", \"payloads_valid\": true, \"matches_checkpoint\": true, \"status_equal\": true, \"current_sha256\": \"bcf9fe2ecc85956231b55053338eafc3e1bbed2f6d4eb5e2366c6a5148f4d608\", \"manifest_sha256\": \"36c99f10ccdc4eed268e2859d2f737eac282181784ea0385572e64d3221c7e75\"}\n",
+  "stderr": ""
+}

@@ -1,0 +1,31 @@
+--- /Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md@preimage
++++ /Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md@current
+@@ -2,6 +2,10 @@
+ 
+ ## Current state
+ 
++### S6 — Private behavioral rehearsal complete; setup acceptance pending
++
++Recorded by Codex side chat (ephemeral), 2026-10-04T21:16:40.081914+00:00. MC-T09's installation and isolated behavioral outcome are **complete**; root full-S6 acceptance, final whole-SPEC integration review and owner setup acceptance remain pending. The [actual private rehearsal](jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/report.md) exercised terminal provider/intent holds, fresh initial/repair/Wiki/final gates, two canonical app/UI/watcher handoffs, two historical `COMMIT_READY_WAITING_OWNER` packets, fix-X/Y reopening, stale-input/operation refusals and interrupted guarded recovery. The preview is now **stopped and abandoned**, with original128/full4353 seeded inputs restored; the historical owner packets do not assert current readiness. Supported default runtime roles explicitly loaded the exact installed skills/TOML instructions, inherited root settings without overrides, and exposed no concrete model/effort or native-loader metadata. Fixture landing/adoption receipts were labeled simulations; real publication, landing, consumer adoption and Alpha actions are absent. Setup created no operational MC role, persistent integration task or schedule. The [closeout raw manifest](planning/commit-supervisor/execution/S6-closeout-manifest.json) maps original criteria, current documentation and exact evidence; older preservation claims apply only before the authorized six-record/article edits.
++
+ ### S5 — Canonical Commit Supervisor installed; rehearsal pending
+ 
+ Recorded by Codex side chat (ephemeral), 2026-10-04T10:58:05.867587Z. [Owner-approved S1–S5 setup](planning/commit-supervisor/execution/approval-receipt.md) installs the sole [mc-commit-supervisor entry](.agents/skills/mc-commit-supervisor/SKILL.md) and subordinate review/repair routes. Historical Review and Merge names below describe earlier events. [Cutover evidence](planning/commit-supervisor/execution/S5/cutover-inventory.json) found no legacy job/writer/schedule needing transfer; no job IDs or intentional waits were renamed/restarted. [S5 report](planning/commit-supervisor/execution/S5-builder.md) is the setup evidence pointer. MC-T09 remains **installed; isolated rehearsal pending**. No operational MC role/timer, integration job, publication, acceptance cursor or Alpha action is created.
+@@ -23,7 +27,7 @@
+ 
+ The owner authorized this controller home and the existing TODO's adaptation to folder-bound Launchpad sessions. The charter, TODO, registry, domain routing and source references now live here. Capture 037 is retained; check source revisions before reconciling later changes. The root AGENTS.md is an entry contract, not a claim that MC-T11's full operational profile and rehearsal are finished.
+ 
+-MC-T01–03 were already marked complete in the imported records. The current MC-T02 follow-up established this home. MC-T04–12 remain open. Three future roadmap slots remain unassigned. No child session, product roadmap, integration job, checkpoint cursor or hourly automation was created. This side chat does not replace the parent Mission Control session.
++MC-T01–03 were already marked complete in the imported records. The current MC-T02 follow-up established this home. MC-T04–08 and MC-T10–12 remain open; MC-T09 now has completed installation/behavioral outcomes with setup acceptance gates pending above. Three future roadmap slots remain unassigned. No child session, product roadmap, integration job, checkpoint cursor or hourly automation was created. This side chat does not replace the parent Mission Control session.
+ 
+ The earlier universal D-004 launch hold is superseded by D-021/D-023. Setup still does not activate a role/timer or register a controller identity; those require the actual selected main task and supported runtime evidence.
+ 
+@@ -53,7 +57,7 @@
+ 
+ ### Commit Supervisor SPEC — D-024
+ 
+-Current continuation: the assigned SPEC orchestrator accepts the current S5 packet, then performs approved S6 fixture preparation and isolated agent/runtime/recovery rehearsal. Use [execution ledger](planning/commit-supervisor/execution/slice-ledger.json) for accepted current revisions; setup acceptance does not approve any future integration candidate or Git operation. Earlier planning/creation paragraphs below retain their dates/provenance and no longer select the installed route.
++Current continuation as of 2026-10-04T21:16:40.081914+00:00: the assigned root SPEC orchestrator independently accepts the current full-S6 builder packet, performs the separate fresh whole-SPEC integration gate, then returns completed setup for owner acceptance. Use the [current raw S6 manifest](planning/commit-supervisor/execution/S6-closeout-manifest.json) and [execution ledger](planning/commit-supervisor/execution/slice-ledger.json). The private preview is stopped/restored; preserve its historical owner packets and recovery records. Setup acceptance does not approve a future integration candidate or Git operation. Earlier S5/planning/creation paragraphs retain their dated provenance and no longer select the current action. When `planning/commit-supervisor/execution/SPEC-final-report.md` is present, read it for the current root acceptance/final-review result and next safe action; owner setup acceptance remains separate.
+ 
+ The owner renamed the top-level Review and Merge role **Commit Supervisor** and requested [one integrated workflow SPEC](planning/commit-supervisor/SPEC.md), including appropriate clean-room gates. Its [planning record](planning/commit-supervisor/PLANNING.md) owns candidate identity and independent review status. The installed legacy identifiers remain until implementation. This assignment prepares the SPEC; MC-T09 stays open for workflow installation and isolated rehearsal. Use the reviewed candidate and record an owner implementation assignment before dispatching it. Existing commit/push, per-SPEC acceptance and D-023 cycle rules remain.
+ 

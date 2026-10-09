@@ -1,0 +1,26 @@
+src/emojis/EmojiTrigger.tsx:10:  onInsert?: (text: string) => void;
+src/emojis/EmojiTrigger.tsx:18:  onInsert,
+src/emojis/EmojiTrigger.tsx:24:  void onInsert;
+src/screenshots/chatScreenshotCapture.ts:87:export async function captureAndAttachScreenshot(
+src/screenshots/index.ts:10:export { captureAndAttachScreenshot, SCREENSHOT_FLASH_EVENT } from './chatScreenshotCapture';
+src/state/chatFileLinkStore.ts:14:  addPendingAttachment: (
+src/state/chatFileLinkStore.ts:94:  addPendingAttachment: (workspaceId, threadId, attachment) => set((state) => {
+src/state/chatComposerDraftStore.ts:6:  setDraft: (workspaceId: string, threadId: string, text: string) => void;
+src/state/chatComposerDraftStore.ts:20:  setDraft: (workspaceId, threadId, text) => set((state) => ({
+src/lib/chat-material-commit.ts:42:    store.addPendingAttachment(workspaceId, threadId, attachment);
+src/lib/chat-material-commit.ts:61:  store.setDraft(workspaceId, threadId, next);
+src/components/App.tsx:35:  captureAndAttachScreenshot,
+src/components/App.tsx:76:    void captureAndAttachScreenshot();
+src/components/chat/ConnectedChatComposer.tsx:22:import { captureAndAttachScreenshot } from '../../screenshots/chatScreenshotCapture';
+src/components/chat/ConnectedChatComposer.tsx:71:    void captureAndAttachScreenshot(materialLease.current);
+src/components/chat/ConnectedChatComposer.tsx:114:    useChatComposerDraftStore.getState().setDraft(workspaceId, threadId, text);
+src/components/SystemViewer.tsx:6:import { dispatchChatAction } from '../lib/chat-action';
+src/components/SystemViewer.tsx:83:    const result = await dispatchChatAction({
+src/components/SystemViewer.tsx:92:      sourceViewId: 'system-viewer',
+src/lib/chat-action.ts:25:  sourceViewId?: string;
+src/lib/chat-action.ts:70:export function dispatchChatAction(action: ChatActionPayload): Promise<ChatActionResult> {
+src/lib/chat-action.ts:74:  const capturedAddress = action.address ?? captureChatActionAddress(action.sourceViewId);
+src/lib/chat-action-creation.ts:1:import { dispatchChatAction, type ChatActionAddress, type ChatActionRequest, type ChatActionResult } from './chat-action';
+src/lib/chat-action-creation.ts:96:      void dispatchChatAction({ content: resolved, target: 'current', delivery: 'send',
+src/lib/chat-action-creation.ts:109:      drafts.setDraft(created.workspaceId, created.threadId!, next);
+src/lib/chat-action-creation.ts:158:      else void dispatchChatAction({ content: resolved, target: 'current',

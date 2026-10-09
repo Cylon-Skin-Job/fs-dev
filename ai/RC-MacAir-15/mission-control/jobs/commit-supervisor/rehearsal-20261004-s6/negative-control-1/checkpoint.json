@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "checkpoint_id": "S6-NEGATIVE-CONTROL-1-UNMET-GATE",
+  "job_id": "rehearsal-20261004-s6",
+  "actor": "/root/s6_supervisor_refusal_1",
+  "manager": "/root",
+  "phase": "unmet-gate",
+  "return": "unmet-gate",
+  "return_state": "unmet-gate",
+  "current_ready": false,
+  "rehearsal_result": "Four-way stale-authority refusal observed; not a new production return-state contract",
+  "scope": "REHEARSAL_ONLY",
+  "actual_operation_authority": "NONE",
+  "actual_operations": [],
+  "candidate_location": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "current_selected_source": "551a74313d099724cdb3d76ead04e940ae88f223",
+  "source_repository_HEAD": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "current_target": "551a74313d099724cdb3d76ead04e940ae88f223",
+  "candidate_HEAD": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "current_controller_sha256": "95ece1f98d8ff6cd5d420784bc1dc5356a4a05c50df223527bb9164545ae6d10",
+  "historical_readiness": "Both owner packets and actual native waiting-owner terminals preserved as time-qualified history; current readiness withheld. No predecessor work replayed.",
+  "latest_historical_owner_packet": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/owner-packet-fix-xy.md",
+    "sha256": "4262b884dccc10a10b53a43e1a96e00167a5557b85f88802c324414410c29870"
+  },
+  "latest_historical_checkpoint": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/checkpoint-fix-xy.json",
+    "sha256": "3c8b1928e3eed370df4e9a8cab22fe812eabf24ed59b1ac0323c9d2a4822ec1a"
+  },
+  "original_and_fixed_recovery": "Payloads valid and immutable; current fixed matches_checkpoint false; see inspection and first-wiki correction",
+  "missing_gates": [
+    {
+      "id": "NC-SOURCE",
+      "current": "551a74313d099724cdb3d76ead04e940ae88f223",
+      "covered": "d15792920731f85e45b743519d4af2b807d95a9c",
+      "raw": "inspection2-selected-existing.command.json",
+      "invalidated": "Selected-source acceptance/preparation and all whole source-bound handoff/final/runtime/operation readiness. Actual R HEAD unchanged; artificial selected source is another EXISTING private commit, not source-repository advancement."
+    },
+    {
+      "id": "NC-TARGET",
+      "current": "551a74313d099724cdb3d76ead04e940ae88f223",
+      "covered": "d15792920731f85e45b743519d4af2b807d95a9c",
+      "raw": "inspection2-target-current.command.json",
+      "invalidated": "Target baseline/seam/reproduction/recovery-match/current final/runtime and any candidate-bound approval; private CAS only, source/shared target unchanged."
+    },
+    {
+      "id": "NC-CANDIDATE",
+      "current": "95ece1f98d8ff6cd5d420784bc1dc5356a4a05c50df223527bb9164545ae6d10",
+      "covered": "48ae78dfda264edb62fadf5bdd72e1f07c2f5b54b127ddb7296c41188f2d70bf",
+      "raw": "fault-module-check.command.json",
+      "invalidated": "Controller source scenario/syntax/code handoff, source-dependent Wiki factual acceptance, current final/build/runtime owner readiness and any material-byte-bound approval. Exact diagnostic exit1. Historic running app may retain loaded old bytes; no current readiness inferred."
+    },
+    {
+      "id": "NC-OPERATION",
+      "current": "push",
+      "covered": "simulated commit-only receipt/push false",
+      "raw": "inspection.json /operation",
+      "invalidated": "Operation permission independently mismatched; simulated receipt is never real authority. Actual owner Git authority NONE also independently refuses every publication operation."
+    }
+  ],
+  "holds": [
+    {
+      "phase": "unmet-gate",
+      "resolver": "/root",
+      "release_condition": "Exact private root control restoration readback; later bounded recovery assignment separately required. No actual publication assignment or indispensable product choice here."
+    }
+  ],
+  "last_check_utc": "2026-10-04T19:57:04.303643+00:00",
+  "last_progress_utc": "2026-10-04T19:57:04.303643+00:00",
+  "read_coverage": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/read-coverage.json",
+    "sha256": "bf7342f68b9b2f352e7be5dfc64aa1c9f7150cc1832ac052460a9ede78dca2d2"
+  },
+  "evidence": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/inspection.json",
+    "sha256": "23e7ef792cd6ab82877104eff7c1be163ab0648d3ecd5ae762673862b8570e5e"
+  },
+  "zero_observer_mutation_proof": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/zero-observer-mutation-proof.json",
+    "sha256": "3a9a38d101db1067992ca62238745cd5350c1abf0c51a80be220c5837a7b0b7b"
+  },
+  "deviations": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/deviations.json",
+    "sha256": "b992b17f158acea1c98bb959ca1a964211fd3e5d446bf7eef05357ad0325333f"
+  },
+  "lifecycle": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/negative-control-1/lifecycle.json",
+    "sha256": "aed76d34b02e4437fd68aa91669ce30e96f132bd8d5d178c1447d2193b0ebda0"
+  },
+  "next_safe_action": "Root /root restores only its exact private controller preimage and private tracking ref through the existing guarded compare-and-swap control restoration, preserving receipts; then separately assigns bounded abandoned-preview recovery. This observer ends intentionally with no polling/timer/autoresume/repair/cleanup.",
+  "intentional_END": true
+}

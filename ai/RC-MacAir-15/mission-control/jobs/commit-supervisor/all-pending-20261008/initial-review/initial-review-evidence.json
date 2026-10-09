@@ -1,0 +1,96 @@
+{
+  "at": "2026-10-09T01:10:19.207832+00:00",
+  "manager": "/root/all_pending_initial_review",
+  "mode": "initial",
+  "result": "findings",
+  "frozen_reviewed_identity_sha256": "6e8487a5173edc192f8f3d112b137f1ff0b6e0f6b603ceb94036adc003281762",
+  "raw_reports": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/initial-review/core-material-raw.md",
+      "sha256": "bb6ede2eaae3d1e294ae47f71bc61e25443973b0b5a3063651ebf6252a20a849"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/initial-review/material-sources-raw.md",
+      "sha256": "2cf6e8dd778ec53bed331ecb9ebc41be46382700aa2a518836cbb11dcd1cbdaa"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/initial-review/mc-publication-raw.md",
+      "sha256": "8167ff4ac998174d32a4e022b99c6e2833c473aa36235ed6e13888fe4a171aaf"
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/initial-review/restart-boundary-raw.md",
+      "sha256": "fa70506cd23b3f68699d9299369a8dca8fd19ed598b9569935c307cc50eedfc8"
+    }
+  ],
+  "fresh_checks": [
+    {
+      "receipt": "/private/tmp/fusion-main-consolidation-95vxg0_h/client-build.json",
+      "receipt_sha256": "643f76e31ab68ebfaa4c69da63989f0a6538ac075f4318532e4fafa9ceec3dee",
+      "log": "/private/tmp/fusion-main-consolidation-95vxg0_h/client-build.log",
+      "log_sha256": "ed24eaadbd1a3bec8d51b678b3fa1867332de4585792f843a5f3baad02657f47",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/fusion-studio-client",
+      "exit_code": 0,
+      "started": "2026-10-09T01:02:49.022163+00:00",
+      "ended": "2026-10-09T01:03:02.180164+00:00"
+    },
+    {
+      "receipt": "/private/tmp/fusion-main-consolidation-95vxg0_h/renderer.json",
+      "receipt_sha256": "d54812e554e4322dbe117919287e109361d463e73b26e84c113d6904c0c530db",
+      "log": "/private/tmp/fusion-main-consolidation-95vxg0_h/renderer.log",
+      "log_sha256": "948471269598028dde1772a1e107cbda4ff0f7c6350ee4d917cf93b538c644a8",
+      "command": [
+        "npx",
+        "--no-install",
+        "playwright",
+        "test",
+        "--config=playwright.chat-architecture.config.ts",
+        "e2e/chat-material-insertion.spec.ts",
+        "e2e/threaded-chat-host.spec.ts",
+        "e2e/chat-composer-screenshot-menu.spec.ts",
+        "e2e/chat-surface-identity.spec.ts",
+        "e2e/chat-surface-isolation.spec.ts",
+        "e2e/chat-component-registration.spec.ts",
+        "e2e/side-chat-isolation.spec.ts",
+        "e2e/side-chat-adapterless-native.spec.ts",
+        "e2e/side-chat-placement-recovery.spec.ts",
+        "e2e/move-chat-to-side-chat.spec.ts",
+        "e2e/prompt-ownership.slice-c.spec.ts",
+        "e2e/prompt-submission-recovery.spec.ts",
+        "e2e/chat-send-transport.spec.ts",
+        "e2e/chat-diagnostic-actions.slice-c.spec.ts",
+        "e2e/system-viewer-action-outcome.spec.ts",
+        "e2e/chat-architecture/observation-boundaries.spec.ts",
+        "--workers=1",
+        "--output=/private/tmp/fusion-main-consolidation-95vxg0_h/renderer-output"
+      ],
+      "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/fusion-studio-client",
+      "exit_code": 0,
+      "started": "2026-10-09T01:02:49.022684+00:00",
+      "ended": "2026-10-09T01:05:17.159694+00:00"
+    }
+  ],
+  "validated_finding": {
+    "id": "IR-001",
+    "supervisor_canonical_id": "ALL-SCREENSHOT-001",
+    "severity": "material",
+    "confidence": "high for mechanics; UI frequency unmeasured",
+    "reviewed_source_sha256": "8d11853e29ee8f0264090145aaf1d461384caeac6b58797a63cb687869756254",
+    "current_source_sha256": "8d11853e29ee8f0264090145aaf1d461384caeac6b58797a63cb687869756254",
+    "original_disposition": "open",
+    "supervisor_disposition_reported": "repair-assigned",
+    "worker": "/root/screenshot_unique_path_repair",
+    "required_release": "Bounded save allocation repair + distinct-path/byte public handler regression, renewed affected checks, separate fresh handoff and final current-byte review."
+  },
+  "invalidations": [
+    "Upon server screenshot handler repair, retained historical native/server execution is not a whole-current-candidate claim. Renew affected checks.",
+    "Fresh renderer began concurrently with fresh build; SPEC requires build before suites serving built bytes. Root acknowledged sequencing limitation and will renew after completed build.",
+    "Initial reviewers and manager cannot serve final gate; fresh identities independent of all writers/initial participants required."
+  ],
+  "reported_native_dependency_resolution": "Supervisor retained-evidence-03.json has zero mismatches for16 source/binary hashes; generated observer copied from original accepted worktree. Earlier mismatch attempts preserved. This corrects the timing limit in core raw report without editing it.",
+  "root_repair_authority_report": "Root confirmed leaf ownership of server handler/test and bounded Screenshot Capture Wiki/preimage; review manager performs no repairs."
+}

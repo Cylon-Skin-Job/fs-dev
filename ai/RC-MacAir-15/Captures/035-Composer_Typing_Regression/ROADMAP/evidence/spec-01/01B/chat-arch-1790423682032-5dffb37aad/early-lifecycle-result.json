@@ -1,0 +1,15 @@
+{
+  "scope": "second-launch early lifecycle only; no acceptance credit",
+  "main": null,
+  "summaryStatus": "unavailable",
+  "driverWriteErrors": 0,
+  "driverOverflow": 0,
+  "failedLaunchCloseUnavailable": false,
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "lingeringOwnedPids": [],
+  "complete": false
+}

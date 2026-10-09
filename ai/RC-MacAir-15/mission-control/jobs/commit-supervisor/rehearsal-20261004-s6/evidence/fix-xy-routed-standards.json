@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-04T16:44:55.161517+00:00",
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "scope": "Required full routed standards for new fixture Reset/button/controller/hydration; no prior conclusions",
+  "routes": {
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/002-Frontend_UI/PAGE.md": {
+      "exists": true,
+      "sha256": "18a093c333a610ec8d2c77661b29744f1fae6e9ca8f4e113148fee10a0d9fc18",
+      "mode": "0o100644",
+      "kind": "file"
+    },
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/PAGE.md": {
+      "exists": true,
+      "sha256": "2b4e55ed7580659b35a91d13f5a7b781960c659868027dd8b6ea6f79e609b105",
+      "mode": "0o100600",
+      "kind": "file"
+    }
+  }
+}

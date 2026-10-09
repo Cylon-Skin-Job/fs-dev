@@ -1,0 +1,25 @@
+{
+  "at": "2026-10-04T17:27:42.411352+00:00",
+  "actor": "/root",
+  "scope": "Read-only inspection, excluded from fresh domain gates",
+  "native_reviewer_terminal_report_fully_read": true,
+  "raw_report_sha256": "28fafe4ccbb870003e26a551b25d12e1b5f5ed6677f27a56745dced8f2d09d34",
+  "current_dependency_groups": {
+    "dependencies": {
+      "count": 11,
+      "mismatches": []
+    },
+    "authority_dependencies": {
+      "count": 58,
+      "mismatches": []
+    },
+    "configuration_dependencies": {
+      "count": 1,
+      "mismatches": []
+    }
+  },
+  "five_raw_receipts_derivative_exact": true,
+  "derivative_sha256": "3b3975a2d8b090c70abd0b23eb94d2fe21198b78a08d72a28ab9fc4c00b27573",
+  "root_current_Wiki_postflight_pass": "S6-root-fix-wiki-postflight-command.json",
+  "different_final_manager_dispatched": "Actual parent message confirms; current native terminal remains pending"
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/native-composition-control.mjs",
+    "before": null,
+    "after": "d421695a0059fafd4234c0e8714a58af4c1b66f294e6cf181fc3c2012f9e1219"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/native-composition-control.test.mjs",
+    "before": null,
+    "after": "3474c3b2657a96215efe1495796b208bfa1539d68cf0eaa065a8cf0a6e012c41"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/native-input-electron.mjs",
+    "before": "55d0f118f62c4fe90b2a6f02ca9d41888bbf86614c19f246f27354b8cf022612",
+    "after": "cd1c8f100bcbc2e5ae648fc853cf91718d685cbb7a48f0e74fa007f2100666e6"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/run.mjs",
+    "before": "dcf6f54b018ef79c12dc27a1cc606e4f48fea4b182747e970ae536051a8064da",
+    "after": "ca520a2eac7a9c97afe67685a98277e12b02f953aaa87785facac0d2363d2755"
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/scenario-inventory.mjs",
+    "before": "6f8dfdd1c9af29e8445d5c63afbbaf89c36a8d463820d9be15cd1c91767086a5",
+    "after": "9e8c315624d4c0c80d16b3793e39ef99467788f6b2a64e7322b45653125d94ed"
+  },
+  {
+    "path": "fusion-studio-client/e2e/native-composition-control.spec.ts",
+    "before": null,
+    "after": "ee4d5df8245af775b06f8facd1a135c6a0007f88aeba4c2ec817ab71810d7394"
+  }
+]

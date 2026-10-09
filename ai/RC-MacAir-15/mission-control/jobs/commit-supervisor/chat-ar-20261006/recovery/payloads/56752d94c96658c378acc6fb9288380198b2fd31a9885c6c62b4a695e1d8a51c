@@ -1,0 +1,101 @@
+---
+id: RCC-0109
+title: 'Replicate Chat System wiki overhaul patterns across codebase domains'
+assignee: rccurtrightjr
+created: 2026-06-26T00:00:00.000Z
+author: rccurtrightjr
+state: open
+priority: medium
+---
+
+Replicate the Chat System wiki overhaul pattern across the rest of the Fusion Studio wiki and codebase domains.
+
+## What Was Done
+
+The old Chat System wiki lived under `001-Workspaces_And_Views/003-Chat_System/` as a view-adjacent architecture subtree. That shape made future sessions treat chat like a view feature even though it crosses persistence, runtime, harness adapters, WebSocket protocol, renderer state, UI chrome, metadata, clipboard, testing, and operations.
+
+Chat was promoted into its own top-level wiki domain:
+
+```text
+ai/<machine>/Wiki/007-Chat_System/
+```
+
+The new domain was split into focused pages:
+
+- overview
+- identity and persistence
+- harness and event flow
+- rendering and lifecycle
+- chat UI
+- user metadata
+- text and media payloads
+- testing and operations
+- decisions
+- lessons
+- vision
+- changelog
+- structure
+- runtime model
+
+The old Workspaces chat pages were converted into compatibility pointers so stale duplicate guidance is not maintained in two places.
+
+Supporting rule pages were also added for recurring planning defaults:
+
+- `005-Enforcement/003-Chat_Styling_And_Workspace_CSS/`
+- `005-Enforcement/004-Stub_And_Planning_Defaults/`
+- `002-System_Tools/003-Clipboard_History/`
+- `001-Project/024-Issue_Viewer_Ticket_Authoring/`
+
+`AGENTS.md` and the assistant reply chrome spec were updated to point future sessions at the new Chat System source of truth.
+
+## Why It Was Needed
+
+Planning the assistant reply chrome feature required too much conversational clarification because several durable rules were implicit or scattered:
+
+- Chat ID means SQLite `exchanges.id`, not `threadId`.
+- Stop/interrupted turns must persist through the same exchange-save path as normal completion.
+- Reply chrome must wait for saved exchange acknowledgement.
+- Reply text should come from finalized `Message.segments`, not DOM scraping.
+- Bookmark and note metadata are post-save exchange metadata, not turn-end collectors.
+- Clipboard writes should use managed clipboard history.
+- Chat styling comes from workspace/system CSS variables, not hardcoded frontend values.
+- Current harness flow uses OpenCode -> canonical events -> universal event bus, not old Kimi raw wire protocol.
+- Browser Playwright, Electron Playwright, and Fusion Home restart serve different verification needs.
+
+Those details should be discoverable from wiki articles before a feature-planning session starts.
+
+## Pattern To Replicate
+
+For each major system domain:
+
+1. Promote it to a top-level wiki domain if it crosses multiple code layers.
+2. Split documentation by durable responsibility instead of one long architecture page.
+3. Preserve cross-cutting pages: Decisions, Lessons, Vision, Changelog, Structure, and Runtime/Operations when relevant.
+4. Move old content into the new tree and convert old pages into compatibility pointers.
+5. Update `AGENTS.md`, specs, and source-of-truth references so future sessions start in the new tree.
+6. Add small enforcement/tooling pages when repeated planning defaults are not domain-specific.
+7. Run a link check after migration.
+
+## Candidate Domains
+
+- Workspaces and Views
+- Server and Runtime
+- Automation and Agents
+- Integrations and Tools
+- System Tools
+- Enforcement
+- Operations
+- Wiki View
+- Issues Viewer
+- Browser
+- System Manager
+
+## Acceptance Criteria
+
+- Each major domain has a clear top-level wiki entry or an explicit reason it remains nested.
+- Each major domain has Decisions, Lessons, Vision, Changelog, and Structure pages where useful.
+- Old migrated pages are compatibility pointers, not parallel sources of truth.
+- Root wiki navigation reflects durable system domains.
+- `AGENTS.md` and active specs point to current wiki source-of-truth paths.
+- Repeated planning defaults are documented once and linked from affected domains.
+- A link-existence check passes after each domain migration.

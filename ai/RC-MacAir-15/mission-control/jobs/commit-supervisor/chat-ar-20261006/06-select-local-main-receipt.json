@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-07T00:30:20.427285+00:00",
+  "repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "argv": [
+    "git",
+    "-C",
+    "/Users/rccurtrightjr./projects/fs-dev",
+    "switch",
+    "main"
+  ],
+  "finished": "2026-10-07T00:30:20.461433+00:00",
+  "exit_code": 0,
+  "stdout_sha256": "695ee482ef3794c99c3eb74aae51da66f9bc938189dca7cc2310177c19b3604b",
+  "stderr_sha256": "6300963e525f04410f9d2df59c376a7490543a6db6823dd3351451dad11cfcb0"
+}

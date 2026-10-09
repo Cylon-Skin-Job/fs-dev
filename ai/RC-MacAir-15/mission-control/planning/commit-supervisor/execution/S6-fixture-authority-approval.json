@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-04T11:38:52.765863+00:00",
+  "actor": "/root, owner-assigned mc-orchestrator test controller",
+  "authority_path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/authority.md",
+  "authority_sha256": "d56710db1edba2ba6ef8798975fb1fb4808a301b0ea2e46bcb81d6645e251010",
+  "decision": "approved original disposable fixture intent for S6",
+  "scope": "Checklist completion/reversal/count/reload and ordinary Wiki claims; exact provider and wording holds; separately labeled future fix-X/Y only after first terminal waiting-owner",
+  "source_authorization": "Owner direct mc-orchestrator SPEC assignment and normative S6 test-controller contract",
+  "not_granted": [
+    "preparation acceptance",
+    "S6 completion",
+    "real owner Git approval",
+    "production feature work",
+    "actual landing/adoption",
+    "operational Mission Control"
+  ],
+  "remaining": "Preparation builder handoff and fresh root preparation gate before actual installed Supervisor dispatch; hold releases remain unsupplied"
+}

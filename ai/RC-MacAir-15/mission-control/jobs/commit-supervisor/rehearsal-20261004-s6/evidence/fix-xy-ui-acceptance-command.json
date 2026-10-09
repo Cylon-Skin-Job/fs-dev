@@ -1,0 +1,17 @@
+{
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "started": "2026-10-04T19:26:12.353956+00:00",
+  "finished": "2026-10-04T19:26:16.496148+00:00",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "command": [
+    "node",
+    "jobs/commit-supervisor/rehearsal-20261004-s6/fix_xy_live_smoke.mjs",
+    "jobs/commit-supervisor/rehearsal-20261004-s6/runtime-config-fix-xy.json",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-DlzcE3/verified.json",
+    "fix-xy",
+    "jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-ui-acceptance.json"
+  ],
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": ""
+}

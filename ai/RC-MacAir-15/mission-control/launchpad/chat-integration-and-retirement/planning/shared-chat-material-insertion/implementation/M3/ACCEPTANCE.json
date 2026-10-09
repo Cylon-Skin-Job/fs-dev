@@ -1,0 +1,40 @@
+{
+  "state": "accepted",
+  "at": "2026-10-07T23:15:01.579661+00:00",
+  "slice": "M3",
+  "candidate": "sha256:65b324647b7e52f0426f7b2005849d053f4f239420fab07c848170b21ec1d3f3",
+  "checkout": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev",
+  "branch": "codex/chat-material-01",
+  "HEAD": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "source_seal_sha256": "35cda972a106468eaa279c60da9ef51fc04ec23333f03de4226269b84e14ad07",
+  "product_paths": 65,
+  "builder": "/root/m3_builder",
+  "builder_handoff": "M3/HANDOFF.json",
+  "builder_handoff_sha256": "27ece26b0a1020bf2ac99799d07160cb1203697535a0c6d4dcfe05896785d7b7",
+  "builder_review": "/root/m3_builder/builder_review_01",
+  "builder_review_result": "CLEAN terminal",
+  "orchestrator_inspection": "M3/orchestrator-checks/INSPECTION-01.md",
+  "orchestrator_checks": [
+    "M3/orchestrator-checks/build-01.json",
+    "M3/orchestrator-checks/server-full-01.json",
+    "M3/orchestrator-checks/server-focused-01.json",
+    "M3/orchestrator-checks/renderer-01.json",
+    "M3/orchestrator-checks/wiki-01.json",
+    "M3/orchestrator-checks/native-04.json"
+  ],
+  "orchestrator_acceptance_reviewer": "/root/m3_acceptance_review_01",
+  "orchestrator_acceptance_result": "CLEAN terminal",
+  "review_report": "M3/ORCHESTRATOR-ACCEPTANCE-REVIEW-01.md",
+  "review_report_sha256": "7be8d4eb26bce903ac53b73a23b55acae9946620aaf00fda1ed5c6453e4b0cae",
+  "review_packet_sha256": "fba21845d7544364f2b66d129508b32cd672859d67854a4049b97f7163f88ca4",
+  "deviation_classification": "M3/orchestrator-checks/deviations-02.json",
+  "execution_adapter_classification": "orchestrator-checks/receipt-run-v3.json",
+  "coverage": "Full M3 R01\u2013R10/A01\u2013A17 and immediate accepted M1/M2 seams; all distinct slice gates complete.",
+  "limits": [
+    "Hidden retained native Wiki handler; visible resourceclick separate rendererA04",
+    "Deterministic staged provider/ACK delay; actual PNG/save/serverACK/DB, no publicprovider cert",
+    "Builder native17 cause unknown; exact preservation oracle retained and builder18/root03/04 PASS",
+    "No owner acceptance/publication/Alpha or laterSPEC authority"
+  ],
+  "whole_SPEC": "Pending mandatory post-all-accepted fresh fullsuite/native and distinct final reviewer; owner completion checkpoint separate."
+}

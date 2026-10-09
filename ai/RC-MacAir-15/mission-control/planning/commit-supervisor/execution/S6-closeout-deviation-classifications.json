@@ -1,0 +1,136 @@
+{
+  "at": "2026-10-04T21:37:40.497578+00:00",
+  "owner": "/root",
+  "scope": "Five bounded closeout entries only, root inspection; higher gates pending",
+  "entries": [
+    {
+      "id": "S6-CLOSEOUT-D1",
+      "original_criterion": "S6 final deployment/MC-T09 facts and source-correct documentation; expected product paths are advisory",
+      "actual_change": "Six current central record surfaces and exact canonical restart PAGE + one exclusive complete-preimage version; former undispatched S4 article author scope assigned to S6 closeout",
+      "reason_authority": "Active bounded root closeout assignment and S6-closeout-wiki-ownership contract; no product/helper/test/fixture/runtime behavior expansion",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/.versions/2026-10-04-141458.md"
+      ],
+      "observable_effect": "Current setup continuation and article match installed code/actual bounded rehearsal; historical S5 observations retained",
+      "checks": "Complete preimages, gray-matter/schema/source/link/index/H2/whitespace and unowned readback; fresh own full-S6 gate",
+      "risk": "Old165/168 authority snapshots are historical through precloseout; source preservation excludes these exact later authorized edits only",
+      "downstream_consumer": "Root full-S6 acceptance, final whole-SPEC gate, owner setup acceptance",
+      "downstream_impact": "Documentation integration does not invalidate unchanged implementation or historical behavioral raw outputs; affected current documentation reviewed separately",
+      "builder_proposed_classification": "accepted",
+      "original_requirement": "S6 final deployment/MC-T09 facts and source-correct documentation; expected product paths are advisory",
+      "classification": "accepted",
+      "classification_owner": "/root",
+      "classified_at": "2026-10-04T21:37:40.497578+00:00",
+      "root_basis": "Bounded exact eight doc/version scope explicitly assigned; full article/diffs/helpers/current metadata/source hashes and exclusive complete preimage independently inspected. Does not invalidate unchanged product/runtime definitions.",
+      "evidence": [
+        "S6-root-closeout-readback.json",
+        "S6-acceptance-current-dependency-fingerprints.json"
+      ],
+      "gate_qualification": "Inspection classification only; own and root full-S6 acceptance gates still separate"
+    },
+    {
+      "id": "S6-CLOSEOUT-D2",
+      "original_criterion": "Use exact current source paths and bounded inspection",
+      "actual_change": "Read-only discovery initially named absent review-gate/runtime-module/adjacent/standards paths; actual paths discovered and full required reads completed",
+      "reason_authority": "Routine path lookup correction; no absent source treated as evidence",
+      "files": [],
+      "observable_effect": "Failed read diagnostics only, followed by exact canonical five files and actual Wiki/standards instructions",
+      "checks": "Current file inventory, complete corrected reads and source hashes",
+      "risk": "Failed reads prove no source coverage; corrected reads supply coverage",
+      "downstream_consumer": "Fresh own/root reviewers",
+      "downstream_impact": "No changed candidate or waived required read",
+      "builder_proposed_classification": "downstream_impact",
+      "original_requirement": "Use exact current source paths and bounded inspection",
+      "classification": "accepted",
+      "classification_owner": "/root",
+      "classified_at": "2026-10-04T21:37:40.497578+00:00",
+      "root_basis": "Correct current 74 authorities/full source routes and fixture semantics inspected; failed path lookups remain diagnostics, never coverage proof.",
+      "evidence": [
+        "S6-root-closeout-readback.json",
+        "S6-acceptance-current-dependency-fingerprints.json"
+      ],
+      "gate_qualification": "Inspection classification only; own and root full-S6 acceptance gates still separate"
+    },
+    {
+      "id": "S6-CLOSEOUT-D3",
+      "original_criterion": "Preserve bounded complete evidence and avoid large inventory dumps",
+      "actual_change": "Several concatenated metadata/report reads exceeded output budget; switched to exact selected fields, smaller reads and programmatic full comparisons",
+      "reason_authority": "Tool output-scoping correction",
+      "files": [],
+      "observable_effect": "Transient truncated output, no source mutation",
+      "checks": "Saved full raw local records; completed exact source and all-record hash comparisons",
+      "risk": "Truncated output alone is not coverage proof",
+      "downstream_consumer": "Fresh own/root gates",
+      "downstream_impact": "Review uses explicit raw file navigation and complete current manifest",
+      "builder_proposed_classification": "downstream_impact",
+      "original_requirement": "Preserve bounded complete evidence and avoid large inventory dumps",
+      "classification": "accepted",
+      "classification_owner": "/root",
+      "classified_at": "2026-10-04T21:37:40.497578+00:00",
+      "root_basis": "Full 3309 manifest fingerprints, complete raw structures/snapshots and all required narrative portions inspected; output truncation corrected without artifact mutation.",
+      "evidence": [
+        "S6-root-closeout-readback.json",
+        "S6-acceptance-current-dependency-fingerprints.json"
+      ],
+      "gate_qualification": "Inspection classification only; own and root full-S6 acceptance gates still separate"
+    },
+    {
+      "id": "S6-CLOSEOUT-D4",
+      "original_criterion": "Read Git without optional locks and preserve physical source index",
+      "actual_change": "Initial revision/status orientation omitted GIT_OPTIONAL_LOCKS=0; all subsequent own Git wrappers strip inherited GIT_* and set optional locks/literal paths",
+      "reason_authority": "Disclosed procedural omission; revision/stat reads only",
+      "files": [],
+      "observable_effect": "Source physical index observed unchanged at f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+      "checks": "Historical original hash and current full index/status/stage/ref/cache readbacks",
+      "risk": "Cannot retroactively change initial invocation environment",
+      "downstream_consumer": "Root procedural classification",
+      "downstream_impact": "No observed state effect; inherited publication gates intact",
+      "builder_proposed_classification": "downstream_impact",
+      "original_requirement": "Read Git without optional locks and preserve physical source index",
+      "classification": "accepted",
+      "classification_owner": "/root",
+      "classified_at": "2026-10-04T21:37:40.497578+00:00",
+      "root_basis": "Physical source index equals original f37b throughout current inspection; before/after source/private stage/flags/refs/config identical. Procedural omission is retained, not retroactively fixed.",
+      "evidence": [
+        "S6-root-closeout-readback.json",
+        "S6-acceptance-current-dependency-fingerprints.json"
+      ],
+      "gate_qualification": "Inspection classification only; own and root full-S6 acceptance gates still separate"
+    },
+    {
+      "id": "S6-CLOSEOUT-D5",
+      "original_requirement": "Full exact unowned preservation while root owns disjoint E coordination; read actual optional fields for absent storage",
+      "actual_change": "Initial strict source comparator flagged three legitimate manager-owned E additions; corrected from immutable before/after snapshots with exact path provenance. A later storage comparison assumed kind on absent leaves and raised KeyError; corrected get-field equality retains two exact absences. Packet assembly corrected absent Wiki session-contract pointer before review; incomplete first packet components remain historical.",
+      "reason_authority": "Assignment explicitly preserves root E ownership and actual absence; no candidate correction or effects replay",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/initial-preservation-assertion-correction.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/preservation-comparison.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/before.json",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/after.json"
+      ],
+      "checks": "21145\u219221148 source leaves, eight assigned docs/version and three exact root E additions, all other baseline leaves/193caches/candidate4353/profile460/source+candidateindex/refs/stage/flags exact;11 storage existence/nine existing device/inode identities exact",
+      "observable_effect": "Corrected read-only proof scope/schema; no source/candidate/profile mutation from failed assertions",
+      "risk": "Root evidence bytes are manager-owned; normal/Alpha live DB hash/stat changes retained and qualified. Failed initial assertions are not successful proof.",
+      "downstream_impact": "Full-S6/root/whole-SPEC preservation uses corrected explicit accounting and raw before/after, not universal E unchanged claim",
+      "builder_proposed_classification": "downstream_impact",
+      "classification": "accepted",
+      "classification_owner": "/root",
+      "classified_at": "2026-10-04T21:37:40.497578+00:00",
+      "root_basis": "Root independently computes exact11 source differences: eight assigned docs/version plus two added/one modified root coordination files. Source193/cache/private4353/profile460 and protected11 storage identity readbacks support the corrected proof, including two absent leaves.",
+      "evidence": [
+        "S6-root-closeout-readback.json",
+        "S6-acceptance-current-dependency-fingerprints.json"
+      ],
+      "gate_qualification": "Inspection classification only; own and root full-S6 acceptance gates still separate"
+    }
+  ],
+  "downstream_required_correction": [],
+  "owner_rulings_required": []
+}

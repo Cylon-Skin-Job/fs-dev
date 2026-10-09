@@ -1,0 +1,21 @@
+{
+  "at": "2026-09-27T01:09:25.854405+00:00",
+  "identities": {
+    "source": {
+      "entries": 1948,
+      "sha256": "9f97dd6ad99cba7610b35147905dc1e907295bc8e340bfb00a38bea8f2f30cfc",
+      "mismatches": []
+    },
+    "build": {
+      "entries": 200,
+      "sha256": "6c06602b58f8dc0e4a9b1ed6588c5670b8e628b21044040a581e9e9d55f05234",
+      "mismatches": []
+    }
+  },
+  "ownedWorkloads": [],
+  "IOConsoleLocked": [
+    "No"
+  ],
+  "manualNativeEnv": null,
+  "plannedPostSoakManualMs": 0
+}

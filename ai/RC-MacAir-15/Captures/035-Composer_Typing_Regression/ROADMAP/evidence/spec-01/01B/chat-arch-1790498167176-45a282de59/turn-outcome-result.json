@@ -1,0 +1,2428 @@
+{
+  "status": "failed",
+  "records": [
+    {
+      "mode": "denied",
+      "identity": {
+        "group_id": "tg-2ded8e7f-b049-4d03-a0f6-decba97ee1a7",
+        "thread_id": "2026-09-27T01-36-11-093"
+      },
+      "receipt": {
+        "request_id": "0daf28e8d7ae4bb691e3b87d002004a0",
+        "turn_id": "1ac14990-fdb9-4046-9fbf-6524094361ca",
+        "outcome": "accepted"
+      },
+      "exchange": {
+        "id": 1,
+        "thread_id": "2026-09-27T01-36-11-093",
+        "seq": 1,
+        "user_input": "TO_CASE:denied",
+        "assistant": {
+          "parts": [
+            {
+              "type": "text",
+              "content": "Retained answer denied"
+            },
+            {
+              "type": "tool_call",
+              "toolCallId": "call_fixture",
+              "name": "shell",
+              "arguments": {
+                "command": "fixture-only"
+              },
+              "result": {
+                "output": "",
+                "statusMessage": "error",
+                "display": [],
+                "returnedDiff": false,
+                "isError": false,
+                "files": []
+              },
+              "terminalSnapshotExpansionVersion": 1,
+              "terminalSnapshotExpansionComplete": true
+            }
+          ]
+        },
+        "metadata": {
+          "messageId": "msg_fixture",
+          "planMode": false,
+          "contextUsage": null,
+          "tokenUsage": {},
+          "turnId": "1ac14990-fdb9-4046-9fbf-6524094361ca",
+          "reason": "error",
+          "partial": true,
+          "capturedAt": 1790498171469,
+          "savedAt": 1790498171663,
+          "terminalError": {
+            "kind": "runtime",
+            "code": "HARNESS_EXITED",
+            "message": "The model process ended before the response completed.",
+            "recoverable": true,
+            "diagnosticId": "4b6d1740-a280-4d17-b34a-f5e3b9aeee57"
+          },
+          "attachments": [],
+          "mentions": [],
+          "fileMutations": []
+        }
+      },
+      "terminal": {
+        "direction": "in",
+        "type": "turn_end",
+        "scope": "project",
+        "threadId": "2026-09-27T01-36-11-093",
+        "turnId": "1ac14990-fdb9-4046-9fbf-6524094361ca",
+        "streamSeq": 8,
+        "activityRevision": 2,
+        "fullText": "Retained answer denied",
+        "hasToolCalls": true,
+        "userInput": "TO_CASE:denied",
+        "parts": [
+          {
+            "type": "text",
+            "content": "Retained answer denied"
+          },
+          {
+            "type": "tool_call",
+            "toolCallId": "call_fixture",
+            "name": "shell",
+            "arguments": {
+              "command": "fixture-only"
+            },
+            "result": {
+              "output": "",
+              "statusMessage": "error",
+              "display": [],
+              "returnedDiff": false,
+              "isError": false,
+              "files": []
+            },
+            "terminalSnapshotExpansionVersion": 1,
+            "terminalSnapshotExpansionComplete": true
+          }
+        ],
+        "reason": "error",
+        "partial": true,
+        "terminalError": {
+          "kind": "runtime",
+          "code": "HARNESS_EXITED",
+          "message": "The model process ended before the response completed.",
+          "recoverable": true,
+          "diagnosticId": "4b6d1740-a280-4d17-b34a-f5e3b9aeee57"
+        }
+      },
+      "stopProcess": null,
+      "errorRows": 1
+    },
+    {
+      "mode": "success",
+      "identity": {
+        "group_id": "tg-2ded8e7f-b049-4d03-a0f6-decba97ee1a7",
+        "thread_id": "2026-09-27T01-36-11-093"
+      },
+      "receipt": {
+        "request_id": "ade82346a117779acbbf36750627b251",
+        "turn_id": "1a0e251c-5ab8-4f2e-9b10-16c06a8d1bfa",
+        "outcome": "accepted"
+      },
+      "exchange": {
+        "id": 2,
+        "thread_id": "2026-09-27T01-36-11-093",
+        "seq": 2,
+        "user_input": "TO_CASE:success",
+        "assistant": {
+          "parts": [
+            {
+              "type": "text",
+              "content": "Retained answer success"
+            },
+            {
+              "type": "tool_call",
+              "toolCallId": "call_fixture",
+              "name": "shell",
+              "arguments": {
+                "command": "fixture-only"
+              },
+              "result": {
+                "output": "Retained tool result",
+                "display": [],
+                "returnedDiff": false,
+                "isError": false,
+                "files": []
+              },
+              "terminalSnapshotExpansionVersion": 1,
+              "terminalSnapshotExpansionComplete": true
+            }
+          ]
+        },
+        "metadata": {
+          "messageId": "msg_fixture",
+          "planMode": false,
+          "contextUsage": null,
+          "tokenUsage": {},
+          "turnId": "1a0e251c-5ab8-4f2e-9b10-16c06a8d1bfa",
+          "reason": "stop",
+          "partial": false,
+          "capturedAt": 1790498172621,
+          "savedAt": 1790498172621,
+          "attachments": [],
+          "mentions": [],
+          "fileMutations": []
+        }
+      },
+      "terminal": {
+        "direction": "in",
+        "type": "turn_end",
+        "scope": "project",
+        "threadId": "2026-09-27T01-36-11-093",
+        "turnId": "1a0e251c-5ab8-4f2e-9b10-16c06a8d1bfa",
+        "streamSeq": 8,
+        "activityRevision": 2,
+        "fullText": "Retained answer success",
+        "hasToolCalls": true,
+        "userInput": "TO_CASE:success",
+        "parts": [
+          {
+            "type": "text",
+            "content": "Retained answer success"
+          },
+          {
+            "type": "tool_call",
+            "toolCallId": "call_fixture",
+            "name": "shell",
+            "arguments": {
+              "command": "fixture-only"
+            },
+            "result": {
+              "output": "Retained tool result",
+              "display": [],
+              "returnedDiff": false,
+              "isError": false,
+              "files": []
+            },
+            "terminalSnapshotExpansionVersion": 1,
+            "terminalSnapshotExpansionComplete": true
+          }
+        ],
+        "reason": "stop",
+        "partial": false
+      },
+      "stopProcess": null,
+      "errorRows": 1
+    },
+    {
+      "mode": "recovered",
+      "identity": {
+        "group_id": "tg-2ded8e7f-b049-4d03-a0f6-decba97ee1a7",
+        "thread_id": "2026-09-27T01-36-11-093"
+      },
+      "receipt": {
+        "request_id": "452542f55279275b99120bab501563a8",
+        "turn_id": "9c4dd803-3b00-429a-a36b-c9329b0712f2",
+        "outcome": "accepted"
+      },
+      "exchange": {
+        "id": 3,
+        "thread_id": "2026-09-27T01-36-11-093",
+        "seq": 3,
+        "user_input": "TO_CASE:recovered",
+        "assistant": {
+          "parts": [
+            {
+              "type": "text",
+              "content": "Retained answer recovered"
+            },
+            {
+              "type": "tool_call",
+              "toolCallId": "call_fixture",
+              "name": "shell",
+              "arguments": {
+                "command": "fixture-only"
+              },
+              "result": {
+                "output": "",
+                "statusMessage": "error",
+                "display": [],
+                "returnedDiff": false,
+                "isError": false,
+                "files": []
+              },
+              "terminalSnapshotExpansionVersion": 1,
+              "terminalSnapshotExpansionComplete": true
+            },
+            {
+              "type": "text",
+              "content": "Recovered provider answer"
+            }
+          ]
+        },
+        "metadata": {
+          "messageId": "msg_fixture",
+          "planMode": false,
+          "contextUsage": null,
+          "tokenUsage": {},
+          "turnId": "9c4dd803-3b00-429a-a36b-c9329b0712f2",
+          "reason": "stop",
+          "partial": false,
+          "capturedAt": 1790498175331,
+          "savedAt": 1790498175331,
+          "attachments": [],
+          "mentions": [],
+          "fileMutations": []
+        }
+      },
+      "terminal": {
+        "direction": "in",
+        "type": "turn_end",
+        "scope": "project",
+        "threadId": "2026-09-27T01-36-11-093",
+        "turnId": "9c4dd803-3b00-429a-a36b-c9329b0712f2",
+        "streamSeq": 10,
+        "activityRevision": 2,
+        "fullText": "Retained answer recoveredRecovered provider answer",
+        "hasToolCalls": true,
+        "userInput": "TO_CASE:recovered",
+        "parts": [
+          {
+            "type": "text",
+            "content": "Retained answer recovered"
+          },
+          {
+            "type": "tool_call",
+            "toolCallId": "call_fixture",
+            "name": "shell",
+            "arguments": {
+              "command": "fixture-only"
+            },
+            "result": {
+              "output": "",
+              "statusMessage": "error",
+              "display": [],
+              "returnedDiff": false,
+              "isError": false,
+              "files": []
+            },
+            "terminalSnapshotExpansionVersion": 1,
+            "terminalSnapshotExpansionComplete": true
+          },
+          {
+            "type": "text",
+            "content": "Recovered provider answer"
+          }
+        ],
+        "reason": "stop",
+        "partial": false
+      },
+      "stopProcess": null,
+      "errorRows": 1
+    },
+    {
+      "mode": "denied-only",
+      "identity": {
+        "group_id": "tg-2ded8e7f-b049-4d03-a0f6-decba97ee1a7",
+        "thread_id": "2026-09-27T01-36-11-093"
+      },
+      "receipt": {
+        "request_id": "eac3f560c0d311c35e1ce589ab5653dd",
+        "turn_id": "f41f36f9-810d-4074-be9c-7a84e8f7edf3",
+        "outcome": "accepted"
+      },
+      "exchange": {
+        "id": 4,
+        "thread_id": "2026-09-27T01-36-11-093",
+        "seq": 4,
+        "user_input": "TO_CASE:denied-only",
+        "assistant": {
+          "parts": [
+            {
+              "type": "tool_call",
+              "toolCallId": "call_fixture",
+              "name": "shell",
+              "arguments": {
+                "command": "fixture-only"
+              },
+              "result": {
+                "output": "",
+                "statusMessage": "error",
+                "display": [],
+                "returnedDiff": false,
+                "isError": false,
+                "files": []
+              },
+              "terminalSnapshotExpansionVersion": 1,
+              "terminalSnapshotExpansionComplete": true
+            }
+          ]
+        },
+        "metadata": {
+          "messageId": "msg_fixture",
+          "planMode": false,
+          "contextUsage": null,
+          "tokenUsage": {},
+          "turnId": "f41f36f9-810d-4074-be9c-7a84e8f7edf3",
+          "reason": "error",
+          "partial": true,
+          "capturedAt": 1790498178426,
+          "savedAt": 1790498178539,
+          "terminalError": {
+            "kind": "runtime",
+            "code": "HARNESS_EXITED",
+            "message": "The model process ended before the response completed.",
+            "recoverable": true,
+            "diagnosticId": "57fd7cc0-f3e0-4a8a-806e-0f57af2cc941"
+          },
+          "attachments": [],
+          "mentions": [],
+          "fileMutations": []
+        }
+      },
+      "terminal": {
+        "direction": "in",
+        "type": "turn_end",
+        "scope": "project",
+        "threadId": "2026-09-27T01-36-11-093",
+        "turnId": "f41f36f9-810d-4074-be9c-7a84e8f7edf3",
+        "streamSeq": 7,
+        "activityRevision": 2,
+        "fullText": "",
+        "hasToolCalls": true,
+        "userInput": "TO_CASE:denied-only",
+        "parts": [
+          {
+            "type": "tool_call",
+            "toolCallId": "call_fixture",
+            "name": "shell",
+            "arguments": {
+              "command": "fixture-only"
+            },
+            "result": {
+              "output": "",
+              "statusMessage": "error",
+              "display": [],
+              "returnedDiff": false,
+              "isError": false,
+              "files": []
+            },
+            "terminalSnapshotExpansionVersion": 1,
+            "terminalSnapshotExpansionComplete": true
+          }
+        ],
+        "reason": "error",
+        "partial": true,
+        "terminalError": {
+          "kind": "runtime",
+          "code": "HARNESS_EXITED",
+          "message": "The model process ended before the response completed.",
+          "recoverable": true,
+          "diagnosticId": "57fd7cc0-f3e0-4a8a-806e-0f57af2cc941"
+        }
+      },
+      "stopProcess": null,
+      "errorRows": 2
+    },
+    {
+      "mode": "tool-calls",
+      "identity": {
+        "group_id": "tg-2ded8e7f-b049-4d03-a0f6-decba97ee1a7",
+        "thread_id": "2026-09-27T01-36-11-093"
+      },
+      "receipt": {
+        "request_id": "9e70a09cf7e90c7c10865ac4333d2516",
+        "turn_id": "5d165f14-09a6-45ca-a2de-16420e57bfef",
+        "outcome": "accepted"
+      },
+      "exchange": {
+        "id": 5,
+        "thread_id": "2026-09-27T01-36-11-093",
+        "seq": 5,
+        "user_input": "TO_CASE:tool-calls",
+        "assistant": {
+          "parts": [
+            {
+              "type": "text",
+              "content": "Retained answer tool-calls"
+            },
+            {
+              "type": "tool_call",
+              "toolCallId": "call_fixture",
+              "name": "shell",
+              "arguments": {
+                "command": "fixture-only"
+              },
+              "result": {
+                "output": "Retained tool result",
+                "display": [],
+                "returnedDiff": false,
+                "isError": false,
+                "files": []
+              },
+              "terminalSnapshotExpansionVersion": 1,
+              "terminalSnapshotExpansionComplete": true
+            }
+          ]
+        },
+        "metadata": {
+          "messageId": "msg_fixture",
+          "planMode": false,
+          "contextUsage": null,
+          "tokenUsage": {},
+          "turnId": "5d165f14-09a6-45ca-a2de-16420e57bfef",
+          "reason": "error",
+          "partial": true,
+          "capturedAt": 1790498179154,
+          "savedAt": 1790498179348,
+          "terminalError": {
+            "kind": "runtime",
+            "code": "HARNESS_EXITED",
+            "message": "The model process ended before the response completed.",
+            "recoverable": true,
+            "diagnosticId": "c8089786-c39f-403c-a565-f29f7e0e3605"
+          },
+          "attachments": [],
+          "mentions": [],
+          "fileMutations": []
+        }
+      },
+      "terminal": {
+        "direction": "in",
+        "type": "turn_end",
+        "scope": "project",
+        "threadId": "2026-09-27T01-36-11-093",
+        "turnId": "5d165f14-09a6-45ca-a2de-16420e57bfef",
+        "streamSeq": 8,
+        "activityRevision": 2,
+        "fullText": "Retained answer tool-calls",
+        "hasToolCalls": true,
+        "userInput": "TO_CASE:tool-calls",
+        "parts": [
+          {
+            "type": "text",
+            "content": "Retained answer tool-calls"
+          },
+          {
+            "type": "tool_call",
+            "toolCallId": "call_fixture",
+            "name": "shell",
+            "arguments": {
+              "command": "fixture-only"
+            },
+            "result": {
+              "output": "Retained tool result",
+              "display": [],
+              "returnedDiff": false,
+              "isError": false,
+              "files": []
+            },
+            "terminalSnapshotExpansionVersion": 1,
+            "terminalSnapshotExpansionComplete": true
+          }
+        ],
+        "reason": "error",
+        "partial": true,
+        "terminalError": {
+          "kind": "runtime",
+          "code": "HARNESS_EXITED",
+          "message": "The model process ended before the response completed.",
+          "recoverable": true,
+          "diagnosticId": "c8089786-c39f-403c-a565-f29f7e0e3605"
+        }
+      },
+      "stopProcess": null,
+      "errorRows": 3
+    },
+    {
+      "mode": "pending",
+      "identity": {
+        "group_id": "tg-2ded8e7f-b049-4d03-a0f6-decba97ee1a7",
+        "thread_id": "2026-09-27T01-36-11-093"
+      },
+      "receipt": {
+        "request_id": "447f1ec3c7ef9f4b0c543525b33a6d99",
+        "turn_id": "da0ee15c-bd8b-40b1-9ed6-cb6c41023c3b",
+        "outcome": "accepted"
+      },
+      "exchange": {
+        "id": 6,
+        "thread_id": "2026-09-27T01-36-11-093",
+        "seq": 6,
+        "user_input": "TO_CASE:pending",
+        "assistant": {
+          "parts": [
+            {
+              "type": "text",
+              "content": "Retained answer pending"
+            },
+            {
+              "type": "tool_call",
+              "toolCallId": "call_fixture",
+              "name": "shell",
+              "arguments": {
+                "command": "fixture-only"
+              },
+              "result": {
+                "output": "",
+                "display": [],
+                "isError": false
+              }
+            }
+          ]
+        },
+        "metadata": {
+          "messageId": null,
+          "planMode": false,
+          "contextUsage": null,
+          "tokenUsage": null,
+          "turnId": "da0ee15c-bd8b-40b1-9ed6-cb6c41023c3b",
+          "reason": "error",
+          "partial": true,
+          "capturedAt": 1790498180155,
+          "savedAt": 1790498180155,
+          "terminalError": {
+            "kind": "runtime",
+            "code": "HARNESS_EXITED",
+            "message": "The model process ended before the response completed.",
+            "recoverable": true,
+            "diagnosticId": "c9a0bc8f-ef0c-417a-874e-bd4f11b809bb"
+          },
+          "attachments": [],
+          "mentions": [],
+          "fileMutations": []
+        }
+      },
+      "terminal": {
+        "direction": "in",
+        "type": "turn_end",
+        "scope": "project",
+        "threadId": "2026-09-27T01-36-11-093",
+        "turnId": "da0ee15c-bd8b-40b1-9ed6-cb6c41023c3b",
+        "streamSeq": 6,
+        "activityRevision": 2,
+        "fullText": "Retained answer pending",
+        "hasToolCalls": true,
+        "userInput": "TO_CASE:pending",
+        "parts": [
+          {
+            "type": "text",
+            "content": "Retained answer pending"
+          },
+          {
+            "type": "tool_call",
+            "toolCallId": "call_fixture",
+            "name": "shell",
+            "arguments": {
+              "command": "fixture-only"
+            },
+            "result": {
+              "output": "",
+              "display": [],
+              "isError": false
+            }
+          }
+        ],
+        "reason": "error",
+        "partial": true,
+        "terminalError": {
+          "kind": "runtime",
+          "code": "HARNESS_EXITED",
+          "message": "The model process ended before the response completed.",
+          "recoverable": true,
+          "diagnosticId": "c9a0bc8f-ef0c-417a-874e-bd4f11b809bb"
+        }
+      },
+      "stopProcess": null,
+      "errorRows": 4
+    },
+    {
+      "mode": "reasoning",
+      "identity": {
+        "group_id": "tg-2ded8e7f-b049-4d03-a0f6-decba97ee1a7",
+        "thread_id": "2026-09-27T01-36-11-093"
+      },
+      "receipt": {
+        "request_id": "6b8b64174ae486be451998dbb0ce0d75",
+        "turn_id": "a31e38da-a69a-4c9b-8a1a-1b9b6fa8f0ec",
+        "outcome": "accepted"
+      },
+      "exchange": {
+        "id": 7,
+        "thread_id": "2026-09-27T01-36-11-093",
+        "seq": 7,
+        "user_input": "TO_CASE:reasoning",
+        "assistant": {
+          "parts": [
+            {
+              "type": "think",
+              "content": "Retained fixture reasoning"
+            }
+          ]
+        },
+        "metadata": {
+          "messageId": null,
+          "planMode": false,
+          "contextUsage": null,
+          "tokenUsage": null,
+          "turnId": "a31e38da-a69a-4c9b-8a1a-1b9b6fa8f0ec",
+          "reason": "error",
+          "partial": true,
+          "capturedAt": 1790498180747,
+          "savedAt": 1790498180747,
+          "terminalError": {
+            "kind": "runtime",
+            "code": "HARNESS_EXITED",
+            "message": "The model process ended before the response completed.",
+            "recoverable": true,
+            "diagnosticId": "bbc24034-3121-44ce-8c41-551aab3178f0"
+          },
+          "attachments": [],
+          "mentions": [],
+          "fileMutations": []
+        }
+      },
+      "terminal": {
+        "direction": "in",
+        "type": "turn_end",
+        "scope": "project",
+        "threadId": "2026-09-27T01-36-11-093",
+        "turnId": "a31e38da-a69a-4c9b-8a1a-1b9b6fa8f0ec",
+        "streamSeq": 4,
+        "activityRevision": 2,
+        "fullText": "",
+        "hasToolCalls": false,
+        "userInput": "TO_CASE:reasoning",
+        "parts": [
+          {
+            "type": "think",
+            "content": "Retained fixture reasoning"
+          }
+        ],
+        "reason": "error",
+        "partial": true,
+        "terminalError": {
+          "kind": "runtime",
+          "code": "HARNESS_EXITED",
+          "message": "The model process ended before the response completed.",
+          "recoverable": true,
+          "diagnosticId": "bbc24034-3121-44ce-8c41-551aab3178f0"
+        }
+      },
+      "stopProcess": null,
+      "errorRows": 5
+    },
+    {
+      "mode": "empty",
+      "identity": {
+        "group_id": "tg-2ded8e7f-b049-4d03-a0f6-decba97ee1a7",
+        "thread_id": "2026-09-27T01-36-11-093"
+      },
+      "receipt": {
+        "request_id": "774a7c96e7bedb99da763de15494c105",
+        "turn_id": "62adc7ac-5c26-4e7f-909e-9cf46209f5e6",
+        "outcome": "accepted"
+      },
+      "exchange": {
+        "id": 8,
+        "thread_id": "2026-09-27T01-36-11-093",
+        "seq": 8,
+        "user_input": "TO_CASE:empty",
+        "assistant": {
+          "parts": []
+        },
+        "metadata": {
+          "messageId": null,
+          "planMode": false,
+          "contextUsage": null,
+          "tokenUsage": null,
+          "turnId": "62adc7ac-5c26-4e7f-909e-9cf46209f5e6",
+          "reason": "error",
+          "partial": true,
+          "capturedAt": 1790498181354,
+          "savedAt": 1790498181354,
+          "terminalError": {
+            "kind": "runtime",
+            "code": "HARNESS_EXITED",
+            "message": "The model process ended before the response completed.",
+            "recoverable": true,
+            "diagnosticId": "bd99f327-dfdb-4c7f-ad33-6d2aa5b778e0"
+          },
+          "attachments": [],
+          "mentions": [],
+          "fileMutations": []
+        }
+      },
+      "terminal": {
+        "direction": "in",
+        "type": "turn_end",
+        "scope": "project",
+        "threadId": "2026-09-27T01-36-11-093",
+        "turnId": "62adc7ac-5c26-4e7f-909e-9cf46209f5e6",
+        "streamSeq": 3,
+        "activityRevision": 2,
+        "fullText": "",
+        "hasToolCalls": false,
+        "userInput": "TO_CASE:empty",
+        "parts": [],
+        "reason": "error",
+        "partial": true,
+        "terminalError": {
+          "kind": "runtime",
+          "code": "HARNESS_EXITED",
+          "message": "The model process ended before the response completed.",
+          "recoverable": true,
+          "diagnosticId": "bd99f327-dfdb-4c7f-ad33-6d2aa5b778e0"
+        }
+      },
+      "stopProcess": null,
+      "errorRows": 6
+    },
+    {
+      "mode": "nonzero",
+      "identity": {
+        "group_id": "tg-2ded8e7f-b049-4d03-a0f6-decba97ee1a7",
+        "thread_id": "2026-09-27T01-36-11-093"
+      },
+      "receipt": {
+        "request_id": "b76687912412973a95f8aab0c1c70335",
+        "turn_id": "1978ed43-ce25-4fd3-839a-8451ab908f30",
+        "outcome": "accepted"
+      },
+      "exchange": {
+        "id": 9,
+        "thread_id": "2026-09-27T01-36-11-093",
+        "seq": 9,
+        "user_input": "TO_CASE:nonzero",
+        "assistant": {
+          "parts": [
+            {
+              "type": "text",
+              "content": "Retained answer nonzero"
+            }
+          ]
+        },
+        "metadata": {
+          "messageId": null,
+          "planMode": false,
+          "contextUsage": null,
+          "tokenUsage": null,
+          "turnId": "1978ed43-ce25-4fd3-839a-8451ab908f30",
+          "reason": "error",
+          "partial": true,
+          "capturedAt": 1790498182132,
+          "savedAt": 1790498182132,
+          "terminalError": {
+            "kind": "runtime",
+            "code": "HARNESS_EXITED",
+            "message": "The model process ended before the response completed.",
+            "recoverable": true,
+            "diagnosticId": "b36aa41c-2470-4925-a9a0-061df259d921"
+          },
+          "attachments": [],
+          "mentions": [],
+          "fileMutations": []
+        }
+      },
+      "terminal": {
+        "direction": "in",
+        "type": "turn_end",
+        "scope": "project",
+        "threadId": "2026-09-27T01-36-11-093",
+        "turnId": "1978ed43-ce25-4fd3-839a-8451ab908f30",
+        "streamSeq": 4,
+        "activityRevision": 2,
+        "fullText": "Retained answer nonzero",
+        "hasToolCalls": false,
+        "userInput": "TO_CASE:nonzero",
+        "parts": [
+          {
+            "type": "text",
+            "content": "Retained answer nonzero"
+          }
+        ],
+        "reason": "error",
+        "partial": true,
+        "terminalError": {
+          "kind": "runtime",
+          "code": "HARNESS_EXITED",
+          "message": "The model process ended before the response completed.",
+          "recoverable": true,
+          "diagnosticId": "b36aa41c-2470-4925-a9a0-061df259d921"
+        }
+      },
+      "stopProcess": null,
+      "errorRows": 7
+    },
+    {
+      "mode": "compat-text",
+      "identity": {
+        "group_id": "tg-2ded8e7f-b049-4d03-a0f6-decba97ee1a7",
+        "thread_id": "2026-09-27T01-36-11-093"
+      },
+      "receipt": {
+        "request_id": "7313321a664a24d7d7fea87d306cf8ab",
+        "turn_id": "a4cf814d-e935-43b6-a11f-83530d8b9258",
+        "outcome": "accepted"
+      },
+      "exchange": {
+        "id": 10,
+        "thread_id": "2026-09-27T01-36-11-093",
+        "seq": 10,
+        "user_input": "TO_CASE:compat-text",
+        "assistant": {
+          "parts": [
+            {
+              "type": "text",
+              "content": "Retained answer compat-text"
+            }
+          ]
+        },
+        "metadata": {
+          "messageId": null,
+          "planMode": false,
+          "contextUsage": null,
+          "tokenUsage": null,
+          "turnId": "a4cf814d-e935-43b6-a11f-83530d8b9258",
+          "reason": "complete",
+          "partial": false,
+          "capturedAt": 1790498182928,
+          "savedAt": 1790498182928,
+          "attachments": [],
+          "mentions": [],
+          "fileMutations": []
+        }
+      },
+      "terminal": {
+        "direction": "in",
+        "type": "turn_end",
+        "scope": "project",
+        "threadId": "2026-09-27T01-36-11-093",
+        "turnId": "a4cf814d-e935-43b6-a11f-83530d8b9258",
+        "streamSeq": 4,
+        "activityRevision": 2,
+        "fullText": "Retained answer compat-text",
+        "hasToolCalls": false,
+        "userInput": "TO_CASE:compat-text",
+        "parts": [
+          {
+            "type": "text",
+            "content": "Retained answer compat-text"
+          }
+        ],
+        "reason": "complete",
+        "partial": false
+      },
+      "stopProcess": null,
+      "errorRows": 7
+    },
+    {
+      "mode": "compat-tool",
+      "identity": {
+        "group_id": "tg-2ded8e7f-b049-4d03-a0f6-decba97ee1a7",
+        "thread_id": "2026-09-27T01-36-11-093"
+      },
+      "receipt": {
+        "request_id": "e99461736d7aabec27f1c7356d11df65",
+        "turn_id": "27647d58-1910-469d-ba48-438f04a04fc9",
+        "outcome": "accepted"
+      },
+      "exchange": {
+        "id": 11,
+        "thread_id": "2026-09-27T01-36-11-093",
+        "seq": 11,
+        "user_input": "TO_CASE:compat-tool",
+        "assistant": {
+          "parts": [
+            {
+              "type": "tool_call",
+              "toolCallId": "call_fixture",
+              "name": "shell",
+              "arguments": {
+                "command": "fixture-only"
+              },
+              "result": {
+                "output": "Retained tool result",
+                "display": [],
+                "returnedDiff": false,
+                "isError": false,
+                "files": []
+              },
+              "terminalSnapshotExpansionVersion": 1,
+              "terminalSnapshotExpansionComplete": true
+            }
+          ]
+        },
+        "metadata": {
+          "messageId": null,
+          "planMode": false,
+          "contextUsage": null,
+          "tokenUsage": null,
+          "turnId": "27647d58-1910-469d-ba48-438f04a04fc9",
+          "reason": "complete",
+          "partial": false,
+          "capturedAt": 1790498184250,
+          "savedAt": 1790498184250,
+          "attachments": [],
+          "mentions": [],
+          "fileMutations": []
+        }
+      },
+      "terminal": {
+        "direction": "in",
+        "type": "turn_end",
+        "scope": "project",
+        "threadId": "2026-09-27T01-36-11-093",
+        "turnId": "27647d58-1910-469d-ba48-438f04a04fc9",
+        "streamSeq": 6,
+        "activityRevision": 2,
+        "fullText": "",
+        "hasToolCalls": true,
+        "userInput": "TO_CASE:compat-tool",
+        "parts": [
+          {
+            "type": "tool_call",
+            "toolCallId": "call_fixture",
+            "name": "shell",
+            "arguments": {
+              "command": "fixture-only"
+            },
+            "result": {
+              "output": "Retained tool result",
+              "display": [],
+              "returnedDiff": false,
+              "isError": false,
+              "files": []
+            },
+            "terminalSnapshotExpansionVersion": 1,
+            "terminalSnapshotExpansionComplete": true
+          }
+        ],
+        "reason": "complete",
+        "partial": false
+      },
+      "stopProcess": null,
+      "errorRows": 7
+    },
+    {
+      "mode": "terminal-nonzero",
+      "identity": {
+        "group_id": "tg-2ded8e7f-b049-4d03-a0f6-decba97ee1a7",
+        "thread_id": "2026-09-27T01-36-11-093"
+      },
+      "receipt": {
+        "request_id": "744b1d73b426819b80072dda3b414818",
+        "turn_id": "5fb93054-5c53-4c2d-958a-b05301b4da79",
+        "outcome": "accepted"
+      },
+      "exchange": {
+        "id": 12,
+        "thread_id": "2026-09-27T01-36-11-093",
+        "seq": 12,
+        "user_input": "TO_CASE:terminal-nonzero",
+        "assistant": {
+          "parts": [
+            {
+              "type": "text",
+              "content": "Retained answer terminal-nonzero"
+            }
+          ]
+        },
+        "metadata": {
+          "messageId": "msg_fixture",
+          "planMode": false,
+          "contextUsage": null,
+          "tokenUsage": {},
+          "turnId": "5fb93054-5c53-4c2d-958a-b05301b4da79",
+          "reason": "stop",
+          "partial": false,
+          "capturedAt": 1790498186015,
+          "savedAt": 1790498186015,
+          "attachments": [],
+          "mentions": [],
+          "fileMutations": []
+        }
+      },
+      "terminal": {
+        "direction": "in",
+        "type": "turn_end",
+        "scope": "project",
+        "threadId": "2026-09-27T01-36-11-093",
+        "turnId": "5fb93054-5c53-4c2d-958a-b05301b4da79",
+        "streamSeq": 5,
+        "activityRevision": 2,
+        "fullText": "Retained answer terminal-nonzero",
+        "hasToolCalls": false,
+        "userInput": "TO_CASE:terminal-nonzero",
+        "parts": [
+          {
+            "type": "text",
+            "content": "Retained answer terminal-nonzero"
+          }
+        ],
+        "reason": "stop",
+        "partial": false
+      },
+      "stopProcess": null,
+      "errorRows": 7
+    },
+    {
+      "mode": "duplicate",
+      "identity": {
+        "group_id": "tg-2ded8e7f-b049-4d03-a0f6-decba97ee1a7",
+        "thread_id": "2026-09-27T01-36-11-093"
+      },
+      "receipt": {
+        "request_id": "52ef37c45306f3830daf1e98d0c08abb",
+        "turn_id": "4510dbad-9f59-45e1-bb63-88a20369fa87",
+        "outcome": "accepted"
+      },
+      "exchange": {
+        "id": 13,
+        "thread_id": "2026-09-27T01-36-11-093",
+        "seq": 13,
+        "user_input": "TO_CASE:duplicate",
+        "assistant": {
+          "parts": [
+            {
+              "type": "text",
+              "content": "Retained answer duplicate"
+            }
+          ]
+        },
+        "metadata": {
+          "messageId": "msg_fixture",
+          "planMode": false,
+          "contextUsage": null,
+          "tokenUsage": {},
+          "turnId": "4510dbad-9f59-45e1-bb63-88a20369fa87",
+          "reason": "stop",
+          "partial": false,
+          "capturedAt": 1790498187451,
+          "savedAt": 1790498187451,
+          "attachments": [],
+          "mentions": [],
+          "fileMutations": []
+        }
+      },
+      "terminal": {
+        "direction": "in",
+        "type": "turn_end",
+        "scope": "project",
+        "threadId": "2026-09-27T01-36-11-093",
+        "turnId": "4510dbad-9f59-45e1-bb63-88a20369fa87",
+        "streamSeq": 5,
+        "activityRevision": 2,
+        "fullText": "Retained answer duplicate",
+        "hasToolCalls": false,
+        "userInput": "TO_CASE:duplicate",
+        "parts": [
+          {
+            "type": "text",
+            "content": "Retained answer duplicate"
+          }
+        ],
+        "reason": "stop",
+        "partial": false
+      },
+      "stopProcess": null,
+      "errorRows": 7
+    }
+  ],
+  "frames": [
+    {
+      "direction": "in",
+      "type": "shell-auth:authenticated",
+      "version": 1
+    },
+    {
+      "direction": "in",
+      "type": "thread:opened",
+      "requestId": null,
+      "workspaceEpoch": "56ffb719-ca3e-48e9-bcf9-61bf6bfc025c",
+      "threadId": "2026-09-27T01-36-11-093",
+      "threadGroupId": "tg-2ded8e7f-b049-4d03-a0f6-decba97ee1a7",
+      "workspaceId": "native-outcome",
+      "viewId": "capture-viewer",
+      "panel": "capture-viewer",
+      "scope": "project",
+      "thread": {
+        "name": null,
+        "createdAt": "2026-09-27T08:36:11.095Z",
+        "messageCount": 0,
+        "status": "suspended",
+        "scope": "project",
+        "viewId": null,
+        "harnessId": "opencode"
+      },
+      "history": [],
+      "exchanges": [],
+      "liveTurn": null,
+      "contextUsage": null
+    },
+    {
+      "direction": "in",
+      "type": "thread:opened",
+      "requestId": null,
+      "workspaceEpoch": "56ffb719-ca3e-48e9-bcf9-61bf6bfc025c",
+      "threadId": "2026-09-27T01-36-11-093",
+      "threadGroupId": "tg-2ded8e7f-b049-4d03-a0f6-decba97ee1a7",
+      "workspaceId": "native-outcome",
+      "viewId": "capture-viewer",
+      "panel": "capture-viewer",
+      "scope": "project",
+      "thread": {
+        "name": null,
+        "createdAt": "2026-09-27T08:36:11.095Z",
+        "messageCount": 0,
+        "status": "active",
+        "scope": "project",
+        "viewId": null,
+        "resumedAt": "2026-09-27T08:36:11.102Z",
+        "harnessId": "opencode"
+      },
+      "history": [],
+      "exchanges": [],
+      "liveTurn": null,
+      "contextUsage": null
+    },
+    {
+      "direction": "out",
+      "type": "prompt",
+      "threadId": "2026-09-27T01-36-11-093",
+      "requestId": "0daf28e8d7ae4bb691e3b87d002004a0",
+      "user_input": "TO_CASE:denied"
+    },
+    {
+      "direction": "in",
+      "type": "message:sent",
+      "workspaceId": "native-outcome",
+      "threadId": "2026-09-27T01-36-11-093",
+      "scope": "project",
+      "requestId": "0daf28e8d7ae4bb691e3b87d002004a0",
+      "turnId": "1ac14990-fdb9-4046-9fbf-6524094361ca",
+      "content": "TO_CASE:denied"
+    },
+    {
+      "direction": "in",
+      "type": "turn_end",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "1ac14990-fdb9-4046-9fbf-6524094361ca",
+      "streamSeq": 8,
+      "activityRevision": 2,
+      "fullText": "Retained answer denied",
+      "hasToolCalls": true,
+      "userInput": "TO_CASE:denied",
+      "parts": [
+        {
+          "type": "text",
+          "content": "Retained answer denied"
+        },
+        {
+          "type": "tool_call",
+          "toolCallId": "call_fixture",
+          "name": "shell",
+          "arguments": {
+            "command": "fixture-only"
+          },
+          "result": {
+            "output": "",
+            "statusMessage": "error",
+            "display": [],
+            "returnedDiff": false,
+            "isError": false,
+            "files": []
+          },
+          "terminalSnapshotExpansionVersion": 1,
+          "terminalSnapshotExpansionComplete": true
+        }
+      ],
+      "reason": "error",
+      "partial": true,
+      "terminalError": {
+        "kind": "runtime",
+        "code": "HARNESS_EXITED",
+        "message": "The model process ended before the response completed.",
+        "recoverable": true,
+        "diagnosticId": "4b6d1740-a280-4d17-b34a-f5e3b9aeee57"
+      }
+    },
+    {
+      "direction": "in",
+      "type": "chat-turn:saved",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "1ac14990-fdb9-4046-9fbf-6524094361ca",
+      "exchangeId": 1,
+      "seq": 1,
+      "ts": 1790498171664,
+      "partial": true,
+      "reason": "error",
+      "metadata": {
+        "messageId": "msg_fixture",
+        "planMode": false,
+        "contextUsage": null,
+        "tokenUsage": {},
+        "turnId": "1ac14990-fdb9-4046-9fbf-6524094361ca",
+        "reason": "error",
+        "partial": true,
+        "capturedAt": 1790498171469,
+        "savedAt": 1790498171663,
+        "terminalError": {
+          "kind": "runtime",
+          "code": "HARNESS_EXITED",
+          "message": "The model process ended before the response completed.",
+          "recoverable": true,
+          "diagnosticId": "4b6d1740-a280-4d17-b34a-f5e3b9aeee57"
+        },
+        "attachments": [],
+        "mentions": [],
+        "fileMutations": []
+      }
+    },
+    {
+      "direction": "in",
+      "type": "shell-auth:authenticated",
+      "version": 1
+    },
+    {
+      "direction": "in",
+      "type": "thread:opened",
+      "requestId": null,
+      "workspaceEpoch": "9a9ac152-25d1-4891-81cf-aaebdd8642ed",
+      "threadId": "2026-09-27T01-36-11-093",
+      "threadGroupId": "tg-2ded8e7f-b049-4d03-a0f6-decba97ee1a7",
+      "workspaceId": "native-outcome",
+      "viewId": "capture-viewer",
+      "panel": "capture-viewer",
+      "scope": "project",
+      "thread": {
+        "name": null,
+        "createdAt": "2026-09-27T08:36:11.095Z",
+        "messageCount": 2,
+        "status": "suspended",
+        "scope": "project",
+        "viewId": null,
+        "resumedAt": "2026-09-27T08:36:11.102Z",
+        "harnessId": "opencode",
+        "harnessConfig": {
+          "opencodeSessionId": "ses_native_fixture"
+        }
+      },
+      "history": [
+        {
+          "role": "user",
+          "content": "TO_CASE:denied",
+          "hasToolCalls": false
+        },
+        {
+          "role": "assistant",
+          "content": "Retained answer denied",
+          "hasToolCalls": true,
+          "metadata": {
+            "messageId": "msg_fixture",
+            "planMode": false,
+            "contextUsage": null,
+            "tokenUsage": {},
+            "turnId": "1ac14990-fdb9-4046-9fbf-6524094361ca",
+            "reason": "error",
+            "partial": true,
+            "capturedAt": 1790498171469,
+            "savedAt": 1790498171663,
+            "terminalError": {
+              "kind": "runtime",
+              "code": "HARNESS_EXITED",
+              "message": "The model process ended before the response completed.",
+              "recoverable": true,
+              "diagnosticId": "4b6d1740-a280-4d17-b34a-f5e3b9aeee57"
+            },
+            "attachments": [],
+            "mentions": [],
+            "fileMutations": [],
+            "chatMirror": {
+              "threadId": "2026-09-27T01-36-11-093",
+              "exchangeId": 1,
+              "seq": 1,
+              "turnId": "1ac14990-fdb9-4046-9fbf-6524094361ca"
+            }
+          }
+        }
+      ],
+      "exchanges": [
+        {
+          "exchangeId": 1,
+          "seq": 1,
+          "ts": 1790498171664,
+          "user": "TO_CASE:denied",
+          "assistant": {
+            "parts": [
+              {
+                "type": "text",
+                "content": "Retained answer denied"
+              },
+              {
+                "type": "tool_call",
+                "toolCallId": "call_fixture",
+                "name": "shell",
+                "arguments": {
+                  "command": "fixture-only"
+                },
+                "result": {
+                  "output": "",
+                  "statusMessage": "error",
+                  "display": [],
+                  "returnedDiff": false,
+                  "isError": false,
+                  "files": []
+                },
+                "terminalSnapshotExpansionVersion": 1,
+                "terminalSnapshotExpansionComplete": true
+              }
+            ]
+          },
+          "metadata": {
+            "messageId": "msg_fixture",
+            "planMode": false,
+            "contextUsage": null,
+            "tokenUsage": {},
+            "turnId": "1ac14990-fdb9-4046-9fbf-6524094361ca",
+            "reason": "error",
+            "partial": true,
+            "capturedAt": 1790498171469,
+            "savedAt": 1790498171663,
+            "terminalError": {
+              "kind": "runtime",
+              "code": "HARNESS_EXITED",
+              "message": "The model process ended before the response completed.",
+              "recoverable": true,
+              "diagnosticId": "4b6d1740-a280-4d17-b34a-f5e3b9aeee57"
+            },
+            "attachments": [],
+            "mentions": [],
+            "fileMutations": []
+          }
+        }
+      ],
+      "liveTurn": null,
+      "contextUsage": null
+    },
+    {
+      "direction": "out",
+      "type": "prompt",
+      "threadId": "2026-09-27T01-36-11-093",
+      "requestId": "ade82346a117779acbbf36750627b251",
+      "user_input": "TO_CASE:success"
+    },
+    {
+      "direction": "in",
+      "type": "message:sent",
+      "workspaceId": "native-outcome",
+      "threadId": "2026-09-27T01-36-11-093",
+      "scope": "project",
+      "requestId": "ade82346a117779acbbf36750627b251",
+      "turnId": "1a0e251c-5ab8-4f2e-9b10-16c06a8d1bfa",
+      "content": "TO_CASE:success"
+    },
+    {
+      "direction": "in",
+      "type": "turn_end",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "1a0e251c-5ab8-4f2e-9b10-16c06a8d1bfa",
+      "streamSeq": 8,
+      "activityRevision": 2,
+      "fullText": "Retained answer success",
+      "hasToolCalls": true,
+      "userInput": "TO_CASE:success",
+      "parts": [
+        {
+          "type": "text",
+          "content": "Retained answer success"
+        },
+        {
+          "type": "tool_call",
+          "toolCallId": "call_fixture",
+          "name": "shell",
+          "arguments": {
+            "command": "fixture-only"
+          },
+          "result": {
+            "output": "Retained tool result",
+            "display": [],
+            "returnedDiff": false,
+            "isError": false,
+            "files": []
+          },
+          "terminalSnapshotExpansionVersion": 1,
+          "terminalSnapshotExpansionComplete": true
+        }
+      ],
+      "reason": "stop",
+      "partial": false
+    },
+    {
+      "direction": "in",
+      "type": "chat-turn:saved",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "1a0e251c-5ab8-4f2e-9b10-16c06a8d1bfa",
+      "exchangeId": 2,
+      "seq": 2,
+      "ts": 1790498172622,
+      "partial": false,
+      "reason": "stop",
+      "metadata": {
+        "messageId": "msg_fixture",
+        "planMode": false,
+        "contextUsage": null,
+        "tokenUsage": {},
+        "turnId": "1a0e251c-5ab8-4f2e-9b10-16c06a8d1bfa",
+        "reason": "stop",
+        "partial": false,
+        "capturedAt": 1790498172621,
+        "savedAt": 1790498172621,
+        "attachments": [],
+        "mentions": [],
+        "fileMutations": []
+      }
+    },
+    {
+      "direction": "out",
+      "type": "prompt",
+      "threadId": "2026-09-27T01-36-11-093",
+      "requestId": "452542f55279275b99120bab501563a8",
+      "user_input": "TO_CASE:recovered"
+    },
+    {
+      "direction": "in",
+      "type": "message:sent",
+      "workspaceId": "native-outcome",
+      "threadId": "2026-09-27T01-36-11-093",
+      "scope": "project",
+      "requestId": "452542f55279275b99120bab501563a8",
+      "turnId": "9c4dd803-3b00-429a-a36b-c9329b0712f2",
+      "content": "TO_CASE:recovered"
+    },
+    {
+      "direction": "in",
+      "type": "turn_end",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "9c4dd803-3b00-429a-a36b-c9329b0712f2",
+      "streamSeq": 10,
+      "activityRevision": 2,
+      "fullText": "Retained answer recoveredRecovered provider answer",
+      "hasToolCalls": true,
+      "userInput": "TO_CASE:recovered",
+      "parts": [
+        {
+          "type": "text",
+          "content": "Retained answer recovered"
+        },
+        {
+          "type": "tool_call",
+          "toolCallId": "call_fixture",
+          "name": "shell",
+          "arguments": {
+            "command": "fixture-only"
+          },
+          "result": {
+            "output": "",
+            "statusMessage": "error",
+            "display": [],
+            "returnedDiff": false,
+            "isError": false,
+            "files": []
+          },
+          "terminalSnapshotExpansionVersion": 1,
+          "terminalSnapshotExpansionComplete": true
+        },
+        {
+          "type": "text",
+          "content": "Recovered provider answer"
+        }
+      ],
+      "reason": "stop",
+      "partial": false
+    },
+    {
+      "direction": "in",
+      "type": "chat-turn:saved",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "9c4dd803-3b00-429a-a36b-c9329b0712f2",
+      "exchangeId": 3,
+      "seq": 3,
+      "ts": 1790498175333,
+      "partial": false,
+      "reason": "stop",
+      "metadata": {
+        "messageId": "msg_fixture",
+        "planMode": false,
+        "contextUsage": null,
+        "tokenUsage": {},
+        "turnId": "9c4dd803-3b00-429a-a36b-c9329b0712f2",
+        "reason": "stop",
+        "partial": false,
+        "capturedAt": 1790498175331,
+        "savedAt": 1790498175331,
+        "attachments": [],
+        "mentions": [],
+        "fileMutations": []
+      }
+    },
+    {
+      "direction": "out",
+      "type": "prompt",
+      "threadId": "2026-09-27T01-36-11-093",
+      "requestId": "eac3f560c0d311c35e1ce589ab5653dd",
+      "user_input": "TO_CASE:denied-only"
+    },
+    {
+      "direction": "in",
+      "type": "message:sent",
+      "workspaceId": "native-outcome",
+      "threadId": "2026-09-27T01-36-11-093",
+      "scope": "project",
+      "requestId": "eac3f560c0d311c35e1ce589ab5653dd",
+      "turnId": "f41f36f9-810d-4074-be9c-7a84e8f7edf3",
+      "content": "TO_CASE:denied-only"
+    },
+    {
+      "direction": "in",
+      "type": "turn_end",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "f41f36f9-810d-4074-be9c-7a84e8f7edf3",
+      "streamSeq": 7,
+      "activityRevision": 2,
+      "fullText": "",
+      "hasToolCalls": true,
+      "userInput": "TO_CASE:denied-only",
+      "parts": [
+        {
+          "type": "tool_call",
+          "toolCallId": "call_fixture",
+          "name": "shell",
+          "arguments": {
+            "command": "fixture-only"
+          },
+          "result": {
+            "output": "",
+            "statusMessage": "error",
+            "display": [],
+            "returnedDiff": false,
+            "isError": false,
+            "files": []
+          },
+          "terminalSnapshotExpansionVersion": 1,
+          "terminalSnapshotExpansionComplete": true
+        }
+      ],
+      "reason": "error",
+      "partial": true,
+      "terminalError": {
+        "kind": "runtime",
+        "code": "HARNESS_EXITED",
+        "message": "The model process ended before the response completed.",
+        "recoverable": true,
+        "diagnosticId": "57fd7cc0-f3e0-4a8a-806e-0f57af2cc941"
+      }
+    },
+    {
+      "direction": "in",
+      "type": "chat-turn:saved",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "f41f36f9-810d-4074-be9c-7a84e8f7edf3",
+      "exchangeId": 4,
+      "seq": 4,
+      "ts": 1790498178541,
+      "partial": true,
+      "reason": "error",
+      "metadata": {
+        "messageId": "msg_fixture",
+        "planMode": false,
+        "contextUsage": null,
+        "tokenUsage": {},
+        "turnId": "f41f36f9-810d-4074-be9c-7a84e8f7edf3",
+        "reason": "error",
+        "partial": true,
+        "capturedAt": 1790498178426,
+        "savedAt": 1790498178539,
+        "terminalError": {
+          "kind": "runtime",
+          "code": "HARNESS_EXITED",
+          "message": "The model process ended before the response completed.",
+          "recoverable": true,
+          "diagnosticId": "57fd7cc0-f3e0-4a8a-806e-0f57af2cc941"
+        },
+        "attachments": [],
+        "mentions": [],
+        "fileMutations": []
+      }
+    },
+    {
+      "direction": "out",
+      "type": "prompt",
+      "threadId": "2026-09-27T01-36-11-093",
+      "requestId": "9e70a09cf7e90c7c10865ac4333d2516",
+      "user_input": "TO_CASE:tool-calls"
+    },
+    {
+      "direction": "in",
+      "type": "message:sent",
+      "workspaceId": "native-outcome",
+      "threadId": "2026-09-27T01-36-11-093",
+      "scope": "project",
+      "requestId": "9e70a09cf7e90c7c10865ac4333d2516",
+      "turnId": "5d165f14-09a6-45ca-a2de-16420e57bfef",
+      "content": "TO_CASE:tool-calls"
+    },
+    {
+      "direction": "in",
+      "type": "turn_end",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "5d165f14-09a6-45ca-a2de-16420e57bfef",
+      "streamSeq": 8,
+      "activityRevision": 2,
+      "fullText": "Retained answer tool-calls",
+      "hasToolCalls": true,
+      "userInput": "TO_CASE:tool-calls",
+      "parts": [
+        {
+          "type": "text",
+          "content": "Retained answer tool-calls"
+        },
+        {
+          "type": "tool_call",
+          "toolCallId": "call_fixture",
+          "name": "shell",
+          "arguments": {
+            "command": "fixture-only"
+          },
+          "result": {
+            "output": "Retained tool result",
+            "display": [],
+            "returnedDiff": false,
+            "isError": false,
+            "files": []
+          },
+          "terminalSnapshotExpansionVersion": 1,
+          "terminalSnapshotExpansionComplete": true
+        }
+      ],
+      "reason": "error",
+      "partial": true,
+      "terminalError": {
+        "kind": "runtime",
+        "code": "HARNESS_EXITED",
+        "message": "The model process ended before the response completed.",
+        "recoverable": true,
+        "diagnosticId": "c8089786-c39f-403c-a565-f29f7e0e3605"
+      }
+    },
+    {
+      "direction": "in",
+      "type": "chat-turn:saved",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "5d165f14-09a6-45ca-a2de-16420e57bfef",
+      "exchangeId": 5,
+      "seq": 5,
+      "ts": 1790498179349,
+      "partial": true,
+      "reason": "error",
+      "metadata": {
+        "messageId": "msg_fixture",
+        "planMode": false,
+        "contextUsage": null,
+        "tokenUsage": {},
+        "turnId": "5d165f14-09a6-45ca-a2de-16420e57bfef",
+        "reason": "error",
+        "partial": true,
+        "capturedAt": 1790498179154,
+        "savedAt": 1790498179348,
+        "terminalError": {
+          "kind": "runtime",
+          "code": "HARNESS_EXITED",
+          "message": "The model process ended before the response completed.",
+          "recoverable": true,
+          "diagnosticId": "c8089786-c39f-403c-a565-f29f7e0e3605"
+        },
+        "attachments": [],
+        "mentions": [],
+        "fileMutations": []
+      }
+    },
+    {
+      "direction": "out",
+      "type": "prompt",
+      "threadId": "2026-09-27T01-36-11-093",
+      "requestId": "447f1ec3c7ef9f4b0c543525b33a6d99",
+      "user_input": "TO_CASE:pending"
+    },
+    {
+      "direction": "in",
+      "type": "message:sent",
+      "workspaceId": "native-outcome",
+      "threadId": "2026-09-27T01-36-11-093",
+      "scope": "project",
+      "requestId": "447f1ec3c7ef9f4b0c543525b33a6d99",
+      "turnId": "da0ee15c-bd8b-40b1-9ed6-cb6c41023c3b",
+      "content": "TO_CASE:pending"
+    },
+    {
+      "direction": "in",
+      "type": "turn_end",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "da0ee15c-bd8b-40b1-9ed6-cb6c41023c3b",
+      "streamSeq": 6,
+      "activityRevision": 2,
+      "fullText": "Retained answer pending",
+      "hasToolCalls": true,
+      "userInput": "TO_CASE:pending",
+      "parts": [
+        {
+          "type": "text",
+          "content": "Retained answer pending"
+        },
+        {
+          "type": "tool_call",
+          "toolCallId": "call_fixture",
+          "name": "shell",
+          "arguments": {
+            "command": "fixture-only"
+          },
+          "result": {
+            "output": "",
+            "display": [],
+            "isError": false
+          }
+        }
+      ],
+      "reason": "error",
+      "partial": true,
+      "terminalError": {
+        "kind": "runtime",
+        "code": "HARNESS_EXITED",
+        "message": "The model process ended before the response completed.",
+        "recoverable": true,
+        "diagnosticId": "c9a0bc8f-ef0c-417a-874e-bd4f11b809bb"
+      }
+    },
+    {
+      "direction": "in",
+      "type": "chat-turn:saved",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "da0ee15c-bd8b-40b1-9ed6-cb6c41023c3b",
+      "exchangeId": 6,
+      "seq": 6,
+      "ts": 1790498180157,
+      "partial": true,
+      "reason": "error",
+      "metadata": {
+        "messageId": null,
+        "planMode": false,
+        "contextUsage": null,
+        "tokenUsage": null,
+        "turnId": "da0ee15c-bd8b-40b1-9ed6-cb6c41023c3b",
+        "reason": "error",
+        "partial": true,
+        "capturedAt": 1790498180155,
+        "savedAt": 1790498180155,
+        "terminalError": {
+          "kind": "runtime",
+          "code": "HARNESS_EXITED",
+          "message": "The model process ended before the response completed.",
+          "recoverable": true,
+          "diagnosticId": "c9a0bc8f-ef0c-417a-874e-bd4f11b809bb"
+        },
+        "attachments": [],
+        "mentions": [],
+        "fileMutations": []
+      }
+    },
+    {
+      "direction": "out",
+      "type": "prompt",
+      "threadId": "2026-09-27T01-36-11-093",
+      "requestId": "6b8b64174ae486be451998dbb0ce0d75",
+      "user_input": "TO_CASE:reasoning"
+    },
+    {
+      "direction": "in",
+      "type": "message:sent",
+      "workspaceId": "native-outcome",
+      "threadId": "2026-09-27T01-36-11-093",
+      "scope": "project",
+      "requestId": "6b8b64174ae486be451998dbb0ce0d75",
+      "turnId": "a31e38da-a69a-4c9b-8a1a-1b9b6fa8f0ec",
+      "content": "TO_CASE:reasoning"
+    },
+    {
+      "direction": "in",
+      "type": "turn_end",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "a31e38da-a69a-4c9b-8a1a-1b9b6fa8f0ec",
+      "streamSeq": 4,
+      "activityRevision": 2,
+      "fullText": "",
+      "hasToolCalls": false,
+      "userInput": "TO_CASE:reasoning",
+      "parts": [
+        {
+          "type": "think",
+          "content": "Retained fixture reasoning"
+        }
+      ],
+      "reason": "error",
+      "partial": true,
+      "terminalError": {
+        "kind": "runtime",
+        "code": "HARNESS_EXITED",
+        "message": "The model process ended before the response completed.",
+        "recoverable": true,
+        "diagnosticId": "bbc24034-3121-44ce-8c41-551aab3178f0"
+      }
+    },
+    {
+      "direction": "in",
+      "type": "chat-turn:saved",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "a31e38da-a69a-4c9b-8a1a-1b9b6fa8f0ec",
+      "exchangeId": 7,
+      "seq": 7,
+      "ts": 1790498180748,
+      "partial": true,
+      "reason": "error",
+      "metadata": {
+        "messageId": null,
+        "planMode": false,
+        "contextUsage": null,
+        "tokenUsage": null,
+        "turnId": "a31e38da-a69a-4c9b-8a1a-1b9b6fa8f0ec",
+        "reason": "error",
+        "partial": true,
+        "capturedAt": 1790498180747,
+        "savedAt": 1790498180747,
+        "terminalError": {
+          "kind": "runtime",
+          "code": "HARNESS_EXITED",
+          "message": "The model process ended before the response completed.",
+          "recoverable": true,
+          "diagnosticId": "bbc24034-3121-44ce-8c41-551aab3178f0"
+        },
+        "attachments": [],
+        "mentions": [],
+        "fileMutations": []
+      }
+    },
+    {
+      "direction": "out",
+      "type": "prompt",
+      "threadId": "2026-09-27T01-36-11-093",
+      "requestId": "774a7c96e7bedb99da763de15494c105",
+      "user_input": "TO_CASE:empty"
+    },
+    {
+      "direction": "in",
+      "type": "message:sent",
+      "workspaceId": "native-outcome",
+      "threadId": "2026-09-27T01-36-11-093",
+      "scope": "project",
+      "requestId": "774a7c96e7bedb99da763de15494c105",
+      "turnId": "62adc7ac-5c26-4e7f-909e-9cf46209f5e6",
+      "content": "TO_CASE:empty"
+    },
+    {
+      "direction": "in",
+      "type": "turn_end",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "62adc7ac-5c26-4e7f-909e-9cf46209f5e6",
+      "streamSeq": 3,
+      "activityRevision": 2,
+      "fullText": "",
+      "hasToolCalls": false,
+      "userInput": "TO_CASE:empty",
+      "parts": [],
+      "reason": "error",
+      "partial": true,
+      "terminalError": {
+        "kind": "runtime",
+        "code": "HARNESS_EXITED",
+        "message": "The model process ended before the response completed.",
+        "recoverable": true,
+        "diagnosticId": "bd99f327-dfdb-4c7f-ad33-6d2aa5b778e0"
+      }
+    },
+    {
+      "direction": "in",
+      "type": "chat-turn:saved",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "62adc7ac-5c26-4e7f-909e-9cf46209f5e6",
+      "exchangeId": 8,
+      "seq": 8,
+      "ts": 1790498181355,
+      "partial": true,
+      "reason": "error",
+      "metadata": {
+        "messageId": null,
+        "planMode": false,
+        "contextUsage": null,
+        "tokenUsage": null,
+        "turnId": "62adc7ac-5c26-4e7f-909e-9cf46209f5e6",
+        "reason": "error",
+        "partial": true,
+        "capturedAt": 1790498181354,
+        "savedAt": 1790498181354,
+        "terminalError": {
+          "kind": "runtime",
+          "code": "HARNESS_EXITED",
+          "message": "The model process ended before the response completed.",
+          "recoverable": true,
+          "diagnosticId": "bd99f327-dfdb-4c7f-ad33-6d2aa5b778e0"
+        },
+        "attachments": [],
+        "mentions": [],
+        "fileMutations": []
+      }
+    },
+    {
+      "direction": "out",
+      "type": "prompt",
+      "threadId": "2026-09-27T01-36-11-093",
+      "requestId": "b76687912412973a95f8aab0c1c70335",
+      "user_input": "TO_CASE:nonzero"
+    },
+    {
+      "direction": "in",
+      "type": "message:sent",
+      "workspaceId": "native-outcome",
+      "threadId": "2026-09-27T01-36-11-093",
+      "scope": "project",
+      "requestId": "b76687912412973a95f8aab0c1c70335",
+      "turnId": "1978ed43-ce25-4fd3-839a-8451ab908f30",
+      "content": "TO_CASE:nonzero"
+    },
+    {
+      "direction": "in",
+      "type": "turn_end",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "1978ed43-ce25-4fd3-839a-8451ab908f30",
+      "streamSeq": 4,
+      "activityRevision": 2,
+      "fullText": "Retained answer nonzero",
+      "hasToolCalls": false,
+      "userInput": "TO_CASE:nonzero",
+      "parts": [
+        {
+          "type": "text",
+          "content": "Retained answer nonzero"
+        }
+      ],
+      "reason": "error",
+      "partial": true,
+      "terminalError": {
+        "kind": "runtime",
+        "code": "HARNESS_EXITED",
+        "message": "The model process ended before the response completed.",
+        "recoverable": true,
+        "diagnosticId": "b36aa41c-2470-4925-a9a0-061df259d921"
+      }
+    },
+    {
+      "direction": "in",
+      "type": "chat-turn:saved",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "1978ed43-ce25-4fd3-839a-8451ab908f30",
+      "exchangeId": 9,
+      "seq": 9,
+      "ts": 1790498182134,
+      "partial": true,
+      "reason": "error",
+      "metadata": {
+        "messageId": null,
+        "planMode": false,
+        "contextUsage": null,
+        "tokenUsage": null,
+        "turnId": "1978ed43-ce25-4fd3-839a-8451ab908f30",
+        "reason": "error",
+        "partial": true,
+        "capturedAt": 1790498182132,
+        "savedAt": 1790498182132,
+        "terminalError": {
+          "kind": "runtime",
+          "code": "HARNESS_EXITED",
+          "message": "The model process ended before the response completed.",
+          "recoverable": true,
+          "diagnosticId": "b36aa41c-2470-4925-a9a0-061df259d921"
+        },
+        "attachments": [],
+        "mentions": [],
+        "fileMutations": []
+      }
+    },
+    {
+      "direction": "out",
+      "type": "prompt",
+      "threadId": "2026-09-27T01-36-11-093",
+      "requestId": "7313321a664a24d7d7fea87d306cf8ab",
+      "user_input": "TO_CASE:compat-text"
+    },
+    {
+      "direction": "in",
+      "type": "message:sent",
+      "workspaceId": "native-outcome",
+      "threadId": "2026-09-27T01-36-11-093",
+      "scope": "project",
+      "requestId": "7313321a664a24d7d7fea87d306cf8ab",
+      "turnId": "a4cf814d-e935-43b6-a11f-83530d8b9258",
+      "content": "TO_CASE:compat-text"
+    },
+    {
+      "direction": "in",
+      "type": "turn_end",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "a4cf814d-e935-43b6-a11f-83530d8b9258",
+      "streamSeq": 4,
+      "activityRevision": 2,
+      "fullText": "Retained answer compat-text",
+      "hasToolCalls": false,
+      "userInput": "TO_CASE:compat-text",
+      "parts": [
+        {
+          "type": "text",
+          "content": "Retained answer compat-text"
+        }
+      ],
+      "reason": "complete",
+      "partial": false
+    },
+    {
+      "direction": "in",
+      "type": "chat-turn:saved",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "a4cf814d-e935-43b6-a11f-83530d8b9258",
+      "exchangeId": 10,
+      "seq": 10,
+      "ts": 1790498182930,
+      "partial": false,
+      "reason": "complete",
+      "metadata": {
+        "messageId": null,
+        "planMode": false,
+        "contextUsage": null,
+        "tokenUsage": null,
+        "turnId": "a4cf814d-e935-43b6-a11f-83530d8b9258",
+        "reason": "complete",
+        "partial": false,
+        "capturedAt": 1790498182928,
+        "savedAt": 1790498182928,
+        "attachments": [],
+        "mentions": [],
+        "fileMutations": []
+      }
+    },
+    {
+      "direction": "out",
+      "type": "prompt",
+      "threadId": "2026-09-27T01-36-11-093",
+      "requestId": "e99461736d7aabec27f1c7356d11df65",
+      "user_input": "TO_CASE:compat-tool"
+    },
+    {
+      "direction": "in",
+      "type": "message:sent",
+      "workspaceId": "native-outcome",
+      "threadId": "2026-09-27T01-36-11-093",
+      "scope": "project",
+      "requestId": "e99461736d7aabec27f1c7356d11df65",
+      "turnId": "27647d58-1910-469d-ba48-438f04a04fc9",
+      "content": "TO_CASE:compat-tool"
+    },
+    {
+      "direction": "in",
+      "type": "turn_end",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "27647d58-1910-469d-ba48-438f04a04fc9",
+      "streamSeq": 6,
+      "activityRevision": 2,
+      "fullText": "",
+      "hasToolCalls": true,
+      "userInput": "TO_CASE:compat-tool",
+      "parts": [
+        {
+          "type": "tool_call",
+          "toolCallId": "call_fixture",
+          "name": "shell",
+          "arguments": {
+            "command": "fixture-only"
+          },
+          "result": {
+            "output": "Retained tool result",
+            "display": [],
+            "returnedDiff": false,
+            "isError": false,
+            "files": []
+          },
+          "terminalSnapshotExpansionVersion": 1,
+          "terminalSnapshotExpansionComplete": true
+        }
+      ],
+      "reason": "complete",
+      "partial": false
+    },
+    {
+      "direction": "in",
+      "type": "chat-turn:saved",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "27647d58-1910-469d-ba48-438f04a04fc9",
+      "exchangeId": 11,
+      "seq": 11,
+      "ts": 1790498184251,
+      "partial": false,
+      "reason": "complete",
+      "metadata": {
+        "messageId": null,
+        "planMode": false,
+        "contextUsage": null,
+        "tokenUsage": null,
+        "turnId": "27647d58-1910-469d-ba48-438f04a04fc9",
+        "reason": "complete",
+        "partial": false,
+        "capturedAt": 1790498184250,
+        "savedAt": 1790498184250,
+        "attachments": [],
+        "mentions": [],
+        "fileMutations": []
+      }
+    },
+    {
+      "direction": "out",
+      "type": "prompt",
+      "threadId": "2026-09-27T01-36-11-093",
+      "requestId": "744b1d73b426819b80072dda3b414818",
+      "user_input": "TO_CASE:terminal-nonzero"
+    },
+    {
+      "direction": "in",
+      "type": "message:sent",
+      "workspaceId": "native-outcome",
+      "threadId": "2026-09-27T01-36-11-093",
+      "scope": "project",
+      "requestId": "744b1d73b426819b80072dda3b414818",
+      "turnId": "5fb93054-5c53-4c2d-958a-b05301b4da79",
+      "content": "TO_CASE:terminal-nonzero"
+    },
+    {
+      "direction": "in",
+      "type": "turn_end",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "5fb93054-5c53-4c2d-958a-b05301b4da79",
+      "streamSeq": 5,
+      "activityRevision": 2,
+      "fullText": "Retained answer terminal-nonzero",
+      "hasToolCalls": false,
+      "userInput": "TO_CASE:terminal-nonzero",
+      "parts": [
+        {
+          "type": "text",
+          "content": "Retained answer terminal-nonzero"
+        }
+      ],
+      "reason": "stop",
+      "partial": false
+    },
+    {
+      "direction": "in",
+      "type": "chat-turn:saved",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "5fb93054-5c53-4c2d-958a-b05301b4da79",
+      "exchangeId": 12,
+      "seq": 12,
+      "ts": 1790498186016,
+      "partial": false,
+      "reason": "stop",
+      "metadata": {
+        "messageId": "msg_fixture",
+        "planMode": false,
+        "contextUsage": null,
+        "tokenUsage": {},
+        "turnId": "5fb93054-5c53-4c2d-958a-b05301b4da79",
+        "reason": "stop",
+        "partial": false,
+        "capturedAt": 1790498186015,
+        "savedAt": 1790498186015,
+        "attachments": [],
+        "mentions": [],
+        "fileMutations": []
+      }
+    },
+    {
+      "direction": "out",
+      "type": "prompt",
+      "threadId": "2026-09-27T01-36-11-093",
+      "requestId": "52ef37c45306f3830daf1e98d0c08abb",
+      "user_input": "TO_CASE:duplicate"
+    },
+    {
+      "direction": "in",
+      "type": "message:sent",
+      "workspaceId": "native-outcome",
+      "threadId": "2026-09-27T01-36-11-093",
+      "scope": "project",
+      "requestId": "52ef37c45306f3830daf1e98d0c08abb",
+      "turnId": "4510dbad-9f59-45e1-bb63-88a20369fa87",
+      "content": "TO_CASE:duplicate"
+    },
+    {
+      "direction": "in",
+      "type": "turn_end",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "4510dbad-9f59-45e1-bb63-88a20369fa87",
+      "streamSeq": 5,
+      "activityRevision": 2,
+      "fullText": "Retained answer duplicate",
+      "hasToolCalls": false,
+      "userInput": "TO_CASE:duplicate",
+      "parts": [
+        {
+          "type": "text",
+          "content": "Retained answer duplicate"
+        }
+      ],
+      "reason": "stop",
+      "partial": false
+    },
+    {
+      "direction": "in",
+      "type": "chat-turn:saved",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "4510dbad-9f59-45e1-bb63-88a20369fa87",
+      "exchangeId": 13,
+      "seq": 13,
+      "ts": 1790498187453,
+      "partial": false,
+      "reason": "stop",
+      "metadata": {
+        "messageId": "msg_fixture",
+        "planMode": false,
+        "contextUsage": null,
+        "tokenUsage": {},
+        "turnId": "4510dbad-9f59-45e1-bb63-88a20369fa87",
+        "reason": "stop",
+        "partial": false,
+        "capturedAt": 1790498187451,
+        "savedAt": 1790498187451,
+        "attachments": [],
+        "mentions": [],
+        "fileMutations": []
+      }
+    },
+    {
+      "direction": "out",
+      "type": "prompt",
+      "threadId": "2026-09-27T01-36-11-093",
+      "requestId": "3a396b7034dbf2d39056e769d1c81eb2",
+      "user_input": "TO_CASE:stop"
+    },
+    {
+      "direction": "in",
+      "type": "message:sent",
+      "workspaceId": "native-outcome",
+      "threadId": "2026-09-27T01-36-11-093",
+      "scope": "project",
+      "requestId": "3a396b7034dbf2d39056e769d1c81eb2",
+      "turnId": "c2b2aaba-abd9-4c30-b774-0ec96209805a",
+      "content": "TO_CASE:stop"
+    },
+    {
+      "direction": "in",
+      "type": "turn_end",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "c2b2aaba-abd9-4c30-b774-0ec96209805a",
+      "streamSeq": 8,
+      "activityRevision": 2,
+      "fullText": "Retained answer stop",
+      "hasToolCalls": true,
+      "userInput": "TO_CASE:stop",
+      "parts": [
+        {
+          "type": "text",
+          "content": "Retained answer stop"
+        },
+        {
+          "type": "tool_call",
+          "toolCallId": "call_fixture",
+          "name": "shell",
+          "arguments": {
+            "command": "fixture-only"
+          },
+          "result": {
+            "output": "",
+            "statusMessage": "error",
+            "display": [],
+            "returnedDiff": false,
+            "isError": false,
+            "files": []
+          },
+          "terminalSnapshotExpansionVersion": 1,
+          "terminalSnapshotExpansionComplete": true
+        }
+      ],
+      "reason": "interrupted",
+      "partial": true
+    },
+    {
+      "direction": "in",
+      "type": "chat-turn:saved",
+      "scope": "project",
+      "threadId": "2026-09-27T01-36-11-093",
+      "turnId": "c2b2aaba-abd9-4c30-b774-0ec96209805a",
+      "exchangeId": 14,
+      "seq": 14,
+      "ts": 1790498189448,
+      "partial": true,
+      "reason": "interrupted",
+      "metadata": {
+        "messageId": "msg_fixture",
+        "planMode": false,
+        "contextUsage": null,
+        "tokenUsage": {},
+        "turnId": "c2b2aaba-abd9-4c30-b774-0ec96209805a",
+        "reason": "interrupted",
+        "partial": true,
+        "capturedAt": 1790498188783,
+        "savedAt": 1790498189447,
+        "attachments": [],
+        "mentions": [],
+        "fileMutations": []
+      }
+    }
+  ],
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": {
+    "message": "database is locked",
+    "stack": "SqliteError: database is locked\n    at Database.prepare (/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules/better-sqlite3/lib/methods/wrappers.js:5:21)\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs:27:42\n    at withDb (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs:22:16)\n    at readDb (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs:20:18)\n    at async send (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs:78:18)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs:145:84"
+  }
+}

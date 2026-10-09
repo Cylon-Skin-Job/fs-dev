@@ -1,0 +1,96 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - button "chat_paste_go" [ref=e4]
+    - button "chat_paste_go" [ref=e5]
+    - group "Document actions" [ref=e6]:
+      - button "link_2" [ref=e7] [cursor=pointer]:
+        - generic [ref=e8]: link_2
+      - button "chat_paste_go" [ref=e9] [cursor=pointer]:
+        - generic [ref=e10]: chat_paste_go
+  - generic [ref=e12]:
+    - complementary [ref=e13]:
+      - generic [ref=e14]:
+        - button "Hide threads" [ref=e15]: dock_to_right
+        - combobox "Thread view" [ref=e16] [cursor=pointer]:
+          - option "Active Threads" [selected]
+          - option "Archive"
+      - button "edit_squareNew chat" [ref=e17]
+      - separator [ref=e18]
+      - generic [ref=e19]:
+        - generic [ref=e20]:
+          - generic [ref=e21]:
+            - generic "Main material" [ref=e22]: Main material●
+            - button "More options" [ref=e23]: more_vert
+          - generic [ref=e25]: 0 msgs · 12/31/2025
+        - generic [ref=e26]:
+          - generic [ref=e27]:
+            - generic "Other material" [ref=e28]: Other material●
+            - button "More options" [ref=e29]: more_vert
+          - generic [ref=e31]: 0 msgs · 12/31/2025
+    - generic [ref=e32]:
+      - button "More options" [ref=e35]: event_list
+      - generic [ref=e37]:
+        - generic [ref=e39]: FAILED PROMPT
+        - generic [ref=e40]:
+          - paragraph [ref=e42]: PARTIAL
+          - alert [ref=e43]:
+            - generic [ref=e44]: Response failed
+            - generic [ref=e45]: MODEL_RESPONSE_FAILED
+            - generic [ref=e46]: The model response failed before it completed.
+          - generic [ref=e47]:
+            - generic "Diagnostic actions" [ref=e48]:
+              - button "View" [ref=e49] [cursor=pointer]
+              - button "Copy" [ref=e50] [cursor=pointer]
+              - button "Ask AI" [ref=e51] [cursor=pointer]
+            - generic [ref=e52]: Unable to add diagnostic to the composer. Check the chat target and try again.
+          - generic [ref=e54]:
+            - button "Copy reply" [ref=e55] [cursor=pointer]:
+              - generic [ref=e56]: content_copy
+            - button "Text to speech" [disabled] [ref=e57]:
+              - generic [ref=e58]: text_to_speech
+            - button "Add bookmark" [ref=e59] [cursor=pointer]:
+              - generic [ref=e60]: bookmark
+            - button "Chat ID" [ref=e61] [cursor=pointer]:
+              - generic [ref=e62]: link_2
+      - generic [ref=e64]:
+        - textbox "Ask about wiki-viewer..." [ref=e68]: MAIN DRAFT
+        - generic [ref=e69]:
+          - generic [ref=e70]:
+            - button "Add" [ref=e72] [cursor=pointer]:
+              - generic [ref=e73]: add
+            - button "Mode" [ref=e75]: shield_lockMode
+          - generic [ref=e76]:
+            - 'button "Context usage: 0%" [ref=e78]'
+            - button "DeepSeek V4 Flash" [ref=e80]: DeepSeek V4 Flashkeyboard_arrow_down
+            - button "Voice input (click to open)" [ref=e82] [cursor=pointer]:
+              - generic [ref=e83]: mic
+            - button "Send message" [ref=e85]: arrow_upward
+  - generic [ref=e86]:
+    - tablist "wiki-viewer" [ref=e88]:
+      - tab "wiki-viewer" [ref=e89]: tabwiki-viewer
+      - tab "Side Chat" [selected] [ref=e90]: tabSide Chat
+      - button "Close Side Chat" [ref=e91]: close
+    - generic [ref=e92]:
+      - generic [ref=e93]:
+        - generic [ref=e94]:
+          - button "Show threads" [ref=e95]: dock_to_right
+          - button "New chat" [ref=e96]: edit_square
+        - button "More options" [ref=e98]: event_list
+      - generic [ref=e101]: Start a conversation
+      - generic [ref=e103]:
+        - textbox "Ask about chat-surface-component-material-side-component..." [ref=e107]: SIDE DRAFT
+        - generic [ref=e108]:
+          - generic [ref=e109]:
+            - button "Add" [ref=e111] [cursor=pointer]:
+              - generic [ref=e112]: add
+            - button "Mode" [ref=e114]: shield_lockMode
+          - generic [ref=e115]:
+            - 'button "Context usage: 0%" [ref=e117]'
+            - button "DeepSeek V4 Flash" [ref=e119]: DeepSeek V4 Flashkeyboard_arrow_down
+            - button "Voice input (click to open)" [ref=e121] [cursor=pointer]:
+              - generic [ref=e122]: mic
+            - button "Send message" [ref=e124]: arrow_upward
+```

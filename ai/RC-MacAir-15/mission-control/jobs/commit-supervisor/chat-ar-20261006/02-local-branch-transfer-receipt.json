@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-07T00:28:23.563765+00:00",
+  "repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "argv": [
+    "git",
+    "-C",
+    "/Users/rccurtrightjr./projects/fs-dev",
+    "fetch",
+    "--no-tags",
+    "--no-recurse-submodules",
+    "--no-write-fetch-head",
+    "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+    "refs/heads/codex/chat-retirement-and-startup-repair:refs/heads/codex/chat-retirement-and-startup-repair"
+  ],
+  "finished": "2026-10-07T00:28:24.099134+00:00",
+  "exit_code": 0,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "9ebe644b3bc6f6e53d56799eac96e20f707a7e8d0dc37d612d1369759b98be4e"
+}

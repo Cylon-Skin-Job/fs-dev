@@ -1,0 +1,32 @@
+{
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "index_sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+  "files": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+      "sha256": "96d9b148f37b9bb87f18bd1f55fd84a29f05961b0161d7c2a0298512c172560c",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-preimages/96d9b148f37b9bb87f18bd1f55fd84a29f05961b0161d7c2a0298512c172560c",
+      "lines": 303
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/job-template.md",
+      "sha256": "6bf15686c791a11fe6cb83cc141d87905956e6bc8e8742a38bba5ee709372692",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-preimages/6bf15686c791a11fe6cb83cc141d87905956e6bc8e8742a38bba5ee709372692",
+      "lines": 69
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+      "sha256": "7e9bcfa884c2e20c180173885667fe1ad8d1cf31c15aca6c9737a0bd2aa387d8",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-preimages/7e9bcfa884c2e20c180173885667fe1ad8d1cf31c15aca6c9737a0bd2aa387d8",
+      "lines": 269
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+      "sha256": "daf13e49f75279cc21610abad6762212b132fa4810c1cd6f14057cbcb54e3521",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-preimages/daf13e49f75279cc21610abad6762212b132fa4810c1cd6f14057cbcb54e3521",
+      "lines": 120
+    }
+  ]
+}

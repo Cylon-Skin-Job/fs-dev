@@ -1,0 +1,25 @@
+(node:97095) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+FAIL test/screenshot-file-capture-request-id.test.js
+  ● screenshot:file-capture save isolation › concurrent captures at the same timestamp retain their own paths and image bytes
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 1
+
+      115 |     expect(sent).toHaveLength(2);
+      116 |     expect(sent.map((response) => response.requestId).sort()).toEqual(['capture-blue', 'capture-red']);
+    > 117 |     expect(new Set(sent.map((response) => response.savedPath)).size).toBe(2);
+          |                                                                      ^
+      118 |     const screenshotDir = path.join(root, 'ai', 'Screenshot-Test', 'Data', 'Screenshots');
+      119 |     for (const { requestId, image } of requests) {
+      120 |       const response = sent.find((item) => item.requestId === requestId);
+
+      at Object.toBe (test/screenshot-file-capture-request-id.test.js:117:70)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 3 skipped, 4 total
+Snapshots:   0 total
+Time:        0.411 s
+Ran all test suites within paths "test/screenshot-file-capture-request-id.test.js".

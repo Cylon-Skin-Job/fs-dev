@@ -1,0 +1,50 @@
+{
+  "kind": "REHEARSAL_ONLY_PROVIDER_RELEASE",
+  "scope": "REHEARSAL_ONLY",
+  "at": "2026-10-04T13:42:39.214964+00:00",
+  "resolver": "/root",
+  "issue": "FIXTURE_PROVIDER_01",
+  "predecessor": "/root/s6_supervisor_provider_1",
+  "predecessor_host_terminal_observed": true,
+  "provider": "fixture-sample-provider",
+  "consumer": "checklist-view",
+  "authority_sha256": "d56710db1edba2ba6ef8798975fb1fb4808a301b0ea2e46bcb81d6645e251010",
+  "sample": [
+    {
+      "id": "draft",
+      "label": "Draft report"
+    },
+    {
+      "id": "review",
+      "label": "Review sources"
+    },
+    {
+      "id": "send",
+      "label": "Send summary"
+    }
+  ],
+  "sample_artifact": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-provider-sample.json",
+  "sample_sha256": "d5fdc410a26a65471c519e1accb2745b93813bf7123299e77e2d95e41de1be40",
+  "sample_encoding": "UTF-8 JSON file, exact bytes including final newline",
+  "existing_baseline_full_id": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "fixture_landed": {
+    "kind": "REHEARSAL_ONLY_SIMULATED_LANDING",
+    "simulated": true,
+    "existing_baseline_full_id": "d15792920731f85e45b743519d4af2b807d95a9c",
+    "actual_landing": false,
+    "new_commits": false
+  },
+  "adoption_evidence": {
+    "kind": "REHEARSAL_ONLY_SIMULATED_CONSUMER_ADOPTION",
+    "separate_from_landing": true,
+    "production_adoption": false,
+    "current_fixture_source": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js",
+    "current_fixture_source_sha256": "2b9276858645f88d423fb044816deb3b84049b1be09e74369353549d712f2412",
+    "actual_preparation_ui_labels_raw": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-public-ui-observation.json",
+    "actual_preparation_ui_sha256": "37602cf4d680ec84edf4765fdff8d6d97c2f3020c3488925f8db920359ba5f72",
+    "scope": "Private fixture source plus time-qualified real preparation UI label readback only; successor independently checks current source/task identity."
+  },
+  "git_operation_authority": "NONE",
+  "prerequisite_build_authority": "NONE",
+  "intent_resolution": "UNRELEASED"
+}

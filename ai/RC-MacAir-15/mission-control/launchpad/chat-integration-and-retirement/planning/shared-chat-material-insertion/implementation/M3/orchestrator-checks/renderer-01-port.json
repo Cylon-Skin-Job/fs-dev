@@ -1,0 +1,7 @@
+{
+  "at": "2026-10-07T20:55:16.978330+00:00",
+  "port": 50711,
+  "host": "127.0.0.1",
+  "state": "Verified free by exclusive bind before owned Playwright launch; reuseExistingServer false",
+  "scope": "owned architecture test server, no live owner port"
+}

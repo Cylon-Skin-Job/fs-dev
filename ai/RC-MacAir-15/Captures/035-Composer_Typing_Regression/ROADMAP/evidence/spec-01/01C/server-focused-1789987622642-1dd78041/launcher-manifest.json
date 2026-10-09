@@ -1,0 +1,18 @@
+{
+  "runId": "server-focused-1789987622642-1dd78041",
+  "kind": "server-focused",
+  "mode": null,
+  "token": "chat-architecture-owner-server-focused-1789987622642-1dd78041",
+  "ownerPid": 6768,
+  "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/server-focused-1789987622642-1dd78041-dIPe9K",
+  "supervisedCommand": [
+    "/opt/homebrew/Cellar/node/25.6.1/bin/node",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/owned-case-supervisor.mjs",
+    "chat-architecture-owner-server-focused-1789987622642-1dd78041",
+    "6768",
+    "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/server-focused-1789987622642-1dd78041-dIPe9K",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/server-focused-regressions.mjs"
+  ],
+  "parentLossPolicy": "accepted owned-case-supervisor watches owner PID, kills target descendants and removes marked root",
+  "deadlineMs": 540000
+}

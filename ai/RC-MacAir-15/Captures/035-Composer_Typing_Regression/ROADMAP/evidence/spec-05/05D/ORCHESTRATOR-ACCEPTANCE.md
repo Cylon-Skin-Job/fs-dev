@@ -1,0 +1,9 @@
+#05D orchestrator reacceptance — CLEAN
+
+Root reaccepts05D and affected05A/C on78-file5fe5337047401bf19aed7a4c90d6d82cd0fb6d0e5a4ade5c1bfea980b5394792,105-file integratedda6ecbffec10d9f79951ecf6c2fb65996eb2a8ebfb341c5f26bd31458ca4ea73. Original acceptance retained in ORCHESTRATOR-ACCEPTANCE-BEFORE-D18.md. D01–D18 classified, no material issue or owner ruling remains at this lower gate.
+
+Builder /root/builder05d terminal READY; fresh reviewer /root/builder05d/review05d_waiter terminal CLEAN. Root independently inspected exact three-file diff, helper and six regressions, replayed original actual SessionManager failure trigger with zero retained helper listeners, and reran26runtime suites/550tests. Current cumulative backend6cases/UI6flows,7submission,6actions,214server suites3180tests/nativepretest/oneexistingKimi skip,17Node and valid build pass. All1607 current server/runtime dependencies match; cleanup clean.
+
+Fresh /root/review05d_acceptance_3 terminal CLEAN, no material findings/new advisories. Independently verified78/105manifests,1607server/runtime dependencies,55production owner bounds and immediate session/lifecycle/activation/interactive/automation/Stop consumers. Private waiter cleanup preserves truthful failure, retained STOPPING owner, unrelated lifecycle observers/custom contract, late exit recovery, replacement isolation and bounded saved delivery. Reused relevant raw broader UI/DB/file and full gates independently. D01–D18 dispositions supported.
+
+Retain D07/D12/D16 unknown causes/baseline issue,5s explicit retry/30s saved-delivery bounds, deterministicGUI, existingKimi skip and build/bootstrap warnings. No06 or original symptom acceptance. Reviewer read-only/no workloads/edits/descendants; all prior writers/reviewers terminal. close_agent unavailable. All slices current accepted before final integrated commands; fresh final review still required.

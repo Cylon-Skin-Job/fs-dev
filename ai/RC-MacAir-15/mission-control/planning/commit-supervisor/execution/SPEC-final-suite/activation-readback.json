@@ -1,0 +1,47 @@
+{
+  "at": "2026-10-05T03:21:12.499768+00:00",
+  "activation": {
+    "at": "2026-10-05T03:21:12.390022+00:00",
+    "actor": "/root",
+    "accepted_slices": [
+      "S1",
+      "S2",
+      "S3",
+      "S4",
+      "S5",
+      "S6"
+    ],
+    "actual_recovery_complete": true,
+    "private_preview_stopped": true,
+    "S6_acceptance": {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance.json",
+      "sha256": "c0f2d6fe4539c322c89a15fe0e22cfcf969610ef2a51e1dff4d2beb02976f962"
+    },
+    "no_current_runtime_readiness_claim": true,
+    "scope": "Final current regression/static/read-only preservation gates; real successful live fixed rehearsals retained on exact historical bytes"
+  },
+  "activation_fingerprint": {
+    "exists": true,
+    "kind": "file",
+    "mode": "0o100644",
+    "sha256": "029eee81a80268cd2a04d2ae02ae5fe369b4f68fbd498b1ea93d7c3945397d7d"
+  },
+  "slice_ledger_fingerprint": {
+    "exists": true,
+    "kind": "file",
+    "mode": "0o100644",
+    "sha256": "cf370557d85805e8269d8a82d8fcceafaf4805c4d34361725c241229206e2b36"
+  },
+  "runner_fingerprint": {
+    "exists": true,
+    "kind": "file",
+    "mode": "0o100644",
+    "sha256": "8a15996c3d1e4093f5b1db61df94087385520cb1948784edba8f97fd46d5a079"
+  },
+  "bindings_fingerprint": {
+    "exists": true,
+    "kind": "file",
+    "mode": "0o100644",
+    "sha256": "c68ad9c0e21aa0ffcb37ba5a40629f0b8ea09ac67c0854de23a095f1f84fd565"
+  }
+}

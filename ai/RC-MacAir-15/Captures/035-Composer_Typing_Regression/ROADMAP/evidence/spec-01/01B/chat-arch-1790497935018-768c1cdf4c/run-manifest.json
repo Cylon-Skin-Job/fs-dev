@@ -1,0 +1,331 @@
+{
+  "runId": "chat-arch-1790497935018-768c1cdf4c",
+  "token": "chat-architecture-owner-chat-arch-1790497935018-768c1cdf4c",
+  "requested": {
+    "suite": "backend",
+    "mode": "enforce",
+    "cases": [
+      "TO-01-NATIVE-OUTCOME"
+    ],
+    "diagnosticDeadlines": {},
+    "enforcementGroup": [
+      "R8-GROUP-BACKEND-MATRIX",
+      "R8-UI-LIFECYCLE",
+      "R8-EXACT-MEMBER-HYDRATION",
+      "R7-R8-RUNTIME-OWNERSHIP",
+      "R8-MIRROR-RECOVERY",
+      "R8-SESSION-LIFECYCLE",
+      "R8-PRE-RECEIPT-UPGRADE"
+    ],
+    "durationMs": null
+  },
+  "suiteDeadline": {
+    "startedAt": 1790497935018,
+    "durationMs": 900000,
+    "deadlineAt": 1790498835018
+  },
+  "source": {
+    "head": "88637d11c65be53d4f2ad0f049f64a07fa3db1de",
+    "statusScope": [
+      "fusion-studio-client/e2e/chat-architecture",
+      "fusion-studio-client/playwright.chat-architecture.config.ts",
+      "fusion-studio-client/electron/main.cjs",
+      "fusion-studio-client/electron/server-spawn.cjs",
+      "fusion-studio-server/server.js",
+      "fusion-studio-server/lib/harness/registry.js",
+      "fusion-studio-server/lib/db/migrations/044_thread_group_placement_outbox.js"
+    ],
+    "status": [
+      "?? fusion-studio-client/e2e/chat-architecture/",
+      "?? fusion-studio-client/playwright.chat-architecture.config.ts"
+    ],
+    "files": [
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/run.mjs",
+        "sha256": "8eeeffdd1a00c3a371d5aeaf03f641f8207a495cf1d4af4d30e0b433f1902bb8"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs",
+        "sha256": "c29befc91499bb6e535ffa2027b28715daf1259b94ed0b0dd2e46a9ce2c38d69"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/turn-outcome-native.cjs",
+        "sha256": "90f4021af4c3746bd6d6928dd5a7c98eee5ba0548903ac6831483b2a0dc1d6b2"
+      },
+      {
+        "relativePath": "fusion-studio-server/lib/harness/opencode/index.js",
+        "sha256": "14c6dff6c5a83bd3f1c7008547efb6720527c94f88c75ebd47b1047ddd992afb"
+      },
+      {
+        "relativePath": "fusion-studio-server/lib/harness/opencode/turn-outcome.js",
+        "sha256": "b01efd354b33b383fc27d0dbcf4dbb206bf581463357397616eaac564ccf14f1"
+      },
+      {
+        "relativePath": "fusion-studio-server/lib/harness/opencode/failure-marker-builder.js",
+        "sha256": "fbe7fee6838bee792cdf8909523e3b2aeae90e47bf1bdbf35b52717ed1ff029f"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/f1-electron.mjs",
+        "sha256": "95ca167150b88d3450cb652a8c15f8af06636c9b97d0a5d32adacfdc3c2c6f0f"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/fault-route-electron.mjs",
+        "sha256": "a843527428d4206899ba74fb635b21437c6a9cbb7809282d6cc5e3a16c11a823"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/owned-case-supervisor.mjs",
+        "sha256": "7adf3918a86b8ee4c76cf4c4818f90d06678d81e1834dffccbd8b1f9e2e9250d"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/fixture-fault-runtime.cjs",
+        "sha256": "68d37a5933559337c2bdd581c1729e25913c345e606eaea6a2e87bfa3e537ab1"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/fixture-lifecycle.mjs",
+        "sha256": "2c2ce4b330593faf04e4eadc7c95d0adccdd1b75c1d02452b4110efa19a3b84d"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/stage-fixture.mjs",
+        "sha256": "8efe08f2486f1f67edc09e57e4afacf4db6f8e880e3bc98ff9f45807cf3f48a9"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/deterministic-opencode-adapter.cjs",
+        "sha256": "7ba87f35596301bcfbbff7ec0280dace34efc16665c568dc586d120a1c660fe8"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/runner-lifecycle.test.mjs",
+        "sha256": "5aff19dd161d8f0a9010436a5668bda28a9d19d4219bb3c7795e479a1bb400d3"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/scenario-inventory.mjs",
+        "sha256": "9e8c315624d4c0c80d16b3793e39ef99467788f6b2a64e7322b45653125d94ed"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/fixture-workloads.mjs",
+        "sha256": "047eecea1ea59c3772b4360dd0b7cb131a94223d97955add74b04691cae498bd"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs",
+        "sha256": "a6add386edbc5fab53a8fb3a53c4a2b8ed75bdcef947e36c87d71ff5a4f1921a"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/r1-electron.mjs",
+        "sha256": "19a6f41d1c891c22341d009e41431776273fbce7a02b4fcdaa56a634ff2ef73a"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/r1-sustained-electron.mjs",
+        "sha256": "33657de4274e128c656ec81871212c04dba6522a80ce2b9085ea2c5914893836"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/soak-electron.mjs",
+        "sha256": "a929044bdb865a5bda8ca15ebb8f41fabc10dd335ff2aa77b440c1efcffaf1d5"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/soak-actions.mjs",
+        "sha256": "e3d8907f9d5ed6f232cd3b00c0198af54d8f441152de61cd8648bd08574546b0"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/soak-resources.mjs",
+        "sha256": "8c13308c229786ed7328f20cc61875eed9dd014082a2cbd192ac2b36b079d79a"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/soak-measurement.mjs",
+        "sha256": "45e78fde713bd02230ae54dc9f3330db293ebff84dd481f64a7581855dadd6a2"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/soak-preparation.mjs",
+        "sha256": "bff41c032fa6b7be8f183be9ad2d59a9a349c8357bf056695724b3046fa316c0"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/soak-foreground-handoff.mjs",
+        "sha256": "37957324d52b37c414c2d1cc3f78b2688d11804cbe620234e7dcc41e1ea45495"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/soak-delete-native.mjs",
+        "sha256": "9ec46111045965f88341782dd04dba3a85f941bd7f967944e19609ff90a5c8bc"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/native-composition-control.mjs",
+        "sha256": "d421695a0059fafd4234c0e8714a58af4c1b66f294e6cf181fc3c2012f9e1219"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/native-input-electron.mjs",
+        "sha256": "cd1c8f100bcbc2e5ae648fc853cf91718d685cbb7a48f0e74fa007f2100666e6"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/manual-input-window.mjs",
+        "sha256": "53d42dd04347db6c78fc740168bc85555f0ddb589d1c500f057198e3f32319b5"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/owned-focus-observation.mjs",
+        "sha256": "4c0588dd1d36aef00c4d351c9275dfecec6c2d15df02d4b293eae45d2e7d538a"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/early-lifecycle-preload.cjs",
+        "sha256": "61b06aeaa41ffc3a305489f8b50a07c8560014f329e92c471bd4a28e2743eda3"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/early-lifecycle-driver.mjs",
+        "sha256": "afa1c778b3f16b060d0996aaa99ffa8827c50b25fbf8d7199de60284b0744257"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/node-inspector-observation.mjs",
+        "sha256": "b77d690c2d2eeacdf2b6180e081e092d6248dad76c3bb1bd96f7d072cb454ed7"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/native-activation-probe.mjs",
+        "sha256": "a2aa1ca33fa98be5b225d0b9a78076b25aaf7d8873bf1c201d6513c2f82d3003"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/watched-trace-core.mjs",
+        "sha256": "a453e0cbc92c64ad2d9976c77005ad71dfbf872c2cb16295062321e986bbd5bf"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/watched-renderer-trace.mjs",
+        "sha256": "fc64e8ad6ec26bc88b4435bae3e97eb72348e63497fc5208d0e18057c992ac57"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/watched-setup-trace.mjs",
+        "sha256": "bb8754cfae8de21f9fc462f6b3bc33c4bab685792a997cc98c9d4795cbf4e0f5"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/r1-sustained-observation.mjs",
+        "sha256": "608f0e8e09854b21ba225de0c015b0f1733c5efcfd25fcb1678fa22afba03420"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/owner-foreground.mjs",
+        "sha256": "99bac92c725e0e0ff10bab336356f97003cacafce97a4bc8dac89ad1b5dce360"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/watched-pointer.mjs",
+        "sha256": "7b928ae88a82c2cf566962493c965214ecfd35296c42628cf10065d5bf6e1efa"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/r1-sustained-fixture.mjs",
+        "sha256": "3ab71a13b29d8814df26ef776e9783edc14db2eca7fc24ec221869537345185f"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/message-list-observation.mjs",
+        "sha256": "5712d8b1c3a88176da816577dd712d40cc11f5fd10d79d04d93642f48cf7e280"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/session-retirement.test.mjs",
+        "sha256": "f76324daf9ffa80609168b9cf68a822e17875cc38f29dcddf0da86aec761864f"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/r7-history-playwright.mjs",
+        "sha256": "4645f678780068b77bad22cb16af6744042f43b7248c024c09e70dd4dc8c96f5"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/r2-electron.mjs",
+        "sha256": "76b155dfbeaf6984123b2d20cf7f311b9fc8350489e5fdf9f105bb6fb96b72b3"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/r8-ui-electron.mjs",
+        "sha256": "ad3c63b2e43731295bfa423f00cbcfbdb35702175558e5fecba1e72be5db70ff"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/r8-upgrade-electron.mjs",
+        "sha256": "3635250260414568608429e2ddd50eb0175f022410d3946ceec9dcc547ee28f4"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/r8-history-playwright.mjs",
+        "sha256": "3147f21fd5a687187385f7d4675bdd11612225c0003414e795fc2c16dc1528ac"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-surface-identity.spec.ts",
+        "sha256": "17fb34728856a3557b5cf833b393f291a9b08be9021471135442f6aa58bfafed"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/backend-owner-contract.mjs",
+        "sha256": "413f3ffb1aca720f40cd376e931c136bb7d601c4d02698956bc96cceb86782c0"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/backend-owner-contract.test.mjs",
+        "sha256": "90cc20d1dda383557f831c0ec8d63a14d37426d8b13887dc15f8ba7ef5d4e8cd"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/r5-r6-electron.mjs",
+        "sha256": "11c374170cc1cca7268fb1d32ee081f7d78649ad9db18607868a8a953d1b67b0"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/r5-diagnostic-playwright.mjs",
+        "sha256": "6ec26aa207d7b7087352935e7ef71db98823f86074bd39905b18779b069d0e63"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/r6-boundaries-playwright.mjs",
+        "sha256": "d7d24dee9ef3dc798e96fbb7596fe407e8adbe3cb6fa53e73ce29a634e05c447"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/r9-playwright.mjs",
+        "sha256": "0341df883ce93a586ab56397108bfaf2bb72b3f45f10a1c0e3d7046474c59a52"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/r9-electron.mjs",
+        "sha256": "9f33022433c7261d4e2b65b814dcc575bd2a7a81beae43cb0e3f10ae90ef1f3f"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/future-submit-electron.mjs",
+        "sha256": "3161f3b10903faab854741e2e28d1f1931eb82abcab87c26a3abd22fdebb2978"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/observation-contract.test.mjs",
+        "sha256": "3be4d05f9ae06819525a47da2442b02ce47d4ac915b311a1ad08c268d6314e90"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/chat-architecture/observation-boundaries.spec.ts",
+        "sha256": "63bb35d7cc67b0310545e5fcc51a863ec2d64803c453ff988168380c0a6b89ca"
+      },
+      {
+        "relativePath": "fusion-studio-client/playwright.chat-architecture.config.ts",
+        "sha256": "30605cd962368f6ed861727a7ec88d3baebd28a193a2edd5e792f23c58a71f24"
+      },
+      {
+        "relativePath": "fusion-studio-client/e2e/view-bound-shell-smoke.mjs",
+        "sha256": "56ffb5aea0595af47d8fab73a051daf301cc4a0f4bfd8bb4c5a77c513dca2139"
+      },
+      {
+        "relativePath": "fusion-studio-client/electron/main.cjs",
+        "sha256": "22d254036040a367782656c3d29730e719dae3056d6d54f4ada94f2ed1bca260"
+      },
+      {
+        "relativePath": "fusion-studio-server/server.js",
+        "sha256": "293e3f56f7c61aa855d8e116fe901cb58db86eedf69cce3ac2e4ad865ad62a07"
+      },
+      {
+        "relativePath": "fusion-studio-server/lib/db/migrations/044_thread_group_placement_outbox.js",
+        "sha256": "08197c2b84835c63890ab292db11ebf68d5f697295c54f894a8d8298fb322d12"
+      }
+    ]
+  },
+  "runtime": {
+    "node": "v25.6.1",
+    "electron": "42.0.1",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "workloadHash": "e494af57fe0b5fa2d778a10c9ce09b3fe87f48db61dde535529949d57ee649c8",
+  "paths": {
+    "evidenceRoot": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790497935018-768c1cdf4c",
+    "ownedRunRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790497935018-768c1cdf4c-m5z1Kw",
+    "plannedProfile": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790497935018-768c1cdf4c-m5z1Kw/profile",
+    "plannedWorkspace": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790497935018-768c1cdf4c-m5z1Kw/workspace",
+    "plannedStage": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790497935018-768c1cdf4c-m5z1Kw/stage"
+  },
+  "commands": [
+    {
+      "id": "TO-01-NATIVE-OUTCOME",
+      "command": [
+        "/opt/homebrew/Cellar/node/25.6.1/bin/node",
+        "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/owned-case-supervisor.mjs",
+        "chat-architecture-owner-chat-arch-1790497935018-768c1cdf4c",
+        "77655",
+        "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790497935018-768c1cdf4c-m5z1Kw",
+        "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs",
+        "chat-architecture-owner-chat-arch-1790497935018-768c1cdf4c",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790497935018-768c1cdf4c",
+        "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790497935018-768c1cdf4c-m5z1Kw"
+      ]
+    }
+  ]
+}

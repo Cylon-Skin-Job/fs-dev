@@ -1,0 +1,11 @@
+{
+  "fusion-studio-client/src/components/LiveSegmentRenderer.tsx": "f237473f6e6e0d3fb12fdc05bd70a2d9ff968a8d779276a0424b6f11ce9b22a4",
+  "fusion-studio-client/src/components/chat/WorkingActivity.tsx": "f44f1ae1264d1dccd8ce2247c33d3f99f2730d5a739657d722df577103132c76",
+  "fusion-studio-client/src/components/MessageList.tsx": "49a448781a8aed83328b5b22c65f69dbb7b6fa53f4993dd5b8a3afa713ade528",
+  "fusion-studio-client/src/components/chat/ConnectedChatHistory.tsx": "cf4f9868bacb57c83e31191c0633ad6c23a605f588b415c078e85ba6655c2f81",
+  "fusion-studio-client/src/lib/text/text-animate.ts": "776fb4bb9bc9ad23e01983574105c0e841e7af8ce7e7150a8f0b37b62977490e",
+  "fusion-studio-client/src/lib/reveal/orchestrator.ts": "3fab885820b7494348871ec07b274b69c934b46e1e0c9de0cae6b9d169cc06b2",
+  "fusion-studio-client/src/lib/reveal/types.ts": "c262ac7f0579ad0f133ad97672a9d8ac0e0ed96460802796f50daeabefeb1cd3",
+  "fusion-studio-client/src/lib/reveal/grouped-summary.ts": "0b2f6e5c20c8ebf37ec7bebd9ef65b81c072334e9ca9426536e32fc7482d02c2",
+  "fusion-studio-client/src/lib/tool-animate.ts": "3274b182efb5fa5dcb71073b902c6ce7115cb69b13a77a595be79ff2bed02ffa"
+}

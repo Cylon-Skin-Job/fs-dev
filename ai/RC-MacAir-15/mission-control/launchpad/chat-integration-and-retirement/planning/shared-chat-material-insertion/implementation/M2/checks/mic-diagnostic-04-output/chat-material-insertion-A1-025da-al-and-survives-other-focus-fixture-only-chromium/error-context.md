@@ -1,0 +1,97 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - button "chat_paste_go" [ref=e4]
+    - button "chat_paste_go" [ref=e5]
+    - group "Document actions" [ref=e6]:
+      - button "link_2" [ref=e7] [cursor=pointer]:
+        - generic [ref=e8]: link_2
+      - button "chat_paste_go" [ref=e9] [cursor=pointer]:
+        - generic [ref=e10]: chat_paste_go
+  - generic [ref=e12]:
+    - complementary [ref=e13]:
+      - generic [ref=e14]:
+        - button "Hide threads" [ref=e15]: dock_to_right
+        - combobox "Thread view" [ref=e16] [cursor=pointer]:
+          - option "Active Threads" [selected]
+          - option "Archive"
+      - button "edit_squareNew chat" [ref=e17]
+      - separator [ref=e18]
+      - generic [ref=e19]:
+        - generic [ref=e20]:
+          - generic [ref=e21]:
+            - generic "Main material" [ref=e22]: Main material●
+            - button "More options" [ref=e23]: more_vert
+          - generic [ref=e25]: 0 msgs · 12/31/2025
+        - generic [ref=e26]:
+          - generic [ref=e27]:
+            - generic "Other material" [ref=e28]: Other material●
+            - button "More options" [ref=e29]: more_vert
+          - generic [ref=e31]: 0 msgs · 12/31/2025
+    - generic [ref=e32]:
+      - button "More options" [ref=e35]: event_list
+      - generic [ref=e37]:
+        - generic [ref=e39]: FAILED PROMPT
+        - generic [ref=e40]:
+          - paragraph [ref=e42]: PARTIAL
+          - alert [ref=e43]:
+            - generic [ref=e44]: Response failed
+            - generic [ref=e45]: MODEL_RESPONSE_FAILED
+            - generic [ref=e46]: The model response failed before it completed.
+          - generic [ref=e47]:
+            - generic "Diagnostic actions" [ref=e48]:
+              - button "View" [ref=e49] [cursor=pointer]
+              - button "Copy" [ref=e50] [cursor=pointer]
+              - button "Ask AI" [ref=e51] [cursor=pointer]
+            - generic [ref=e52]: Diagnostic added to the composer for review.
+            - generic [ref=e53]: "Redacted harness diagnostic Harness: opencode Category: runtime Renderable output: no Tool calls: no Truncated fields: none Message: SAFE REDACTED DETAIL"
+          - generic [ref=e55]:
+            - button "Copy reply" [ref=e56] [cursor=pointer]:
+              - generic [ref=e57]: content_copy
+            - button "Text to speech" [disabled] [ref=e58]:
+              - generic [ref=e59]: text_to_speech
+            - button "Add bookmark" [ref=e60] [cursor=pointer]:
+              - generic [ref=e61]: bookmark
+            - button "Chat ID" [ref=e62] [cursor=pointer]:
+              - generic [ref=e63]: link_2
+      - generic [ref=e65]:
+        - textbox "Ask about wiki-viewer..." [ref=e69]: "MAIN DRAFT Please help me troubleshoot this failed model response using the redacted diagnostic below. Suggest safe next steps. Redacted harness diagnostic Harness: opencode Category: runtime Renderable output: no Tool calls: no Truncated fields: none Message: SAFE REDACTED DETAIL"
+        - generic [ref=e70]:
+          - generic [ref=e71]:
+            - button "Add" [ref=e73] [cursor=pointer]:
+              - generic [ref=e74]: add
+            - button "Mode" [ref=e76]: shield_lockMode
+          - generic [ref=e77]:
+            - 'button "Context usage: 0%" [ref=e79]'
+            - button "DeepSeek V4 Flash" [ref=e81]: DeepSeek V4 Flashkeyboard_arrow_down
+            - button "Voice input (click to open)" [ref=e83] [cursor=pointer]:
+              - generic [ref=e84]: mic
+            - button "Send message" [ref=e86]: arrow_upward
+  - generic [ref=e87]:
+    - tablist "wiki-viewer" [ref=e89]:
+      - tab "wiki-viewer" [ref=e90]: tabwiki-viewer
+      - tab "Side Chat" [selected] [ref=e91]: tabSide Chat
+      - button "Close Side Chat" [ref=e92]: close
+    - generic [ref=e93]:
+      - generic [ref=e94]:
+        - generic [ref=e95]:
+          - button "Show threads" [ref=e96]: dock_to_right
+          - button "New chat" [ref=e97]: edit_square
+        - button "More options" [ref=e99]: event_list
+      - generic [ref=e102]: Start a conversation
+      - generic [ref=e104]:
+        - textbox "Ask about chat-surface-component-material-side-component..." [active] [ref=e108]: SIDE DRAFT
+        - generic [ref=e109]:
+          - generic [ref=e110]:
+            - button "Add" [ref=e112] [cursor=pointer]:
+              - generic [ref=e113]: add
+            - button "Mode" [ref=e115]: shield_lockMode
+          - generic [ref=e116]:
+            - 'button "Context usage: 0%" [ref=e118]'
+            - button "DeepSeek V4 Flash" [ref=e120]: DeepSeek V4 Flashkeyboard_arrow_down
+            - button "Voice input (click to open)" [ref=e122] [cursor=pointer]:
+              - generic [ref=e123]: mic
+            - button "Send message" [ref=e125]: arrow_upward
+```

@@ -1,0 +1,30 @@
+{
+  "manifestDigest": "d5e5da40c915723ddfaded1581d47a9a9501f6639fbacb027267528d4b8fd955",
+  "changedCount": 69,
+  "preeditCount": 751,
+  "preeditMismatches": [],
+  "accepted05CCount": 27,
+  "accepted05CContinuityMismatches": [],
+  "frontendBaseline": {
+    "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx": {
+      "startAvailable": false,
+      "beforeMatchesStart": null
+    },
+    "fusion-studio-client/src/lib/ws/thread-handlers.ts": {
+      "startAvailable": false,
+      "beforeMatchesStart": null
+    },
+    "fusion-studio-client/src/lib/ws/thread-history.ts": {
+      "startAvailable": false,
+      "beforeMatchesStart": null
+    },
+    "fusion-studio-client/src/lib/ws/thread-markdown.ts": {
+      "startAvailable": false,
+      "beforeMatchesStart": null
+    },
+    "fusion-studio-client/src/types/websocket.ts": {
+      "startAvailable": false,
+      "beforeMatchesStart": null
+    }
+  }
+}

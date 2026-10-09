@@ -1,0 +1,198 @@
+[
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md",
+    "relative": "AGENTS.md",
+    "sha256": "67a88a237b1113daca286791354977f795b3791fd56d80aa192b7bbf0e2784ff",
+    "mode": 420,
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/preimages/AGENTS.md",
+    "bytes": 11206
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/session-contract.md",
+    "relative": "session-contract.md",
+    "sha256": "a6190c66ddd6f511b76b7c257c415c39f52aa3466246b324b4db05637bd3482c",
+    "mode": 420,
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/preimages/session-contract.md",
+    "bytes": 6564
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/record-templates.md",
+    "relative": "record-templates.md",
+    "sha256": "e97b95cfeeb9b6bc2b1667781904f87ca459d157eb71f6256f66ae1c8d9ac87c",
+    "mode": 420,
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/preimages/record-templates.md",
+    "bytes": 4082
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/mission-control.md",
+    "relative": "mission-control.md",
+    "sha256": "ddbbac98f1fba1a5598e1d81ae9b43976f44de0221c22fa4b773afec7e272b12",
+    "mode": 420,
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/preimages/mission-control.md",
+    "bytes": 10762
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+    "relative": "deployment.md",
+    "sha256": "bfbc5ac1aa30c10ef47deaa9cf6f942877d17b05456843942dbc0f848dd84b92",
+    "mode": 420,
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/preimages/deployment.md",
+    "bytes": 20300
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+    "relative": "skills-and-agents.md",
+    "sha256": "e1708e4552a0b7df52d41b6bf0e5bd3937f5a75d80d06f7c35e8055f46f54bb3",
+    "mode": 420,
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/preimages/skills-and-agents.md",
+    "bytes": 16945
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+    "relative": "handoff.md",
+    "sha256": "32aaf7037f0b0944d39722ae0e58915b870cc6812a66af161ff369d9a9a90e2c",
+    "mode": 420,
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/preimages/handoff.md",
+    "bytes": 33904
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+    "relative": "todo.md",
+    "sha256": "2553e8bd9abb3bf0e86577932e2bcae3f43ae0af3d31be4c2b2729fd66e2307b",
+    "mode": 420,
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/preimages/todo.md",
+    "bytes": 21858
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+    "relative": "registry.md",
+    "sha256": "660ccbf5773b920ee6e15c3b8422105c8090c1eafd79a9e071616770877bd542",
+    "mode": 420,
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/preimages/registry.md",
+    "bytes": 13369
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/index.json",
+    "relative": "index.json",
+    "sha256": "2ee83e813649dd06b5b0cd3c9b83b2bdb04c17aa2e67bda8432331cb91e4e889",
+    "mode": 420,
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/preimages/index.json",
+    "bytes": 38725
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/config.toml",
+    "relative": ".codex/config.toml",
+    "sha256": "755c39322d94bd17c50597ec90c18c743164425734725b97ddf4e5df6dfc78ee",
+    "mode": 420,
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/preimages/.codex/config.toml",
+    "bytes": 2605
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-review-and-merge.toml",
+    "relative": ".codex/agents/mc-review-and-merge.toml",
+    "sha256": "93c097025c51ba233b191bc3a7d5e5461848be4de4b98f587311b9be95428f63",
+    "mode": 420,
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/preimages/.codex/agents/mc-review-and-merge.toml",
+    "bytes": 1086
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-review-and-merge/SKILL.md",
+    "relative": ".agents/skills/mc-review-and-merge/SKILL.md",
+    "sha256": "87cead992de90ce053b9a739640ba2410c0ca2ef875d481483690198f966b43c",
+    "mode": 420,
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/preimages/.agents/skills/mc-review-and-merge/SKILL.md",
+    "bytes": 5972
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-review-and-merge/agents/openai.yaml",
+    "relative": ".agents/skills/mc-review-and-merge/agents/openai.yaml",
+    "sha256": "640034388851f2bc1fccb0c761c4c6ab0e8a24bc17918d8561df76981740a704",
+    "mode": 420,
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/preimages/.agents/skills/mc-review-and-merge/agents/openai.yaml",
+    "bytes": 369
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mission-control/SKILL.md",
+    "relative": ".agents/skills/mission-control/SKILL.md",
+    "sha256": "26715ee00d19611665e54e635f7a344a2c9e6a21a360865379ecf2ffd47d2265",
+    "mode": 420,
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/preimages/.agents/skills/mission-control/SKILL.md",
+    "bytes": 5040
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/monitor/SKILL.md",
+    "relative": ".agents/skills/monitor/SKILL.md",
+    "sha256": "a749c02ac0422bf3f7a3207fb93e7ff477b966667843c50ae73f36745e2be4e7",
+    "mode": 420,
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/preimages/.agents/skills/monitor/SKILL.md",
+    "bytes": 5489
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/status/references/report-format.md",
+    "relative": ".agents/skills/status/references/report-format.md",
+    "sha256": "e87bffd6dd656bd94334ef9d6365aa0b6e266e4b3d8a7f62b2701bde74e48480",
+    "mode": 420,
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/preimages/.agents/skills/status/references/report-format.md",
+    "bytes": 3038
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-implementation-supervisor/SKILL.md",
+    "relative": ".agents/skills/mc-roadmap-implementation-supervisor/SKILL.md",
+    "sha256": "f514a07a4cc3d12eb2a2a1fef76ca76821bc32c13f97ba755f2e090a2cd6f4cd",
+    "mode": 420,
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/preimages/.agents/skills/mc-roadmap-implementation-supervisor/SKILL.md",
+    "bytes": 17124
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+    "relative": ".agents/skills/mc-commit-supervisor/references/workflow.md",
+    "sha256": "77f805037ed1384e3a387cb246d95df95fc2e0858755a63e95228d684403c6a7",
+    "mode": 420,
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/preimages/.agents/skills/mc-commit-supervisor/references/workflow.md",
+    "bytes": 20651
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/job-template.md",
+    "relative": ".agents/skills/mc-commit-supervisor/references/job-template.md",
+    "sha256": "2631f5ba8734a764ca3a4c9bb11b4bf1a8375b81331c259a9f5d35ceab6de5a3",
+    "mode": 420,
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/preimages/.agents/skills/mc-commit-supervisor/references/job-template.md",
+    "bytes": 6481
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md",
+    "relative": ".agents/skills/mc-commit-supervisor/SKILL.md",
+    "absent": true
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/agents/openai.yaml",
+    "relative": ".agents/skills/mc-commit-supervisor/agents/openai.yaml",
+    "absent": true
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-supervisor.toml",
+    "relative": ".codex/agents/mc-commit-supervisor.toml",
+    "absent": true
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/owner-publication.md",
+    "relative": ".agents/skills/mc-commit-supervisor/references/owner-publication.md",
+    "absent": true
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+    "relative": "review-and-merge-design.md",
+    "sha256": "5694da42dabb5e5ca14f95fb35f559c8b2e54c6f0f287db57cb71372de9fe79f",
+    "mode": 420,
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/preimages/review-and-merge-design.md",
+    "bytes": 32855
+  },
+  {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+    "relative": "review-and-merge-handoff.md",
+    "sha256": "86041f2634b107fc85f7c15d0f397b59ad8fb0b648ae9990a7b7e592977fa22e",
+    "mode": 420,
+    "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S5/preimages/review-and-merge-handoff.md",
+    "bytes": 15397
+  }
+]

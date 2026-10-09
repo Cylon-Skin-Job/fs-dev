@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-04T13:49:05.446631+00:00",
+  "actor": "/root/s6_supervisor_intent_1",
+  "read_only": true,
+  "repositories": {
+    "source": {
+      "root": "/Users/rccurtrightjr./projects/fs-dev",
+      "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+      "target_full_id": "d15792920731f85e45b743519d4af2b807d95a9c",
+      "branch": "agent/exact-workspace-paths",
+      "refs_sha256": "2137fda44918eee605a707a4931a0f12f57125dbab104179ca490556d5e74976",
+      "index_sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+      "source_previous_index_equal": true,
+      "source_previous_refs_equal": true,
+      "remote_config": "gitlab\thttps://gitlab.com/m1-build-server/fs-dev.git (fetch)\ngitlab\thttps://gitlab.com/m1-build-server/fs-dev.git (push)\norigin\thttps://github.com/Cylon-Skin-Job/fs-dev.git (fetch)\norigin\thttps://github.com/Cylon-Skin-Job/fs-dev.git (push)\n"
+    },
+    "candidate": {
+      "root": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+      "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+      "target_full_id": "d15792920731f85e45b743519d4af2b807d95a9c",
+      "branch": null,
+      "refs_sha256": "9d16de57b401c2857b4e01e956037365f3ca9669a716562248c6be8faf58472d",
+      "index_sha256": "f60a305e9691ad6ecac0d696c78dfc5bc779a73004fce64b0e5f955b76eaecbb",
+      "source_previous_index_equal": true,
+      "source_previous_refs_equal": true,
+      "remote_config": "origin\t/Users/rccurtrightjr./projects/fs-dev (fetch)\norigin\t/Users/rccurtrightjr./projects/fs-dev (push)\n"
+    }
+  }
+}

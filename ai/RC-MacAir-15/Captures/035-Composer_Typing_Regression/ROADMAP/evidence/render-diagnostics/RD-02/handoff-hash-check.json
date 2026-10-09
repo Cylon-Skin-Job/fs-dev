@@ -1,0 +1,17 @@
+{
+  "changed-manifest.json": {
+    "count": 30,
+    "mismatches": [],
+    "manifestSha256": "22bada61001ca8f9292902e8897227e2a508904e46ee96b138ac514106b3795d"
+  },
+  "source-manifest.json": {
+    "count": 1551,
+    "mismatches": [],
+    "manifestSha256": "34b1a0993cf19e2f9147cade370be85328d6d2c6e9ca47db7303bbc511f4de2d"
+  },
+  "build-manifest.json": {
+    "count": 191,
+    "mismatches": [],
+    "manifestSha256": "7cfba338fb407ad91307470b95a1e6ea7b209c9afe36f425132e1148a1e62b73"
+  }
+}

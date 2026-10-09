@@ -1,0 +1,25 @@
+{
+  "actor": "/root",
+  "argv": [
+    "/opt/homebrew/bin/node",
+    "--test",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "started_at": "2026-10-05T03:21:37.084342+00:00",
+  "finished_at": "2026-10-05T03:22:04.047103+00:00",
+  "exit_code": 0,
+  "stdout": "\u2714 canonical CLI preserves default DB; explicit and inherited profiles select server-data (254.975833ms)\n\u2714 CLI rejects unsafe/Alpha/ambiguous arguments without profile changes (570.281125ms)\n\u2714 launch environment preserves default DB mode and resolves selected profile/machine/TMPDIR (8.996542ms)\n\u2714 selected-only tree includes children and preserves same-checkout other profile and Alpha (7.244042ms)\n\u2714 foreign checkout/shared profile, wrong machine, orphan renderer, mode collision refuse before effects (7.041ms)\n\u2714 runtime identity rejects wrong-path/profile/server/renderer instead of certifying a port (8.204291ms)\n\u2714 exact renderer profile avoids Alpha prefix collision and CLI profile overrides absent environment (7.364291ms)\n\u2714 read-only real-system selector identifies default app and excludes Alpha process tree (409.5015ms)\n\u2714 renderer connection oracle requires initialized shell and sustained actual connected state (0.20675ms)\n\u2714 injected post-launch failures withhold readiness, preserve DBs/unrelated caches, release lock (11.288583ms)\n\u2714 borrowed Electron runtime and linked runtime storage refuse without effects (4.829709ms)\n\u2714 linked profile database storage refuses before build/profile/cache mutation (4.883792ms)\n\u2714 actual disposable Node tree ownership/termination preserves another live profile (19303.81625ms)\n\u2714 PID reuse refuses all signals and ps environment parser retains spaced profile (0.160084ms)\n\u2714 inventory disappearance is reobserved; live errors and PID/command changes refuse all stop signals (0.7075ms)\n\u2714 PID reuse after SIGTERM never signals the replacement process (0.100625ms)\n\u2714 actual disposable exit races at lsof/env and after SIGTERM complete cleanup and preserve another profile (6226.894709ms)\n\u2139 {\"kind\":\"ACTUAL_DISPOSABLE_PROCESS_RACES\",\"schedulingAdapter\":\"exit only selected fixture at real OS inspection boundary\",\"observations\":[{\"boundary\":\"lsof\",\"pid\":79317,\"terminalState\":\"Z\"},{\"boundary\":\"lsof\",\"cmd\":\"lsof\",\"status\":1,\"stdout\":\"\",\"stderr\":\"\"},{\"boundary\":\"lsof\",\"signals\":[],\"selectedRemaining\":[],\"unrelatedPid\":79316,\"unrelatedAlive\":true},{\"boundary\":\"env\",\"pid\":82311,\"terminalState\":\"Z\"},{\"boundary\":\"env\",\"signals\":[],\"selectedRemaining\":[],\"unrelatedPid\":79316,\"unrelatedAlive\":true},{\"boundary\":\"after-SIGTERM\",\"pid\":85311,\"terminalState\":\"Z\"},{\"boundary\":\"after-SIGTERM\",\"cmd\":\"lsof\",\"status\":1,\"stdout\":\"\",\"stderr\":\"\"},{\"boundary\":\"after-SIGTERM\",\"signals\":[[85311,\"SIGTERM\"]],\"selectedRemaining\":[],\"unrelatedPid\":79316,\"unrelatedAlive\":true}]}\n\u2139 tests 17\n\u2139 suites 0\n\u2139 pass 17\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 26908.470875\n",
+  "stderr": "",
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "FUSION_RESTART_TEST_EVIDENCE": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite/node-fixtures"
+  },
+  "executable": {
+    "exists": true,
+    "kind": "symlink",
+    "mode": "0o120755",
+    "sha256": "344397e6aa48976f46b3748aef30b8536f2fc05ba5888826b69923c84ca6d4c3"
+  }
+}

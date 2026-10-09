@@ -19,7 +19,15 @@ metadata:
     - fusion-studio-client/src/screenshots/chatScreenshotCapture.ts
     - fusion-studio-client/src/hooks/useFileAutocomplete.ts
     - fusion-studio-client/src/lib/chat-file-links/file-autocomplete-match.ts
-  last-modified: "2026-10-06T22:15:19Z"
+    - fusion-studio-client/src/lib/chat-action-controller.ts
+    - fusion-studio-client/src/lib/chat-action.ts
+    - fusion-studio-client/src/lib/chat-material-target.ts
+    - fusion-studio-client/src/lib/chat-material-commit.ts
+    - fusion-studio-client/src/state/slices/mountedChatState.ts
+    - fusion-studio-client/src/components/chat/useMountedChatBinding.ts
+    - fusion-studio-client/src/components/chat/useComposerMaterialSource.ts
+    - fusion-studio-client/src/lib/chat-material-source.ts
+  last-modified: "2026-10-07T20:18:16Z"
 ---
 
 The composer is the user input and turn control surface. `ChatAreaFooter.tsx` presents the input and Send/Stop/finalization states. `useChatSessionHost.ts` composes the session identity and presentation; `useChatSessionActions.ts` supplies exact-session send, Stop, attachment and diagnostic Ask AI actions, and `ConnectedChatComposer.tsx` subscribes to the addressed draft, attachments and submission state; `chatComposerDraftStore.ts` and `chatFileLinkStore.ts` retain their respective owner-keyed data.
@@ -46,9 +54,17 @@ attachments. A late acknowledgement for thread A cannot mutate thread B.
 Pending acceptance survives an owning chat surface's temporary unmount/remount,
 including a side-chat content-tab switch, because the exact session owns it.
 
-The Add menu's **Take screenshot** action snapshots this composer's exact workspace, view, Thread group, chat session and mounted-surface lifetime before its first await. The view's Main Chat follows the selected Thread group and current primary session; an explicit Main content component keeps its hydrated session independently of the outer rail. A Side Chat keeps its own session and open service-managed placement when Main Chat selection changes.
+## Prepared material ownership
 
-Ownership is checked before capture, after native capture and after the correlated saved-PNG response. A changed destination workspace, owning view or chat session, an inactive or unmounted composer, or a closed Side Chat placement cancels attachment with a fixed safe status. Changing the selected Thread group also cancels a view-bound Main capture. Content components retained in a hidden view are cancelled too; returning to the same view or session does not revive that old capture. If saving has already begun, its PNG can remain in the gallery, but no attachment is added to another chat. The global header camera has its own Main Chat/Legacy resolution; [Screenshot Capture](../../../004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md#in-app-captures-and-attachments) owns that behavior and the separate gallery and workspace-preview paths.
+Global **Send to Chat** and the header camera synchronously capture the last actually active, open, mounted Main or Side composer in the foreground view before preparing their source. A resource's panel and content root select the source; they do not select the destination. Missing, stale, closed or unhydrated activity produces unavailable feedback without falling back to Main, Legacy or `currentThreadId`.
+
+Every Add-menu camera, saved screenshot, clipboard selected/top item, recent selected/top file and microphone operation captures its own committed composer binding before preparation. Diagnostic **Ask AI** captures that same owner before retrieval and appends its validated redacted report. The existing Chat action consumer validates the immutable workspace/view/group/session/surface tuple, mount generation, workspace binding and exact open Side placement, then commits prepared text or one attachment synchronously through the existing draft or attachment store. These material operations only compose for review; they do not Send or create a chat.
+
+Another chat or view gaining focus does not cancel an operation whose originating composer remains mounted, hydrated and bound. Main content components and open Side placements keep their exact sessions independently of unrelated outer Main selection. Actual rebind, unmount, closure, session or hydration loss, workspace binding retirement, or Side placement replacement invalidates the operation permanently; returning with the same strings cannot revive an older generation. View-bound Main selection changes its actual binding and cancels older work. Pending prompt acceptance blocks insertion; an unknown outcome allows composition but still blocks another Send.
+
+Cursor replacement uses the latest exact-owner draft and current selection only when its live binding, value, revision and offsets agree. Intervening typing is retained; stale selection safely appends prepared text. Presentation restores caret only through that live owner and never steals focus from another active editor. Duplicate mounts share session drafts/pills but retain independent menu, selection and lifetime state. Existing eligible composer and screenshot warming targets the captured thread; warming remains separate from local insertion and server acceptance. Global resource and diagnostic insertion add no warm path.
+
+Camera capture/save remains source-owned. It checks shared validity after native capture before saving, then uses the correlated saved absolute path at shared commit. Cancellation before save sends no save request; cancellation after save may leave a gallery PNG without any pill. [Screenshot Capture](../../../004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md#in-app-captures-and-attachments) describes correlation and the separate gallery/preview paths.
 
 ## Diagnostic Ask AI
 

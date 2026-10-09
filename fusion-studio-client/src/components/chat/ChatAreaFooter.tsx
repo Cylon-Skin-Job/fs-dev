@@ -17,9 +17,9 @@ import { ChatComposerAddMenu } from './ChatComposerAddMenu';
 import { ChatComposerModeMenu } from './ChatComposerModeMenu';
 import { ChatComposerModelMenu } from './ChatComposerModelMenu';
 import { ChatComposerContextMeter } from './ChatComposerContextMeter';
+import type { BeginChatMaterialSource } from '../../lib/chat-material-source';
 import type { ChatLinkAttachment } from '../../lib/chat-file-links/file-link-types';
 import type { TokenUsage } from '../../types';
-import type { ScreenshotAttachmentOwner } from '../../screenshots/chatScreenshotCapture';
 import type { ChatSurfaceInputHandle, ChatSurfaceModelSelection } from './chatSurfaceContract';
 
 export interface ChatAreaFooterProps {
@@ -38,8 +38,7 @@ export interface ChatAreaFooterProps {
   submissionFeedback: string;
   canCheckSubmissionStatus: boolean;
   onCheckSubmissionStatus: () => void;
-  onInsertText: (text: string) => void;
-  onAddAttachment: (attachment: ChatLinkAttachment) => void;
+  beginMaterial: BeginChatMaterialSource;
   onWarmIntent: () => void;
   contextUsage: number;
   tokenUsage: TokenUsage | null;
@@ -50,7 +49,7 @@ export interface ChatAreaFooterProps {
   onComposerDraftChange: (text: string) => void;
   modelSelection: ChatSurfaceModelSelection;
   onModelSelectionChange: (patch: { modelId?: string | null; variant?: string | null }) => void;
-  screenshotOwner: ScreenshotAttachmentOwner | null;
+  onTakeScreenshot: () => void;
 }
 
 export function ChatAreaFooter({
@@ -69,8 +68,7 @@ export function ChatAreaFooter({
   submissionFeedback,
   canCheckSubmissionStatus,
   onCheckSubmissionStatus,
-  onInsertText,
-  onAddAttachment,
+  beginMaterial,
   onWarmIntent,
   contextUsage,
   tokenUsage,
@@ -81,7 +79,7 @@ export function ChatAreaFooter({
   onComposerDraftChange,
   modelSelection,
   onModelSelectionChange,
-  screenshotOwner,
+  onTakeScreenshot,
 }: ChatAreaFooterProps) {
   return (
     <div
@@ -110,9 +108,8 @@ export function ChatAreaFooter({
         <div className="rv-chat-composer-meta-row">
           <div className="rv-chat-composer-tools-left">
             <ChatComposerAddMenu
-              onAttach={onAddAttachment}
-              onInsert={onInsertText}
-              screenshotOwner={screenshotOwner}
+              beginMaterial={beginMaterial}
+              onTakeScreenshot={onTakeScreenshot}
             />
             <ChatComposerModeMenu />
           </div>
@@ -124,7 +121,7 @@ export function ChatAreaFooter({
               selection={modelSelection}
               onChangeSelection={onModelSelectionChange}
             />
-            <MicTrigger onInsert={onInsertText} />
+            <MicTrigger beginMaterial={beginMaterial} />
             {isTurnFinalizing ? (
               <div
                 className="rv-chat-completing-indicator"

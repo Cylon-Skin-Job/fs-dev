@@ -1,0 +1,39 @@
+{
+  "runId": "server-focused-1789986204790-9bcf5a3c",
+  "startedAt": "2026-09-21T10:23:24.791Z",
+  "token": "chat-architecture-owner-server-focused-1789986204790-9bcf5a3c",
+  "command": [
+    "npm",
+    "test",
+    "--",
+    "--runInBand",
+    "--runTestsByPath",
+    "test/ws/prompt-canonical-route.integration.test.js",
+    "test/ws/privileged-thread-public-route.integration.test.js",
+    "test/thread/thread-runtime-controller.test.js",
+    "test/thread/thread-activation-lifecycle.test.js",
+    "test/thread/thread-crud-active-turn-reconnect.test.js",
+    "test/thread/thread-group-lifecycle.test.js",
+    "test/thread/thread-group-delete-recovery.test.js",
+    "test/thread/thread-manager-chatlog-sync.test.js",
+    "test/ws/thread-group-move-side-chat.integration.test.js",
+    "test/ws/thread-group-worksurface-cleanup.integration.test.js"
+  ],
+  "testPaths": [
+    "test/ws/prompt-canonical-route.integration.test.js",
+    "test/ws/privileged-thread-public-route.integration.test.js",
+    "test/thread/thread-runtime-controller.test.js",
+    "test/thread/thread-activation-lifecycle.test.js",
+    "test/thread/thread-crud-active-turn-reconnect.test.js",
+    "test/thread/thread-group-lifecycle.test.js",
+    "test/thread/thread-group-delete-recovery.test.js",
+    "test/thread/thread-manager-chatlog-sync.test.js",
+    "test/ws/thread-group-move-side-chat.integration.test.js",
+    "test/ws/thread-group-worksurface-cleanup.integration.test.js"
+  ],
+  "stagedServer": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/server-focused-1789986204790-9bcf5a3c-Kwcqmq/stage/fusion-studio-server",
+  "profileRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/server-focused-1789986204790-9bcf5a3c-Kwcqmq/profile",
+  "workspaceRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/server-focused-1789986204790-9bcf5a3c-Kwcqmq/workspace",
+  "portPolicy": "PORT=0, no server listener; port 3001 refused",
+  "nativePretest": "npm test invokes build:native-observer"
+}

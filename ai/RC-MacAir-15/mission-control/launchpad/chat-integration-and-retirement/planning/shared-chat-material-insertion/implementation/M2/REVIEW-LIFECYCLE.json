@@ -1,0 +1,50 @@
+{
+  "passes": [
+    {
+      "gate": "M2 builder-owned",
+      "reviewer": "/root/m2_builder/builder_review_01",
+      "status": "terminal REVIEW_COMPLETE / findings",
+      "started_recorded": "2026-10-07T16:53:51.052295+00:00",
+      "fork_turns": "none",
+      "agent_type": "clean-room-reviewer",
+      "model_effort": "inherited invoking root; no override",
+      "write_policy": "read-only; no delegation/build/test/Git/app mutations",
+      "prior_reviewer_audit": "No prior M2 reviewer; list_agents before spawn showed only terminal M1 reviewer/builders and running parent/builder",
+      "close_agent": "unavailable in exposed runtime tools",
+      "packet": [
+        "SOURCE-SEAL.json",
+        "M2-slice.patch",
+        "BUILDER-REPORT.md",
+        "DEVIATIONS.json",
+        "checks/build-05.json",
+        "checks/renderer-08.json",
+        "PRELOAD-RECONCILIATION.json",
+        "BUILD-OUTPUT.json",
+        "CHECK-LIFECYCLE.json"
+      ],
+      "ended_recorded": "2026-10-07T17:00:21.671328+00:00",
+      "raw_report": "BUILDER-REVIEW-01.md",
+      "raw_report_sha256": "be8498dd365a1801b9f726240445db4fdeefb15231ef9d8ca89fece456b3014a",
+      "finding": "Direct Ask AI loses diagnostic source-unavailable state; validated independently and repair authorized within original M2 contract",
+      "closure_attempt": "close_agent absent; terminal result delivered, no active conflicting reviewer"
+    },
+    {
+      "gate": "M2 builder-owned",
+      "reviewer": "/root/m2_builder/builder_review_02",
+      "status": "terminal REVIEW_COMPLETE / CLEAN",
+      "started_recorded": "2026-10-07T17:06:29.944764+00:00",
+      "fork_turns": "none",
+      "agent_type": "clean-room-reviewer",
+      "model_effort": "inherited root; no override",
+      "write_policy": "read-only; no delegation/build/test/Git/app mutations",
+      "prior_reviewer_audit": "list_agents confirmed reviewer01 completed before spawn; no overlapping writer/reviewer repair",
+      "close_agent": "unavailable",
+      "packet": "Current raw sources/authority/build-11/renderer-12/structural-13/deviations; no prior reviewer conclusions/history",
+      "ended_recorded": "2026-10-07T17:15:24.203956+00:00",
+      "raw_report": "BUILDER-REVIEW-02.md",
+      "raw_report_sha256": "8518882a3842e453e007a2b76f401be0896e55ec475d7b17e3fc648e5d022d68",
+      "closure_attempt": "close_agent unavailable in exposed runtime; terminal final result received, no active conflicting reviewer"
+    }
+  ],
+  "terminal_gate": "CLEAN, stop after first materially clean pass"
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "MC Roadmap Candidate Author"
+  short_description: "Author executable SPEC and roadmap candidates"
+  default_prompt: "Use $mc-roadmap-author to produce the assigned executable candidate with source traceability, dependency and impact analysis, verification and a byte manifest."

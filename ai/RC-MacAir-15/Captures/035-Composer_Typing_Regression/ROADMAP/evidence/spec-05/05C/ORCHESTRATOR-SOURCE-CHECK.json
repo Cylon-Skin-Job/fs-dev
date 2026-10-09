@@ -1,0 +1,127 @@
+{
+  "currentSourceFiles": 27,
+  "mismatches": [],
+  "sourceManifestHash": "b4c05e2456693fb809e62ed1bcf66afe37b893932bfe9a35f221973a4a99af50",
+  "prerequisite05B": [
+    {
+      "path": "fusion-studio-client/e2e/chat-architecture/run.mjs",
+      "source": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05C/preedit/fusion-studio-client/e2e/chat-architecture/run.mjs",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-architecture/server-focused-regressions.mjs",
+      "source": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05C/preedit/fusion-studio-client/e2e/chat-architecture/server-focused-regressions.mjs",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-server/lib/thread-groups/placement-delivery.js",
+      "source": "fusion-studio-server/lib/thread-groups/placement-delivery.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-server/lib/thread-groups/repository.js",
+      "source": "fusion-studio-server/lib/thread-groups/repository.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-server/lib/thread-groups/session-transactions.js",
+      "source": "fusion-studio-server/lib/thread-groups/session-transactions.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/HistoryFile.js",
+      "source": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05C/preedit/fusion-studio-server/lib/thread/HistoryFile.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/ThreadManager.js",
+      "source": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05C/preedit/fusion-studio-server/lib/thread/ThreadManager.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/chatlog-mirror.js",
+      "source": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05C/preedit/fusion-studio-server/lib/thread/chatlog-mirror.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/mirror-journal.js",
+      "source": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05C/preedit/fusion-studio-server/lib/thread/mirror-journal.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/session-lifecycle.js",
+      "source": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05C/preedit/fusion-studio-server/lib/thread/session-lifecycle.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/thread-runtime-automation.js",
+      "source": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05C/preedit/fusion-studio-server/lib/thread/thread-runtime-automation.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/thread-runtime-controller.js",
+      "source": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05C/preedit/fusion-studio-server/lib/thread/thread-runtime-controller.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-server/lib/thread/thread-runtime-manager.js",
+      "source": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05C/preedit/fusion-studio-server/lib/thread/thread-runtime-manager.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-server/lib/ws/thread-ws-handlers.js",
+      "source": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05C/preedit/fusion-studio-server/lib/ws/thread-ws-handlers.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-server/test/thread/thread-activation-lifecycle.test.js",
+      "source": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05C/preedit/fusion-studio-server/test/thread/thread-activation-lifecycle.test.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-server/test/thread/thread-group-delete-recovery.test.js",
+      "source": "fusion-studio-server/test/thread/thread-group-delete-recovery.test.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-server/test/thread/thread-manager-chatlog-sync.test.js",
+      "source": "fusion-studio-server/test/thread/thread-manager-chatlog-sync.test.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-server/test/thread/thread-runtime-automation.test.js",
+      "source": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05C/preedit/fusion-studio-server/test/thread/thread-runtime-automation.test.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-server/test/thread/thread-runtime-controller.test.js",
+      "source": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05C/preedit/fusion-studio-server/test/thread/thread-runtime-controller.test.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-server/test/ws/privileged-thread-handlers.test.js",
+      "source": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05C/preedit/fusion-studio-server/test/ws/privileged-thread-handlers.test.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-server/test/ws/privileged-thread-public-route.integration.test.js",
+      "source": "ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-05/05C/preedit/fusion-studio-server/test/ws/privileged-thread-public-route.integration.test.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-server/test/ws/prompt-canonical-route.integration.test.js",
+      "source": "fusion-studio-server/test/ws/prompt-canonical-route.integration.test.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-server/test/ws/thread-group-move-side-chat.integration.test.js",
+      "source": "fusion-studio-server/test/ws/thread-group-move-side-chat.integration.test.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-server/test/ws/thread-group-worksurface-cleanup.integration.test.js",
+      "source": "fusion-studio-server/test/ws/thread-group-worksurface-cleanup.integration.test.js",
+      "matches": true
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "phase": "initial",
+  "candidate": {
+    "target": "target-1",
+    "sources": [
+      "source-1"
+    ],
+    "owned": {
+      "code.py": {
+        "worktree": "bad",
+        "index": "base",
+        "mode": "100644"
+      }
+    },
+    "configuration": {
+      "profile": "disposable"
+    },
+    "fixtures": {
+      "oracle": "correct"
+    },
+    "authority": {
+      "SPEC": "approved"
+    },
+    "preparation": "replay-owned-bytes"
+  },
+  "orchestrator_id": "fixture-manager",
+  "participants": [
+    "fixture-writer"
+  ],
+  "required_checks": [
+    "behavior"
+  ],
+  "evidence": [
+    {
+      "id": "behavior",
+      "dependencies": {
+        "target": "target-1",
+        "sources": [
+          "source-1"
+        ],
+        "owned": {
+          "code.py": {
+            "worktree": "bad",
+            "index": "base",
+            "mode": "100644"
+          }
+        },
+        "configuration": {
+          "profile": "disposable"
+        },
+        "fixtures": {
+          "oracle": "correct"
+        },
+        "authority": {
+          "SPEC": "approved"
+        },
+        "preparation": "replay-owned-bytes"
+      },
+      "raw_path": "fixture/behavior.log",
+      "result": "pass"
+    }
+  ],
+  "reviews": [
+    {
+      "identity": "fixture-reviewer-1",
+      "terminal": true,
+      "clean_room": true,
+      "read_only": true,
+      "root_inherited": true,
+      "dependencies": {
+        "target": "target-1",
+        "sources": [
+          "source-1"
+        ],
+        "owned": {
+          "code.py": {
+            "worktree": "bad",
+            "index": "base",
+            "mode": "100644"
+          }
+        },
+        "configuration": {
+          "profile": "disposable"
+        },
+        "fixtures": {
+          "oracle": "correct"
+        },
+        "authority": {
+          "SPEC": "approved"
+        },
+        "preparation": "replay-owned-bytes"
+      },
+      "raw_path": "fixture/review-1.md",
+      "lenses": [
+        "Behavior & Verification",
+        "Standards Compliance",
+        "Integrations & Dependencies",
+        "Forward Compatibility",
+        "Wiki Impact"
+      ],
+      "result": "clean",
+      "findings": []
+    }
+  ],
+  "findings": [],
+  "dispositions": {},
+  "assigned_paths": [
+    "code.py"
+  ],
+  "issue": {
+    "kind": "intent",
+    "question": "Which accepted provider owns this missing result?",
+    "checked_sources": [
+      "fixture/decisions.md",
+      "fixture/proposals.md",
+      "history unavailable"
+    ],
+    "affected_behavior": "consumer lacks required value",
+    "provider": "provider-1",
+    "consumer": "consumer-1",
+    "evidence": [
+      "fixture/repro.log"
+    ],
+    "unknowns": [
+      "provider release"
+    ],
+    "resolver": "owner/provider maintainer",
+    "route": "bounded requirement investigation",
+    "release_condition": "accepted provider revision and consumer readback pass",
+    "preserved_progress": [
+      "unrelated checked seam"
+    ],
+    "next_safe_action": "continue independent checks"
+  }
+}

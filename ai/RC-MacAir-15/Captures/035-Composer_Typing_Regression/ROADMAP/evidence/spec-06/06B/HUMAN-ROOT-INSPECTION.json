@@ -1,0 +1,37 @@
+{
+  "at": "2026-09-27T06:41:30.259287+00:00",
+  "root": "/Users/rccurtrightjr./projects/fs-dev",
+  "manifests": {
+    "source": {
+      "count": 1964,
+      "sha256": "4e4aab06f4da76e16aa50e02bffd8a3b98d8472d28528559735477ab6b88e9c4",
+      "mismatches": []
+    },
+    "build": {
+      "count": 200,
+      "sha256": "b070d633863382e48ea2f6d677a92cfe65b9a4dea79caa87975711c109c70b03",
+      "mismatches": []
+    },
+    "config": {
+      "count": 2,
+      "sha256": "7da4458133f72ba943d05562750c30b8237cb48c53ec38fc3fb5956376196510",
+      "mismatches": []
+    }
+  },
+  "sourceDelta": [
+    "fusion-studio-client/e2e/chat-architecture/human-session-launch.mjs",
+    "fusion-studio-client/e2e/chat-architecture/human-session-observer.mjs",
+    "fusion-studio-client/e2e/chat-architecture/human-session-ownership.mjs",
+    "fusion-studio-client/e2e/chat-architecture/human-session-recording.mjs",
+    "fusion-studio-client/e2e/chat-architecture/human-session.mjs",
+    "fusion-studio-client/e2e/chat-architecture/human-session.test.mjs",
+    "fusion-studio-client/e2e/human-session-observer.spec.ts"
+  ],
+  "existingB20SourceChanged": [],
+  "checks": {
+    "node": "ORCHESTRATOR-06B-human-unit.log: 7 pass",
+    "browser": "ORCHESTRATOR-06B-human-browser.log: 3 pass",
+    "build": "reused unchanged B20 build; 200 hashes independently verified"
+  },
+  "runtimeLaunched": false
+}

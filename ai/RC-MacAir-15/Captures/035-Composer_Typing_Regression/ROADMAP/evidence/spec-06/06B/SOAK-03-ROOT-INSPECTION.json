@@ -1,0 +1,158 @@
+{
+  "at": "2026-09-27T02:35:42.053322+00:00",
+  "runId": "chat-arch-1790476363440-1da2c8ab45",
+  "ownedRootExists": false,
+  "checkedRecordedPids": [
+    46201,
+    46213,
+    47255
+  ],
+  "liveRecordedPids": [],
+  "caseFailure": {
+    "message": "short-idle-1: rAF latency\n+ actual - expected\n\n+ [\n+   'rAF latency'\n+ ]\n- []\n",
+    "stack": "AssertionError [ERR_ASSERTION]: short-idle-1: rAF latency\n+ actual - expected\n\n+ [\n+   'rAF latency'\n+ ]\n- []\n\n    at measure (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/soak-electron.mjs:90:47)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/soak-electron.mjs:144:24",
+    "dom": {
+      "body": "AI source\nLocal: RC-MacAir-15\narrow_drop_down\nConnected\nchevron_left\nSustained Input Fixture\nchevron_right\ncontrol_camera\nfirst_page\nlast_page\ndiscover_tune\nhub\nmacOS Connectors\nmail\nApple Mail\ncalendar_month\nApple Calendar\nnote_stack\nApple Notes\ntask_alt\nApple Reminders\nClose\nopen_run\ncode_blocks\nfull_coverage\nbusiness_messages\nrobot_2\ndescription\nsettings\ndock_to_right\nActive Threads\nArchive\nedit_square\nNew chat\n2026-09-26T19-32-50\nmore_vert\n0 msgs \u00b7 just now\n2026-09-26T19-32-49\nmore_vert\n0 msgs \u00b7 just now\nevent_list\nSynthetic user request 1\nDeterministic exchange 1\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t1\nconst exchange = 1;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 1\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 2\nDeterministic exchange 2\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t2\nconst exchange = 2;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 2\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 3\nDeterministic exchange 3\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t3\nconst exchange = 3;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 3\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 4\nDeterministic exchange 4\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t4\nconst exchange = 4;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 4\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 5\nDeterministic exchange 5\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t5\nconst exchange = 5;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 5\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 6\nDeterministic exchange 6\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t6\nconst exchange = 6;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 6\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 7\nDeterministic exchange 7\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t7\nconst exchange = 7;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 7\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 8\nDeterministic exchange 8\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t8\nconst exchange = 8;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 8\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 9\nDeterministic exchange 9\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t9\nconst exchange = 9;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 9\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 10\nDeterministic exchange 10\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t10\nconst exchange = 10;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 10\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 11\nDeterministic exchange 11\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t11\nconst exchange = 11;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 11\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 12\nDeterministic exchange 12\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t12\nconst exchange = 12;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 12\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 13\nDeterministic exchange 13\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t13\nconst exchange = 13;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 13\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 14\nDeterministic exchange 14\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t14\nconst exchange = 14;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 14\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 15\nDeterministic exchange 15\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t15\nconst exchange = 15;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 15\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 16\nDeterministic exchange 16\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t16\nconst exchange = 16;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 16\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 17\nDeterministic exchange 17\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t17\nconst exchange = 17;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 17\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 18\nDeterministic exchange 18\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t18\nconst exchange = 18;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 18\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 19\nDeterministic exchange 19\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t19\nconst exchange = 19;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 19\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 20\nDeterministic exchange 20\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t20\nconst exchange = 20;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 20\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 21\nDeterministic exchange 21\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t21\nconst exchange = 21;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 21\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 22\nDeterministic exchange 22\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t22\nconst exchange = 22;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 22\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 23\nDeterministic exchange 23\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t23\nconst exchange = 23;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 23\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 24\nDeterministic exchange 24\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t24\nconst exchange = 24;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 24\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 25\nDeterministic exchange 25\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t25\nconst exchange = 25;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 25\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 26\nDeterministic exchange 26\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t26\nconst exchange = 26;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 26\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 27\nDeterministic exchange 27\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t27\nconst exchange = 27;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 27\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nSynthetic user request 28\nDeterministic exchange 28\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t28\nconst exchange = 28;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 28\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 29\nDeterministic exchange 29\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t29\nconst exchange = 29;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 29\ncontent_copy\ntext_to_speech\nbookmark\nlink_2\nSynthetic user request 30\nDeterministic exchange 30\n\nParagraph text used only by the synthetic architecture workload.\n\nfirst list item\nsecond list item\ncolumn\tvalue\nexchange\t30\nconst exchange = 30;\n\ndescription\nReadarrow_drop_down\ncollapsed deterministic tool result 30\ncontent_copy\ntext_to_speech\nbookmark_star\nlink_2\nadd\nshield_lock\nDeepSeek V4 Flash\nkeyboard_arrow_down\nmic\narrow_upward\nopen_run\nCAPTURE\nclose\nadd\nCapture\nchevron_right\nDocuments and Artifacts\nsearch\nDocument and Artifact Capture\nHome\nRecent\nStarred\nArchive\nFIXTURE\n1\nkid_star\n\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat architecture workload; no private content.\nai/RC-MacAir-15/Captures/001-Fixture/PAGE.md :: deterministic Fusion Studio chat arch",
+      "surfaces": [
+        {
+          "thread": "2026-09-26T19-32-49-980",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        }
+      ]
+    }
+  },
+  "runResult": {
+    "runId": "chat-arch-1790476363440-1da2c8ab45",
+    "status": "failed",
+    "results": [
+      {
+        "id": "R9-45-MINUTE-SOAK",
+        "code": 1,
+        "signal": null,
+        "pid": 46213,
+        "timedOut": false,
+        "interrupted": false,
+        "leakedOwnedPids": [],
+        "elapsedMs": 123236
+      }
+    ],
+    "ownedRunRootRemoved": true,
+    "failure": {
+      "name": "Error",
+      "message": "R9-45-MINUTE-SOAK exited 1",
+      "stack": "Error: R9-45-MINUTE-SOAK exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:492:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+    }
+  },
+  "windows": [
+    {
+      "label": "short-idle-1",
+      "streaming": false,
+      "short": true,
+      "at": 1790476482897,
+      "wallMs": 2104,
+      "characters": 68,
+      "delay": 25,
+      "exactRetention": true,
+      "sha256": "5c6133e4472cb6fb826e075bc7f76f7f0882ab42f7f31d2401e5c11abe93bb32",
+      "metrics": {
+        "inputCount": 68,
+        "inputP95Ms": 0.5,
+        "inputMaxMs": 35.299999713897705,
+        "nextRafCount": 68,
+        "nextRafP95Ms": 17,
+        "nextRafMaxMs": 50.89999961853027,
+        "longTaskObserverSupported": true,
+        "longTaskCount": 0,
+        "longTaskMaxMs": 0,
+        "reactCommitCount": 204,
+        "domMutations": 204,
+        "wsSent": 0,
+        "outboundEvidence": [],
+        "outboundEvidenceOverflow": 0
+      },
+      "coverage": {
+        "counts": {
+          "renderTextInstant": 0,
+          "MessageList": 0,
+          "InstantSegmentRenderer": 0,
+          "ChatAreaHeader": 0,
+          "ThreadRail": 0,
+          "ContentArea": 0,
+          "ChatAreaFooter": 68,
+          "chatArchRecordMessageList": 0
+        },
+        "discovered": [
+          "ChatAreaFooter"
+        ]
+      },
+      "messageListAttribution": {
+        "enabled": false,
+        "counts": {},
+        "overflow": 0,
+        "startedAt": 1790476482924,
+        "endedAt": 1790476484891,
+        "total": 0,
+        "liveThreadId": null,
+        "composerThreadId": "2026-09-26T19-32-49-980"
+      },
+      "focus": {
+        "before": {
+          "available": true,
+          "focused": true,
+          "visible": true,
+          "minimized": false,
+          "windowId": 1,
+          "url": "fusion-shell://app/"
+        },
+        "after": {
+          "available": true,
+          "focused": true,
+          "visible": true,
+          "minimized": false,
+          "windowId": 1,
+          "url": "fusion-shell://app/"
+        },
+        "interval": {
+          "startedAt": 1790476482897,
+          "endedAt": 1790476485001,
+          "available": true,
+          "events": [],
+          "overflow": 0,
+          "valid": true,
+          "interruptions": []
+        }
+      },
+      "stream": null,
+      "violations": [
+        "rAF latency"
+      ]
+    }
+  ],
+  "sampleCount": 1,
+  "cycleCount": 0,
+  "workloadStartedAt": null
+}

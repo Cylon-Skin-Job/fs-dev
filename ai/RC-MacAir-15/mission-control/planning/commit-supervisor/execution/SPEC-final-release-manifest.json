@@ -1,0 +1,67 @@
+{
+  "at": "2026-10-05T04:51:37.895307+00:00",
+  "result": "SPEC_READY_FOR_OWNER_REVIEW",
+  "original_SPEC": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/SPEC.md",
+    "size": 46744,
+    "sha256": "6d7b351db87e535b0950f94c42c61d503a3ac3fef6587299dfc024c7887df664"
+  },
+  "owner_assignment": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/approval-receipt.md",
+    "size": 796,
+    "sha256": "0de192d5c5f0e422a3ab3301a4376c32b120667f61b03b63f661c0502c150a56"
+  },
+  "reviewed_current_source_and_raw_checks": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-current-manifest-v2.json",
+    "size": 134805,
+    "sha256": "3920ff4a7194cead10033f4e6e0ea58534b705564d16b6af46f10475b1476260"
+  },
+  "reviewed_neutral_contexts": 116,
+  "final_contexts": 119,
+  "unique_final_ids": 113,
+  "current_owned_implementation_surface": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-owned-implementation-surface.json",
+    "size": 18327,
+    "sha256": "ad98d21990accee74c0cbe320a4be264ea5ea1d69f1d577e786d3772943cc5b8"
+  },
+  "native_CLEAN_report": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-integration-review-2.md",
+    "size": 21090,
+    "sha256": "403c11eda1663b11d538ad62891daebe043ac22923b24b15464f509c96429802"
+  },
+  "native_CLEAN_lifecycle": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-review-2-lifecycle.json",
+    "size": 1994,
+    "sha256": "15fa4a0be6157e82cbf17142c90f5b2b385603d585c5453814d06872c387194a"
+  },
+  "excluded_first_pass": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-review-lifecycle.json",
+    "size": 2214,
+    "sha256": "5bc55a765bf08707939a9083f26bee78a9c03662b4e1e59c820d2222b8a6ad8b"
+  },
+  "final_neutral": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-neutral-deviations-final.json",
+    "size": 191724,
+    "sha256": "fabb336774ae3cd8d102862c451dfd3dd4a4a1225bd63acec77475666d3ac027"
+  },
+  "final_classifications": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-deviation-classifications-final.json",
+    "size": 246448,
+    "sha256": "745f5754da2c81a26c222d2e87a56624f8bc6d5877776a9ae1f78e6e54a79fca"
+  },
+  "post_gate_factual_addendum": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-procedural-and-preservation-addendum.json",
+    "size": 6219,
+    "sha256": "6f851458a04681be5893e76099012555c255341a1b400ce89877d9c330b0efa2"
+  },
+  "later_current_ref_readback": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-internal-ref-readback.json",
+    "size": 16054,
+    "sha256": "75b039bf6675a328b1b01235d1c5f45f8a91ee5ab978e14d91764ef45686767c"
+  },
+  "implemented_product_source_changed_after_review": false,
+  "owner_acceptance": false,
+  "agent_publication_operations": [],
+  "Alpha_operations": [],
+  "next_SPEC_started": false
+}

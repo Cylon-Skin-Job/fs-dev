@@ -1,0 +1,219 @@
+{
+  "at": "2026-10-09T01:29:10.383529+00:00",
+  "producer": "/root/all_pending_final_review",
+  "checks": {
+    "client-build": {
+      "receipt": "/private/tmp/fusion-main-consolidation-95vxg0_h/client-build.json",
+      "sha256": "643f76e31ab68ebfaa4c69da63989f0a6538ac075f4318532e4fafa9ceec3dee",
+      "log_sha256": "ed24eaadbd1a3bec8d51b678b3fa1867332de4585792f843a5f3baad02657f47",
+      "exit_code": 0,
+      "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/fusion-studio-client",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "started": "2026-10-09T01:02:49.022163+00:00",
+      "ended": "2026-10-09T01:03:02.180164+00:00"
+    },
+    "renderer": {
+      "receipt": "/private/tmp/fusion-main-consolidation-95vxg0_h/renderer-02.json",
+      "sha256": "3ffb6abf3037f3f9b88dc2bf9bf468181b986a1285d3cb2b26a6bf8dd0b7211f",
+      "log_sha256": "72a5972c8ca16db0e8d228ffe9527e5de0f1d24d2b138e744cef75e1a7c2e579",
+      "exit_code": 0,
+      "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/fusion-studio-client",
+      "command": [
+        "npx",
+        "--no-install",
+        "playwright",
+        "test",
+        "--config=playwright.chat-architecture.config.ts",
+        "e2e/chat-material-insertion.spec.ts",
+        "e2e/threaded-chat-host.spec.ts",
+        "e2e/chat-composer-screenshot-menu.spec.ts",
+        "e2e/chat-surface-identity.spec.ts",
+        "e2e/chat-surface-isolation.spec.ts",
+        "e2e/chat-component-registration.spec.ts",
+        "e2e/side-chat-isolation.spec.ts",
+        "e2e/side-chat-adapterless-native.spec.ts",
+        "e2e/side-chat-placement-recovery.spec.ts",
+        "e2e/move-chat-to-side-chat.spec.ts",
+        "e2e/prompt-ownership.slice-c.spec.ts",
+        "e2e/prompt-submission-recovery.spec.ts",
+        "e2e/chat-send-transport.spec.ts",
+        "e2e/chat-diagnostic-actions.slice-c.spec.ts",
+        "e2e/system-viewer-action-outcome.spec.ts",
+        "e2e/chat-architecture/observation-boundaries.spec.ts",
+        "--workers=1",
+        "--output=/private/tmp/fusion-main-consolidation-95vxg0_h/renderer-02-output"
+      ],
+      "started": "2026-10-09T01:09:22.658517+00:00",
+      "ended": "2026-10-09T01:11:37.548740+00:00"
+    },
+    "server": {
+      "receipt": "/private/tmp/fusion-main-consolidation-95vxg0_h/server-full-02.json",
+      "sha256": "487b3a61436b73f624213f37188eea254441eb48d2d2c215ebce1421bcb2dd04",
+      "log_sha256": "162580f135138e970cbd5a7a493f7ab3a685aa368564f5920797dbeeedfaca45",
+      "exit_code": 0,
+      "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/fusion-studio-server",
+      "command": [
+        "npx",
+        "--no-install",
+        "jest",
+        "--runInBand"
+      ],
+      "started": "2026-10-09T01:17:01.647511+00:00",
+      "ended": "2026-10-09T01:18:55.616715+00:00"
+    },
+    "native": {
+      "receipt": "/private/tmp/fusion-main-consolidation-95vxg0_h/native.json",
+      "sha256": "a4a14672d03a40e58981939561b636f35636ff6b3fd5181f45948ec88f81fd4e",
+      "log_sha256": "412b2e58fdf05266546d2335ab7a19928388960b2703171a17a6992e74bfdeee",
+      "exit_code": 0,
+      "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/fusion-studio-client",
+      "command": [
+        "node",
+        "e2e/chat-material-native-scenario.mjs"
+      ],
+      "started": "2026-10-09T01:13:05.233288+00:00",
+      "ended": "2026-10-09T01:13:25.409420+00:00"
+    },
+    "wiki": {
+      "receipt": "/private/tmp/fusion-main-consolidation-95vxg0_h/wiki-02.json",
+      "sha256": "53b01325c40c8ba16e846261772127d2674915dd99f830813ab7227b9916447d",
+      "log_sha256": "c8ca999996e2bfcddaf530d3fa3cab3dc16362de0b9348cfb4d07fd4e4190130",
+      "exit_code": 0,
+      "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/fusion-studio-client",
+      "command": [
+        "npx",
+        "--no-install",
+        "playwright",
+        "test",
+        "--config=playwright.chat-architecture.config.ts",
+        "e2e/chat-material-wiki.spec.ts",
+        "--workers=1",
+        "--output=/private/tmp/fusion-main-consolidation-95vxg0_h/wiki-02-output"
+      ],
+      "started": "2026-10-09T01:17:38.993575+00:00",
+      "ended": "2026-10-09T01:17:43.881811+00:00"
+    }
+  },
+  "scope_deltas": {
+    "fusion-studio-client/": {
+      "current_changed_count": 51,
+      "from_01_deltas": []
+    },
+    "fusion-studio-server/": {
+      "current_changed_count": 3,
+      "from_01_deltas": [
+        "fusion-studio-server/lib/screenshot/ws-handlers.js",
+        "fusion-studio-server/test/screenshot-file-capture-request-id.test.js",
+        "fusion-studio-server/test/screenshot-protected-view-path.test.js"
+      ]
+    },
+    "scripts/": {
+      "current_changed_count": 4,
+      "from_01_deltas": []
+    }
+  },
+  "native_current_dependencies": {
+    "renderer": {
+      "count": 191,
+      "mismatch": []
+    },
+    "electron": {
+      "count": 65,
+      "mismatch": []
+    },
+    "server": {
+      "count": 482,
+      "base": "fusion-studio-server/lib",
+      "disclosed_fixture_substitutions": [
+        "harness/opencode/fixture-fault-runtime.cjs",
+        "harness/opencode/index.js",
+        "thread/runtime-prompt-admission.js",
+        "wire/wire-broadcaster.js"
+      ],
+      "unchanged_production_count": 478
+    },
+    "server_entry": {
+      "current_sha256": "293e3f56f7c61aa855d8e116fe901cb58db86eedf69cce3ac2e4ad865ad62a07",
+      "receipt_sha256": "293e3f56f7c61aa855d8e116fe901cb58db86eedf69cce3ac2e4ad865ad62a07"
+    },
+    "observer": {
+      "current_sha256": "c9aa17eb72b253235ea6eb1b4c6a639e455939d9e8b070129a25c587c9c69d11",
+      "receipt_sha256": "c9aa17eb72b253235ea6eb1b4c6a639e455939d9e8b070129a25c587c9c69d11"
+    }
+  },
+  "native_capture_count": 8,
+  "native_send_count": 4,
+  "native_protected_processes_equal": true,
+  "native_cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "native_lingering_owned_pids": [],
+  "native_limits": [
+    "Deterministic staged provider and inherited admission/ACK fault seams; no public provider certification.",
+    "Capture IPC, preload, screenshot save/path protection, production renderer and SQLite persistence remain actual.",
+    "Only bounded synthetic fixture prompts and image hashes/dimensions are retained; no PNG payload copied."
+  ],
+  "contracts": [
+    {
+      "path": "AGENTS.md",
+      "controller_sha256": "d4dce1ca561b013641ca999d4183a73be739b408cfa5e518c750af783420de6d",
+      "candidate_sha256": "d4dce1ca561b013641ca999d4183a73be739b408cfa5e518c750af783420de6d",
+      "equal": true
+    },
+    {
+      "path": "session-contract.md",
+      "controller_sha256": "d82d5a815a94f8c27b64d1d90aa0085790e3d98408c011e86d6126dd1bd9b570",
+      "candidate_sha256": "d82d5a815a94f8c27b64d1d90aa0085790e3d98408c011e86d6126dd1bd9b570",
+      "equal": true
+    },
+    {
+      "path": ".agents/skills/mc-code-review-orchestrator/SKILL.md",
+      "controller_sha256": "61a2e611803aa918b22b9356e19f1d863a3e7a6ac05cf9cc491f41e175d16129",
+      "candidate_sha256": "61a2e611803aa918b22b9356e19f1d863a3e7a6ac05cf9cc491f41e175d16129",
+      "equal": true
+    },
+    {
+      "path": ".agents/skills/mc-commit-supervisor/references/workflow.md",
+      "controller_sha256": "27aab53da9edbed9f6ee8ceb4917d7c7531a7de914a3c2df7fb2196b6bd4a20c",
+      "candidate_sha256": "27aab53da9edbed9f6ee8ceb4917d7c7531a7de914a3c2df7fb2196b6bd4a20c",
+      "equal": true
+    },
+    {
+      "path": ".agents/skills/mc-spec-review-gate/SKILL.md",
+      "controller_sha256": "cc738b3ecebca875b1f6d4460d26c3185dd3b3dd2a93550086742995a0c6c56a",
+      "candidate_sha256": "cc738b3ecebca875b1f6d4460d26c3185dd3b3dd2a93550086742995a0c6c56a",
+      "equal": true
+    }
+  ],
+  "correction": {
+    "at": "2026-10-09T01:29:26.113524+00:00",
+    "prior_report": "manager-check-bindings-attempt-01.json",
+    "reason": "First local verification interpreted server lib-relative native-receipt identity keys as server-root paths. Corrected explicit path base; no candidate bytes or evidence receipts changed."
+  },
+  "scope_statement": "Native staging substitutions are evidence limits, not product-byte drift; actual capture/preload/screenshot handler/persistence match current production. No public-provider or later canonical-runtime certification.",
+  "supplemental_mc_unit": {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      ".agents/skills/mc-commit-supervisor/tests",
+      "-p",
+      "test_*.py"
+    ],
+    "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/mission-control",
+    "raw_log": "/private/tmp/fusion-main-consolidation-95vxg0_h/mc-unit.log",
+    "log_sha256": "ce897c6dd7412e120ca3a49f7679b5b51d5f3981d3ed8fb6d1a4009973a80a7d",
+    "raw_result": "Ran55tests;OK",
+    "subprocess_exit_preserved": false,
+    "producer_attestation": "/root supplied exact original command/CWD; original sequential shell did not preserve unit subprocess exit separately",
+    "limit": "Supplemental provenance limitation; no product gate discharged solely by this receipt. No changed source/oracle requires repeat."
+  }
+}

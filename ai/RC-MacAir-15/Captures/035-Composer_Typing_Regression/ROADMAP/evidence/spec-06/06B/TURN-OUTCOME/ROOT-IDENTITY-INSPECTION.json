@@ -1,0 +1,67 @@
+{
+  "at": "2026-09-27T08:40:06.071785+00:00",
+  "inventories": {
+    "source": {
+      "files": 1968,
+      "mismatches": [],
+      "manifestSha256": "2bedc37c0dd1b4373df5f90d2dbcde2e74059521f14b6346525ab7596d94ecc7"
+    },
+    "build": {
+      "files": 200,
+      "mismatches": [],
+      "manifestSha256": "b070d633863382e48ea2f6d677a92cfe65b9a4dea79caa87975711c109c70b03"
+    }
+  },
+  "delta": [
+    {
+      "path": "fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs",
+      "currentMatch": true,
+      "beforeMatch": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-architecture/run.mjs",
+      "currentMatch": true,
+      "beforeMatch": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs",
+      "currentMatch": true,
+      "beforeMatch": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/chat-architecture/turn-outcome-native.cjs",
+      "currentMatch": true,
+      "beforeMatch": true
+    },
+    {
+      "path": "fusion-studio-server/lib/harness/opencode/failure-marker-builder.js",
+      "currentMatch": true,
+      "beforeMatch": true
+    },
+    {
+      "path": "fusion-studio-server/lib/harness/opencode/index.js",
+      "currentMatch": true,
+      "beforeMatch": true
+    },
+    {
+      "path": "fusion-studio-server/lib/harness/opencode/turn-outcome.js",
+      "currentMatch": true,
+      "beforeMatch": true
+    },
+    {
+      "path": "fusion-studio-server/test/harness/opencode/turn-outcome.test.js",
+      "currentMatch": true,
+      "beforeMatch": true
+    }
+  ],
+  "changedPaths": [
+    "fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs",
+    "fusion-studio-client/e2e/chat-architecture/run.mjs",
+    "fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs",
+    "fusion-studio-client/e2e/chat-architecture/turn-outcome-native.cjs",
+    "fusion-studio-server/lib/harness/opencode/failure-marker-builder.js",
+    "fusion-studio-server/lib/harness/opencode/index.js",
+    "fusion-studio-server/lib/harness/opencode/turn-outcome.js",
+    "fusion-studio-server/test/harness/opencode/turn-outcome.test.js"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "runId": "boot-1790000778602-baccd35f",
+  "mode": "--all",
+  "status": "observed-red",
+  "port": 64961,
+  "testResult": {
+    "code": 1,
+    "signal": null,
+    "pid": 35816,
+    "timedOut": false,
+    "interrupted": false,
+    "leakedOwnedPids": [],
+    "elapsedMs": 90242
+  },
+  "failure": null,
+  "ownedRunRootRemoved": true
+}

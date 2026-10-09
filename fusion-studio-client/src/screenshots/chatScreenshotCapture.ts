@@ -3,81 +3,17 @@
  * @role Shared screenshot capture-and-attach controller for header and composer actions.
  */
 
-import { useChatFileLinkStore } from '../state/chatFileLinkStore';
 import { usePanelStore } from '../state/panelStore';
-import { getCurrentThreadGroupId, getThreadGroupPopulation } from '../state/slices/chatSurfaceSlice';
-import { getWorksurfaceEntry } from '../state/slices/worksurfaceSlice';
-import { readOpenSideChatPlacements } from '../lib/chat/side-chat-placements';
+import { beginChatMaterial, commitChatMaterial, validateChatMaterial } from '../lib/chat-action';
+import { chatSubmissionOwnerKey, useChatSubmissionStore } from '../state/chatSubmissionStore';
+import type { MountedChatBinding } from '../state/slices/mountedChatState';
 import { createSendToChatAttachment } from '../lib/chat-file-links/send-to-chat-reference-label';
 import type { ChatLinkAttachment } from '../lib/chat-file-links/file-link-types';
 import { showToast } from '../lib/toast';
 
 export const SCREENSHOT_FLASH_EVENT = 'fusion:screenshot-flash';
-
 const CAPTURE_TIMEOUT_MS = 30_000;
 const OWNER_CHANGED_MESSAGE = 'Screenshot was not attached because the chat changed.';
-
-export interface ScreenshotAttachmentOwner {
-  workspaceId: string;
-  threadId: string;
-  surface: 'primary' | 'side-tab';
-  selection?: { viewId: string | null; threadGroupId: string };
-  /** Connected composer lifetime; omitted for the global/header action. */
-  mount?: {
-    surfaceId: string;
-    selectionScope: 'view' | 'session';
-    isCurrent: () => boolean;
-  };
-}
-
-function currentPrimaryOwner(
-  state: ReturnType<typeof usePanelStore.getState>,
-): ScreenshotAttachmentOwner | null {
-  const workspaceId = state.activeWorkspaceId;
-  if (!workspaceId) return null;
-  const viewId = state.currentPanel;
-  const threadGroupId = getCurrentThreadGroupId(state, workspaceId, viewId);
-  const row = getThreadGroupPopulation(state, workspaceId, viewId)
-    .find((candidate) => candidate.threadGroupId === threadGroupId);
-  if (row?.threadId && row.threadGroupId) {
-    return { workspaceId, threadId: row.threadId, surface: 'primary',
-      selection: { viewId, threadGroupId: row.threadGroupId } };
-  }
-  if (!state.currentThreadId) return null;
-  return { workspaceId, threadId: state.currentThreadId, surface: 'primary' };
-}
-
-function isCurrentOwner(
-  owner: ScreenshotAttachmentOwner,
-  state = usePanelStore.getState(),
-): boolean {
-  if (state.activeWorkspaceId !== owner.workspaceId) return false;
-  if (owner.mount && (!owner.mount.surfaceId || !owner.mount.isCurrent())) return false;
-  if (!owner.selection) {
-    // Legacy is an intentional fallback only while no qualified Main exists.
-    const current = currentPrimaryOwner(state);
-    return owner.surface === 'primary' && !current?.selection
-      && current?.threadId === owner.threadId;
-  }
-  const { viewId, threadGroupId } = owner.selection;
-  // Content component tabs stay mounted when WorkspacePanel becomes hidden.
-  // Their owning view must still be the shell's active view at every await.
-  if (viewId !== null && state.currentPanel !== viewId) return false;
-  if (owner.surface === 'side-tab') {
-    if (!viewId || !owner.mount) return false;
-    return readOpenSideChatPlacements(
-      getWorksurfaceEntry(state, owner.workspaceId, viewId, threadGroupId), viewId,
-    ).some(({ threadId, descriptor }) => threadId === owner.threadId
-      && descriptor.input.workspaceId === owner.workspaceId
-      && descriptor.input.threadGroupId === threadGroupId);
-  }
-  if (!owner.mount && state.currentPanel !== viewId) return false;
-  if (owner.mount?.selectionScope !== 'session'
-    && getCurrentThreadGroupId(state, owner.workspaceId, viewId) !== threadGroupId) return false;
-  const row = getThreadGroupPopulation(state, owner.workspaceId, viewId)
-    .find((candidate) => candidate.threadGroupId === threadGroupId);
-  return row?.threadId === owner.threadId;
-}
 
 function screenshotName(savedPath: string): string {
   return savedPath.split(/[\\/]/).pop() || 'screenshot.png';
@@ -106,11 +42,16 @@ function waitForSavedScreenshot(
         const message = JSON.parse(event.data) as {
           type?: string;
           requestId?: string;
-          savedPath?: string;
+          savedPath?: unknown;
+          workspaceId?: string;
           message?: string;
         };
-        if (message.requestId !== requestId) return;
-        if (message.type === 'screenshot:file-captured' && message.savedPath) {
+        if (message.requestId !== requestId || (message.workspaceId && message.workspaceId !== workspaceId)) return;
+        if (message.type === 'screenshot:file-captured') {
+          if (typeof message.savedPath !== 'string' || !message.savedPath.trim()) {
+            fail('The saved screenshot path was unavailable.');
+            return;
+          }
           cleanup();
           resolve(message.savedPath);
           return;
@@ -142,21 +83,20 @@ function waitForSavedScreenshot(
   });
 }
 
+/** Source capture/save; destination and the single store mutation belong to Chat material. */
 export async function captureAndAttachScreenshot(
-  requestedOwner?: ScreenshotAttachmentOwner,
+  requestedOwner?: MountedChatBinding | null,
 ): Promise<ChatLinkAttachment | null> {
-  const panelState = usePanelStore.getState();
-  // Snapshot the complete owner and socket from one state read before the
-  // first await. Composer callers pass their exact mounted session owner; global
-  // capture defaults to the primary owner from this same read.
-  const owner = requestedOwner ?? currentPrimaryOwner(panelState);
-  const socket = panelState.ws;
-  const capturePage = window.electronAPI?.capturePage;
-
-  if (!owner || !isCurrentOwner(owner, panelState)) {
-    showToast(OWNER_CHANGED_MESSAGE);
+  const begun = beginChatMaterial(requestedOwner);
+  if (begun.status !== 'ready') {
+    showToast(begun.status === 'unavailable' && begun.reason === 'busy'
+      ? 'Wait for message acceptance' : OWNER_CHANGED_MESSAGE);
     return null;
   }
+  const operation = begun.operation, owner = operation.owner;
+  // Capture source inputs before native preparation; never resolve another destination.
+  const socket = usePanelStore.getState().ws;
+  const capturePage = window.electronAPI?.capturePage;
   if (!capturePage) {
     showToast('Screenshot capture is available in the desktop app.');
     return null;
@@ -165,46 +105,40 @@ export async function captureAndAttachScreenshot(
     showToast('Fusion must be connected before taking a screenshot.');
     return null;
   }
-
   try {
     const base64 = await capturePage();
     if (!base64) throw new Error('The current window could not be captured.');
-    if (!isCurrentOwner(owner)) {
+    if (validateChatMaterial(operation)) {
       showToast(OWNER_CHANGED_MESSAGE);
       return null;
     }
-
+    // The captured source socket may have retired while native work was pending.
+    if (socket.readyState !== WebSocket.OPEN || usePanelStore.getState().ws !== socket) {
+      throw new Error('Fusion server disconnected while saving the screenshot.');
+    }
     const dataUrl = `data:image/png;base64,${base64}`;
     window.dispatchEvent(new CustomEvent<string>(SCREENSHOT_FLASH_EVENT, { detail: dataUrl }));
-
     const savedPath = await waitForSavedScreenshot(socket, owner.workspaceId, dataUrl);
-    if (!isCurrentOwner(owner)) {
-      showToast(OWNER_CHANGED_MESSAGE);
-      return null;
-    }
     const name = screenshotName(savedPath);
     const attachment = createSendToChatAttachment({
-      panel: 'screenshots',
-      relativePath: `Data/Screenshots/${name}`,
-      absolutePath: savedPath,
+      panel: 'screenshots', relativePath: `Data/Screenshots/${name}`, absolutePath: savedPath,
     });
-
-    useChatFileLinkStore.getState().addPendingAttachment(
-      owner.workspaceId,
-      owner.threadId,
-      attachment,
-    );
-
-    const currentState = usePanelStore.getState();
-    if (currentState.chatActive) {
-      currentState.warmThread(owner.threadId);
+    const result = await commitChatMaterial(operation, { attachment });
+    if (result.status !== 'applied' && result.status !== 'noop') {
+      showToast(result.status === 'unavailable' && result.reason === 'busy'
+        ? 'Wait for message acceptance' : OWNER_CHANGED_MESSAGE);
+      return null;
     }
-
-    showToast('Screenshot attached to chat.');
+    // Existing screenshot warming is best effort, independently of local insertion.
+    const state = usePanelStore.getState();
+    const phase = useChatSubmissionStore.getState().attemptsByOwner[chatSubmissionOwnerKey(owner.workspaceId, owner.threadId)]?.phase;
+    if (state.chatActive && phase !== 'pending' && phase !== 'unknown' && !validateChatMaterial(operation)) {
+      try { state.warmThread(owner.threadId); } catch { /* Successful insertion stays successful. */ }
+    }
+    showToast(result.status === 'noop' ? 'Screenshot is already attached to chat.' : 'Screenshot attached to chat.');
     return attachment;
-  } catch (error) {
-    console.error('[ScreenshotCapture] capture-and-attach failed:', error);
-    showToast(error instanceof Error ? error.message : 'Screenshot capture failed.');
+  } catch {
+    showToast('Screenshot capture or save failed.');
     return null;
   }
 }

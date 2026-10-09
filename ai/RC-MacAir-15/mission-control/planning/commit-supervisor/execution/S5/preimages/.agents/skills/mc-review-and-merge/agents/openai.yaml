@@ -1,0 +1,6 @@
+interface:
+  display_name: "Review and Merge"
+  short_description: "Prepare integration and wait for commit/push approval"
+  default_prompt: "Use $mc-review-and-merge for this bounded completed-build integration assignment. Prepare and evaluate the candidate, then wait for my explicit go-ahead before committing or pushing."
+policy:
+  allow_implicit_invocation: false

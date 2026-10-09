@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-07T23:02:34.405357+00:00",
+  "scope": "Independent root actual native run on current frozen M3 bytes; no owner/SPEC acceptance",
+  "source_seal_sha256": "35cda972a106468eaa279c60da9ef51fc04ec23333f03de4226269b84e14ad07",
+  "outer_receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/orchestrator-checks/native-04.json",
+  "outer_sha256": "ee7bd0d82931665ccce4c20e288815378b300623dcc359c10318bc7b5e18cbcf",
+  "native_receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/orchestrator-checks/native-04/native-receipt.json",
+  "native_sha256": "4af8043bf226ca1fb5b919c43765333274949cdd0ccfece756152bf80914b52f",
+  "log_sha256": "5e313b03da9bd43314fd471e2452082020f0452c389801a9469fc9265e0e83d6",
+  "source_paths": 65,
+  "renderer_artifacts": 191,
+  "counts": {
+    "captures": 8,
+    "gallery": 4,
+    "resources": 2,
+    "public_send_ACK_DB": 4
+  },
+  "result": "PASS",
+  "capture_dimensions": [
+    [
+      3200,
+      1944
+    ]
+  ],
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "ownedPidsRemaining": [],
+  "capability_precondition": "Native03 started after177sec observed inactivity and passed; native04 after320sec observed inactivity. Optional idle-availability question had no answer; actual external capability independently observed, no time-inferred approval.",
+  "limits": [
+    "Deterministic staged provider and inherited admission/ACK fault seams; no public provider certification.",
+    "Capture IPC, preload, screenshot save/path protection, production renderer and SQLite persistence remain actual.",
+    "Only bounded synthetic fixture prompts and image hashes/dimensions are retained; no PNG payload copied.",
+    "Native resources invoke actual retained hidden Wiki DOM handler; visible source coverage belongs to renderer A04.",
+    "Builder native17 remains unknown/unattributed; root native01/02 fail during directly observed keyboard events, no assertion relaxed."
+  ],
+  "inputEventsCount": 16
+}

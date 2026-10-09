@@ -1,0 +1,15 @@
+{
+  "systemSetupReadiness": null,
+  "systemAttemptSnapshot": null,
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": {
+    "name": "Error",
+    "message": "fixture view office-viewer was not projected to renderer rail: {\"workspaceLabel\":\"R5 R6 2227ebc2nd\",\"connected\":true,\"railTitles\":[\"Captures\",\"Files\",\"Wiki\",\"Issues\",\"Agents\"]}",
+    "stack": "Error: fixture view office-viewer was not projected to renderer rail: {\"workspaceLabel\":\"R5 R6 2227ebc2nd\",\"connected\":true,\"railTitles\":[\"Captures\",\"Files\",\"Wiki\",\"Issues\",\"Agents\"]}\n    at selectPanel (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs:69:13)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r5-r6-electron.mjs:749:23"
+  }
+}

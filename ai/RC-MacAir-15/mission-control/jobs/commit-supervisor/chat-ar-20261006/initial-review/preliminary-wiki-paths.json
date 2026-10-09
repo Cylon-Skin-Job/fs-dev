@@ -1,0 +1,2895 @@
+{
+  "scope": "preliminary complete current live Wiki PAGE.md and .versions including deletions; factual review pending",
+  "entries": [
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/001-Style_Guide/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/002-Creating_Wikis/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/003-Updating_Wikis/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/000-Project/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/000-Project/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/001-Home/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/001-Home/LOG.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/001-Home/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/004-Path_Resolution/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/004-Path_Resolution/LOG.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/004-Path_Resolution/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/013-Background_Agents/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/013-Background_Agents/LOG.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/013-Background_Agents/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/014-Background_Services_Audit/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/014-Background_Services_Audit/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/017-GitLab/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/017-GitLab/LOG.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/017-GitLab/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/018-Hooks/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/018-Hooks/LOG.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/018-Hooks/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/019-Run_Auditing/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/019-Run_Auditing/LOG.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/019-Run_Auditing/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/020-Screenshot_Capture/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/020-Screenshot_Capture/LOG.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/020-Screenshot_Capture/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/021-Setup_Wizard/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/021-Setup_Wizard/LOG.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/021-Setup_Wizard/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/022-Ticket_Routing/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/022-Ticket_Routing/LOG.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/022-Ticket_Routing/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/023-Warmth_Settings/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/023-Warmth_Settings/LOG.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/023-Warmth_Settings/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/024-Issue_Viewer_Ticket_Authoring/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/024-Issue_Viewer_Ticket_Authoring/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Project/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/001-Workspace_Paradigm/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/003-Adding_Workspaces/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/000-Wiki_View/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/000-Architecture/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/002-Decisions/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/003-Lessons/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/004-Interface/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/005-System/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/006-Frontmatter_Model/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/007-Structure/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/005-Browser/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/010-Voice_Input/000-Voice_Input/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/010-Voice_Input/001-Architecture/000-Architecture/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/010-Voice_Input/001-Architecture/004-Rule_System/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/010-Voice_Input/001-Architecture/006-Structure/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/010-Voice_Input/001-Architecture/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/010-Voice_Input/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/011-System_Manager/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/012-Viewer_Search/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/014-Office_Viewer/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/002-System_Tools/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/002-System_Tools/000-System_Tools/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/002-System_Tools/000-System_Tools/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/002-System_Tools/001-Custom_Theme_CSS/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/002-System_Tools/001-Custom_Theme_CSS/LOG.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/002-System_Tools/001-Custom_Theme_CSS/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/002-System_Tools/002-Secrets_Manager/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/002-System_Tools/002-Secrets_Manager/LOG.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/002-System_Tools/002-Secrets_Manager/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/002-System_Tools/003-Clipboard_History/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/002-System_Tools/003-Clipboard_History/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/002-System_Tools/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/000-Enforcement/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/002-Frontend_UI/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/002-Themes_And_State/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/006-Operations/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/006-System_Manager/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/006-System_Manager/001-Workspaces_&_Views/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/006-System_Manager/001-Workspaces_&_Views/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " D",
+      "path": "ai/RC-MacAir-15/Wiki/006-System_Manager/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/006-Runtime_Model/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/008-Workflows/001-Sync_Wiki_Context/001-What_Is_This/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/008-Workflows/001-Sync_Wiki_Context/002-How_Its_Organized/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/008-Workflows/001-Sync_Wiki_Context/003-Domains/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/008-Workflows/001-Sync_Wiki_Context/004-Wiki_System/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/008-Workflows/001-Sync_Wiki_Context/005-Status/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/008-Workflows/001-Sync_Wiki_Context/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/008-Workflows/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/009-Fusion_Home/000-Fusion_Home/002-Vision/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/009-Fusion_Home/000-Fusion_Home/003-Decisions/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/009-Fusion_Home/000-Fusion_Home/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/009-Fusion_Home/002-Calendar_Viewer/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/009-Fusion_Home/003-Email/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/009-Fusion_Home/004-ToDo/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/009-Fusion_Home/006-Sheets/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/009-Fusion_Home/007-Pdfs/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/009-Fusion_Home/008-Artifacts/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/002-Tool_Call_Provenance_Schema/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/007-UI_Action_And_Context_Provenance_Schema/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/008-Audit_Query_And_Review_Provenance_Schema/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/009-Assistant_Query_And_Review_Loops/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/001-Wiki_Viewer_UI_Context/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/002-File_Viewer_UI_Context/PAGE.md",
+      "old": null
+    },
+    {
+      "status": " M",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/.versions/2026-09-27-212124.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/000-Project/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/000-Project/.versions/2026-09-27-211426.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/000-Project/.versions/2026-09-27-211458.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/000-Project/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/001-Home/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/001-Home/.versions/2026-09-27-211426.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/001-Home/LOG.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/001-Home/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/004-Path_Resolution/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/004-Path_Resolution/.versions/2026-09-27-211426.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/004-Path_Resolution/LOG.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/004-Path_Resolution/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/013-Background_Agents/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/013-Background_Agents/.versions/2026-09-27-211426.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/013-Background_Agents/LOG.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/013-Background_Agents/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/014-Background_Services_Audit/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/014-Background_Services_Audit/.versions/2026-09-27-211426.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/014-Background_Services_Audit/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/017-GitLab/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/017-GitLab/.versions/2026-09-27-211426.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/017-GitLab/LOG.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/017-GitLab/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/018-Hooks/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/018-Hooks/.versions/2026-09-27-211426.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/018-Hooks/LOG.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/018-Hooks/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/019-Run_Auditing/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/019-Run_Auditing/.versions/2026-09-27-211426.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/019-Run_Auditing/LOG.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/019-Run_Auditing/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/020-Screenshot_Capture/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/020-Screenshot_Capture/.versions/2026-09-27-211426.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/020-Screenshot_Capture/LOG.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/020-Screenshot_Capture/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/021-Setup_Wizard/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/021-Setup_Wizard/.versions/2026-09-27-211426.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/021-Setup_Wizard/LOG.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/021-Setup_Wizard/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/022-Ticket_Routing/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/022-Ticket_Routing/.versions/2026-09-27-211426.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/022-Ticket_Routing/LOG.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/022-Ticket_Routing/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/023-Warmth_Settings/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/023-Warmth_Settings/.versions/2026-09-27-211426.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/023-Warmth_Settings/LOG.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/023-Warmth_Settings/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/024-Issue_Viewer_Ticket_Authoring/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/024-Issue_Viewer_Ticket_Authoring/.versions/2026-09-27-211426.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/024-Issue_Viewer_Ticket_Authoring/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/001-Project/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/002-System_Tools/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/002-System_Tools/.versions/2026-09-27-212124.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/002-System_Tools/000-System_Tools/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/002-System_Tools/000-System_Tools/.versions/2026-09-27-211426.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/002-System_Tools/000-System_Tools/.versions/2026-09-27-211458.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/002-System_Tools/000-System_Tools/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/002-System_Tools/001-Custom_Theme_CSS/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/002-System_Tools/001-Custom_Theme_CSS/.versions/2026-09-27-211426.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/002-System_Tools/001-Custom_Theme_CSS/LOG.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/002-System_Tools/001-Custom_Theme_CSS/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/002-System_Tools/002-Secrets_Manager/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/002-System_Tools/002-Secrets_Manager/.versions/2026-09-27-211426.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/002-System_Tools/002-Secrets_Manager/LOG.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/002-System_Tools/002-Secrets_Manager/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/002-System_Tools/003-Clipboard_History/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/002-System_Tools/003-Clipboard_History/.versions/2026-09-27-211426.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/002-System_Tools/003-Clipboard_History/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/002-System_Tools/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/006-System_Manager/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/006-System_Manager/.versions/2026-09-27-211426.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/006-System_Manager/001-Workspaces_&_Views/.versions/2026-08-28-014539.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/006-System_Manager/001-Workspaces_&_Views/.versions/2026-09-21-062735.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/006-System_Manager/001-Workspaces_&_Views/.versions/2026-09-21-063002.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/006-System_Manager/001-Workspaces_&_Views/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/006-System_Manager/001-Workspaces_&_Views/.versions/2026-09-27-211426.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/006-System_Manager/001-Workspaces_&_Views/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/.versions/retired-2026-09-27-215608/006-System_Manager/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/.versions/2026-09-21-062734.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/.versions/2026-09-21-062824.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/.versions/2026-09-21-063002.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/.versions/2026-09-23-065012.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/.versions/2026-09-23-065033.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/.versions/2026-09-23-065040.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/.versions/2026-09-27-211231.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/.versions/2026-09-27-211458.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/001-Style_Guide/.versions/2026-09-19-033208.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/001-Style_Guide/.versions/2026-09-19-033431.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/002-Creating_Wikis/.versions/2026-09-19-033208.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/002-Creating_Wikis/.versions/2026-09-19-033431.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/003-Updating_Wikis/.versions/2026-09-19-033208.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/003-Updating_Wikis/.versions/2026-09-19-033431.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/003-Updating_Wikis/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/.versions/2026-09-19-033208.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/.versions/2026-09-19-033431.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/.versions/2026-09-27-212145.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/.versions/2026-09-27-212224.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/005-User_Profile_Preferences_and_Design_Philosophy/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/.versions/2026-09-21-062744.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/.versions/2026-09-21-052454.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/.versions/2026-09-21-062824.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/.versions/2026-09-21-063001.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/.versions/2026-09-21-063722.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/.versions/2026-09-23-063439.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/.versions/2026-09-23-065039.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/.versions/2026-09-21-063001.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/.versions/2026-09-23-063439.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/.versions/2026-09-23-065039.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/001-Vision/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/.versions/2026-09-21-063001.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/.versions/2026-09-23-063439.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/.versions/2026-09-23-065039.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/002-Decisions/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/.versions/2026-09-21-063002.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/.versions/2026-09-23-063439.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/.versions/2026-09-23-065039.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/000-Workspaces_And_Views/003-Unfinished_Work/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/001-Workspace_Paradigm/.versions/2026-09-21-053148.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/001-Workspace_Paradigm/.versions/2026-09-21-063001.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/001-Workspace_Paradigm/.versions/2026-09-21-063722.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/.versions/2026-09-21-053157.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/.versions/2026-09-21-063001.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/.versions/2026-09-21-063722.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/.versions/2026-09-23-063439.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/002-View_Architecture/.versions/2026-09-23-065039.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/003-Adding_Workspaces/.versions/2026-09-21-053201.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/003-Adding_Workspaces/.versions/2026-09-21-053432.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/003-Adding_Workspaces/.versions/2026-09-21-053904.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/003-Adding_Workspaces/.versions/2026-09-21-063001.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/003-Adding_Workspaces/.versions/2026-09-21-063659.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/003-Adding_Workspaces/.versions/2026-09-21-063722.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/000-Wiki_View/.versions/2026-09-21-061254.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/000-Wiki_View/.versions/2026-09-21-061313.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/000-Wiki_View/.versions/2026-09-21-063001.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/000-Wiki_View/.versions/2026-09-21-063722.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/000-Wiki_View/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/000-Architecture/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/002-Decisions/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/003-Lessons/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/004-Interface/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/005-System/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/006-Frontmatter_Model/.versions/2026-09-19-033208.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/006-Frontmatter_Model/.versions/2026-09-19-033431.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/004-Wiki_View/001-Architecture/007-Structure/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/005-Browser/.versions/2026-09-21-061254.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/005-Browser/.versions/2026-09-21-061313.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/005-Browser/.versions/2026-09-21-063001.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/005-Browser/.versions/2026-09-21-063722.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/.versions/2026-09-21-061254.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/.versions/2026-09-21-061313.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/.versions/2026-09-21-061515.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/.versions/2026-09-21-061916.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/.versions/2026-09-21-063001.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/.versions/2026-09-21-063722.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/.versions/2026-09-23-063439.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/006-Custom_Iframe/.versions/2026-09-23-065040.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/.versions/2026-09-21-061313.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/.versions/2026-09-21-063002.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/.versions/2026-09-23-063439.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/.versions/2026-09-23-065040.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/007-File_View/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/008-Agent_View/.versions/2026-09-21-061313.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/008-Agent_View/.versions/2026-09-21-063002.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/008-Agent_View/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/008-Agent_View/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/009-Issues_View/.versions/2026-09-21-061313.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/009-Issues_View/.versions/2026-09-21-063002.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/009-Issues_View/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/009-Issues_View/.versions/2026-09-27-211231.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/009-Issues_View/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/010-Voice_Input/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/010-Voice_Input/000-Voice_Input/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/010-Voice_Input/001-Architecture/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/010-Voice_Input/001-Architecture/000-Architecture/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/010-Voice_Input/001-Architecture/004-Rule_System/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/010-Voice_Input/001-Architecture/006-Structure/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/011-System_Manager/.versions/2026-09-21-054717.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/011-System_Manager/.versions/2026-09-21-063001.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/011-System_Manager/.versions/2026-09-21-063722.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/011-System_Manager/.versions/2026-09-27-211231.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/012-Viewer_Search/.versions/2026-09-21-054717.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/012-Viewer_Search/.versions/2026-09-21-055341.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/012-Viewer_Search/.versions/2026-09-21-063001.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/012-Viewer_Search/.versions/2026-09-21-063722.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/.versions/2026-09-19-021443.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/.versions/2026-09-19-033431.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/.versions/2026-09-21-054717.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/.versions/2026-09-21-054752.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/.versions/2026-09-21-055341.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/.versions/2026-09-21-055758.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/.versions/2026-09-21-063001.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/013-View_Activity_And_Collections/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/014-Office_Viewer/.versions/2026-09-21-061254.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/014-Office_Viewer/.versions/2026-09-21-061313.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/014-Office_Viewer/.versions/2026-09-21-063001.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/014-Office_Viewer/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/015-Capture_View/.versions/2026-09-21-061313.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/015-Capture_View/.versions/2026-09-21-063002.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/015-Capture_View/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/015-Capture_View/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/016-Calendar_View/.versions/2026-09-21-061313.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/016-Calendar_View/.versions/2026-09-21-063002.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/016-Calendar_View/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/016-Calendar_View/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/017-Email_View/.versions/2026-09-21-061313.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/017-Email_View/.versions/2026-09-21-063002.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/017-Email_View/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/017-Email_View/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/018-Contacts_View/.versions/2026-09-21-061313.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/018-Contacts_View/.versions/2026-09-21-063002.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/018-Contacts_View/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/018-Contacts_View/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/019-Library_View/.versions/2026-09-21-061313.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/019-Library_View/.versions/2026-09-21-063002.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/019-Library_View/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/019-Library_View/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/020-Media_View/.versions/2026-09-21-061313.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/020-Media_View/.versions/2026-09-21-063002.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/020-Media_View/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/020-Media_View/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/.versions/2026-09-21-053908.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/.versions/2026-09-21-063002.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/.versions/2026-09-21-063659.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/.versions/2026-09-23-063439.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/.versions/2026-09-23-065040.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/021-Workspace_Compositions/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/.versions/2026-09-21-063002.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/.versions/2026-09-23-063439.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/.versions/2026-09-23-065040.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/022-View_Configuration_And_Agents/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/023-View_Catalog/.versions/2026-09-21-061313.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/023-View_Catalog/.versions/2026-09-21-063002.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/023-View_Catalog/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/023-View_Catalog/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/024-Developer_Map/.versions/2026-09-21-062917.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/024-Developer_Map/.versions/2026-09-21-063002.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/024-Developer_Map/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/001-Workspaces_And_Views/024-Developer_Map/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-09-19-025843.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-09-19-040021.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-09-21-054717.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-09-21-054914.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-09-21-063002.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-09-27-211231.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-10-05-181325.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-10-05-181627.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/.versions/2026-10-05-182133.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/006-Background_Services/.versions/2026-09-27-211857.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/006-Background_Services/.versions/2026-09-27-212925.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/006-Background_Services/.versions/2026-10-05-181325.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/006-Background_Services/.versions/2026-10-05-181627.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/006-Background_Services/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/002-Server_And_Runtime/007-Path_Resolution/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/.versions/2026-09-27-211231.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/002-Ticketing/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/004-Run_Auditing/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/005-Background_Agents/.versions/2026-09-27-213102.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/005-Background_Agents/.versions/2026-10-05-181325.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/005-Background_Agents/.versions/2026-10-05-181627.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/003-Automation_And_Agents/005-Background_Agents/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/.versions/2026-09-27-211231.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/001-GitLab/.versions/2026-09-27-211857.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/001-GitLab/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/002-Secrets_Manager/.versions/2026-09-27-211857.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/002-Secrets_Manager/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/.versions/2026-09-27-212527.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/005-Custom_Theme_CSS/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/000-Enforcement/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/000-Code_Standards/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/002-Frontend_UI/.versions/2026-09-27-211318.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/002-Frontend_UI/.versions/2026-09-27-211529.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/002-Frontend_UI/.versions/2026-09-27-211857.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/.versions/2026-09-21-054717.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/.versions/2026-09-21-055758.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/.versions/2026-09-21-063002.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/.versions/2026-09-19-031038.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/.versions/2026-09-19-032540.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/.versions/2026-09-19-040021.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/.versions/2026-09-19-025843.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/.versions/2026-09-19-040021.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/.versions/2026-09-21-054717.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/.versions/2026-09-21-063002.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/002-Themes_And_State/.versions/2026-09-21-054717.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/002-Themes_And_State/.versions/2026-09-21-063002.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/002-Themes_And_State/.versions/2026-09-21-063723.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/005-Enforcement/002-Themes_And_State/.versions/2026-09-27-211318.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/006-Operations/.versions/2026-09-27-211231.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/006-Operations/001-Setup/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/006-Operations/004-Troubleshooting/.versions/2026-09-27-211857.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/006-Operations/004-Troubleshooting/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/.versions/2026-10-05-181325.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/.versions/2026-10-05-182133.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/.versions/2026-10-04-141458.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/008-Workflows/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/008-Workflows/.versions/2026-09-27-221905.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/008-Workflows/001-Sync_Wiki_Context/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/008-Workflows/001-Sync_Wiki_Context/001-What_Is_This/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/008-Workflows/001-Sync_Wiki_Context/002-How_Its_Organized/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/008-Workflows/001-Sync_Wiki_Context/003-Domains/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/008-Workflows/001-Sync_Wiki_Context/004-Wiki_System/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/008-Workflows/001-Sync_Wiki_Context/005-Status/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/008-Workflows/002-Wiki_Update/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/009-Fusion_Home/000-Fusion_Home/.versions/2026-09-27-211318.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/009-Fusion_Home/000-Fusion_Home/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/009-Fusion_Home/000-Fusion_Home/002-Vision/.versions/2026-09-27-211318.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/009-Fusion_Home/000-Fusion_Home/002-Vision/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/009-Fusion_Home/000-Fusion_Home/003-Decisions/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/009-Fusion_Home/002-Calendar_Viewer/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/009-Fusion_Home/003-Email/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/009-Fusion_Home/004-ToDo/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/009-Fusion_Home/006-Sheets/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/009-Fusion_Home/007-Pdfs/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/009-Fusion_Home/008-Artifacts/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-09-19-025843.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-09-19-030133.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-09-19-040021.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/.versions/2026-09-19-025843.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/.versions/2026-09-19-040021.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/001-Vision/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/.versions/2026-09-19-025843.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/.versions/2026-09-19-030133.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/.versions/2026-09-19-040021.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/000-Events_And_Ledger/002-Decisions/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/.versions/2026-09-19-031038.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/.versions/2026-09-19-040021.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/001-Universal_Event_Bus/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/.versions/2026-09-19-031038.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/.versions/2026-09-19-040021.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/002-Event_Taxonomy/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/.versions/2026-09-19-031038.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/.versions/2026-09-19-032620.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/.versions/2026-09-19-040021.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/.versions/2026-09-19-033554.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/001-Chat_Metadata_Provenance_Schema/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/002-Tool_Call_Provenance_Schema/.versions/2026-09-19-033554.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/002-Tool_Call_Provenance_Schema/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/.versions/2026-09-19-032330.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/.versions/2026-09-19-040021.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/003-Resource_Mutation_Provenance_Schema/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/.versions/2026-09-19-031038.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/.versions/2026-09-19-040021.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/004-Ledger_Event_Provenance_Schema/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/.versions/2026-09-19-032330.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/.versions/2026-09-19-040021.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/005-File_Version_Provenance_Schema/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/.versions/2026-09-19-034705.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/.versions/2026-09-19-034812.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/.versions/2026-10-05-181325.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/006-Automation_Run_Provenance_Schema/.versions/2026-10-05-181627.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/007-UI_Action_And_Context_Provenance_Schema/.versions/2026-09-19-034705.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/007-UI_Action_And_Context_Provenance_Schema/.versions/2026-09-19-034812.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/007-UI_Action_And_Context_Provenance_Schema/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/008-Audit_Query_And_Review_Provenance_Schema/.versions/2026-09-19-034705.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/008-Audit_Query_And_Review_Provenance_Schema/.versions/2026-09-19-034812.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/003-Provenance_Model/008-Audit_Query_And_Review_Provenance_Schema/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/.versions/2026-09-19-031038.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/.versions/2026-09-19-031209.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/.versions/2026-09-19-040021.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/004-Ledger_Schema/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/.versions/2026-09-19-032330.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/.versions/2026-09-19-040021.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/005-Resource_Events_And_Render_Sync/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/.versions/2026-09-19-032330.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/.versions/2026-09-19-040021.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/006-File_Versioning/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/.versions/2026-09-19-032330.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/.versions/2026-09-19-032540.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/.versions/2026-09-19-040021.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/.versions/2026-09-19-040308.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/007-Correlation_And_Causality/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/.versions/2026-09-19-034705.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/.versions/2026-09-19-034812.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/008-Change_Storm_Control/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/009-Assistant_Query_And_Review_Loops/.versions/2026-09-19-033554.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/009-Assistant_Query_And_Review_Loops/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-031038.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-031102.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-031421.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-040021.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/010-Structure/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/.versions/2026-09-19-034705.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/.versions/2026-09-19-034812.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/001-Wiki_Viewer_UI_Context/.versions/2026-09-19-034705.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/001-Wiki_Viewer_UI_Context/.versions/2026-09-19-034812.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/001-Wiki_Viewer_UI_Context/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/001-Wiki_Viewer_UI_Context/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/002-File_Viewer_UI_Context/.versions/2026-09-19-034705.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/002-File_Viewer_UI_Context/.versions/2026-09-19-034812.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/002-File_Viewer_UI_Context/.versions/2026-09-19-045220.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/010-Events_And_Ledger/011-UI_Action_Provenance_Module/002-File_Viewer_UI_Context/.versions/2026-09-27-215608.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/.versions/2026-09-23-065033.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/.versions/2026-09-23-065037.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/.versions/2026-09-23-065037.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/001-Decisions/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/.versions/2026-09-23-065038.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/002-Unfinished_Work/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/000-Platform_And_Plugins/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/.versions/2026-09-23-065037.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/001-Platform_Boundaries/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/.versions/2026-09-23-065037.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/002-Plugin_Templates_And_Instances/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/.versions/2026-09-23-065038.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/003-Composable_Presentation/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/.versions/2026-09-23-065038.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/004-Tabs_Drawers_And_Files/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/.versions/2026-09-23-065038.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/005-Data_And_Actions/PAGE.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/.versions/2026-09-23-065038.md",
+      "old": null
+    },
+    {
+      "status": "??",
+      "path": "ai/RC-MacAir-15/Wiki/011-Platform_And_Plugins/006-Custom_Iframe_Composition/PAGE.md",
+      "old": null
+    }
+  ]
+}

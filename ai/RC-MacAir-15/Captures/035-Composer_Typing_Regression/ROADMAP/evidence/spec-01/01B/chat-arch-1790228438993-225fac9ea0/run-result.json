@@ -1,0 +1,18 @@
+{
+  "runId": "chat-arch-1790228438993-225fac9ea0",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R1-FIVE-MINUTE-TYPING",
+      "code": 0,
+      "signal": null,
+      "pid": 16386,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 359803
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

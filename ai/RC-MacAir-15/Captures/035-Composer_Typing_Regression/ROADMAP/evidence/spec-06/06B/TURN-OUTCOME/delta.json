@@ -1,0 +1,50 @@
+[
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs",
+    "before": "24d5678272f01c41aa92e183acf2bcf1b4d33d17fb06e04700aa2aacff6dc7ad",
+    "after": "a6add386edbc5fab53a8fb3a53c4a2b8ed75bdcef947e36c87d71ff5a4f1921a",
+    "new": false
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/run.mjs",
+    "before": "ca520a2eac7a9c97afe67685a98277e12b02f953aaa87785facac0d2363d2755",
+    "after": "783e836858890ec6f8a2adc22c4393a0fccd6d7843f70f453331be32280959ef",
+    "new": false
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/turn-outcome-electron.mjs",
+    "before": null,
+    "after": "f157ba13140dc3bf025a8b457c52c7ced632005b08734d714c451d5250bcc8c8",
+    "new": true
+  },
+  {
+    "path": "fusion-studio-client/e2e/chat-architecture/turn-outcome-native.cjs",
+    "before": null,
+    "after": "90f4021af4c3746bd6d6928dd5a7c98eee5ba0548903ac6831483b2a0dc1d6b2",
+    "new": true
+  },
+  {
+    "path": "fusion-studio-server/lib/harness/opencode/failure-marker-builder.js",
+    "before": "395566efd9a2e2c75d9569d93366f61fa119d6f80a6cdbf26c42f5b56dd4582b",
+    "after": "f99ce4bc0056b7cbdac6ee1f89d0520862e25c543081779101d1577ca2c09772",
+    "new": false
+  },
+  {
+    "path": "fusion-studio-server/lib/harness/opencode/index.js",
+    "before": "344c6a8ed07e05124bfdaf3d4e7974456147e883a0602b09b2c081733d0eda70",
+    "after": "14c6dff6c5a83bd3f1c7008547efb6720527c94f88c75ebd47b1047ddd992afb",
+    "new": false
+  },
+  {
+    "path": "fusion-studio-server/lib/harness/opencode/turn-outcome.js",
+    "before": null,
+    "after": "b01efd354b33b383fc27d0dbcf4dbb206bf581463357397616eaac564ccf14f1",
+    "new": true
+  },
+  {
+    "path": "fusion-studio-server/test/harness/opencode/turn-outcome.test.js",
+    "before": null,
+    "after": "2f4fbf9698ec4a3a5add20779cac25135003328b33e8f71aa562d98016869503",
+    "new": true
+  }
+]

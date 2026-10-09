@@ -1,0 +1,13 @@
+{
+  "status": "failed",
+  "flows": {},
+  "screenshots": [],
+  "frameCounts": {},
+  "errors": [],
+  "consoleErrors": [],
+  "failure": {
+    "message": "staged patch saved turn acknowledgement gates expected one match, found 0",
+    "stack": "Error: staged patch saved turn acknowledgement gates expected one match, found 0\n    at replaceOnce (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/stage-fixture.mjs:28:11)\n    at installFaultSeams (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/stage-fixture.mjs:73:3)\n    at stageFixture (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/stage-fixture.mjs:120:3)\n    at stageAndLaunch (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs:99:24)\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r8-ui-electron.mjs:16:19\n    at ModuleJob.run (node:internal/modules/esm/module_job:430:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:655:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)"
+  },
+  "lingering": []
+}

@@ -1,0 +1,27 @@
+{
+  "captured_at": "2026-10-04T17:06:34.599599+00:00",
+  "preimage_path": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki/001-Checklist/001-Checklist_Guide/.versions/2026-10-04-095624.md",
+  "complete_preimage_bytes": 1620,
+  "preimage_sha256": "a3d372eba6208c2fbee71cd046f305a91fc7c44185c5dae42b5da50e5cbcfdce",
+  "complete_preimage_readback": "---\nname: Checklist Guide\ndescription: How to complete and revisit the disposable checklist.\nmetadata:\n  source-files:\n    - rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js\n    - rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js\n    - scripts/fusion-restart-target.mjs\n    - scripts/fusion-restart.mjs\n  last-modified: \"2026-10-04T15:18:44Z\"\n---\n\n# Checklist Guide\n\nThe checklist contains Draft report, Review sources and Send summary. Select a task checkbox to complete it; clear the checkbox to make it incomplete again. All three task rows and their checkboxes remain visible, including completed tasks.\n\nThe summary uses `N remaining of 3`, where N counts incomplete tasks. With all tasks incomplete it reads `3 remaining of 3`. Complete Draft report to reach `2 remaining of 3`, then Review sources to reach `1 remaining of 3`; clear Draft report to return to `2 remaining of 3`. Completing every task reaches `0 remaining of 3`, and clearing every checkbox returns to `3 remaining of 3`.\n\nAn ordinary iframe or shell reload within the same profile retains completion. After the example above, reloading keeps Review sources checked, Draft report and Send summary incomplete, and the summary at `2 remaining of 3`. A full canonical development restart clears browser storage, including Local Storage and Session Storage, so the checklist starts with all three tasks incomplete and `3 remaining of 3`.\n\nOpen the built-in Wiki view to return to this guide. See the [Navigation Guide](../002-Navigation_Guide/PAGE.md) for movement between views.\n",
+  "dependencies_rechecked_at": "2026-10-04T17:06:34.959913+00:00",
+  "write_clock": "2026-10-04T17:06:34.959920+00:00",
+  "quoted_last_modified": "2026-10-04T17:06:34Z",
+  "written_at": "2026-10-04T17:06:34.960121+00:00",
+  "final_page": {
+    "exists": true,
+    "kind": "file",
+    "sha256": "5f09372532fa58527e844bd0f60678e592e48cbf2f92cd38ee611c209afb6b8b",
+    "mode": "0o100644",
+    "mtime_ns": 1791133594960000239,
+    "bytes": 2218
+  },
+  "final_version": {
+    "exists": true,
+    "kind": "file",
+    "sha256": "a3d372eba6208c2fbee71cd046f305a91fc7c44185c5dae42b5da50e5cbcfdce",
+    "mode": "0o100644",
+    "mtime_ns": 1791133594599550684,
+    "bytes": 1620
+  }
+}

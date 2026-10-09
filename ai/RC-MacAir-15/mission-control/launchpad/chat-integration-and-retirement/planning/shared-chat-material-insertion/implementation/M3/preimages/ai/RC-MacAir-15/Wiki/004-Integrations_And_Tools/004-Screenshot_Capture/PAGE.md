@@ -1,0 +1,46 @@
+---
+name: Screenshot Capture
+description: Direct app captures, exact chat attachments, saved-image gallery, workspace previews, and storage limits.
+metadata:
+  source-files:
+    - fusion-studio-client/src/state/chatFileLinkStore.ts
+    - fusion-studio-client/src/lib/chat/side-chat-placements.ts
+    - fusion-studio-client/src/state/slices/chatSurfaceSlice.ts
+    - fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx
+    - fusion-studio-client/src/components/chat/ChatSurface.tsx
+    - fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx
+    - fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx
+    - fusion-studio-client/src/components/App.tsx
+    - fusion-studio-server/lib/screenshot/ws-handlers.js
+    - fusion-studio-client/electron/ipc/capture-handlers.cjs
+    - fusion-studio-client/electron/ipc/screenshot-handlers.cjs
+    - fusion-studio-client/src/screenshots/chatScreenshotCapture.ts
+    - fusion-studio-client/src/screenshots/ScreenshotsTrigger.tsx
+    - fusion-studio-client/src/hooks/useScreenshotCapture.ts
+    - fusion-studio-server/lib/workspace/screenshot-service.js
+  last-modified: "2026-10-06T22:15:19Z"
+---
+
+## In-app captures and attachments
+
+In the desktop app, **Take screenshot** captures the focused Fusion Studio window. The capture controller snapshots the destination chat and socket before awaiting native capture, then sends `screenshot:file-capture` with that workspace and a request ID. The server validates the active workspace and saves a PNG under its `ai/<machine>/Data/Screenshots/`. Only the matching `screenshot:file-captured` response supplies the saved path for a pending attachment in that exact workspace and chat session; an unrelated response cannot attach a file.
+
+The composer Add menu supplies its explicit workspace, view, Thread group, chat session and mounted-surface lifetime. The view's Main Chat follows its selected Thread group and current primary session. A Main Chat mounted as an explicit content component keeps its hydrated session independently of the outer thread rail. A Side Chat keeps its own session and open service-managed placement, so changing Main Chat selection cannot redirect its capture. The global header camera resolves the selected Main Chat in the active view; it falls back to the current Legacy session only when no qualified Main Chat is available.
+
+The controller checks ownership before capture and again after native capture and saving. A change to the destination workspace, owning view or chat session cancels attachment; changing the selected Thread group also cancels a view-bound Main capture. Connected composers also cancel when they become inactive or unmount, or when their Side Chat placement closes. A content component retained in a hidden view cannot finish a capture for that view; switching away and back does not revive the old composer capture. Cancellation before the save request leaves no new saved file. Cancellation while the save is pending can leave the PNG in the workspace gallery, but it does not attach it to another chat.
+
+The Screenshots gallery lists image files from the workspace folder and can attach an existing one. Workspace preview images are separate: they capture the app panel on workspace changes and are stored as one PNG row per workspace in SQLite for the ribbon and carousel.
+
+## macOS screenshots
+
+Automatic import from the macOS screenshot folder and source-folder refresh are retired. Taking a screenshot with Fusion Studio remains available through the direct in-app capture path described above. Existing files already saved in a workspace's `ai/<machine>/Data/Screenshots/` remain available to the gallery and can be attached manually. No source-folder monitor is running.
+
+## Optional source location and CLI route
+
+Changing the macOS screenshot destination does not configure Fusion Studio imports. No refresh command or restart will bind an automatic source-folder watcher. A CLI working in this repository may separately use `ai/screenshots/desktop` as a symlink to a macOS source folder after checking that no path would be replaced.
+
+A symlink only exposes its target to processes with appropriate permissions. It is not inherently read-only, does not feed the app gallery and does not route captures to a workspace.
+
+## Storage and privacy
+
+Git ignore rules for the repository's screenshot and machine-scoped data folders affect ordinary tracking, not other access or sharing paths. Saved screenshots and previews can contain sensitive content. Review an image before attaching it to an AI chat or sharing a workspace. The gallery limits its display to 20 items, not storage to 20 files; deleting a saved image can break a chat attachment that refers to it. [Setup](../../006-Operations/001-Setup/PAGE.md) treats source-location changes as optional.

@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "R8-OWNER-GRAPH",
+      "name": "Final backend owner graph, line limits and detector sensitivity"
+    },
+    {
+      "id": "R8-UI-LIFECYCLE",
+      "name": "Authenticated production UI create, Send, Stop, Move, reconnect and Delete with durable readback"
+    },
+    {
+      "id": "R7-R8-RUNTIME-OWNERSHIP",
+      "name": "R7/R8 exact activation, drain, Stop and terminal ownership"
+    },
+    {
+      "id": "R8-MIRROR-RECOVERY",
+      "name": "R8 mirror/delete/Move faults, receipt cascade and restart readback through isolated public routes"
+    },
+    {
+      "id": "R8-SESSION-LIFECYCLE",
+      "name": "R8 session create/open/warm/close/capacity and transactional faults through isolated public routes"
+    }
+  ],
+  "fixture": "fresh disposable profile, migrated fusion.db, fresh empty Capture workspace",
+  "adapter": "canonical deterministic OpenCode iterator at 20 text frames/second",
+  "scenarioInventory": "R1-R9 concrete IDs and later owning contracts in scenario-inventory.mjs",
+  "enforcementGroup": [
+    "R8-GROUP-BACKEND-MATRIX"
+  ]
+}

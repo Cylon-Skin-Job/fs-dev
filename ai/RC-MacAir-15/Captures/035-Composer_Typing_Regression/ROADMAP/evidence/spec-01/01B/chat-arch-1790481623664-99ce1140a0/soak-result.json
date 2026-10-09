@@ -1,0 +1,609 @@
+{
+  "status": "failed",
+  "windows": [],
+  "cycles": [],
+  "samples": [],
+  "durationMs": 2700000,
+  "errors": [],
+  "observationAdapter": {
+    "excludedRuntimeLogs": {
+      "server-live.log": true,
+      "server.log": true,
+      "wire-debug.log": true,
+      "wire-debug.log.old": true
+    },
+    "renderer": "index-DPvPlLbo.js",
+    "originalRendererSha256": "be858458542b8736cebf75e36b2ce8304547158e631bb9251f1d6f3c0138ad76",
+    "observedRendererSha256": "69d579a2099b1aad308cd70c2e84285b72dec39a64341ab619b18080fea37670",
+    "server": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01B/chat-arch-1790481623664-99ce1140a0/soak-server-resources.ndjson",
+    "mode": "read-only counts; fixture-only stage observation, bounded 16 thread IDs"
+  },
+  "fixtures": {
+    "f2": {
+      "id": "F2-DETERMINISTIC-HISTORY-V1",
+      "exchanges": 30,
+      "renderedMessages": 60,
+      "includes": [
+        "text",
+        "code",
+        "lists",
+        "tables",
+        "collapsed-tool-results",
+        "reply-metadata"
+      ],
+      "dense": {
+        "exchanges": 2,
+        "assistantPayloadBytes": 534528,
+        "sha256": "9b06d21b677d93e4479544db39cf56f86eb4d3cd25fb603740407f263e7420dc"
+      }
+    },
+    "f3": {
+      "id": "F3-DETERMINISTIC-WORKSPACE-V1",
+      "algorithm": "label-repeated-to-fixed-byte-count",
+      "counts": {
+        "smallFiles": 1000,
+        "captureFolders": 100,
+        "wikiPages": 100,
+        "officeDocuments": 20
+      },
+      "totalFiles": 1220,
+      "totalContentBytes": 11059200,
+      "root": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790481623664-99ce1140a0-DqXLAB/soak-workspace/sustained-project",
+      "everyPathFixtureContained": true,
+      "manifestHash": "421c0ef8f5e255bb333a82a9f26d28c74eb2c8d55e95fc262ad241ed45740079"
+    },
+    "f5": {
+      "frameIntervalMs": 50,
+      "textFrames": 10000,
+      "maxCharacters": 200
+    }
+  },
+  "identity": {
+    "baseThreadId": "2026-09-26T21-00-27-727",
+    "baseGroupId": "tg-54972ba6-6b30-4f3b-a69c-db12353a68d5",
+    "denseThreadId": "2026-09-26T21-00-27-923",
+    "project": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790481623664-99ce1140a0-DqXLAB/soak-workspace/sustained-project"
+  },
+  "routes": {
+    "sequence": 35,
+    "frames": [
+      {
+        "sequence": 1,
+        "at": 1790481632287,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mujaj9br-0",
+        "groupId": "tg-c7ff2918-f028-4004-a3e6-8780a4441d92",
+        "lane": "content",
+        "contentRevision": "wsr_4105a1b49357acbfeba1e0cb543e1377",
+        "placementRevision": "wsr_d0b78f70c2db2d241746cae62e244d77"
+      },
+      {
+        "sequence": 2,
+        "at": 1790481632534,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-switch-mujaj9ih-1",
+        "groupId": "tg-c7ff2918-f028-4004-a3e6-8780a4441d92",
+        "lane": "content",
+        "contentRevision": "wsr_6d684596b5b38fc88928e71763abfd67",
+        "placementRevision": "wsr_d0b78f70c2db2d241746cae62e244d77"
+      },
+      {
+        "sequence": 3,
+        "at": 1790481632576,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mujaj9jq-2",
+        "groupId": "tg-54972ba6-6b30-4f3b-a69c-db12353a68d5",
+        "lane": "content",
+        "contentRevision": "wsr_a16c71512a2536c908758dfe361b7780",
+        "placementRevision": "wsr_a72abfac0c2fa45064ba0a65894ee5b7"
+      },
+      {
+        "sequence": 4,
+        "at": 1790481634661,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-switch-mujajb6f-3",
+        "groupId": "tg-54972ba6-6b30-4f3b-a69c-db12353a68d5",
+        "lane": "content",
+        "contentRevision": "wsr_4b06bd3f3077f2b3447f24abd7bf61fa",
+        "placementRevision": "wsr_a72abfac0c2fa45064ba0a65894ee5b7"
+      },
+      {
+        "sequence": 5,
+        "at": 1790481634831,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mujajb6t-4",
+        "groupId": "tg-c7ff2918-f028-4004-a3e6-8780a4441d92",
+        "lane": "content",
+        "contentRevision": "wsr_6d684596b5b38fc88928e71763abfd67",
+        "placementRevision": "wsr_d0b78f70c2db2d241746cae62e244d77"
+      },
+      {
+        "sequence": 6,
+        "at": 1790481634971,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-switch-mujajbf4-5",
+        "groupId": "tg-c7ff2918-f028-4004-a3e6-8780a4441d92",
+        "lane": "content",
+        "contentRevision": "wsr_f01d16b5555e40befcf574a8ca2bd066",
+        "placementRevision": "wsr_d0b78f70c2db2d241746cae62e244d77"
+      },
+      {
+        "sequence": 7,
+        "at": 1790481634986,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mujajbff-6",
+        "groupId": "tg-54972ba6-6b30-4f3b-a69c-db12353a68d5",
+        "lane": "content",
+        "contentRevision": "wsr_4b06bd3f3077f2b3447f24abd7bf61fa",
+        "placementRevision": "wsr_a72abfac0c2fa45064ba0a65894ee5b7"
+      },
+      {
+        "sequence": 8,
+        "at": 1790481635253,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mujajbmi-7",
+        "groupId": "tg-e7cf2cc7-a3f4-4281-bb32-65924c0838d7",
+        "lane": "content",
+        "contentRevision": null,
+        "placementRevision": null
+      },
+      {
+        "sequence": 9,
+        "at": 1790481635536,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-switch-mujajbux-8",
+        "groupId": "tg-54972ba6-6b30-4f3b-a69c-db12353a68d5",
+        "lane": "content",
+        "contentRevision": "wsr_246d204dcd2852af6f6321a1a70aaf79",
+        "placementRevision": "wsr_a72abfac0c2fa45064ba0a65894ee5b7"
+      },
+      {
+        "sequence": 10,
+        "at": 1790481635629,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mujajbv4-9",
+        "groupId": "tg-e7cf2cc7-a3f4-4281-bb32-65924c0838d7",
+        "lane": "content",
+        "contentRevision": null,
+        "placementRevision": null
+      },
+      {
+        "sequence": 11,
+        "at": 1790481635870,
+        "direction": "inbound",
+        "type": "thread:action:completed",
+        "action": "move_chat_to_side",
+        "requestId": "2b13e97f-2f5d-482e-96b4-45394ed64df3",
+        "threadId": "2026-09-26T21-00-35-124",
+        "groupId": "tg-e7cf2cc7-a3f4-4281-bb32-65924c0838d7"
+      },
+      {
+        "sequence": 12,
+        "at": 1790481635872,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mujajc4e-a",
+        "groupId": "tg-e7cf2cc7-a3f4-4281-bb32-65924c0838d7",
+        "lane": "content",
+        "contentRevision": "wsr_5bafa5b67adaef70d91adbce0d714a0c",
+        "placementRevision": "wsr_d9bc7299707c1773bb5036a6457dcf25"
+      },
+      {
+        "sequence": 13,
+        "at": 1790481636880,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "2b857e81901d48bcdc053311837f75cf",
+        "threadId": "2026-09-26T21-00-35-124"
+      },
+      {
+        "sequence": 14,
+        "at": 1790481637290,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "2b857e81901d48bcdc053311837f75cf",
+        "threadId": "2026-09-26T21-00-35-124",
+        "turnId": "1f342447-d366-4ee7-8f2e-d0a8c002ccbb"
+      },
+      {
+        "sequence": 15,
+        "at": 1790481637299,
+        "direction": "inbound",
+        "type": "turn_begin",
+        "threadId": "2026-09-26T21-00-35-124",
+        "turnId": "1f342447-d366-4ee7-8f2e-d0a8c002ccbb"
+      },
+      {
+        "sequence": 16,
+        "at": 1790481637441,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "a31024d767bee8347f6296a51fd676e6",
+        "threadId": "th-6c3a55c9-c173-4c37-9971-4f43caaa7b93"
+      },
+      {
+        "sequence": 17,
+        "at": 1790481637848,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "a31024d767bee8347f6296a51fd676e6",
+        "threadId": "th-6c3a55c9-c173-4c37-9971-4f43caaa7b93",
+        "turnId": "cb3a111a-7250-4b83-9c51-ccb19b2431df"
+      },
+      {
+        "sequence": 18,
+        "at": 1790481637855,
+        "direction": "inbound",
+        "type": "turn_begin",
+        "threadId": "th-6c3a55c9-c173-4c37-9971-4f43caaa7b93",
+        "turnId": "cb3a111a-7250-4b83-9c51-ccb19b2431df"
+      },
+      {
+        "sequence": 19,
+        "at": 1790481639138,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-flush-mujajemg-b",
+        "groupId": "tg-e7cf2cc7-a3f4-4281-bb32-65924c0838d7",
+        "lane": "content",
+        "contentRevision": "wsr_0a204a23117ed23af8cc24debbd0972b",
+        "placementRevision": "wsr_d9bc7299707c1773bb5036a6457dcf25"
+      },
+      {
+        "sequence": 20,
+        "at": 1790481639356,
+        "direction": "inbound",
+        "type": "turn_end",
+        "threadId": "2026-09-26T21-00-35-124",
+        "turnId": "1f342447-d366-4ee7-8f2e-d0a8c002ccbb"
+      },
+      {
+        "sequence": 21,
+        "at": 1790481639601,
+        "direction": "inbound",
+        "type": "chat-turn:saved",
+        "threadId": "2026-09-26T21-00-35-124",
+        "turnId": "1f342447-d366-4ee7-8f2e-d0a8c002ccbb"
+      },
+      {
+        "sequence": 22,
+        "at": 1790481640323,
+        "direction": "outbound",
+        "type": "prompt",
+        "requestId": "abeec4892a5f20a43496d49e382f94fb",
+        "threadId": "2026-09-26T21-00-35-124"
+      },
+      {
+        "sequence": 23,
+        "at": 1790481640728,
+        "direction": "inbound",
+        "type": "message:sent",
+        "requestId": "abeec4892a5f20a43496d49e382f94fb",
+        "threadId": "2026-09-26T21-00-35-124",
+        "turnId": "a9dc4b8c-51d3-47b2-9264-6ca1e527bbf5"
+      },
+      {
+        "sequence": 24,
+        "at": 1790481640733,
+        "direction": "inbound",
+        "type": "turn_begin",
+        "threadId": "2026-09-26T21-00-35-124",
+        "turnId": "a9dc4b8c-51d3-47b2-9264-6ca1e527bbf5"
+      },
+      {
+        "sequence": 25,
+        "at": 1790481640788,
+        "direction": "inbound",
+        "type": "turn_end",
+        "threadId": "th-6c3a55c9-c173-4c37-9971-4f43caaa7b93",
+        "turnId": "cb3a111a-7250-4b83-9c51-ccb19b2431df"
+      },
+      {
+        "sequence": 26,
+        "at": 1790481641030,
+        "direction": "inbound",
+        "type": "chat-turn:saved",
+        "threadId": "th-6c3a55c9-c173-4c37-9971-4f43caaa7b93",
+        "turnId": "cb3a111a-7250-4b83-9c51-ccb19b2431df"
+      },
+      {
+        "sequence": 27,
+        "at": 1790481641772,
+        "direction": "inbound",
+        "type": "turn_end",
+        "threadId": "2026-09-26T21-00-35-124",
+        "turnId": "a9dc4b8c-51d3-47b2-9264-6ca1e527bbf5"
+      },
+      {
+        "sequence": 28,
+        "at": 1790481642019,
+        "direction": "inbound",
+        "type": "chat-turn:saved",
+        "threadId": "2026-09-26T21-00-35-124",
+        "turnId": "a9dc4b8c-51d3-47b2-9264-6ca1e527bbf5"
+      },
+      {
+        "sequence": 29,
+        "at": 1790481642173,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-placement-close-mujajgz1-c",
+        "groupId": "tg-e7cf2cc7-a3f4-4281-bb32-65924c0838d7",
+        "lane": "placement",
+        "contentRevision": "wsr_0a204a23117ed23af8cc24debbd0972b",
+        "placementRevision": "wsr_15e745586e386fa66fb61946c28e474c"
+      },
+      {
+        "sequence": 30,
+        "at": 1790481642537,
+        "direction": "inbound",
+        "type": "thread:action:completed",
+        "action": "open_member_in_side",
+        "requestId": "c3b80b7d-71f9-478e-8e62-9780d740ad4f",
+        "threadId": "2026-09-26T21-00-35-124",
+        "groupId": "tg-e7cf2cc7-a3f4-4281-bb32-65924c0838d7"
+      },
+      {
+        "sequence": 31,
+        "at": 1790481642538,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mujajh9k-d",
+        "groupId": "tg-e7cf2cc7-a3f4-4281-bb32-65924c0838d7",
+        "lane": "content",
+        "contentRevision": "wsr_0a204a23117ed23af8cc24debbd0972b",
+        "placementRevision": "wsr_f86504fda134d3db2063f81b46d00ae4"
+      },
+      {
+        "sequence": 32,
+        "at": 1790481645704,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mujajjm1-e",
+        "groupId": "tg-e7cf2cc7-a3f4-4281-bb32-65924c0838d7",
+        "lane": "content",
+        "contentRevision": "wsr_0a204a23117ed23af8cc24debbd0972b",
+        "placementRevision": "wsr_f86504fda134d3db2063f81b46d00ae4"
+      },
+      {
+        "sequence": 33,
+        "at": 1790481645853,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mujajjtg-f",
+        "groupId": "tg-e7cf2cc7-a3f4-4281-bb32-65924c0838d7",
+        "lane": "content",
+        "contentRevision": "wsr_0a204a23117ed23af8cc24debbd0972b",
+        "placementRevision": "wsr_f86504fda134d3db2063f81b46d00ae4"
+      },
+      {
+        "sequence": 34,
+        "at": 1790481647395,
+        "direction": "inbound",
+        "type": "thread:action:completed",
+        "action": "delete",
+        "requestId": "60db5aeb-a5fe-4c9a-aed0-7f1df6824c66",
+        "threadId": "th-6c3a55c9-c173-4c37-9971-4f43caaa7b93",
+        "groupId": "tg-e7cf2cc7-a3f4-4281-bb32-65924c0838d7"
+      },
+      {
+        "sequence": 35,
+        "at": 1790481647814,
+        "direction": "inbound",
+        "type": "state:worksurface_result",
+        "requestId": "worksurface-get-mujajl40-g",
+        "groupId": "tg-c7ff2918-f028-4004-a3e6-8780a4441d92",
+        "lane": "content",
+        "contentRevision": "wsr_f01d16b5555e40befcf574a8ca2bd066",
+        "placementRevision": "wsr_d0b78f70c2db2d241746cae62e244d77"
+      }
+    ],
+    "content": {
+      "2026-09-26T21-00-35-124": {
+        "count": 59,
+        "firstAt": 1790481637311,
+        "maxCharacters": 28,
+        "lastAt": 1790481641719
+      },
+      "th-6c3a55c9-c173-4c37-9971-4f43caaa7b93": {
+        "count": 57,
+        "firstAt": 1790481637861,
+        "maxCharacters": 28,
+        "lastAt": 1790481640765
+      }
+    },
+    "errors": [],
+    "worksurfaces": [
+      {
+        "cycle": "warmup",
+        "label": "before-reconnect",
+        "bindings": {
+          "sustained-project::capture-viewer": {
+            "workspaceId": "sustained-project",
+            "viewId": "capture-viewer",
+            "threadGroupId": "tg-e7cf2cc7-a3f4-4281-bb32-65924c0838d7",
+            "adapterId": "capture-viewer",
+            "adapterVersion": 1,
+            "contentRevision": "wsr_0a204a23117ed23af8cc24debbd0972b",
+            "placementRevision": "wsr_f86504fda134d3db2063f81b46d00ae4"
+          }
+        },
+        "pending": {},
+        "conflicts": {},
+        "entries": [
+          "sustained-project::capture-viewer::tg-c7ff2918-f028-4004-a3e6-8780a4441d92",
+          "sustained-project::capture-viewer::tg-54972ba6-6b30-4f3b-a69c-db12353a68d5",
+          "sustained-project::capture-viewer::tg-e7cf2cc7-a3f4-4281-bb32-65924c0838d7"
+        ],
+        "remote": {}
+      },
+      {
+        "cycle": "warmup",
+        "label": "after-reconnect",
+        "bindings": {
+          "sustained-project::capture-viewer": {
+            "workspaceId": "sustained-project",
+            "viewId": "capture-viewer",
+            "threadGroupId": "tg-e7cf2cc7-a3f4-4281-bb32-65924c0838d7",
+            "adapterId": "capture-viewer",
+            "adapterVersion": 1,
+            "contentRevision": "wsr_0a204a23117ed23af8cc24debbd0972b",
+            "placementRevision": "wsr_f86504fda134d3db2063f81b46d00ae4"
+          }
+        },
+        "pending": {},
+        "conflicts": {},
+        "entries": [
+          "sustained-project::capture-viewer::tg-c7ff2918-f028-4004-a3e6-8780a4441d92",
+          "sustained-project::capture-viewer::tg-54972ba6-6b30-4f3b-a69c-db12353a68d5",
+          "sustained-project::capture-viewer::tg-e7cf2cc7-a3f4-4281-bb32-65924c0838d7"
+        ],
+        "remote": {}
+      }
+    ]
+  },
+  "calibration": {
+    "counts": {
+      "renderTextInstant": 32,
+      "MessageList": 2,
+      "InstantSegmentRenderer": 32,
+      "ChatAreaHeader": 18,
+      "ThreadRail": 19,
+      "ContentArea": 9,
+      "ChatAreaFooter": 16
+    },
+    "discovered": [
+      "ChatAreaFooter",
+      "ChatAreaHeader",
+      "ContentArea",
+      "InstantSegmentRenderer",
+      "MessageList",
+      "ThreadRail",
+      "renderTextInstant"
+    ]
+  },
+  "attributionCalibration": {
+    "enabled": false,
+    "counts": {
+      "2026-09-26T21-00-27-923": 1,
+      "2026-09-26T21-00-27-727": 1
+    },
+    "overflow": 0
+  },
+  "setupBootstrap": {
+    "requiredLifecycle": [
+      "screenshot:capture",
+      "screenshot:updated",
+      "screenshot:request",
+      "screenshot:data"
+    ],
+    "quietMs": 500,
+    "documentId": "2d680a76-00b2-458e-8d67-0bf1faa39217",
+    "finalTrafficSequence": 897,
+    "lifecycle": [
+      {
+        "sequence": 894,
+        "atMs": 1621.4,
+        "direction": "outbound",
+        "type": "screenshot:capture"
+      },
+      {
+        "sequence": 895,
+        "atMs": 1626.4,
+        "direction": "inbound",
+        "type": "screenshot:updated"
+      },
+      {
+        "sequence": 896,
+        "atMs": 1626.5,
+        "direction": "outbound",
+        "type": "screenshot:request"
+      },
+      {
+        "sequence": 897,
+        "atMs": 1628.9,
+        "direction": "inbound",
+        "type": "screenshot:data"
+      }
+    ]
+  },
+  "observerCalibration": [
+    75
+  ],
+  "failure": {
+    "message": "native Delete ACK deadline elapsed",
+    "stack": "Error: native Delete ACK deadline elapsed\n    at waitForDeleteAck (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/soak-delete-native.mjs:26:9)\n    at async Object.run (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/soak-delete-native.mjs:74:21)\n    at async deleteGroup (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/soak-actions.mjs:71:23)\n    at async lifecycleCycle (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/soak-actions.mjs:128:3)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/soak-electron.mjs:142:19",
+    "dom": {
+      "body": "AI source\nLocal: RC-MacAir-15\narrow_drop_down\nConnected\nchevron_left\nSustained Input Fixture\nchevron_right\ncontrol_camera\nfirst_page\nlast_page\ndiscover_tune\nhub\nmacOS Connectors\nmail\nApple Mail\ncalendar_month\nApple Calendar\nnote_stack\nApple Notes\ntask_alt\nApple Reminders\nClose\nopen_run\ncode_blocks\nfull_coverage\nbusiness_messages\nrobot_2\ndescription\nsettings\ndock_to_right\nActive Threads\nArchive\nedit_square\nNew chat\n2026-09-26T21-00-27\nmore_vert\n0 msgs · just now\n2026-09-26T21-00-27\nmore_vert\n0 msgs · just now\nevent_list\nSynthetic dense request one\n\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content.\nF2 dense assistant payload :: deterministic Fusion Studio chat architecture workload; no private content",
+      "surfaces": [
+        {
+          "thread": "2026-09-26T21-00-27-923",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        },
+        {
+          "thread": "",
+          "host": "main"
+        }
+      ]
+    }
+  },
+  "ownedFocus": {
+    "pid": 41953,
+    "windowId": 1,
+    "events": [
+      {
+        "type": "installed",
+        "at": 1790481629911,
+        "focused": true,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      },
+      {
+        "type": "show",
+        "at": 1790481629980,
+        "focused": true,
+        "appHidden": false,
+        "visible": true,
+        "minimized": false
+      }
+    ],
+    "overflow": 0
+  },
+  "lingeringOwnedPids": [],
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  }
+}

@@ -1,0 +1,241 @@
+diff --git a/fusion-studio-client/src/components/LiveSegmentRenderer.tsx b/fusion-studio-client/src/components/LiveSegmentRenderer.tsx
+index 7e690a0..52c3a55 100644
+--- a/fusion-studio-client/src/components/LiveSegmentRenderer.tsx
++++ b/fusion-studio-client/src/components/LiveSegmentRenderer.tsx
+@@ -36,7 +36,6 @@ import { DEFAULT_TIMING_PROFILE } from '../lib/timing';
+ import { animateTool } from '../lib/tool-animate';
+ import { renderTextInstant } from '../lib/text';
+ import { animateText } from '../lib/text/text-animate';
+-import { sleep } from '../lib/animate-utils';
+ import { ToolCallBlock } from './ToolCallBlock';
+ import { Orb } from './Orb';
+ import { HourglassFlow } from './chat/HourglassFlow';
+@@ -67,13 +66,22 @@ interface LiveSegmentRendererProps {
+   activity?: TurnActivity | null;
+ }
+ 
+-export function LiveSegmentRenderer({ turnId, segments, onRevealComplete, activity }: LiveSegmentRendererProps) {
++export function LiveSegmentRenderer(props: LiveSegmentRendererProps) {
++  // A replacement turn owns a fresh frontier and retires every old continuation.
++  return <LiveTurnSegments key={props.turnId} {...props} />;
++}
++
++function LiveTurnSegments({ turnId, segments, onRevealComplete, activity }: LiveSegmentRendererProps) {
+   const [orbDone, setOrbDone] = useState(false);
+   const [orbDisposing, setOrbDisposing] = useState(false);
+   const [revealedCount, setRevealedCount] = useState(0);
+   const prevLenRef = useRef(0);
+   const hasTokenRef = useRef(false);
+   const finalizedRef = useRef(false);
++  const lastRenderableRef = useRef(-1);
++  lastRenderableRef.current = segments.reduce((last, seg, i) =>
++    seg.type !== 'text' || seg.content.length > 0 ? i : last, -1);
++  const hasQueuedItemAfter = useCallback((index: number) => lastRenderableRef.current > index, []);
+ 
+   useEffect(() => {
+     setOrbDone(false);
+@@ -143,8 +151,8 @@ export function LiveSegmentRenderer({ turnId, segments, onRevealComplete, activi
+   // onSegmentDone: ONLY bumps the counter. No completion logic here.
+   // Stable callback — no deps, no stale closure risk. Every mounted
+   // segment gets the same function reference.
+-  const onSegmentDone = useCallback(() => {
+-    setRevealedCount(prev => prev + 1);
++  const onSegmentDone = useCallback((index: number) => {
++    setRevealedCount(prev => prev === index ? prev + 1 : prev);
+   }, []);
+ 
+   // Completion detection: reactive effect, not a callback.
+@@ -235,6 +243,8 @@ export function LiveSegmentRenderer({ turnId, segments, onRevealComplete, activi
+             <LiveToolSegment
+               segment={seg}
+               index={i}
++              hasQueuedNext={hasQueuedItemAfter(i)}
++              hasQueuedItemAfter={hasQueuedItemAfter}
+               skipShimmer={i === 0}
+               getTimingProfile={getTimingProfile}
+               onDone={onSegmentDone}
+@@ -311,6 +321,8 @@ function LiveTextSegment({ segment, index, skipAnimation, getTimingProfile, onDo
+ // ── Live Tool Segment ─────────────────────────────────────────────────
+ 
+ interface LiveToolSegmentProps {
++  hasQueuedNext: boolean;
++  hasQueuedItemAfter: (index: number) => boolean;
+   segment: StreamSegment;
+   index: number;
+   /** Skip shimmer delay — used for first segment after orb (orb already bridged the wait) */
+@@ -333,15 +345,18 @@ interface LiveToolSegmentProps {
+  * boundary, returning the stable timing profile. Reveal speed is
+  * controlled by chunk queue lookahead inside the reveal controllers.
+  */
+-function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTimingProfile, onDone }: LiveToolSegmentProps) {
++function LiveToolSegment({ segment, index, hasQueuedNext, hasQueuedItemAfter, skipShimmer, skipAnimation, getTimingProfile, onDone }: LiveToolSegmentProps) {
+   const [phase, setPhase] = useState<'shimmer' | 'revealing' | 'collapsing' | 'done'>('shimmer');
+   const [expanded, setExpanded] = useState(true);
+   const [displayedContent, setDisplayedContent] = useState('');
+-  const animatingRef = useRef(false);
+   const contentRef = useRef(segment.content);
+   const completeRef = useRef(segment.complete ?? false);
+-  const cancelRef = useRef(false);
+-  const collapseMsRef = useRef(DEFAULT_TIMING_PROFILE.collapseDuration); // synced with CSS transition
++  const [collapseMs, setCollapseMs] = useState(DEFAULT_TIMING_PROFILE.collapseDuration);
++  const interruptCollapseRef = useRef<(() => void) | null>(null);
++
++  useEffect(() => {
++    if (hasQueuedNext) interruptCollapseRef.current?.();
++  }, [hasQueuedNext]);
+ 
+   contentRef.current = segment.content;
+   completeRef.current = segment.complete ?? false;
+@@ -353,9 +368,29 @@ function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTiming
+   }, [segment.type, segment.content, segment.complete]);
+ 
+   useEffect(() => {
+-    if (animatingRef.current) return;
+-    animatingRef.current = true;
+-    cancelRef.current = false;
++    // Each effect invocation has its own cancellation token (including replay).
++    const cancelled = { current: false };
++    let finishWait: (() => void) | null = null;
++    let done = false;
++    const wait = (ms: number) => new Promise<void>(resolve => {
++      const finish = () => {
++        clearTimeout(timer);
++        finishWait = null;
++        resolve();
++      };
++      const timer = setTimeout(finish, ms);
++      finishWait = finish;
++    });
++    const finish = () => {
++      if (cancelled.current || done) return;
++      done = true;
++      onDone(index);
++    };
++    const cleanup = () => {
++      cancelled.current = true;
++      interruptCollapseRef.current = null;
++      finishWait?.();
++    };
+ 
+     // Subagents are live background ledgers. They must not block later
+     // assistant text from rendering, because Kimi can keep emitting
+@@ -364,8 +399,8 @@ function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTiming
+       setDisplayedContent(contentRef.current);
+       setPhase('done');
+       setExpanded(true);
+-      setTimeout(() => onDone(index), 0);
+-      return;
++      void wait(0).then(finish);
++      return cleanup;
+     }
+ 
+     // ── Skipped segments render instantly when animation is bypassed ──
+@@ -373,8 +408,8 @@ function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTiming
+       setDisplayedContent(contentRef.current);
+       setPhase('done');
+       setExpanded(false);
+-      setTimeout(() => onDone(index), 0);
+-      return;
++      void wait(0).then(finish);
++      return cleanup;
+     }
+ 
+     // ── TIMING: Log when this segment's animate() fires ──
+@@ -392,8 +427,8 @@ function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTiming
+       if (!skipShimmer) {
+         const p = getTimingProfile();
+         if (p.shimmerTotal > 0) {
+-          await sleep(p.shimmerTotal);
+-          if (cancelRef.current) return;
++          await wait(p.shimmerTotal);
++          if (cancelled.current) return;
+         }
+       }
+ 
+@@ -407,34 +442,41 @@ function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTiming
+         console.log(`[TIMING] REVEAL START (${segment.type} #${index}) at ${revealAt.toFixed(1)}ms — ${sinceSend}ms after send`);
+       }
+       await animateTool({
+-        contentRef, completeRef, cancelRef,
++        contentRef, completeRef, cancelRef: cancelled,
+         segmentType: segment.type,
+         toolArgs: segment.toolArgs,
+         setDisplayedContent,
+         getTimingProfile,
+         onDone: () => {},  // collapse phase handles the real onDone
+       });
+-      if (cancelRef.current) return;
++      if (cancelled.current) return;
+ 
+-      // Phase 3: Collapse. The reveal is done — content has been
+-      // shown. Collapse immediately. The sequential gating
+-      // (revealedCount) ensures the next segment mounts after
+-      // this one calls onDone.
+-      setPhase('collapsing');
++      // Only later renderable items count, never parser chunks of this item.
++      // The getter reads current queue bytes even after an awaited reveal.
++      let immediate = hasQueuedItemAfter(index);
+       const collapseProfile = getTimingProfile();
+-      collapseMsRef.current = collapseProfile.collapseDuration;
+-      if (collapseProfile.postTypingPause > 0) await sleep(collapseProfile.postTypingPause);
++      interruptCollapseRef.current = () => {
++        immediate = true;
++        setCollapseMs(0);
++        setExpanded(false);
++        finishWait?.();
++      };
++      setPhase('collapsing');
++      setCollapseMs(immediate ? 0 : collapseProfile.collapseDuration);
++      if (!immediate && collapseProfile.postTypingPause > 0) await wait(collapseProfile.postTypingPause);
++      if (cancelled.current) return;
+       setExpanded(false);
+-      if (collapseProfile.collapseDuration > 0) await sleep(collapseProfile.collapseDuration);
+-
+-      // Brief gap then mount next — 100ms feels back-to-back
++      if (!immediate && collapseProfile.collapseDuration > 0) await wait(collapseProfile.collapseDuration);
++      if (cancelled.current) return;
++      // Retire lookahead before the gap: completed items stay user-expandable.
++      interruptCollapseRef.current = null;
+       setPhase('done');
+-      await sleep(100);
+-      onDone(index);
++      await wait(100);
++      finish();
+     };
+ 
+     animate();
+-    return () => { cancelRef.current = true; };
++    return cleanup;
+   }, []);
+ 
+   const renderer = getToolRenderer(segment.type);
+@@ -448,7 +490,7 @@ function LiveToolSegment({ segment, index, skipShimmer, skipAnimation, getTiming
+       expanded={expanded}
+       onToggle={() => setExpanded(!expanded)}
+       shimmer={phase === 'shimmer' || phase === 'revealing'}
+-      collapseDuration={collapseMsRef.current}
++      collapseDuration={collapseMs}
+     >
+       {renderedContent && (
+         <div
+diff --git a/fusion-studio-client/src/components/ToolCallBlock.tsx b/fusion-studio-client/src/components/ToolCallBlock.tsx
+index 7ee58bc..53ac448 100644
+--- a/fusion-studio-client/src/components/ToolCallBlock.tsx
++++ b/fusion-studio-client/src/components/ToolCallBlock.tsx
+@@ -51,7 +51,7 @@ export function ToolCallBlock({
+   const hasContent = !!children;
+ 
+   return (
+-    <div className="rv-tool-fade-in">
++    <div className="rv-tool-fade-in" style={{ '--tool-collapse-ms': `${effectiveCollapse}ms` } as React.CSSProperties}>
+       {/* Header */}
+       <button
+         type="button"
+@@ -87,7 +87,6 @@ export function ToolCallBlock({
+           className="rv-tool-content-area"
+           data-expanded={expanded ? 'true' : undefined}
+           style={{
+-            '--tool-collapse-ms': `${effectiveCollapse}ms`,
+             '--tool-border-w': visual.borderLeft?.width ?? '0px',
+             '--tool-border-color': visual.borderLeft?.color ?? 'transparent',
+             '--tool-border-pl': visual.borderLeft ? '12px' : '0px',

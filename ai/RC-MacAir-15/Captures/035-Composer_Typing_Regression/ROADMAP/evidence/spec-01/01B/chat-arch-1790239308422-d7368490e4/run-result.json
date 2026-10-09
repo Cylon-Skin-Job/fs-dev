@@ -1,0 +1,18 @@
+{
+  "runId": "chat-arch-1790239308422-d7368490e4",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R8-SESSION-LIFECYCLE",
+      "code": 0,
+      "signal": null,
+      "pid": 37174,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 8709
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

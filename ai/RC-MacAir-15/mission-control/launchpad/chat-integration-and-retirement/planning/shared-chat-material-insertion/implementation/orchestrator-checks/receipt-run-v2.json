@@ -1,0 +1,7 @@
+{
+  "updated_at": "2026-10-07T17:40:46.675366+00:00",
+  "runner": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/receipt-run.py",
+  "sha256": "1fa6b51912721ddbe48c89d1cb4d08360423723ac91431b8fea2b5aa59e51961",
+  "change": "Schema2 adds runner identity and unchanged native observer source/build/artifact and node-gyp dependency bindings; previous raw receipts preserved.",
+  "verification": "Python source compile passed; subsequent actual M3 verification commands exercise runner."
+}

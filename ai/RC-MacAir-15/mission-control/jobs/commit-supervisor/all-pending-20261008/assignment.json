@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-09T00:59:00.288830+00:00",
+  "owner": "/root",
+  "role": "Owner-authorized integration and publication",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008",
+  "private_root": "/private/tmp/fusion-main-consolidation-95vxg0_h",
+  "candidate": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate",
+  "source_repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "target": "main",
+  "baseline": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "source_worktree": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev",
+  "owner_instruction": "Commit everything and make main up to date.",
+  "operation_authority": "Consolidate current nonignored source/docs/evidence and accepted shared-material implementation, commit to main and publish main to origin. Preserve ignored runtime databases/cache. No new Alpha deployment authorization.",
+  "runtime": "Isolated disposable candidate only; no owner/Alpha app restart.",
+  "permissions": "danger-full-access; never approval policy; effective environment provided by host",
+  "model": "Inherited root settings; no override and no literal model identity assertion",
+  "active_overlap": "Track OpenCode failure modes is completing shared Launchpad documentation; await terminal readback before freeze.",
+  "prior_publication": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb already published; no repetition."
+}

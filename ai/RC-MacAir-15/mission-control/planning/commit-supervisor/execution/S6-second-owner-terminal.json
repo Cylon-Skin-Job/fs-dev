@@ -1,0 +1,25 @@
+{
+  "at": "2026-10-04T19:42:11.252691+00:00",
+  "owner": "/root",
+  "scope": "ROOT_INSPECTION_EXCLUDED_FROM_FRESH_GATES",
+  "actual_direct_child": "/root/s6_supervisor_fix_xy_1",
+  "terminal_observation": "Actual native FINAL_ANSWER COMMIT_READY_WAITING_OWNER delivered to root; exact-prefix native tree snapshot reports Supervisor+reviewers completed; earlier leaves terminal evidence retained. close_agent unavailable.",
+  "full_concrete_packet_operations_report_lifecycle_correction_and_all_deviations_inspected": true,
+  "current_checkpoint_fp_bindings": 10,
+  "packet": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/owner-packet-fix-xy.md",
+  "owner_packet_sha256": "4262b884dccc10a10b53a43e1a96e00167a5557b85f88802c324414410c29870",
+  "checkpoint": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/checkpoint-fix-xy.json",
+  "checkpoint_sha256": "3c8b1928e3eed370df4e9a8cab22fe812eabf24ed59b1ac0323c9d2a4822ec1a",
+  "fixed_job": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/fix-xy",
+  "fixed_manifest_sha256": "fd15619a9ebd65f9600e6867054ddd15dbaef589a607d2177c9f3528e33f5e9e",
+  "independent_root_inspections": [
+    "S6-root-revised-final3-inspection.json",
+    "S6-root-revised-actual-runtime-inspection.json",
+    "S6-root-second-fixed-verify.json"
+  ],
+  "correction_preimages_and_one_character_delta_verified": true,
+  "second_actual_ownerwait_complete": true,
+  "outer_S6_SPEC_acceptance_pending": true,
+  "actual_commit_push_Alpha_authorization": "NONE",
+  "next_safe_action": "Explicit labeled private four-way refusal controls followed by fresh actual readonly installed Supervisor successor."
+}

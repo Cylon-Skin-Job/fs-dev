@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-07T23:43:30.911282+00:00",
+  "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/INTEGRATED-CANDIDATE-02.patch",
+  "sha256": "6e5391fd2c89ed639ddd820db6e839f62b95dfb7656ac1e70dbb5cc5218c2a5c",
+  "bytes": 355466,
+  "product_count": 65,
+  "tracked_count": 45,
+  "new_count": 20,
+  "source_seal_sha256": "35cda972a106468eaa279c60da9ef51fc04ec23333f03de4226269b84e14ad07",
+  "original_failed_patch": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/INTEGRATED-CANDIDATE.patch",
+  "original_failed_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/INTEGRATED-CANDIDATE-PATCH.json",
+  "readonly_check": {
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "--reverse",
+      "--",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/INTEGRATED-CANDIDATE-02.patch"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "effect": "Check only, no file/index/ref mutation"
+  },
+  "source65_current_unchanged": true
+}

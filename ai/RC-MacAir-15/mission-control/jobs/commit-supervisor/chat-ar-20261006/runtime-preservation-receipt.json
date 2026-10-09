@@ -1,0 +1,39 @@
+{
+  "at": "2026-10-07T00:22:19.397053+00:00",
+  "protected_files_equal": true,
+  "file_drift": [],
+  "process_tuple_drift": [],
+  "protected_file_count": 5,
+  "foreign_process_count": 25,
+  "protected_window": "Repeat collection only, all logs outside source from coherent prelaunch through complete owned stop.",
+  "older_process_tuples_equal": true,
+  "candidate_current_verifier": {
+    "at": "2026-10-07T00:22:15.388959+00:00",
+    "candidate": "/private/tmp/chat-ar-integration-r6pe5gmi/candidate",
+    "tree": "1c80f83c6c4b2b61e42c4dbb988c1f942b672ade",
+    "candidate_head": "3356e1b73cc5d44028eac5baa02fd542a8bbc385",
+    "owned_paths_match": 1668,
+    "runtime_support_match": 5,
+    "unchanged_backend_electron_comparisons": 832,
+    "wiki_source_dependencies": 199,
+    "unstaged_runtime_only": [
+      "restart-fusion.sh"
+    ],
+    "untracked_runtime_only": [
+      "scripts/fusion-restart-probe.mjs",
+      "scripts/fusion-restart-processes.mjs",
+      "scripts/fusion-restart-target.mjs",
+      "scripts/fusion-restart.mjs"
+    ],
+    "sealed_leaf_evidence_matches": true
+  },
+  "unselected_source_verifier": {
+    "mode": "verify",
+    "unselected_leaf_count": 20303,
+    "exact": true,
+    "at": "2026-10-07T00:22:19.388650+00:00"
+  },
+  "original_interrupted_window": "Two foreign DB files changed and four old renderers replaced; initial dev DB read incoherent. Old physical equality UNPROVED. Replacement starts and one unrelated view-state change predate candidate first launch; all original observations retained. Cause attribution to background apps/watchers is inference.",
+  "foreign_view_state_reconciliation": "foreign-view-state-reconciliation.json: preserve latest runtime state, new separate snapshot of all20303 unselected leaves; never stage/reset it.",
+  "limits": "Five physical identities/content and25 process tuples in repeat only, no complete logical/WAL or whole-session equality, no DB copies/restores or unconditional graceful shutdown claim."
+}

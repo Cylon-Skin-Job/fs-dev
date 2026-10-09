@@ -1,0 +1,14 @@
+{
+  "systemSetupReadiness": null,
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": {
+    "name": "AssertionError",
+    "message": "disposable public Create Project did not register system-files\n+ actual - expected\n\n+ undefined\n- 'system-files'\n",
+    "stack": "AssertionError [ERR_ASSERTION]: disposable public Create Project did not register system-files\n+ actual - expected\n\n+ undefined\n- 'system-files'\n\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r5-r6-electron.mjs:772:10"
+  }
+}

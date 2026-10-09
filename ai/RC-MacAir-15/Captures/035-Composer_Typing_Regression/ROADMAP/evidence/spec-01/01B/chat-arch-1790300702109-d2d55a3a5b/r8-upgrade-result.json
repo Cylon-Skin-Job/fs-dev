@@ -1,0 +1,17 @@
+{
+  "status": "failed",
+  "evidence": {
+    "schema": {},
+    "phases": []
+  },
+  "failure": {
+    "message": "View registry unavailable",
+    "stack": "ViewRelocationError: View registry unavailable\n    at acquireViewlessScaffoldLease (/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790300702109-d2d55a3a5b-eLBzJ0/r8-upgrade-stage/fusion-studio-server/lib/views/readiness-runtime.js:75:11)\n    at scaffoldProjectV2 (/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790300702109-d2d55a3a5b-eLBzJ0/r8-upgrade-stage/fusion-studio-server/lib/workspace/create-service.js:46:17)\n    at Object.scaffoldProject (/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790300702109-d2d55a3a5b-eLBzJ0/r8-upgrade-stage/fusion-studio-server/lib/workspace/create-service.js:41:10)\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r8-upgrade-electron.mjs:48:54"
+  },
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "lingering": []
+}

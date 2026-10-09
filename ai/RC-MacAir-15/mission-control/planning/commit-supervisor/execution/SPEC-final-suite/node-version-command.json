@@ -1,0 +1,23 @@
+{
+  "actor": "/root",
+  "argv": [
+    "/opt/homebrew/bin/node",
+    "--version"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "started_at": "2026-10-05T03:21:37.069639+00:00",
+  "finished_at": "2026-10-05T03:21:37.083797+00:00",
+  "exit_code": 0,
+  "stdout": "v25.6.1\n",
+  "stderr": "",
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "executable": {
+    "exists": true,
+    "kind": "symlink",
+    "mode": "0o120755",
+    "sha256": "344397e6aa48976f46b3748aef30b8536f2fc05ba5888826b69923c84ca6d4c3"
+  }
+}

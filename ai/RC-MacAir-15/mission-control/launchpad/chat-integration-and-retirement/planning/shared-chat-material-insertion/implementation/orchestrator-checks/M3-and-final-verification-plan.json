@@ -1,0 +1,85 @@
+{
+  "prepared_at": "2026-10-07T17:42:15.153581+00:00",
+  "state": "future Orchestrator inspection/final commands; no command run by preparation",
+  "authority": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/SPEC.md",
+  "authority_sha256": "063562058007928d07477913a1ba05e43a2d191d6e42a0e9cb1d6a6e5c71659e",
+  "checkout": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev",
+  "M3_dependency": "terminal complete handoff, builder CLEAN and current frozen source/authority/check binding",
+  "sequence": [
+    "Inspect complete M3 patch/current files, immediate M1/M2/source/server/Electron seams, all deviations and criteria",
+    "Verify builder raw current checks/native/Wiki receipts and exact source/artifact/PID/cancellation/ACK/readback evidence",
+    "Run own current build before built-renderer check; reconcile only own generated preload noise and record exact consumed artifacts",
+    "Run own current full direct server Jest and focused specified server tests; bind local native artifact; no npm pretest claim",
+    "Run complete exact renderer lane on verified free owned port and isolated outputs; run own new native scenario and current production Wiki readback",
+    "Obtain fresh distinct M3 acceptance on current bytes and raw evidence without earlier review conclusions",
+    "After all slices accepted, run full SPEC integration suite/runtime; then fresh distinct final integration reviewer",
+    "Record exact current criteria/deviation/downstream/lifecycle/final evidence and owner review handoff; no next SPEC/publication"
+  ],
+  "commands": {
+    "client_build": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "renderer_lane": [
+      "npx",
+      "--no-install",
+      "playwright",
+      "test",
+      "--config=playwright.chat-architecture.config.ts",
+      "e2e/chat-material-insertion.spec.ts",
+      "e2e/threaded-chat-host.spec.ts",
+      "e2e/chat-composer-screenshot-menu.spec.ts",
+      "e2e/chat-surface-identity.spec.ts",
+      "e2e/chat-surface-isolation.spec.ts",
+      "e2e/chat-component-registration.spec.ts",
+      "e2e/side-chat-isolation.spec.ts",
+      "e2e/side-chat-adapterless-native.spec.ts",
+      "e2e/side-chat-placement-recovery.spec.ts",
+      "e2e/move-chat-to-side-chat.spec.ts",
+      "e2e/prompt-ownership.slice-c.spec.ts",
+      "e2e/prompt-submission-recovery.spec.ts",
+      "e2e/chat-send-transport.spec.ts",
+      "e2e/chat-diagnostic-actions.slice-c.spec.ts",
+      "e2e/system-viewer-action-outcome.spec.ts",
+      "e2e/chat-architecture/observation-boundaries.spec.ts",
+      "--workers=1"
+    ],
+    "native_scenario": [
+      "node",
+      "e2e/chat-material-native-scenario.mjs"
+    ],
+    "server_focused": [
+      "npx",
+      "--no-install",
+      "jest",
+      "--runInBand",
+      "--runTestsByPath",
+      "test/screenshot-file-capture-request-id.test.js",
+      "test/screenshot-protected-view-path.test.js",
+      "test/ws/prompt-submission-recovery.integration.test.js"
+    ],
+    "server_full": [
+      "npx",
+      "--no-install",
+      "jest",
+      "--runInBand"
+    ],
+    "conditional_Electron": [
+      "node",
+      "--test",
+      "electron/ipc/screenshot-handlers.test.cjs"
+    ]
+  },
+  "required_receipts": [
+    "Before/after source hashes/modes/HEAD/branch/diff and authority",
+    "Dependency/native compiled/main/server/preload/renderer/dist identities",
+    "Raw stdout/time/exit/count/warnings/skips",
+    "Owned port/PID/profile/machine marker and cleanup, protected runtime preservation",
+    "Actual PNG signature/dimensions/hash/original saved absolute path/request correlation and rendered exact-owner pill",
+    "No insertion prompt/newchat/nontarget changes; later actual Send no optimistic bubble, exact ACK generation cleanup and persisted exchange/metadata",
+    "Wiki full preimages/actual quoted UTC timestamps/source metadata/links, parseWikiPage/markdownToHtml production PageViewer render/readback",
+    "All R01\u201310/A01\u201317, complete caller/stale-symbol inventory, all deviations and evidence limits"
+  ],
+  "final_mandatory_status": "All pending; no historical substitution"
+}

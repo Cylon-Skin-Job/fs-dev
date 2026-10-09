@@ -1,0 +1,116 @@
+[
+  {
+    "argv": [
+      "bash",
+      "-n",
+      "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "node",
+      "--check",
+      "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "node",
+      "--check",
+      "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "node",
+      "--check",
+      "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "node",
+      "--check",
+      "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "node",
+      "--check",
+      ".agents/skills/mc-commit-supervisor/tests/prepare_rehearsal_shell.mjs"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "node",
+      "--check",
+      ".agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "node",
+      "--check",
+      ".agents/skills/mc-commit-supervisor/tests/rehearsal_watcher_smoke.mjs"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "node",
+      "--check",
+      ".agents/skills/mc-commit-supervisor/tests/stop_rehearsal_runtime.mjs"
+    ],
+    "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "check": "python AST",
+    "file": ".agents/skills/mc-commit-supervisor/tests/install_rehearsal_fixture.py",
+    "result": "PASS"
+  },
+  {
+    "check": "python AST",
+    "file": ".agents/skills/mc-commit-supervisor/tests/rehearsal_recovery_smoke.py",
+    "result": "PASS"
+  },
+  {
+    "check": "python AST",
+    "file": ".agents/skills/mc-commit-supervisor/tests/rehearsal_wiki_recovery_smoke.py",
+    "result": "PASS"
+  }
+]

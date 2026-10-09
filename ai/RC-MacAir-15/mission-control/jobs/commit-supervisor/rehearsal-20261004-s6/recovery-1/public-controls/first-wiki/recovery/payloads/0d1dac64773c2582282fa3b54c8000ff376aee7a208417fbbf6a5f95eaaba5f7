@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "dataSource": "project-root",
+  "root": {
+    "type": "project-root"
+  },
+  "chat": {
+    "type": "threaded",
+    "position": "right"
+  },
+  "tabs": {
+    "schemaVersion": 1,
+    "initial": {
+      "kind": "empty"
+    },
+    "plus": {
+      "enabled": true
+    },
+    "empty": {
+      "tabLabel": "New File Tab",
+      "locationLabel": "New File Tab",
+      "launcherIds": [
+        "file.open"
+      ]
+    },
+    "location": {
+      "omitTerminalNames": [],
+      "historyControls": "none"
+    },
+    "newTab": {
+      "blankKind": "empty",
+      "autoOpenDrawer": true
+    }
+  }
+}

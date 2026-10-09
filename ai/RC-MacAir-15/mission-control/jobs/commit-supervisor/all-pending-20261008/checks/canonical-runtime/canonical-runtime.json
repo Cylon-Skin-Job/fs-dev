@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/restart-fusion.sh",
+    "--repo",
+    "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate",
+    "--machine",
+    "RC-MacAir-15",
+    "--user-data",
+    "/private/tmp/fusion-main-consolidation-95vxg0_h/profile"
+  ],
+  "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate",
+  "started": "2026-10-09T01:39:04.088606+00:00",
+  "ended": "2026-10-09T01:39:19.675597+00:00",
+  "exit_code": 0,
+  "stdout": "/private/tmp/fusion-main-consolidation-95vxg0_h/canonical-runtime.stdout",
+  "candidate_identity_sha256": "4a0ba37d3eca52a91fd0abe426ebe126447aeb31c0d1f734700df48f3cda8415",
+  "normal_and_Alpha": "Excluded; disposable candidate/profile only"
+}

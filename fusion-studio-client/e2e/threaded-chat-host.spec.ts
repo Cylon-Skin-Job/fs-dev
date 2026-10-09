@@ -688,6 +688,7 @@ async function buildThreadedHarness(): Promise<string> {
     const handlersPath = path.resolve('src/lib/ws/thread-handlers.ts');
     const productSendPath = path.resolve('src/lib/ws/product-send.ts');
     const screenshotPath = path.resolve('src/screenshots/chatScreenshotCapture.ts');
+    const consumerPath = path.resolve('src/lib/chat-action-controller.ts');
     const attachmentPath = path.resolve('src/state/chatFileLinkStore.ts');
     const componentMountPath = path.resolve('src/components/chat/ChatSurfaceComponentMount.tsx');
     const toastPath = path.resolve('src/lib/toast.ts');
@@ -705,6 +706,7 @@ async function buildThreadedHarness(): Promise<string> {
       import { handleThreadMessage } from ${JSON.stringify(handlersPath)};
       import { installProductSendCapability } from ${JSON.stringify(productSendPath)};
       import { captureAndAttachScreenshot } from ${JSON.stringify(screenshotPath)};
+      import { installChatActionConsumer } from ${JSON.stringify(consumerPath)};
       import { useChatFileLinkStore } from ${JSON.stringify(attachmentPath)};
       import { ChatSurfaceComponentMount } from ${JSON.stringify(componentMountPath)};
       import { registerToastSetter } from ${JSON.stringify(toastPath)};
@@ -780,9 +782,11 @@ async function buildThreadedHarness(): Promise<string> {
         viewStates: {},
         worksurfaceEntries: {},
       });
-      useWorkspaceStore.setState({ hasReceivedInit: true });
+      useWorkspaceStore.setState({ hasReceivedInit: true, activeWorkspaceId: WS, workspaceEpoch: 'fixture-epoch', bindingSerial: 1, bindingRevision: 1 });
+      installChatActionConsumer();
 
       function seedComponentPlacement(host, threadId) {
+        usePanelStore.setState(state => ({ projectChats: { ...state.projectChats, [threadId]: { messages: [], currentTurn: null, pendingTurnEnd: false, segments: [], lastReleasedSegmentCount: 0, pendingSavedExchanges: {}, pendingExchangeSaveTurnId: null, activity: null } } }));
         var descriptor = { schemaVersion: 1, componentTypeId: 'fusion.chat-surface',
           componentInstanceId: 'screenshot-component', input: {
             workspaceId: WS, viewId: VIEW_A, threadGroupId: ${JSON.stringify(GROUP_A)},
@@ -1215,8 +1219,9 @@ for (const legacyThreadId of [null, 'older-legacy-thread']) {
     await expect(page.locator('#host-b .rv-chat-attachment-pill')).toHaveCount(0);
   });
 
-  test(`header screenshot resolves qualified New Chat with Legacy ${legacyThreadId}`, async ({ page }) => {
+  test(`header screenshot captures activated Main New Chat with Legacy ${legacyThreadId}`, async ({ page }) => {
     await acceptedNewChat(page, legacyThreadId);
+    await page.locator('#host-a textarea').click();
     await screenshotFixtureCall(page, 'globalCapture');
     await expect.poll(async () => (await screenshotState(page)).captures).toBe(1);
     const requestId = await finishScreenshotCapture(page);
@@ -1226,7 +1231,7 @@ for (const legacyThreadId of [null, 'older-legacy-thread']) {
 }
 
 for (const phase of ['capture', 'save'] as const) {
-  for (const change of ['thread', 'workspace', 'view', 'inactive', 'unmount'] as const) {
+  for (const change of ['thread', 'workspace', 'view', 'unmount'] as const) {
     test(`composer screenshot cancels on actual ${change} owner change during ${phase}`, async ({ page }) => {
       await acceptedNewChat(page, 'older-legacy-thread');
       await clickComposerScreenshot(page);
@@ -1247,9 +1252,6 @@ for (const phase of ['capture', 'save'] as const) {
       } else if (change === 'view') {
         await screenshotFixtureCall(page, 'setAView', 'other-owning-view');
         await expect(page.locator('#host-a .rv-chat-area')).toHaveAttribute('data-chat-view-id', 'other-owning-view');
-      } else if (change === 'inactive') {
-        await screenshotFixtureCall(page, 'setAActive', false);
-        await expect(page.locator('#host-a textarea')).toBeDisabled();
       } else {
         await screenshotFixtureCall(page, 'setAMounted', false);
         await expect(page.locator('#host-a .rv-chat-area')).toHaveCount(0);
@@ -1266,28 +1268,27 @@ for (const phase of ['capture', 'save'] as const) {
 }
 
 for (const phase of ['capture', 'save'] as const) {
-  test(`qualified header screenshot cancels owning view switch during ${phase}`, async ({ page }) => {
+  test(`qualified header screenshot preserves retained owner after view focus switch during ${phase}`, async ({ page }) => {
     await acceptedNewChat(page);
+    await page.locator('#host-a textarea').click();
     await screenshotFixtureCall(page, 'globalCapture');
     await expect.poll(async () => (await screenshotState(page)).captures).toBe(1);
     const requestId = phase === 'save' ? await finishScreenshotCapture(page) : null;
     await screenshotFixtureCall(page, 'setState', { currentPanel: VIEW_B });
-    if (requestId) await screenshotFixtureCall(page, 'saved', requestId, '/scratch/ai/Test/Data/Screenshots/exact.png');
-    else await screenshotFixtureCall(page, 'finishCapture');
-    await expect.poll(async () => (await screenshotState(page)).toasts.at(-1))
-      .toBe('Screenshot was not attached because the chat changed.');
-    expect((await screenshotState(page)).attachments).toEqual({});
+    const id = requestId ?? await finishScreenshotCapture(page);
+    await screenshotFixtureCall(page, 'saved', id, '/scratch/ai/Test/Data/Screenshots/exact.png');
+    await expectExactScreenshotAttachment(page, 'screenshot-new-thread');
   });
 }
 
-test('header screenshot retains the actual Legacy fallback when qualified Main is unavailable', async ({ page }) => {
+test('header screenshot denies stale Legacy without an active mounted destination', async ({ page }) => {
   await mountFixture(page);
   await screenshotFixtureCall(page, 'setState', { currentThreadId: 'legacy-fallback' });
   await screenshotFixtureCall(page, 'globalCapture');
-  await expect.poll(async () => (await screenshotState(page)).captures).toBe(1);
-  const requestId = await finishScreenshotCapture(page);
-  await screenshotFixtureCall(page, 'saved', requestId, '/scratch/ai/Test/Data/Screenshots/exact.png');
-  await expectExactScreenshotAttachment(page, 'legacy-fallback');
+  const state = await screenshotState(page);
+  expect(state.captures).toBe(0);
+  expect(state.requests).toEqual([]);
+  expect(state.attachments).toEqual({});
 });
 
 test('Side composer screenshot preserves its placement owner when Main selection changes', async ({ page }) => {
@@ -1338,7 +1339,7 @@ test('an explicit Main component screenshot uses its hydrated session independen
 for (const host of ['main', 'side-tab'] as const) {
   for (const phase of ['capture', 'save'] as const) {
     for (const returnsToView of [false, true]) {
-      test(`retained ${host} component screenshot cancels active panel switch during ${phase}${returnsToView ? ' even after return' : ''}`, async ({ page }) => {
+      test(`retained ${host} component screenshot survives retained active panel switch during ${phase}${returnsToView ? ' after return' : ''}`, async ({ page }) => {
         await acceptedNewChat(page);
         await screenshotFixtureCall(page, 'seedWorkspaceComponent', host,
           host === 'main' ? THREAD_A : 'screenshot-side-thread');
@@ -1364,12 +1365,10 @@ for (const host of ['main', 'side-tab'] as const) {
           await expect(component).toHaveAttribute('data-surface-id', surfaceId!);
         }
 
-        if (requestId) await screenshotFixtureCall(page, 'saved', requestId, '/scratch/ai/Test/Data/Screenshots/exact.png');
-        else await screenshotFixtureCall(page, 'finishCapture');
-        await expect.poll(async () => (await screenshotState(page)).toasts.at(-1))
-          .toBe('Screenshot was not attached because the chat changed.');
-        expect((await screenshotState(page)).attachments).toEqual({});
-        expect((await screenshotState(page)).requests).toHaveLength(phase === 'save' ? 1 : 0);
+        const id = requestId ?? await finishScreenshotCapture(page);
+        await screenshotFixtureCall(page, 'saved', id, '/scratch/ai/Test/Data/Screenshots/exact.png');
+        await expectExactScreenshotAttachment(page, host === 'main' ? THREAD_A : 'screenshot-side-thread');
+        expect((await screenshotState(page)).requests).toHaveLength(1);
         state = JSON.parse(await screenshotFixtureCall(page, 'storeState') as string);
         expect(state.worksurfaceEntries[`${WORKSPACE}::${VIEW_A}::${GROUP_A}`]
           .managedComponentPlacements['screenshot-side'].disposition).toBe('open');

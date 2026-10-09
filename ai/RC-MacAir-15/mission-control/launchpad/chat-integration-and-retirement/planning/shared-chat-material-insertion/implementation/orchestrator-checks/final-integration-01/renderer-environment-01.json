@@ -1,0 +1,31 @@
+{
+  "at": "2026-10-07T23:18:30.794678+00:00",
+  "owned_port": 51988,
+  "reuseExistingServer": false,
+  "config": "playwright.chat-architecture.config.ts",
+  "command": [
+    "npx",
+    "--no-install",
+    "playwright",
+    "test",
+    "--config=playwright.chat-architecture.config.ts",
+    "e2e/chat-material-insertion.spec.ts",
+    "e2e/threaded-chat-host.spec.ts",
+    "e2e/chat-composer-screenshot-menu.spec.ts",
+    "e2e/chat-surface-identity.spec.ts",
+    "e2e/chat-surface-isolation.spec.ts",
+    "e2e/chat-component-registration.spec.ts",
+    "e2e/side-chat-isolation.spec.ts",
+    "e2e/side-chat-adapterless-native.spec.ts",
+    "e2e/side-chat-placement-recovery.spec.ts",
+    "e2e/move-chat-to-side-chat.spec.ts",
+    "e2e/prompt-ownership.slice-c.spec.ts",
+    "e2e/prompt-submission-recovery.spec.ts",
+    "e2e/chat-send-transport.spec.ts",
+    "e2e/chat-diagnostic-actions.slice-c.spec.ts",
+    "e2e/system-viewer-action-outcome.spec.ts",
+    "e2e/chat-architecture/observation-boundaries.spec.ts",
+    "--workers=1",
+    "--output=/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/renderer-01-output"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "at": "2026-10-07T08:17:51.184544+00:00",
+  "owner_authority": "authorization.md",
+  "commit": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "tree": "1c80f83c6c4b2b61e42c4dbb988c1f942b672ade",
+  "branch": "main",
+  "destination": "origin refs/heads/main",
+  "remote_before": "3356e1b73cc5d44028eac5baa02fd542a8bbc385\trefs/heads/main",
+  "staged_paths": 0,
+  "owned_leaves_exact": 1668,
+  "original_local_operation_seal_verified": true,
+  "independent_final_seal_verified": true,
+  "exact_candidate_check_passed": true,
+  "unselected_current_count": 20303,
+  "unselected_intervening_drift_paths": [
+    "ai/RC-MacAir-15/System/Views/001-capture-viewer/state/state.json",
+    "ai/RC-MacAir-15/System/Views/002-file-viewer/state/state.json",
+    "ai/RC-MacAir-15/System/Views/004-wiki-viewer/state/state.json",
+    "ai/RC-MacAir-15/System/state/state.json",
+    "ai/RC-MacAir-15/System/styles/themes.json"
+  ],
+  "hooks_absent": true,
+  "force": false
+}

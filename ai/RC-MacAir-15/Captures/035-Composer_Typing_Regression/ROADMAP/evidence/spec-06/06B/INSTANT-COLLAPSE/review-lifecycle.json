@@ -1,0 +1,23 @@
+{
+  "gate": "builder-owned",
+  "pass": 1,
+  "reviewer": "/root/builder_collapse/review_collapse_1",
+  "fork_turns": "none",
+  "model_override": false,
+  "prior_reviewers": "none; subtree inventory only builder before spawn",
+  "result": "CLEAN",
+  "material_findings": [],
+  "advisories": [],
+  "terminal_evidence": [
+    "final response",
+    "list_agents completed"
+  ],
+  "closure": "close_agent unavailable in exposed API and tool inventory; no callable closure",
+  "reviewer_checks": {
+    "source_entries": 1969,
+    "build_entries": 200,
+    "tests": "38 passed, 0 failed, 17.7s",
+    "output": "/tmp/fs-instant-collapse-review-1"
+  },
+  "post_review_product_or_test_edits": false
+}

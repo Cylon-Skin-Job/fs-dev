@@ -1,0 +1,71 @@
+{
+  "status": "passed",
+  "proof": {
+    "mode": "server-admission",
+    "authenticated": true,
+    "serverRejected": true,
+    "adapterNotDispatched": true,
+    "port": 62630,
+    "frameCounts": {
+      "shell-auth:challenge": 2,
+      "connected": 2,
+      "workspace:init": 2,
+      "panel_config": 3,
+      "shell-auth:authenticated": 2,
+      "error": 5,
+      "screenshot:list": 2,
+      "file_content_response": 75,
+      "workspace:create_manifest": 1,
+      "workspace:created": 1,
+      "workspace:added": 1,
+      "workspace:registry_changed": 1,
+      "workspace:switched": 1,
+      "file_tree_response": 66,
+      "office:palette_state": 2,
+      "state:result": 8,
+      "thread:list": 10,
+      "panel_changed": 2,
+      "thread:created": 1,
+      "thread:opened": 2,
+      "wire_ready": 1,
+      "state:worksurface_result": 1
+    },
+    "importantFrames": [
+      {
+        "type": "shell-auth:authenticated",
+        "message": null
+      },
+      {
+        "type": "error",
+        "message": "No active workspace"
+      },
+      {
+        "type": "error",
+        "message": "No active workspace"
+      },
+      {
+        "type": "error",
+        "message": "Message handling failed"
+      },
+      {
+        "type": "shell-auth:authenticated",
+        "message": null
+      },
+      {
+        "type": "error",
+        "message": "No active workspace"
+      },
+      {
+        "type": "error",
+        "message": "Message could not be accepted"
+      }
+    ]
+  },
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": null
+}

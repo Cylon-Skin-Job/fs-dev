@@ -7,6 +7,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const screenshotService = require('../workspace/screenshot-service');
 const workspaceState = require('../workspace/workspace-state');
 const workspaceController = require('../workspace/workspace-controller');
@@ -20,7 +21,7 @@ async function prepareFileScreenshot(workspaceId) {
   }
   const targetDir = path.join(aiPaths.getMachineAiRoot(activeWorkspace.repo_path), 'Data', 'Screenshots');
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-  const targetPath = path.join(targetDir, `fusion-capture-${timestamp}.png`);
+  const targetPath = path.join(targetDir, `fusion-capture-${timestamp}-${crypto.randomUUID()}.png`);
   await assertGenericViewMutationAllowed({
     projectRoot: activeWorkspace.repo_path,
     paths: [targetDir, targetPath],
@@ -32,7 +33,7 @@ async function saveFileScreenshot(dataUrl, { targetDir, targetPath }) {
   const base64 = dataUrl.replace(/^data:image\/png;base64,/, '');
   const buffer = Buffer.from(base64, 'base64');
   await fs.promises.mkdir(targetDir, { recursive: true });
-  await fs.promises.writeFile(targetPath, buffer);
+  await fs.promises.writeFile(targetPath, buffer, { flag: 'wx' });
 
   return targetPath;
 }

@@ -1,0 +1,18 @@
+{
+  "id": "F2-DETERMINISTIC-HISTORY-V1",
+  "exchanges": 30,
+  "renderedMessages": 60,
+  "includes": [
+    "text",
+    "code",
+    "lists",
+    "tables",
+    "collapsed-tool-results",
+    "reply-metadata"
+  ],
+  "dense": {
+    "exchanges": 2,
+    "assistantPayloadBytes": 534528,
+    "sha256": "9b06d21b677d93e4479544db39cf56f86eb4d3cd25fb603740407f263e7420dc"
+  }
+}

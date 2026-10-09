@@ -1,0 +1,88 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - button "chat_paste_go" [ref=e4]
+      - button "chat_paste_go" [ref=e5]
+      - group "Document actions" [ref=e6]:
+        - button "link_2" [ref=e7] [cursor=pointer]:
+          - generic [ref=e8]: link_2
+        - button "chat_paste_go" [ref=e9] [cursor=pointer]:
+          - generic [ref=e10]: chat_paste_go
+    - generic [ref=e12]:
+      - complementary [ref=e13]:
+        - generic [ref=e14]:
+          - button "Hide threads" [ref=e15]: dock_to_right
+          - combobox "Thread view" [ref=e16] [cursor=pointer]:
+            - option "Active Threads" [selected]
+            - option "Archive"
+        - button "edit_squareNew chat" [ref=e17]
+        - separator [ref=e18]
+        - generic [ref=e19]:
+          - generic [ref=e20]:
+            - generic [ref=e21]:
+              - generic "Main material" [ref=e22]: Main material●
+              - button "More options" [expanded] [ref=e23]: more_vert
+            - generic [ref=e25]: 0 msgs · 12/31/2025
+          - generic [ref=e26]:
+            - generic [ref=e27]:
+              - generic "Other material" [ref=e28]: Other material●
+              - button "More options" [ref=e29]: more_vert
+            - generic [ref=e31]: 0 msgs · 12/31/2025
+      - generic [ref=e32]:
+        - button "More options" [ref=e35]: event_list
+        - generic [ref=e38]: Start a conversation
+        - generic [ref=e40]:
+          - textbox "Ask about wiki-viewer..." [ref=e44]: MAIN DRAFT
+          - generic [ref=e45]:
+            - generic [ref=e46]:
+              - button "Add" [ref=e48] [cursor=pointer]:
+                - generic [ref=e49]: add
+              - button "Mode" [ref=e51]: shield_lockMode
+            - generic [ref=e52]:
+              - 'button "Context usage: 0%" [ref=e54]'
+              - button "DeepSeek V4 Flash" [ref=e56]: DeepSeek V4 Flashkeyboard_arrow_down
+              - button "Voice input (click to open)" [ref=e58] [cursor=pointer]:
+                - generic [ref=e59]: mic
+              - button "Send message" [ref=e61]: arrow_upward
+    - generic [ref=e62]:
+      - tablist "wiki-viewer" [ref=e64]:
+        - tab "wiki-viewer" [ref=e65]: tabwiki-viewer
+        - tab "Side Chat" [selected] [ref=e66]: tabSide Chat
+        - button "Close Side Chat" [ref=e67]: close
+      - generic [ref=e68]:
+        - generic [ref=e69]:
+          - generic [ref=e70]:
+            - button "Show threads" [ref=e71]: dock_to_right
+            - button "New chat" [ref=e72]: edit_square
+          - button "More options" [ref=e74]: event_list
+        - generic [ref=e77]: Start a conversation
+        - generic [ref=e79]:
+          - textbox "Ask about chat-surface-component-material-side-component..." [ref=e83]: SIDE DRAFT
+          - generic [ref=e84]:
+            - generic [ref=e85]:
+              - button "Add" [ref=e87] [cursor=pointer]:
+                - generic [ref=e88]: add
+              - button "Mode" [ref=e90]: shield_lockMode
+            - generic [ref=e91]:
+              - 'button "Context usage: 0%" [ref=e93]'
+              - button "DeepSeek V4 Flash" [ref=e95]: DeepSeek V4 Flashkeyboard_arrow_down
+              - button "Voice input (click to open)" [ref=e97] [cursor=pointer]:
+                - generic [ref=e98]: mic
+              - button "Send message" [ref=e100]: arrow_upward
+  - menu "Thread options" [ref=e101]:
+    - menuitem "Rename" [active] [ref=e102] [cursor=pointer]:
+      - generic [ref=e103]: edit
+      - generic [ref=e104]: Rename
+    - menuitem "Copy Link" [ref=e105] [cursor=pointer]:
+      - generic [ref=e106]: link_2
+      - generic [ref=e107]: Copy Link
+    - menuitem "View Markdown" [ref=e108] [cursor=pointer]:
+      - generic [ref=e109]: docs
+      - generic [ref=e110]: View Markdown
+    - menuitem "Delete" [ref=e111] [cursor=pointer]:
+      - generic [ref=e112]: delete
+      - generic [ref=e113]: Delete
+```

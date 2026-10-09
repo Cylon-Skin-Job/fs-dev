@@ -1,0 +1,42 @@
+{
+  "at": "2026-10-06T22:08:41.182801+00:00",
+  "claim": "All4 unchanged additional106test cumulative oracles equal immutable initial candidate pretest baseline and source/currentcandidate",
+  "pretest_checkpoint": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006/recovery/manifest.json",
+  "pretest_manifest_sha256": "8ebfd14f6e97736ad4d38a6ab1c165a9e106d1607e9c6597f168dce525addef8",
+  "comparisons": [
+    {
+      "path": "fusion-studio-client/e2e/side-chat-isolation.spec.ts",
+      "pretest_immutable_checkpoint_sha256": "66d0b5cc28ca97e314c4ff5eabd8ccbc083a8b60f1c2efac1876c1946a11fa18",
+      "current_candidate_sha256": "66d0b5cc28ca97e314c4ff5eabd8ccbc083a8b60f1c2efac1876c1946a11fa18",
+      "current_source_sha256": "66d0b5cc28ca97e314c4ff5eabd8ccbc083a8b60f1c2efac1876c1946a11fa18",
+      "candidate_mode": 420,
+      "unchanged": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/side-chat-adapterless-native.spec.ts",
+      "pretest_immutable_checkpoint_sha256": "31259f18c0fa5bb89bd45002186029c7bb6557caa328a97ef4515e9e084242cc",
+      "current_candidate_sha256": "31259f18c0fa5bb89bd45002186029c7bb6557caa328a97ef4515e9e084242cc",
+      "current_source_sha256": "31259f18c0fa5bb89bd45002186029c7bb6557caa328a97ef4515e9e084242cc",
+      "candidate_mode": 420,
+      "unchanged": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/side-chat-placement-recovery.spec.ts",
+      "pretest_immutable_checkpoint_sha256": "05e4a325f5724e632848560400f2fa28b9aa7991d7ea4af8188d7f38cce88bac",
+      "current_candidate_sha256": "05e4a325f5724e632848560400f2fa28b9aa7991d7ea4af8188d7f38cce88bac",
+      "current_source_sha256": "05e4a325f5724e632848560400f2fa28b9aa7991d7ea4af8188d7f38cce88bac",
+      "candidate_mode": 420,
+      "unchanged": true
+    },
+    {
+      "path": "fusion-studio-client/e2e/move-chat-to-side-chat.spec.ts",
+      "pretest_immutable_checkpoint_sha256": "b36f7f3dbcbb6778dd19daa488582f9ff1d6de495b86f1e90b6fe5ac7e113f0e",
+      "current_candidate_sha256": "b36f7f3dbcbb6778dd19daa488582f9ff1d6de495b86f1e90b6fe5ac7e113f0e",
+      "current_source_sha256": "b36f7f3dbcbb6778dd19daa488582f9ff1d6de495b86f1e90b6fe5ac7e113f0e",
+      "candidate_mode": 420,
+      "unchanged": true
+    }
+  ],
+  "rerun_required": false,
+  "reason": "No oracle/config/source change; exact before/current equality."
+}

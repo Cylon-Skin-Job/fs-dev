@@ -1,0 +1,22 @@
+{
+  "runId": "chat-arch-1790308275229-664034d4d7",
+  "status": "failed",
+  "results": [
+    {
+      "id": "R9-NATIVE-INPUT",
+      "code": 2,
+      "signal": null,
+      "pid": 19362,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 6729
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "R9-NATIVE-INPUT exited 2",
+    "stack": "Error: R9-NATIVE-INPUT exited 2\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:470:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

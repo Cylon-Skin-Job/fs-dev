@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-04T18:24:29.212461+00:00",
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "kind": "IMMUTABLE_ARCHIVE_INTEGRITY_ONLY",
+  "archives": [
+    {
+      "name": "original128",
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery/manifest.json",
+      "sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb",
+      "owned": 128,
+      "payloads": 117,
+      "all_payloads_valid": true
+    },
+    {
+      "name": "firstWiki129",
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/first-wiki-1/recovery/manifest.json",
+      "sha256": "36c99f10ccdc4eed268e2859d2f737eac282181784ea0385572e64d3221c7e75",
+      "owned": 129,
+      "payloads": 117,
+      "all_payloads_valid": true
+    },
+    {
+      "name": "fixedFirst129",
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fixed-candidates/first/recovery/manifest.json",
+      "sha256": "5bf3fb69c13aacfd60afcb384de2c9975fc917ad3f1f7a49b9176073b7b34d96",
+      "owned": 129,
+      "payloads": 118,
+      "all_payloads_valid": true
+    },
+    {
+      "name": "fixWiki130",
+      "manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/fix-xy-wiki-1/recovery/manifest.json",
+      "sha256": "5227a7a7d38dddec138aff13c16f2ee8a22bda1a53657f203a47d80857827617",
+      "owned": 130,
+      "payloads": 118,
+      "all_payloads_valid": true
+    }
+  ],
+  "limit": "Payload/hash integrity only; current candidate differs intentionally from historical checkpoint. No restore/guard/control operation or recovery authority."
+}

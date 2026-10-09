@@ -1,0 +1,22 @@
+{
+  "runId": "chat-arch-1790045140165-3a5936bb7e",
+  "status": "failed",
+  "results": [
+    {
+      "id": "R6-PRODUCTION-ACTION-OWNER",
+      "code": 1,
+      "signal": null,
+      "pid": 17042,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 25898
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "R6-PRODUCTION-ACTION-OWNER exited 1",
+    "stack": "Error: R6-PRODUCTION-ACTION-OWNER exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:383:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

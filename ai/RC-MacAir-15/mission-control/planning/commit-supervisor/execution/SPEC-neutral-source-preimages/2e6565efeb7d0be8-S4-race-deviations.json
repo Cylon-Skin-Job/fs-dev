@@ -1,0 +1,18 @@
+[
+  {
+    "id": "S4-R2-D1",
+    "original_criterion": "S4 selected-checkout/profile process trees must stop safely for repeat restart/cleanup; SPEC expected-file list names canonical restart and focused tests, not separate process modules.",
+    "actual": "Extend the existing authorized process support module with state-bearing ps records and boundary reobservation; add optional command executor for meaningful OS-boundary fixtures. stopOwned remains unchanged. Add three focused tests in existing restart test file.",
+    "reason": "Actual accepted-candidate cleanup raced a process exit between ps and lsof, aborting stopOwned on empty exit 1. Only reobserved absence/terminal state can resolve that race safely.",
+    "authority": "Owner-approved SPEC-COMMIT-SUPERVISOR-01 S4 and /root consolidated S4-runtime-race-repair-assignment.md; root explicit cohesive fusion-restart support authorization.",
+    "paths": [
+      "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs",
+      "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs"
+    ],
+    "checks": "17 focused tests; actual disposable lsof/env/post-SIGTERM exit races; live permission/read errors and PID/command drift zero-signal fixtures; 55 cumulative workflow tests; syntax/default CLI/skill/index/static preservation.",
+    "observable_effect": "Confirmed absent/Z/X processes do not abort inventory or proper selected cleanup. Live empty failures, malformed/read-denied inventory, identity drift and PID reuse remain fail-closed. No selection/profile/DB/cache/launch/readiness behavior grows.",
+    "risk": "One extra ps reobservation per inspected relevant live process; process identity retains accepted ps lstart resolution and command/uid evidence. OS permission failures remain visible. Synthetic timing controls complement actual disposable OS I/O; no real app success claim.",
+    "downstream_impact": "Root acceptance required before S6 resumes. S6 must replay the changed helper into private candidate, refresh candidate/input/recovery fingerprints as affected and repeat runtime/cleanup/preparation evidence and fresh prep gate. Earlier S6 runtime/cleanup evidence does not certify repaired bytes.",
+    "proposed_classification": "accepted"
+  }
+]

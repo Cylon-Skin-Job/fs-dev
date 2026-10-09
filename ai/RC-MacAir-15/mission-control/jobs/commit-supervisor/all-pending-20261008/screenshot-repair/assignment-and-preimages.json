@@ -1,0 +1,44 @@
+{
+  "at": "2026-10-09T01:10:03.426960+00:00",
+  "worker": "/root/screenshot_unique_path_repair",
+  "manager": "/root",
+  "finding_id": "ALL-SCREENSHOT-001",
+  "controller_home": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "actual_memory_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "candidate": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate",
+  "head": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "branch": "",
+  "git_common_dir": ".git",
+  "overlapping_writers": "manager asserts none; renderer/Wiki reviewers read-only",
+  "permissions": "danger-full-access, approval policy never supplied by host",
+  "model_effort": "root inherited; no override",
+  "owned_preimages": [
+    {
+      "path": "fusion-studio-server/lib/screenshot/ws-handlers.js",
+      "sha256": "8d11853e29ee8f0264090145aaf1d461384caeac6b58797a63cb687869756254",
+      "mode": "0o644",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/screenshot-repair/preimages/fusion-studio-server/lib/screenshot/ws-handlers.js"
+    },
+    {
+      "path": "fusion-studio-server/test/screenshot-file-capture-request-id.test.js",
+      "sha256": "79f331849cff605f963731744066d94941c80b8d3298d2300e49778880bb78e8",
+      "mode": "0o644",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/screenshot-repair/preimages/fusion-studio-server/test/screenshot-file-capture-request-id.test.js"
+    },
+    {
+      "path": "fusion-studio-server/test/screenshot-protected-view-path.test.js",
+      "sha256": "1fe319e540ca4376398bbb8b0daa48bdea18a1ed2a7889d2618d74e9e799d8c6",
+      "mode": "0o644",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/screenshot-repair/preimages/fusion-studio-server/test/screenshot-protected-view-path.test.js"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md",
+      "sha256": "2ca9937fd14648f9af85e6b3effd151c0107811b4eadacb551a7938ef00b4ceb",
+      "mode": "0o644",
+      "preimage": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/screenshot-repair/preimages/ai/RC-MacAir-15/Wiki/004-Integrations_And_Tools/004-Screenshot_Capture/PAGE.md"
+    }
+  ],
+  "recovery_checkpoint": "/private/tmp/fusion-main-consolidation-95vxg0_h/recovery-checkpoint",
+  "finding_raw": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/all-pending-20261008/initial-review/screenshot-collision-validation.json",
+  "write_limits": "These four leaves, one complete exclusively created adjacent Wiki .versions preimage, own report directory. No source/main/shared ref/index, publication, app/runtime operation."
+}

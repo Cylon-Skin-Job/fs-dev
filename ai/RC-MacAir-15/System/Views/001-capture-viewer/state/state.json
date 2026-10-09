@@ -643,10 +643,10 @@
       "kind": "capture",
       "ui": {
         "mode": "active",
-        "lastOpenedPath": "001-Captures/wiki-audit-decisions.md",
+        "lastOpenedPath": "001-Captures/machine-sync-sharing-model.md",
         "byMode": {
           "active": {
-            "selectedPath": "001-Captures/wiki-audit-decisions.md",
+            "selectedPath": null,
             "gridScroll": 0,
             "docScroll": 0
           },
@@ -752,7 +752,4864 @@
         }
       }
     ],
-    "activeTabId": "cvt-mty3qoth-0-yk0i8",
+    "activeTabId": "cvt-mtwy5avr-2-kuukj",
     "reservations": []
+  },
+  "threadWorksurfaces": {
+    "tg-299b1685-3766-47bc-b93e-0d418de1496a": {
+      "schemaVersion": 1,
+      "adapterId": "capture-viewer",
+      "adapterVersion": 1,
+      "contentRevision": "wsr_caaac75b5ee26d1160c9a634eb352f99",
+      "placementRevision": "wsr_f8415d3ccf50a94fb024593093326e1b",
+      "updatedAt": "2026-09-28T05:30:08.449Z",
+      "content": {
+        "mode": "active",
+        "activeSelectedPath": null,
+        "archiveSelectedPath": null,
+        "lastOpenedPath": "001-Captures/machine-sync-sharing-model.md",
+        "activeGridScroll": 0,
+        "archiveGridScroll": 0,
+        "activeDocScroll": 0,
+        "archiveDocScroll": 0,
+        "tabs": [
+          {
+            "id": "cvt-mtxma449-0-9g7sh",
+            "kind": "doc",
+            "path": "001-Captures/machine-sync-sharing-model.md",
+            "name": "machine-sync-sharing-model.md",
+            "extension": "md",
+            "ui": {
+              "mode": "active",
+              "lastOpenedPath": "001-Captures/machine-sync-sharing-model.md",
+              "byMode": {
+                "active": {
+                  "selectedPath": "001-Captures/machine-sync-sharing-model.md",
+                  "gridScroll": 0,
+                  "docScroll": 0
+                },
+                "archive": {
+                  "selectedPath": null,
+                  "gridScroll": 0,
+                  "docScroll": 0
+                }
+              }
+            }
+          },
+          {
+            "id": "cvt-mtxma449-1-unekk",
+            "kind": "capture",
+            "ui": {
+              "mode": "active",
+              "lastOpenedPath": "001-Captures/machine-sync-sharing-model.md",
+              "byMode": {
+                "active": {
+                  "selectedPath": null,
+                  "gridScroll": 0,
+                  "docScroll": 0
+                },
+                "archive": {
+                  "selectedPath": null,
+                  "gridScroll": 0,
+                  "docScroll": 0
+                }
+              }
+            }
+          }
+        ],
+        "activeTabId": "cvt-mtxma449-1-unekk",
+        "captureTabRecords": {
+          "schemaVersion": 1,
+          "tabs": [
+            {
+              "tabId": "cvt-mtwy5avr-2-kuukj",
+              "content": {
+                "kind": "component",
+                "revision": 0,
+                "component": {
+                  "schemaVersion": 1,
+                  "componentTypeId": "capture.landing",
+                  "componentInstanceId": "cvi-mtwy5avr-3-g20qn",
+                  "input": {
+                    "title": "CAPTURE",
+                    "locationLabels": [
+                      "Capture",
+                      "Documents and Artifacts"
+                    ],
+                    "classic": {
+                      "mode": "active",
+                      "lastOpenedPath": "001-Captures/responsive-breakpoints.md",
+                      "selectedPath": "001-Captures/responsive-breakpoints.md",
+                      "gridScroll": 0,
+                      "docScroll": 0
+                    }
+                  },
+                  "targetKey": "capture:home"
+                }
+              }
+            }
+          ],
+          "activeTabId": "cvt-mtwy5avr-2-kuukj",
+          "reservations": []
+        },
+        "activity": {
+          "recents": [
+            {
+              "id": "capture-viewer:001-Captures/wiki-audit-decisions.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/wiki-audit-decisions.md",
+              "title": "wiki-audit-decisions.md",
+              "kind": "document",
+              "openedAt": 1789200430432,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/codebase-exploration-report.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/codebase-exploration-report.md",
+              "title": "codebase-exploration-report.md",
+              "kind": "document",
+              "openedAt": 1789198397168,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/machine-sync-sharing-model.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/machine-sync-sharing-model.md",
+              "title": "machine-sync-sharing-model.md",
+              "kind": "document",
+              "openedAt": 1789171102080,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/responsive-breakpoints.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/responsive-breakpoints.md",
+              "title": "responsive-breakpoints.md",
+              "kind": "document",
+              "openedAt": 1789100046264,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/Email_Workspace_HANDOFF.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/Email_Workspace_HANDOFF.md",
+              "title": "Email_Workspace_HANDOFF.md",
+              "kind": "document",
+              "openedAt": 1789090661435,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/STYLE_GUIDE.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/STYLE_GUIDE.md",
+              "title": "STYLE_GUIDE.md",
+              "kind": "document",
+              "openedAt": 1789090645090,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/full-permissions-safety-architecture.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/full-permissions-safety-architecture.md",
+              "title": "full-permissions-safety-architecture.md",
+              "kind": "document",
+              "openedAt": 1789088418444,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/discovery-gated-ceilings.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/discovery-gated-ceilings.md",
+              "title": "discovery-gated-ceilings.md",
+              "kind": "document",
+              "openedAt": 1789086054788,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/agent-registry-redundancy.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/agent-registry-redundancy.md",
+              "title": "agent-registry-redundancy.md",
+              "kind": "document",
+              "openedAt": 1788589871418,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/file-mutation-injection.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/file-mutation-injection.md",
+              "title": "file-mutation-injection.md",
+              "kind": "document",
+              "openedAt": 1788499208629,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+              "title": "GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+              "kind": "document",
+              "openedAt": 1788444301316,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:004-Playground/robin-overlay.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/robin-overlay.html",
+              "title": "robin-overlay.html",
+              "kind": "document",
+              "openedAt": 1787656739822,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:004-Playground/robin-overlay-v3.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/robin-overlay-v3.html",
+              "title": "robin-overlay-v3.html",
+              "kind": "document",
+              "openedAt": 1787652266847,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:022-Vision_Roadmap/THREADS_AND_VIEWS.md",
+              "panel": "capture-viewer",
+              "path": "022-Vision_Roadmap/THREADS_AND_VIEWS.md",
+              "title": "THREADS_AND_VIEWS.md",
+              "kind": "document",
+              "openedAt": 1787640648143,
+              "folder": "022-Vision_Roadmap",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:004-Playground/theme-studio.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/theme-studio.html",
+              "title": "theme-studio.html",
+              "kind": "document",
+              "openedAt": 1787638127309,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/VIEW-TABLE.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/VIEW-TABLE.md",
+              "title": "VIEW-TABLE.md",
+              "kind": "document",
+              "openedAt": 1787627154982,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/SPEC-KNOWLEDGE-AUTHORING.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/SPEC-KNOWLEDGE-AUTHORING.md",
+              "title": "SPEC-KNOWLEDGE-AUTHORING.md",
+              "kind": "document",
+              "openedAt": 1787624193856,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/SPEC-agent-self-improvement.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/SPEC-agent-self-improvement.md",
+              "title": "SPEC-agent-self-improvement.md",
+              "kind": "document",
+              "openedAt": 1787624187406,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:004-Playground/theme-picker-mockup.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/theme-picker-mockup.html",
+              "title": "theme-picker-mockup.html",
+              "kind": "document",
+              "openedAt": 1787619365462,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:005-Assets/modal-mockup.html",
+              "panel": "capture-viewer",
+              "path": "005-Assets/modal-mockup.html",
+              "title": "modal-mockup.html",
+              "kind": "document",
+              "openedAt": 1787619283145,
+              "folder": "005-Assets",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/PENDING_CHAT_INTENT_SPEC.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/PENDING_CHAT_INTENT_SPEC.md",
+              "title": "PENDING_CHAT_INTENT_SPEC.md",
+              "kind": "document",
+              "openedAt": 1787619275229,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+              "title": "CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+              "kind": "document",
+              "openedAt": 1787554903487,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:999-Archive/2026-05-22-view-architecture-session-3.md",
+              "panel": "capture-viewer",
+              "path": "999-Archive/2026-05-22-view-architecture-session-3.md",
+              "title": "2026-05-22-view-architecture-session-3.md",
+              "kind": "document",
+              "openedAt": 1787552452671,
+              "folder": "999-Archive",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:999-Archive/2026-05-19-fusion-studio-view-architecture.md",
+              "panel": "capture-viewer",
+              "path": "999-Archive/2026-05-19-fusion-studio-view-architecture.md",
+              "title": "2026-05-19-fusion-studio-view-architecture.md",
+              "kind": "document",
+              "openedAt": 1787552449670,
+              "folder": "999-Archive",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:999-Archive/WS_CLIENT_EXTRACTION.md",
+              "panel": "capture-viewer",
+              "path": "999-Archive/WS_CLIENT_EXTRACTION.md",
+              "title": "WS_CLIENT_EXTRACTION.md",
+              "kind": "document",
+              "openedAt": 1787536811380,
+              "folder": "999-Archive",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:020-CSS_UI_Changes/DECISIONS.md",
+              "panel": "capture-viewer",
+              "path": "020-CSS_UI_Changes/DECISIONS.md",
+              "title": "DECISIONS.md",
+              "kind": "document",
+              "openedAt": 1787361592975,
+              "folder": "020-CSS_UI_Changes",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:020-CSS_UI_Changes/ISSUES.md",
+              "panel": "capture-viewer",
+              "path": "020-CSS_UI_Changes/ISSUES.md",
+              "title": "ISSUES.md",
+              "kind": "document",
+              "openedAt": 1787231988550,
+              "folder": "020-CSS_UI_Changes",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:020-CSS_UI_Changes/WIKI_IMPACT.md",
+              "panel": "capture-viewer",
+              "path": "020-CSS_UI_Changes/WIKI_IMPACT.md",
+              "title": "WIKI_IMPACT.md",
+              "kind": "document",
+              "openedAt": 1787231982866,
+              "folder": "020-CSS_UI_Changes",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/ISSUES.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/ISSUES.md",
+              "title": "ISSUES.md",
+              "kind": "document",
+              "openedAt": 1787191656257,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/WORKFLOW_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/WORKFLOW_MODEL.md",
+              "title": "WORKFLOW_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787191650238,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/SYSTEM_MANAGER.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/SYSTEM_MANAGER.md",
+              "title": "SYSTEM_MANAGER.md",
+              "kind": "document",
+              "openedAt": 1787143539327,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/ROUTINES_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/ROUTINES_MODEL.md",
+              "title": "ROUTINES_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787143537728,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/PROPOSALS.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/PROPOSALS.md",
+              "title": "PROPOSALS.md",
+              "kind": "document",
+              "openedAt": 1787143535745,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/PRIVACY_AND_DATA.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/PRIVACY_AND_DATA.md",
+              "title": "PRIVACY_AND_DATA.md",
+              "kind": "document",
+              "openedAt": 1787143533979,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/MEMORY_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/MEMORY_MODEL.md",
+              "title": "MEMORY_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787143532395,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/INTERACTION_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/INTERACTION_MODEL.md",
+              "title": "INTERACTION_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787143525145,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/INTENT.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/INTENT.md",
+              "title": "INTENT.md",
+              "kind": "document",
+              "openedAt": 1787143521527,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/index.json",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/index.json",
+              "title": "index.json",
+              "kind": "document",
+              "openedAt": 1787143517677,
+              "folder": "021-Project_Vision",
+              "extension": "json"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/DECISIONS.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/DECISIONS.md",
+              "title": "DECISIONS.md",
+              "kind": "document",
+              "openedAt": 1787143515095,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/CAPTURE.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/CAPTURE.md",
+              "title": "CAPTURE.md",
+              "kind": "document",
+              "openedAt": 1787143509995,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/BULLETIN.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/BULLETIN.md",
+              "title": "BULLETIN.md",
+              "kind": "document",
+              "openedAt": 1787143505295,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/AGENTS.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/AGENTS.md",
+              "title": "AGENTS.md",
+              "kind": "document",
+              "openedAt": 1787143500011,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:019-System_Manager/system-manager-oracle-and-pattern-library.md",
+              "panel": "capture-viewer",
+              "path": "019-System_Manager/system-manager-oracle-and-pattern-library.md",
+              "title": "system-manager-oracle-and-pattern-library.md",
+              "kind": "document",
+              "openedAt": 1786264616387,
+              "folder": "019-System_Manager",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:013-Convergence_Loops/adversarial-document-convergence.md",
+              "panel": "capture-viewer",
+              "path": "013-Convergence_Loops/adversarial-document-convergence.md",
+              "title": "adversarial-document-convergence.md",
+              "kind": "document",
+              "openedAt": 1783990444939,
+              "folder": "013-Convergence_Loops",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/TRANSCRIPT.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/TRANSCRIPT.md",
+              "title": "TRANSCRIPT.md",
+              "kind": "document",
+              "openedAt": 1783851478239,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:005-Assets/menu-mockup.txt",
+              "panel": "capture-viewer",
+              "path": "005-Assets/menu-mockup.txt",
+              "title": "menu-mockup.txt",
+              "kind": "document",
+              "openedAt": 1783850555159,
+              "folder": "005-Assets",
+              "extension": "txt"
+            },
+            {
+              "id": "capture-viewer:005-Assets/menu-mockup.html",
+              "panel": "capture-viewer",
+              "path": "005-Assets/menu-mockup.html",
+              "title": "menu-mockup.html",
+              "kind": "document",
+              "openedAt": 1783850551859,
+              "folder": "005-Assets",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:005-Assets/sketch.txt",
+              "panel": "capture-viewer",
+              "path": "005-Assets/sketch.txt",
+              "title": "sketch.txt",
+              "kind": "document",
+              "openedAt": 1783850493493,
+              "folder": "005-Assets",
+              "extension": "txt"
+            },
+            {
+              "id": "capture-viewer:010-ModularizeDB-Temp/CAPTURE.md",
+              "panel": "capture-viewer",
+              "path": "010-ModularizeDB-Temp/CAPTURE.md",
+              "title": "CAPTURE.md",
+              "kind": "document",
+              "openedAt": 1783820497397,
+              "folder": "010-ModularizeDB-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:008-Provenance-Temp/provenance-flow.html",
+              "panel": "capture-viewer",
+              "path": "008-Provenance-Temp/provenance-flow.html",
+              "title": "provenance-flow.html",
+              "kind": "document",
+              "openedAt": 1783820117984,
+              "folder": "008-Provenance-Temp",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/CAPTURE.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/CAPTURE.md",
+              "title": "CAPTURE.md",
+              "kind": "document",
+              "openedAt": 1783747732657,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/CHECKPOINT_PROMPT.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/CHECKPOINT_PROMPT.md",
+              "title": "CHECKPOINT_PROMPT.md",
+              "kind": "document",
+              "openedAt": 1783747730457,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/CHECKPOINTS.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/CHECKPOINTS.md",
+              "title": "CHECKPOINTS.md",
+              "kind": "document",
+              "openedAt": 1783747725807,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/DECISIONS.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/DECISIONS.md",
+              "title": "DECISIONS.md",
+              "kind": "document",
+              "openedAt": 1783747724274,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/ISSUES.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/ISSUES.md",
+              "title": "ISSUES.md",
+              "kind": "document",
+              "openedAt": 1783747719225,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            }
+          ],
+          "navigation": {
+            "stack": [],
+            "index": -1
+          },
+          "tabs": [],
+          "activeTabId": null
+        }
+      },
+      "managedComponentPlacements": {
+        "scp-dbf7bf9a-75c4-4474-9184-4a1f7a45a409": {
+          "placementId": "scp-dbf7bf9a-75c4-4474-9184-4a1f7a45a409",
+          "disposition": "open",
+          "descriptor": {
+            "schemaVersion": 1,
+            "componentTypeId": "fusion.chat-surface",
+            "componentInstanceId": "chat-side:scp-dbf7bf9a-75c4-4474-9184-4a1f7a45a409",
+            "targetKey": "scp-dbf7bf9a-75c4-4474-9184-4a1f7a45a409",
+            "input": {
+              "workspaceId": "fs-dev",
+              "viewId": "capture-viewer",
+              "threadGroupId": "tg-299b1685-3766-47bc-b93e-0d418de1496a",
+              "threadId": "2026-09-27T22-27-09-105",
+              "host": "side-tab"
+            }
+          },
+          "updatedAt": "2026-09-28T05:28:24.101Z"
+        }
+      }
+    },
+    "tg-711980a4-7a74-41aa-9773-079aa8870768": {
+      "schemaVersion": 1,
+      "adapterId": "capture-viewer",
+      "adapterVersion": 1,
+      "contentRevision": "wsr_ae02a2096ff5e4e5aa853bcd67130194",
+      "placementRevision": "wsr_6f9c3309d25a0380694c6d64aaf425c6",
+      "updatedAt": "2026-09-28T05:30:11.399Z",
+      "content": {
+        "mode": "active",
+        "activeSelectedPath": null,
+        "archiveSelectedPath": null,
+        "lastOpenedPath": "001-Captures/machine-sync-sharing-model.md",
+        "activeGridScroll": 0,
+        "archiveGridScroll": 0,
+        "activeDocScroll": 0,
+        "archiveDocScroll": 0,
+        "tabs": [
+          {
+            "id": "cvt-mtxma449-0-9g7sh",
+            "kind": "doc",
+            "path": "001-Captures/machine-sync-sharing-model.md",
+            "name": "machine-sync-sharing-model.md",
+            "extension": "md",
+            "ui": {
+              "mode": "active",
+              "lastOpenedPath": "001-Captures/machine-sync-sharing-model.md",
+              "byMode": {
+                "active": {
+                  "selectedPath": "001-Captures/machine-sync-sharing-model.md",
+                  "gridScroll": 0,
+                  "docScroll": 0
+                },
+                "archive": {
+                  "selectedPath": null,
+                  "gridScroll": 0,
+                  "docScroll": 0
+                }
+              }
+            }
+          },
+          {
+            "id": "cvt-mtxma449-1-unekk",
+            "kind": "capture",
+            "ui": {
+              "mode": "active",
+              "lastOpenedPath": "001-Captures/machine-sync-sharing-model.md",
+              "byMode": {
+                "active": {
+                  "selectedPath": null,
+                  "gridScroll": 0,
+                  "docScroll": 0
+                },
+                "archive": {
+                  "selectedPath": null,
+                  "gridScroll": 0,
+                  "docScroll": 0
+                }
+              }
+            }
+          }
+        ],
+        "activeTabId": "cvt-mtxma449-1-unekk",
+        "captureTabRecords": {
+          "schemaVersion": 1,
+          "tabs": [
+            {
+              "tabId": "cvt-mtwy5avr-2-kuukj",
+              "content": {
+                "kind": "component",
+                "revision": 0,
+                "component": {
+                  "schemaVersion": 1,
+                  "componentTypeId": "capture.landing",
+                  "componentInstanceId": "cvi-mtwy5avr-3-g20qn",
+                  "input": {
+                    "title": "CAPTURE",
+                    "locationLabels": [
+                      "Capture",
+                      "Documents and Artifacts"
+                    ],
+                    "classic": {
+                      "mode": "active",
+                      "lastOpenedPath": "001-Captures/responsive-breakpoints.md",
+                      "selectedPath": "001-Captures/responsive-breakpoints.md",
+                      "gridScroll": 0,
+                      "docScroll": 0
+                    }
+                  },
+                  "targetKey": "capture:home"
+                }
+              }
+            }
+          ],
+          "activeTabId": "cvt-mtwy5avr-2-kuukj",
+          "reservations": []
+        },
+        "activity": {
+          "recents": [
+            {
+              "id": "capture-viewer:001-Captures/wiki-audit-decisions.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/wiki-audit-decisions.md",
+              "title": "wiki-audit-decisions.md",
+              "kind": "document",
+              "openedAt": 1789200430432,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/codebase-exploration-report.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/codebase-exploration-report.md",
+              "title": "codebase-exploration-report.md",
+              "kind": "document",
+              "openedAt": 1789198397168,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/machine-sync-sharing-model.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/machine-sync-sharing-model.md",
+              "title": "machine-sync-sharing-model.md",
+              "kind": "document",
+              "openedAt": 1789171102080,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/responsive-breakpoints.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/responsive-breakpoints.md",
+              "title": "responsive-breakpoints.md",
+              "kind": "document",
+              "openedAt": 1789100046264,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/Email_Workspace_HANDOFF.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/Email_Workspace_HANDOFF.md",
+              "title": "Email_Workspace_HANDOFF.md",
+              "kind": "document",
+              "openedAt": 1789090661435,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/STYLE_GUIDE.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/STYLE_GUIDE.md",
+              "title": "STYLE_GUIDE.md",
+              "kind": "document",
+              "openedAt": 1789090645090,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/full-permissions-safety-architecture.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/full-permissions-safety-architecture.md",
+              "title": "full-permissions-safety-architecture.md",
+              "kind": "document",
+              "openedAt": 1789088418444,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/discovery-gated-ceilings.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/discovery-gated-ceilings.md",
+              "title": "discovery-gated-ceilings.md",
+              "kind": "document",
+              "openedAt": 1789086054788,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/agent-registry-redundancy.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/agent-registry-redundancy.md",
+              "title": "agent-registry-redundancy.md",
+              "kind": "document",
+              "openedAt": 1788589871418,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/file-mutation-injection.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/file-mutation-injection.md",
+              "title": "file-mutation-injection.md",
+              "kind": "document",
+              "openedAt": 1788499208629,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+              "title": "GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+              "kind": "document",
+              "openedAt": 1788444301316,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:004-Playground/robin-overlay.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/robin-overlay.html",
+              "title": "robin-overlay.html",
+              "kind": "document",
+              "openedAt": 1787656739822,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:004-Playground/robin-overlay-v3.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/robin-overlay-v3.html",
+              "title": "robin-overlay-v3.html",
+              "kind": "document",
+              "openedAt": 1787652266847,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:022-Vision_Roadmap/THREADS_AND_VIEWS.md",
+              "panel": "capture-viewer",
+              "path": "022-Vision_Roadmap/THREADS_AND_VIEWS.md",
+              "title": "THREADS_AND_VIEWS.md",
+              "kind": "document",
+              "openedAt": 1787640648143,
+              "folder": "022-Vision_Roadmap",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:004-Playground/theme-studio.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/theme-studio.html",
+              "title": "theme-studio.html",
+              "kind": "document",
+              "openedAt": 1787638127309,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/VIEW-TABLE.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/VIEW-TABLE.md",
+              "title": "VIEW-TABLE.md",
+              "kind": "document",
+              "openedAt": 1787627154982,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/SPEC-KNOWLEDGE-AUTHORING.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/SPEC-KNOWLEDGE-AUTHORING.md",
+              "title": "SPEC-KNOWLEDGE-AUTHORING.md",
+              "kind": "document",
+              "openedAt": 1787624193856,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/SPEC-agent-self-improvement.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/SPEC-agent-self-improvement.md",
+              "title": "SPEC-agent-self-improvement.md",
+              "kind": "document",
+              "openedAt": 1787624187406,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:004-Playground/theme-picker-mockup.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/theme-picker-mockup.html",
+              "title": "theme-picker-mockup.html",
+              "kind": "document",
+              "openedAt": 1787619365462,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:005-Assets/modal-mockup.html",
+              "panel": "capture-viewer",
+              "path": "005-Assets/modal-mockup.html",
+              "title": "modal-mockup.html",
+              "kind": "document",
+              "openedAt": 1787619283145,
+              "folder": "005-Assets",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/PENDING_CHAT_INTENT_SPEC.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/PENDING_CHAT_INTENT_SPEC.md",
+              "title": "PENDING_CHAT_INTENT_SPEC.md",
+              "kind": "document",
+              "openedAt": 1787619275229,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+              "title": "CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+              "kind": "document",
+              "openedAt": 1787554903487,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:999-Archive/2026-05-22-view-architecture-session-3.md",
+              "panel": "capture-viewer",
+              "path": "999-Archive/2026-05-22-view-architecture-session-3.md",
+              "title": "2026-05-22-view-architecture-session-3.md",
+              "kind": "document",
+              "openedAt": 1787552452671,
+              "folder": "999-Archive",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:999-Archive/2026-05-19-fusion-studio-view-architecture.md",
+              "panel": "capture-viewer",
+              "path": "999-Archive/2026-05-19-fusion-studio-view-architecture.md",
+              "title": "2026-05-19-fusion-studio-view-architecture.md",
+              "kind": "document",
+              "openedAt": 1787552449670,
+              "folder": "999-Archive",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:999-Archive/WS_CLIENT_EXTRACTION.md",
+              "panel": "capture-viewer",
+              "path": "999-Archive/WS_CLIENT_EXTRACTION.md",
+              "title": "WS_CLIENT_EXTRACTION.md",
+              "kind": "document",
+              "openedAt": 1787536811380,
+              "folder": "999-Archive",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:020-CSS_UI_Changes/DECISIONS.md",
+              "panel": "capture-viewer",
+              "path": "020-CSS_UI_Changes/DECISIONS.md",
+              "title": "DECISIONS.md",
+              "kind": "document",
+              "openedAt": 1787361592975,
+              "folder": "020-CSS_UI_Changes",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:020-CSS_UI_Changes/ISSUES.md",
+              "panel": "capture-viewer",
+              "path": "020-CSS_UI_Changes/ISSUES.md",
+              "title": "ISSUES.md",
+              "kind": "document",
+              "openedAt": 1787231988550,
+              "folder": "020-CSS_UI_Changes",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:020-CSS_UI_Changes/WIKI_IMPACT.md",
+              "panel": "capture-viewer",
+              "path": "020-CSS_UI_Changes/WIKI_IMPACT.md",
+              "title": "WIKI_IMPACT.md",
+              "kind": "document",
+              "openedAt": 1787231982866,
+              "folder": "020-CSS_UI_Changes",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/ISSUES.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/ISSUES.md",
+              "title": "ISSUES.md",
+              "kind": "document",
+              "openedAt": 1787191656257,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/WORKFLOW_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/WORKFLOW_MODEL.md",
+              "title": "WORKFLOW_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787191650238,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/SYSTEM_MANAGER.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/SYSTEM_MANAGER.md",
+              "title": "SYSTEM_MANAGER.md",
+              "kind": "document",
+              "openedAt": 1787143539327,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/ROUTINES_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/ROUTINES_MODEL.md",
+              "title": "ROUTINES_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787143537728,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/PROPOSALS.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/PROPOSALS.md",
+              "title": "PROPOSALS.md",
+              "kind": "document",
+              "openedAt": 1787143535745,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/PRIVACY_AND_DATA.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/PRIVACY_AND_DATA.md",
+              "title": "PRIVACY_AND_DATA.md",
+              "kind": "document",
+              "openedAt": 1787143533979,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/MEMORY_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/MEMORY_MODEL.md",
+              "title": "MEMORY_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787143532395,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/INTERACTION_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/INTERACTION_MODEL.md",
+              "title": "INTERACTION_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787143525145,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/INTENT.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/INTENT.md",
+              "title": "INTENT.md",
+              "kind": "document",
+              "openedAt": 1787143521527,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/index.json",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/index.json",
+              "title": "index.json",
+              "kind": "document",
+              "openedAt": 1787143517677,
+              "folder": "021-Project_Vision",
+              "extension": "json"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/DECISIONS.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/DECISIONS.md",
+              "title": "DECISIONS.md",
+              "kind": "document",
+              "openedAt": 1787143515095,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/CAPTURE.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/CAPTURE.md",
+              "title": "CAPTURE.md",
+              "kind": "document",
+              "openedAt": 1787143509995,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/BULLETIN.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/BULLETIN.md",
+              "title": "BULLETIN.md",
+              "kind": "document",
+              "openedAt": 1787143505295,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/AGENTS.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/AGENTS.md",
+              "title": "AGENTS.md",
+              "kind": "document",
+              "openedAt": 1787143500011,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:019-System_Manager/system-manager-oracle-and-pattern-library.md",
+              "panel": "capture-viewer",
+              "path": "019-System_Manager/system-manager-oracle-and-pattern-library.md",
+              "title": "system-manager-oracle-and-pattern-library.md",
+              "kind": "document",
+              "openedAt": 1786264616387,
+              "folder": "019-System_Manager",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:013-Convergence_Loops/adversarial-document-convergence.md",
+              "panel": "capture-viewer",
+              "path": "013-Convergence_Loops/adversarial-document-convergence.md",
+              "title": "adversarial-document-convergence.md",
+              "kind": "document",
+              "openedAt": 1783990444939,
+              "folder": "013-Convergence_Loops",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/TRANSCRIPT.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/TRANSCRIPT.md",
+              "title": "TRANSCRIPT.md",
+              "kind": "document",
+              "openedAt": 1783851478239,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:005-Assets/menu-mockup.txt",
+              "panel": "capture-viewer",
+              "path": "005-Assets/menu-mockup.txt",
+              "title": "menu-mockup.txt",
+              "kind": "document",
+              "openedAt": 1783850555159,
+              "folder": "005-Assets",
+              "extension": "txt"
+            },
+            {
+              "id": "capture-viewer:005-Assets/menu-mockup.html",
+              "panel": "capture-viewer",
+              "path": "005-Assets/menu-mockup.html",
+              "title": "menu-mockup.html",
+              "kind": "document",
+              "openedAt": 1783850551859,
+              "folder": "005-Assets",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:005-Assets/sketch.txt",
+              "panel": "capture-viewer",
+              "path": "005-Assets/sketch.txt",
+              "title": "sketch.txt",
+              "kind": "document",
+              "openedAt": 1783850493493,
+              "folder": "005-Assets",
+              "extension": "txt"
+            },
+            {
+              "id": "capture-viewer:010-ModularizeDB-Temp/CAPTURE.md",
+              "panel": "capture-viewer",
+              "path": "010-ModularizeDB-Temp/CAPTURE.md",
+              "title": "CAPTURE.md",
+              "kind": "document",
+              "openedAt": 1783820497397,
+              "folder": "010-ModularizeDB-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:008-Provenance-Temp/provenance-flow.html",
+              "panel": "capture-viewer",
+              "path": "008-Provenance-Temp/provenance-flow.html",
+              "title": "provenance-flow.html",
+              "kind": "document",
+              "openedAt": 1783820117984,
+              "folder": "008-Provenance-Temp",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/CAPTURE.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/CAPTURE.md",
+              "title": "CAPTURE.md",
+              "kind": "document",
+              "openedAt": 1783747732657,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/CHECKPOINT_PROMPT.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/CHECKPOINT_PROMPT.md",
+              "title": "CHECKPOINT_PROMPT.md",
+              "kind": "document",
+              "openedAt": 1783747730457,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/CHECKPOINTS.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/CHECKPOINTS.md",
+              "title": "CHECKPOINTS.md",
+              "kind": "document",
+              "openedAt": 1783747725807,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/DECISIONS.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/DECISIONS.md",
+              "title": "DECISIONS.md",
+              "kind": "document",
+              "openedAt": 1783747724274,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/ISSUES.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/ISSUES.md",
+              "title": "ISSUES.md",
+              "kind": "document",
+              "openedAt": 1783747719225,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            }
+          ],
+          "navigation": {
+            "stack": [],
+            "index": -1
+          },
+          "tabs": [],
+          "activeTabId": null
+        }
+      },
+      "managedComponentPlacements": {}
+    },
+    "tg-a1adde1c-e580-4fae-939d-5cdf369ee44c": {
+      "schemaVersion": 1,
+      "adapterId": "capture-viewer",
+      "adapterVersion": 1,
+      "contentRevision": "wsr_febdfb9ac116cceb99fa028c8c97905b",
+      "placementRevision": "wsr_19e8265c1ede820d12591165a0945251",
+      "updatedAt": "2026-10-02T16:15:57.853Z",
+      "content": {
+        "mode": "active",
+        "activeSelectedPath": "039-Mission_Control_Master_Vision/mission-control.html",
+        "archiveSelectedPath": null,
+        "lastOpenedPath": "039-Mission_Control_Master_Vision/mission-control.html",
+        "activeGridScroll": 0,
+        "archiveGridScroll": 0,
+        "activeDocScroll": 0,
+        "archiveDocScroll": 0,
+        "tabs": [
+          {
+            "id": "cvt-mtxma449-0-9g7sh",
+            "kind": "doc",
+            "path": "001-Captures/machine-sync-sharing-model.md",
+            "name": "machine-sync-sharing-model.md",
+            "extension": "md",
+            "ui": {
+              "mode": "active",
+              "lastOpenedPath": "001-Captures/machine-sync-sharing-model.md",
+              "byMode": {
+                "active": {
+                  "selectedPath": "001-Captures/machine-sync-sharing-model.md",
+                  "gridScroll": 0,
+                  "docScroll": 0
+                },
+                "archive": {
+                  "selectedPath": null,
+                  "gridScroll": 0,
+                  "docScroll": 0
+                }
+              }
+            }
+          },
+          {
+            "id": "cvt-mtxma449-1-unekk",
+            "kind": "capture",
+            "ui": {
+              "mode": "active",
+              "lastOpenedPath": "039-Mission_Control_Master_Vision/mission-control.html",
+              "byMode": {
+                "active": {
+                  "selectedPath": "039-Mission_Control_Master_Vision/mission-control.html",
+                  "gridScroll": 0,
+                  "docScroll": 0
+                },
+                "archive": {
+                  "selectedPath": null,
+                  "gridScroll": 0,
+                  "docScroll": 0
+                }
+              }
+            }
+          }
+        ],
+        "activeTabId": "cvt-mtxma449-1-unekk",
+        "captureTabRecords": {
+          "schemaVersion": 1,
+          "tabs": [
+            {
+              "tabId": "cvt-mtwy5avr-2-kuukj",
+              "content": {
+                "kind": "component",
+                "revision": 0,
+                "component": {
+                  "schemaVersion": 1,
+                  "componentTypeId": "capture.landing",
+                  "componentInstanceId": "cvi-mtwy5avr-3-g20qn",
+                  "input": {
+                    "title": "CAPTURE",
+                    "locationLabels": [
+                      "Capture",
+                      "Documents and Artifacts"
+                    ],
+                    "classic": {
+                      "mode": "active",
+                      "lastOpenedPath": "001-Captures/responsive-breakpoints.md",
+                      "selectedPath": "001-Captures/responsive-breakpoints.md",
+                      "gridScroll": 0,
+                      "docScroll": 0
+                    }
+                  },
+                  "targetKey": "capture:home"
+                }
+              }
+            },
+            {
+              "tabId": "cvt-mur60a6v-0-kwebl",
+              "content": {
+                "kind": "component",
+                "revision": 0,
+                "component": {
+                  "schemaVersion": 1,
+                  "componentTypeId": "capture.document",
+                  "componentInstanceId": "cvi-mur60a6v-1-mdrvm",
+                  "input": {
+                    "title": "mission-control.html",
+                    "locationLabels": [
+                      "Capture",
+                      "Mission Control Master Vision",
+                      "mission-control.html"
+                    ],
+                    "icon": "code",
+                    "iconClassName": "file-icon-html",
+                    "path": "039-Mission_Control_Master_Vision/mission-control.html",
+                    "name": "mission-control.html",
+                    "extension": "html",
+                    "mode": "active",
+                    "docScroll": 0,
+                    "selectedPath": "039-Mission_Control_Master_Vision/mission-control.html",
+                    "lastOpenedPath": "039-Mission_Control_Master_Vision/mission-control.html"
+                  },
+                  "targetKey": "capture:doc:039-Mission_Control_Master_Vision/mission-control.html"
+                }
+              }
+            }
+          ],
+          "activeTabId": "cvt-mur60a6v-0-kwebl",
+          "reservations": []
+        },
+        "activity": {
+          "recents": [
+            {
+              "id": "capture-viewer:039-Mission_Control_Master_Vision/mission-control.html",
+              "panel": "capture-viewer",
+              "path": "039-Mission_Control_Master_Vision/mission-control.html",
+              "title": "mission-control.html",
+              "kind": "document",
+              "openedAt": 1790585360811,
+              "folder": "039-Mission_Control_Master_Vision",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:001-Captures/wiki-audit-decisions.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/wiki-audit-decisions.md",
+              "title": "wiki-audit-decisions.md",
+              "kind": "document",
+              "openedAt": 1789200430432,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/codebase-exploration-report.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/codebase-exploration-report.md",
+              "title": "codebase-exploration-report.md",
+              "kind": "document",
+              "openedAt": 1789198397168,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/machine-sync-sharing-model.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/machine-sync-sharing-model.md",
+              "title": "machine-sync-sharing-model.md",
+              "kind": "document",
+              "openedAt": 1789171102080,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/responsive-breakpoints.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/responsive-breakpoints.md",
+              "title": "responsive-breakpoints.md",
+              "kind": "document",
+              "openedAt": 1789100046264,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/Email_Workspace_HANDOFF.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/Email_Workspace_HANDOFF.md",
+              "title": "Email_Workspace_HANDOFF.md",
+              "kind": "document",
+              "openedAt": 1789090661435,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/STYLE_GUIDE.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/STYLE_GUIDE.md",
+              "title": "STYLE_GUIDE.md",
+              "kind": "document",
+              "openedAt": 1789090645090,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/full-permissions-safety-architecture.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/full-permissions-safety-architecture.md",
+              "title": "full-permissions-safety-architecture.md",
+              "kind": "document",
+              "openedAt": 1789088418444,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/discovery-gated-ceilings.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/discovery-gated-ceilings.md",
+              "title": "discovery-gated-ceilings.md",
+              "kind": "document",
+              "openedAt": 1789086054788,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/agent-registry-redundancy.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/agent-registry-redundancy.md",
+              "title": "agent-registry-redundancy.md",
+              "kind": "document",
+              "openedAt": 1788589871418,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/file-mutation-injection.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/file-mutation-injection.md",
+              "title": "file-mutation-injection.md",
+              "kind": "document",
+              "openedAt": 1788499208629,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+              "title": "GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+              "kind": "document",
+              "openedAt": 1788444301316,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:004-Playground/robin-overlay.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/robin-overlay.html",
+              "title": "robin-overlay.html",
+              "kind": "document",
+              "openedAt": 1787656739822,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:004-Playground/robin-overlay-v3.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/robin-overlay-v3.html",
+              "title": "robin-overlay-v3.html",
+              "kind": "document",
+              "openedAt": 1787652266847,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:022-Vision_Roadmap/THREADS_AND_VIEWS.md",
+              "panel": "capture-viewer",
+              "path": "022-Vision_Roadmap/THREADS_AND_VIEWS.md",
+              "title": "THREADS_AND_VIEWS.md",
+              "kind": "document",
+              "openedAt": 1787640648143,
+              "folder": "022-Vision_Roadmap",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:004-Playground/theme-studio.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/theme-studio.html",
+              "title": "theme-studio.html",
+              "kind": "document",
+              "openedAt": 1787638127309,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/VIEW-TABLE.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/VIEW-TABLE.md",
+              "title": "VIEW-TABLE.md",
+              "kind": "document",
+              "openedAt": 1787627154982,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/SPEC-KNOWLEDGE-AUTHORING.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/SPEC-KNOWLEDGE-AUTHORING.md",
+              "title": "SPEC-KNOWLEDGE-AUTHORING.md",
+              "kind": "document",
+              "openedAt": 1787624193856,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/SPEC-agent-self-improvement.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/SPEC-agent-self-improvement.md",
+              "title": "SPEC-agent-self-improvement.md",
+              "kind": "document",
+              "openedAt": 1787624187406,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:004-Playground/theme-picker-mockup.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/theme-picker-mockup.html",
+              "title": "theme-picker-mockup.html",
+              "kind": "document",
+              "openedAt": 1787619365462,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:005-Assets/modal-mockup.html",
+              "panel": "capture-viewer",
+              "path": "005-Assets/modal-mockup.html",
+              "title": "modal-mockup.html",
+              "kind": "document",
+              "openedAt": 1787619283145,
+              "folder": "005-Assets",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/PENDING_CHAT_INTENT_SPEC.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/PENDING_CHAT_INTENT_SPEC.md",
+              "title": "PENDING_CHAT_INTENT_SPEC.md",
+              "kind": "document",
+              "openedAt": 1787619275229,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+              "title": "CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+              "kind": "document",
+              "openedAt": 1787554903487,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:999-Archive/2026-05-22-view-architecture-session-3.md",
+              "panel": "capture-viewer",
+              "path": "999-Archive/2026-05-22-view-architecture-session-3.md",
+              "title": "2026-05-22-view-architecture-session-3.md",
+              "kind": "document",
+              "openedAt": 1787552452671,
+              "folder": "999-Archive",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:999-Archive/2026-05-19-fusion-studio-view-architecture.md",
+              "panel": "capture-viewer",
+              "path": "999-Archive/2026-05-19-fusion-studio-view-architecture.md",
+              "title": "2026-05-19-fusion-studio-view-architecture.md",
+              "kind": "document",
+              "openedAt": 1787552449670,
+              "folder": "999-Archive",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:999-Archive/WS_CLIENT_EXTRACTION.md",
+              "panel": "capture-viewer",
+              "path": "999-Archive/WS_CLIENT_EXTRACTION.md",
+              "title": "WS_CLIENT_EXTRACTION.md",
+              "kind": "document",
+              "openedAt": 1787536811380,
+              "folder": "999-Archive",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:020-CSS_UI_Changes/DECISIONS.md",
+              "panel": "capture-viewer",
+              "path": "020-CSS_UI_Changes/DECISIONS.md",
+              "title": "DECISIONS.md",
+              "kind": "document",
+              "openedAt": 1787361592975,
+              "folder": "020-CSS_UI_Changes",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:020-CSS_UI_Changes/ISSUES.md",
+              "panel": "capture-viewer",
+              "path": "020-CSS_UI_Changes/ISSUES.md",
+              "title": "ISSUES.md",
+              "kind": "document",
+              "openedAt": 1787231988550,
+              "folder": "020-CSS_UI_Changes",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:020-CSS_UI_Changes/WIKI_IMPACT.md",
+              "panel": "capture-viewer",
+              "path": "020-CSS_UI_Changes/WIKI_IMPACT.md",
+              "title": "WIKI_IMPACT.md",
+              "kind": "document",
+              "openedAt": 1787231982866,
+              "folder": "020-CSS_UI_Changes",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/ISSUES.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/ISSUES.md",
+              "title": "ISSUES.md",
+              "kind": "document",
+              "openedAt": 1787191656257,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/WORKFLOW_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/WORKFLOW_MODEL.md",
+              "title": "WORKFLOW_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787191650238,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/SYSTEM_MANAGER.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/SYSTEM_MANAGER.md",
+              "title": "SYSTEM_MANAGER.md",
+              "kind": "document",
+              "openedAt": 1787143539327,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/ROUTINES_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/ROUTINES_MODEL.md",
+              "title": "ROUTINES_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787143537728,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/PROPOSALS.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/PROPOSALS.md",
+              "title": "PROPOSALS.md",
+              "kind": "document",
+              "openedAt": 1787143535745,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/PRIVACY_AND_DATA.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/PRIVACY_AND_DATA.md",
+              "title": "PRIVACY_AND_DATA.md",
+              "kind": "document",
+              "openedAt": 1787143533979,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/MEMORY_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/MEMORY_MODEL.md",
+              "title": "MEMORY_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787143532395,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/INTERACTION_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/INTERACTION_MODEL.md",
+              "title": "INTERACTION_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787143525145,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/INTENT.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/INTENT.md",
+              "title": "INTENT.md",
+              "kind": "document",
+              "openedAt": 1787143521527,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/index.json",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/index.json",
+              "title": "index.json",
+              "kind": "document",
+              "openedAt": 1787143517677,
+              "folder": "021-Project_Vision",
+              "extension": "json"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/DECISIONS.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/DECISIONS.md",
+              "title": "DECISIONS.md",
+              "kind": "document",
+              "openedAt": 1787143515095,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/CAPTURE.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/CAPTURE.md",
+              "title": "CAPTURE.md",
+              "kind": "document",
+              "openedAt": 1787143509995,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/BULLETIN.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/BULLETIN.md",
+              "title": "BULLETIN.md",
+              "kind": "document",
+              "openedAt": 1787143505295,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/AGENTS.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/AGENTS.md",
+              "title": "AGENTS.md",
+              "kind": "document",
+              "openedAt": 1787143500011,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:019-System_Manager/system-manager-oracle-and-pattern-library.md",
+              "panel": "capture-viewer",
+              "path": "019-System_Manager/system-manager-oracle-and-pattern-library.md",
+              "title": "system-manager-oracle-and-pattern-library.md",
+              "kind": "document",
+              "openedAt": 1786264616387,
+              "folder": "019-System_Manager",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:013-Convergence_Loops/adversarial-document-convergence.md",
+              "panel": "capture-viewer",
+              "path": "013-Convergence_Loops/adversarial-document-convergence.md",
+              "title": "adversarial-document-convergence.md",
+              "kind": "document",
+              "openedAt": 1783990444939,
+              "folder": "013-Convergence_Loops",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/TRANSCRIPT.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/TRANSCRIPT.md",
+              "title": "TRANSCRIPT.md",
+              "kind": "document",
+              "openedAt": 1783851478239,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:005-Assets/menu-mockup.txt",
+              "panel": "capture-viewer",
+              "path": "005-Assets/menu-mockup.txt",
+              "title": "menu-mockup.txt",
+              "kind": "document",
+              "openedAt": 1783850555159,
+              "folder": "005-Assets",
+              "extension": "txt"
+            },
+            {
+              "id": "capture-viewer:005-Assets/menu-mockup.html",
+              "panel": "capture-viewer",
+              "path": "005-Assets/menu-mockup.html",
+              "title": "menu-mockup.html",
+              "kind": "document",
+              "openedAt": 1783850551859,
+              "folder": "005-Assets",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:005-Assets/sketch.txt",
+              "panel": "capture-viewer",
+              "path": "005-Assets/sketch.txt",
+              "title": "sketch.txt",
+              "kind": "document",
+              "openedAt": 1783850493493,
+              "folder": "005-Assets",
+              "extension": "txt"
+            },
+            {
+              "id": "capture-viewer:010-ModularizeDB-Temp/CAPTURE.md",
+              "panel": "capture-viewer",
+              "path": "010-ModularizeDB-Temp/CAPTURE.md",
+              "title": "CAPTURE.md",
+              "kind": "document",
+              "openedAt": 1783820497397,
+              "folder": "010-ModularizeDB-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:008-Provenance-Temp/provenance-flow.html",
+              "panel": "capture-viewer",
+              "path": "008-Provenance-Temp/provenance-flow.html",
+              "title": "provenance-flow.html",
+              "kind": "document",
+              "openedAt": 1783820117984,
+              "folder": "008-Provenance-Temp",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/CAPTURE.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/CAPTURE.md",
+              "title": "CAPTURE.md",
+              "kind": "document",
+              "openedAt": 1783747732657,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/CHECKPOINT_PROMPT.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/CHECKPOINT_PROMPT.md",
+              "title": "CHECKPOINT_PROMPT.md",
+              "kind": "document",
+              "openedAt": 1783747730457,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/CHECKPOINTS.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/CHECKPOINTS.md",
+              "title": "CHECKPOINTS.md",
+              "kind": "document",
+              "openedAt": 1783747725807,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/DECISIONS.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/DECISIONS.md",
+              "title": "DECISIONS.md",
+              "kind": "document",
+              "openedAt": 1783747724274,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/ISSUES.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/ISSUES.md",
+              "title": "ISSUES.md",
+              "kind": "document",
+              "openedAt": 1783747719225,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            }
+          ],
+          "navigation": {
+            "stack": [],
+            "index": -1
+          },
+          "tabs": [],
+          "activeTabId": null
+        }
+      },
+      "managedComponentPlacements": {}
+    },
+    "tg-3923fe62-5c06-44d5-b0c3-4de45ccd7896": {
+      "schemaVersion": 1,
+      "adapterId": "capture-viewer",
+      "adapterVersion": 1,
+      "contentRevision": "wsr_e3b0a31aab375bb79bd1b933a8e5a751",
+      "placementRevision": "wsr_3cc4c5111d30f0d123ddd96dcedd9926",
+      "updatedAt": "2026-09-28T06:52:34.141Z",
+      "content": {
+        "mode": "active",
+        "activeSelectedPath": null,
+        "archiveSelectedPath": null,
+        "lastOpenedPath": "001-Captures/machine-sync-sharing-model.md",
+        "activeGridScroll": 0,
+        "archiveGridScroll": 0,
+        "activeDocScroll": 0,
+        "archiveDocScroll": 0,
+        "tabs": [
+          {
+            "id": "cvt-mtxma449-0-9g7sh",
+            "kind": "doc",
+            "path": "001-Captures/machine-sync-sharing-model.md",
+            "name": "machine-sync-sharing-model.md",
+            "extension": "md",
+            "ui": {
+              "mode": "active",
+              "lastOpenedPath": "001-Captures/machine-sync-sharing-model.md",
+              "byMode": {
+                "active": {
+                  "selectedPath": "001-Captures/machine-sync-sharing-model.md",
+                  "gridScroll": 0,
+                  "docScroll": 0
+                },
+                "archive": {
+                  "selectedPath": null,
+                  "gridScroll": 0,
+                  "docScroll": 0
+                }
+              }
+            }
+          },
+          {
+            "id": "cvt-mtxma449-1-unekk",
+            "kind": "capture",
+            "ui": {
+              "mode": "active",
+              "lastOpenedPath": "001-Captures/machine-sync-sharing-model.md",
+              "byMode": {
+                "active": {
+                  "selectedPath": null,
+                  "gridScroll": 0,
+                  "docScroll": 0
+                },
+                "archive": {
+                  "selectedPath": null,
+                  "gridScroll": 0,
+                  "docScroll": 0
+                }
+              }
+            }
+          }
+        ],
+        "activeTabId": "cvt-mtxma449-1-unekk",
+        "captureTabRecords": {
+          "schemaVersion": 1,
+          "tabs": [
+            {
+              "tabId": "cvt-mtwy5avr-2-kuukj",
+              "content": {
+                "kind": "component",
+                "revision": 0,
+                "component": {
+                  "schemaVersion": 1,
+                  "componentTypeId": "capture.landing",
+                  "componentInstanceId": "cvi-mtwy5avr-3-g20qn",
+                  "input": {
+                    "title": "CAPTURE",
+                    "locationLabels": [
+                      "Capture",
+                      "Documents and Artifacts"
+                    ],
+                    "classic": {
+                      "mode": "active",
+                      "lastOpenedPath": "001-Captures/responsive-breakpoints.md",
+                      "selectedPath": "001-Captures/responsive-breakpoints.md",
+                      "gridScroll": 0,
+                      "docScroll": 0
+                    }
+                  },
+                  "targetKey": "capture:home"
+                }
+              }
+            }
+          ],
+          "activeTabId": "cvt-mtwy5avr-2-kuukj",
+          "reservations": []
+        },
+        "activity": {
+          "recents": [
+            {
+              "id": "capture-viewer:001-Captures/wiki-audit-decisions.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/wiki-audit-decisions.md",
+              "title": "wiki-audit-decisions.md",
+              "kind": "document",
+              "openedAt": 1789200430432,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/codebase-exploration-report.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/codebase-exploration-report.md",
+              "title": "codebase-exploration-report.md",
+              "kind": "document",
+              "openedAt": 1789198397168,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/machine-sync-sharing-model.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/machine-sync-sharing-model.md",
+              "title": "machine-sync-sharing-model.md",
+              "kind": "document",
+              "openedAt": 1789171102080,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/responsive-breakpoints.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/responsive-breakpoints.md",
+              "title": "responsive-breakpoints.md",
+              "kind": "document",
+              "openedAt": 1789100046264,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/Email_Workspace_HANDOFF.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/Email_Workspace_HANDOFF.md",
+              "title": "Email_Workspace_HANDOFF.md",
+              "kind": "document",
+              "openedAt": 1789090661435,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/STYLE_GUIDE.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/STYLE_GUIDE.md",
+              "title": "STYLE_GUIDE.md",
+              "kind": "document",
+              "openedAt": 1789090645090,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/full-permissions-safety-architecture.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/full-permissions-safety-architecture.md",
+              "title": "full-permissions-safety-architecture.md",
+              "kind": "document",
+              "openedAt": 1789088418444,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/discovery-gated-ceilings.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/discovery-gated-ceilings.md",
+              "title": "discovery-gated-ceilings.md",
+              "kind": "document",
+              "openedAt": 1789086054788,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/agent-registry-redundancy.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/agent-registry-redundancy.md",
+              "title": "agent-registry-redundancy.md",
+              "kind": "document",
+              "openedAt": 1788589871418,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/file-mutation-injection.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/file-mutation-injection.md",
+              "title": "file-mutation-injection.md",
+              "kind": "document",
+              "openedAt": 1788499208629,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+              "title": "GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+              "kind": "document",
+              "openedAt": 1788444301316,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:004-Playground/robin-overlay.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/robin-overlay.html",
+              "title": "robin-overlay.html",
+              "kind": "document",
+              "openedAt": 1787656739822,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:004-Playground/robin-overlay-v3.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/robin-overlay-v3.html",
+              "title": "robin-overlay-v3.html",
+              "kind": "document",
+              "openedAt": 1787652266847,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:022-Vision_Roadmap/THREADS_AND_VIEWS.md",
+              "panel": "capture-viewer",
+              "path": "022-Vision_Roadmap/THREADS_AND_VIEWS.md",
+              "title": "THREADS_AND_VIEWS.md",
+              "kind": "document",
+              "openedAt": 1787640648143,
+              "folder": "022-Vision_Roadmap",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:004-Playground/theme-studio.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/theme-studio.html",
+              "title": "theme-studio.html",
+              "kind": "document",
+              "openedAt": 1787638127309,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/VIEW-TABLE.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/VIEW-TABLE.md",
+              "title": "VIEW-TABLE.md",
+              "kind": "document",
+              "openedAt": 1787627154982,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/SPEC-KNOWLEDGE-AUTHORING.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/SPEC-KNOWLEDGE-AUTHORING.md",
+              "title": "SPEC-KNOWLEDGE-AUTHORING.md",
+              "kind": "document",
+              "openedAt": 1787624193856,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/SPEC-agent-self-improvement.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/SPEC-agent-self-improvement.md",
+              "title": "SPEC-agent-self-improvement.md",
+              "kind": "document",
+              "openedAt": 1787624187406,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:004-Playground/theme-picker-mockup.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/theme-picker-mockup.html",
+              "title": "theme-picker-mockup.html",
+              "kind": "document",
+              "openedAt": 1787619365462,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:005-Assets/modal-mockup.html",
+              "panel": "capture-viewer",
+              "path": "005-Assets/modal-mockup.html",
+              "title": "modal-mockup.html",
+              "kind": "document",
+              "openedAt": 1787619283145,
+              "folder": "005-Assets",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/PENDING_CHAT_INTENT_SPEC.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/PENDING_CHAT_INTENT_SPEC.md",
+              "title": "PENDING_CHAT_INTENT_SPEC.md",
+              "kind": "document",
+              "openedAt": 1787619275229,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+              "title": "CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+              "kind": "document",
+              "openedAt": 1787554903487,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:999-Archive/2026-05-22-view-architecture-session-3.md",
+              "panel": "capture-viewer",
+              "path": "999-Archive/2026-05-22-view-architecture-session-3.md",
+              "title": "2026-05-22-view-architecture-session-3.md",
+              "kind": "document",
+              "openedAt": 1787552452671,
+              "folder": "999-Archive",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:999-Archive/2026-05-19-fusion-studio-view-architecture.md",
+              "panel": "capture-viewer",
+              "path": "999-Archive/2026-05-19-fusion-studio-view-architecture.md",
+              "title": "2026-05-19-fusion-studio-view-architecture.md",
+              "kind": "document",
+              "openedAt": 1787552449670,
+              "folder": "999-Archive",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:999-Archive/WS_CLIENT_EXTRACTION.md",
+              "panel": "capture-viewer",
+              "path": "999-Archive/WS_CLIENT_EXTRACTION.md",
+              "title": "WS_CLIENT_EXTRACTION.md",
+              "kind": "document",
+              "openedAt": 1787536811380,
+              "folder": "999-Archive",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:020-CSS_UI_Changes/DECISIONS.md",
+              "panel": "capture-viewer",
+              "path": "020-CSS_UI_Changes/DECISIONS.md",
+              "title": "DECISIONS.md",
+              "kind": "document",
+              "openedAt": 1787361592975,
+              "folder": "020-CSS_UI_Changes",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:020-CSS_UI_Changes/ISSUES.md",
+              "panel": "capture-viewer",
+              "path": "020-CSS_UI_Changes/ISSUES.md",
+              "title": "ISSUES.md",
+              "kind": "document",
+              "openedAt": 1787231988550,
+              "folder": "020-CSS_UI_Changes",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:020-CSS_UI_Changes/WIKI_IMPACT.md",
+              "panel": "capture-viewer",
+              "path": "020-CSS_UI_Changes/WIKI_IMPACT.md",
+              "title": "WIKI_IMPACT.md",
+              "kind": "document",
+              "openedAt": 1787231982866,
+              "folder": "020-CSS_UI_Changes",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/ISSUES.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/ISSUES.md",
+              "title": "ISSUES.md",
+              "kind": "document",
+              "openedAt": 1787191656257,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/WORKFLOW_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/WORKFLOW_MODEL.md",
+              "title": "WORKFLOW_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787191650238,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/SYSTEM_MANAGER.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/SYSTEM_MANAGER.md",
+              "title": "SYSTEM_MANAGER.md",
+              "kind": "document",
+              "openedAt": 1787143539327,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/ROUTINES_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/ROUTINES_MODEL.md",
+              "title": "ROUTINES_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787143537728,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/PROPOSALS.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/PROPOSALS.md",
+              "title": "PROPOSALS.md",
+              "kind": "document",
+              "openedAt": 1787143535745,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/PRIVACY_AND_DATA.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/PRIVACY_AND_DATA.md",
+              "title": "PRIVACY_AND_DATA.md",
+              "kind": "document",
+              "openedAt": 1787143533979,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/MEMORY_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/MEMORY_MODEL.md",
+              "title": "MEMORY_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787143532395,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/INTERACTION_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/INTERACTION_MODEL.md",
+              "title": "INTERACTION_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787143525145,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/INTENT.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/INTENT.md",
+              "title": "INTENT.md",
+              "kind": "document",
+              "openedAt": 1787143521527,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/index.json",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/index.json",
+              "title": "index.json",
+              "kind": "document",
+              "openedAt": 1787143517677,
+              "folder": "021-Project_Vision",
+              "extension": "json"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/DECISIONS.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/DECISIONS.md",
+              "title": "DECISIONS.md",
+              "kind": "document",
+              "openedAt": 1787143515095,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/CAPTURE.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/CAPTURE.md",
+              "title": "CAPTURE.md",
+              "kind": "document",
+              "openedAt": 1787143509995,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/BULLETIN.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/BULLETIN.md",
+              "title": "BULLETIN.md",
+              "kind": "document",
+              "openedAt": 1787143505295,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/AGENTS.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/AGENTS.md",
+              "title": "AGENTS.md",
+              "kind": "document",
+              "openedAt": 1787143500011,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:019-System_Manager/system-manager-oracle-and-pattern-library.md",
+              "panel": "capture-viewer",
+              "path": "019-System_Manager/system-manager-oracle-and-pattern-library.md",
+              "title": "system-manager-oracle-and-pattern-library.md",
+              "kind": "document",
+              "openedAt": 1786264616387,
+              "folder": "019-System_Manager",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:013-Convergence_Loops/adversarial-document-convergence.md",
+              "panel": "capture-viewer",
+              "path": "013-Convergence_Loops/adversarial-document-convergence.md",
+              "title": "adversarial-document-convergence.md",
+              "kind": "document",
+              "openedAt": 1783990444939,
+              "folder": "013-Convergence_Loops",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/TRANSCRIPT.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/TRANSCRIPT.md",
+              "title": "TRANSCRIPT.md",
+              "kind": "document",
+              "openedAt": 1783851478239,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:005-Assets/menu-mockup.txt",
+              "panel": "capture-viewer",
+              "path": "005-Assets/menu-mockup.txt",
+              "title": "menu-mockup.txt",
+              "kind": "document",
+              "openedAt": 1783850555159,
+              "folder": "005-Assets",
+              "extension": "txt"
+            },
+            {
+              "id": "capture-viewer:005-Assets/menu-mockup.html",
+              "panel": "capture-viewer",
+              "path": "005-Assets/menu-mockup.html",
+              "title": "menu-mockup.html",
+              "kind": "document",
+              "openedAt": 1783850551859,
+              "folder": "005-Assets",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:005-Assets/sketch.txt",
+              "panel": "capture-viewer",
+              "path": "005-Assets/sketch.txt",
+              "title": "sketch.txt",
+              "kind": "document",
+              "openedAt": 1783850493493,
+              "folder": "005-Assets",
+              "extension": "txt"
+            },
+            {
+              "id": "capture-viewer:010-ModularizeDB-Temp/CAPTURE.md",
+              "panel": "capture-viewer",
+              "path": "010-ModularizeDB-Temp/CAPTURE.md",
+              "title": "CAPTURE.md",
+              "kind": "document",
+              "openedAt": 1783820497397,
+              "folder": "010-ModularizeDB-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:008-Provenance-Temp/provenance-flow.html",
+              "panel": "capture-viewer",
+              "path": "008-Provenance-Temp/provenance-flow.html",
+              "title": "provenance-flow.html",
+              "kind": "document",
+              "openedAt": 1783820117984,
+              "folder": "008-Provenance-Temp",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/CAPTURE.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/CAPTURE.md",
+              "title": "CAPTURE.md",
+              "kind": "document",
+              "openedAt": 1783747732657,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/CHECKPOINT_PROMPT.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/CHECKPOINT_PROMPT.md",
+              "title": "CHECKPOINT_PROMPT.md",
+              "kind": "document",
+              "openedAt": 1783747730457,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/CHECKPOINTS.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/CHECKPOINTS.md",
+              "title": "CHECKPOINTS.md",
+              "kind": "document",
+              "openedAt": 1783747725807,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/DECISIONS.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/DECISIONS.md",
+              "title": "DECISIONS.md",
+              "kind": "document",
+              "openedAt": 1783747724274,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/ISSUES.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/ISSUES.md",
+              "title": "ISSUES.md",
+              "kind": "document",
+              "openedAt": 1783747719225,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            }
+          ],
+          "navigation": {
+            "stack": [],
+            "index": -1
+          },
+          "tabs": [],
+          "activeTabId": null
+        }
+      },
+      "managedComponentPlacements": {}
+    },
+    "tg-514803c3-1da0-46e3-bfa4-ace4080ca11c": {
+      "schemaVersion": 1,
+      "adapterId": "capture-viewer",
+      "adapterVersion": 1,
+      "contentRevision": "wsr_9395feb6dfbf69d162cc00a4745da400",
+      "placementRevision": "wsr_0036d316148f9b45c7702906f7053206",
+      "updatedAt": "2026-10-05T15:59:43.758Z",
+      "content": {
+        "mode": "active",
+        "activeSelectedPath": null,
+        "archiveSelectedPath": null,
+        "lastOpenedPath": "001-Captures/machine-sync-sharing-model.md",
+        "activeGridScroll": 0,
+        "archiveGridScroll": 0,
+        "activeDocScroll": 0,
+        "archiveDocScroll": 0,
+        "tabs": [
+          {
+            "id": "cvt-mtxma449-0-9g7sh",
+            "kind": "doc",
+            "path": "001-Captures/machine-sync-sharing-model.md",
+            "name": "machine-sync-sharing-model.md",
+            "extension": "md",
+            "ui": {
+              "mode": "active",
+              "lastOpenedPath": "001-Captures/machine-sync-sharing-model.md",
+              "byMode": {
+                "active": {
+                  "selectedPath": "001-Captures/machine-sync-sharing-model.md",
+                  "gridScroll": 0,
+                  "docScroll": 0
+                },
+                "archive": {
+                  "selectedPath": null,
+                  "gridScroll": 0,
+                  "docScroll": 0
+                }
+              }
+            }
+          },
+          {
+            "id": "cvt-mtxma449-1-unekk",
+            "kind": "capture",
+            "ui": {
+              "mode": "active",
+              "lastOpenedPath": "001-Captures/machine-sync-sharing-model.md",
+              "byMode": {
+                "active": {
+                  "selectedPath": null,
+                  "gridScroll": 0,
+                  "docScroll": 0
+                },
+                "archive": {
+                  "selectedPath": null,
+                  "gridScroll": 0,
+                  "docScroll": 0
+                }
+              }
+            }
+          }
+        ],
+        "activeTabId": "cvt-mtxma449-1-unekk",
+        "captureTabRecords": {
+          "schemaVersion": 1,
+          "tabs": [
+            {
+              "tabId": "cvt-mtwy5avr-0-w1sft",
+              "content": {
+                "kind": "component",
+                "revision": 0,
+                "component": {
+                  "schemaVersion": 1,
+                  "componentTypeId": "capture.document",
+                  "componentInstanceId": "cvi-mtwy5avr-1-ifcj5",
+                  "input": {
+                    "title": "responsive-breakpoints.md",
+                    "locationLabels": [
+                      "Capture",
+                      "Captures",
+                      "responsive-breakpoints.md"
+                    ],
+                    "icon": "description",
+                    "iconClassName": "file-icon-md",
+                    "path": "001-Captures/responsive-breakpoints.md",
+                    "name": "responsive-breakpoints.md",
+                    "extension": "md",
+                    "mode": "active",
+                    "docScroll": 0,
+                    "gridScroll": 0,
+                    "selectedPath": "001-Captures/responsive-breakpoints.md",
+                    "lastOpenedPath": "001-Captures/responsive-breakpoints.md"
+                  },
+                  "targetKey": "capture:doc:001-Captures/responsive-breakpoints.md"
+                }
+              }
+            },
+            {
+              "tabId": "cvt-mtwy5avr-2-kuukj",
+              "content": {
+                "kind": "component",
+                "revision": 0,
+                "component": {
+                  "schemaVersion": 1,
+                  "componentTypeId": "capture.landing",
+                  "componentInstanceId": "cvi-mtwy5avr-3-g20qn",
+                  "input": {
+                    "title": "CAPTURE",
+                    "locationLabels": [
+                      "Capture",
+                      "Documents and Artifacts"
+                    ],
+                    "classic": {
+                      "mode": "active",
+                      "lastOpenedPath": "001-Captures/responsive-breakpoints.md",
+                      "selectedPath": "001-Captures/responsive-breakpoints.md",
+                      "gridScroll": 0,
+                      "docScroll": 0
+                    }
+                  },
+                  "targetKey": "capture:home"
+                }
+              }
+            },
+            {
+              "tabId": "cvt-mty3qoth-0-yk0i8",
+              "content": {
+                "kind": "component",
+                "revision": 0,
+                "component": {
+                  "schemaVersion": 1,
+                  "componentTypeId": "capture.document",
+                  "componentInstanceId": "cvi-mty3qoth-1-iwr56",
+                  "input": {
+                    "title": "wiki-audit-decisions.md",
+                    "locationLabels": [
+                      "Capture",
+                      "Captures",
+                      "wiki-audit-decisions.md"
+                    ],
+                    "icon": "description",
+                    "iconClassName": "file-icon-md",
+                    "path": "001-Captures/wiki-audit-decisions.md",
+                    "name": "wiki-audit-decisions.md",
+                    "extension": "md",
+                    "mode": "active",
+                    "docScroll": 0,
+                    "selectedPath": "001-Captures/wiki-audit-decisions.md",
+                    "lastOpenedPath": "001-Captures/wiki-audit-decisions.md"
+                  },
+                  "targetKey": "capture:doc:001-Captures/wiki-audit-decisions.md"
+                }
+              }
+            }
+          ],
+          "activeTabId": "cvt-mtwy5avr-2-kuukj",
+          "reservations": []
+        },
+        "activity": {
+          "recents": [
+            {
+              "id": "capture-viewer:001-Captures/wiki-audit-decisions.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/wiki-audit-decisions.md",
+              "title": "wiki-audit-decisions.md",
+              "kind": "document",
+              "openedAt": 1789200430432,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/codebase-exploration-report.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/codebase-exploration-report.md",
+              "title": "codebase-exploration-report.md",
+              "kind": "document",
+              "openedAt": 1789198397168,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/machine-sync-sharing-model.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/machine-sync-sharing-model.md",
+              "title": "machine-sync-sharing-model.md",
+              "kind": "document",
+              "openedAt": 1789171102080,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/responsive-breakpoints.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/responsive-breakpoints.md",
+              "title": "responsive-breakpoints.md",
+              "kind": "document",
+              "openedAt": 1789100046264,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/Email_Workspace_HANDOFF.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/Email_Workspace_HANDOFF.md",
+              "title": "Email_Workspace_HANDOFF.md",
+              "kind": "document",
+              "openedAt": 1789090661435,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/STYLE_GUIDE.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/STYLE_GUIDE.md",
+              "title": "STYLE_GUIDE.md",
+              "kind": "document",
+              "openedAt": 1789090645090,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/full-permissions-safety-architecture.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/full-permissions-safety-architecture.md",
+              "title": "full-permissions-safety-architecture.md",
+              "kind": "document",
+              "openedAt": 1789088418444,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/discovery-gated-ceilings.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/discovery-gated-ceilings.md",
+              "title": "discovery-gated-ceilings.md",
+              "kind": "document",
+              "openedAt": 1789086054788,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/agent-registry-redundancy.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/agent-registry-redundancy.md",
+              "title": "agent-registry-redundancy.md",
+              "kind": "document",
+              "openedAt": 1788589871418,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/file-mutation-injection.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/file-mutation-injection.md",
+              "title": "file-mutation-injection.md",
+              "kind": "document",
+              "openedAt": 1788499208629,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+              "title": "GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+              "kind": "document",
+              "openedAt": 1788444301316,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:004-Playground/robin-overlay.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/robin-overlay.html",
+              "title": "robin-overlay.html",
+              "kind": "document",
+              "openedAt": 1787656739822,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:004-Playground/robin-overlay-v3.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/robin-overlay-v3.html",
+              "title": "robin-overlay-v3.html",
+              "kind": "document",
+              "openedAt": 1787652266847,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:022-Vision_Roadmap/THREADS_AND_VIEWS.md",
+              "panel": "capture-viewer",
+              "path": "022-Vision_Roadmap/THREADS_AND_VIEWS.md",
+              "title": "THREADS_AND_VIEWS.md",
+              "kind": "document",
+              "openedAt": 1787640648143,
+              "folder": "022-Vision_Roadmap",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:004-Playground/theme-studio.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/theme-studio.html",
+              "title": "theme-studio.html",
+              "kind": "document",
+              "openedAt": 1787638127309,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/VIEW-TABLE.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/VIEW-TABLE.md",
+              "title": "VIEW-TABLE.md",
+              "kind": "document",
+              "openedAt": 1787627154982,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/SPEC-KNOWLEDGE-AUTHORING.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/SPEC-KNOWLEDGE-AUTHORING.md",
+              "title": "SPEC-KNOWLEDGE-AUTHORING.md",
+              "kind": "document",
+              "openedAt": 1787624193856,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/SPEC-agent-self-improvement.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/SPEC-agent-self-improvement.md",
+              "title": "SPEC-agent-self-improvement.md",
+              "kind": "document",
+              "openedAt": 1787624187406,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:004-Playground/theme-picker-mockup.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/theme-picker-mockup.html",
+              "title": "theme-picker-mockup.html",
+              "kind": "document",
+              "openedAt": 1787619365462,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:005-Assets/modal-mockup.html",
+              "panel": "capture-viewer",
+              "path": "005-Assets/modal-mockup.html",
+              "title": "modal-mockup.html",
+              "kind": "document",
+              "openedAt": 1787619283145,
+              "folder": "005-Assets",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/PENDING_CHAT_INTENT_SPEC.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/PENDING_CHAT_INTENT_SPEC.md",
+              "title": "PENDING_CHAT_INTENT_SPEC.md",
+              "kind": "document",
+              "openedAt": 1787619275229,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+              "title": "CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+              "kind": "document",
+              "openedAt": 1787554903487,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:999-Archive/2026-05-22-view-architecture-session-3.md",
+              "panel": "capture-viewer",
+              "path": "999-Archive/2026-05-22-view-architecture-session-3.md",
+              "title": "2026-05-22-view-architecture-session-3.md",
+              "kind": "document",
+              "openedAt": 1787552452671,
+              "folder": "999-Archive",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:999-Archive/2026-05-19-fusion-studio-view-architecture.md",
+              "panel": "capture-viewer",
+              "path": "999-Archive/2026-05-19-fusion-studio-view-architecture.md",
+              "title": "2026-05-19-fusion-studio-view-architecture.md",
+              "kind": "document",
+              "openedAt": 1787552449670,
+              "folder": "999-Archive",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:999-Archive/WS_CLIENT_EXTRACTION.md",
+              "panel": "capture-viewer",
+              "path": "999-Archive/WS_CLIENT_EXTRACTION.md",
+              "title": "WS_CLIENT_EXTRACTION.md",
+              "kind": "document",
+              "openedAt": 1787536811380,
+              "folder": "999-Archive",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:020-CSS_UI_Changes/DECISIONS.md",
+              "panel": "capture-viewer",
+              "path": "020-CSS_UI_Changes/DECISIONS.md",
+              "title": "DECISIONS.md",
+              "kind": "document",
+              "openedAt": 1787361592975,
+              "folder": "020-CSS_UI_Changes",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:020-CSS_UI_Changes/ISSUES.md",
+              "panel": "capture-viewer",
+              "path": "020-CSS_UI_Changes/ISSUES.md",
+              "title": "ISSUES.md",
+              "kind": "document",
+              "openedAt": 1787231988550,
+              "folder": "020-CSS_UI_Changes",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:020-CSS_UI_Changes/WIKI_IMPACT.md",
+              "panel": "capture-viewer",
+              "path": "020-CSS_UI_Changes/WIKI_IMPACT.md",
+              "title": "WIKI_IMPACT.md",
+              "kind": "document",
+              "openedAt": 1787231982866,
+              "folder": "020-CSS_UI_Changes",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/ISSUES.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/ISSUES.md",
+              "title": "ISSUES.md",
+              "kind": "document",
+              "openedAt": 1787191656257,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/WORKFLOW_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/WORKFLOW_MODEL.md",
+              "title": "WORKFLOW_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787191650238,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/SYSTEM_MANAGER.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/SYSTEM_MANAGER.md",
+              "title": "SYSTEM_MANAGER.md",
+              "kind": "document",
+              "openedAt": 1787143539327,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/ROUTINES_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/ROUTINES_MODEL.md",
+              "title": "ROUTINES_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787143537728,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/PROPOSALS.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/PROPOSALS.md",
+              "title": "PROPOSALS.md",
+              "kind": "document",
+              "openedAt": 1787143535745,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/PRIVACY_AND_DATA.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/PRIVACY_AND_DATA.md",
+              "title": "PRIVACY_AND_DATA.md",
+              "kind": "document",
+              "openedAt": 1787143533979,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/MEMORY_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/MEMORY_MODEL.md",
+              "title": "MEMORY_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787143532395,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/INTERACTION_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/INTERACTION_MODEL.md",
+              "title": "INTERACTION_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787143525145,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/INTENT.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/INTENT.md",
+              "title": "INTENT.md",
+              "kind": "document",
+              "openedAt": 1787143521527,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/index.json",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/index.json",
+              "title": "index.json",
+              "kind": "document",
+              "openedAt": 1787143517677,
+              "folder": "021-Project_Vision",
+              "extension": "json"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/DECISIONS.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/DECISIONS.md",
+              "title": "DECISIONS.md",
+              "kind": "document",
+              "openedAt": 1787143515095,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/CAPTURE.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/CAPTURE.md",
+              "title": "CAPTURE.md",
+              "kind": "document",
+              "openedAt": 1787143509995,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/BULLETIN.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/BULLETIN.md",
+              "title": "BULLETIN.md",
+              "kind": "document",
+              "openedAt": 1787143505295,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/AGENTS.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/AGENTS.md",
+              "title": "AGENTS.md",
+              "kind": "document",
+              "openedAt": 1787143500011,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:019-System_Manager/system-manager-oracle-and-pattern-library.md",
+              "panel": "capture-viewer",
+              "path": "019-System_Manager/system-manager-oracle-and-pattern-library.md",
+              "title": "system-manager-oracle-and-pattern-library.md",
+              "kind": "document",
+              "openedAt": 1786264616387,
+              "folder": "019-System_Manager",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:013-Convergence_Loops/adversarial-document-convergence.md",
+              "panel": "capture-viewer",
+              "path": "013-Convergence_Loops/adversarial-document-convergence.md",
+              "title": "adversarial-document-convergence.md",
+              "kind": "document",
+              "openedAt": 1783990444939,
+              "folder": "013-Convergence_Loops",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/TRANSCRIPT.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/TRANSCRIPT.md",
+              "title": "TRANSCRIPT.md",
+              "kind": "document",
+              "openedAt": 1783851478239,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:005-Assets/menu-mockup.txt",
+              "panel": "capture-viewer",
+              "path": "005-Assets/menu-mockup.txt",
+              "title": "menu-mockup.txt",
+              "kind": "document",
+              "openedAt": 1783850555159,
+              "folder": "005-Assets",
+              "extension": "txt"
+            },
+            {
+              "id": "capture-viewer:005-Assets/menu-mockup.html",
+              "panel": "capture-viewer",
+              "path": "005-Assets/menu-mockup.html",
+              "title": "menu-mockup.html",
+              "kind": "document",
+              "openedAt": 1783850551859,
+              "folder": "005-Assets",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:005-Assets/sketch.txt",
+              "panel": "capture-viewer",
+              "path": "005-Assets/sketch.txt",
+              "title": "sketch.txt",
+              "kind": "document",
+              "openedAt": 1783850493493,
+              "folder": "005-Assets",
+              "extension": "txt"
+            },
+            {
+              "id": "capture-viewer:010-ModularizeDB-Temp/CAPTURE.md",
+              "panel": "capture-viewer",
+              "path": "010-ModularizeDB-Temp/CAPTURE.md",
+              "title": "CAPTURE.md",
+              "kind": "document",
+              "openedAt": 1783820497397,
+              "folder": "010-ModularizeDB-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:008-Provenance-Temp/provenance-flow.html",
+              "panel": "capture-viewer",
+              "path": "008-Provenance-Temp/provenance-flow.html",
+              "title": "provenance-flow.html",
+              "kind": "document",
+              "openedAt": 1783820117984,
+              "folder": "008-Provenance-Temp",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/CAPTURE.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/CAPTURE.md",
+              "title": "CAPTURE.md",
+              "kind": "document",
+              "openedAt": 1783747732657,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/CHECKPOINT_PROMPT.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/CHECKPOINT_PROMPT.md",
+              "title": "CHECKPOINT_PROMPT.md",
+              "kind": "document",
+              "openedAt": 1783747730457,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/CHECKPOINTS.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/CHECKPOINTS.md",
+              "title": "CHECKPOINTS.md",
+              "kind": "document",
+              "openedAt": 1783747725807,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/DECISIONS.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/DECISIONS.md",
+              "title": "DECISIONS.md",
+              "kind": "document",
+              "openedAt": 1783747724274,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/ISSUES.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/ISSUES.md",
+              "title": "ISSUES.md",
+              "kind": "document",
+              "openedAt": 1783747719225,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            }
+          ],
+          "navigation": {
+            "stack": [],
+            "index": -1
+          },
+          "tabs": [],
+          "activeTabId": null
+        }
+      },
+      "managedComponentPlacements": {}
+    },
+    "tg-fd62deab-e88b-4276-be7a-47368b45ca51": {
+      "schemaVersion": 1,
+      "adapterId": "capture-viewer",
+      "adapterVersion": 1,
+      "contentRevision": "wsr_b64acdcc4f079f158a5d69ec80dfe2ff",
+      "placementRevision": "wsr_4f5b7413846ddc3855a060a37593dc49",
+      "updatedAt": "2026-10-05T15:59:51.324Z",
+      "content": {
+        "mode": "active",
+        "activeSelectedPath": null,
+        "archiveSelectedPath": null,
+        "lastOpenedPath": "001-Captures/machine-sync-sharing-model.md",
+        "activeGridScroll": 0,
+        "archiveGridScroll": 0,
+        "activeDocScroll": 0,
+        "archiveDocScroll": 0,
+        "tabs": [
+          {
+            "id": "cvt-mtxma449-0-9g7sh",
+            "kind": "doc",
+            "path": "001-Captures/machine-sync-sharing-model.md",
+            "name": "machine-sync-sharing-model.md",
+            "extension": "md",
+            "ui": {
+              "mode": "active",
+              "lastOpenedPath": "001-Captures/machine-sync-sharing-model.md",
+              "byMode": {
+                "active": {
+                  "selectedPath": "001-Captures/machine-sync-sharing-model.md",
+                  "gridScroll": 0,
+                  "docScroll": 0
+                },
+                "archive": {
+                  "selectedPath": null,
+                  "gridScroll": 0,
+                  "docScroll": 0
+                }
+              }
+            }
+          },
+          {
+            "id": "cvt-mtxma449-1-unekk",
+            "kind": "capture",
+            "ui": {
+              "mode": "active",
+              "lastOpenedPath": "001-Captures/machine-sync-sharing-model.md",
+              "byMode": {
+                "active": {
+                  "selectedPath": null,
+                  "gridScroll": 0,
+                  "docScroll": 0
+                },
+                "archive": {
+                  "selectedPath": null,
+                  "gridScroll": 0,
+                  "docScroll": 0
+                }
+              }
+            }
+          }
+        ],
+        "activeTabId": "cvt-mtxma449-1-unekk",
+        "captureTabRecords": {
+          "schemaVersion": 1,
+          "tabs": [
+            {
+              "tabId": "cvt-mtwy5avr-0-w1sft",
+              "content": {
+                "kind": "component",
+                "revision": 0,
+                "component": {
+                  "schemaVersion": 1,
+                  "componentTypeId": "capture.document",
+                  "componentInstanceId": "cvi-mtwy5avr-1-ifcj5",
+                  "input": {
+                    "title": "responsive-breakpoints.md",
+                    "locationLabels": [
+                      "Capture",
+                      "Captures",
+                      "responsive-breakpoints.md"
+                    ],
+                    "icon": "description",
+                    "iconClassName": "file-icon-md",
+                    "path": "001-Captures/responsive-breakpoints.md",
+                    "name": "responsive-breakpoints.md",
+                    "extension": "md",
+                    "mode": "active",
+                    "docScroll": 0,
+                    "gridScroll": 0,
+                    "selectedPath": "001-Captures/responsive-breakpoints.md",
+                    "lastOpenedPath": "001-Captures/responsive-breakpoints.md"
+                  },
+                  "targetKey": "capture:doc:001-Captures/responsive-breakpoints.md"
+                }
+              }
+            },
+            {
+              "tabId": "cvt-mtwy5avr-2-kuukj",
+              "content": {
+                "kind": "component",
+                "revision": 0,
+                "component": {
+                  "schemaVersion": 1,
+                  "componentTypeId": "capture.landing",
+                  "componentInstanceId": "cvi-mtwy5avr-3-g20qn",
+                  "input": {
+                    "title": "CAPTURE",
+                    "locationLabels": [
+                      "Capture",
+                      "Documents and Artifacts"
+                    ],
+                    "classic": {
+                      "mode": "active",
+                      "lastOpenedPath": "001-Captures/responsive-breakpoints.md",
+                      "selectedPath": "001-Captures/responsive-breakpoints.md",
+                      "gridScroll": 0,
+                      "docScroll": 0
+                    }
+                  },
+                  "targetKey": "capture:home"
+                }
+              }
+            },
+            {
+              "tabId": "cvt-mty3qoth-0-yk0i8",
+              "content": {
+                "kind": "component",
+                "revision": 0,
+                "component": {
+                  "schemaVersion": 1,
+                  "componentTypeId": "capture.document",
+                  "componentInstanceId": "cvi-mty3qoth-1-iwr56",
+                  "input": {
+                    "title": "wiki-audit-decisions.md",
+                    "locationLabels": [
+                      "Capture",
+                      "Captures",
+                      "wiki-audit-decisions.md"
+                    ],
+                    "icon": "description",
+                    "iconClassName": "file-icon-md",
+                    "path": "001-Captures/wiki-audit-decisions.md",
+                    "name": "wiki-audit-decisions.md",
+                    "extension": "md",
+                    "mode": "active",
+                    "docScroll": 0,
+                    "selectedPath": "001-Captures/wiki-audit-decisions.md",
+                    "lastOpenedPath": "001-Captures/wiki-audit-decisions.md"
+                  },
+                  "targetKey": "capture:doc:001-Captures/wiki-audit-decisions.md"
+                }
+              }
+            }
+          ],
+          "activeTabId": "cvt-mtwy5avr-2-kuukj",
+          "reservations": []
+        },
+        "activity": {
+          "recents": [
+            {
+              "id": "capture-viewer:001-Captures/wiki-audit-decisions.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/wiki-audit-decisions.md",
+              "title": "wiki-audit-decisions.md",
+              "kind": "document",
+              "openedAt": 1789200430432,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/codebase-exploration-report.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/codebase-exploration-report.md",
+              "title": "codebase-exploration-report.md",
+              "kind": "document",
+              "openedAt": 1789198397168,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/machine-sync-sharing-model.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/machine-sync-sharing-model.md",
+              "title": "machine-sync-sharing-model.md",
+              "kind": "document",
+              "openedAt": 1789171102080,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/responsive-breakpoints.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/responsive-breakpoints.md",
+              "title": "responsive-breakpoints.md",
+              "kind": "document",
+              "openedAt": 1789100046264,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/Email_Workspace_HANDOFF.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/Email_Workspace_HANDOFF.md",
+              "title": "Email_Workspace_HANDOFF.md",
+              "kind": "document",
+              "openedAt": 1789090661435,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/STYLE_GUIDE.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/STYLE_GUIDE.md",
+              "title": "STYLE_GUIDE.md",
+              "kind": "document",
+              "openedAt": 1789090645090,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/full-permissions-safety-architecture.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/full-permissions-safety-architecture.md",
+              "title": "full-permissions-safety-architecture.md",
+              "kind": "document",
+              "openedAt": 1789088418444,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/discovery-gated-ceilings.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/discovery-gated-ceilings.md",
+              "title": "discovery-gated-ceilings.md",
+              "kind": "document",
+              "openedAt": 1789086054788,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/agent-registry-redundancy.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/agent-registry-redundancy.md",
+              "title": "agent-registry-redundancy.md",
+              "kind": "document",
+              "openedAt": 1788589871418,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/file-mutation-injection.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/file-mutation-injection.md",
+              "title": "file-mutation-injection.md",
+              "kind": "document",
+              "openedAt": 1788499208629,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+              "title": "GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+              "kind": "document",
+              "openedAt": 1788444301316,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:004-Playground/robin-overlay.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/robin-overlay.html",
+              "title": "robin-overlay.html",
+              "kind": "document",
+              "openedAt": 1787656739822,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:004-Playground/robin-overlay-v3.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/robin-overlay-v3.html",
+              "title": "robin-overlay-v3.html",
+              "kind": "document",
+              "openedAt": 1787652266847,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:022-Vision_Roadmap/THREADS_AND_VIEWS.md",
+              "panel": "capture-viewer",
+              "path": "022-Vision_Roadmap/THREADS_AND_VIEWS.md",
+              "title": "THREADS_AND_VIEWS.md",
+              "kind": "document",
+              "openedAt": 1787640648143,
+              "folder": "022-Vision_Roadmap",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:004-Playground/theme-studio.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/theme-studio.html",
+              "title": "theme-studio.html",
+              "kind": "document",
+              "openedAt": 1787638127309,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/VIEW-TABLE.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/VIEW-TABLE.md",
+              "title": "VIEW-TABLE.md",
+              "kind": "document",
+              "openedAt": 1787627154982,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/SPEC-KNOWLEDGE-AUTHORING.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/SPEC-KNOWLEDGE-AUTHORING.md",
+              "title": "SPEC-KNOWLEDGE-AUTHORING.md",
+              "kind": "document",
+              "openedAt": 1787624193856,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/SPEC-agent-self-improvement.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/SPEC-agent-self-improvement.md",
+              "title": "SPEC-agent-self-improvement.md",
+              "kind": "document",
+              "openedAt": 1787624187406,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:004-Playground/theme-picker-mockup.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/theme-picker-mockup.html",
+              "title": "theme-picker-mockup.html",
+              "kind": "document",
+              "openedAt": 1787619365462,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:005-Assets/modal-mockup.html",
+              "panel": "capture-viewer",
+              "path": "005-Assets/modal-mockup.html",
+              "title": "modal-mockup.html",
+              "kind": "document",
+              "openedAt": 1787619283145,
+              "folder": "005-Assets",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/PENDING_CHAT_INTENT_SPEC.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/PENDING_CHAT_INTENT_SPEC.md",
+              "title": "PENDING_CHAT_INTENT_SPEC.md",
+              "kind": "document",
+              "openedAt": 1787619275229,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+              "title": "CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+              "kind": "document",
+              "openedAt": 1787554903487,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:999-Archive/2026-05-22-view-architecture-session-3.md",
+              "panel": "capture-viewer",
+              "path": "999-Archive/2026-05-22-view-architecture-session-3.md",
+              "title": "2026-05-22-view-architecture-session-3.md",
+              "kind": "document",
+              "openedAt": 1787552452671,
+              "folder": "999-Archive",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:999-Archive/2026-05-19-fusion-studio-view-architecture.md",
+              "panel": "capture-viewer",
+              "path": "999-Archive/2026-05-19-fusion-studio-view-architecture.md",
+              "title": "2026-05-19-fusion-studio-view-architecture.md",
+              "kind": "document",
+              "openedAt": 1787552449670,
+              "folder": "999-Archive",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:999-Archive/WS_CLIENT_EXTRACTION.md",
+              "panel": "capture-viewer",
+              "path": "999-Archive/WS_CLIENT_EXTRACTION.md",
+              "title": "WS_CLIENT_EXTRACTION.md",
+              "kind": "document",
+              "openedAt": 1787536811380,
+              "folder": "999-Archive",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:020-CSS_UI_Changes/DECISIONS.md",
+              "panel": "capture-viewer",
+              "path": "020-CSS_UI_Changes/DECISIONS.md",
+              "title": "DECISIONS.md",
+              "kind": "document",
+              "openedAt": 1787361592975,
+              "folder": "020-CSS_UI_Changes",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:020-CSS_UI_Changes/ISSUES.md",
+              "panel": "capture-viewer",
+              "path": "020-CSS_UI_Changes/ISSUES.md",
+              "title": "ISSUES.md",
+              "kind": "document",
+              "openedAt": 1787231988550,
+              "folder": "020-CSS_UI_Changes",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:020-CSS_UI_Changes/WIKI_IMPACT.md",
+              "panel": "capture-viewer",
+              "path": "020-CSS_UI_Changes/WIKI_IMPACT.md",
+              "title": "WIKI_IMPACT.md",
+              "kind": "document",
+              "openedAt": 1787231982866,
+              "folder": "020-CSS_UI_Changes",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/ISSUES.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/ISSUES.md",
+              "title": "ISSUES.md",
+              "kind": "document",
+              "openedAt": 1787191656257,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/WORKFLOW_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/WORKFLOW_MODEL.md",
+              "title": "WORKFLOW_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787191650238,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/SYSTEM_MANAGER.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/SYSTEM_MANAGER.md",
+              "title": "SYSTEM_MANAGER.md",
+              "kind": "document",
+              "openedAt": 1787143539327,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/ROUTINES_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/ROUTINES_MODEL.md",
+              "title": "ROUTINES_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787143537728,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/PROPOSALS.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/PROPOSALS.md",
+              "title": "PROPOSALS.md",
+              "kind": "document",
+              "openedAt": 1787143535745,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/PRIVACY_AND_DATA.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/PRIVACY_AND_DATA.md",
+              "title": "PRIVACY_AND_DATA.md",
+              "kind": "document",
+              "openedAt": 1787143533979,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/MEMORY_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/MEMORY_MODEL.md",
+              "title": "MEMORY_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787143532395,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/INTERACTION_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/INTERACTION_MODEL.md",
+              "title": "INTERACTION_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787143525145,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/INTENT.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/INTENT.md",
+              "title": "INTENT.md",
+              "kind": "document",
+              "openedAt": 1787143521527,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/index.json",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/index.json",
+              "title": "index.json",
+              "kind": "document",
+              "openedAt": 1787143517677,
+              "folder": "021-Project_Vision",
+              "extension": "json"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/DECISIONS.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/DECISIONS.md",
+              "title": "DECISIONS.md",
+              "kind": "document",
+              "openedAt": 1787143515095,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/CAPTURE.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/CAPTURE.md",
+              "title": "CAPTURE.md",
+              "kind": "document",
+              "openedAt": 1787143509995,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/BULLETIN.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/BULLETIN.md",
+              "title": "BULLETIN.md",
+              "kind": "document",
+              "openedAt": 1787143505295,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/AGENTS.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/AGENTS.md",
+              "title": "AGENTS.md",
+              "kind": "document",
+              "openedAt": 1787143500011,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:019-System_Manager/system-manager-oracle-and-pattern-library.md",
+              "panel": "capture-viewer",
+              "path": "019-System_Manager/system-manager-oracle-and-pattern-library.md",
+              "title": "system-manager-oracle-and-pattern-library.md",
+              "kind": "document",
+              "openedAt": 1786264616387,
+              "folder": "019-System_Manager",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:013-Convergence_Loops/adversarial-document-convergence.md",
+              "panel": "capture-viewer",
+              "path": "013-Convergence_Loops/adversarial-document-convergence.md",
+              "title": "adversarial-document-convergence.md",
+              "kind": "document",
+              "openedAt": 1783990444939,
+              "folder": "013-Convergence_Loops",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/TRANSCRIPT.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/TRANSCRIPT.md",
+              "title": "TRANSCRIPT.md",
+              "kind": "document",
+              "openedAt": 1783851478239,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:005-Assets/menu-mockup.txt",
+              "panel": "capture-viewer",
+              "path": "005-Assets/menu-mockup.txt",
+              "title": "menu-mockup.txt",
+              "kind": "document",
+              "openedAt": 1783850555159,
+              "folder": "005-Assets",
+              "extension": "txt"
+            },
+            {
+              "id": "capture-viewer:005-Assets/menu-mockup.html",
+              "panel": "capture-viewer",
+              "path": "005-Assets/menu-mockup.html",
+              "title": "menu-mockup.html",
+              "kind": "document",
+              "openedAt": 1783850551859,
+              "folder": "005-Assets",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:005-Assets/sketch.txt",
+              "panel": "capture-viewer",
+              "path": "005-Assets/sketch.txt",
+              "title": "sketch.txt",
+              "kind": "document",
+              "openedAt": 1783850493493,
+              "folder": "005-Assets",
+              "extension": "txt"
+            },
+            {
+              "id": "capture-viewer:010-ModularizeDB-Temp/CAPTURE.md",
+              "panel": "capture-viewer",
+              "path": "010-ModularizeDB-Temp/CAPTURE.md",
+              "title": "CAPTURE.md",
+              "kind": "document",
+              "openedAt": 1783820497397,
+              "folder": "010-ModularizeDB-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:008-Provenance-Temp/provenance-flow.html",
+              "panel": "capture-viewer",
+              "path": "008-Provenance-Temp/provenance-flow.html",
+              "title": "provenance-flow.html",
+              "kind": "document",
+              "openedAt": 1783820117984,
+              "folder": "008-Provenance-Temp",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/CAPTURE.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/CAPTURE.md",
+              "title": "CAPTURE.md",
+              "kind": "document",
+              "openedAt": 1783747732657,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/CHECKPOINT_PROMPT.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/CHECKPOINT_PROMPT.md",
+              "title": "CHECKPOINT_PROMPT.md",
+              "kind": "document",
+              "openedAt": 1783747730457,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/CHECKPOINTS.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/CHECKPOINTS.md",
+              "title": "CHECKPOINTS.md",
+              "kind": "document",
+              "openedAt": 1783747725807,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/DECISIONS.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/DECISIONS.md",
+              "title": "DECISIONS.md",
+              "kind": "document",
+              "openedAt": 1783747724274,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/ISSUES.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/ISSUES.md",
+              "title": "ISSUES.md",
+              "kind": "document",
+              "openedAt": 1783747719225,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            }
+          ],
+          "navigation": {
+            "stack": [],
+            "index": -1
+          },
+          "tabs": [],
+          "activeTabId": null
+        }
+      },
+      "managedComponentPlacements": {}
+    },
+    "tg-5f49cb2b-89db-4ca6-91bf-a7e743f6e3e5": {
+      "schemaVersion": 1,
+      "adapterId": "capture-viewer",
+      "adapterVersion": 1,
+      "contentRevision": "wsr_5d6b599a42da5d82ece81bb42cf5f61e",
+      "placementRevision": "wsr_7143018eef28a93516c36e870f09951c",
+      "updatedAt": "2026-10-07T06:01:34.566Z",
+      "content": {
+        "mode": "active",
+        "activeSelectedPath": null,
+        "archiveSelectedPath": null,
+        "lastOpenedPath": "001-Captures/machine-sync-sharing-model.md",
+        "activeGridScroll": 0,
+        "archiveGridScroll": 0,
+        "activeDocScroll": 0,
+        "archiveDocScroll": 0,
+        "tabs": [
+          {
+            "id": "cvt-mtxma449-0-9g7sh",
+            "kind": "doc",
+            "path": "001-Captures/machine-sync-sharing-model.md",
+            "name": "machine-sync-sharing-model.md",
+            "extension": "md",
+            "ui": {
+              "mode": "active",
+              "lastOpenedPath": "001-Captures/machine-sync-sharing-model.md",
+              "byMode": {
+                "active": {
+                  "selectedPath": "001-Captures/machine-sync-sharing-model.md",
+                  "gridScroll": 0,
+                  "docScroll": 0
+                },
+                "archive": {
+                  "selectedPath": null,
+                  "gridScroll": 0,
+                  "docScroll": 0
+                }
+              }
+            }
+          },
+          {
+            "id": "cvt-mtxma449-1-unekk",
+            "kind": "capture",
+            "ui": {
+              "mode": "active",
+              "lastOpenedPath": "001-Captures/machine-sync-sharing-model.md",
+              "byMode": {
+                "active": {
+                  "selectedPath": null,
+                  "gridScroll": 0,
+                  "docScroll": 0
+                },
+                "archive": {
+                  "selectedPath": null,
+                  "gridScroll": 0,
+                  "docScroll": 0
+                }
+              }
+            }
+          }
+        ],
+        "activeTabId": "cvt-mtxma449-1-unekk",
+        "captureTabRecords": {
+          "schemaVersion": 1,
+          "tabs": [
+            {
+              "tabId": "cvt-mtwy5avr-0-w1sft",
+              "content": {
+                "kind": "component",
+                "revision": 0,
+                "component": {
+                  "schemaVersion": 1,
+                  "componentTypeId": "capture.document",
+                  "componentInstanceId": "cvi-mtwy5avr-1-ifcj5",
+                  "input": {
+                    "title": "responsive-breakpoints.md",
+                    "locationLabels": [
+                      "Capture",
+                      "Captures",
+                      "responsive-breakpoints.md"
+                    ],
+                    "icon": "description",
+                    "iconClassName": "file-icon-md",
+                    "path": "001-Captures/responsive-breakpoints.md",
+                    "name": "responsive-breakpoints.md",
+                    "extension": "md",
+                    "mode": "active",
+                    "docScroll": 0,
+                    "gridScroll": 0,
+                    "selectedPath": "001-Captures/responsive-breakpoints.md",
+                    "lastOpenedPath": "001-Captures/responsive-breakpoints.md"
+                  },
+                  "targetKey": "capture:doc:001-Captures/responsive-breakpoints.md"
+                }
+              }
+            },
+            {
+              "tabId": "cvt-mtwy5avr-2-kuukj",
+              "content": {
+                "kind": "component",
+                "revision": 0,
+                "component": {
+                  "schemaVersion": 1,
+                  "componentTypeId": "capture.landing",
+                  "componentInstanceId": "cvi-mtwy5avr-3-g20qn",
+                  "input": {
+                    "title": "CAPTURE",
+                    "locationLabels": [
+                      "Capture",
+                      "Documents and Artifacts"
+                    ],
+                    "classic": {
+                      "mode": "active",
+                      "lastOpenedPath": "001-Captures/responsive-breakpoints.md",
+                      "selectedPath": "001-Captures/responsive-breakpoints.md",
+                      "gridScroll": 0,
+                      "docScroll": 0
+                    }
+                  },
+                  "targetKey": "capture:home"
+                }
+              }
+            },
+            {
+              "tabId": "cvt-mty3qoth-0-yk0i8",
+              "content": {
+                "kind": "component",
+                "revision": 0,
+                "component": {
+                  "schemaVersion": 1,
+                  "componentTypeId": "capture.document",
+                  "componentInstanceId": "cvi-mty3qoth-1-iwr56",
+                  "input": {
+                    "title": "wiki-audit-decisions.md",
+                    "locationLabels": [
+                      "Capture",
+                      "Captures",
+                      "wiki-audit-decisions.md"
+                    ],
+                    "icon": "description",
+                    "iconClassName": "file-icon-md",
+                    "path": "001-Captures/wiki-audit-decisions.md",
+                    "name": "wiki-audit-decisions.md",
+                    "extension": "md",
+                    "mode": "active",
+                    "docScroll": 0,
+                    "selectedPath": "001-Captures/wiki-audit-decisions.md",
+                    "lastOpenedPath": "001-Captures/wiki-audit-decisions.md"
+                  },
+                  "targetKey": "capture:doc:001-Captures/wiki-audit-decisions.md"
+                }
+              }
+            }
+          ],
+          "activeTabId": "cvt-mtwy5avr-2-kuukj",
+          "reservations": []
+        },
+        "activity": {
+          "recents": [
+            {
+              "id": "capture-viewer:001-Captures/wiki-audit-decisions.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/wiki-audit-decisions.md",
+              "title": "wiki-audit-decisions.md",
+              "kind": "document",
+              "openedAt": 1789200430432,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/codebase-exploration-report.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/codebase-exploration-report.md",
+              "title": "codebase-exploration-report.md",
+              "kind": "document",
+              "openedAt": 1789198397168,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/machine-sync-sharing-model.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/machine-sync-sharing-model.md",
+              "title": "machine-sync-sharing-model.md",
+              "kind": "document",
+              "openedAt": 1789171102080,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/responsive-breakpoints.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/responsive-breakpoints.md",
+              "title": "responsive-breakpoints.md",
+              "kind": "document",
+              "openedAt": 1789100046264,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/Email_Workspace_HANDOFF.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/Email_Workspace_HANDOFF.md",
+              "title": "Email_Workspace_HANDOFF.md",
+              "kind": "document",
+              "openedAt": 1789090661435,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/STYLE_GUIDE.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/STYLE_GUIDE.md",
+              "title": "STYLE_GUIDE.md",
+              "kind": "document",
+              "openedAt": 1789090645090,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/full-permissions-safety-architecture.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/full-permissions-safety-architecture.md",
+              "title": "full-permissions-safety-architecture.md",
+              "kind": "document",
+              "openedAt": 1789088418444,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/discovery-gated-ceilings.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/discovery-gated-ceilings.md",
+              "title": "discovery-gated-ceilings.md",
+              "kind": "document",
+              "openedAt": 1789086054788,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/agent-registry-redundancy.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/agent-registry-redundancy.md",
+              "title": "agent-registry-redundancy.md",
+              "kind": "document",
+              "openedAt": 1788589871418,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:001-Captures/file-mutation-injection.md",
+              "panel": "capture-viewer",
+              "path": "001-Captures/file-mutation-injection.md",
+              "title": "file-mutation-injection.md",
+              "kind": "document",
+              "openedAt": 1788499208629,
+              "folder": "001-Captures",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+              "title": "GENERIC_COMPONENT_TAB_HOST_SPEC.md",
+              "kind": "document",
+              "openedAt": 1788444301316,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:004-Playground/robin-overlay.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/robin-overlay.html",
+              "title": "robin-overlay.html",
+              "kind": "document",
+              "openedAt": 1787656739822,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:004-Playground/robin-overlay-v3.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/robin-overlay-v3.html",
+              "title": "robin-overlay-v3.html",
+              "kind": "document",
+              "openedAt": 1787652266847,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:022-Vision_Roadmap/THREADS_AND_VIEWS.md",
+              "panel": "capture-viewer",
+              "path": "022-Vision_Roadmap/THREADS_AND_VIEWS.md",
+              "title": "THREADS_AND_VIEWS.md",
+              "kind": "document",
+              "openedAt": 1787640648143,
+              "folder": "022-Vision_Roadmap",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:004-Playground/theme-studio.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/theme-studio.html",
+              "title": "theme-studio.html",
+              "kind": "document",
+              "openedAt": 1787638127309,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/VIEW-TABLE.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/VIEW-TABLE.md",
+              "title": "VIEW-TABLE.md",
+              "kind": "document",
+              "openedAt": 1787627154982,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/SPEC-KNOWLEDGE-AUTHORING.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/SPEC-KNOWLEDGE-AUTHORING.md",
+              "title": "SPEC-KNOWLEDGE-AUTHORING.md",
+              "kind": "document",
+              "openedAt": 1787624193856,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/SPEC-agent-self-improvement.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/SPEC-agent-self-improvement.md",
+              "title": "SPEC-agent-self-improvement.md",
+              "kind": "document",
+              "openedAt": 1787624187406,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:004-Playground/theme-picker-mockup.html",
+              "panel": "capture-viewer",
+              "path": "004-Playground/theme-picker-mockup.html",
+              "title": "theme-picker-mockup.html",
+              "kind": "document",
+              "openedAt": 1787619365462,
+              "folder": "004-Playground",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:005-Assets/modal-mockup.html",
+              "panel": "capture-viewer",
+              "path": "005-Assets/modal-mockup.html",
+              "title": "modal-mockup.html",
+              "kind": "document",
+              "openedAt": 1787619283145,
+              "folder": "005-Assets",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/PENDING_CHAT_INTENT_SPEC.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/PENDING_CHAT_INTENT_SPEC.md",
+              "title": "PENDING_CHAT_INTENT_SPEC.md",
+              "kind": "document",
+              "openedAt": 1787619275229,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:002-SPECs/CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+              "panel": "capture-viewer",
+              "path": "002-SPECs/CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+              "title": "CAPABILITY_LAYER_AND_GWEN_ONESHOT_SPEC.md",
+              "kind": "document",
+              "openedAt": 1787554903487,
+              "folder": "002-SPECs",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:999-Archive/2026-05-22-view-architecture-session-3.md",
+              "panel": "capture-viewer",
+              "path": "999-Archive/2026-05-22-view-architecture-session-3.md",
+              "title": "2026-05-22-view-architecture-session-3.md",
+              "kind": "document",
+              "openedAt": 1787552452671,
+              "folder": "999-Archive",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:999-Archive/2026-05-19-fusion-studio-view-architecture.md",
+              "panel": "capture-viewer",
+              "path": "999-Archive/2026-05-19-fusion-studio-view-architecture.md",
+              "title": "2026-05-19-fusion-studio-view-architecture.md",
+              "kind": "document",
+              "openedAt": 1787552449670,
+              "folder": "999-Archive",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:999-Archive/WS_CLIENT_EXTRACTION.md",
+              "panel": "capture-viewer",
+              "path": "999-Archive/WS_CLIENT_EXTRACTION.md",
+              "title": "WS_CLIENT_EXTRACTION.md",
+              "kind": "document",
+              "openedAt": 1787536811380,
+              "folder": "999-Archive",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:020-CSS_UI_Changes/DECISIONS.md",
+              "panel": "capture-viewer",
+              "path": "020-CSS_UI_Changes/DECISIONS.md",
+              "title": "DECISIONS.md",
+              "kind": "document",
+              "openedAt": 1787361592975,
+              "folder": "020-CSS_UI_Changes",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:020-CSS_UI_Changes/ISSUES.md",
+              "panel": "capture-viewer",
+              "path": "020-CSS_UI_Changes/ISSUES.md",
+              "title": "ISSUES.md",
+              "kind": "document",
+              "openedAt": 1787231988550,
+              "folder": "020-CSS_UI_Changes",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:020-CSS_UI_Changes/WIKI_IMPACT.md",
+              "panel": "capture-viewer",
+              "path": "020-CSS_UI_Changes/WIKI_IMPACT.md",
+              "title": "WIKI_IMPACT.md",
+              "kind": "document",
+              "openedAt": 1787231982866,
+              "folder": "020-CSS_UI_Changes",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/ISSUES.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/ISSUES.md",
+              "title": "ISSUES.md",
+              "kind": "document",
+              "openedAt": 1787191656257,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/WORKFLOW_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/WORKFLOW_MODEL.md",
+              "title": "WORKFLOW_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787191650238,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/SYSTEM_MANAGER.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/SYSTEM_MANAGER.md",
+              "title": "SYSTEM_MANAGER.md",
+              "kind": "document",
+              "openedAt": 1787143539327,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/ROUTINES_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/ROUTINES_MODEL.md",
+              "title": "ROUTINES_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787143537728,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/PROPOSALS.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/PROPOSALS.md",
+              "title": "PROPOSALS.md",
+              "kind": "document",
+              "openedAt": 1787143535745,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/PRIVACY_AND_DATA.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/PRIVACY_AND_DATA.md",
+              "title": "PRIVACY_AND_DATA.md",
+              "kind": "document",
+              "openedAt": 1787143533979,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/MEMORY_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/MEMORY_MODEL.md",
+              "title": "MEMORY_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787143532395,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/INTERACTION_MODEL.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/INTERACTION_MODEL.md",
+              "title": "INTERACTION_MODEL.md",
+              "kind": "document",
+              "openedAt": 1787143525145,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/INTENT.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/INTENT.md",
+              "title": "INTENT.md",
+              "kind": "document",
+              "openedAt": 1787143521527,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/index.json",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/index.json",
+              "title": "index.json",
+              "kind": "document",
+              "openedAt": 1787143517677,
+              "folder": "021-Project_Vision",
+              "extension": "json"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/DECISIONS.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/DECISIONS.md",
+              "title": "DECISIONS.md",
+              "kind": "document",
+              "openedAt": 1787143515095,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/CAPTURE.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/CAPTURE.md",
+              "title": "CAPTURE.md",
+              "kind": "document",
+              "openedAt": 1787143509995,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/BULLETIN.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/BULLETIN.md",
+              "title": "BULLETIN.md",
+              "kind": "document",
+              "openedAt": 1787143505295,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:021-Project_Vision/AGENTS.md",
+              "panel": "capture-viewer",
+              "path": "021-Project_Vision/AGENTS.md",
+              "title": "AGENTS.md",
+              "kind": "document",
+              "openedAt": 1787143500011,
+              "folder": "021-Project_Vision",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:019-System_Manager/system-manager-oracle-and-pattern-library.md",
+              "panel": "capture-viewer",
+              "path": "019-System_Manager/system-manager-oracle-and-pattern-library.md",
+              "title": "system-manager-oracle-and-pattern-library.md",
+              "kind": "document",
+              "openedAt": 1786264616387,
+              "folder": "019-System_Manager",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:013-Convergence_Loops/adversarial-document-convergence.md",
+              "panel": "capture-viewer",
+              "path": "013-Convergence_Loops/adversarial-document-convergence.md",
+              "title": "adversarial-document-convergence.md",
+              "kind": "document",
+              "openedAt": 1783990444939,
+              "folder": "013-Convergence_Loops",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/TRANSCRIPT.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/TRANSCRIPT.md",
+              "title": "TRANSCRIPT.md",
+              "kind": "document",
+              "openedAt": 1783851478239,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:005-Assets/menu-mockup.txt",
+              "panel": "capture-viewer",
+              "path": "005-Assets/menu-mockup.txt",
+              "title": "menu-mockup.txt",
+              "kind": "document",
+              "openedAt": 1783850555159,
+              "folder": "005-Assets",
+              "extension": "txt"
+            },
+            {
+              "id": "capture-viewer:005-Assets/menu-mockup.html",
+              "panel": "capture-viewer",
+              "path": "005-Assets/menu-mockup.html",
+              "title": "menu-mockup.html",
+              "kind": "document",
+              "openedAt": 1783850551859,
+              "folder": "005-Assets",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:005-Assets/sketch.txt",
+              "panel": "capture-viewer",
+              "path": "005-Assets/sketch.txt",
+              "title": "sketch.txt",
+              "kind": "document",
+              "openedAt": 1783850493493,
+              "folder": "005-Assets",
+              "extension": "txt"
+            },
+            {
+              "id": "capture-viewer:010-ModularizeDB-Temp/CAPTURE.md",
+              "panel": "capture-viewer",
+              "path": "010-ModularizeDB-Temp/CAPTURE.md",
+              "title": "CAPTURE.md",
+              "kind": "document",
+              "openedAt": 1783820497397,
+              "folder": "010-ModularizeDB-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:008-Provenance-Temp/provenance-flow.html",
+              "panel": "capture-viewer",
+              "path": "008-Provenance-Temp/provenance-flow.html",
+              "title": "provenance-flow.html",
+              "kind": "document",
+              "openedAt": 1783820117984,
+              "folder": "008-Provenance-Temp",
+              "extension": "html"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/CAPTURE.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/CAPTURE.md",
+              "title": "CAPTURE.md",
+              "kind": "document",
+              "openedAt": 1783747732657,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/CHECKPOINT_PROMPT.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/CHECKPOINT_PROMPT.md",
+              "title": "CHECKPOINT_PROMPT.md",
+              "kind": "document",
+              "openedAt": 1783747730457,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/CHECKPOINTS.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/CHECKPOINTS.md",
+              "title": "CHECKPOINTS.md",
+              "kind": "document",
+              "openedAt": 1783747725807,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/DECISIONS.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/DECISIONS.md",
+              "title": "DECISIONS.md",
+              "kind": "document",
+              "openedAt": 1783747724274,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            },
+            {
+              "id": "capture-viewer:009-Office-Editor-Temp/ISSUES.md",
+              "panel": "capture-viewer",
+              "path": "009-Office-Editor-Temp/ISSUES.md",
+              "title": "ISSUES.md",
+              "kind": "document",
+              "openedAt": 1783747719225,
+              "folder": "009-Office-Editor-Temp",
+              "extension": "md"
+            }
+          ],
+          "navigation": {
+            "stack": [],
+            "index": -1
+          },
+          "tabs": [],
+          "activeTabId": null
+        }
+      },
+      "managedComponentPlacements": {}
+    }
   }
 }

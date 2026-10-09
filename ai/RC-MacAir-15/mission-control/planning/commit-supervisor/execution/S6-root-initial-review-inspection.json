@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-04T14:25:19.792307+00:00",
+  "scope": "Root original-authority/raw initial review inspection; not candidate acceptance",
+  "raw_initial_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/initial-reviewer-1.raw.md",
+  "raw_initial_report_sha256": "b6268c64c098c48f1de81a55a2c41c8480f63264d50cf8f51cb9665b19eccd6c",
+  "source_read_coverage": "Original controller/view/authority/current intent receipt/Guide/navigation full reads already completed by root; full actual raw reviewer report inspected",
+  "validated_findings": [
+    "S6-I1-001",
+    "S6-I1-002",
+    "S6-I1-003"
+  ],
+  "effect": "Parent actual Supervisor owns bounded repair/handoff/Wiki/final/runtime; root does not repair private app",
+  "reviewer_input_exclusion": "Exclude this assessment from every fresh review packet"
+}

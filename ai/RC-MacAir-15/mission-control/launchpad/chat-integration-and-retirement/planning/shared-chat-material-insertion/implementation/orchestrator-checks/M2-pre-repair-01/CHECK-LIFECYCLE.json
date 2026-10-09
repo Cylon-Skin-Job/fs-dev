@@ -1,0 +1,153 @@
+{
+  "observed_at": "2026-10-07T16:52:43.923214+00:00",
+  "checks": [
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/build-01.json",
+      "exit_code": 0,
+      "source_unchanged_during_check": false,
+      "dependencies_unchanged": true,
+      "owned_port": null,
+      "port_listening_after": null,
+      "changed_paths_during_check": [
+        "fusion-studio-client/electron/preload.cjs"
+      ],
+      "expected_generation": true
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/build-02.json",
+      "exit_code": 0,
+      "source_unchanged_during_check": true,
+      "dependencies_unchanged": true,
+      "owned_port": null,
+      "port_listening_after": null,
+      "changed_paths_during_check": [],
+      "expected_generation": false
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/build-03.json",
+      "exit_code": 0,
+      "source_unchanged_during_check": true,
+      "dependencies_unchanged": true,
+      "owned_port": null,
+      "port_listening_after": null,
+      "changed_paths_during_check": [],
+      "expected_generation": false
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/build-04.json",
+      "exit_code": 0,
+      "source_unchanged_during_check": true,
+      "dependencies_unchanged": true,
+      "owned_port": null,
+      "port_listening_after": null,
+      "changed_paths_during_check": [],
+      "expected_generation": false
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/build-05.json",
+      "exit_code": 0,
+      "source_unchanged_during_check": true,
+      "dependencies_unchanged": true,
+      "owned_port": null,
+      "port_listening_after": null,
+      "changed_paths_during_check": [],
+      "expected_generation": false
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/material-01.json",
+      "exit_code": 130,
+      "source_unchanged_during_check": true,
+      "dependencies_unchanged": true,
+      "owned_port": "65226",
+      "port_listening_after": false,
+      "changed_paths_during_check": [],
+      "expected_generation": false
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/material-02.json",
+      "exit_code": 0,
+      "source_unchanged_during_check": true,
+      "dependencies_unchanged": true,
+      "owned_port": "65249",
+      "port_listening_after": false,
+      "changed_paths_during_check": [],
+      "expected_generation": false
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/material-03.json",
+      "exit_code": 1,
+      "source_unchanged_during_check": true,
+      "dependencies_unchanged": true,
+      "owned_port": "65270",
+      "port_listening_after": false,
+      "changed_paths_during_check": [],
+      "expected_generation": false
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/mic-debug-05.json",
+      "exit_code": 1,
+      "source_unchanged_during_check": true,
+      "dependencies_unchanged": true,
+      "owned_port": "65304",
+      "port_listening_after": false,
+      "changed_paths_during_check": [],
+      "expected_generation": false
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/mic-diagnostic-04.json",
+      "exit_code": 1,
+      "source_unchanged_during_check": true,
+      "dependencies_unchanged": true,
+      "owned_port": "65291",
+      "port_listening_after": false,
+      "changed_paths_during_check": [],
+      "expected_generation": false
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/mic-diagnostic-06.json",
+      "exit_code": 0,
+      "source_unchanged_during_check": true,
+      "dependencies_unchanged": true,
+      "owned_port": "65315",
+      "port_listening_after": false,
+      "changed_paths_during_check": [],
+      "expected_generation": false
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/renderer-07.json",
+      "exit_code": 0,
+      "source_unchanged_during_check": true,
+      "dependencies_unchanged": true,
+      "owned_port": "65350",
+      "port_listening_after": false,
+      "changed_paths_during_check": [],
+      "expected_generation": false
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/renderer-08.json",
+      "exit_code": 0,
+      "source_unchanged_during_check": true,
+      "dependencies_unchanged": true,
+      "owned_port": "65410",
+      "port_listening_after": false,
+      "changed_paths_during_check": [],
+      "expected_generation": false
+    },
+    {
+      "receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/structural-09.json",
+      "exit_code": 0,
+      "source_unchanged_during_check": true,
+      "dependencies_unchanged": true,
+      "owned_port": null,
+      "port_listening_after": null,
+      "changed_paths_during_check": [],
+      "expected_generation": false
+    }
+  ],
+  "interrupted_run": {
+    "receipt": "checks/material-01.json",
+    "method": "SIGINT only owned Playwright PID 85564",
+    "final_exit_code": 130
+  },
+  "terminal_unified_exec_sessions": "All completed before candidate freeze; no launched live app or user DB/server"
+}

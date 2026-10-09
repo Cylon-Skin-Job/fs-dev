@@ -1,0 +1,17 @@
+{
+  "started_at": "2026-10-07T22:34:24.673156+00:00",
+  "expires_at": "2026-10-08T02:34:24.673156+00:00",
+  "duration_seconds": 14400,
+  "command": [
+    "/usr/bin/caffeinate",
+    "-dimsu",
+    "-t",
+    "14400"
+  ],
+  "pid": 15210,
+  "observed_process": "15210 15209 Wed Oct  7 15:34:24 2026     /usr/bin/caffeinate -dimsu -t 14400",
+  "owner_authorization": "Unlocked. Set caffeinate for 4 hours and restart.",
+  "scope": "Bounded OS awake assertion for resumed isolated native validation, no app restart/owner profile changes",
+  "completion_policy": "Allow requested four-hour assertion to expire naturally; no persistent automation",
+  "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/caffeinate-4h-01.log"
+}

@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/opt/homebrew/bin/node",
+    "--input-type=module",
+    "--check"
+  ],
+  "cwd": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "stdin_source": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js",
+  "stdin_sha256": "95ece1f98d8ff6cd5d420784bc1dc5356a4a05c50df223527bb9164545ae6d10",
+  "started": "2026-10-04T19:51:27.061641+00:00",
+  "finished": "2026-10-04T19:51:27.107120+00:00",
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "[stdin]:29\nexport const REHEARSAL_ONLY_SYNTAX_FAULT = ;\n                                           ^\n\nSyntaxError: Unexpected token ';'\n    at checkSyntax (node:internal/main/check_syntax:72:5)\n    at node:internal/main/check_syntax:45:5\n    at Socket.<anonymous> (node:internal/process/execution:205:5)\n    at Socket.emit (node:events:520:22)\n    at endReadableNT (node:internal/streams/readable:1729:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)\n\nNode.js v25.6.1\n"
+}

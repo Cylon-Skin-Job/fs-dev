@@ -1,0 +1,155 @@
+{
+  "status": "failed",
+  "evidence": {
+    "schema": {
+      "before": [
+        "001_initial.js",
+        "002_system_panel.js",
+        "003_workspace_themes.js",
+        "004_secrets_wiki_update.js",
+        "005_clipboard.js",
+        "006_harness_selector.js",
+        "007_thread_name_nullable.js",
+        "008_project_scoped_threads.js",
+        "009_workspace_registry.js",
+        "010_harness_status.js",
+        "011_harness_theme.js",
+        "012_drop_harness_theme.js",
+        "013_secrets_index.js",
+        "014_drop_secrets_system_tab.js",
+        "015_drop_use_when.js",
+        "016_clipboard_keychain.js",
+        "017_workspace_id_threads.js",
+        "019_workspace_type.js",
+        "020_workspace_screenshots.js",
+        "021_recent_docs.js",
+        "021_screenshot_source_folder.js",
+        "022_calendar_sync.js",
+        "023_bookmarks.js",
+        "024_slack_liaison_foundation.js",
+        "025_workspace_ribbon_membership.js",
+        "026_transcription_history.js",
+        "027_emoji_recents.js",
+        "028_local_machine_identity.js",
+        "029_event_ledger.js",
+        "030_drop_local_machine_identity.js",
+        "031_repair_workspace_themes_fk.js",
+        "032_drop_recent_docs.js",
+        "033_restore_exact_workspace_paths.js",
+        "034_event_registry_authority.js",
+        "034_harness_error_diagnostics.js",
+        "035_file_provenance.js",
+        "036_agent_tool_provenance.js",
+        "037_harness_diagnostic_binding_identity.js",
+        "038_view_capsule_relocation_journal.js",
+        "039_system_wiki_canonical_view_path.js",
+        "040_reported_ui_context.js",
+        "041_thread_group_foundation.js",
+        "042_thread_group_action_recovery.js",
+        "043_thread_group_worksurface_cleanup.js",
+        "044_thread_group_placement_outbox.js"
+      ],
+      "after": [
+        "001_initial.js",
+        "002_system_panel.js",
+        "003_workspace_themes.js",
+        "004_secrets_wiki_update.js",
+        "005_clipboard.js",
+        "006_harness_selector.js",
+        "007_thread_name_nullable.js",
+        "008_project_scoped_threads.js",
+        "009_workspace_registry.js",
+        "010_harness_status.js",
+        "011_harness_theme.js",
+        "012_drop_harness_theme.js",
+        "013_secrets_index.js",
+        "014_drop_secrets_system_tab.js",
+        "015_drop_use_when.js",
+        "016_clipboard_keychain.js",
+        "017_workspace_id_threads.js",
+        "019_workspace_type.js",
+        "020_workspace_screenshots.js",
+        "021_recent_docs.js",
+        "021_screenshot_source_folder.js",
+        "022_calendar_sync.js",
+        "023_bookmarks.js",
+        "024_slack_liaison_foundation.js",
+        "025_workspace_ribbon_membership.js",
+        "026_transcription_history.js",
+        "027_emoji_recents.js",
+        "028_local_machine_identity.js",
+        "029_event_ledger.js",
+        "030_drop_local_machine_identity.js",
+        "031_repair_workspace_themes_fk.js",
+        "032_drop_recent_docs.js",
+        "033_restore_exact_workspace_paths.js",
+        "034_event_registry_authority.js",
+        "034_harness_error_diagnostics.js",
+        "035_file_provenance.js",
+        "036_agent_tool_provenance.js",
+        "037_harness_diagnostic_binding_identity.js",
+        "038_view_capsule_relocation_journal.js",
+        "039_system_wiki_canonical_view_path.js",
+        "040_reported_ui_context.js",
+        "041_thread_group_foundation.js",
+        "042_thread_group_action_recovery.js",
+        "043_thread_group_worksurface_cleanup.js",
+        "044_thread_group_placement_outbox.js",
+        "045_prompt_submission_receipts.js"
+      ]
+    },
+    "phases": [],
+    "scaffoldCleanup": {
+      "dbQuickCheck": "ok",
+      "portFileRemoved": true,
+      "fixtureRootsRemoved": true
+    },
+    "fixture": {
+      "manifestHash": "421c0ef8f5e255bb333a82a9f26d28c74eb2c8d55e95fc262ad241ed45740079",
+      "counts": {
+        "smallFiles": 1000,
+        "captureFolders": 100,
+        "wikiPages": 100,
+        "officeDocuments": 20
+      }
+    },
+    "historicalDigest": "038bd29bef5163c621732f5c0e64bcd20bb26a9dbb26054317dc0ab7fde3141f",
+    "lastFrames": [
+      {
+        "type": "workspace:init"
+      },
+      {
+        "type": "thread:list",
+        "viewId": null
+      },
+      {
+        "type": "thread:list",
+        "viewId": "capture-viewer"
+      },
+      {
+        "type": "thread:opened",
+        "requestId": null,
+        "threadId": "upgrade-view-thread",
+        "viewId": "capture-viewer"
+      },
+      {
+        "type": "thread:list",
+        "viewId": null
+      },
+      {
+        "type": "error",
+        "message": "No active workspace"
+      }
+    ]
+  },
+  "failure": {
+    "message": "timed out waiting for thread:opened upgrade-history-0",
+    "stack": "Error: timed out waiting for thread:opened upgrade-history-0\n    at waitFor (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs:31:9)\n    at async request (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r8-upgrade-electron.mjs:40:3)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r8-upgrade-electron.mjs:97:20"
+  },
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "lingering": []
+}

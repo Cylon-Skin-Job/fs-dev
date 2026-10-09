@@ -1,0 +1,13 @@
+[stdin]:29
+export const REHEARSAL_ONLY_SYNTAX_FAULT = ;
+                                           ^
+
+SyntaxError: Unexpected token ';'
+    at checkSyntax (node:internal/main/check_syntax:72:5)
+    at node:internal/main/check_syntax:45:5
+    at Socket.<anonymous> (node:internal/process/execution:205:5)
+    at Socket.emit (node:events:520:22)
+    at endReadableNT (node:internal/streams/readable:1729:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+
+Node.js v25.6.1

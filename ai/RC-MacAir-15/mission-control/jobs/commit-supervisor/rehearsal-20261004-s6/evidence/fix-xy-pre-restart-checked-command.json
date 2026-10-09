@@ -1,0 +1,17 @@
+{
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "started": "2026-10-04T19:20:08.672517+00:00",
+  "finished": "2026-10-04T19:20:11.796482+00:00",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "command": [
+    "node",
+    "jobs/commit-supervisor/rehearsal-20261004-s6/fix_xy_pre_restart_readback.mjs",
+    "jobs/commit-supervisor/rehearsal-20261004-s6/runtime-config-fix-xy.json",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-bFErPY/verified.json",
+    "owner-current",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/fix-xy-pre-restart-checked.json"
+  ],
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": ""
+}

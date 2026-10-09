@@ -1,0 +1,48 @@
+{
+  "at": "2026-10-07T22:46:12.712388+00:00",
+  "original_seal_sha256": "6fcef6edfdf2439a45eec626a1d854ed67db209b7c78988a6aeaa48a713fd316",
+  "current_seal_sha256": "35cda972a106468eaa279c60da9ef51fc04ec23333f03de4226269b84e14ad07",
+  "changed_paths": [
+    "fusion-studio-client/e2e/chat-material-native-scenario.mjs"
+  ],
+  "unchanged_product_paths": 64,
+  "exact_current65_mismatches": [],
+  "root_nonnative_checks": [
+    {
+      "label": "build-01",
+      "receipt_sha256": "918ec82b791a2854247bb4bedeb37dbb15bc5c0f87d3a80ff9826e960d0b9e4b",
+      "current_unchanged_path_mismatches": [],
+      "excluded_native_scenario": "Not imported by app renderer/build/selected renderer Wiki suites or server Jest; root current native independently renews this program.",
+      "generated_preload": "Authorized baseline restoration separately bound in derived-artifact-reconciliation-01.json"
+    },
+    {
+      "label": "server-full-01",
+      "receipt_sha256": "b3458cbe0ee60fbc9508da3e357f2b9b5962837209a43adb6e5a25ba2f64a0f6",
+      "current_unchanged_path_mismatches": [],
+      "excluded_native_scenario": "Not imported by app renderer/build/selected renderer Wiki suites or server Jest; root current native independently renews this program.",
+      "generated_preload": "Authorized baseline restoration separately bound in derived-artifact-reconciliation-01.json"
+    },
+    {
+      "label": "server-focused-01",
+      "receipt_sha256": "64fdf1e8b07697ea687f7f62792d6257ed548fa2df18a44d7cf4ebf52f57aa8a",
+      "current_unchanged_path_mismatches": [],
+      "excluded_native_scenario": "Not imported by app renderer/build/selected renderer Wiki suites or server Jest; root current native independently renews this program.",
+      "generated_preload": "Authorized baseline restoration separately bound in derived-artifact-reconciliation-01.json"
+    },
+    {
+      "label": "renderer-01",
+      "receipt_sha256": "8cde2c41a1b1a44460bf716cdb77bebff688281ad39bfef72fd7188a4cd5fed0",
+      "current_unchanged_path_mismatches": [],
+      "excluded_native_scenario": "Not imported by app renderer/build/selected renderer Wiki suites or server Jest; root current native independently renews this program.",
+      "generated_preload": "Authorized baseline restoration separately bound in derived-artifact-reconciliation-01.json"
+    },
+    {
+      "label": "wiki-01",
+      "receipt_sha256": "93889bea8c4509154caf10783236a68df0b55f071026b73620c737f1f1b13772",
+      "current_unchanged_path_mismatches": [],
+      "excluded_native_scenario": "Not imported by app renderer/build/selected renderer Wiki suites or server Jest; root current native independently renews this program.",
+      "generated_preload": "Authorized baseline restoration separately bound in derived-artifact-reconciliation-01.json"
+    }
+  ],
+  "state": "Independent scoped retention only; does not discharge native or independent gates"
+}

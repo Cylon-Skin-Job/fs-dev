@@ -1,0 +1,17 @@
+{
+  "actor": "/root/s6_supervisor_fix_xy_1",
+  "started": "2026-10-04T16:56:26.638353+00:00",
+  "finished": "2026-10-04T16:56:27.103297+00:00",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "command": [
+    "python3.12",
+    "-B",
+    ".agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+    "verify",
+    "--job",
+    "jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/fix-xy-wiki-1"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"result\": \"VERIFIED\", \"payloads_valid\": true, \"matches_checkpoint\": true, \"status_equal\": true, \"current_sha256\": \"4b6ecb6cfbd6cea78ea82773364b0af26d353f8633b0c3b265c3bb7cb70c596f\", \"manifest_sha256\": \"5227a7a7d38dddec138aff13c16f2ee8a22bda1a53657f203a47d80857827617\"}\n",
+  "stderr": ""
+}

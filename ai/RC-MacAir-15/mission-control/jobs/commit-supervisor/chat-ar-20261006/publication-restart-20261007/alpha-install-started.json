@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-07T08:24:39.479388+00:00",
+  "stage": "/Applications/.FusionStudioAlpha-install-20261007T082439Z.app",
+  "backup": "/Applications/Fusion Studio Alpha.previous-20261007T082439Z.app",
+  "installed": "/Applications/Fusion Studio Alpha.app",
+  "source": "/Users/rccurtrightjr./Applications/Fusion-Studio-Alpha-Source/fusion-studio-client/release/mac-arm64/Fusion Studio Alpha.app",
+  "scope": "Copy new app, quit exact old Alpha process tree, preserve prior bundle by atomic rename, install new bundle; no profile/cache/DB copy or reset."
+}

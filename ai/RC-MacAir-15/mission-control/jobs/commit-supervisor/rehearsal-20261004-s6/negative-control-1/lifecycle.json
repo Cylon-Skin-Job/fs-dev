@@ -1,0 +1,71 @@
+{
+  "at": "2026-10-04T19:57:04.303643+00:00",
+  "actor": "/root/s6_supervisor_refusal_1",
+  "parent": "/root",
+  "children_spawned": [],
+  "native_predecessor_subtree_query": {
+    "tool": "collaboration.list_agents",
+    "path_prefix": "/root/s6_supervisor_fix_xy_1",
+    "actual_result": "7 returned actors, all completed, including Supervisor and three final managers plus three reviewer descendants. No active returned writer.",
+    "directly_observed": [
+      "/root/s6_supervisor_fix_xy_1",
+      "/root/s6_supervisor_fix_xy_1/fix_xy_final_manager_1",
+      "/root/s6_supervisor_fix_xy_1/fix_xy_final_manager_1/fresh_all5_reviewer_1",
+      "/root/s6_supervisor_fix_xy_1/fix_xy_final_manager_2",
+      "/root/s6_supervisor_fix_xy_1/fix_xy_final_manager_2/final_reviewer_2",
+      "/root/s6_supervisor_fix_xy_1/fix_xy_final_manager_3",
+      "/root/s6_supervisor_fix_xy_1/fix_xy_final_manager_3/reviewer_3"
+    ],
+    "retired_actor_limit": "Four former code/Wiki leaf/handoff entries no longer returned; their exact original completion receipts and path responsibilities remain in immutable lifecycle-fix-xy.json; assignment root confirms actual terminal/non-conflicting."
+  },
+  "predecessor_lifecycle": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/lifecycle-fix-xy.json",
+    "sha256": "b7de4f8bc500f3f2d0f10048226efae521771c083c685d4f7671a50a22fbdf85"
+  },
+  "root_second_native_terminal": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-second-owner-terminal.json",
+    "sha256": "2c0f69fb5b239df259fd7587e7fdfd2eeacc919e80d294e5ae360cb16462f665"
+  },
+  "matching_schedules": [],
+  "schedules": [
+    {
+      "path": "/Users/rccurtrightjr./.codex/automations/chat-ar-orchestrator-hourly-check-in/automation.toml",
+      "sha256": "ec7257312e7c4d5393449d5477dda758932315a3461123d6111baad10353403f",
+      "status": "PAUSED",
+      "kind": "heartbeat",
+      "matching": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/automations/check-chat-wiki-orchestrator/automation.toml",
+      "sha256": "04db689d5c84a756b2bbcc51c7201385f564ea44baee342448d152ab4c5d1178",
+      "status": "PAUSED",
+      "kind": "heartbeat",
+      "matching": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/automations/check-provenance-wiki-reconciliation/automation.toml",
+      "sha256": "33e85b9b6843a72c82b2ea8f795aa0127c8f5bf14af508f5172c1b0e621ea794",
+      "status": "PAUSED",
+      "kind": "heartbeat",
+      "matching": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/automations/check-workspaces-and-views-wiki-orchestrator/automation.toml",
+      "sha256": "1d1fb54ac2a80a20cdc82d75694b2e71e82c66abcf01539b83e4dbb43de0a5b4",
+      "status": "PAUSED",
+      "kind": "heartbeat",
+      "matching": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/automations/monitor-chokidar-first-draft/automation.toml",
+      "sha256": "7af0ff68f3557f9a4bbf1a79a9574081a33e2d0ee13ed11bd4075f5d698d2cbe",
+      "status": "PAUSED",
+      "kind": "heartbeat",
+      "matching": false
+    }
+  ],
+  "candidate_writers_active": [],
+  "close_agent": "unavailable; no closure fabricated",
+  "current_actor_status": "intentionally ending native turn after returning unmet-gate; parent must observe actual terminal",
+  "next_action": "Only root exact private control restore then separately assigned abandoned-preview recovery. No automatic resumption."
+}

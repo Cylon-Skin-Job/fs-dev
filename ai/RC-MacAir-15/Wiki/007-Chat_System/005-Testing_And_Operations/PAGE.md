@@ -2,7 +2,7 @@
 name: Chat Testing And Operations
 description: Vertical smoke tests, browser Playwright, Electron Playwright, and Fusion restart guidance for chat work.
 metadata:
-  last-modified: "2026-10-06T01:21:33Z"
+  last-modified: "2026-10-07T20:18:16Z"
   source-files:
     - fusion-studio-server/lib/startup.js
     - fusion-studio-server/test/runtime/isolated-provenance-runtime.test.js
@@ -45,6 +45,13 @@ metadata:
     - fusion-studio-client/e2e/prompt-submission-recovery.spec.ts
     - fusion-studio-client/e2e/chat-recovery-native-scenario.mjs
     - fusion-studio-server/server.js
+    - fusion-studio-client/e2e/chat-material-insertion.spec.ts
+    - fusion-studio-client/e2e/support/chat-material-fixture.tsx
+    - fusion-studio-client/e2e/support/chat-material-source-fixture.ts
+    - fusion-studio-client/e2e/support/chat-material-screenshot-cases.ts
+    - fusion-studio-client/e2e/chat-material-native-scenario.mjs
+    - fusion-studio-client/e2e/chat-architecture/electron-case-helpers.mjs
+    - fusion-studio-client/e2e/chat-architecture/stage-fixture.mjs
 ---
 
 Use this section before validating chat changes.
@@ -114,6 +121,14 @@ For renderer chat-send changes, also exercise the production `ws/product-send.ts
 For receipt inquiry changes, build the client, then run `npx playwright test --config=playwright.chat-architecture.config.ts e2e/prompt-submission-recovery.spec.ts e2e/chat-send-transport.spec.ts e2e/prompt-ownership.slice-c.spec.ts e2e/thread-bootstrap-order.spec.ts e2e/visible-wait.spec.ts` from the client and `npm test -- --runInBand --runTestsByPath test/ws/prompt-submission-recovery.integration.test.js` from the server. The recovery spec uses the production send-result boundary for refusal, uncertainty and auth-queue cases, fake time for the 15-second start, five-second inquiry and bounded retries, and the isolated browser composer for scheduled/manual status and existing feedback. The default Playwright config is outside this isolated route and can contact a live development server.
 
 The default `node e2e/trusted-shell-auth-smoke.mjs` entry now also runs `chat-recovery-native-scenario.mjs` in a disposable profile, workspace and SQLite database. A staged test-only server fault drops `message:sent` while preserving durable acceptance; the browser's real authenticated socket then checks one refused inquiry, one manual receipt readback, and one uncertain post-enqueue inquiry. The native case checks exact status/prompt counts and one durable receipt/exchange per attempt; it does not prove live provider failure causes, eventual reconnect after the injected socket throw, or Alpha health. Temporary fixture data and owned processes are removed afterward.
+
+## Shared prepared material validation
+
+`e2e/chat-material-insertion.spec.ts` exercises public global resource buttons, real composer controls, the installed Chat action consumer, existing exact-session stores and rendered text/pills. Its source fixtures control preparation delays without replacing destination validation or store mutation. Assertions cover active Main/Side, own-composer and adapterless placement targeting, source/destination separation, retained-focus survival, irreversible rebind/unmount/workspace/hydration/placement cancellation, latest-draft cursor behavior, pending/unknown acceptance, concurrent correlated screenshot results and all terminal cleanup paths. `threaded-chat-host.spec.ts` retains New Chat and exact component coverage while replacing Main/Legacy fallback and focus-only cancellation expectations. Screenshot menu layout assertions supplement these production route observations.
+
+After a fresh client build, `node e2e/chat-material-native-scenario.mjs` runs the compiled shell in marker-owned profile/workspace staging on an ephemeral owned server port with explicit profile and machine identities. It captures actual global and own-composer Main/Side PNGs through Electron/preload and the current screenshot save handler, including native-adapted and adapterless hosts; reads signature, dimensions, hash and correlated saved path; observes the exact rendered pill and non-target preservation; and exercises actual gallery/resource staging. Insertion causes no prompt or New Chat frame. Subsequent public Send checks no optimistic bubble, exact server ACK clearing and SQLite exchange/attachment metadata readback. Its deterministic staged harness and bounded admission/ACK delay seams isolate acceptance regression; they do not certify a public provider, Alpha or transient draft restart persistence. Capture/save and persistence owners remain actual, and cleanup is confined to marker-owned fixture roots/PIDs.
+
+The architecture renderer lane uses a free test-owned `CHAT_TRANSPORT_TEST_PORT` with `reuseExistingServer: false`; it must not reuse an owner server/profile/database. Current shared-chat changes require a fresh full-server `npx --no-install jest --runInBand` and fresh client `npm run build` from the assigned integration checkout, in addition to focused screenshot request/path protection and prompt recovery checks. Direct Jest does not run npm's native-observer pretest. If its ignored addon is absent in a fresh worktree, build unchanged native observer source locally through `build:native-observer`, without rebuilding shared modules, and bind its source/artifact/actual consumption separately. Each receipt records current source/build/dependency identity, exact commands/results, warnings and fixture limits; dated passes and equal historical hashes do not discharge fresh required runs.
 
 ## Startup retirement and guarded provenance
 

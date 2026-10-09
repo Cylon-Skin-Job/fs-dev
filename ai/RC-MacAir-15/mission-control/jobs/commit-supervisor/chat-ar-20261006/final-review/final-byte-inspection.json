@@ -1,0 +1,25 @@
+{
+  "at": "2026-10-06T22:45:30.094138+00:00",
+  "candidate_head": "3356e1b73cc5d44028eac5baa02fd542a8bbc385",
+  "candidate_branch": "codex/chat-retirement-and-startup-repair",
+  "candidate_tree": "1befa26e94a3487ef91d309665ff389b2e959b65",
+  "source_head": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "source_branch": "agent/exact-workspace-paths",
+  "candidate_owned_count": 1669,
+  "candidate_owned_mismatches": [],
+  "source_owned_mismatches": [],
+  "index_entries": 5620,
+  "index_tree_differences": [],
+  "candidate_index_sha256": "7026c1f4e6fe37d3e6b5853f0f020e13bf2bcba736320f69025451db20cec930",
+  "source_index_sha256": "8c2f62d2d71cc47a2c5ca767375290e860835e7eec19014f13b8f1475a1c26a4",
+  "candidate_index_matches_initial_observed_raw": true,
+  "source_index_matches_frozen": true,
+  "raw_reports": {
+    "code-raw.md": "62b7e3183b8a00728b44f42bc6c01c4f10bb053d776d1772a6b4bad0d002089f",
+    "code-evidence.json": "b98234b38923794be33ff29900a0eb02d24c1237be67d1e3d12f63b8e24815c4",
+    "docs-raw.md": "6da8085c3068514b7482bbf5477cdbbb4180d56fcf73dc5c11fcfda7ebfff4c2",
+    "docs-evidence.json": "62fbed282e0157f8985c58bc7c8da7f7858f6a0688423a5b6bec9761900346ac"
+  },
+  "source_product_refs_match_frozen": true,
+  "method": "Read/stat/hash and optional-lock-disabled Git listings; no write-tree or effects"
+}

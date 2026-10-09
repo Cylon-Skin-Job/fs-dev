@@ -1,0 +1,35 @@
+{
+  "timestamp": "2026-10-07T16:18:23.805404+00:00",
+  "correction": "Coordinator helper now uses git ls-files --full-name so untracked paths bind to repo root; earlier17/23 direct-binding limit retained historically, current independent checks rerun on same frozen23 files",
+  "product_or_fixture_change": false,
+  "receipt_helper_sha256": "2da52304b536612142e6c6ea7e76d42b351d7443ecda36b99f380e564b0e06ef",
+  "checks": {
+    "build-02": {
+      "receipt": "build-02.json",
+      "log": "build-02.log",
+      "exit": 0,
+      "started": "2026-10-07T16:16:50.706152+00:00",
+      "ended": "2026-10-07T16:17:00.682600+00:00",
+      "test_environment": {},
+      "all23_product_hashes_match_before_after": true,
+      "dependency_drift": false,
+      "receipt_sha256": "43db9095c1d8616ab9a48aa7fc95e72efb14b1d8f2aefad62abd256dd2ef56e5"
+    },
+    "renderer-02": {
+      "receipt": "renderer-02.json",
+      "log": "renderer-02.log",
+      "exit": 0,
+      "started": "2026-10-07T16:17:29.647357+00:00",
+      "ended": "2026-10-07T16:18:01.306001+00:00",
+      "test_environment": {
+        "CHAT_TRANSPORT_TEST_PORT": "65082"
+      },
+      "all23_product_hashes_match_before_after": true,
+      "dependency_drift": false,
+      "receipt_sha256": "1fa43779f4e20ae34228175452380c8f18e2fb0ee11ab94f6df8a64c5d3f4016"
+    }
+  },
+  "reconciliation": "derived-artifact-reconciliation-02.json",
+  "source_identity": "acceptance-inputs-01.json unchanged",
+  "claim": "Current independent build and 75-case renderer lane, sequential order, all23 files bound before and after, current match, no dependency drift"
+}

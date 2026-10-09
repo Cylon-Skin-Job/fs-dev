@@ -1,0 +1,635 @@
+{
+  "at": "2026-10-07T23:18:54.379697+00:00",
+  "workId": "CHAT-MATERIAL-SPEC-01",
+  "scope": "Whole current SPEC deviation and impact accounting for independent final review; no final gate conclusion",
+  "rows": [
+    {
+      "slice": "M1",
+      "id": "M1-D01",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M1/orchestrator-checks/deviations-01.json",
+      "originating_sha256": "29a60cb212e554c3cccb6f08f7604eded2784a13a385057ab262f657a8dd296f",
+      "originating_fields": {
+        "id": "M1-D01",
+        "original_text_actual_change_reason": "Expected list names Chat slice/types and connected seams; add `panelStore.ts` subscription. React cleanup alone cannot observe loss/return within one batch; retire before equal strings regain authority",
+        "files_checks_observable_effect": "panelStore + mountedChatState; workspace/hydration/placement/socket and group-return cases. Old operations remain cancelled synchronously",
+        "risk_downstream_proposal_release_condition": "Existing store observer scans small mounted projection; no competing store. M2/M3 consume this fence. Propose accepted after current lifecycle cases and independent review clean",
+        "orchestrator_classification": "accepted",
+        "classification_basis": "Necessary bounded mechanics for the approved M1 contract; independently read current source and real rendered cases passed in Orchestrator renderer-01. No contradictory owner intent or new product feature. Slice release still requires clean distinct acceptance review."
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "slice": "M1",
+      "id": "M1-D02",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M1/orchestrator-checks/deviations-01.json",
+      "originating_sha256": "29a60cb212e554c3cccb6f08f7604eded2784a13a385057ab262f657a8dd296f",
+      "originating_fields": {
+        "id": "M1-D02",
+        "original_text_actual_change_reason": "Expected list omits `thread-handlers.ts` and normal New Chat action seam. Existing ordinary no-requestId created response selects a new Main without material focus event; bind only a pending explicit New Chat intent",
+        "files_checks_observable_effect": "useViewChatHost/useChatSessionActions/thread-handlers; ordinary New Chat + late hydration/no-steal tests. Response activation uses current existing tuple and no new WS family",
+        "risk_downstream_proposal_release_condition": "No protocol/schema change; intent clears on authority/view loss or other real chat interaction. M2/M3 must preserve it. Propose accepted after independent response/Send regression review",
+        "orchestrator_classification": "accepted",
+        "classification_basis": "Necessary bounded mechanics for the approved M1 contract; independently read current source and real rendered cases passed in Orchestrator renderer-01. No contradictory owner intent or new product feature. Slice release still requires clean distinct acceptance review."
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "slice": "M1",
+      "id": "M1-D03",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M1/orchestrator-checks/deviations-01.json",
+      "originating_sha256": "29a60cb212e554c3cccb6f08f7604eded2784a13a385057ab262f657a8dd296f",
+      "originating_fields": {
+        "id": "M1-D03",
+        "original_text_actual_change_reason": "SPEC permits narrow target helper and existing consumer extension; split subordinate `chat-material-commit.ts` as well. Keeps identity validation and local insertion cohesive under 400 without another event/controller/store owner",
+        "files_checks_observable_effect": "chat-action/controller/target/commit; real file/wiki/folder route, latest draft, exact selection, duplicate, pending, source-failure/abort",
+        "risk_downstream_proposal_release_condition": "New prepared union shape includes sourceFailure marker; M2/M3 may consume and refine existing seam within contract. Propose accepted with no material bypass and synchronous one-store tests",
+        "orchestrator_classification": "accepted",
+        "classification_basis": "Necessary bounded mechanics for the approved M1 contract; independently read current source and real rendered cases passed in Orchestrator renderer-01. No contradictory owner intent or new product feature. Slice release still requires clean distinct acceptance review."
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "slice": "M1",
+      "id": "M1-D04",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M1/orchestrator-checks/deviations-01.json",
+      "originating_sha256": "29a60cb212e554c3cccb6f08f7604eded2784a13a385057ab262f657a8dd296f",
+      "originating_fields": {
+        "id": "M1-D04",
+        "original_text_actual_change_reason": "Existing identity fixture claimed the entire app store lacks surface IDs; approved projection now legitimately owns transient bindings. Existing isolation fixture modeled raw socket only; initialized product admission must be explicit",
+        "files_checks_observable_effect": "identity/isolation fixtures; durable-lane absence, independent generation retirement, exact Send ACK/readded attachments/Stop/New Chat unchanged",
+        "risk_downstream_proposal_release_condition": "Test setup only; does not weaken ACK or durable/wire restrictions. Larger existing test files retained. Propose accepted after current cumulative pass",
+        "orchestrator_classification": "accepted",
+        "classification_basis": "Necessary bounded mechanics for the approved M1 contract; independently read current source and real rendered cases passed in Orchestrator renderer-01. No contradictory owner intent or new product feature. Slice release still requires clean distinct acceptance review."
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "slice": "M1",
+      "id": "M1-D05",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M1/orchestrator-checks/deviations-01.json",
+      "originating_sha256": "29a60cb212e554c3cccb6f08f7604eded2784a13a385057ab262f657a8dd296f",
+      "originating_fields": {
+        "id": "M1-D05",
+        "original_text_actual_change_reason": "\u00a73 permits confirmed-dead browser insertion deletion, though M2/M3 own later bypass sweep. Delete its owner listener in M1 instead of keeping obsolete global Main reconstruction alongside migrated button",
+        "files_checks_observable_effect": "chat-action-controller; full caller sweep, duplicate consumer/no-target/ordinary branch regressions",
+        "risk_downstream_proposal_release_condition": "No producer found; external undocumented legacy integration not claimed. M2/M3 inventory must continue tracking remaining actual callers. Propose accepted with source-bound absence evidence",
+        "orchestrator_classification": "accepted",
+        "classification_basis": "Necessary bounded mechanics for the approved M1 contract; independently read current source and real rendered cases passed in Orchestrator renderer-01. No contradictory owner intent or new product feature. Slice release still requires clean distinct acceptance review."
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "slice": "M1",
+      "id": "M1-D06",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M1/orchestrator-checks/deviations-01.json",
+      "originating_sha256": "29a60cb212e554c3cccb6f08f7604eded2784a13a385057ab262f657a8dd296f",
+      "originating_fields": {
+        "id": "M1-D06",
+        "original_text_actual_change_reason": "Expected list mentions one new test file; introduce bounded support fixture and coherent seam groundwork beyond required M1 cases (A07/A08/A09/A16)",
+        "files_checks_observable_effect": "new fixture144 and test307 lines; explicit Main independent lifetime and capture exact binding demonstrations",
+        "risk_downstream_proposal_release_condition": "These prove shared seam only, not unimplemented source migrations. M2 expands same suite. Propose accepted if M1 required release and evidence limits remain explicit",
+        "orchestrator_classification": "accepted",
+        "classification_basis": "Necessary bounded mechanics for the approved M1 contract; independently read current source and real rendered cases passed in Orchestrator renderer-01. No contradictory owner intent or new product feature. Slice release still requires clean distinct acceptance review."
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "slice": "M2",
+      "id": "M2-D01",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/orchestrator-checks/deviations-01.json",
+      "originating_sha256": "c36310253a262ac76b104b2a61be7b622a2dbea035500938cc685c4064accb65",
+      "originating_fields": {
+        "id": "M2-D01",
+        "original_text": "M2 expected source/menu/footer/session callbacks; sources prepare independently; reuse the existing action consumer and stores",
+        "actual_change": "Add portable chat-material-source types and connected useComposerMaterialSource adapter",
+        "reason_authority": "Mechanical common begin/cancellation/prepared completion and presentation seam needed for all M2 callers under SPEC 4.1/4.3; no new action consumer or store",
+        "files": [
+          "src/lib/chat-material-source.ts",
+          "src/components/chat/useComposerMaterialSource.ts"
+        ],
+        "checks": "Actual Main/Side/adapterless menus, pending/unknown, warm suppression/failure, source errors and deferred source suite",
+        "observable_effect": "Sources receive an already-bound operation before preparation and one prepared commit; editor presentation and warm use only captured owner",
+        "risk": "Shared connected seam affects all source callers; covered through actual public UI and cumulative checks",
+        "downstream": "M3 should use beginMaterial for own camera while preserving camera preparation/correlation; globals use existing global begin directly",
+        "proposed_classification": "accepted",
+        "normative_anchor": "SPEC \u00a74.1",
+        "normative_excerpt": "Concrete types/names can be chosen by the builder within these requirements; the API cannot accept send/create options.",
+        "classification": "accepted",
+        "draft_disposition": "Accepted bounded integration rationale, subject to root current-byte verification and distinct materially clean acceptance gate.",
+        "release_condition": "Root current-byte evidence is complete; distinct fresh acceptance reviewer must return material CLEAN on unchanged current candidate before M3.",
+        "classification_basis": "Approved-scope bounded integration. Root read every M2 product/test diff, inspected immediate authority/lifetime/action/store/source seams, verified raw failed and repaired checks, and reran current build plus165case cumulative renderer. No new feature/owner ruling. Independent acceptance still required before slice release.",
+        "release_condition_status": "satisfied at M2 acceptance; preserve recorded classification and downstream obligations in M3/final"
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "slice": "M2",
+      "id": "M2-D02",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/orchestrator-checks/deviations-01.json",
+      "originating_sha256": "c36310253a262ac76b104b2a61be7b622a2dbea035500938cc685c4064accb65",
+      "originating_fields": {
+        "id": "M2-D02",
+        "original_text": "Exact originating committed lifetime; stale same-instance callbacks must not retarget; expected host/contract integration",
+        "actual_change": "Accepted M1 registration returns a distinct lifetime holder; host material callback slots keyed by owner tuple; old holder/slot cleared in layout cleanup",
+        "reason_authority": "An old closure reading a mutable shared ref would otherwise acquire the rebound composer; SPEC R-04/R-05/A09/A16 requires permanent rejection",
+        "files": [
+          "src/components/chat/useMountedChatBinding.ts",
+          "src/components/chat/useChatSessionHost.ts",
+          "src/components/chat/ChatSurface.tsx",
+          "src/components/chat/ConnectedChatComposer.tsx",
+          "src/components/chat/chatSurfaceContract.ts",
+          "src/components/chat/useChatMountInteractions.ts"
+        ],
+        "checks": "Same DOM node retained across actual tuple reuse; old begin/text/attachment reject before any write/focus; equal tuple return remains dead; actual unmount/loss tests",
+        "observable_effect": "No late callback can read a replacement adapter; unrelated focus/isActive changes retain the original lifetime",
+        "risk": "Accepted M1 host seam changes, so cumulative original registration/identity/activation/isolation checks renewed",
+        "downstream": "M3 captures this holder at camera action start; does not fetch current owner after native awaits",
+        "proposed_classification": "accepted",
+        "normative_anchor": "SPEC \u00a74.3",
+        "normative_excerpt": "A committed lifetime token invalidates on actual owner tuple change, unmount/closed composer, loss of session/workspace/hydration authority or Side placement close/replacement.",
+        "classification": "accepted",
+        "draft_disposition": "Accepted bounded integration rationale, subject to root current-byte verification and distinct materially clean acceptance gate.",
+        "release_condition": "Root current-byte evidence is complete; distinct fresh acceptance reviewer must return material CLEAN on unchanged current candidate before M3.",
+        "classification_basis": "Approved-scope bounded integration. Root read every M2 product/test diff, inspected immediate authority/lifetime/action/store/source seams, verified raw failed and repaired checks, and reran current build plus165case cumulative renderer. No new feature/owner ruling. Independent acceptance still required before slice release.",
+        "release_condition_status": "satisfied at M2 acceptance; preserve recorded classification and downstream obligations in M3/final"
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "slice": "M2",
+      "id": "M2-D03",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/orchestrator-checks/deviations-01.json",
+      "originating_sha256": "c36310253a262ac76b104b2a61be7b622a2dbea035500938cc685c4064accb65",
+      "originating_fields": {
+        "id": "M2-D03",
+        "original_text": "Preserve composer cursor replacement/current selection, latest draft and existing intended source behavior; editor/native operations remain existing owners",
+        "actual_change": "Add readSelection/restoreCaret/recordMaterialText to existing editor adapter; remove external material insertText callback use; preserve emoji-recent recording for cursor sources through existing API only",
+        "reason_authority": "SPEC 4.1/A16 requires latest matching selection without mutating through a rebound input; prior insertText also recorded prepared-text emoji recents",
+        "files": [
+          "src/components/ChatInput.tsx",
+          "src/components/chat/chatSurfaceContract.ts",
+          "src/components/chat/useComposerMaterialSource.ts",
+          "src/components/chat/useChatMountInteractions.ts"
+        ],
+        "checks": "Cursor replacement, intervening typing, stale DOM paragraph append, duplicate mounts, focused original caret guard, emoji record once; diagnostics don't gain emoji side effect",
+        "observable_effect": "Store remains the mutation owner; current editor is presentation/selection only; no new focus theft",
+        "risk": "ChatInput is currently 364 lines, within the 400-line design goal; the bounded adapter addition preserves its cohesive editor responsibility without unrelated rewrite",
+        "downstream": "Unsupported adapters safely append; M3 attachment camera requires no cursor operation",
+        "proposed_classification": "accepted",
+        "normative_anchor": "SPEC \u00a74.1",
+        "normative_excerpt": "Pass current exact-owner selection data from a live presentation adapter into commit; calculate against the latest owner draft.",
+        "classification": "accepted",
+        "draft_disposition": "Accepted bounded integration rationale, subject to root current-byte verification and distinct materially clean acceptance gate.",
+        "release_condition": "Root current-byte evidence is complete; distinct fresh acceptance reviewer must return material CLEAN on unchanged current candidate before M3.",
+        "classification_basis": "Approved-scope bounded integration. Root read every M2 product/test diff, inspected immediate authority/lifetime/action/store/source seams, verified raw failed and repaired checks, and reran current build plus165case cumulative renderer. No new feature/owner ruling. Independent acceptance still required before slice release.",
+        "release_condition_status": "satisfied at M2 acceptance; preserve recorded classification and downstream obligations in M3/final"
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "slice": "M2",
+      "id": "M2-D04",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/orchestrator-checks/deviations-01.json",
+      "originating_sha256": "c36310253a262ac76b104b2a61be7b622a2dbea035500938cc685c4064accb65",
+      "originating_fields": {
+        "id": "M2-D04",
+        "original_text": "Diagnostic capture before retrieval at actual Ask AI click; connected history callback contract as needed",
+        "actual_change": "Diagnostic callback now receives lazy prepare() rather than already-retrieved text; propagate type through MessageList and portable contract",
+        "reason_authority": "Original details UI awaited retrieval before invoking session action; SPEC R-04 requires synchronous begin first",
+        "files": [
+          "src/components/MessageList.tsx",
+          "src/components/chat/ChatDiagnosticDetails.tsx",
+          "src/components/chat/chatSurfaceContract.ts",
+          "src/components/chat/useChatSessionActions.ts"
+        ],
+        "checks": "Actual redacted history diagnostic controls deferred retrieval survives other focus/cancels on real rebind; existing diagnostic action and prompt ownership regression; direct Ask AI unavailable/malformed report retains source-unavailable state and disabled controls, with no owner mutations/warm/send",
+        "observable_effect": "Pending/unavailable denies before report retrieval; validated report paragraph-appends to captured composer only; no warm/send",
+        "risk": "Small callback contract crossing renewed in actual UI and build; validation/redaction/retrieval handlers unchanged",
+        "downstream": "Other history presenters use the lazy preparation contract, no second diagnostic insertion consumer",
+        "proposed_classification": "accepted",
+        "normative_anchor": "SPEC \u00a75 M2 and \u00a74.1(6)",
+        "normative_excerpt": "Capture before selected/top-ranked clipboard fetch, most-recent WS request, mic processing and diagnostic Ask AI retrieval.",
+        "classification": "accepted",
+        "draft_disposition": "Accepted bounded integration rationale, subject to root current-byte verification and distinct materially clean acceptance gate.",
+        "release_condition": "Root current-byte evidence is complete; distinct fresh acceptance reviewer must return material CLEAN on unchanged current candidate before M3.",
+        "classification_basis": "Approved-scope bounded integration. Root read every M2 product/test diff, inspected immediate authority/lifetime/action/store/source seams, verified raw failed and repaired checks, and reran current build plus165case cumulative renderer. No new feature/owner ruling. Independent acceptance still required before slice release.",
+        "release_condition_status": "satisfied at M2 acceptance; preserve recorded classification and downstream obligations in M3/final"
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "slice": "M2",
+      "id": "M2-D05",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/orchestrator-checks/deviations-01.json",
+      "originating_sha256": "c36310253a262ac76b104b2a61be7b622a2dbea035500938cc685c4064accb65",
+      "originating_fields": {
+        "id": "M2-D05",
+        "original_text": "Only necessary lease/cancellation plumbing in VoiceRecorder/useAudioCapture; preserve recording/transcription behavior; explicit cancellation/real lifetime change cancels late insertion",
+        "actual_change": "Forward AbortSignal, stabilize stop callback, retain current UI callbacks via refs, guard permission/device/media/context/transcription awaits and onstop, stop late/temporary stream tracks, abort HTTP transcription and prevent cancelled state callbacks",
+        "reason_authority": "Existing MediaRecorder.onstop transcribed even stopRecording(true); callback-dependent effect cleanup accidentally stopped retained operations; delayed acquisition otherwise starts work after cancellation. Required bounded M2 lifecycle repair, no capture redesign",
+        "files": [
+          "src/mic/MicTrigger.tsx",
+          "src/mic/VoiceRecorder.tsx",
+          "src/mic/useAudioCapture.ts"
+        ],
+        "checks": "Main/Side deferred transcription preserves original destination/focus; explicit cancel permission/recording/processing; same-instance tuple reuse permission/processing; late acquisition track-stop assertion",
+        "observable_effect": "Explicit source cancel/retirement prevents late recording/transcription/insertion; retained callback rerenders no longer cancel work; success closes source UI after commit",
+        "risk": "Uncancelable browser permission request may still resolve, but returned tracks are stopped and no recorder or insertion starts; physical hardware not certified by fixture",
+        "downstream": "No server/STT prompt/capture behavior redesign; native mic verification not claimed. M3 must preserve shared lifecycle cancellation",
+        "proposed_classification": "accepted",
+        "normative_anchor": "SPEC \u00a75 M2",
+        "normative_excerpt": "Do not perform a clipboard product/history retirement or microphone capture redesign.",
+        "classification": "accepted",
+        "draft_disposition": "Accepted bounded integration rationale, subject to root current-byte verification and distinct materially clean acceptance gate.",
+        "release_condition": "Root current-byte evidence is complete; distinct fresh acceptance reviewer must return material CLEAN on unchanged current candidate before M3.",
+        "classification_basis": "Approved-scope bounded integration. Root read every M2 product/test diff, inspected immediate authority/lifetime/action/store/source seams, verified raw failed and repaired checks, and reran current build plus165case cumulative renderer. No new feature/owner ruling. Independent acceptance still required before slice release.",
+        "release_condition_status": "satisfied at M2 acceptance; preserve recorded classification and downstream obligations in M3/final"
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "slice": "M2",
+      "id": "M2-D06",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/orchestrator-checks/deviations-01.json",
+      "originating_sha256": "c36310253a262ac76b104b2a61be7b622a2dbea035500938cc685c4064accb65",
+      "originating_fields": {
+        "id": "M2-D06",
+        "original_text": "Duplicate mounts keep independent transient menu state; successful menu initiation close isn't composer closure; explicit source cancel invalidates",
+        "actual_change": "Remove fixed source-modal ids to use existing generated per-instance IDs; use original composed event path for shared outside-click containment",
+        "reason_authority": "Fixed IDs conflate distinct mounts; mic Send swaps old button before document outside-click listener runs, falsely cancelling processing. Direct failing trace proves required M2 integration seam",
+        "files": [
+          "src/components/hover-icon-modal/useHoverIconModal.ts",
+          "src/clipboard/ClipboardTrigger.tsx",
+          "src/recent-files/RecentFilesTrigger.tsx",
+          "src/screenshots/ScreenshotsTrigger.tsx",
+          "src/mic/MicTrigger.tsx"
+        ],
+        "checks": "Failure mic-debug-05 and repaired mic-diagnostic-06; final Main/Side source UI, duplicate surface/menu isolation, shared menu structure regression",
+        "observable_effect": "An inside command click remains inside after its DOM button is replaced; explicit Escape/outside cancel still aborts mic; menus keep distinct identities",
+        "risk": "Shared hover-modal handler serves other controls; existing containment retained as fallback, menu/isolation regression renewed",
+        "downstream": "No menu visual redesign; M3 public camera uses same source initiation-close distinction",
+        "proposed_classification": "accepted",
+        "normative_anchor": "SPEC \u00a75 M2",
+        "normative_excerpt": "Callback-only changes preserve existing menu presentation; a necessary menu-structure migration must use the shared menu module rather than add another focus/outside-click implementation.",
+        "classification": "accepted",
+        "draft_disposition": "Accepted bounded integration rationale, subject to root current-byte verification and distinct materially clean acceptance gate.",
+        "release_condition": "Root current-byte evidence is complete; distinct fresh acceptance reviewer must return material CLEAN on unchanged current candidate before M3.",
+        "classification_basis": "Approved-scope bounded integration. Root read every M2 product/test diff, inspected immediate authority/lifetime/action/store/source seams, verified raw failed and repaired checks, and reran current build plus165case cumulative renderer. No new feature/owner ruling. Independent acceptance still required before slice release.",
+        "release_condition_status": "satisfied at M2 acceptance; preserve recorded classification and downstream obligations in M3/final"
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "slice": "M2",
+      "id": "M2-D07",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/orchestrator-checks/deviations-01.json",
+      "originating_sha256": "c36310253a262ac76b104b2a61be7b622a2dbea035500938cc685c4064accb65",
+      "originating_fields": {
+        "id": "M2-D07",
+        "original_text": "Expand real material fixture/public menus; keep source-bound menu/diagnostic checks; responsibilities under 400-line goal; camera menu spec listed in M3",
+        "actual_change": "Extend accepted fixture using actual authenticated ws-client plus controlled source boundaries, split source fixture/cases into cohesive support modules; migrate only changed gallery/clipboard/recent callback source assertions in existing camera-menu suite",
+        "reason_authority": "M2 public source behavior must be real and cumulative; old callback assertions would certify removed bypass. Mechanical test integration, camera assertions kept for M3",
+        "files": [
+          "e2e/chat-material-insertion.spec.ts",
+          "e2e/support/chat-material-fixture.tsx",
+          "e2e/support/chat-material-source-fixture.ts",
+          "e2e/support/chat-material-source-cases.ts",
+          "e2e/chat-composer-screenshot-menu.spec.ts"
+        ],
+        "checks": "74 material cases plus identity/isolation/registration/diagnostic/menu/Send/System/prompt ownership/recovery checks in final current-byte renderer receipt",
+        "observable_effect": "Production callers/consumer/stores observed through deterministic deferred data; source-string assertions remain only structural supplementary evidence",
+        "risk": "Transport/media/native preparation controlled in browser fixture, so actual native PNG/provider certification remains M3/final pending",
+        "downstream": "M3 retains cumulative cases and completes obsolete direct-camera assertions/native scenario; fixture adapters are test-only, no product flag/parallel path",
+        "proposed_classification": "accepted",
+        "normative_anchor": "SPEC \u00a75 M2",
+        "normative_excerpt": "Reuse controlled source responses without mocking action consumer or draft/attachment store.",
+        "classification": "accepted",
+        "draft_disposition": "Accepted bounded integration rationale, subject to root current-byte verification and distinct materially clean acceptance gate.",
+        "release_condition": "Root current-byte evidence is complete; distinct fresh acceptance reviewer must return material CLEAN on unchanged current candidate before M3.",
+        "classification_basis": "Approved-scope bounded integration. Root read every M2 product/test diff, inspected immediate authority/lifetime/action/store/source seams, verified raw failed and repaired checks, and reran current build plus165case cumulative renderer. No new feature/owner ruling. Independent acceptance still required before slice release.",
+        "release_condition_status": "satisfied at M2 acceptance; preserve recorded classification and downstream obligations in M3/final"
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "slice": "M2",
+      "id": "M2-D08",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/orchestrator-checks/deviations-01.json",
+      "originating_sha256": "c36310253a262ac76b104b2a61be7b622a2dbea035500938cc685c4064accb65",
+      "originating_fields": {
+        "id": "M2-D08",
+        "original_text": "Build generates tracked preload; reconcile only own generated artifact to verified baseline if API/source unchanged, preserving exact hashes/diff/dist receipts",
+        "actual_change": "Record generated preload bytes/hash/diff and built renderer inventory, then restore exact pre-M2 tracked preload",
+        "reason_authority": "Explicit M2 dispatch instruction; no Electron/preload API source change",
+        "files": [
+          "electron/preload.cjs",
+          "implementation/M2/PRELOAD-RECONCILIATION.json",
+          "implementation/M2/BUILD-OUTPUT.json"
+        ],
+        "checks": "Pre-build copied baseline/hash in START.json; build-11 exit0 and renderer-12 165 pass; final restored artifact matches exact hash and no preload-source diff",
+        "observable_effect": "No unintended generated-only product delta; tested built renderer remains identified separately",
+        "risk": "Final dirty source seal differs from check snapshot only for explicitly reconciled artifact; exact addendum demonstrates irrelevant renderer-test seam",
+        "downstream": "Manager/final builds repeat receipt and reconcile according to their own source API changes; no fabricated build of restored generated artifact",
+        "proposed_classification": "accepted",
+        "normative_anchor": "M2 released dispatch / verification artifact procedure",
+        "normative_excerpt": "Build generates tracked preload; reconcile only own generated artifact to verified baseline if API/source unchanged, preserving exact hashes/diff/dist receipts",
+        "classification": "accepted",
+        "draft_disposition": "Accepted bounded integration rationale, subject to root current-byte verification and distinct materially clean acceptance gate.",
+        "release_condition": "Root current-byte evidence is complete; distinct fresh acceptance reviewer must return material CLEAN on unchanged current candidate before M3.",
+        "classification_basis": "Approved-scope bounded integration. Root read every M2 product/test diff, inspected immediate authority/lifetime/action/store/source seams, verified raw failed and repaired checks, and reran current build plus165case cumulative renderer. No new feature/owner ruling. Independent acceptance still required before slice release.",
+        "release_condition_status": "satisfied at M2 acceptance; preserve recorded classification and downstream obligations in M3/final"
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "slice": "M3",
+      "id": "D-M3-01",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/orchestrator-checks/deviations-02.json",
+      "originating_sha256": "f40d6cbe5525b58592d0eaa590d5840d69cdd2d87a4137d095333a9e0392182f",
+      "originating_fields": {
+        "id": "D-M3-01",
+        "classification": "accepted",
+        "manager_reason": "Required retirement of nonproduced generic current material bypass, including asynchronous prompt continuation; preserved explicit Send/System creation through current renderer regressions.",
+        "observable_effect_and_limit": "Current callable bypass rejects; no production caller lost.",
+        "release_condition": "Fresh builder/acceptance/final review of current retired seam and ordinary/System coverage.",
+        "release_condition_status": "Current nonnative checks PASS and builder native18 PASS; root native and fresh independent gates pending",
+        "source_deviation_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/DEVIATIONS.md",
+        "original_text_change_files_checks_risk": "Complete preserved originating fields in DEVIATIONS.md; current exact33 deltas/preimages65 integrated bindings in SOURCE-SEAL.json",
+        "downstream_impact": "Compatible bounded current-SPEC integration; no subsequent SPEC approved. Required gates retained."
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "slice": "M3",
+      "id": "D-M3-02",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/orchestrator-checks/deviations-02.json",
+      "originating_sha256": "f40d6cbe5525b58592d0eaa590d5840d69cdd2d87a4137d095333a9e0392182f",
+      "originating_fields": {
+        "id": "D-M3-02",
+        "classification": "accepted",
+        "manager_reason": "Required correlated response/material validity and cleanup completion; malformed save fails safely and foreign workspace response ignored.",
+        "observable_effect_and_limit": "No new wire/path owner.",
+        "release_condition": "Current renderer/save protection checks and fresh gates.",
+        "release_condition_status": "Current nonnative checks PASS and builder native18 PASS; root native and fresh independent gates pending",
+        "source_deviation_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/DEVIATIONS.md",
+        "original_text_change_files_checks_risk": "Complete preserved originating fields in DEVIATIONS.md; current exact33 deltas/preimages65 integrated bindings in SOURCE-SEAL.json",
+        "downstream_impact": "Compatible bounded current-SPEC integration; no subsequent SPEC approved. Required gates retained."
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "slice": "M3",
+      "id": "D-M3-03",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/orchestrator-checks/deviations-02.json",
+      "originating_sha256": "f40d6cbe5525b58592d0eaa590d5840d69cdd2d87a4137d095333a9e0392182f",
+      "originating_fields": {
+        "id": "D-M3-03",
+        "classification": "accepted",
+        "manager_reason": "Mechanically necessary migration of obsolete fixture admission/owner paths to current material consumer and source-only mocks.",
+        "observable_effect_and_limit": "Fixture delays remain controlled; no native proof implied.",
+        "release_condition": "Complete renderer lane PASS and fresh independent coverage review.",
+        "release_condition_status": "Current nonnative checks PASS and builder native18 PASS; root native and fresh independent gates pending",
+        "source_deviation_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/DEVIATIONS.md",
+        "original_text_change_files_checks_risk": "Complete preserved originating fields in DEVIATIONS.md; current exact33 deltas/preimages65 integrated bindings in SOURCE-SEAL.json",
+        "downstream_impact": "Compatible bounded current-SPEC integration; no subsequent SPEC approved. Required gates retained."
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "slice": "M3",
+      "id": "D-M3-04",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/orchestrator-checks/deviations-02.json",
+      "originating_sha256": "f40d6cbe5525b58592d0eaa590d5840d69cdd2d87a4137d095333a9e0392182f",
+      "originating_fields": {
+        "id": "D-M3-04",
+        "classification": "accepted",
+        "manager_reason": "Bounded native helper extends unchanged actual stage/lifecycle utilities; public hydration/setup and owned focus needed for real normal runtime.",
+        "observable_effect_and_limit": "Capture/save/store/persistence untouched; current complete native still pending.",
+        "release_condition": "Actual current complete native PASS, lifecycle cleanup and fresh gates.",
+        "release_condition_status": "Current nonnative checks PASS and builder native18 PASS; root native and fresh independent gates pending",
+        "source_deviation_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/DEVIATIONS.md",
+        "original_text_change_files_checks_risk": "Complete preserved originating fields in DEVIATIONS.md; current exact33 deltas/preimages65 integrated bindings in SOURCE-SEAL.json",
+        "downstream_impact": "Compatible bounded current-SPEC integration; no subsequent SPEC approved. Required gates retained."
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "slice": "M3",
+      "id": "D-M3-05",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/orchestrator-checks/deviations-02.json",
+      "originating_sha256": "f40d6cbe5525b58592d0eaa590d5840d69cdd2d87a4137d095333a9e0392182f",
+      "originating_fields": {
+        "id": "D-M3-05",
+        "classification": "accepted",
+        "manager_reason": "Retained actual production resource DOM handler permits source/destination proof while Side stays mounted in inherited one-presenter shell; expressly authorized narrow fixture limit.",
+        "observable_effect_and_limit": "Hidden DOM dispatch proves handler/store ownership, not simultaneous visible click; visible renderer A04 remains.",
+        "release_condition": "Complete current native real source/owner/pill/non-target/no-send readback and fresh gates.",
+        "release_condition_status": "Current nonnative checks PASS and builder native18 PASS; root native and fresh independent gates pending",
+        "source_deviation_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/DEVIATIONS.md",
+        "original_text_change_files_checks_risk": "Complete preserved originating fields in DEVIATIONS.md; current exact33 deltas/preimages65 integrated bindings in SOURCE-SEAL.json",
+        "downstream_impact": "Compatible bounded current-SPEC integration; no subsequent SPEC approved. Required gates retained."
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "slice": "M3",
+      "id": "D-M3-06",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/orchestrator-checks/deviations-02.json",
+      "originating_sha256": "f40d6cbe5525b58592d0eaa590d5840d69cdd2d87a4137d095333a9e0392182f",
+      "originating_fields": {
+        "id": "D-M3-06",
+        "classification": "accepted",
+        "manager_reason": "Unchanged ignored worktree-local native observer build needed for actual full Jest import; no shared-module rebuild.",
+        "observable_effect_and_limit": "Direct Jest does not run npm pretest.",
+        "release_condition": "Local source/artifact bindings and actual import/native consumption; coverage review.",
+        "release_condition_status": "Current nonnative checks PASS and builder native18 PASS; root native and fresh independent gates pending",
+        "source_deviation_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/DEVIATIONS.md",
+        "original_text_change_files_checks_risk": "Complete preserved originating fields in DEVIATIONS.md; current exact33 deltas/preimages65 integrated bindings in SOURCE-SEAL.json",
+        "downstream_impact": "Compatible bounded current-SPEC integration; no subsequent SPEC approved. Required gates retained."
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "slice": "M3",
+      "id": "D-M3-07",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/orchestrator-checks/deviations-02.json",
+      "originating_sha256": "f40d6cbe5525b58592d0eaa590d5840d69cdd2d87a4137d095333a9e0392182f",
+      "originating_fields": {
+        "id": "D-M3-07",
+        "classification": "accepted",
+        "manager_reason": "Exact required canonical Wiki changes/preimages and production viewer fixture bootstrap.",
+        "observable_effect_and_limit": "No structure/nav/import/inactive machine changes.",
+        "release_condition": "Fresh seven-article source/link/preimage/readback and independent coverage review.",
+        "release_condition_status": "Current nonnative checks PASS and builder native18 PASS; root native and fresh independent gates pending",
+        "source_deviation_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/DEVIATIONS.md",
+        "original_text_change_files_checks_risk": "Complete preserved originating fields in DEVIATIONS.md; current exact33 deltas/preimages65 integrated bindings in SOURCE-SEAL.json",
+        "downstream_impact": "Compatible bounded current-SPEC integration; no subsequent SPEC approved. Required gates retained."
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "slice": "M3",
+      "id": "D-M3-08",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/orchestrator-checks/deviations-02.json",
+      "originating_sha256": "f40d6cbe5525b58592d0eaa590d5840d69cdd2d87a4137d095333a9e0392182f",
+      "originating_fields": {
+        "id": "D-M3-08",
+        "classification": "accepted",
+        "manager_reason": "Authorized generated preload reconciliation only after unchanged source/build/API and exact generated/baseline/diff/dist verification.",
+        "observable_effect_and_limit": "Only derivative path/order bytes reconciled; actual native must bind consumed current preload.",
+        "release_condition": "Current source/dist/dependency fingerprints and later actual native consumed-byte binding.",
+        "release_condition_status": "Current nonnative checks PASS and builder native18 PASS; root native and fresh independent gates pending",
+        "source_deviation_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/DEVIATIONS.md",
+        "original_text_change_files_checks_risk": "Complete preserved originating fields in DEVIATIONS.md; current exact33 deltas/preimages65 integrated bindings in SOURCE-SEAL.json",
+        "downstream_impact": "Compatible bounded current-SPEC integration; no subsequent SPEC approved. Required gates retained."
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "slice": "M3",
+      "id": "D-M3-09",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/orchestrator-checks/deviations-02.json",
+      "originating_sha256": "f40d6cbe5525b58592d0eaa590d5840d69cdd2d87a4137d095333a9e0392182f",
+      "originating_fields": {
+        "id": "D-M3-09",
+        "classification": "accepted",
+        "manager_reason": "Owner unlock resolves historical desktop capability hold. Builder native18 completes actual native lane; root native attempts preserve their input-interference failures, no waiver.",
+        "observable_effect_and_limit": "Historical locked runs remain failed; required root native and later final complete run still pending.",
+        "release_condition": "Complete actual root native PASS plus fresh builder/slice/final gates.",
+        "release_condition_status": "Current nonnative checks PASS and builder native18 PASS; root native and fresh independent gates pending",
+        "source_deviation_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/DEVIATIONS.md",
+        "original_text_change_files_checks_risk": "Complete preserved originating fields in DEVIATIONS.md; current exact33 deltas/preimages65 integrated bindings in SOURCE-SEAL.json",
+        "downstream_impact": "Compatible bounded current-SPEC integration; no subsequent SPEC approved. Required gates retained."
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "slice": "M3",
+      "id": "D-M3-10",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/orchestrator-checks/deviations-02.json",
+      "originating_sha256": "f40d6cbe5525b58592d0eaa590d5840d69cdd2d87a4137d095333a9e0392182f",
+      "originating_fields": {
+        "id": "D-M3-10",
+        "classification": "accepted",
+        "manager_reason": "Native-only fixture locator and filesystem-ready corrections are mechanically necessary; passive input diagnostics retain exact non-target oracle and source owners. Only native helper differs from original65 seal;64otherproduct bytes and five root nonnative dependency scopes unchanged.",
+        "source_deviation_record": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/DEVIATIONS.md",
+        "original_text_change_files_checks_risk": "Original requirement, specific native15/16/17 failures, changes, evidence, limits and seal-preimage recovery are recorded in originating DEVIATIONS.md; current SOURCE-SEAL binds native helper.",
+        "observable_effect_and_limit": "Retained actual Wiki handler dispatch remains explicitly hidden; original native17 trailing-space cause unknown. Builder native18 satisfies unchanged exact assertions; root01/02 include directly observed ordinary trusted typing. No product/consumer/store mutation change or assertion relaxation.",
+        "release_condition": "Root same exact current native preservation/capture/resource/ACK assertions PASS and fresh builder/acceptance/final gates.",
+        "release_condition_status": "Root native rerun awaits practical keyboard-idle capability; independent gates pending.",
+        "downstream_impact": "Compatible bounded validation fixture correction; no new product scope or later SPEC authorized."
+      },
+      "current_downstream_assessment": "compatible deviation",
+      "current_release_status": "Distinct slice gates completed; fresh post-accepted checks and final review in progress. Required behavior and explicit proof limits remain."
+    },
+    {
+      "id": "ROOT-EXEC-03",
+      "classification": "accepted",
+      "originating_classification": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/receipt-run-v3.json",
+      "originating_sha256": "509c14d8452d9cfc1f041a945180dcfb4a200c628fc72e9bdf2ada6641704daa",
+      "current_downstream_assessment": "none",
+      "current_release_status": "Root native04 passed with schema3; mandatory final checks use the same corrected execution receipt helper."
+    }
+  ],
+  "product_deviation_count": 24,
+  "root_execution_adapter_count": 1,
+  "original_execution_adapters": [
+    {
+      "origin": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M1/orchestrator-checks/deviations-01.json",
+      "sha256": "29a60cb212e554c3cccb6f08f7604eded2784a13a385057ab262f657a8dd296f",
+      "adapters": [
+        "Exact primary dependency symlinks; server link untracked and excluded from delivered product",
+        "Test-generated preload restored to identical approved HEAD; generation and reconciliation receipts preserve provenance"
+      ]
+    }
+  ],
+  "overall_downstream_impact": "compatible deviation",
+  "following_SPEC_status": "No following SPEC approved or dispatched. General OpenCode harness repair/testing and health scopes remain separate under owner D008/D009. Historical SPEC06 acceptance, residuals and waived soak remain unchanged.",
+  "owner_rulings_required": [],
+  "unresolved_material_product_findings": [],
+  "required_gates_pending": [
+    "Fresh post-accepted full suite and native checks",
+    "Fresh distinct final integration review"
+  ],
+  "temporary_adapters": [
+    {
+      "path": "fusion-studio-server/node_modules",
+      "type": "Root-owned untracked symlink to primary preexisting dependencies",
+      "removal_condition": "After all final checks and review, verify the exact owned symlink and unlink it. Never edit its resolved tree."
+    },
+    {
+      "path": "fusion-studio-client/node_modules",
+      "type": "Ignored symlink to preexisting primary dependencies",
+      "disposition": "Execution dependency excluded from product; no shared install or rebuild."
+    },
+    {
+      "path": "fusion-studio-server/native/secure-file-observer/build",
+      "type": "Ignored local compiled dependency from unchanged source",
+      "disposition": "Source/artifact identities bound; no native or shared dependency source changes."
+    },
+    {
+      "path": "fusion-studio-client/electron/preload.cjs",
+      "type": "Generated dependency-path labels",
+      "disposition": "Own generated bytes, diff and dist preserved. Exact own prebuild baseline restored after unchanged source checks; API remains unchanged."
+    },
+    {
+      "path": "Native stage/profile/workspace/processes",
+      "type": "Marker-owned runtime fixtures",
+      "removal_condition": "Every native run cleans its fixture, checks SQLite and closes owned PIDs; protected owner/Alpha runtimes preserved."
+    }
+  ],
+  "residual_limits": [
+    "Native resources invoke an actual hidden retained Wiki DOM handler; visible source clicks have separate renderer evidence.",
+    "A deterministic staged provider and ACK delay exercise actual server acceptance/persistence; no public-provider certification.",
+    "Builder native17 trailing-space cause remains unknown; current exact preservation assertions pass without waiver.",
+    "The existing baseline harness-spawn placeholder is skipped; direct Jest does not run npm pretest.",
+    "No physical microphone/STT, Alpha, soak/restart persistence, owner acceptance or publication claim."
+  ]
+}

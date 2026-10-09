@@ -4,7 +4,7 @@
 
 ## Assignment
 
-Current scope, owner direction October 5, 2026: finish fixing the current last build. [D-008](DECISIONS.md#d-008--narrow-to-the-current-build-and-separate-follow-on-harness-work) narrows the earlier remit below. Subsequent broader OpenCode harness work follows in [Chat Harness Repair and Testing](../chat-harness-repair-and-testing/TICKET.md) after closeout. Current repairs, verification, task ownership and acceptance gates stay here.
+Current assignment, later owner direction October 7, 2026: [D-010](DECISIONS.md#d-010--assign-the-reviewed-spec-to-a-separate-orchestrator-session) assigns the reviewed shared chat material insertion SPEC to a separate Orchestrator session. D-009's initial preparation hold is superseded only for this exact candidate by [the owner approval receipt](planning/shared-chat-material-insertion/OWNER-APPROVAL.md). The October 5 [D-008](DECISIONS.md#d-008--narrow-to-the-current-build-and-separate-follow-on-harness-work) retirement/startup-repair job is complete under [the October 7 handoff](HANDOFF-COMPLETED-BUILD-2026-10-07.md). Subsequent broader OpenCode harness work belongs in [Chat Harness Repair and Testing](../chat-harness-repair-and-testing/TICKET.md); this planning assignment does not absorb it.
 
 Owner transfer recorded 2026-09-28 UTC: “Let's transfer your responsibilities here: /Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/”. This folder is now the canonical working-memory home for the remaining chat integration, retirement, applicable verification and consumer handoff previously coordinated in supervisor task `01a0c1c8-6e85-7f83-8d67-2cb5c1476007`. Read D-002 and the transferred synthesis in CAPTURE. This is a responsibility/document handoff, not a new task dispatch, app CWD change or checkpoint registration.
 
@@ -12,15 +12,25 @@ The owner approved a distinct Launchpad folder for this subject in the current M
 
 ## Desired outcome
 
-Fix and finish the current last-build job with its required verification, fresh final integration and owner acceptance. Preserve its source/build baseline and historical contract/consumer evidence.
+Prepare one source-grounded ticket and executable SPEC candidate for shared chat material insertion, including affected-check renewal and independent planning review. Return the exact candidate for owner discussion without product implementation. Preserve the completed build's source/build baseline, verification, acceptance and historical contract/consumer evidence.
 
 ## Scope and dependencies
 
-The current job is identified in the [October 5 Chokidar/harness handoff](HANDOFF-CHOKIDAR-AND-HARNESS-2026-10-05.md). Necessary repairs and harness checks within that approved job remain here. Its broader “Other OpenCode harness issues retained for later work” section supplies historical input to the new [harness home](../chat-harness-repair-and-testing/CAPTURE.md); it does not expand this build. No evidence or active implementation is relocated by the split.
+The completed prior job is identified in the [October 5 Chokidar/harness handoff](HANDOFF-CHOKIDAR-AND-HARNESS-2026-10-05.md) and closed by the October 7 handoff. Its approved repairs and checks retain their original evidence here. Its broader “Other OpenCode harness issues retained for later work” section supplies historical input to the new [harness home](../chat-harness-repair-and-testing/CAPTURE.md); it does not expand this build. No evidence or active implementation is relocated by the split.
 
 SPEC-06 remains owner-accepted with residuals. This folder does not reopen its acceptance. Ongoing bookmarks, unrelated dogfood reports, logger design, and new health-event subscriptions belong in the [health folder](../fusion-health-and-governed-observability/TICKET.md). The work may be shaped alongside sibling folders, but a dependency is released only by a named, reviewed contract or accepted integration result. The owner will settle detailed scope and sequencing after provisioning.
 
 ## Current disposition
+
+### October 7 next planning ticket
+
+The owner assigned the next ticket and single SPEC for a shared chat material insertion controller, then explicitly directed “Don't build.” [D-009](DECISIONS.md#d-009--prepare-the-next-shared-chat-material-insertion-ticket-and-spec) and [the original request](planning/shared-chat-material-insertion/OWNER-REQUEST.md) preserve the exact destination, lifetime, preparation and insertion rules. Planning/review is coordinated in [the separate package](planning/shared-chat-material-insertion/PLANNING.md). The [new ticket](planning/shared-chat-material-insertion/TICKET.md) and [single SPEC](planning/shared-chat-material-insertion/SPEC.md) are independently release-reviewed and ready for owner discussion, bound by [the candidate manifest](planning/shared-chat-material-insertion/CANDIDATE.json). [The unchanged release report](planning/shared-chat-material-insertion/reports/RELEASE-VALIDATION-01.md) grants planning readiness only. The current retirement/startup-repair build stays complete; the later D-010 assignment and OWNER-APPROVAL receipt now authorize this exact SPEC implementation; original planning-only observations below remain dated. Existing registered main identity/history boundary and uncommitted work are preserved.
+
+### October 7 completed-build handoff
+
+Owner-requested [completed-build handoff](HANDOFF-COMPLETED-BUILD-2026-10-07.md), recorded 2026-10-07T09:11:36.751942+00:00, supersedes this build's dated October 5 waiting/manual-result/publication-pending state. CHAT-AR-SPEC-01 and CHAT-AR-REPAIR-01 are owner accepted, independently integrated/reviewed, committed and pushed to main at `a4a4262587a7f72f89f5b9b9c2f54878fe5381bb`. Checked ready documentation was included. Development and Alpha source main match that commit; development was rebuilt/restarted, and Alpha was explicitly synced, rebuilt, reinstalled and restarted. Both app connection/identity checks passed; Alpha preserved six workspaces and active fs-dev. Separate final review, local-operation and publication/deployment receipts remain at `/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/chat-ar-20261006`. No current-build operation is unfinished.
+
+This is a bounded side-chat handoff. Historical reports, SPEC-06 acceptance/residuals, owner soak waiver and the existing registered main/history boundary are preserved. No main ownership transition, history checkpoint, MC activation or new task dispatch is implied. Pending unrelated work and this handoff's documentation edits remain uncommitted. Use the new handoff before the historical observations below.
 
 ### October 5 Chokidar and harness handoff
 
@@ -60,7 +70,9 @@ The old supervisor conversation is a historical source, not a second live task l
 
 ## Next safe action
 
-For the current retirement assignment, start with the [October 5 handoff](HANDOFF-CHOKIDAR-AND-HARNESS-2026-10-05.md#next-safe-action): identify the refreshed app/profile and current owner test result, complete the scratch-workspace public OpenCode scenario, then refresh independent final integration and obtain owner acceptance. Check the existing orchestrator before resuming or reassigning its work. Preserve publication, Alpha and main-identity gates. Future event-triggered and half-hour snapshots remain separately scoped in plugin-foundation.
+The current next assignment is [D-010](DECISIONS.md#d-010--assign-the-reviewed-spec-to-a-separate-orchestrator-session): create a separate SPEC Orchestrator session to execute the exact reviewed shared chat material insertion candidate. [Owner approval](planning/shared-chat-material-insertion/OWNER-APPROVAL.md) supersedes the prior preparation hold only for this SPEC. Follow [the current handoff state](planning/shared-chat-material-insertion/PLANNING.md). Completed-work acceptance and publication/Alpha gates remain separate.
+
+For the current build, read the [October 7 completed-build handoff](HANDOFF-COMPLETED-BUILD-2026-10-07.md#successor-entry-and-next-safe-action) and its exact final review, local operation and publication/deployment receipts. That assignment is complete; do not resume the dated October 5 manual gates or repeat completed Git/Alpha operations. Preserve the running apps and all uncommitted work. Broader follow-on harness repair/testing resumes only under the owner's next bounded assignment in its separate home. Future event-triggered and half-hour snapshots remain separately scoped in plugin-foundation.
 
 Replacement session: read this TICKET, index, unresolved BULLETIN, INTENT/DECISIONS and the linked final receipts; verify its actual identity and owner-assigned scope before becoming the main writer. Preserve the existing main history target and saved boundary, verify any checkpoint artifact/receipt from the owner's run, and use an explicit ownership handoff before any registry rebinding. Do not reset or advance history as startup housekeeping. Check the active failure-map investigation before duplicating or reallocating its work. The three-SPEC acceptance, merge and Alpha deployment are complete; resume only the owner's next bounded assignment.
 

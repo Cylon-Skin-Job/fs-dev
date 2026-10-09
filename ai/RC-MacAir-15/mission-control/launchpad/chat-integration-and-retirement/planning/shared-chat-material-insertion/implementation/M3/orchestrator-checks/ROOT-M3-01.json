@@ -1,0 +1,25 @@
+{
+  "at": "2026-10-07T20:57:45.533764+00:00",
+  "id": "ROOT-M3-01",
+  "classification": "builder_repair",
+  "severity": "material fixture handoff cleanup",
+  "authority": "SPEC section7 marker-owned isolated native lifecycle cleanup",
+  "artifact": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/fusion-studio-client/e2e/chat-material-native-scenario.mjs",
+  "source_sha256": "a1164a5a1a9ad80f30ab443630f376bdc99d9559d63f3d37ee9fdab7780c625f",
+  "evidence": "Creates tempRoot and ownership marker before try/locked-desktop assertion; fixture assigned after assertion; finally only removes root under if(fixture). On locked precondition, fixture remains undefined, so owned root is left. Independent direct source inspection; no current native execution claimed.",
+  "observable_impact": "A known currently locked-desktop invocation leaks its job-owned root and fails required terminal fixture cleanup.",
+  "repair": "Retire exact marker-owned tempRoot on terminal no-fixture path too; preserve evidenceRoot and raw receipt. Do not delete any unmarked or running owner resource.",
+  "responsible_builder": "/root/m3_builder",
+  "affected_evidence": "Native helper/seal/runtime/cleanup proof only. Current app/source/render/Wiki/server dependencies unchanged; root nonnative runs retain their exact scopes subject to final current checks.",
+  "state": "withdrawn: stale final-block reading; not a current product or fixture defect",
+  "corrected_at": "2026-10-07T20:59:02.362899+00:00",
+  "current_validation": {
+    "sha256": "a1164a5a1a9ad80f30ab443630f376bdc99d9559d63f3d37ee9fdab7780c625f",
+    "current_final_block": "assertDisposablePath(tempRoot, token); fs.rmSync(tempRoot, { recursive: true, force: true }); is unconditional and independent of fixture assignment",
+    "seal": "Matches frozen6fcef6\u202665-file seal; no repair required or product bytes changed",
+    "native_14_receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M3/native-14/native-receipt.json",
+    "native_14_sha256": "e554e2bc1a37ab9e46a4ad6190f4c703b15bc3cb4e3952949535a8b58a79b113",
+    "observed_result": "Capability FAIL locked; no fixture launch; exact marked tempRoot absent after terminal. This is cleanup proof only, not native success."
+  },
+  "disposition": "Manager correction of stale source interpretation; preserve original record/history, no validated finding or extra review cycle."
+}

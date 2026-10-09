@@ -1,0 +1,1336 @@
+/* ============================================
+   OfficeDocumentPage — Crepe editor surface
+   ============================================ */
+
+.rv-office-document-page {
+  --rv-office-paper-mute-alpha: 0;
+  --rv-office-paper-mute-rgb: 8, 10, 14;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--rv-office-content-fill, var(--bg-solid, var(--ws-content-bg, #000000)));
+  animation: rv-office-view-enter 0.18s ease-out;
+  position: relative;
+}
+
+/* Topbar */
+.rv-office-document-topbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  flex-shrink: 0;
+}
+
+.rv-office-document-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--accent-dim);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.rv-office-document-back:hover {
+  background: var(--surface-hover);
+}
+
+.rv-office-document-back .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.rv-office-document-filename {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--chrome-accent);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rv-office-document-dirty {
+  flex: 0 0 auto;
+  padding: 2px 7px;
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.12));
+  border-radius: 999px;
+  color: var(--accent-dim, #f8d477);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Margins dropdown */
+.rv-office-margins-menu {
+  position: relative;
+}
+
+.rv-office-margins-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  z-index: var(--z-dropdown, 200);
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--radius-md, 10px);
+  background: var(--surface-elevated, #202020);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  animation: rv-office-view-enter 0.12s ease-out;
+  left: 0;
+  min-width: 160px;
+}
+
+.rv-office-margins-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xs) 0;
+}
+
+.rv-office-margins-row label {
+  flex: 1;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--chrome-accent);
+}
+
+.rv-office-margins-row input {
+  width: 60px;
+  padding: 4px 8px;
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface, #1e1e1e);
+  color: var(--accent-dim);
+  font-size: 0.8125rem;
+  text-align: right;
+  transition: border-color 0.15s ease;
+}
+
+.rv-office-margins-row input:focus {
+  outline: none;
+  border-color: var(--accent-dim);
+}
+
+.rv-office-document-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.rv-office-document-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--chrome-accent);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.rv-office-document-action:hover:not(:disabled) {
+  background: var(--surface-hover);
+  color: var(--accent-dim);
+}
+
+.rv-office-document-action:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.rv-office-document-action .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.rv-office-document-sidepanel-header {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 0 0 auto;
+}
+
+.rv-office-document-sidepanel-header--open {
+  box-sizing: border-box;
+  width: calc(200px - var(--space-lg));
+  padding-left: calc(var(--space-sm) + 15px);
+  justify-content: space-between;
+}
+
+.rv-office-document-sidepanel-heading {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  color: var(--accent-dim);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.rv-office-document-spacer {
+  flex: 1;
+}
+
+.rv-office-spin {
+  animation: rv-office-spin 0.9s linear infinite;
+}
+
+/* Permanent toolbar beneath header */
+.rv-office-document-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-lg);
+  border-bottom: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  background: var(--rv-office-content-fill, var(--bg-solid, var(--ws-content-bg, #000000)));
+  flex-shrink: 0;
+}
+
+.rv-office-document-toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--chrome-accent);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.rv-office-document-toolbar-btn:hover {
+  background: var(--surface-hover);
+  color: var(--accent-dim);
+}
+
+.rv-office-document-toolbar-btn.rv-office-toolbar-btn--active {
+  background: var(--surface-hover, rgba(255, 255, 255, 0.08));
+  color: var(--accent-dim);
+}
+
+.rv-office-document-toolbar-btn .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.rv-office-document-toolbar-btn--wide {
+  width: auto;
+  gap: 4px;
+  padding: 0 8px;
+}
+
+.rv-office-document-toolbar-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.rv-office-document-toolbar-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  margin: 0 var(--space-xs);
+}
+
+.rv-office-document-toolbar-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--chrome-accent);
+  cursor: pointer;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  height: 28px;
+  line-height: 1;
+  padding: 0 24px 0 8px;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='%23999'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+  background-size: 14px;
+}
+
+.rv-office-document-toolbar-select:hover {
+  background-color: var(--surface-hover);
+  border-color: var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  color: var(--accent-dim);
+}
+
+.rv-office-document-toolbar-select:focus-visible {
+  outline: none;
+  border-color: var(--accent-dim);
+}
+
+.rv-office-document-toolbar-select option {
+  background: var(--bg-surface, #1e1e1e);
+  color: var(--chrome-accent);
+}
+
+.rv-office-document-toolbar-spacer {
+  flex: 1;
+}
+
+.rv-office-document-toolbar-zoom {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--chrome-accent);
+  min-width: 36px;
+  text-align: center;
+  user-select: none;
+}
+
+.rv-office-document-toolbar-fontsize {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--chrome-accent);
+  min-width: 28px;
+  text-align: center;
+  user-select: none;
+}
+
+/* Body — wraps toolbar + workspace; side panel is absolutely positioned here */
+.rv-office-document-body {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--rv-office-content-fill, var(--bg-solid, var(--ws-content-bg, #000000)));
+}
+
+/* Workspace — editor + side panel side by side */
+.rv-office-document-workspace {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--rv-office-content-fill, var(--bg-solid, var(--ws-content-bg, #000000)));
+}
+
+.rv-office-document-workspace.rv-office-workspace--drawer-open .rv-office-document-editor {
+  padding-right: 200px;
+}
+
+/* Editor surface — matches header and drawer */
+.rv-office-document-editor {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: var(--space-xl) var(--space-lg);
+  background: var(--rv-office-content-fill, var(--bg-solid, var(--ws-content-bg, #000000)));
+}
+
+/* FIXED: Document page surface (#faf9f6, #1c1c1c) — light paper aesthetic,
+   not theme-adjustable. rgba(0,0,0,0.55) is a dark overlay on the light surface. */
+/* Crepe page — letter-like sheet with shadow and margins */
+.rv-office-document-editor .milkdown {
+  position: relative;
+  max-width: 816px;
+  margin: 0 auto;
+  padding: 0;
+  background: #faf9f6;
+  color: #1c1c1c;
+  box-shadow:
+    0 1px 4px rgba(0, 0, 0, 0.08),
+    0 2px 12px rgba(0, 0, 0, 0.06);
+  border-radius: 2px;
+  min-height: 800px;
+  zoom: var(--editor-zoom, 1);
+  font-family: var(--doc-font-family, Georgia, "Times New Roman", serif);
+  isolation: isolate;
+}
+
+.rv-office-document-editor .milkdown::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: rgba(var(--rv-office-paper-mute-rgb), var(--rv-office-paper-mute-alpha, 0));
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.rv-office-document-editor .milkdown.rv-office-paper-filter-capture-clean::after {
+  display: none;
+}
+
+.rv-office-document-editor .milkdown .editor {
+  background: transparent;
+  color: #1c1c1c;
+}
+
+/* Override Crepe's default ProseMirror padding — keep toolbar at edge, give text margins */
+.rv-office-document-editor .milkdown .ProseMirror {
+  font-size: var(--doc-font-size, 16px);
+  text-align: var(--doc-alignment, left);
+  padding: var(--doc-margin-top, 72px) var(--doc-margin-right, 90px) var(--doc-margin-bottom, 72px) var(--doc-margin-left, 90px);
+  /* Set the virtual-caret color on the same element Crepe targets
+     (.ProseMirror-focused), at higher specificity, so the dark theme's light
+     caret can't win and vanish against the fixed-light paper. */
+  --prosemirror-virtual-cursor-color: #1c1c1c;
+}
+
+.rv-office-document-editor .rv-office-table-wrapper {
+  overflow-x: auto;
+}
+
+.rv-office-document-editor .rv-office-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.rv-office-document-editor .rv-office-table[data-rv-table-alignment='left'] {
+  margin-inline-start: 0;
+  margin-inline-end: auto;
+}
+
+.rv-office-document-editor .rv-office-table[data-rv-table-alignment='center'] {
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+}
+
+.rv-office-document-editor .rv-office-table[data-rv-table-alignment='right'] {
+  margin-inline-start: auto;
+  margin-inline-end: 0;
+}
+
+.rv-office-table[data-rv-table-overflow] {
+  table-layout: fixed;
+}
+
+.rv-office-table[data-rv-table-overflow='overflow'] :is(th, td),
+.rv-office-table[data-rv-table-overflow='truncate'] :is(th, td) {
+  overflow: hidden;
+}
+
+.rv-office-table[data-rv-table-overflow='overflow'] :is(th, td) > p {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+
+.rv-office-table[data-rv-table-overflow='truncate'] :is(th, td) > p {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rv-office-table[data-rv-table-overflow='newline'] :is(th, td),
+.rv-office-table[data-rv-table-overflow='newline'] :is(th, td) > p {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.rv-office-table[data-rv-table-overflow='overflow'] [data-rv-hardbreak='explicit'] > br,
+.rv-office-table[data-rv-table-overflow='truncate'] [data-rv-hardbreak='explicit'] > br {
+  display: none;
+}
+
+.rv-office-table[data-rv-table-overflow='overflow'] [data-rv-hardbreak='explicit']::after,
+.rv-office-table[data-rv-table-overflow='truncate'] [data-rv-hardbreak='explicit']::after {
+  content: ' ';
+}
+
+.rv-office-document-editor .milkdown .rv-office-table-block .rv-office-table th,
+.rv-office-document-editor .milkdown .rv-office-table-block .rv-office-table td {
+  position: relative;
+  box-sizing: border-box;
+  min-width: var(--rv-office-table-cell-min-width, 32px);
+  height: var(--rv-office-table-cell-min-height, auto);
+  padding-block: 9px 11px;
+  padding-inline: 0.25ch;
+  border: 0;
+  box-shadow: none;
+  vertical-align: top;
+}
+
+.rv-office-document-editor .milkdown .rv-office-table-block .rv-office-table :is(th, td)::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  box-sizing: border-box;
+  border: 0;
+  border-block-start: var(--rv-office-table-border-width, 1px)
+    var(--rv-office-table-border-style, solid)
+    var(--rv-office-table-border-color, rgba(28, 28, 28, 0.18));
+  border-inline-start: var(--rv-office-table-border-width, 1px)
+    var(--rv-office-table-border-style, solid)
+    var(--rv-office-table-border-color, rgba(28, 28, 28, 0.18));
+  pointer-events: none;
+}
+
+.rv-office-document-editor .milkdown .rv-office-table-block .rv-office-table :is(th, td):last-child::after {
+  border-inline-end: var(--rv-office-table-border-width, 1px)
+    var(--rv-office-table-border-style, solid)
+    var(--rv-office-table-border-color, rgba(28, 28, 28, 0.18));
+}
+
+.rv-office-document-editor .milkdown .rv-office-table-block .rv-office-table tr:last-child > :is(th, td)::after {
+  border-block-end: var(--rv-office-table-border-width, 1px)
+    var(--rv-office-table-border-style, solid)
+    var(--rv-office-table-border-color, rgba(28, 28, 28, 0.18));
+}
+
+.rv-office-table[data-rv-table-border-style='solid'] {
+  --rv-office-table-border-style: solid;
+}
+
+.rv-office-table[data-rv-table-border-style='dotted'] {
+  --rv-office-table-border-style: dotted;
+}
+
+@media print {
+  .rv-office-table[data-rv-table-border-color='none'] {
+    --rv-office-table-border-width: 0px !important;
+  }
+}
+
+.rv-office-document-editor .milkdown .editor .rv-office-table th > p,
+.rv-office-document-editor .milkdown .editor .rv-office-table td > p {
+  margin-block: 0;
+  padding-block: 0;
+  line-height: inherit;
+}
+
+/* ── Column resize overlay ────────────────────────────────────────────────
+   Lives on <body>, positioned in viewport coordinates. Grab bars sit ABOVE
+   the table (in non-editable space); a dashed guide previews the new border.
+   Dragging never touches ProseMirror — the real width is written on release. */
+.rv-office-table-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-dropdown, 200);
+  pointer-events: none;
+}
+
+/* Full-height grab strip sitting on a column line. The strip itself is
+   invisible but carries the ↔ cursor and the pointer target; a dashed guide
+   (::after) lights up on the line while hovering or dragging. */
+.rv-office-col-grab {
+  position: fixed;
+  width: 13px;
+  transform: translateX(-50%);
+  cursor: col-resize;
+  pointer-events: auto;
+  touch-action: none;
+  user-select: none;
+}
+
+.rv-office-col-grab::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 1.5px dashed rgba(36, 92, 140, 0.85);
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+.rv-office-col-grab:hover::after,
+.rv-office-col-grab[data-active="true"]::after {
+  opacity: 1;
+}
+
+body.rv-office-col-resizing {
+  cursor: col-resize;
+  user-select: none;
+}
+
+/* ── Table background color picker ────────────────────────────────────── */
+.rv-office-color-popover {
+  position: fixed;
+  z-index: calc(var(--rv-menu-z-index, var(--z-overlay)) + 1);
+  width: 236px;
+  padding: 8px;
+  border: 1px solid var(--neutral-chrome-border, rgba(154, 176, 200, 0.38));
+  border-radius: 8px;
+  background: var(--rv-office-content-fill, #1c2a36);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.4);
+}
+
+.rv-office-color-popover[data-custom-open="true"] {
+  width: 252px;
+}
+
+.rv-office-color-default-section {
+  position: relative;
+}
+
+.rv-office-color-popover[data-custom-open="true"] .rv-office-color-default-section {
+  margin-bottom: 0;
+}
+
+.rv-office-color-popover[data-custom-open="true"] > .rv-office-color-divider,
+.rv-office-color-popover[data-custom-open="true"] > .rv-office-color-row {
+  display: none;
+  pointer-events: none;
+}
+
+.rv-office-color-none {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 8px;
+  margin-bottom: 6px;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--text-secondary, #9ab0c8);
+  font: inherit;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.rv-office-color-none:hover,
+.rv-office-color-none[data-active="true"] {
+  background: rgba(154, 176, 200, 0.14);
+  color: var(--text-primary, #dce7f1);
+}
+
+.rv-office-color-none .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.rv-office-color-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 4px;
+}
+
+.rv-office-color-swatch {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+  background: var(--swatch, #000);
+  cursor: pointer;
+  transition: transform 0.08s ease;
+}
+
+.rv-office-color-swatch:hover {
+  transform: scale(1.18);
+}
+
+.rv-office-color-swatch[data-active="true"] {
+  outline: 2px solid var(--accent, #9ab0c8);
+  outline-offset: 1px;
+}
+
+.rv-office-color-divider {
+  height: 1px;
+  margin: 8px 2px;
+  background: var(--neutral-chrome-border, rgba(154, 176, 200, 0.22));
+}
+
+.rv-office-color-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+
+.rv-office-color-sync {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 5px 6px;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--text-secondary, #9ab0c8);
+  font: inherit;
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.rv-office-color-sync:hover:not(:disabled) {
+  background: rgba(154, 176, 200, 0.14);
+  color: var(--text-primary, #dce7f1);
+}
+
+.rv-office-color-sync:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.rv-office-color-sync .material-symbols-outlined {
+  font-size: 17px;
+}
+
+.rv-office-color-custom {
+  display: grid;
+  grid-template-columns: repeat(10, 18px);
+  grid-auto-rows: 18px;
+}
+
+.rv-office-color-add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-secondary, #9ab0c8);
+  cursor: pointer;
+}
+
+.rv-office-color-add:hover {
+  color: var(--text-primary, #dce7f1);
+}
+
+.rv-office-color-add .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.rv-office-color-custom-editor {
+  display: none;
+  grid-template-columns: minmax(0, 1fr) 26px;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  position: relative;
+  z-index: 2;
+}
+
+.rv-office-color-custom-editor[data-open="true"] {
+  display: grid;
+}
+
+.rv-office-color-picker {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.rv-office-color-plane {
+  position: relative;
+  width: 100%;
+  height: 132px;
+  padding: 0;
+  border: 1px solid rgba(154, 176, 200, 0.38);
+  border-radius: 5px;
+  background:
+    linear-gradient(to top, #000000, rgba(0, 0, 0, 0)),
+    linear-gradient(to right, #ffffff, hsl(var(--hue, 216), 100%, 50%));
+  cursor: crosshair;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.rv-office-color-plane-cursor {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.62);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.rv-office-color-hue-row {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+}
+
+.rv-office-color-preview {
+  width: 26px;
+  height: 26px;
+  border: 1px solid rgba(154, 176, 200, 0.38);
+  border-radius: 50%;
+  background: var(--custom-color, #4a86e8);
+}
+
+.rv-office-color-hue {
+  min-width: 0;
+  height: 14px;
+  margin: 0;
+  accent-color: var(--accent, #9ab0c8);
+  cursor: pointer;
+}
+
+.rv-office-color-hex {
+  min-width: 0;
+  height: 26px;
+  padding: 3px 7px;
+  border: 1px solid rgba(154, 176, 200, 0.38);
+  border-radius: 5px;
+  background: rgba(8, 13, 18, 0.24);
+  color: var(--text-primary, #dce7f1);
+  font: inherit;
+  font-size: 12px;
+  text-transform: lowercase;
+}
+
+.rv-office-color-hex:focus {
+  border-color: var(--accent, #9ab0c8);
+  outline: none;
+}
+
+.rv-office-color-commit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: none;
+  border-radius: 5px;
+  background: rgba(154, 176, 200, 0.12);
+  color: var(--text-secondary, #9ab0c8);
+  cursor: pointer;
+}
+
+.rv-office-color-commit:hover:not(:disabled) {
+  background: rgba(154, 176, 200, 0.2);
+  color: var(--text-primary, #dce7f1);
+}
+
+.rv-office-color-commit:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.rv-office-color-commit .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.rv-office-document-editor .rv-office-table-block .handle,
+.rv-office-document-editor .rv-office-table-block .drag-preview {
+  display: none !important;
+  pointer-events: none !important;
+}
+
+.rv-office-table-grid-popover {
+  position: fixed;
+  z-index: 10000;
+  min-width: 156px;
+  padding: 10px;
+  border: 1px solid var(--neutral-chrome-border, rgba(154, 176, 200, 0.38));
+  border-radius: 6px;
+  background: var(--rv-office-content-fill, #1c2a36);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.34);
+}
+
+.rv-office-table-grid-cells {
+  display: grid;
+  grid-template-columns: repeat(8, 14px);
+  gap: 4px;
+}
+
+.rv-office-table-grid-cell {
+  width: 14px;
+  height: 14px;
+  padding: 0;
+  border: 1px solid rgba(154, 176, 200, 0.38);
+  border-radius: 2px;
+  background: rgba(154, 176, 200, 0.08);
+  cursor: pointer;
+}
+
+.rv-office-table-grid-cell[data-active="true"] {
+  border-color: var(--accent, #9ab0c8);
+  background: rgba(154, 176, 200, 0.28);
+}
+
+.rv-office-table-grid-label {
+  margin-top: 9px;
+  color: var(--text-secondary, #9ab0c8);
+  font-size: 12px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.rv-office-table-confirm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg, 24px);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+}
+
+.rv-office-table-confirm-dialog {
+  width: min(420px, 100%);
+  padding: var(--space-xl, 24px);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.14));
+  border-radius: var(--radius-lg, 14px);
+  background: var(--surface-elevated, #202020);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.42);
+  color: var(--text-primary, #f2f2f2);
+}
+
+.rv-office-table-confirm-dialog h2 {
+  margin: 0 0 var(--space-sm, 8px);
+  color: var(--chrome-accent, #f5f5f5);
+  font-size: 1rem;
+}
+
+.rv-office-table-confirm-dialog p {
+  margin: 0 0 var(--space-lg, 20px);
+  color: var(--text-dim, #a8a8a8);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.rv-office-table-confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm, 8px);
+}
+
+.rv-office-table-confirm-button {
+  min-height: 34px;
+  padding: 0 var(--space-md, 12px);
+  border-radius: var(--radius-sm, 6px);
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.rv-office-table-confirm-cancel {
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.12));
+  background: transparent;
+  color: var(--text-primary, #f2f2f2);
+}
+
+.rv-office-table-confirm-remove {
+  border: 1px solid rgba(255, 138, 138, 0.55);
+  background: rgba(255, 138, 138, 0.16);
+  color: var(--error, #ff8a8a);
+}
+
+.rv-office-table-confirm-button:hover,
+.rv-office-table-confirm-button:focus-visible {
+  outline: 2px solid var(--accent, #9ab0c8);
+  outline-offset: 2px;
+}
+
+/* All body text scales with the base font-size via em */
+.rv-office-document-editor .milkdown .editor p,
+.rv-office-document-editor .milkdown .editor li,
+.rv-office-document-editor .milkdown .editor blockquote,
+.rv-office-document-editor .milkdown .editor td,
+.rv-office-document-editor .milkdown .editor th {
+  font-size: 1em;
+}
+
+/* Code blocks keep a monospace size relative to base */
+.rv-office-document-editor .milkdown .editor code {
+  font-size: 0.875em;
+}
+
+/* Headings scale proportionally with the base */
+.rv-office-document-editor .milkdown .editor h1 { font-size: 2em; }
+.rv-office-document-editor .milkdown .editor h2 { font-size: 1.5em; }
+.rv-office-document-editor .milkdown .editor h3 { font-size: 1.25em; }
+.rv-office-document-editor .milkdown .editor h4 { font-size: 1.1em; }
+.rv-office-document-editor .milkdown .editor h5 { font-size: 1em; }
+.rv-office-document-editor .milkdown .editor h6 { font-size: 0.85em; }
+
+/* Ensure all text elements are dark on the light page */
+.rv-office-document-editor .milkdown .editor p,
+.rv-office-document-editor .milkdown .editor h1,
+.rv-office-document-editor .milkdown .editor h2,
+.rv-office-document-editor .milkdown .editor h3,
+.rv-office-document-editor .milkdown .editor h4,
+.rv-office-document-editor .milkdown .editor li,
+.rv-office-document-editor .milkdown .editor blockquote {
+  color: #1c1c1c;
+}
+
+/* Print-appropriate heading sizes (not web-sized) */
+.rv-office-document-editor .milkdown .editor h1 { font-size: 1.25em; }
+.rv-office-document-editor .milkdown .editor h2 { font-size: 1.15em; }
+.rv-office-document-editor .milkdown .editor h3 { font-size: 1.05em; }
+
+/* Toolbar — match Material Symbols glyphs to menu icon colors */
+.rv-office-document-editor .milkdown .milkdown-toolbar .toolbar-item .material-symbols-outlined {
+  color: var(--crepe-color-outline);
+  font-size: 20px;
+}
+.rv-office-document-editor .milkdown .milkdown-toolbar .toolbar-item.active .material-symbols-outlined {
+  color: var(--crepe-color-primary);
+}
+.rv-office-document-editor .milkdown .milkdown-toolbar .toolbar-item:hover .material-symbols-outlined {
+  color: var(--crepe-color-on-surface);
+}
+
+/* Side panel — absolutely positioned over toolbar + workspace */
+.rv-office-document-sidepanel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 200px;
+  border-left: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  padding: 110px var(--space-sm) var(--space-md);
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--rv-office-content-fill, var(--bg-solid, var(--ws-content-bg, #000000)));
+  z-index: 1;
+  transform: translateX(100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.22s ease-out, opacity 0.18s ease-out;
+}
+
+.rv-office-document-sidepanel[data-open="true"] {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Floating action buttons that sit above the side panel */
+.rv-office-document-action--floating {
+  position: relative;
+  z-index: 10;
+}
+
+.rv-office-document-action--active {
+  color: var(--accent-dim);
+  background: transparent;
+}
+
+.rv-office-document-sidepanel-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xl) var(--space-md);
+  color: var(--text-dim, #a8a8a8);
+  text-align: center;
+}
+
+.rv-office-document-sidepanel-empty .material-symbols-outlined {
+  font-size: 32px;
+  opacity: 0.5;
+}
+
+.rv-office-document-sidepanel-empty p {
+  margin: 0;
+  font-size: 0.8125rem;
+}
+
+.rv-office-document-ribbon-scroll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.rv-office-dirty-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay, 1000);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+}
+
+.rv-office-dirty-modal {
+  width: min(460px, 100%);
+  padding: var(--space-xl);
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.14));
+  border-radius: var(--radius-lg, 14px);
+  background: var(--surface-elevated, #202020);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.42);
+  color: var(--text-primary, #f2f2f2);
+}
+
+.rv-office-dirty-modal h3 {
+  margin: 0 0 var(--space-sm);
+  color: var(--chrome-accent, #f5f5f5);
+  font-size: 1rem;
+}
+
+.rv-office-dirty-modal p {
+  margin: 0 0 var(--space-lg);
+  color: var(--text-dim, #a8a8a8);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.rv-office-dirty-modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+}
+
+.rv-office-dirty-action {
+  min-height: 34px;
+  padding: 0 var(--space-md);
+  border-radius: var(--radius-sm, 6px);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+}
+
+.rv-office-dirty-action:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.rv-office-dirty-action-secondary {
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.12));
+  background: transparent;
+  color: var(--text-primary, #f2f2f2);
+}
+
+.rv-office-dirty-action-secondary:hover:not(:disabled) {
+  background: var(--surface-hover, rgba(255, 255, 255, 0.08));
+  border-color: var(--border-focus, rgba(255, 255, 255, 0.22));
+}
+
+.rv-office-dirty-action-primary {
+  border: 1px solid var(--accent-dim, #f8d477);
+  background: var(--accent-dim, #f8d477);
+  color: var(--bg-surface, #111);
+}
+
+.rv-office-dirty-action-primary:hover:not(:disabled) {
+  filter: brightness(1.06);
+}
+
+@keyframes rv-office-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rv-office-view-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ============================================
+   Send dropdown menu
+   ============================================ */
+
+.rv-office-send-menu {
+  position: relative;
+}
+
+.rv-office-send-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: var(--z-dropdown, 200);
+  min-width: 180px;
+  padding: 0;
+  border: 1px solid var(--neutral-chrome-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--radius-md, 10px);
+  background: var(--surface-elevated, #202020);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  animation: rv-office-view-enter 0.12s ease-out;
+}
+
+.rv-office-send-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  border: none;
+  background: transparent;
+  color: var(--chrome-accent);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.12s ease;
+  white-space: nowrap;
+}
+
+.rv-office-send-option:hover:not(:disabled) {
+  background: var(--surface-hover, rgba(255, 255, 255, 0.06));
+  color: var(--accent-dim);
+}
+
+.rv-office-send-option:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.rv-office-send-option .material-symbols-outlined {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   Print styles — hide chrome, show clean page
+   ============================================ */
+
+@media print {
+  /* Hide all app chrome */
+  .rv-office-document-topbar,
+  .rv-office-document-toolbar,
+  .rv-office-document-sidepanel,
+  .rv-office-dirty-modal-overlay,
+  .rv-office-send-dropdown,
+  .rv-header,
+  .rv-tools-panel,
+  .rv-sidebar,
+  .rv-chat-area,
+  .rv-left-sidebar-resize,
+  .rv-left-chat-resize,
+  .rv-panel-placeholder,
+  .rv-toast,
+  .rv-modal-overlay,
+  .rv-fusion-overlay,
+  .rv-workspace-switcher,
+  .rv-workspace-ribbon,
+  .rv-workspace-carousel {
+    display: none !important;
+  }
+
+  /* Expand the page to full viewport */
+  .rv-app-container,
+  .rv-panel-container,
+  .rv-panel,
+  .rv-panel.active,
+  .rv-layout-dual-chat,
+  .rv-content-area,
+  .rv-office-document-page {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    background: white !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    grid-template-columns: none !important;
+  }
+
+  .rv-office-document-workspace {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .rv-office-document-editor {
+    display: block !important;
+    background: white !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  /* The document page */
+  .rv-office-document-editor .milkdown {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    background: white !important;
+    color: black !important;
+    zoom: 1 !important;
+    min-height: auto !important;
+    border-radius: 0 !important;
+  }
+
+  .rv-office-document-editor .milkdown .editor {
+    background: white !important;
+    color: black !important;
+  }
+
+  .rv-office-document-editor .milkdown .ProseMirror {
+    padding: 0.5in !important;
+  }
+
+  /* Ensure text is black on white for print */
+  .rv-office-document-editor .milkdown .editor p,
+  .rv-office-document-editor .milkdown .editor h1,
+  .rv-office-document-editor .milkdown .editor h2,
+  .rv-office-document-editor .milkdown .editor h3,
+  .rv-office-document-editor .milkdown .editor h4,
+  .rv-office-document-editor .milkdown .editor li,
+  .rv-office-document-editor .milkdown .editor blockquote {
+    color: black !important;
+  }
+
+  /* Print-appropriate heading sizes */
+  .rv-office-document-editor .milkdown .editor h1 { font-size: 1.4em; }
+  .rv-office-document-editor .milkdown .editor h2 { font-size: 1.25em; }
+  .rv-office-document-editor .milkdown .editor h3 { font-size: 1.1em; }
+
+  /* Page breaks */
+  .rv-office-document-editor .milkdown .editor h1,
+  .rv-office-document-editor .milkdown .editor h2 {
+    page-break-after: avoid;
+  }
+
+  .rv-office-document-editor .milkdown .editor p {
+    orphans: 3;
+    widows: 3;
+  }
+}

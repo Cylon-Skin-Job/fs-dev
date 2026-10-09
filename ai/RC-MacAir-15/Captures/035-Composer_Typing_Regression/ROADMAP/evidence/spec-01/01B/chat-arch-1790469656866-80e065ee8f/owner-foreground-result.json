@@ -1,0 +1,27 @@
+{
+  "clickRequired": false,
+  "enabled": true,
+  "status": "acquired",
+  "runId": "chat-arch-1790469656866-80e065ee8f",
+  "pid": 81728,
+  "windowId": 1,
+  "title": "ISOLATED ACCEPTANCE — chat-arch-1790469656866-80e065ee8f",
+  "url": "fusion-shell://app/",
+  "profile": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790469656866-80e065ee8f-nIZj5y/r1-sustained-profile",
+  "workspace": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790469656866-80e065ee8f-nIZj5y/r1-sustained-workspace",
+  "timeoutMs": 120000,
+  "acquisition": {
+    "startedAt": 1790469862427,
+    "endedAt": 1790469864505,
+    "stableMs": 2000,
+    "observations": 21,
+    "last": {
+      "focused": true,
+      "visible": true,
+      "minimized": false,
+      "appHidden": false,
+      "windowId": 1
+    },
+    "lastObservedAt": 1790469864505
+  }
+}

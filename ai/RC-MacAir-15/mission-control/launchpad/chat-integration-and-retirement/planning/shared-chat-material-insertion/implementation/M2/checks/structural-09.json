@@ -1,0 +1,485 @@
+{
+  "schemaVersion": 1,
+  "label": "structural-09",
+  "root": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev",
+  "cwd": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/fusion-studio-client",
+  "command": [
+    "git",
+    "diff",
+    "--check"
+  ],
+  "test_environment": {},
+  "started": "2026-10-07T16:52:43.705440+00:00",
+  "ended": "2026-10-07T16:52:43.719366+00:00",
+  "exit_code": 0,
+  "before": {
+    "head": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+    "branch": "codex/chat-material-01",
+    "status": " M fusion-studio-client/e2e/chat-composer-screenshot-menu.spec.ts\n M fusion-studio-client/e2e/chat-surface-identity.spec.ts\n M fusion-studio-client/e2e/chat-surface-isolation.spec.ts\n M fusion-studio-client/electron/preload.cjs\n M fusion-studio-client/src/clipboard/ClipboardTrigger.tsx\n M fusion-studio-client/src/components/ChatInput.tsx\n M fusion-studio-client/src/components/MessageList.tsx\n M fusion-studio-client/src/components/SendToChatButton.tsx\n M fusion-studio-client/src/components/chat/ChatAreaFooter.tsx\n M fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx\n M fusion-studio-client/src/components/chat/ChatDiagnosticDetails.tsx\n M fusion-studio-client/src/components/chat/ChatSurface.tsx\n M fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx\n M fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx\n M fusion-studio-client/src/components/chat/chatSurfaceContract.ts\n M fusion-studio-client/src/components/chat/useChatMountInteractions.ts\n M fusion-studio-client/src/components/chat/useChatSessionActions.ts\n M fusion-studio-client/src/components/chat/useChatSessionHost.ts\n M fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts\n M fusion-studio-client/src/components/chat/useViewChatHost.ts\n M fusion-studio-client/src/components/hover-icon-modal/useHoverIconModal.ts\n M fusion-studio-client/src/lib/chat-action-controller.ts\n M fusion-studio-client/src/lib/chat-action.ts\n M fusion-studio-client/src/lib/ws/thread-handlers.ts\n M fusion-studio-client/src/mic/MicTrigger.tsx\n M fusion-studio-client/src/mic/VoiceRecorder.tsx\n M fusion-studio-client/src/mic/useAudioCapture.ts\n M fusion-studio-client/src/recent-files/RecentFilesTrigger.tsx\n M fusion-studio-client/src/screenshots/ScreenshotsTrigger.tsx\n M fusion-studio-client/src/state/panelStore.ts\n M fusion-studio-client/src/state/panelStoreTypes.ts\n M fusion-studio-client/src/state/slices/chatSurfaceSlice.ts\n?? fusion-studio-client/e2e/chat-material-insertion.spec.ts\n?? fusion-studio-client/e2e/support/chat-material-fixture.tsx\n?? fusion-studio-client/e2e/support/chat-material-source-cases.ts\n?? fusion-studio-client/e2e/support/chat-material-source-fixture.ts\n?? fusion-studio-client/src/components/chat/useComposerMaterialSource.ts\n?? fusion-studio-client/src/components/chat/useMountedChatBinding.ts\n?? fusion-studio-client/src/lib/chat-material-commit.ts\n?? fusion-studio-client/src/lib/chat-material-source.ts\n?? fusion-studio-client/src/lib/chat-material-target.ts\n?? fusion-studio-client/src/state/slices/mountedChatState.ts\n?? fusion-studio-server/node_modules\n",
+    "files": {
+      "fusion-studio-client/e2e/chat-composer-screenshot-menu.spec.ts": {
+        "sha256": "38747c2864276049bdc26fac20ce8b47e9ce2fffd40040e28a9186832c3d8e9f",
+        "bytes": 6025
+      },
+      "fusion-studio-client/e2e/chat-material-insertion.spec.ts": {
+        "sha256": "39c62635d9575c60413e6f896831737c6de9207046e84b74cb463578a2ecfcdf",
+        "bytes": 17310
+      },
+      "fusion-studio-client/e2e/chat-surface-identity.spec.ts": {
+        "sha256": "62677ea808ac57ff4b446e449e5078b5e159f2ddf42706306677606e2e0ebfa2",
+        "bytes": 30144
+      },
+      "fusion-studio-client/e2e/chat-surface-isolation.spec.ts": {
+        "sha256": "068fc92d53e295594b2485db3026a408e41e7ba936940831c18f75501c34c7cf",
+        "bytes": 64372
+      },
+      "fusion-studio-client/e2e/support/chat-material-fixture.tsx": {
+        "sha256": "042fc3880ad53a4eda1950102ed38730e17db8fe85d9773f1aae8d4ac9895d1e",
+        "bytes": 13270
+      },
+      "fusion-studio-client/e2e/support/chat-material-source-cases.ts": {
+        "sha256": "df3204aa18c6ca69461e4f08704933a2f637685805458e7600629d12e21e992d",
+        "bytes": 17624
+      },
+      "fusion-studio-client/e2e/support/chat-material-source-fixture.ts": {
+        "sha256": "a6570656cbfd0068324c1367a1b49df5bc17f8555d86acc6ac43983beb9958ae",
+        "bytes": 6630
+      },
+      "fusion-studio-client/electron/preload.cjs": {
+        "sha256": "b200cc4f24c59ca53c4aebda40cdeeb8e3743da06fceb3006eb8b0a63a93ece3",
+        "bytes": 606630
+      },
+      "fusion-studio-client/src/clipboard/ClipboardTrigger.tsx": {
+        "sha256": "0d9bd2e83fc3d898c74311fff87074c21f3098391c967c81d6ac1ffd3a41164f",
+        "bytes": 8364
+      },
+      "fusion-studio-client/src/components/ChatInput.tsx": {
+        "sha256": "a980e99c197b239da795fac4d764b4d54e85bff5c1d0c2039e326206ab415990",
+        "bytes": 12498
+      },
+      "fusion-studio-client/src/components/MessageList.tsx": {
+        "sha256": "822d2743061fb616e855c6b5d6ecf6eb03aa025aa9a3b0b03f9a7acd51b31303",
+        "bytes": 12381
+      },
+      "fusion-studio-client/src/components/SendToChatButton.tsx": {
+        "sha256": "26e5008817f8fb841a8b14d9d783a2b3411cb395678cc5e9bf247a6071679302",
+        "bytes": 1471
+      },
+      "fusion-studio-client/src/components/chat/ChatAreaFooter.tsx": {
+        "sha256": "215a11c7bbd2c1251a990043e607efce1caa401e05b1f5e12d7bda5486a3ba2c",
+        "bytes": 5487
+      },
+      "fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx": {
+        "sha256": "67739bd009abf10819f673e91af042f06ed5678a1f75f6b951dd95baf4d4019d",
+        "bytes": 3334
+      },
+      "fusion-studio-client/src/components/chat/ChatDiagnosticDetails.tsx": {
+        "sha256": "b7858e464543a0095570fe1a51fa1c43e69a60e400f27b9362771568585cd60b",
+        "bytes": 7097
+      },
+      "fusion-studio-client/src/components/chat/ChatSurface.tsx": {
+        "sha256": "4b795b878034c03634f29a50a28c3ada6a83bf84422e011f311517d8370d1d56",
+        "bytes": 3688
+      },
+      "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx": {
+        "sha256": "b32b696609b0b42f8e88c9bd08c346bd48903f31f351e41479b10d1d7513ceb3",
+        "bytes": 6022
+      },
+      "fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx": {
+        "sha256": "951317b1234c712e62a91a044afd8a242d362cd0d2c27724563a8ff5730e1a58",
+        "bytes": 7376
+      },
+      "fusion-studio-client/src/components/chat/chatSurfaceContract.ts": {
+        "sha256": "990717911e5eabc22df83d4a6738b2ecbf9851d88b8ce9b26ca439d482cb9f5b",
+        "bytes": 6803
+      },
+      "fusion-studio-client/src/components/chat/useChatMountInteractions.ts": {
+        "sha256": "3febde36c48ee58131506b51d3a3b9cbf490c87b92a2965dbdd3e2137c1d0814",
+        "bytes": 4207
+      },
+      "fusion-studio-client/src/components/chat/useChatSessionActions.ts": {
+        "sha256": "dd293ba33e12e891d112aff9153989901f8b7256164cc407f34f20ec53632734",
+        "bytes": 12709
+      },
+      "fusion-studio-client/src/components/chat/useChatSessionHost.ts": {
+        "sha256": "67060e0790a1052b78ef27aadf24a1029c2753ac481628c8f0973684bdce61bc",
+        "bytes": 6520
+      },
+      "fusion-studio-client/src/components/chat/useComposerMaterialSource.ts": {
+        "sha256": "03a973bf7b957c791820ce4fc3103f1164066eec62588ca5ef2e5f31fa3c58b8",
+        "bytes": 4578
+      },
+      "fusion-studio-client/src/components/chat/useMountedChatBinding.ts": {
+        "sha256": "2db870162c34ae974ca8330f971fa9452f9ef07e000f096e1114a6dd6a13f9be",
+        "bytes": 1485
+      },
+      "fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts": {
+        "sha256": "6e7793ad865bb3fbea8ea1b1a179204b330c98477af5c2d5d679d33d9b81a49c",
+        "bytes": 5228
+      },
+      "fusion-studio-client/src/components/chat/useViewChatHost.ts": {
+        "sha256": "9763ce0d749a063236fa94c6a5e7162f5bcc68dc01402141592533bc2436861b",
+        "bytes": 11472
+      },
+      "fusion-studio-client/src/components/hover-icon-modal/useHoverIconModal.ts": {
+        "sha256": "6d8e7d291198f92a1d72d330ea864e45bc603dae2eaf032c02e8bf5335cd2942",
+        "bytes": 7493
+      },
+      "fusion-studio-client/src/lib/chat-action-controller.ts": {
+        "sha256": "79697686cf6b55661c87d8eab05db21f43253b2f4f4b965b079c1f424cfad39a",
+        "bytes": 6446
+      },
+      "fusion-studio-client/src/lib/chat-action.ts": {
+        "sha256": "f8b15ee9e83cd85f4075f10e66cf7f0f9ea5e162c415a822bf3be0c72cfaa1b2",
+        "bytes": 5146
+      },
+      "fusion-studio-client/src/lib/chat-material-commit.ts": {
+        "sha256": "9ca48a31e7e1acb3a1a98d452ccf4b0480101a2d36d94b076a8107f1a3d67a37",
+        "bytes": 3810
+      },
+      "fusion-studio-client/src/lib/chat-material-source.ts": {
+        "sha256": "13600decc8bea3101925522b1dfe25bbe9a4eb191046c53d6dc1d8f7a034d4fc",
+        "bytes": 714
+      },
+      "fusion-studio-client/src/lib/chat-material-target.ts": {
+        "sha256": "79020c5de3b860ba72486eacf434f8ec04341e0a4417e62c045afd1bf62009ad",
+        "bytes": 2879
+      },
+      "fusion-studio-client/src/lib/ws/thread-handlers.ts": {
+        "sha256": "5b63d2f06074b2dad8d43ea7acf8f38769ddf9081868178a407203a95e92a390",
+        "bytes": 20901
+      },
+      "fusion-studio-client/src/mic/MicTrigger.tsx": {
+        "sha256": "40b63def35f6fbb8ae95a6161a623d11be5e21ab5566f82a409edbb6ca46499a",
+        "bytes": 10915
+      },
+      "fusion-studio-client/src/mic/VoiceRecorder.tsx": {
+        "sha256": "c2b39311791d3a20b247f771c9f385565bb4fe1405fbb8f4667d610746cbc981",
+        "bytes": 4575
+      },
+      "fusion-studio-client/src/mic/useAudioCapture.ts": {
+        "sha256": "dae950577ccdcb4f9e13335edb3502386dc6316cc80154665a0e21c2a9f58046",
+        "bytes": 12696
+      },
+      "fusion-studio-client/src/recent-files/RecentFilesTrigger.tsx": {
+        "sha256": "5956cf2d5846a916233b45e5b2d1a45124d538016e0b5598986cd26ea9ecb0f6",
+        "bytes": 8477
+      },
+      "fusion-studio-client/src/screenshots/ScreenshotsTrigger.tsx": {
+        "sha256": "6a51901241fee836d19f4adfa1dcde572f10763d590372596da357ced422613f",
+        "bytes": 8165
+      },
+      "fusion-studio-client/src/state/panelStore.ts": {
+        "sha256": "7b9ecb8386524a89c7b235bcce70ca94613ae611370871d569343f329768b609",
+        "bytes": 23417
+      },
+      "fusion-studio-client/src/state/panelStoreTypes.ts": {
+        "sha256": "762c7fa2b26923fabb0e2d4585d625417d17e333709b9fd9bdb3c9e8ca97b8bb",
+        "bytes": 17705
+      },
+      "fusion-studio-client/src/state/slices/chatSurfaceSlice.ts": {
+        "sha256": "0ee04ae43e3e68b88f29b548bb6ad5fe25b0e1a3c5e091e9d40a2af14971a854",
+        "bytes": 24616
+      },
+      "fusion-studio-client/src/state/slices/mountedChatState.ts": {
+        "sha256": "9302850d0488b37740a4a1ec989da370d8e06073362bdd7e6f549f3bd8767a8a",
+        "bytes": 9209
+      }
+    }
+  },
+  "after": {
+    "head": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+    "branch": "codex/chat-material-01",
+    "status": " M fusion-studio-client/e2e/chat-composer-screenshot-menu.spec.ts\n M fusion-studio-client/e2e/chat-surface-identity.spec.ts\n M fusion-studio-client/e2e/chat-surface-isolation.spec.ts\n M fusion-studio-client/electron/preload.cjs\n M fusion-studio-client/src/clipboard/ClipboardTrigger.tsx\n M fusion-studio-client/src/components/ChatInput.tsx\n M fusion-studio-client/src/components/MessageList.tsx\n M fusion-studio-client/src/components/SendToChatButton.tsx\n M fusion-studio-client/src/components/chat/ChatAreaFooter.tsx\n M fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx\n M fusion-studio-client/src/components/chat/ChatDiagnosticDetails.tsx\n M fusion-studio-client/src/components/chat/ChatSurface.tsx\n M fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx\n M fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx\n M fusion-studio-client/src/components/chat/chatSurfaceContract.ts\n M fusion-studio-client/src/components/chat/useChatMountInteractions.ts\n M fusion-studio-client/src/components/chat/useChatSessionActions.ts\n M fusion-studio-client/src/components/chat/useChatSessionHost.ts\n M fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts\n M fusion-studio-client/src/components/chat/useViewChatHost.ts\n M fusion-studio-client/src/components/hover-icon-modal/useHoverIconModal.ts\n M fusion-studio-client/src/lib/chat-action-controller.ts\n M fusion-studio-client/src/lib/chat-action.ts\n M fusion-studio-client/src/lib/ws/thread-handlers.ts\n M fusion-studio-client/src/mic/MicTrigger.tsx\n M fusion-studio-client/src/mic/VoiceRecorder.tsx\n M fusion-studio-client/src/mic/useAudioCapture.ts\n M fusion-studio-client/src/recent-files/RecentFilesTrigger.tsx\n M fusion-studio-client/src/screenshots/ScreenshotsTrigger.tsx\n M fusion-studio-client/src/state/panelStore.ts\n M fusion-studio-client/src/state/panelStoreTypes.ts\n M fusion-studio-client/src/state/slices/chatSurfaceSlice.ts\n?? fusion-studio-client/e2e/chat-material-insertion.spec.ts\n?? fusion-studio-client/e2e/support/chat-material-fixture.tsx\n?? fusion-studio-client/e2e/support/chat-material-source-cases.ts\n?? fusion-studio-client/e2e/support/chat-material-source-fixture.ts\n?? fusion-studio-client/src/components/chat/useComposerMaterialSource.ts\n?? fusion-studio-client/src/components/chat/useMountedChatBinding.ts\n?? fusion-studio-client/src/lib/chat-material-commit.ts\n?? fusion-studio-client/src/lib/chat-material-source.ts\n?? fusion-studio-client/src/lib/chat-material-target.ts\n?? fusion-studio-client/src/state/slices/mountedChatState.ts\n?? fusion-studio-server/node_modules\n",
+    "files": {
+      "fusion-studio-client/e2e/chat-composer-screenshot-menu.spec.ts": {
+        "sha256": "38747c2864276049bdc26fac20ce8b47e9ce2fffd40040e28a9186832c3d8e9f",
+        "bytes": 6025
+      },
+      "fusion-studio-client/e2e/chat-material-insertion.spec.ts": {
+        "sha256": "39c62635d9575c60413e6f896831737c6de9207046e84b74cb463578a2ecfcdf",
+        "bytes": 17310
+      },
+      "fusion-studio-client/e2e/chat-surface-identity.spec.ts": {
+        "sha256": "62677ea808ac57ff4b446e449e5078b5e159f2ddf42706306677606e2e0ebfa2",
+        "bytes": 30144
+      },
+      "fusion-studio-client/e2e/chat-surface-isolation.spec.ts": {
+        "sha256": "068fc92d53e295594b2485db3026a408e41e7ba936940831c18f75501c34c7cf",
+        "bytes": 64372
+      },
+      "fusion-studio-client/e2e/support/chat-material-fixture.tsx": {
+        "sha256": "042fc3880ad53a4eda1950102ed38730e17db8fe85d9773f1aae8d4ac9895d1e",
+        "bytes": 13270
+      },
+      "fusion-studio-client/e2e/support/chat-material-source-cases.ts": {
+        "sha256": "df3204aa18c6ca69461e4f08704933a2f637685805458e7600629d12e21e992d",
+        "bytes": 17624
+      },
+      "fusion-studio-client/e2e/support/chat-material-source-fixture.ts": {
+        "sha256": "a6570656cbfd0068324c1367a1b49df5bc17f8555d86acc6ac43983beb9958ae",
+        "bytes": 6630
+      },
+      "fusion-studio-client/electron/preload.cjs": {
+        "sha256": "b200cc4f24c59ca53c4aebda40cdeeb8e3743da06fceb3006eb8b0a63a93ece3",
+        "bytes": 606630
+      },
+      "fusion-studio-client/src/clipboard/ClipboardTrigger.tsx": {
+        "sha256": "0d9bd2e83fc3d898c74311fff87074c21f3098391c967c81d6ac1ffd3a41164f",
+        "bytes": 8364
+      },
+      "fusion-studio-client/src/components/ChatInput.tsx": {
+        "sha256": "a980e99c197b239da795fac4d764b4d54e85bff5c1d0c2039e326206ab415990",
+        "bytes": 12498
+      },
+      "fusion-studio-client/src/components/MessageList.tsx": {
+        "sha256": "822d2743061fb616e855c6b5d6ecf6eb03aa025aa9a3b0b03f9a7acd51b31303",
+        "bytes": 12381
+      },
+      "fusion-studio-client/src/components/SendToChatButton.tsx": {
+        "sha256": "26e5008817f8fb841a8b14d9d783a2b3411cb395678cc5e9bf247a6071679302",
+        "bytes": 1471
+      },
+      "fusion-studio-client/src/components/chat/ChatAreaFooter.tsx": {
+        "sha256": "215a11c7bbd2c1251a990043e607efce1caa401e05b1f5e12d7bda5486a3ba2c",
+        "bytes": 5487
+      },
+      "fusion-studio-client/src/components/chat/ChatComposerAddMenu.tsx": {
+        "sha256": "67739bd009abf10819f673e91af042f06ed5678a1f75f6b951dd95baf4d4019d",
+        "bytes": 3334
+      },
+      "fusion-studio-client/src/components/chat/ChatDiagnosticDetails.tsx": {
+        "sha256": "b7858e464543a0095570fe1a51fa1c43e69a60e400f27b9362771568585cd60b",
+        "bytes": 7097
+      },
+      "fusion-studio-client/src/components/chat/ChatSurface.tsx": {
+        "sha256": "4b795b878034c03634f29a50a28c3ada6a83bf84422e011f311517d8370d1d56",
+        "bytes": 3688
+      },
+      "fusion-studio-client/src/components/chat/ChatSurfaceComponentMount.tsx": {
+        "sha256": "b32b696609b0b42f8e88c9bd08c346bd48903f31f351e41479b10d1d7513ceb3",
+        "bytes": 6022
+      },
+      "fusion-studio-client/src/components/chat/ConnectedChatComposer.tsx": {
+        "sha256": "951317b1234c712e62a91a044afd8a242d362cd0d2c27724563a8ff5730e1a58",
+        "bytes": 7376
+      },
+      "fusion-studio-client/src/components/chat/chatSurfaceContract.ts": {
+        "sha256": "990717911e5eabc22df83d4a6738b2ecbf9851d88b8ce9b26ca439d482cb9f5b",
+        "bytes": 6803
+      },
+      "fusion-studio-client/src/components/chat/useChatMountInteractions.ts": {
+        "sha256": "3febde36c48ee58131506b51d3a3b9cbf490c87b92a2965dbdd3e2137c1d0814",
+        "bytes": 4207
+      },
+      "fusion-studio-client/src/components/chat/useChatSessionActions.ts": {
+        "sha256": "dd293ba33e12e891d112aff9153989901f8b7256164cc407f34f20ec53632734",
+        "bytes": 12709
+      },
+      "fusion-studio-client/src/components/chat/useChatSessionHost.ts": {
+        "sha256": "67060e0790a1052b78ef27aadf24a1029c2753ac481628c8f0973684bdce61bc",
+        "bytes": 6520
+      },
+      "fusion-studio-client/src/components/chat/useComposerMaterialSource.ts": {
+        "sha256": "03a973bf7b957c791820ce4fc3103f1164066eec62588ca5ef2e5f31fa3c58b8",
+        "bytes": 4578
+      },
+      "fusion-studio-client/src/components/chat/useMountedChatBinding.ts": {
+        "sha256": "2db870162c34ae974ca8330f971fa9452f9ef07e000f096e1114a6dd6a13f9be",
+        "bytes": 1485
+      },
+      "fusion-studio-client/src/components/chat/useSideChatRailAdapter.ts": {
+        "sha256": "6e7793ad865bb3fbea8ea1b1a179204b330c98477af5c2d5d679d33d9b81a49c",
+        "bytes": 5228
+      },
+      "fusion-studio-client/src/components/chat/useViewChatHost.ts": {
+        "sha256": "9763ce0d749a063236fa94c6a5e7162f5bcc68dc01402141592533bc2436861b",
+        "bytes": 11472
+      },
+      "fusion-studio-client/src/components/hover-icon-modal/useHoverIconModal.ts": {
+        "sha256": "6d8e7d291198f92a1d72d330ea864e45bc603dae2eaf032c02e8bf5335cd2942",
+        "bytes": 7493
+      },
+      "fusion-studio-client/src/lib/chat-action-controller.ts": {
+        "sha256": "79697686cf6b55661c87d8eab05db21f43253b2f4f4b965b079c1f424cfad39a",
+        "bytes": 6446
+      },
+      "fusion-studio-client/src/lib/chat-action.ts": {
+        "sha256": "f8b15ee9e83cd85f4075f10e66cf7f0f9ea5e162c415a822bf3be0c72cfaa1b2",
+        "bytes": 5146
+      },
+      "fusion-studio-client/src/lib/chat-material-commit.ts": {
+        "sha256": "9ca48a31e7e1acb3a1a98d452ccf4b0480101a2d36d94b076a8107f1a3d67a37",
+        "bytes": 3810
+      },
+      "fusion-studio-client/src/lib/chat-material-source.ts": {
+        "sha256": "13600decc8bea3101925522b1dfe25bbe9a4eb191046c53d6dc1d8f7a034d4fc",
+        "bytes": 714
+      },
+      "fusion-studio-client/src/lib/chat-material-target.ts": {
+        "sha256": "79020c5de3b860ba72486eacf434f8ec04341e0a4417e62c045afd1bf62009ad",
+        "bytes": 2879
+      },
+      "fusion-studio-client/src/lib/ws/thread-handlers.ts": {
+        "sha256": "5b63d2f06074b2dad8d43ea7acf8f38769ddf9081868178a407203a95e92a390",
+        "bytes": 20901
+      },
+      "fusion-studio-client/src/mic/MicTrigger.tsx": {
+        "sha256": "40b63def35f6fbb8ae95a6161a623d11be5e21ab5566f82a409edbb6ca46499a",
+        "bytes": 10915
+      },
+      "fusion-studio-client/src/mic/VoiceRecorder.tsx": {
+        "sha256": "c2b39311791d3a20b247f771c9f385565bb4fe1405fbb8f4667d610746cbc981",
+        "bytes": 4575
+      },
+      "fusion-studio-client/src/mic/useAudioCapture.ts": {
+        "sha256": "dae950577ccdcb4f9e13335edb3502386dc6316cc80154665a0e21c2a9f58046",
+        "bytes": 12696
+      },
+      "fusion-studio-client/src/recent-files/RecentFilesTrigger.tsx": {
+        "sha256": "5956cf2d5846a916233b45e5b2d1a45124d538016e0b5598986cd26ea9ecb0f6",
+        "bytes": 8477
+      },
+      "fusion-studio-client/src/screenshots/ScreenshotsTrigger.tsx": {
+        "sha256": "6a51901241fee836d19f4adfa1dcde572f10763d590372596da357ced422613f",
+        "bytes": 8165
+      },
+      "fusion-studio-client/src/state/panelStore.ts": {
+        "sha256": "7b9ecb8386524a89c7b235bcce70ca94613ae611370871d569343f329768b609",
+        "bytes": 23417
+      },
+      "fusion-studio-client/src/state/panelStoreTypes.ts": {
+        "sha256": "762c7fa2b26923fabb0e2d4585d625417d17e333709b9fd9bdb3c9e8ca97b8bb",
+        "bytes": 17705
+      },
+      "fusion-studio-client/src/state/slices/chatSurfaceSlice.ts": {
+        "sha256": "0ee04ae43e3e68b88f29b548bb6ad5fe25b0e1a3c5e091e9d40a2af14971a854",
+        "bytes": 24616
+      },
+      "fusion-studio-client/src/state/slices/mountedChatState.ts": {
+        "sha256": "9302850d0488b37740a4a1ec989da370d8e06073362bdd7e6f549f3bd8767a8a",
+        "bytes": 9209
+      }
+    }
+  },
+  "dependencies_before": {
+    "fusion-studio-client/package.json": {
+      "resolved": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/fusion-studio-client/package.json",
+      "sha256": "9b9e9c906358afd17eb5027af187fbe2030c537a9536d6d0d6fbcf64fb70dfb0",
+      "bytes": 3936
+    },
+    "fusion-studio-client/package-lock.json": {
+      "resolved": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/fusion-studio-client/package-lock.json",
+      "sha256": "bf84fb48fd5b41b169afea6bc23acba4a1466255dd4c8679c2119cad55f593f4",
+      "bytes": 350089
+    },
+    "fusion-studio-server/package.json": {
+      "resolved": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/fusion-studio-server/package.json",
+      "sha256": "15113c033b6deb5622aa8a5213042bcb1b67e82d87f63df3b006efc9640717db",
+      "bytes": 1035
+    },
+    "fusion-studio-server/package-lock.json": {
+      "resolved": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/fusion-studio-server/package-lock.json",
+      "sha256": "33dd6068bc27b3689394c6d17b1cb2514b0d4cfa3804313dc02b9604e3dcbe7f",
+      "bytes": 274023
+    },
+    "fusion-studio-client/node_modules/.package-lock.json": {
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/.package-lock.json",
+      "sha256": "dfe5c94d3ae739adf81e9b89d1bdc9d15dae5b79f54f8e77bf2d800cba77294b",
+      "bytes": 319015
+    },
+    "fusion-studio-server/node_modules/.package-lock.json": {
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules/.package-lock.json",
+      "sha256": "6fbc3f2e64977a2e50ccf991c71b0bb9769e542d7498bb55fcfae0c1605d8245",
+      "bytes": 249171
+    },
+    "fusion-studio-client/node_modules/electron/package.json": {
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/package.json",
+      "sha256": "d8e71feee3508f91dbfa46214451b462ed9bb181c04099f7aeac8d544ad4c295",
+      "bytes": 725
+    },
+    "fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron": {
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+      "sha256": "c86c2701f15ca66ba460f4cdcd7ebcab0b5133a4cc299295f02108b3754e9eed",
+      "bytes": 33968
+    },
+    "fusion-studio-server/node_modules/better-sqlite3/build/Release/better_sqlite3.node": {
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules/better-sqlite3/build/Release/better_sqlite3.node",
+      "sha256": "beaae109810a34bb2d4e9c924bd23e268ac64b6b3db4a5b5f668042a0fa77e9e",
+      "bytes": 1914544
+    },
+    "node": {
+      "path": "/opt/homebrew/bin/node",
+      "resolved": "/opt/homebrew/Cellar/node/25.6.1/bin/node"
+    },
+    "python3": {
+      "path": "/usr/bin/python3",
+      "resolved": "/usr/bin/python3"
+    },
+    "npm": {
+      "path": "/opt/homebrew/bin/npm",
+      "resolved": "/opt/homebrew/lib/node_modules/npm/bin/npm-cli.js"
+    }
+  },
+  "dependencies_after": {
+    "fusion-studio-client/package.json": {
+      "resolved": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/fusion-studio-client/package.json",
+      "sha256": "9b9e9c906358afd17eb5027af187fbe2030c537a9536d6d0d6fbcf64fb70dfb0",
+      "bytes": 3936
+    },
+    "fusion-studio-client/package-lock.json": {
+      "resolved": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/fusion-studio-client/package-lock.json",
+      "sha256": "bf84fb48fd5b41b169afea6bc23acba4a1466255dd4c8679c2119cad55f593f4",
+      "bytes": 350089
+    },
+    "fusion-studio-server/package.json": {
+      "resolved": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/fusion-studio-server/package.json",
+      "sha256": "15113c033b6deb5622aa8a5213042bcb1b67e82d87f63df3b006efc9640717db",
+      "bytes": 1035
+    },
+    "fusion-studio-server/package-lock.json": {
+      "resolved": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/fusion-studio-server/package-lock.json",
+      "sha256": "33dd6068bc27b3689394c6d17b1cb2514b0d4cfa3804313dc02b9604e3dcbe7f",
+      "bytes": 274023
+    },
+    "fusion-studio-client/node_modules/.package-lock.json": {
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/.package-lock.json",
+      "sha256": "dfe5c94d3ae739adf81e9b89d1bdc9d15dae5b79f54f8e77bf2d800cba77294b",
+      "bytes": 319015
+    },
+    "fusion-studio-server/node_modules/.package-lock.json": {
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules/.package-lock.json",
+      "sha256": "6fbc3f2e64977a2e50ccf991c71b0bb9769e542d7498bb55fcfae0c1605d8245",
+      "bytes": 249171
+    },
+    "fusion-studio-client/node_modules/electron/package.json": {
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/package.json",
+      "sha256": "d8e71feee3508f91dbfa46214451b462ed9bb181c04099f7aeac8d544ad4c295",
+      "bytes": 725
+    },
+    "fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron": {
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+      "sha256": "c86c2701f15ca66ba460f4cdcd7ebcab0b5133a4cc299295f02108b3754e9eed",
+      "bytes": 33968
+    },
+    "fusion-studio-server/node_modules/better-sqlite3/build/Release/better_sqlite3.node": {
+      "resolved": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules/better-sqlite3/build/Release/better_sqlite3.node",
+      "sha256": "beaae109810a34bb2d4e9c924bd23e268ac64b6b3db4a5b5f668042a0fa77e9e",
+      "bytes": 1914544
+    },
+    "node": {
+      "path": "/opt/homebrew/bin/node",
+      "resolved": "/opt/homebrew/Cellar/node/25.6.1/bin/node"
+    },
+    "python3": {
+      "path": "/usr/bin/python3",
+      "resolved": "/usr/bin/python3"
+    },
+    "npm": {
+      "path": "/opt/homebrew/bin/npm",
+      "resolved": "/opt/homebrew/lib/node_modules/npm/bin/npm-cli.js"
+    }
+  },
+  "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/M2/checks/structural-09.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "root": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion",
+  "candidateId": "sha256:65b324647b7e52f0426f7b2005849d053f4f239420fab07c848170b21ec1d3f3",
+  "artifacts": [
+    {
+      "path": "SPEC.md",
+      "sha256": "063562058007928d07477913a1ba05e43a2d191d6e42a0e9cb1d6a6e5c71659e"
+    },
+    {
+      "path": "TICKET.md",
+      "sha256": "730b6c92efa396eeb3abdc5ee6c522c692c790db9c288346d141ad57817e0074"
+    }
+  ]
+}

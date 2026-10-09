@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import { systemProcesses } from '/private/tmp/chat-ar-integration-r6pe5gmi/candidate/scripts/fusion-restart-processes.mjs';
+const source='/Users/rccurtrightjr./projects/fs-dev';
+const paths=[source+'/fusion-studio-server/data/fusion.db','/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server-data/fusion.db','/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha/server-data/fusion.db',source+'/ai/RC-MacAir-15/System/state/state.json',source+'/ai/RC-MacAir-15/System/config/cli.json'];
+const identify=(p)=>{try { const a=fs.lstatSync(p); const sha=crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex'); const b=fs.lstatSync(p);return {kind:a.isFile()?'file':'other',mode:a.mode,inode:a.ino,device:a.dev,size:b.size,mtimeMs:b.mtimeMs,sha256:sha,coherent:a.size===b.size&&a.mtimeMs===b.mtimeMs}; } catch(e) {if(e.code==='ENOENT')return {kind:'absent'};throw e;}};
+const processes=systemProcesses().filter(r=>/Electron|Fusion Studio|server\.js/.test(r.command));
+const phase=process.argv[2];if(!['before-runtime','after-runtime'].includes(phase))throw Error('Unknown protection phase');
+const output=path.join(import.meta.dirname,phase+'-protection.json');
+fs.writeFileSync(output,JSON.stringify({at:new Date().toISOString(),phase,files:Object.fromEntries(paths.map(p=>[p,identify(p)])),processes,scope:'Read-only physical file identities/content and exact process inventory; live background writes require attribution, no database copy/restore or shutdown proof.'},null,2)+'\n',{flag:'wx',mode:0o600});console.log(JSON.stringify({output,protectedFiles:paths.length,processes:processes.length}));

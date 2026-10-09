@@ -1,0 +1,18 @@
+{
+  "runId": "server-full-1790305828231-5b7f4ca8",
+  "kind": "server-full",
+  "mode": null,
+  "token": "chat-architecture-owner-server-full-1790305828231-5b7f4ca8",
+  "ownerPid": 77304,
+  "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/server-full-1790305828231-5b7f4ca8-mopqdg",
+  "supervisedCommand": [
+    "/opt/homebrew/Cellar/node/25.6.1/bin/node",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/owned-regression-supervisor.mjs",
+    "chat-architecture-owner-server-full-1790305828231-5b7f4ca8",
+    "77304",
+    "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/server-full-1790305828231-5b7f4ca8-mopqdg",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/server-focused-regressions.mjs"
+  ],
+  "parentLossPolicy": "01C supervisor watches owner PID including zombie state, kills target descendants and removes marked root",
+  "deadlineMs": 540000
+}

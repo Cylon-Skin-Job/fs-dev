@@ -1,0 +1,1947 @@
+{
+  "work_id": "SPEC-COMMIT-SUPERVISOR-01",
+  "candidate_id": "sha256:c12ff1fff3c391e5183eea219553c547a91e461d9cb114c21719b37cfe209d02",
+  "manager": "owner",
+  "slices": [
+    {
+      "id": "S1",
+      "scope": "Recoverable intake and exact restoration",
+      "prerequisites": [],
+      "criteria_source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/SPEC.md#s1",
+      "checks": "required commands and criteria in approved SPEC",
+      "builder": "/root/s1_builder",
+      "reviewers": [
+        {
+          "identity": "/root/s1_builder/s1_builder_review_1",
+          "gate": "builder",
+          "result": "CLEAN",
+          "terminal": true,
+          "close_agent": "unavailable",
+          "report": "planning/commit-supervisor/execution/S1-builder-review-1.md"
+        },
+        {
+          "identity": "/root/s1_acceptance_1",
+          "gate": "orchestrator_acceptance",
+          "state": "terminal",
+          "fork_turns": "none",
+          "close_agent": "unavailable",
+          "result": "CLEAN",
+          "report": "planning/commit-supervisor/execution/S1-acceptance-review-1.md"
+        }
+      ],
+      "current_revision": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/job-template.md",
+          "sha256": "6bf15686c791a11fe6cb83cc141d87905956e6bc8e8742a38bba5ee709372692",
+          "lines": 69
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+          "sha256": "3e18cc76419007a6fab834123bb519ea291c4d55f819ba4f2ee217d6fd442c87",
+          "lines": 129
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+          "sha256": "d85c8ae1828bfe94426bde87527ddc3430d720604c78cfdab775db5982dabc58",
+          "lines": 240
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/snapshot_restore.py",
+          "sha256": "37c75d19a2217759086be00274f14d589a5bb64bb6905f323db7ba1969674c2c",
+          "lines": 137
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/snapshot_state.py",
+          "sha256": "a38ffed0cca07299031c2709773caf33ea9065785bf114b6352141fb3310689b",
+          "lines": 159
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/snapshot_fixture.py",
+          "sha256": "79e1cfa9975f1e0b4e2040dd8b259543d207b3a770ee08ce9f171f5f22fbc2d4",
+          "lines": 99
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_job_snapshot.py",
+          "sha256": "a7f2413aff9807a495c3cd697f14ab813fa254beb8632ea7c2c49b68929010e6",
+          "lines": 316
+        }
+      ],
+      "deviations": [
+        {
+          "id": "S1-D1",
+          "original": "One snapshot/verify/isolated-restore responsibility; split if cohesive complexity warrants",
+          "actual": "Separate state reader and restore modules from public CLI",
+          "reason": "Purposeful responsibilities under 400 lines",
+          "files": [
+            "scripts/job_snapshot.py",
+            "scripts/snapshot_state.py",
+            "scripts/snapshot_restore.py",
+            "tests/snapshot_fixture.py",
+            "tests/test_job_snapshot.py"
+          ],
+          "checks": "21 tests plus public CLI readback",
+          "effect": "Same exact-recovery semantics",
+          "risk": "Sibling imports exercised",
+          "downstream_impact": "none",
+          "classification": "accepted"
+        },
+        {
+          "id": "S1-D2",
+          "original": "Planned capture, verify and restore; restore requires current ownership and expected bytes",
+          "actual": "Add guard CLI and receipt",
+          "reason": "Freeze manager-verified expected current bytes before restore",
+          "files": [
+            "scripts/job_snapshot.py",
+            "scripts/snapshot_restore.py",
+            "references/workflow.md",
+            "tests/test_job_snapshot.py"
+          ],
+          "checks": "Stale guard and legitimate restore round trips",
+          "effect": "Collision refuses without mutation",
+          "risk": "Manager must verify writer inactivity",
+          "downstream_impact": "S6 uses guard before restore",
+          "classification": "accepted"
+        },
+        {
+          "id": "S1-D3",
+          "original": "Preserve owned leaf index/worktree semantics; report unmet recovery prerequisites",
+          "actual": "Independent clone only; explicitly refuse directory/submodule/special leaf/intent-to-add",
+          "reason": "Do not approximate unsupported recovery input",
+          "files": [
+            "scripts/snapshot_state.py",
+            "scripts/job_snapshot.py",
+            "references/workflow.md",
+            "tests/test_job_snapshot.py"
+          ],
+          "checks": "Merge stages/index flags supported; unsupported paths explicitly refuse",
+          "effect": "Required leaf scope fully supported with honest bounds",
+          "risk": "Other job types need their own recovery prerequisite",
+          "downstream_impact": "none; S6 uses supported fixtures",
+          "classification": "accepted"
+        }
+      ],
+      "downstream_impact": "none identified",
+      "state": "accepted",
+      "accepted_at": "2026-10-04T08:27:57.484935+00:00",
+      "orchestrator_evidence": "planning/commit-supervisor/execution/S1-orchestrator-inspection.md"
+    },
+    {
+      "id": "S2",
+      "scope": "Independent review and bounded repair",
+      "prerequisites": [
+        "S1"
+      ],
+      "criteria_source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/SPEC.md#s2",
+      "checks": "required commands and criteria in approved SPEC",
+      "builder": "/root/s2_builder",
+      "reviewers": [
+        {
+          "identity": "/root/s2_builder/s2_builder_review_1",
+          "gate": "builder",
+          "result": "FINDINGS",
+          "terminal": true,
+          "close_agent": "unavailable",
+          "report": "planning/commit-supervisor/execution/S2-builder-review-1.md",
+          "covered_identity": "planning/commit-supervisor/execution/S2-pass-1-authority/S2-current-files.json"
+        },
+        {
+          "identity": "/root/s2_builder/s2_builder_review_2",
+          "gate": "builder",
+          "result": "FINDINGS",
+          "terminal": true,
+          "close_agent": "unavailable",
+          "report": "planning/commit-supervisor/execution/S2-builder-review-2.md",
+          "covered_identity": "planning/commit-supervisor/execution/S2-builder-pass-2-authority/S2-current-files.json"
+        },
+        {
+          "identity": "/root/s2_builder/s2_builder_review_3",
+          "gate": "builder",
+          "state": "terminal",
+          "fork_turns": "none",
+          "close_agent": "unavailable",
+          "result": "FINDINGS",
+          "terminal": true,
+          "report": "planning/commit-supervisor/execution/S2-builder-review-3.md",
+          "covered_identity": "planning/commit-supervisor/execution/S2-builder-pass-3-authority/S2-current-files.json"
+        },
+        {
+          "identity": "/root/s2_builder/s2_builder_review_4",
+          "gate": "builder",
+          "result": "CLEAN",
+          "terminal": true,
+          "close_agent": "unavailable",
+          "report": "planning/commit-supervisor/execution/S2-builder-review-4.md",
+          "covered_identity": "planning/commit-supervisor/execution/S2-builder-pass-4-authority/S2-current-files.json"
+        },
+        {
+          "identity": "/root/s2_acceptance_1",
+          "gate": "orchestrator_acceptance",
+          "state": "terminal",
+          "fork_turns": "none",
+          "close_agent": "unavailable",
+          "result": "CLEAN",
+          "terminal": true,
+          "report": "planning/commit-supervisor/execution/S2-acceptance-review-1.md"
+        }
+      ],
+      "current_revision": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-code-review-orchestrator/SKILL.md",
+          "sha256": "61a2e611803aa918b22b9356e19f1d863a3e7a6ac05cf9cc491f41e175d16129",
+          "lines": 51
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-code-review-orchestrator/agents/openai.yaml",
+          "sha256": "24a3b0515c3c858cf7af6a3a3887a2b943b4a6bf4ea799b33faef87cc38517a8",
+          "lines": 4
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-code-review-orchestrator.toml",
+          "sha256": "1e06b777794a371a2620a7df3d97caaeb95cb67652b18461e1db6f9744b653e0",
+          "lines": 3
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-repair-worker/SKILL.md",
+          "sha256": "f6aa836695ab3cfb22b256e0bc6c5df5cd64b1a65e2ca75654da59be3972daa9",
+          "lines": 50
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-repair-worker/agents/openai.yaml",
+          "sha256": "71f4602466de516b59a8fabbb225a61a51dcfe7922deb2a46e08b95ba39cd47b",
+          "lines": 4
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-repair-worker.toml",
+          "sha256": "90d9830f49a41ca63712aca1096a31f9224b9bb06d6adea60a9d715b1364fc81",
+          "lines": 3
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-review-gate/SKILL.md",
+          "sha256": "cc738b3ecebca875b1f6d4460d26c3185dd3b3dd2a93550086742995a0c6c56a",
+          "lines": 109
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+          "sha256": "96d9b148f37b9bb87f18bd1f55fd84a29f05961b0161d7c2a0298512c172560c",
+          "lines": 303
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+          "sha256": "15a250fb476407020a98740d443e95b612d075515a3500740d6ed56f2222d496",
+          "lines": 250
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_review_packet.py",
+          "sha256": "7830ec4b4d0b10cbab76e2403bdfceacf78f334e4777835daaaa2fc4e8746504",
+          "lines": 378
+        }
+      ],
+      "deviations": [
+        {
+          "id": "S2-D1",
+          "original": "S2 expected skill/profile/workflow/gate files and functional table-driven harness",
+          "actual": "Read-only public JSON evaluator plus CLI tests",
+          "reason": "Cohesive observable harness entry without duplicate model in tests",
+          "files": [
+            "scripts/review_packet.py",
+            "tests/test_review_packet.py"
+          ],
+          "checks": "23 targeted methods; 12 public CLI smoke cases; cumulative44",
+          "effect": "Routing/freshness/hold/disposition simulation without mutation/dispatch",
+          "risk": "Attestations cannot prove actual runtime identity; manager verification and S6 actual chain required",
+          "downstream_impact": "S6 may reuse negative decisions only",
+          "classification": "accepted"
+        }
+      ],
+      "downstream_impact": "none; actual S6 chain remains required",
+      "state": "accepted",
+      "findings": [
+        {
+          "ids": [
+            "S2-F1",
+            "S2-F2",
+            "CR-S2-01",
+            "CR-S2-02",
+            "CR-S2-R3-01"
+          ],
+          "classification": "builder_repair",
+          "current_root_readback": "all five corrections validated; builder gate4 and separate acceptance CLEAN",
+          "raw_root_evidence": [
+            "S2-orchestrator-finding-validation.json",
+            "S2-orchestrator-finding-validation-pass2.json",
+            "S2-orchestrator-static-pass3.json",
+            "S2-orchestrator-finding-validation-pass3.json"
+          ]
+        }
+      ],
+      "orchestrator_evidence": "planning/commit-supervisor/execution/S2-orchestrator-inspection.md",
+      "builder_terminal": "READY_FOR_ORCHESTRATOR_REVIEW",
+      "builder_lifecycle": "terminal; close_agent unavailable",
+      "accepted_at": "2026-10-04T09:38:33.151290+00:00"
+    },
+    {
+      "id": "S3",
+      "scope": "Settled Wiki handoff and independent documentation audit",
+      "prerequisites": [
+        "S1",
+        "S2"
+      ],
+      "criteria_source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/SPEC.md#s3",
+      "checks": "required commands and criteria in approved SPEC",
+      "builder": "/root/s3_builder",
+      "reviewers": [
+        {
+          "identity": "/root/s3_builder/s3_builder_review_1",
+          "agent_type": "clean-room-reviewer",
+          "fork_turns": "none",
+          "root_model_effort_inherited": true,
+          "override": false,
+          "result": "CLEAN",
+          "terminal_confirmed_by": "list_agents",
+          "close_agent": "unavailable",
+          "report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S3-builder-review-1.md",
+          "report_sha256": "ac49049f35daecc6ab255c529562d8432e679e8c685ad6f924e70dc4e976b92d"
+        },
+        {
+          "identity": "/root/s3_acceptance_1",
+          "gate": "orchestrator_acceptance",
+          "state": "terminal",
+          "fork_turns": "none",
+          "close_agent": "unavailable",
+          "result": "CLEAN",
+          "terminal": true,
+          "report": "planning/commit-supervisor/execution/S3-acceptance-review-1.md"
+        }
+      ],
+      "current_revision": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+          "sha256": "f30199373a1e5fbd59d3f3425dcaa2553839d32b70ec62681cca1f26f357acbe",
+          "lines": 315
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/job-template.md",
+          "sha256": "2631f5ba8734a764ca3a4c9bb11b4bf1a8375b81331c259a9f5d35ceab6de5a3",
+          "lines": 102
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/wiki-handoff.md",
+          "sha256": "4d9198cfa72345335294ea3046c6895e10827ec65456ff2c0339c5e8f247c432",
+          "lines": 143
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+          "sha256": "5694da42dabb5e5ca14f95fb35f559c8b2e54c6f0f287db57cb71372de9fe79f",
+          "lines": 271
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+          "sha256": "86041f2634b107fc85f7c15d0f397b59ad8fb0b648ae9990a7b7e592977fa22e",
+          "lines": 122
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/wiki_fixture.py",
+          "sha256": "cd2a1024f2acad7844a06406b7ff3f1794a016da21ffdd2d04abfae859e7a6de",
+          "lines": 175
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_wiki_handoff.py",
+          "sha256": "5a35d5586b11af10fea182f3ec45f44c19a14117223e7a54d5328b5e7afe4269",
+          "lines": 187
+        }
+      ],
+      "deviations": [
+        {
+          "id": "S3-D1",
+          "original": "Workflow Wiki section and bounded necessary integration; expected paths advisory",
+          "actual": "Cohesive wiki-handoff.md reference with append-only workflow/template and bounded design/handoff reuse paragraphs",
+          "reason": "Purposeful responsibility and under400line guidance, room for S4/S5",
+          "files": [
+            "references/wiki-handoff.md",
+            "references/workflow.md",
+            "references/job-template.md",
+            "review-and-merge-design.md",
+            "review-and-merge-handoff.md"
+          ],
+          "checks": "56links, exact prefix/H2/readback;11targeted/55cumulative",
+          "effect": "Full bounded article procedure with independent original-scope audit",
+          "risk": "Added reference dependency checked",
+          "downstream_impact": "S4-S6 follow routed reference; same scope",
+          "classification": "accepted"
+        },
+        {
+          "id": "S3-D2",
+          "original": "Disposable Wiki fixture demonstrates required outcomes",
+          "actual": "Test-only wiki_fixture.py shared with test_wiki_handoff.py and retained smoke",
+          "reason": "Cohesive explicit subject/dependency fixture; no production scanner",
+          "files": [
+            "tests/wiki_fixture.py",
+            "tests/test_wiki_handoff.py"
+          ],
+          "checks": "11targeted/55cumulative plus real node audit twice",
+          "effect": "Preimages/collision/no-op/drift/coverage/import observable",
+          "risk": "Fixtures cannot attest real agent identity or discover arbitrary omissions",
+          "downstream_impact": "S6 actual agents/runtime still required",
+          "classification": "accepted"
+        },
+        {
+          "id": "S3-D3",
+          "original": "Exact metadata and real staged generation/check evidence",
+          "actual": "Use existing renderer gray-matter dependency for strict authored metadata oracle; real server CLI remains generator",
+          "reason": "Existing server limited parser reproduces four failures on valid block arrays/emptyarray",
+          "files": [
+            "tests/wiki_fixture.py"
+          ],
+          "checks": "Initial failure retained; current11tests; actual seam inspected",
+          "effect": "Correct valid source array/quoted timestamp readback",
+          "risk": "Existing product parser limitation remains; no app rendering claim",
+          "downstream_impact": "No criterion waived; S6 real UI required",
+          "classification": "accepted"
+        }
+      ],
+      "downstream_impact": "none identified",
+      "state": "accepted",
+      "builder_terminal": "READY_FOR_ORCHESTRATOR_REVIEW",
+      "builder_lifecycle": "terminal; close_agent unavailable",
+      "orchestrator_evidence": "planning/commit-supervisor/execution/S3-orchestrator-inspection.md",
+      "accepted_at": "2026-10-04T10:05:28.208649+00:00"
+    },
+    {
+      "id": "S4",
+      "scope": "Verified isolated development runtime",
+      "prerequisites": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "criteria_source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/SPEC.md#s4",
+      "checks": "required commands and criteria in approved SPEC",
+      "builder": "/root/s4_builder",
+      "reviewers": [
+        {
+          "identity": "/root/s4_builder/s4_builder_review_1",
+          "agent_type": "clean-room-reviewer",
+          "fork_turns": "none",
+          "root_model_effort_inherited": true,
+          "overrides": false,
+          "result": "CLEAN",
+          "terminal_confirmed_by": "list_agents completed",
+          "close_agent": "unavailable",
+          "raw_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-builder-review-1.md",
+          "raw_report_sha256": "3c2240dcb6d1bfbc42f978a4d874c4bee1064352e961183a367c3825f7c16b0e",
+          "inline_report_saved_by": "/root/s4_builder; exact raw terminal text",
+          "frozen_packet": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-pass-1/manifest.json"
+        },
+        {
+          "identity": "/root/s4_acceptance_1",
+          "gate": "orchestrator_acceptance",
+          "state": "terminal",
+          "fork_turns": "none",
+          "close_agent": "unavailable",
+          "terminal": true,
+          "result": "CLEAN",
+          "report": "planning/commit-supervisor/execution/S4-acceptance-review-1.md",
+          "report_sha256": "290752bacfcd55b708f03f0b5dfe750fa05bab1919e4066699aee0f355290f1a"
+        },
+        {
+          "identity": "/root/s4_builder/s4_race_review_1",
+          "gate": "builder_runtime_repair",
+          "result": "CLEAN",
+          "terminal": true,
+          "close_agent": "unavailable",
+          "report": "planning/commit-supervisor/execution/S4-race-builder-review-1.md",
+          "assessment_consumed": false,
+          "excluded_entry": "036"
+        },
+        {
+          "identity": "/root/s4_race_acceptance_1",
+          "gate": "orchestrator_runtime_repair_acceptance",
+          "state": "terminal",
+          "fork_turns": "none",
+          "model_effort": "inherited root without override",
+          "read_only": true,
+          "assignment": "planning/commit-supervisor/execution/S4-race-acceptance-assignment.json",
+          "close_agent": "unavailable",
+          "result": "CLEAN",
+          "report": "planning/commit-supervisor/execution/S4-race-acceptance-review-1.md",
+          "report_sha256": "eef62419ce8a71b6d837ac9c5b543648edc1aa50ab90dc2ac9e9bf74355e5dde",
+          "terminal_at": "2026-10-04T12:34:44Z"
+        }
+      ],
+      "current_revision": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh",
+          "sha256": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+          "mode": 493,
+          "lines": 5
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs",
+          "sha256": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e",
+          "mode": 420,
+          "lines": 60
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs",
+          "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+          "mode": 420,
+          "lines": 178
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs",
+          "sha256": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+          "mode": 420,
+          "lines": 93
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs",
+          "sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+          "mode": 420,
+          "lines": 114
+        },
+        {
+          "path": "/Users/rccurtrightjr./.codex/skills/fusion-electron-restart/SKILL.md",
+          "sha256": "ca796770a18e1833ac025c24a881a62b7b07e6ee177bb08aaf00798b7b141153",
+          "mode": 420,
+          "lines": 30
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+          "sha256": "77f805037ed1384e3a387cb246d95df95fc2e0858755a63e95228d684403c6a7",
+          "mode": 420,
+          "lines": 325
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/runtime-handoff.md",
+          "sha256": "1f32dcb413d10288ced451ba8806dfc1b325e280e6919e35165e8a8d70b50694",
+          "mode": 420,
+          "lines": 71
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs",
+          "sha256": "9b4bb189ebff26ceaf9b899abafa75400ebbd5e9157f0a45468640d87459ad85",
+          "mode": 420,
+          "lines": 328
+        }
+      ],
+      "deviations": [
+        {
+          "id": "S4-D1",
+          "original_criterion": "Own canonical restart script, bounded procedure correction and focused tests; advisory expected files; no app architecture change",
+          "actual": "Add four cohesive R/scripts/fusion-restart*.mjs modules; canonical shell forwards to target/process/probe/coordinator support",
+          "reason": "Safe process/profile selection and real initialized-shell verification need distinct cohesive responsibilities; each module below 200 lines",
+          "authority": "Approved S4 necessary bounded integration plus explicit root authorization for cohesive scripts support",
+          "paths": [
+            "R/restart-fusion.sh",
+            "R/scripts/fusion-restart-target.mjs",
+            "R/scripts/fusion-restart-processes.mjs",
+            "R/scripts/fusion-restart-probe.mjs",
+            "R/scripts/fusion-restart.mjs"
+          ],
+          "checks": "bash -n; four node syntax checks;14 focused tests; actual read-only default/Alpha selector;55 cumulative tests",
+          "observable_effect": "No global pkill/pidfiles/borrowed runtime; explicit/inherited/default storage resolution; selected-only effects and actual CDP shell connection gate",
+          "risk": "macOS ps/lsof and selected Playwright/Electron dependencies are required; unsupported observations fail honestly; actual app success unproven until S6",
+          "downstream_consumer": "S5 runtime routing and S6 candidate copies/real runtime",
+          "downstream_impact": "Copy all four support modules with canonical script; actual isolated app/UI proof still required",
+          "proposed_classification": "accepted",
+          "classification": "accepted"
+        },
+        {
+          "id": "S4-D2",
+          "original_criterion": "Workflow runtime section/reference; preserve accepted predecessor bytes and purposeful file responsibility",
+          "actual": "Append 10-line runtime route to workflow and add cohesive runtime-handoff.md reference",
+          "reason": "Keeps accepted workflow prefix byte-identical and complete runtime procedure separate under file-size guidance",
+          "authority": "Approved S4 workflow runtime section, manager explicitly allows bounded cohesive runtime reference",
+          "paths": [
+            "K/references/workflow.md",
+            "K/references/runtime-handoff.md"
+          ],
+          "checks": "7 Markdown links resolve; accepted prefix exact;14 focused/55 cumulative and source preservation",
+          "observable_effect": "Full ownership/environment/runtime/diagnostic/recovery and readiness procedure is discoverable without broadening role/publication authority",
+          "risk": "Reference link must remain packaged; current static links checked",
+          "downstream_consumer": "S5 top-level entry; S6 executing supervisor",
+          "downstream_impact": "Follow reference and preserve exact S4 support dependencies; no new feature",
+          "proposed_classification": "accepted",
+          "classification": "accepted"
+        }
+      ],
+      "downstream_impact": "none identified",
+      "state": "accepted",
+      "started_at": "2026-10-04T10:06:29.499676+00:00",
+      "builder_terminal": "READY_FOR_ORCHESTRATOR_REVIEW",
+      "builder_lifecycle": "terminal; close_agent unavailable",
+      "orchestrator_evidence": "planning/commit-supervisor/execution/S4-orchestrator-inspection.md",
+      "findings": [
+        {
+          "id": "S4-R1",
+          "classification": "builder_repair",
+          "authority": "S4 compatible default restart with exact selected profile ownership and Alpha isolation",
+          "path": "scripts/fusion-restart-processes.mjs",
+          "consequence": "Alpha suffix-prefix matches default profile, so ordinary default selector falsely refuses common coexistence",
+          "original_evidence": "S4-orchestrator-preliminary-observation.json",
+          "current_correction": "Exact CLI profile boundary and env/argument reconciliation; malformed/unsupported flags refuse before signals",
+          "current_evidence": [
+            "S4-orchestrator-tests.log",
+            "S4-orchestrator-readback.json"
+          ],
+          "state": "corrected current bytes; builder and separate acceptance CLEAN"
+        }
+      ],
+      "accepted_at": "2026-10-04T10:48:39.821515+00:00",
+      "preserved_acceptance": "Original accepted S4 definitions/raw gates retained; actual systemProcesses cleanup race invalidates affected inventory/stop readiness until renewed current-byte gates",
+      "runtime_findings": [
+        {
+          "id": "S4-R2",
+          "severity": "material",
+          "confidence": "high",
+          "authority": "SPEC S4 safe selected process ownership/termination; S6 owned cleanup and repeated real restart",
+          "affected_paths": [
+            "R/scripts/fusion-restart-processes.mjs",
+            "R/scripts/fusion-restart.mjs stopOwned seam"
+          ],
+          "reproduction": "Actual private Electron SIGTERM shutdown: ps snapshot PID76638 then lsof exited1 empty as process died; systemProcesses throws, stopOwned aborted. Later zero-owned readback proves disappearance.",
+          "raw": "planning/commit-supervisor/execution/S6-prep/cleanup.log",
+          "raw_sha256": "3fe20eca25aaa17758cfdcaa1fa6923c8fe990999b98b61988170e037b4770d2",
+          "state": "repair-assigned",
+          "responsible_builder": "/root/s4_builder",
+          "assignment": "planning/commit-supervisor/execution/S4-runtime-race-repair-assignment.md",
+          "actual_no_profile_loss": "No private remaining processes; protected runtimes untouched; malformed/live ownership still must refuse"
+        }
+      ],
+      "runtime_repair_deviations": [
+        {
+          "id": "S4-R2-D1",
+          "original_criterion": "S4 selected-checkout/profile process trees must stop safely for repeat restart/cleanup; SPEC expected-file list names canonical restart and focused tests, not separate process modules.",
+          "actual": "Extend the existing authorized process support module with state-bearing ps records and boundary reobservation; add optional command executor for meaningful OS-boundary fixtures. stopOwned remains unchanged. Add three focused tests in existing restart test file.",
+          "reason": "Actual accepted-candidate cleanup raced a process exit between ps and lsof, aborting stopOwned on empty exit 1. Only reobserved absence/terminal state can resolve that race safely.",
+          "authority": "Owner-approved SPEC-COMMIT-SUPERVISOR-01 S4 and /root consolidated S4-runtime-race-repair-assignment.md; root explicit cohesive fusion-restart support authorization.",
+          "paths": [
+            "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs",
+            "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs"
+          ],
+          "checks": "17 focused tests; actual disposable lsof/env/post-SIGTERM exit races; live permission/read errors and PID/command drift zero-signal fixtures; 55 cumulative workflow tests; syntax/default CLI/skill/index/static preservation.",
+          "observable_effect": "Confirmed absent/Z/X processes do not abort inventory or proper selected cleanup. Live empty failures, malformed/read-denied inventory, identity drift and PID reuse remain fail-closed. No selection/profile/DB/cache/launch/readiness behavior grows.",
+          "risk": "One extra ps reobservation per inspected relevant live process; process identity retains accepted ps lstart resolution and command/uid evidence. OS permission failures remain visible. Synthetic timing controls complement actual disposable OS I/O; no real app success claim.",
+          "downstream_impact": "Root acceptance required before S6 resumes. S6 must replay the changed helper into private candidate, refresh candidate/input/recovery fingerprints as affected and repeat runtime/cleanup/preparation evidence and fresh prep gate. Earlier S6 runtime/cleanup evidence does not certify repaired bytes.",
+          "proposed_classification": "accepted",
+          "classification": "accepted"
+        },
+        {
+          "id": "S4-R2-D2",
+          "original_criterion": "Fresh independent review receives raw criteria/current artifacts/evidence without manager or prior reviewer conclusions.",
+          "actual": "Evidence freeze glob inadvertently included a manager preliminary assessment as entry036; original snapshot retained, assessment source/entry expressly excluded and a 74-entry filtered input manifest governed completion. Reviewer confirmed only path/hash provenance encountered, no content display or interpretation.",
+          "reason": "Parent identified the accidentally captured assessment before gate completion; filtering preserves independent review and immutable audit history.",
+          "authority": "Local mc-spec-review-gate freshness rule and /root explicit correction authorizing continuation only if assessment not consumed; fresh reviewer raw consumption response confirms unread condition.",
+          "paths": [
+            "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-pass-1/manifest.json",
+            "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-filtered-manifest.json",
+            "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-filtered-freeze.json",
+            "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-independence-note.json",
+            "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-lifecycle.json"
+          ],
+          "checks": "Reviewer raw consumption acknowledgment and terminal clean report explicitly confirm exclusion/unread status; all 74 filtered source/frozen hashes verified by reviewer and post-review builder readback.",
+          "observable_effect": "Fresh gate evaluates unchanged current source/raw checks independently; original excluded snapshot remains historical evidence only. No product or substantive verification changed.",
+          "risk": "Consumers must use filtered manifest rather than indiscriminately reading original 75-entry archive.",
+          "downstream_impact": "Root acceptance packet must exclude manager/previous reviewer conclusions; use filtered raw inputs plus current criteria/deviation evidence. No extra runtime replay beyond D1.",
+          "proposed_classification": "accepted",
+          "classification": "accepted"
+        }
+      ],
+      "runtime_repair_state": "accepted",
+      "runtime_repair_current": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs",
+          "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+          "lines": 178,
+          "mode": 420
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs",
+          "sha256": "9b4bb189ebff26ceaf9b899abafa75400ebbd5e9157f0a45468640d87459ad85",
+          "lines": 328,
+          "mode": 420
+        }
+      ],
+      "last_check": "2026-10-04T12:35:41.823990+00:00",
+      "runtime_repair_accepted_at": "2026-10-04T12:36:51.457292+00:00",
+      "runtime_repair_frozen_manifest_sha256": "88f974ccbf35e3828676e51fbe13b133571ea56b8350a7d423bc4919997b7a39",
+      "runtime_repair_semantic_packet_identity": "sha256:3d36ef2d8e7edf9112b4eb79624f1a1f0dbf629e82c6c45ca78a6521fce79c23",
+      "orchestrator_runtime_repair_evidence": [
+        "planning/commit-supervisor/execution/S4-race-orchestrator-final-inspection.json",
+        "planning/commit-supervisor/execution/S4-race-orchestrator-checks.json",
+        "planning/commit-supervisor/execution/S4-race-orchestrator-protected.json"
+      ],
+      "runtime_repair_advisory": "Preexisting Fusion Restart Wiki summary older; invocation unchanged. Retained without new product obligation."
+    },
+    {
+      "id": "S5",
+      "scope": "Assignable top-level entry, active-call migration and owner gate",
+      "prerequisites": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ],
+      "criteria_source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/SPEC.md#s5",
+      "checks": "required commands and criteria in approved SPEC",
+      "builder": "/root/s5_builder",
+      "reviewers": [
+        {
+          "identity": "/root/s5_builder/s5_builder_review_1",
+          "gate": "builder",
+          "state": "terminal",
+          "fork_turns": "none",
+          "close_agent": "unavailable",
+          "frozen_packet": "planning/commit-supervisor/execution/S5-pass-1/manifest.json",
+          "frozen_packet_sha256": "68e34c0ebaa6b000b3fbfc5c0d62699013874d6fa5d3c65997e2244618f8d8ee",
+          "terminal": true,
+          "result": "CLEAN",
+          "terminal_evidence": "E/S5-terminal.json and E/S5/reviewer-lifecycle.json, native completed disposition",
+          "report": "planning/commit-supervisor/execution/S5-builder-review-1.md"
+        },
+        {
+          "identity": "/root/s5_acceptance_1",
+          "gate": "orchestrator_acceptance",
+          "state": "terminal",
+          "fork_turns": "none",
+          "model_effort": "inherited without override",
+          "close_agent": "unavailable",
+          "terminal": true,
+          "result": "CLEAN",
+          "report": "planning/commit-supervisor/execution/S5-acceptance-review-1.md",
+          "report_sha256": "a4b1f7ccb54f09736c9043efb4ba32a5f951df124f28bdcb4f4feebe6b5d10d9"
+        }
+      ],
+      "current_revision": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md",
+          "relative": "AGENTS.md",
+          "sha256": "54cb3ff16f0fae8847341ba38f53af6afd6aa6d84ac4ddb7df9e20faf13888dc",
+          "mode": 420,
+          "bytes": 11356,
+          "lines": 60
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/session-contract.md",
+          "relative": "session-contract.md",
+          "sha256": "d82d5a815a94f8c27b64d1d90aa0085790e3d98408c011e86d6126dd1bd9b570",
+          "mode": 420,
+          "bytes": 7123,
+          "lines": 37
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/record-templates.md",
+          "relative": "record-templates.md",
+          "sha256": "41a4de158caea4cd1512b839150db77735d3a36cdfbe4fb688059bc8a86732e7",
+          "mode": 420,
+          "bytes": 4673,
+          "lines": 59
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/mission-control.md",
+          "relative": "mission-control.md",
+          "sha256": "daff3be04e4c9db92098517de4a7866fb7f9cb86532d1bd60eab6d6f78272f13",
+          "mode": 420,
+          "bytes": 10810,
+          "lines": 93
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+          "relative": "deployment.md",
+          "sha256": "7c5c447fc48805dcbea283e1bd7c5e4290b3443496abdb2876c6ccf460fe41b1",
+          "mode": 420,
+          "bytes": 21875,
+          "lines": 114
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+          "relative": "skills-and-agents.md",
+          "sha256": "41fe2c81f6da2ed87e4fd625e60044988fd10c5725da33446ebc360f6ab8cba9",
+          "mode": 420,
+          "bytes": 17686,
+          "lines": 113
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+          "relative": "handoff.md",
+          "sha256": "52ed4a92ffef4a3f6ecd2f128f5e5886a2d1ed496d841e9f83a38481360da937",
+          "mode": 420,
+          "bytes": 35271,
+          "lines": 196
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+          "relative": "todo.md",
+          "sha256": "aca67f27b5c1cd4c75e5e8ebfc388c446ff505a9581719e239d6ed40087a49b1",
+          "mode": 420,
+          "bytes": 22422,
+          "lines": 138
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+          "relative": "registry.md",
+          "sha256": "e3ffc6d20ff9d31dfe1b0a7f5bbbeabe3351cee9a3c4ec9bc8f990c080dd08ea",
+          "mode": 420,
+          "bytes": 13674,
+          "lines": 108
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/index.json",
+          "relative": "index.json",
+          "sha256": "c93b4e279488456bd2e81b2836f8e1e11a80301af0f0b3d1ba521f9acfbdb460",
+          "mode": 420,
+          "bytes": 39626,
+          "lines": 1142
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/config.toml",
+          "relative": ".codex/config.toml",
+          "sha256": "21558b2f2eae1c44479ea7d5afe5e636a379b8b08f4a79c108715d99f9b81322",
+          "mode": 420,
+          "bytes": 3017,
+          "lines": 62
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-review-and-merge.toml",
+          "relative": ".codex/agents/mc-review-and-merge.toml",
+          "absent": true
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-review-and-merge/SKILL.md",
+          "relative": ".agents/skills/mc-review-and-merge/SKILL.md",
+          "absent": true
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-review-and-merge/agents/openai.yaml",
+          "relative": ".agents/skills/mc-review-and-merge/agents/openai.yaml",
+          "absent": true
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mission-control/SKILL.md",
+          "relative": ".agents/skills/mission-control/SKILL.md",
+          "sha256": "49ad5a39b4ca9bc70194f7268b55d7e859c8a1edb6af2398f4cf7499f6972acd",
+          "mode": 420,
+          "bytes": 5403,
+          "lines": 32
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/monitor/SKILL.md",
+          "relative": ".agents/skills/monitor/SKILL.md",
+          "sha256": "ddd24895961ae68a0adc53a61f9a1722b9169b6b89da12c9960c0a7816831425",
+          "mode": 420,
+          "bytes": 5490,
+          "lines": 34
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/status/references/report-format.md",
+          "relative": ".agents/skills/status/references/report-format.md",
+          "sha256": "3cd603a9c454f2a2458b09af2d50ec416768cfa5202f1bd2bf783f26dbf5d557",
+          "mode": 420,
+          "bytes": 3039,
+          "lines": 43
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-implementation-supervisor/SKILL.md",
+          "relative": ".agents/skills/mc-roadmap-implementation-supervisor/SKILL.md",
+          "sha256": "aeff519d09551470d8aadbf6a223bbee89729d96184726addef155492a3b1f38",
+          "mode": 420,
+          "bytes": 17125,
+          "lines": 171
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+          "relative": ".agents/skills/mc-commit-supervisor/references/workflow.md",
+          "sha256": "27aab53da9edbed9f6ee8ceb4917d7c7531a7de914a3c2df7fb2196b6bd4a20c",
+          "mode": 420,
+          "bytes": 21146,
+          "lines": 334
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/job-template.md",
+          "relative": ".agents/skills/mc-commit-supervisor/references/job-template.md",
+          "sha256": "21bf5a6b99bb333115c43b594996810159a7a34ddaa360936895cf1ce95d35f8",
+          "mode": 420,
+          "bytes": 7305,
+          "lines": 115
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md",
+          "relative": ".agents/skills/mc-commit-supervisor/SKILL.md",
+          "sha256": "b4ec0266a8d72f573dd4f3670c671a856ee5cc98b6942aad48683fa22fb14d68",
+          "mode": 420,
+          "bytes": 3967,
+          "lines": 62
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/agents/openai.yaml",
+          "relative": ".agents/skills/mc-commit-supervisor/agents/openai.yaml",
+          "sha256": "1b938e91f8799afb36273459f1172b18b7e45aceed5b9cb2b81af9d9c86ce82d",
+          "mode": 420,
+          "bytes": 364,
+          "lines": 6
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-supervisor.toml",
+          "relative": ".codex/agents/mc-commit-supervisor.toml",
+          "sha256": "01887fdc12c962be5a7438b513836e6269cff1f9683b7a17c2edfbf2aa961044",
+          "mode": 420,
+          "bytes": 1563,
+          "lines": 3
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/owner-publication.md",
+          "relative": ".agents/skills/mc-commit-supervisor/references/owner-publication.md",
+          "sha256": "e443f0a689532a42ababb29bf6729a49dc56ba91f6727364f46faafb1ae19785",
+          "mode": 420,
+          "bytes": 7391,
+          "lines": 110
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+          "relative": "review-and-merge-design.md",
+          "sha256": "de9ee5cf8ba042caa0ea452b6b67c791ac40bdcf76cbf4a04c0d2555fcb63a68",
+          "mode": 420,
+          "bytes": 33283,
+          "lines": 273
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+          "relative": "review-and-merge-handoff.md",
+          "sha256": "c752f13b4ba459793a178aee789cf6bd42bf1c39184f2b045b17494980176198",
+          "mode": 420,
+          "bytes": 15813,
+          "lines": 124
+        }
+      ],
+      "deviations": [
+        {
+          "id": "S5-D1",
+          "original_criterion": "S5 finish shared workflow/template; precise owner/operation gate; purposeful file responsibility below 400 lines",
+          "actual": "Add cohesive owner-publication.md reached from entry/workflow/template",
+          "reason": "Complete owner/successor/operation contract without expanding accepted shared sections",
+          "authority": "Approved S5 owner-gate scope and explicit root permission for cohesive reference",
+          "paths": [
+            "K/SKILL.md",
+            "K/references/owner-publication.md",
+            "K/references/workflow.md",
+            "K/references/job-template.md"
+          ],
+          "checks": "7 skill validators;259 links; accepted prefix exact;12 profiles/21document index;55Python/14Node unchanged dependency evidence",
+          "observable_effect": "Terminal owner wait; bounded fix scope with affected current gates/runtime; current precise pre-operation authority; disjoint operation/landing/adoption/Alpha receipts",
+          "risk": "Reference must remain packaged; links verified, actual behavior remains S6",
+          "downstream_consumer": "S6 and future assigned Commit Supervisor jobs",
+          "downstream_impact": "Read and exercise full reference; no added scope",
+          "classification": "accepted"
+        },
+        {
+          "id": "S5-D2",
+          "original_criterion": "S5 active-caller expected list omits current mission-control.md charter",
+          "actual": "Migrate four active charter phrases and qualify historical hierarchy with D024 alias",
+          "reason": "Prevent active charter selecting retired role",
+          "authority": "Explicit root assigned bounded active-caller correction",
+          "paths": [
+            "C/mission-control.md"
+          ],
+          "checks": "Whole active-caller/61alias classification sweep; current links/H2/index readback",
+          "observable_effect": "Canonical entry consistent with local instructions without new role or dispatch activation",
+          "risk": "Historical statements remain qualified; source decisions untouched",
+          "downstream_consumer": "S6 and later MC entry",
+          "downstream_impact": "Compatible route correction only",
+          "classification": "accepted"
+        },
+        {
+          "id": "S5-D3",
+          "original_criterion": "S5 retire legacy entry/profile and migrate active links; S3 design/handoff not named S5 ownership",
+          "actual": "Retarget removed entry/profile links and obsolete MC-T09 anchors in design/handoff; add current cutover provenance",
+          "reason": "Keep historical source links useful after canonical cutover",
+          "authority": "Explicit root mechanically necessary integration authorization",
+          "paths": [
+            "C/review-and-merge-design.md",
+            "C/review-and-merge-handoff.md"
+          ],
+          "checks": "Exact current hashes/H2/link readback; preimages retained; S3 article/fixture/generation behavior dependencies unchanged",
+          "observable_effect": "Historical prose/source fingerprints preserved while active destinations resolve",
+          "risk": "Link/hash evidence renewed; historical text scoped by current note",
+          "downstream_consumer": "S6 and current re-entry/document readers",
+          "downstream_impact": "No S3 behavior invalidation; current route evidence updated",
+          "classification": "accepted"
+        }
+      ],
+      "downstream_impact": "Compatible canonical route/reference migration; S6 actual behavioral proof and current factual closeout remain required",
+      "state": "accepted",
+      "started_at": "2026-10-04T10:48:39.821785+00:00",
+      "orchestrator_evidence": "planning/commit-supervisor/execution/S5-orchestrator-inspection.md",
+      "builder_terminal": true,
+      "builder_report": "planning/commit-supervisor/execution/S5-builder.md",
+      "builder_terminal_record": "planning/commit-supervisor/execution/S5-terminal.json",
+      "accepted_at": "2026-10-04T11:32:01.470585+00:00",
+      "current_manifest": "planning/commit-supervisor/execution/S5/current-manifest.json",
+      "current_manifest_sha256": "e61a55051eb1981a6375230669ebd367fca7cb5b5eb7f900a4dc8c31187b7936"
+    },
+    {
+      "id": "S6",
+      "scope": "Actual isolated workflow and recovery rehearsal",
+      "prerequisites": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5"
+      ],
+      "criteria_source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/SPEC.md#s6",
+      "checks": "required commands and criteria in approved SPEC",
+      "builder": "/root/s6_builder",
+      "reviewers": [
+        {
+          "identity": "/root/s6_builder/s6_prep_review_1",
+          "gate": "builder_preparation",
+          "result": "CLEAN",
+          "terminal": true,
+          "fork_turns": "none",
+          "close_agent": "unavailable",
+          "report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-builder-review-1.md",
+          "scope": "preparation only"
+        },
+        {
+          "identity": "/root/s6_prep_acceptance_1",
+          "gate": "orchestrator_preparation_acceptance",
+          "result": "CLEAN",
+          "terminal": true,
+          "fork_turns": "none",
+          "close_agent": "unavailable",
+          "report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-preparation-acceptance-review-1.md",
+          "scope": "preparation only"
+        },
+        {
+          "identity": "/root/s6_builder/s6_full_review_1",
+          "gate": "builder_full_S6",
+          "result": "CLEAN",
+          "terminal": true,
+          "fork_turns": "none",
+          "close_agent": "unavailable",
+          "report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout/reviewer-1.raw.md",
+          "sha256": "7437bf65b0067e5e0ee3c819712ab04477a5579e078cc1368044835d88a0e403"
+        },
+        {
+          "identity": "/root/s6_acceptance_1",
+          "gate": "orchestrator_full_S6_acceptance",
+          "result": "CLEAN",
+          "terminal": true,
+          "fork_turns": "none",
+          "close_agent": "unavailable",
+          "report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-acceptance-review-1.md",
+          "sha256": "6434b6a9192b87b4ee084394fa0de3077d12f07a1a4710bedcf57c47af67ea38"
+        }
+      ],
+      "current_revision": [
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/session-contract.md",
+          "sha256": "d82d5a815a94f8c27b64d1d90aa0085790e3d98408c011e86d6126dd1bd9b570",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/decisions.md",
+          "sha256": "d2cc057a1bfd79455fc420a996a19316403afc35ea446593f3d704ca8222b7ff",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/index.json",
+          "sha256": "c93b4e279488456bd2e81b2836f8e1e11a80301af0f0b3d1ba521f9acfbdb460",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/AGENTS.md",
+          "sha256": "41dc4e9dc4d58e7505cb6fc37b500129502231293894b5f90eda9398315e001d",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/SPEC.md",
+          "sha256": "6d7b351db87e535b0950f94c42c61d503a3ac3fef6587299dfc024c7887df664",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/approval-receipt.md",
+          "sha256": "0de192d5c5f0e422a3ab3301a4376c32b120667f61b03b63f661c0502c150a56",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-review-criterion-definitions.json",
+          "sha256": "fa37f463b9bffc05dcefca1aadda52bc80b11a4bb17a8173d04b719321a4dea9",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-slice-builder/SKILL.md",
+          "sha256": "c4ca4bf6f739ea4bea811b6de41cbea6685ad0abd89543f77df33a8e95ccca94",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-review-gate/SKILL.md",
+          "sha256": "cc738b3ecebca875b1f6d4460d26c3185dd3b3dd2a93550086742995a0c6c56a",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-spec-slice-builder.toml",
+          "sha256": "73670ee0c58e4a34dde11fc34cb20b765f92041bff18de4ae0ee24ad5d178af4",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/config.toml",
+          "sha256": "21558b2f2eae1c44479ea7d5afe5e636a379b8b08f4a79c108715d99f9b81322",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md",
+          "sha256": "b4ec0266a8d72f573dd4f3670c671a856ee5cc98b6942aad48683fa22fb14d68",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/agents/openai.yaml",
+          "sha256": "1b938e91f8799afb36273459f1172b18b7e45aceed5b9cb2b81af9d9c86ce82d",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/job-template.md",
+          "sha256": "21bf5a6b99bb333115c43b594996810159a7a34ddaa360936895cf1ce95d35f8",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/owner-publication.md",
+          "sha256": "e443f0a689532a42ababb29bf6729a49dc56ba91f6727364f46faafb1ae19785",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/runtime-handoff.md",
+          "sha256": "1f32dcb413d10288ced451ba8806dfc1b325e280e6919e35165e8a8d70b50694",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/wiki-handoff.md",
+          "sha256": "4d9198cfa72345335294ea3046c6895e10827ec65456ff2c0339c5e8f247c432",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+          "sha256": "27aab53da9edbed9f6ee8ceb4917d7c7531a7de914a3c2df7fb2196b6bd4a20c",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+          "sha256": "d85c8ae1828bfe94426bde87527ddc3430d720604c78cfdab775db5982dabc58",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+          "sha256": "15a250fb476407020a98740d443e95b612d075515a3500740d6ed56f2222d496",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/snapshot_restore.py",
+          "sha256": "37c75d19a2217759086be00274f14d589a5bb64bb6905f323db7ba1969674c2c",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/snapshot_state.py",
+          "sha256": "a38ffed0cca07299031c2709773caf33ea9065785bf114b6352141fb3310689b",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/install_rehearsal_fixture.py",
+          "sha256": "5d47ce4a60d80c78975bb322f12b6f3516b17050046022096cab38cfc33b0fd2",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/prepare_rehearsal_shell.mjs",
+          "sha256": "cd1005258b4d9668e591dca46245e9184174434b81b09dab7aca8ba407167a7b",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/authority.md",
+          "sha256": "d56710db1edba2ba6ef8798975fb1fb4808a301b0ea2e46bcb81d6645e251010",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/checklist-controller.js",
+          "sha256": "2b9276858645f88d423fb044816deb3b84049b1be09e74369353549d712f2412",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/checklist-guide.md",
+          "sha256": "e05c868a3f60d3975ce517c02ada96887d4671faed1640e203853bc545d58076",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/checklist-view.js",
+          "sha256": "a93d17d7fe8924d9cc077f4e973c3d94743796930c05c9c24bd76fec203d6b6f",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/checklist.css",
+          "sha256": "6e3d4171ec9dd14bff1d521f6d9df9b6afa25bfef0b336dba791e1f7fdfc3184",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/index.html",
+          "sha256": "c2ba834be53b0d84b17f2e2bbcde7e3b468ae05903c3b5179ef7070f342428d2",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal-fixture/navigation-guide.md",
+          "sha256": "4fbe50677f55e83003d8af72f2db702c9ffcea3a514f82feacf56ea3c7983970",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_recovery_smoke.py",
+          "sha256": "82c3a378e38f47a03b07956e72abbb9b1313a6563a7e3cc06ee62eab705e6ee2",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs",
+          "sha256": "e11d5dec9ae3219648abcf86bc7651c32f6d3c08b9a7ffffeeef9740424db697",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_watcher_smoke.mjs",
+          "sha256": "f84f2cbe298cb0394751689f3694dd1a532a4ef8475233094b8b5dad406d8267",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_wiki_recovery_smoke.py",
+          "sha256": "f7a46a1701da0c7cf1bdf1eeb1ce3eaf72197bdef4b0783c63ae3d20c155ccb5",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/snapshot_fixture.py",
+          "sha256": "79e1cfa9975f1e0b4e2040dd8b259543d207b3a770ee08ce9f171f5f22fbc2d4",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/stop_rehearsal_runtime.mjs",
+          "sha256": "34ffc7d6fb4660679557c2f5aeffaaca0fb5428ae418b1c700ca4a6c32fd213e",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_job_snapshot.py",
+          "sha256": "a7f2413aff9807a495c3cd697f14ab813fa254beb8632ea7c2c49b68929010e6",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs",
+          "sha256": "9b4bb189ebff26ceaf9b899abafa75400ebbd5e9157f0a45468640d87459ad85",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_review_packet.py",
+          "sha256": "7830ec4b4d0b10cbab76e2403bdfceacf78f334e4777835daaaa2fc4e8746504",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_wiki_handoff.py",
+          "sha256": "5a35d5586b11af10fea182f3ec45f44c19a14117223e7a54d5328b5e7afe4269",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/wiki_fixture.py",
+          "sha256": "cd2a1024f2acad7844a06406b7ff3f1794a016da21ffdd2d04abfae859e7a6de",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-code-review-orchestrator/SKILL.md",
+          "sha256": "61a2e611803aa918b22b9356e19f1d863a3e7a6ac05cf9cc491f41e175d16129",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-code-review-orchestrator/agents/openai.yaml",
+          "sha256": "24a3b0515c3c858cf7af6a3a3887a2b943b4a6bf4ea799b33faef87cc38517a8",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-repair-worker/SKILL.md",
+          "sha256": "f6aa836695ab3cfb22b256e0bc6c5df5cd64b1a65e2ca75654da59be3972daa9",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-repair-worker/agents/openai.yaml",
+          "sha256": "71f4602466de516b59a8fabbb225a61a51dcfe7922deb2a46e08b95ba39cd47b",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-supervisor.toml",
+          "sha256": "01887fdc12c962be5a7438b513836e6269cff1f9683b7a17c2edfbf2aa961044",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-code-review-orchestrator.toml",
+          "sha256": "1e06b777794a371a2620a7df3d97caaeb95cb67652b18461e1db6f9744b653e0",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-repair-worker.toml",
+          "sha256": "90d9830f49a41ca63712aca1096a31f9224b9bb06d6adea60a9d715b1364fc81",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/AGENTS.md",
+          "sha256": "9d353611f3b5ac94efa92048d1c0f8879d71786bcf1b641f915a0f695f5ef697",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/.agents/wiki-session-contract.md",
+          "sha256": "b5147866ebec7e7f65de1f5f114f14166fe86ccbd8263f1e6ab584f4ec952d00",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/.agents/skills/wiki-audit/SKILL.md",
+          "sha256": "0e43872db5681508f23ccf2fecf5d8fc1969a6585bb987f81f4cce876c66799e",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/.agents/skills/wiki-repair/SKILL.md",
+          "sha256": "3fb23901204ffb2789c84a2229bb91dae14bc55cad611178788c5a96537bef70",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/.agents/skills/wiki-research/SKILL.md",
+          "sha256": "26ee803266813cae416278ededccb98f9030a84806e28e29abd7cef951ef3736",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/000-Code_Standards/PAGE.md",
+          "sha256": "de3995c68ae84f3b0fa389c6af0327e21dd08f30ac9ffbc7548b76f80ac393d7",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/001-Architecture_Routing/PAGE.md",
+          "sha256": "4c5fcbf62912c9e8ff6d3d0e1ec07016145e1f1c90c792a162dfcc3ca1b0bfba",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/002-Frontend_UI/PAGE.md",
+          "sha256": "18a093c333a610ec8d2c77661b29744f1fae6e9ca8f4e113148fee10a0d9fc18",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/003-State_Management/PAGE.md",
+          "sha256": "2b4e55ed7580659b35a91d13f5a7b781960c659868027dd8b6ea6f79e609b105",
+          "mode": 33152,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/004-WebSocket_Protocol/PAGE.md",
+          "sha256": "5b77528cec69d60c11c0487a349ec1cfb0b9a47eb69c213dedd1fbf1797dbad6",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/005-Universal_Event_Bus/PAGE.md",
+          "sha256": "25689bb9d2540fff061040ed14f5dc9789a4d9ceaa49662a4e0a1e448f5b0ee0",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/006-Harness_Adapters/PAGE.md",
+          "sha256": "5ece90e88dac136f7ec464b0219a3eb242b7837d118dbbdaba57de673b8a5919",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/007-Persistence_And_Metadata/PAGE.md",
+          "sha256": "bd3e7be468289ac0a6ee6502cd8b9fc340f03fd7568deb59370ed00cc3b2a7a3",
+          "mode": 33152,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/005-Enforcement/001-Code_Standards/008-Testing_And_Smoke_Slices/PAGE.md",
+          "sha256": "e7319750bd27b7ccdad8e5e451b9779044e8fc7a713fc6d461113b409b39018d",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/001-Style_Guide/PAGE.md",
+          "sha256": "28ae2301be3115e22b6d69691fb5208e2625945998393071874b9a1fbee70629",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/003-Updating_Wikis/PAGE.md",
+          "sha256": "ec1739e2d693c07c5691fa3624b200915ea1c65257a09b75c853ff1c181a1a78",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/004-Audit_Workflow/PAGE.md",
+          "sha256": "2ea02f01a6b71621e59c7b198e53af019194cc4620efdb0ffd8a7199cdadc637",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh",
+          "sha256": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+          "mode": 33261,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs",
+          "sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs",
+          "sha256": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs",
+          "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs",
+          "sha256": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./.codex/skills/fusion-electron-restart/SKILL.md",
+          "sha256": "ca796770a18e1833ac025c24a881a62b7b07e6ee177bb08aaf00798b7b141153",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/000-Wiki_Guidance/005-User_Profile_Preferences_and_Design_Philosophy/PAGE.md",
+          "sha256": "45fa9f630563d79935d5a461b308c823c0db3ded5c23817ba6d4c8a06c794ed5",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./.codex/agents/clean-room-reviewer.toml",
+          "sha256": "3ec16b52c4181728463ef4e1511ccbb2783dc6a9101921c04ba7bba454dd286e",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md",
+          "sha256": "d4dce1ca561b013641ca999d4183a73be739b408cfa5e518c750af783420de6d",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+          "sha256": "432b77f8d83297935d3017063e74fc4172d7376d544139abd0d509cbebc81d16",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+          "sha256": "ca478d6baa5dc05bff44daca96295736d69a7226037b8ce8223fc51251230bc0",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+          "sha256": "1804c147efba7fd8b5fa892c41ee9be6f906c69a7209ce45c9d419ec81c9869e",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+          "sha256": "e8a4da6a21b73a293f57626f315da78e3bc8ff77eb841000a8c5dde441e9bafd",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+          "sha256": "592dd2042cc12042186941128e44b34957e8d9db52773b61ffec3a6ae84d31d9",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/PAGE.md",
+          "sha256": "ccf7a76b4201ce3f5a95b29816f72f85cf1506b6f94172a581c100170dd4b94e",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        },
+        {
+          "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Wiki/007-Chat_System/005-Testing_And_Operations/004-Fusion_Restart/.versions/2026-10-04-141458.md",
+          "sha256": "fa7ecb9041a4d4c9f2f24cba9386b3e844a6dbe98c9af52063b05fe90345a9f0",
+          "mode": 33188,
+          "scope": "Current source/authority/documentation dependency of full S6"
+        }
+      ],
+      "deviations": [],
+      "downstream_impact": "none identified",
+      "state": "accepted",
+      "phase": "Full S6 accepted; final SPEC integration pending",
+      "started_at": "2026-10-04T11:32:01.470950+00:00",
+      "assignment": "planning/commit-supervisor/execution/S6-builder-assignment.md",
+      "prerequisites_accepted": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5"
+      ],
+      "builder_launch": {
+        "identity": "/root/s6_builder",
+        "requested_agent_type": "mc-spec-slice-builder",
+        "fork_turns": "none",
+        "model_effort_override": false,
+        "permissions": "danger-full-access / never",
+        "actual_cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+        "acknowledgment": "native child message 2026-10-04T11:34Z; exact skill read acknowledged; first action authority/private clone preparation",
+        "loader_limit": "requested agent type and acknowledged contract recorded separately from unexposed host metadata",
+        "close_agent": "unavailable"
+      },
+      "runtime_assignment_plan": "planning/commit-supervisor/execution/S6-runtime-dispatch-plan.md",
+      "preparation_only": false,
+      "actual_acceptance_criteria": [
+        {
+          "id": "S6-A1",
+          "required": "Existing-ref disposable candidate, private deps/workspace/machine/Wiki/profile; actual role/permission/inheritance acknowledgment",
+          "state": "pending_actual_evidence"
+        },
+        {
+          "id": "S6-A2",
+          "required": "Complete staged+unstaged text/binary/untracked/deletion/mode checkpoint verified through public helper",
+          "state": "pending_actual_evidence"
+        },
+        {
+          "id": "S6-A3",
+          "required": "Actual terminal waiting-dependency, exact provider release, successor retains evidence without prerequisite dispatch",
+          "state": "pending_actual_evidence"
+        },
+        {
+          "id": "S6-A4",
+          "required": "Actual terminal needs-owner, checked authority and labeled fixture intent resolution, no invented feature",
+          "state": "pending_actual_evidence"
+        },
+        {
+          "id": "S6-A5",
+          "required": "Fresh initial manager/reviewer independently identifies meaningful behavior defect and Wiki obligation",
+          "state": "pending_actual_evidence"
+        },
+        {
+          "id": "S6-A6",
+          "required": "Installed leaf repair and distinct fresh manager-assigned original-assignment handoff",
+          "state": "pending_actual_evidence"
+        },
+        {
+          "id": "S6-A7",
+          "required": "Settled bounded Wiki leaf preserves complete preimage/factual distinctions and fresh original-coverage Wiki audit",
+          "state": "pending_actual_evidence"
+        },
+        {
+          "id": "S6-A8",
+          "required": "Fresh independent final manager/reviewer covers whole candidate and all five lenses",
+          "state": "pending_actual_evidence"
+        },
+        {
+          "id": "S6-A9",
+          "required": "Real canonical build/restart, selected process/storage/workspace/watcher and initialized sustained connection plus behavior/article/navigation/reload",
+          "state": "pending_actual_evidence"
+        },
+        {
+          "id": "S6-A10",
+          "required": "Wrong-profile/disconnected failures withhold readiness and preserve protected runtimes/storage",
+          "state": "pending_actual_evidence"
+        },
+        {
+          "id": "S6-A11",
+          "required": "Actual terminal COMMIT_READY_WAITING_OWNER precise packet, no Git/MC action",
+          "state": "pending_actual_evidence"
+        },
+        {
+          "id": "S6-A12",
+          "required": "Labeled fix-X/Y replacement, preserved unaffected evidence, fresh affected gates/final/runtime and updated terminal packet",
+          "state": "pending_actual_evidence"
+        },
+        {
+          "id": "S6-A13",
+          "required": "Actual pre-operation refusal for source/target/candidate drift and simulated operation mismatch, no commit/publication",
+          "state": "pending_actual_evidence"
+        },
+        {
+          "id": "S6-A14",
+          "required": "Interruption exact restore, collision nonmutation, source/index/ref/profile/process sentinels, owned process cleanup and evidence retention",
+          "state": "pending_actual_evidence"
+        },
+        {
+          "id": "S6-A15",
+          "required": "Actual proof followed by coordinated factual MC-T09 closeout, clean full S6 and fresh whole-SPEC final review",
+          "state": "pending_actual_evidence"
+        }
+      ],
+      "writer_paused_ack": "native /root/s6_builder acknowledgment, 2026-10-04T11:53Z; all writes paused, no reviewer started",
+      "remaining_owned_processes": [],
+      "dependency_repair": "S4-R2",
+      "next_safe_action": "Owner reviews/accepts completed setup; no next SPEC or publication authorized",
+      "later_documentation_owned_addition": {
+        "scope": "Canonical active-Wiki restart article actual installation facts and complete exclusive version preimage",
+        "authority": "S6-closeout-wiki-ownership.md; original S3 scope actual workflow facts and mechanically necessary integration allowance",
+        "phase": "After actual runtime proof, final closeout only",
+        "code_dependency_effect": "none; accepted S4 runtime code/gates preserved",
+        "fresh_gates": "Affected S6 builder, root S6 acceptance, final whole-SPEC",
+        "status": "assigned_later_not_started"
+      },
+      "preparation_deviations": [
+        {
+          "id": "S6-D1",
+          "original_requirement": "Existing-ref disposable preparation with source preservation",
+          "actual": "Local no-hardlinks detached clone, private COW dependencies, separate public-created workspace/profile; replay all five accepted restart files only",
+          "reason_authority": "Explicit S6 preparation packet; clean HEAD isolates unrelated dirty watcher/server work",
+          "paths": [
+            "private-paths.json",
+            "current-private-paths.json",
+            "current-helper-replay.json",
+            "protection-before.json",
+            "initial-preservation-readback.json"
+          ],
+          "checks": "Fresh private build/canonical; 63077 dependency inode/link checks; source HEAD/index/refs/caches",
+          "effect": "Normal app/DB protected; clone committed history retained only as code baseline",
+          "risk": "Private disk cost and profile writes remain disposable",
+          "downstream": "Actual Supervisor uses exact private paths; takes its own current checkpoint",
+          "proposed_classification": "accepted",
+          "classification": "accepted",
+          "classification_owner": "/root",
+          "current_gate": "S6 preparation only"
+        },
+        {
+          "id": "S6-D2",
+          "original_requirement": "No real workspace/profile copy; ordinary runtime machine",
+          "actual": "Fresh migrations then remove dev seed before app; UI Create New Project/add/rename Custom; set machine through existing private configuration owner",
+          "reason_authority": "Reuse established public-shell bootstrap mechanics and chosen baseline owner",
+          "paths": [
+            "prepare_rehearsal_shell.mjs",
+            "public-bootstrap.json",
+            "current-canonical-raw/verified.json"
+          ],
+          "checks": "Exactly one private registry row; ordinary actual watcher event",
+          "effect": "Avoids registering R; ordinary MC-S6 proves namespace",
+          "risk": "Migration/bootstrap only runs once; refuses existing profile/workspace",
+          "downstream": "Future reproduction must follow one-shot recipe",
+          "proposed_classification": "accepted",
+          "classification": "accepted",
+          "classification_owner": "/root",
+          "current_gate": "S6 preparation only"
+        },
+        {
+          "id": "S6-D3",
+          "original_requirement": "Preserve exact deletion checkpoint inputs",
+          "actual": "Initial installer assumed nonexistent docs HEAD path, stopped after partial fixture install; use existing tracked HANDOFF.md and complete remaining private recovery leaves without overwriting app/state",
+          "reason_authority": "Bounded mechanical correction; no authority/code behavior change",
+          "paths": [
+            "fixture-install-attempt-1.log",
+            "fixture-install.json",
+            "install_rehearsal_fixture.py"
+          ],
+          "checks": "Public125 historical/126 current exact restoration",
+          "effect": "Current normal installer has correct baseline path",
+          "risk": "Partial attempt requires recorded manual completion; not independently replayed successful one-shot yet",
+          "downstream": "Fresh independent one-shot run now uses corrected installer; actual initial leaf inventory readback remains required",
+          "proposed_classification": "accepted",
+          "classification": "accepted",
+          "classification_owner": "/root",
+          "current_gate": "S6 preparation only"
+        },
+        {
+          "id": "S6-D4",
+          "original_requirement": "Actual Wiki public route readback",
+          "actual": "Duplicate article H1 strict selector failed; use first exact H1 matching title/body, preserve raw partial and successful attempts",
+          "reason_authority": "Observed baseline React title/body rendering",
+          "paths": [
+            "ui-attempt-1.log",
+            "public-ui-attempt-1-partial.json",
+            "rehearsal_ui_smoke.mjs",
+            "current-public-ui-observation.json"
+          ],
+          "checks": "Actual article text/navigation/reload screenshot and sustained connection",
+          "effect": "Changes locator only",
+          "risk": "Prose correctness remains fresh Wiki reviewer responsibility",
+          "downstream": "Actual runtime uses real article and original coverage",
+          "proposed_classification": "accepted",
+          "classification": "accepted",
+          "classification_owner": "/root",
+          "current_gate": "S6 preparation only"
+        },
+        {
+          "id": "S6-D5",
+          "original_requirement": "Private writable dependencies/cache only",
+          "actual": "Copied dependencies had private .tmp cache; deleted private .tmp then built from fresh cache; source193 ignored cache leaves unchanged",
+          "reason_authority": "Preparation cache isolation",
+          "paths": [
+            "preparation-build.log",
+            "preparation-clean-cache-build.log",
+            "initial-preservation-readback.json"
+          ],
+          "checks": "Both builds exit0; source cache hashes equal",
+          "effect": "Fresh private build reproducible",
+          "risk": "Existing baseline Vite mixed import/chunk-size warnings retained",
+          "downstream": "Warnings advisory; no unrelated production bundle refactor",
+          "proposed_classification": "accepted",
+          "classification": "accepted",
+          "classification_owner": "/root",
+          "current_gate": "S6 preparation only"
+        },
+        {
+          "id": "S6-D6",
+          "original_requirement": "Canonical owned cleanup; dependency gate stays current",
+          "actual": "Live S4 cleanup discovery race aborted after processes exited; stop confirmation retained, writer paused, responsible S4 builder repaired, root accepted; only changed accepted helper replayed, current evidence/checkpoints distinct",
+          "reason_authority": "Validated runtime defect routed through responsible builder; no S6 product helper edit",
+          "paths": [
+            "cleanup-attempt-1.log",
+            "cleanup-attempt-2.log",
+            "current-helper-replay.json",
+            "current-canonical-run.log",
+            "current-owned-runtime-stop.json"
+          ],
+          "checks": "Current17 regression/canonical actual stop and separate zero-owned readback",
+          "effect": "Current helper succeeds; old checkpoints never used to restore current helper",
+          "risk": "Old successful runtime/recovery are historical bytes; cannot certify current",
+          "downstream": "Actual Supervisor must use accepted repaired helper/current initial checkpoint",
+          "proposed_classification": "accepted",
+          "classification": "accepted",
+          "classification_owner": "/root",
+          "current_gate": "S6 preparation only"
+        },
+        {
+          "id": "S6-D7",
+          "original_requirement": "Preimages before replacement and exact new Wiki leaves",
+          "actual": "Two immutable supplemental union checkpoints declare actual timestamped versions absent before copy; retain complete PAGE bytes and restore newest-first before original",
+          "reason_authority": "Necessary original recovery integration",
+          "paths": [
+            "rehearsal_wiki_recovery_smoke.py",
+            "final-recovery/wiki-recovery-smoke.json"
+          ],
+          "checks": "Original refusal nonmutating; both supplements remove exact leaves; final original verify; Navigation unchanged",
+          "effect": "Proves version outputs recover with no original manifest rewrite",
+          "risk": "Actual Wiki writer must independently do this for its own real edit timestamps",
+          "downstream": "Actual job captures new original/supplements and preserves raw PAGE preimages",
+          "proposed_classification": "accepted",
+          "classification": "accepted",
+          "classification_owner": "/root",
+          "current_gate": "S6 preparation only"
+        },
+        {
+          "id": "S6-D8",
+          "original_requirement": "Visible labels/states/reset and supported wording per original intent",
+          "actual": "UI oracle now asserts exact three labels and checked flags each scenario, immediately after Reset and reload; accepts only known modes and resolved supported format for verdict modes",
+          "reason_authority": "Completes original authority external acceptance coverage",
+          "paths": [
+            "rehearsal_ui_smoke.mjs",
+            "current-public-ui-observation.json",
+            "current-ui-oracle-negatives.json",
+            "final-ui-validation-negatives.json"
+          ],
+          "checks": "Seeded numerical oracle fails; state/label observations pass; unsupported/missing mode/format refused",
+          "effect": "No final wording guessed; negative config explicitly preparation-only",
+          "risk": "Fixed/reset live behavior still unimplemented and must run later",
+          "downstream": "Actual resolved/fix controls and current corrected UI checked by Supervisor",
+          "proposed_classification": "accepted",
+          "classification": "accepted",
+          "classification_owner": "/root",
+          "current_gate": "S6 preparation only"
+        },
+        {
+          "id": "S6-D9",
+          "original_requirement": "Record actual write times and protected identities honestly",
+          "actual": "Templates synthetic timestamp; installed PAGE actual UTC; original hashes before bootstrap; extra DB inode/executable detail first captured after bootstrap before canonical; confirmed after-cleanup readback separate from one scheduled before completion confirmation",
+          "reason_authority": "Root requested stronger metadata; preserve timing limits instead of inventing evidence",
+          "paths": [
+            "fixture-install.json",
+            "protected-identity-before-canonical.json",
+            "current-protection-before.json",
+            "current-protection-after.json",
+            "current-protection-after-confirmed.json",
+            "current-preservation-summary.json"
+          ],
+          "checks": "Protected DB inode/dev and four process start/executable identities equal; volatile live Alpha/source DB hash drift raw recorded",
+          "effect": "No profile DB/cache replacement/signal; no user content inspection",
+          "risk": "Pre-bootstrap inode observation unavailable; hashes only for that earlier interval; naturally volatile hashes not claimed equal",
+          "downstream": "Actual Supervisor captures full current before/after metadata; retains limit",
+          "proposed_classification": "accepted",
+          "classification": "accepted",
+          "classification_owner": "/root",
+          "current_gate": "S6 preparation only"
+        },
+        {
+          "id": "S6-D10",
+          "original_requirement": "Required skill validation available dependency",
+          "actual": "System and bundled Python lacked yaml; retained both failed logs, used already cached PyYAML read-only via PYTHONPATH with bytecode disabled",
+          "reason_authority": "No dependency/global configuration mutation or network install",
+          "paths": [
+            "current-skill-validation.log",
+            "current-skill-validation-bundled.log",
+            "current-skill-validation-cached.log"
+          ],
+          "checks": "quick_validate K exit0",
+          "effect": "Only interpreter dependency adapter",
+          "risk": "Cached dependency path machine-specific",
+          "downstream": "Recipe/check record exact adapter; no reviewer capability substitution",
+          "proposed_classification": "accepted",
+          "classification": "accepted",
+          "classification_owner": "/root",
+          "current_gate": "S6 preparation only"
+        },
+        {
+          "id": "S6-D11",
+          "original_requirement": "Complete supplemental recovery against prepared exact page paths",
+          "actual": "First new smoke assumed missing top-level article path and stopped before any mutation; corrected to actual 001-Checklist article tree and passed twice",
+          "reason_authority": "Mechanical path correction",
+          "paths": [
+            "current-wiki-recovery-smoke.log",
+            "current-wiki-recovery-smoke-attempt-2.log",
+            "final-wiki-recovery-smoke.log"
+          ],
+          "checks": "Two supplements/original exact final verify",
+          "effect": "No authority/content change remains",
+          "risk": "Raw failed attempt retained",
+          "downstream": "Actual runtime packets use readback exact paths",
+          "proposed_classification": "accepted",
+          "classification": "accepted",
+          "classification_owner": "/root",
+          "current_gate": "S6 preparation only"
+        },
+        {
+          "id": "S6-D12",
+          "original_requirement": "Source preservation while root coordinates later work",
+          "actual": "Current source sentinel readback detects new root-owned undispatched S4 Wiki assignment; preserved article unchanged. Root later transferred that deterministic article correction to final S6 closeout after actual proof",
+          "reason_authority": "Root coordination scope refinement only; not preparation permission",
+          "paths": [
+            "current-protection-before.json",
+            "current-protection-after-confirmed.json",
+            "current-preservation-summary.json"
+          ],
+          "checks": "12703 original current unowned leaves unchanged except newly recorded root assignment; 193cache and HEAD/index/refs equal",
+          "effect": "Root evidence creation distinctly recorded; no real Wiki prep edit",
+          "risk": "Later documentation modifies article and central facts under new preimages/gates",
+          "downstream": "Remain prep-only; root owns actual chain and later bounded closeout",
+          "proposed_classification": "downstream_impact",
+          "classification": "downstream_impact",
+          "classification_owner": "/root",
+          "current_gate": "S6 preparation only"
+        },
+        {
+          "id": "S6-D13",
+          "original_requirement": "Preserve exact terminal review history",
+          "actual": "Raw inline report additionally stored E/S6-builder-review-1.md; terminal report-only metadata appendix with exact hash-verified provisional reconstruction after append",
+          "reason_authority": "Builder-owned review gate requires raw report preservation; root explicitly authorized honest metadata provenance housekeeping",
+          "paths": [
+            "S6-builder-review-1.md",
+            "S6-builder.md",
+            "S6-prep/frozen-provisional-builder-preimage.md",
+            "S6-prep/report-only-finalization.json"
+          ],
+          "checks": "Exact raw report hash; frozen original hash; current source mode and exact metadata-only diff verified; candidate/dependency bytes unchanged",
+          "effect": "Report provenance only",
+          "risk": "Copied immutable preimage mode differs from source intentionally; not a source mode defect",
+          "downstream": "Preparation acceptance consumes current source and raw preimage provenance without prior verdicts",
+          "classification": "accepted",
+          "classification_owner": "/root",
+          "current_gate": "S6 preparation only"
+        }
+      ],
+      "preparation_state": "accepted",
+      "preparation_builder_terminal_at": "2026-10-04T13:11:54.096459+00:00",
+      "preparation_current_report_sha256": "76a260281711a1788942abd78cd394d55cb944bf19563497467eec5b8ba33f60",
+      "preparation_acceptance_reviewer": "/root/s6_prep_acceptance_1",
+      "actual_criteria_detail": "S6-actual-criteria.json refines existing15ledgercriteria; neither list claims actualcompletion.",
+      "preparation_accepted_at": "2026-10-04T13:27:30.744980+00:00",
+      "preparation_acceptance_receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-preparation-acceptance.json",
+      "actual_provider_terminal": "/root/s6_supervisor_provider_1 waiting-dependency",
+      "actual_intent_terminal": "/root/s6_supervisor_intent_1 needs-owner",
+      "last_root_progress_utc": "2026-10-05T02:59:33.175717+00:00",
+      "last_progress_at": "2026-10-04T16:24:46.534443+00:00",
+      "closeout_assignment": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-builder-closeout-assignment.md",
+      "closeout_builder_ack": "Actual native /root/s6_builder acknowledged exact CWD/roots/HEAD/effectiveFullAccess-never/loaded contracts/inherited unexposed loader limits/ownership/no child conflicts before writing",
+      "builder_full_handoff": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-closeout-builder.md",
+      "builder_terminal_receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-root-builder-terminal.json",
+      "accepted_at": "2026-10-05T03:21:12.390022+00:00",
+      "acceptance_receipt": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-full-acceptance.json",
+      "full_deviation_context_count": 91,
+      "full_deviation_classification_sources": [
+        "S6-preparation-deviation-classifications.json",
+        "S6-runtime-deviations.json",
+        "S6-first-candidate-deviation-classifications.json",
+        "S6-revised-leaf-deviation-classifications.json",
+        "S6-revised-supervisor-deviation-classifications.json",
+        "S6-refusal-deviation-classifications.json",
+        "S6-first-interruption-deviation-classifications.json",
+        "S6-recovery-deviation-classifications.json",
+        "S6-closeout-deviation-classifications.json",
+        "S6-reviewer-procedural-classifications.json",
+        "S6-acceptance-procedural-deviations.json"
+      ]
+    }
+  ],
+  "completed_SPEC": {
+    "at": "2026-10-05T04:51:37.895307+00:00",
+    "result": "SPEC_READY_FOR_OWNER_REVIEW",
+    "owner_accepted": false,
+    "final_gate": "CLEAN",
+    "reviewer": "/root/spec_final_review_2",
+    "report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md",
+    "release_manifest": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-release-manifest.json",
+    "final_classifications": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-deviation-classifications-final.json",
+    "current_integrated_revision": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-current-manifest-v2.json",
+    "next_safe_action": "Owner reviews/accepts completed setup; no next SPEC or publication authorized"
+  }
+}

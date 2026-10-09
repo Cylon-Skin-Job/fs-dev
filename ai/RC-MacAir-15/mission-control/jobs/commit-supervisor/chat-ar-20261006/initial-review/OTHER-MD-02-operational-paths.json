@@ -1,0 +1,269 @@
+{
+  "initialStagedTree": "44b2592705cdbc35620207e579113ede27a4a787",
+  "recommendation": "defer these live operational instructions/indexes with pending MC framework; retain substantive decision/issue/intent/evidence notes. Original source bytes and approval receipts remain preserved.",
+  "paths": [
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-harness-repair-and-testing/AGENTS.md",
+      "sourceSha256": "63775e0cf3c6d3e33802fafe58421bfb1b2603a340eb240c82b16ace90e85064",
+      "candidateSha256": "63775e0cf3c6d3e33802fafe58421bfb1b2603a340eb240c82b16ace90e85064",
+      "targetBaselineExists": false,
+      "sourceHeadExists": false,
+      "missingProcedureLinks": [
+        {
+          "label": "Launchpad procedure",
+          "target": "../.agents/skills/mc-launchpad/SKILL.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/launchpad/.agents/skills/mc-launchpad/SKILL.md",
+          "sourceExists": true
+        },
+        {
+          "label": "ticket workflow",
+          "target": "../../ticket-workflow.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/ticket-workflow.md",
+          "sourceExists": true
+        },
+        {
+          "label": "investigation contract",
+          "target": "../../investigation-contract.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/investigation-contract.md",
+          "sourceExists": true
+        },
+        {
+          "label": "Memory Maintenance",
+          "target": "../../.agents/skills/mc-memory-maintenance/SKILL.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/.agents/skills/mc-memory-maintenance/SKILL.md",
+          "sourceExists": true
+        },
+        {
+          "label": "Document Sweep",
+          "target": "../../.agents/skills/mc-document-sweep/SKILL.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/.agents/skills/mc-document-sweep/SKILL.md",
+          "sourceExists": true
+        },
+        {
+          "label": "Preflight",
+          "target": "../../.agents/skills/mc-preflight/SKILL.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/.agents/skills/mc-preflight/SKILL.md",
+          "sourceExists": true
+        },
+        {
+          "label": "conversation evidence rules",
+          "target": "../../conversation-evidence.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/conversation-evidence.md",
+          "sourceExists": true
+        }
+      ]
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-harness-repair-and-testing/index.json",
+      "sourceSha256": "1c4addbf2996118491b80c369d39eaba61fe45c085f8f9f6ff8f5f7ef3349f73",
+      "candidateSha256": "1c4addbf2996118491b80c369d39eaba61fe45c085f8f9f6ff8f5f7ef3349f73",
+      "targetBaselineExists": false,
+      "sourceHeadExists": false,
+      "missingProcedureLinks": []
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/AGENTS.md",
+      "sourceSha256": "886fe0f833d9eacc055166f5a6184f7d39c330ef772f860a8b438d0fb1e08825",
+      "candidateSha256": "886fe0f833d9eacc055166f5a6184f7d39c330ef772f860a8b438d0fb1e08825",
+      "targetBaselineExists": true,
+      "sourceHeadExists": true,
+      "missingProcedureLinks": [
+        {
+          "label": "ticket workflow",
+          "target": "../../ticket-workflow.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/ticket-workflow.md",
+          "sourceExists": true
+        },
+        {
+          "label": "investigation contract",
+          "target": "../../investigation-contract.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/investigation-contract.md",
+          "sourceExists": true
+        },
+        {
+          "label": "MC Launchpad",
+          "target": "../.agents/skills/mc-launchpad/SKILL.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/launchpad/.agents/skills/mc-launchpad/SKILL.md",
+          "sourceExists": true
+        },
+        {
+          "label": "Memory Maintenance",
+          "target": "../../.agents/skills/mc-memory-maintenance/SKILL.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/.agents/skills/mc-memory-maintenance/SKILL.md",
+          "sourceExists": true
+        },
+        {
+          "label": "Document Sweep",
+          "target": "../../.agents/skills/mc-document-sweep/SKILL.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/.agents/skills/mc-document-sweep/SKILL.md",
+          "sourceExists": true
+        },
+        {
+          "label": "conversation evidence contract",
+          "target": "../../conversation-evidence.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/conversation-evidence.md",
+          "sourceExists": true
+        }
+      ]
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/governed-events-and-ledger/AGENTS.md",
+      "sourceSha256": "b4c5f671146ee96746d6b110fdbfb027bb00ecf955ce806d752da393383b4f50",
+      "candidateSha256": "b4c5f671146ee96746d6b110fdbfb027bb00ecf955ce806d752da393383b4f50",
+      "targetBaselineExists": false,
+      "sourceHeadExists": false,
+      "missingProcedureLinks": [
+        {
+          "label": "ticket workflow",
+          "target": "../../ticket-workflow.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/ticket-workflow.md",
+          "sourceExists": true
+        },
+        {
+          "label": "investigation contract",
+          "target": "../../investigation-contract.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/investigation-contract.md",
+          "sourceExists": true
+        },
+        {
+          "label": "MC Launchpad",
+          "target": "../.agents/skills/mc-launchpad/SKILL.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/launchpad/.agents/skills/mc-launchpad/SKILL.md",
+          "sourceExists": true
+        },
+        {
+          "label": "Memory Maintenance",
+          "target": "../../.agents/skills/mc-memory-maintenance/SKILL.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/.agents/skills/mc-memory-maintenance/SKILL.md",
+          "sourceExists": true
+        },
+        {
+          "label": "Document Sweep",
+          "target": "../../.agents/skills/mc-document-sweep/SKILL.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/.agents/skills/mc-document-sweep/SKILL.md",
+          "sourceExists": true
+        },
+        {
+          "label": "conversation evidence contract",
+          "target": "../../conversation-evidence.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/conversation-evidence.md",
+          "sourceExists": true
+        }
+      ]
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/governed-events-and-ledger/index.json",
+      "sourceSha256": "9bb246c642f1df93d33f4e9d679cb6e77891f08bf586d86d66e7ad702e4c22c3",
+      "candidateSha256": "9bb246c642f1df93d33f4e9d679cb6e77891f08bf586d86d66e7ad702e4c22c3",
+      "targetBaselineExists": false,
+      "sourceHeadExists": false,
+      "missingProcedureLinks": []
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/plugin-foundation/AGENTS.md",
+      "sourceSha256": "e11a2a082d16baffcd0887f54af407d56867f0ef79c7e7238d07d1830ea5280b",
+      "candidateSha256": "e11a2a082d16baffcd0887f54af407d56867f0ef79c7e7238d07d1830ea5280b",
+      "targetBaselineExists": false,
+      "sourceHeadExists": false,
+      "missingProcedureLinks": [
+        {
+          "label": "ticket workflow",
+          "target": "../../ticket-workflow.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/ticket-workflow.md",
+          "sourceExists": true
+        },
+        {
+          "label": "investigation contract",
+          "target": "../../investigation-contract.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/investigation-contract.md",
+          "sourceExists": true
+        },
+        {
+          "label": "MC Launchpad",
+          "target": "../.agents/skills/mc-launchpad/SKILL.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/launchpad/.agents/skills/mc-launchpad/SKILL.md",
+          "sourceExists": true
+        },
+        {
+          "label": "Memory Maintenance",
+          "target": "../../.agents/skills/mc-memory-maintenance/SKILL.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/.agents/skills/mc-memory-maintenance/SKILL.md",
+          "sourceExists": true
+        },
+        {
+          "label": "Document Sweep",
+          "target": "../../.agents/skills/mc-document-sweep/SKILL.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/.agents/skills/mc-document-sweep/SKILL.md",
+          "sourceExists": true
+        },
+        {
+          "label": "conversation evidence contract",
+          "target": "../../conversation-evidence.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/conversation-evidence.md",
+          "sourceExists": true
+        }
+      ]
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/plugin-foundation/index.json",
+      "sourceSha256": "da15122056a81664931ed884f8e7b15d3d393eaf9e9c23575f19ef07b6710f89",
+      "candidateSha256": "da15122056a81664931ed884f8e7b15d3d393eaf9e9c23575f19ef07b6710f89",
+      "targetBaselineExists": false,
+      "sourceHeadExists": false,
+      "missingProcedureLinks": []
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/plugin-views-and-provisioning/AGENTS.md",
+      "sourceSha256": "3cb063be53cba3e9b8774a62f69c128de9c6f94aaf588aa2bfc1ebab9aeae5a7",
+      "candidateSha256": "3cb063be53cba3e9b8774a62f69c128de9c6f94aaf588aa2bfc1ebab9aeae5a7",
+      "targetBaselineExists": false,
+      "sourceHeadExists": false,
+      "missingProcedureLinks": [
+        {
+          "label": "ticket workflow",
+          "target": "../../ticket-workflow.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/ticket-workflow.md",
+          "sourceExists": true
+        },
+        {
+          "label": "investigation contract",
+          "target": "../../investigation-contract.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/investigation-contract.md",
+          "sourceExists": true
+        },
+        {
+          "label": "MC Launchpad",
+          "target": "../.agents/skills/mc-launchpad/SKILL.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/launchpad/.agents/skills/mc-launchpad/SKILL.md",
+          "sourceExists": true
+        },
+        {
+          "label": "Memory Maintenance",
+          "target": "../../.agents/skills/mc-memory-maintenance/SKILL.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/.agents/skills/mc-memory-maintenance/SKILL.md",
+          "sourceExists": true
+        },
+        {
+          "label": "Document Sweep",
+          "target": "../../.agents/skills/mc-document-sweep/SKILL.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/.agents/skills/mc-document-sweep/SKILL.md",
+          "sourceExists": true
+        },
+        {
+          "label": "conversation evidence contract",
+          "target": "../../conversation-evidence.md",
+          "repositoryPath": "ai/RC-MacAir-15/mission-control/conversation-evidence.md",
+          "sourceExists": true
+        }
+      ]
+    },
+    {
+      "path": "ai/RC-MacAir-15/mission-control/launchpad/plugin-views-and-provisioning/index.json",
+      "sourceSha256": "fe1ba558edb09e37543f59c691eedf4585f7cf7e9bc3944890fc9cfdea385354",
+      "candidateSha256": "fe1ba558edb09e37543f59c691eedf4585f7cf7e9bc3944890fc9cfdea385354",
+      "targetBaselineExists": false,
+      "sourceHeadExists": false,
+      "missingProcedureLinks": []
+    }
+  ]
+}

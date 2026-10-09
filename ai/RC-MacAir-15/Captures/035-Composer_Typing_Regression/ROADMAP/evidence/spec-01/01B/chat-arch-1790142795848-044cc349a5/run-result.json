@@ -1,0 +1,22 @@
+{
+  "runId": "chat-arch-1790142795848-044cc349a5",
+  "status": "failed",
+  "results": [
+    {
+      "id": "SHELL-VIEW-BOUND",
+      "code": 1,
+      "signal": null,
+      "pid": 88955,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 18788
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": {
+    "name": "Error",
+    "message": "SHELL-VIEW-BOUND exited 1",
+    "stack": "Error: SHELL-VIEW-BOUND exited 1\n    at file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/run.mjs:397:27\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  }
+}

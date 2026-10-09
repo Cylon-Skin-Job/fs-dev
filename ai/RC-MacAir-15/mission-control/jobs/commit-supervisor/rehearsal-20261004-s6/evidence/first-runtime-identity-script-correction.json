@@ -1,0 +1,8 @@
+{
+  "kind": "SUPPLEMENTAL_READONLY_RECEIPT_SCRIPT_CORRECTION",
+  "failure": "Initial supplemental current ownership receipt script failed Node parsing before execution because Python string emitted literal newlines inside JavaScript quotes",
+  "source": "first_runtime_identity-syntax-failed.mjs",
+  "failed_receipt": "evidence/first-current-runtime-identity-command.json",
+  "effects": "No app/process/candidate mutation or signals; canonical actual runtime and successful UI proofs remain valid",
+  "correction": "Job-only script escaped newline literals; next unique receipt runs actual current ownership readback"
+}

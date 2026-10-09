@@ -1,0 +1,45 @@
+{
+  "systemSetupReadiness": {
+    "id": "R5-SYSTEM-FIXTURE-READINESS",
+    "sourceCapsuleVerified": true,
+    "boundedRebind": false,
+    "initial": null,
+    "final": {
+      "workspaceLabel": "R5 System Fixture",
+      "connected": true,
+      "projectionFrames": [
+        {
+          "workspaceId": "system-files",
+          "unavailable": false,
+          "viewIds": [
+            "capture-viewer",
+            "file-viewer",
+            "wiki-viewer",
+            "issues-viewer",
+            "agents-viewer",
+            "system-viewer"
+          ]
+        }
+      ],
+      "railTitles": [
+        "Captures",
+        "Files",
+        "Wiki",
+        "Issues",
+        "Agents",
+        "System"
+      ]
+    }
+  },
+  "cleanup": {
+    "lingering": [],
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "failure": {
+    "name": "Error",
+    "message": "R6 public workspace switch did not settle: {\"label\":\"R5 System Fixture\",\"sent\":{\"shell-auth:proof\":1,\"office:palette_get\":1,\"state:get\":2,\"thread:list\":8,\"screenshot:list\":1,\"file_content_request\":59,\"set_panel\":2,\"file_tree_request\":65,\"state:set\":4,\"workspace:state_push\":1,\"prompt:resolve\":2,\"thread:open-assistant\":1,\"thread:open\":1,\"workspace:ribbon_remove_requested\":1},\"received\":{\"shell-auth:challenge\":1,\"connected\":1,\"workspace:init\":1,\"panel_config\":1,\"shell-auth:authenticated\":1,\"office:palette_state\":1,\"screenshot:list\":1,\"thread:list\":11,\"panel_changed\":2,\"file_content_response\":59,\"file_tree_response\":65,\"state:result\":6,\"error\":1,\"prompt:resolved\":2,\"thread:created\":1,\"thread:opened\":2,\"wire_ready\":1,\"workspace:registry_changed\":1,\"workspace:ribbon_removed\":1},\"overlay\":false}",
+    "stack": "Error: R6 public workspace switch did not settle: {\"label\":\"R5 System Fixture\",\"sent\":{\"shell-auth:proof\":1,\"office:palette_get\":1,\"state:get\":2,\"thread:list\":8,\"screenshot:list\":1,\"file_content_request\":59,\"set_panel\":2,\"file_tree_request\":65,\"state:set\":4,\"workspace:state_push\":1,\"prompt:resolve\":2,\"thread:open-assistant\":1,\"thread:open\":1,\"workspace:ribbon_remove_requested\":1},\"received\":{\"shell-auth:challenge\":1,\"connected\":1,\"workspace:init\":1,\"panel_config\":1,\"shell-auth:authenticated\":1,\"office:palette_state\":1,\"screenshot:list\":1,\"thread:list\":11,\"panel_changed\":2,\"file_content_response\":59,\"file_tree_response\":65,\"state:result\":6,\"error\":1,\"prompt:resolved\":2,\"thread:created\":1,\"thread:opened\":2,\"wire_ready\":1,\"workspace:registry_changed\":1,\"workspace:ribbon_removed\":1},\"overlay\":false}\n    at reconnectAndRelease (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r5-r6-electron.mjs:314:13)\n    at async exerciseProductionR6 (file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r5-r6-electron.mjs:351:23)\n    at async file:///Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/r5-r6-electron.mjs:793:7"
+  }
+}

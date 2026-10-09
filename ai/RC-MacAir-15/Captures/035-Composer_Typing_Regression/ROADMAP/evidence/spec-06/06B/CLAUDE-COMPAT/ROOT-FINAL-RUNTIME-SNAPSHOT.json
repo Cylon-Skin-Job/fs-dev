@@ -1,0 +1,12 @@
+{
+  "at": "2026-09-27T07:35:43.097893+00:00",
+  "humanStatus": "ready",
+  "humanRecording": true,
+  "driverAlive": true,
+  "electronAlive": true,
+  "latestLogBytes": 3206213,
+  "latestLogModifiedAt": "2026-09-27T07:35:42.184760+00:00",
+  "stagedPolicySha256": "64cf7bef1bea086aec1260a0089e7c310ab6a7d85dfa4985dfae76b6bd3b9cbc",
+  "stagedPolicyStillOld": true,
+  "appActionsPerformed": false
+}

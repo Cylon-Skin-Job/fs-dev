@@ -1,0 +1,1210 @@
+{
+  "identity": {
+    "repo": "/Users/rccurtrightjr./projects/fs-dev",
+    "branch": "agent/exact-workspace-paths",
+    "head": "d15792920731f85e45b743519d4af2b807d95a9c",
+    "index_sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966"
+  },
+  "latest_accepted": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/job-template.md",
+      "sha256": "21bf5a6b99bb333115c43b594996810159a7a34ddaa360936895cf1ce95d35f8",
+      "baseline_sha256": "21bf5a6b99bb333115c43b594996810159a7a34ddaa360936895cf1ce95d35f8",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+      "sha256": "27aab53da9edbed9f6ee8ceb4917d7c7531a7de914a3c2df7fb2196b6bd4a20c",
+      "baseline_sha256": "27aab53da9edbed9f6ee8ceb4917d7c7531a7de914a3c2df7fb2196b6bd4a20c",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+      "sha256": "d85c8ae1828bfe94426bde87527ddc3430d720604c78cfdab775db5982dabc58",
+      "baseline_sha256": "d85c8ae1828bfe94426bde87527ddc3430d720604c78cfdab775db5982dabc58",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/snapshot_restore.py",
+      "sha256": "37c75d19a2217759086be00274f14d589a5bb64bb6905f323db7ba1969674c2c",
+      "baseline_sha256": "37c75d19a2217759086be00274f14d589a5bb64bb6905f323db7ba1969674c2c",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/snapshot_state.py",
+      "sha256": "a38ffed0cca07299031c2709773caf33ea9065785bf114b6352141fb3310689b",
+      "baseline_sha256": "a38ffed0cca07299031c2709773caf33ea9065785bf114b6352141fb3310689b",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/snapshot_fixture.py",
+      "sha256": "79e1cfa9975f1e0b4e2040dd8b259543d207b3a770ee08ce9f171f5f22fbc2d4",
+      "baseline_sha256": "79e1cfa9975f1e0b4e2040dd8b259543d207b3a770ee08ce9f171f5f22fbc2d4",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_job_snapshot.py",
+      "sha256": "a7f2413aff9807a495c3cd697f14ab813fa254beb8632ea7c2c49b68929010e6",
+      "baseline_sha256": "a7f2413aff9807a495c3cd697f14ab813fa254beb8632ea7c2c49b68929010e6",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-code-review-orchestrator/SKILL.md",
+      "sha256": "61a2e611803aa918b22b9356e19f1d863a3e7a6ac05cf9cc491f41e175d16129",
+      "baseline_sha256": "61a2e611803aa918b22b9356e19f1d863a3e7a6ac05cf9cc491f41e175d16129",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-code-review-orchestrator/agents/openai.yaml",
+      "sha256": "24a3b0515c3c858cf7af6a3a3887a2b943b4a6bf4ea799b33faef87cc38517a8",
+      "baseline_sha256": "24a3b0515c3c858cf7af6a3a3887a2b943b4a6bf4ea799b33faef87cc38517a8",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-code-review-orchestrator.toml",
+      "sha256": "1e06b777794a371a2620a7df3d97caaeb95cb67652b18461e1db6f9744b653e0",
+      "baseline_sha256": "1e06b777794a371a2620a7df3d97caaeb95cb67652b18461e1db6f9744b653e0",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-repair-worker/SKILL.md",
+      "sha256": "f6aa836695ab3cfb22b256e0bc6c5df5cd64b1a65e2ca75654da59be3972daa9",
+      "baseline_sha256": "f6aa836695ab3cfb22b256e0bc6c5df5cd64b1a65e2ca75654da59be3972daa9",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-repair-worker/agents/openai.yaml",
+      "sha256": "71f4602466de516b59a8fabbb225a61a51dcfe7922deb2a46e08b95ba39cd47b",
+      "baseline_sha256": "71f4602466de516b59a8fabbb225a61a51dcfe7922deb2a46e08b95ba39cd47b",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-repair-worker.toml",
+      "sha256": "90d9830f49a41ca63712aca1096a31f9224b9bb06d6adea60a9d715b1364fc81",
+      "baseline_sha256": "90d9830f49a41ca63712aca1096a31f9224b9bb06d6adea60a9d715b1364fc81",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-review-gate/SKILL.md",
+      "sha256": "cc738b3ecebca875b1f6d4460d26c3185dd3b3dd2a93550086742995a0c6c56a",
+      "baseline_sha256": "cc738b3ecebca875b1f6d4460d26c3185dd3b3dd2a93550086742995a0c6c56a",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/review_packet.py",
+      "sha256": "15a250fb476407020a98740d443e95b612d075515a3500740d6ed56f2222d496",
+      "baseline_sha256": "15a250fb476407020a98740d443e95b612d075515a3500740d6ed56f2222d496",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_review_packet.py",
+      "sha256": "7830ec4b4d0b10cbab76e2403bdfceacf78f334e4777835daaaa2fc4e8746504",
+      "baseline_sha256": "7830ec4b4d0b10cbab76e2403bdfceacf78f334e4777835daaaa2fc4e8746504",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/wiki-handoff.md",
+      "sha256": "4d9198cfa72345335294ea3046c6895e10827ec65456ff2c0339c5e8f247c432",
+      "baseline_sha256": "4d9198cfa72345335294ea3046c6895e10827ec65456ff2c0339c5e8f247c432",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-design.md",
+      "sha256": "de9ee5cf8ba042caa0ea452b6b67c791ac40bdcf76cbf4a04c0d2555fcb63a68",
+      "baseline_sha256": "de9ee5cf8ba042caa0ea452b6b67c791ac40bdcf76cbf4a04c0d2555fcb63a68",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/review-and-merge-handoff.md",
+      "sha256": "c752f13b4ba459793a178aee789cf6bd42bf1c39184f2b045b17494980176198",
+      "baseline_sha256": "c752f13b4ba459793a178aee789cf6bd42bf1c39184f2b045b17494980176198",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/wiki_fixture.py",
+      "sha256": "cd2a1024f2acad7844a06406b7ff3f1794a016da21ffdd2d04abfae859e7a6de",
+      "baseline_sha256": "cd2a1024f2acad7844a06406b7ff3f1794a016da21ffdd2d04abfae859e7a6de",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_wiki_handoff.py",
+      "sha256": "5a35d5586b11af10fea182f3ec45f44c19a14117223e7a54d5328b5e7afe4269",
+      "baseline_sha256": "5a35d5586b11af10fea182f3ec45f44c19a14117223e7a54d5328b5e7afe4269",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh",
+      "sha256": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+      "baseline_sha256": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs",
+      "sha256": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e",
+      "baseline_sha256": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs",
+      "sha256": "d2c536e6cc7219587240301a0f428266a8770fa765b79c7edf278c070be2c181",
+      "baseline_sha256": "3f5f209457b90e1d0fd44266de7934ee3116d3f7a122a1f9d85a6d9e88d98d56",
+      "expected_change": true,
+      "retained": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs",
+      "sha256": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+      "baseline_sha256": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs",
+      "sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+      "baseline_sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/skills/fusion-electron-restart/SKILL.md",
+      "sha256": "ca796770a18e1833ac025c24a881a62b7b07e6ee177bb08aaf00798b7b141153",
+      "baseline_sha256": "ca796770a18e1833ac025c24a881a62b7b07e6ee177bb08aaf00798b7b141153",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/runtime-handoff.md",
+      "sha256": "1f32dcb413d10288ced451ba8806dfc1b325e280e6919e35165e8a8d70b50694",
+      "baseline_sha256": "1f32dcb413d10288ced451ba8806dfc1b325e280e6919e35165e8a8d70b50694",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs",
+      "sha256": "9b4bb189ebff26ceaf9b899abafa75400ebbd5e9157f0a45468640d87459ad85",
+      "baseline_sha256": "0031ecf01c134854a008a9946f7c9f05a8a2e676b7cb73fbe1654cc12dc767c7",
+      "expected_change": true,
+      "retained": false
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/AGENTS.md",
+      "sha256": "54cb3ff16f0fae8847341ba38f53af6afd6aa6d84ac4ddb7df9e20faf13888dc",
+      "baseline_sha256": "54cb3ff16f0fae8847341ba38f53af6afd6aa6d84ac4ddb7df9e20faf13888dc",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/session-contract.md",
+      "sha256": "d82d5a815a94f8c27b64d1d90aa0085790e3d98408c011e86d6126dd1bd9b570",
+      "baseline_sha256": "d82d5a815a94f8c27b64d1d90aa0085790e3d98408c011e86d6126dd1bd9b570",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/record-templates.md",
+      "sha256": "41a4de158caea4cd1512b839150db77735d3a36cdfbe4fb688059bc8a86732e7",
+      "baseline_sha256": "41a4de158caea4cd1512b839150db77735d3a36cdfbe4fb688059bc8a86732e7",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/mission-control.md",
+      "sha256": "daff3be04e4c9db92098517de4a7866fb7f9cb86532d1bd60eab6d6f78272f13",
+      "baseline_sha256": "daff3be04e4c9db92098517de4a7866fb7f9cb86532d1bd60eab6d6f78272f13",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/deployment.md",
+      "sha256": "7c5c447fc48805dcbea283e1bd7c5e4290b3443496abdb2876c6ccf460fe41b1",
+      "baseline_sha256": "7c5c447fc48805dcbea283e1bd7c5e4290b3443496abdb2876c6ccf460fe41b1",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/skills-and-agents.md",
+      "sha256": "41fe2c81f6da2ed87e4fd625e60044988fd10c5725da33446ebc360f6ab8cba9",
+      "baseline_sha256": "41fe2c81f6da2ed87e4fd625e60044988fd10c5725da33446ebc360f6ab8cba9",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/handoff.md",
+      "sha256": "52ed4a92ffef4a3f6ecd2f128f5e5886a2d1ed496d841e9f83a38481360da937",
+      "baseline_sha256": "52ed4a92ffef4a3f6ecd2f128f5e5886a2d1ed496d841e9f83a38481360da937",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/todo.md",
+      "sha256": "aca67f27b5c1cd4c75e5e8ebfc388c446ff505a9581719e239d6ed40087a49b1",
+      "baseline_sha256": "aca67f27b5c1cd4c75e5e8ebfc388c446ff505a9581719e239d6ed40087a49b1",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/registry.md",
+      "sha256": "e3ffc6d20ff9d31dfe1b0a7f5bbbeabe3351cee9a3c4ec9bc8f990c080dd08ea",
+      "baseline_sha256": "e3ffc6d20ff9d31dfe1b0a7f5bbbeabe3351cee9a3c4ec9bc8f990c080dd08ea",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/index.json",
+      "sha256": "c93b4e279488456bd2e81b2836f8e1e11a80301af0f0b3d1ba521f9acfbdb460",
+      "baseline_sha256": "c93b4e279488456bd2e81b2836f8e1e11a80301af0f0b3d1ba521f9acfbdb460",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/config.toml",
+      "sha256": "21558b2f2eae1c44479ea7d5afe5e636a379b8b08f4a79c108715d99f9b81322",
+      "baseline_sha256": "21558b2f2eae1c44479ea7d5afe5e636a379b8b08f4a79c108715d99f9b81322",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-review-and-merge.toml",
+      "sha256": null,
+      "baseline_sha256": null,
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-review-and-merge/SKILL.md",
+      "sha256": null,
+      "baseline_sha256": null,
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-review-and-merge/agents/openai.yaml",
+      "sha256": null,
+      "baseline_sha256": null,
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mission-control/SKILL.md",
+      "sha256": "49ad5a39b4ca9bc70194f7268b55d7e859c8a1edb6af2398f4cf7499f6972acd",
+      "baseline_sha256": "49ad5a39b4ca9bc70194f7268b55d7e859c8a1edb6af2398f4cf7499f6972acd",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/monitor/SKILL.md",
+      "sha256": "ddd24895961ae68a0adc53a61f9a1722b9169b6b89da12c9960c0a7816831425",
+      "baseline_sha256": "ddd24895961ae68a0adc53a61f9a1722b9169b6b89da12c9960c0a7816831425",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/status/references/report-format.md",
+      "sha256": "3cd603a9c454f2a2458b09af2d50ec416768cfa5202f1bd2bf783f26dbf5d557",
+      "baseline_sha256": "3cd603a9c454f2a2458b09af2d50ec416768cfa5202f1bd2bf783f26dbf5d557",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-roadmap-implementation-supervisor/SKILL.md",
+      "sha256": "aeff519d09551470d8aadbf6a223bbee89729d96184726addef155492a3b1f38",
+      "baseline_sha256": "aeff519d09551470d8aadbf6a223bbee89729d96184726addef155492a3b1f38",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/SKILL.md",
+      "sha256": "b4ec0266a8d72f573dd4f3670c671a856ee5cc98b6942aad48683fa22fb14d68",
+      "baseline_sha256": "b4ec0266a8d72f573dd4f3670c671a856ee5cc98b6942aad48683fa22fb14d68",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/agents/openai.yaml",
+      "sha256": "1b938e91f8799afb36273459f1172b18b7e45aceed5b9cb2b81af9d9c86ce82d",
+      "baseline_sha256": "1b938e91f8799afb36273459f1172b18b7e45aceed5b9cb2b81af9d9c86ce82d",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-supervisor.toml",
+      "sha256": "01887fdc12c962be5a7438b513836e6269cff1f9683b7a17c2edfbf2aa961044",
+      "baseline_sha256": "01887fdc12c962be5a7438b513836e6269cff1f9683b7a17c2edfbf2aa961044",
+      "expected_change": false,
+      "retained": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/owner-publication.md",
+      "sha256": "e443f0a689532a42ababb29bf6729a49dc56ba91f6727364f46faafb1ae19785",
+      "baseline_sha256": "e443f0a689532a42ababb29bf6729a49dc56ba91f6727364f46faafb1ae19785",
+      "expected_change": false,
+      "retained": true
+    }
+  ],
+  "unowned_outside_controller_files_checked": 11720,
+  "unowned_outside_controller_drifts": [],
+  "source_build_caches": [
+    {
+      "path": "fusion-studio-client/node_modules/.tmp/tsconfig.app.tsbuildinfo",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/node_modules/.tmp/tsconfig.node.tsbuildinfo",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/index.html",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/vite.svg",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Script-Regular-D3wIWfF6.woff2",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/dockerfile-BKs6k2Af.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-MOh5qavF.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/oz-BzwKVEFT.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_AMS-Regular-DRggAlZN.ttf",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/http-DBlCnlav.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Fraktur-Regular-CTYiF6lA.woff2",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Caligraphic-Regular-wX97UBjC.ttf",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/solr-DehyRSwq.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/forth-Ffai-XNe.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/nsis-LdVXkNf5.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-D16FRjRK.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/apl-B4CMkyY2.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/MenuSurface-BrYLoXvx.css",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/protobuf-ChK-085T.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-Di5qvPd2.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/commonlisp-DBKNyK5s.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Main-Regular-Dr94JaBh.woff",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Size3-Regular-DgpXs0kz.ttf",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/pascal--L3eBynH.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/brainfuck-C4LP7Hcl.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/tiddlywiki-DO-Gjzrf.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/nginx-DdIZxoE0.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/ecl-Cabwm37j.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-BGKwcBVH.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_SansSerif-Regular-BNo7hRIc.ttf",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/cobol-CWcv1MsR.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_SansSerif-Bold-CFMepnvq.ttf",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-hroLRCBn.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/dylan-DwRh75JA.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/mscgen-BA5vi2Kp.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/diff-DbItnlRl.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-BPLAYE1u.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Main-Regular-B22Nviop.woff2",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/FileDocumentPresenter-CflsNQo-.css",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/ttcn-cfg-B9xdYoR4.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/sql-D0XecflT.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/gherkin-heZmZLOM.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/scheme-C41bIUwD.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/stex-C3f8Ysf7.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_AMS-Regular-DMm9YOAa.woff",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/FileEmptyTabBody-IhR99vG_.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/cmake-BQqOBYOt.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/livescript-BwQOo05w.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/ttcn-CfJYG6tj.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/z80-Hz9HOZM7.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/tcl-DVfN8rqt.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/vhdl-lSbBsy5d.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Math-BoldItalic-iY-2wyZ7.woff",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Main-BoldItalic-SpSLRI95.woff",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-D3pelb6U.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Size2-Regular-oD1tc_U0.woff",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/velocity-D8B20fx6.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Main-Italic-3WenGoN9.ttf",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_SansSerif-Regular-CS6fqUqJ.woff",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/gas-Bneqetm1.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/puppet-DMA9R1ak.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Fraktur-Bold-BsDP51OF.woff",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-D-VGcjKx.css",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/ntriples-BfvgReVJ.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/mathematica-DTrFuWx2.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/tiki-DGYXhP31.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/spreadsheet-BCZA_wO0.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Caligraphic-Bold-Dq_IR9rO.woff2",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/eiffel-CnydiIhH.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/factor-kuTfRLto.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/stylus-B533Al4x.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Caligraphic-Regular-CTRA-rTL.woff",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-DPb-ETxa.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/groovy-D9Dt4D0W.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-lnU_gdeH.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/powershell-CFHJl5sT.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-Glr-mdUX.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/asterisk-B-8jnY81.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Size4-Regular-BF-4gkZK.woff",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Main-Italic-NWA7e6Wa.woff2",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Size2-Regular-Dy4dx90m.woff2",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Main-Bold-Jm3AIy58.woff",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/shell-CjFT_Tl9.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/toml-Bm5Em-hy.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_SansSerif-Regular-DDBCnlJ7.woff2",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/lua-BgMRiT3U.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/clike-B9uivgTg.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/idl-BEugSyMb.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/sparql-DkYu6x3z.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/modelica-Dc1JOy9r.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-B84DidjX.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/asciiarmor-Df11BRmG.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/mbox-CNhZ1qSd.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/coffeescript-S37ZYGWr.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-ZRoFOn3G.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_SansSerif-Bold-DbIhKOiC.woff",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/julia-DuME0IfC.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/CaptureDocumentPresenter-D7jtw7g3.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/d-pRatUO7H.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Fraktur-Regular-CB_wures.ttf",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-Cp-hHmTd.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/vbscript-BuJXcnF6.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/textile-CnDTJFAw.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Script-Regular-C5JkGWo-.ttf",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/haxe-H-WmDvRZ.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/r-B6wPVr8A.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/ebnf-CDyGwa7X.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Main-BoldItalic-DzxPMmG6.ttf",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Size4-Regular-Dl5lxZxV.woff2",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Main-Bold-waoOVXN0.ttf",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/simple-mode-GW_nhZxv.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/mirc-CjQqDB4T.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Math-BoldItalic-B3XSjfu4.ttf",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/mllike-CXdrOF99.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/webidl-ZXfAyPTL.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Caligraphic-Regular-Di6jR-x-.woff2",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/javascript-iXu5QeM3.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/troff-wAsdV37c.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/properties-C78fOPTZ.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Math-Italic-DA0__PXp.woff",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/FileEmptyTabBody-Cxwzun_s.css",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/mumps-BT43cFF4.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-_i8Ekqkq.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/vb-CmGdzxic.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Script-Regular-D5yQViql.woff",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Caligraphic-Bold-BEiXGLvX.woff",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_SansSerif-Italic-DN2j7dab.woff",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Fraktur-Regular-Dxdc4cR9.woff",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Fraktur-Bold-CL6g_b3V.woff2",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/fortran-DYz_wnZ1.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Size1-Regular-C195tn64.woff",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/clojure-BMjYHr_A.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/swift-BzpIVaGY.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-BYODCSdc.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/FilePickerDrawerLayer-Hyzar201.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/python-BuPzkPfP.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/yacas-BJ4BC0dw.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/css-BnMrqG3P.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/cypher-C_CwsFkJ.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-EE-X5CCC.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/perl-CdXCOZ3F.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Size1-Regular-Dbsnue_I.ttf",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/xquery-DzFWVndE.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-DVHd-iOO.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Size4-Regular-DWFBv043.ttf",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Size3-Regular-CTq5MqoE.woff",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Main-BoldItalic-DxDJ3AOS.woff2",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/pug-DeIclll2.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/sas-B4kiWyti.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-IW2Ttyi0.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/chat-completing-pinwheel.gif",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/ruby-B2Rjki9n.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/fcl-Kvtd6kyn.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/smalltalk-CnHTOXQT.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-BQaKDyTw.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-DrwsEQeN.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-BsKh73fw.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_SansSerif-Italic-YYjJ1zSn.ttf",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/FilePickerDrawerLayer-CQODmtw5.css",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Main-Bold-Cx986IdX.woff2",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/material-symbols-outlined-CqIkmgaP.woff2",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Main-Regular-ypZvNtVU.ttf",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/FileDocumentPresenter-hMYf6FWg.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/sieve-C3Gn_uJK.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/pig-CevX1Tat.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/haskell-Cw1EW3IL.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Math-BoldItalic-CZnvNsCZ.woff2",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_AMS-Regular-BQhdFMY1.woff2",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-CCNC6y2x.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/index-DTJlK87V.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Fraktur-Bold-BdnERNNW.ttf",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Typewriter-Regular-D3Ib7_Hf.ttf",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/crystal-SjHAIU92.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/verilog-C6RDOZhf.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Typewriter-Regular-CO6r4hn1.woff2",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/dtd-DF_7sFjM.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Math-Italic-flOr_0UB.ttf",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/ChatSurfaceComponentMount-DmyoTlo2.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Size1-Regular-mCD8mA8B.woff2",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Math-Italic-t53AETM-.woff2",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Main-Italic-BMLOBm91.woff",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/asn1-EdZsLKOL.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_SansSerif-Bold-D1sUS0GD.woff2",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Size2-Regular-B7gKUWhC.ttf",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/octave-Ck1zUtKM.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_SansSerif-Italic-C3H0VqGB.woff2",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Caligraphic-Bold-ATXxdsX0.ttf",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/erlang-BNw1qcRV.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/elm-vLlmbW-K.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/KaTeX_Typewriter-Regular-C0xS9mPB.woff",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/rpm-CTu-6PCP.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/q-pXgVlZs6.js",
+      "matches": true
+    },
+    {
+      "path": "fusion-studio-client/dist/assets/turtle-B1tBg_DP.js",
+      "matches": true
+    }
+  ],
+  "markdown_links": [
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/runtime-handoff.md",
+      "target": "/Users/rccurtrightjr./.codex/skills/fusion-electron-restart/SKILL.md",
+      "exists": true
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+      "target": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/job-template.md",
+      "exists": true
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+      "target": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-code-review-orchestrator/SKILL.md",
+      "exists": true
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+      "target": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-spec-review-gate/SKILL.md",
+      "exists": true
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+      "target": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-repair-worker/SKILL.md",
+      "exists": true
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+      "target": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/wiki-handoff.md",
+      "exists": true
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+      "target": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/runtime-handoff.md",
+      "exists": true
+    },
+    {
+      "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+      "target": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/owner-publication.md",
+      "exists": true
+    }
+  ],
+  "toml_parsed": [
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/config.toml",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-code-review-orchestrator.toml",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-repair-worker.toml",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-commit-supervisor.toml",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-draft-supervisor.toml",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-first-draft.toml",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-planning-stage-orchestrator.toml",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-planning-validator.toml",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-roadmap-author.toml",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-roadmap-creation-supervisor.toml",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-roadmap-supervisor.toml",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-spec-orchestrator.toml",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.codex/agents/mc-spec-slice-builder.toml"
+  ],
+  "raw_failure_retained": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/cleanup.log",
+      "matches": true
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/owned-runtime-stop.json",
+      "matches": true
+    }
+  ]
+}

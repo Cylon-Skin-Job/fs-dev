@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-04T15:38:19.132041+00:00",
+  "actor": "/root/s6_supervisor_candidate_1",
+  "state": "HANDOFF_VALIDATED",
+  "review_status": "complete",
+  "reviewer": "/root/s6_supervisor_candidate_1/wiki_handoff_review_1",
+  "actual_terminal": "native FINAL_ANSWER observed",
+  "raw_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/wiki-handoff-1.raw.md",
+  "raw_sha256": "3008c8e63af59a1bca32c9732fcbe6e4132a4ec902b32388e980a4803e948ff1",
+  "current_identity": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-wiki-handoff-identity.json",
+  "current_identity_sha256": "cf9f2f2ab8e66ffe642ea09e270c51bc760d337a1e85ecbfa490e2bbe5a39d83",
+  "current129_50_config_index_status_match": true,
+  "original_assigned_coverage": "All3fixturepages, original missingreaderfacts, retainedroot/Nav linksbytes/times, exactsources/preimage/metadata, unchanged code/restart/shell seams",
+  "required_raw_checks": "first-wiki-command-only /0-4 exit0 current; current55/17 receipts/35deps; complete preimage; no runtime claim",
+  "dependencies": "all three currentpages/version + originalsupporting controller/view/index/style/restart/shell sources/config/authority; runtime-generated incidental state outside narrow doc claims",
+  "limits": "Documentation/source gate only; final/runtime/owner separatelyrequired"
+}

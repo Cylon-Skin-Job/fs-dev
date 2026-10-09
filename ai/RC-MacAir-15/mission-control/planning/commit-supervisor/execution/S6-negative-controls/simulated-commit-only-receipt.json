@@ -1,0 +1,8 @@
+{
+  "label": "REHEARSAL_ONLY_SIMULATED",
+  "candidate_packet": "jobs/commit-supervisor/rehearsal-20261004-s6/owner-packet-fix-xy.md",
+  "candidate_packet_sha256": "4262b884dccc10a10b53a43e1a96e00167a5557b85f88802c324414410c29870",
+  "allowed_operation": "commit",
+  "push": false,
+  "actual_authorization": "NONE"
+}

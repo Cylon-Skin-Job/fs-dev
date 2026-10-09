@@ -1,0 +1,25 @@
+{
+  "at": "2026-09-27T03:21:34.045828+00:00",
+  "runId": "chat-arch-1790478658279-b18e60618b",
+  "ownedRootExists": false,
+  "pidsAlive": {
+    "31883": false,
+    "31895": false,
+    "32601": false
+  },
+  "mismatches": [],
+  "persistent55084Alive": true,
+  "diagnosticStatus": "diagnostic-complete",
+  "events": 204,
+  "overflow": 0,
+  "truncated": 0,
+  "observerRemoved": true,
+  "startedAt": 1790478664807,
+  "endedAt": 1790479264844,
+  "cleanup": {
+    "dbQuickCheck": "ok",
+    "portFileRemoved": true,
+    "fixtureRootsRemoved": true
+  },
+  "lingering": []
+}

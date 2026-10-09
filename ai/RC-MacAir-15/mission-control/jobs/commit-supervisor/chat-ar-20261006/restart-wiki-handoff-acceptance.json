@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-06T23:05:04.838089+00:00",
+  "state": "HANDOFF_VALIDATED",
+  "reviewer": "/root/restart_wiki_handoff_01",
+  "reviewer_terminal": true,
+  "raw_report_sha256": "315ca9845d61803db89471e5f5bfba5e7a9f27e121c1c23f7c2341f67466a9c0",
+  "leaf_terminal": true,
+  "deviations": "Exact baseline deferral and disclosed object-write-capable identification accepted; no observed byte/index/ref drift, entire object-store equality not claimed. Fresh reviewer no writes.",
+  "next": "Root exact article index restore and selector exclusion, pass-02 final review"
+}

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "dataSource": "Issues",
+  "root": {
+    "type": "workspace-relative",
+    "path": "ai/${machine}/Issues"
+  },
+  "chat": {
+    "type": "rolling-daily",
+    "position": "right"
+  }
+}

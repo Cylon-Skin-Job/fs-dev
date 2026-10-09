@@ -1,0 +1,112 @@
+{
+  "at": "2026-10-04T19:26:43.747621+00:00",
+  "owner": "/root",
+  "scope": "S6 actual runtime chain, incremental",
+  "deviations": [
+    {
+      "id": "S6-RUNTIME-D01",
+      "original_SPEC_text": "Record actual identities, inherited root model/effort, terminal results; unavailable independent runtime is an unmet gate.",
+      "actual_change": "First code-handoff child returned actual selected-model capacity error; preserve error and retry DIFFERENT fresh identity with same inherited settings.",
+      "reason": "Runtime capacity prevented any inspection; no result or acceptance invented.",
+      "files": [
+        "J/reviews/code-handoff-1-error.raw.json",
+        "J/checkpoint.json"
+      ],
+      "checks": "Native errored lifecycle observed; replacement fresh root inherited/no overrides; candidate unchanged.",
+      "observable_effect": "Adds real failed-attempt evidence; no code change/gate waiver.",
+      "risk": "Temporary independent reviewer availability remains required.",
+      "downstream_SPEC_impact": "none",
+      "classification": "accepted",
+      "consumer": "Actual installed Supervisor original-assignment handoff gate"
+    },
+    {
+      "id": "S6-RUNTIME-D02",
+      "original_SPEC_text": "Clean-room reviewers are fresh read-only sessions without author/manager conversation or prior reviewer history; supply current bytes and raw test evidence, not desired verdict/prior diagnoses.",
+      "actual_change": "Reviewer2 read mixed worker JSON including raw_finding_origin/proposed_finding_dispositions. It returned actual insufficient-evidence; Supervisor creates command-only derivative and fresh reviewer3 after terminal.",
+      "reason": "Original allowed raw-check file combined command receipts and worker assessments. Exposure cannot be reversed by later filtering.",
+      "files": [
+        "J/workers/code-repair-1-checks.json",
+        "J/evidence/first-code-command-only.json",
+        "J/code-handoff-original-assignment.md",
+        "J/reviews/code-handoff-2.raw.md",
+        "J/checkpoint.json"
+      ],
+      "checks": {
+        "native_reviewer2_completed_insufficient_evidence": true,
+        "derivative_sha256": "413f037a8c923fd6e9f61ab101714e9511da4b7d7342754299cf0c62c6d30add",
+        "source_sha256": "1f0f9c3e22c35ab2a87e14785958fa404578798b92227914e28146ee1aef93b3",
+        "copied_pointer": "/actual_check_receipts",
+        "eleven_raw_receipts_exact_value_match": true,
+        "derivative_contains_only_provenance_and_raw_receipts": true
+      },
+      "observable_effect": "Rejects this pass as independent acceptance; no current code change or readiness claim.",
+      "risk": "Earlier exposed actor remains excluded; distinct raw-only reviewer3 CLEAN and manager actual HANDOFF_VALIDATED satisfy release. Raw-only packets mandatory for subsequent fresh gates.",
+      "downstream_SPEC_impact": "none",
+      "classification": "accepted",
+      "release_condition": "Distinct fresh reviewer returns current original-assignment materially clean result after terminal2 with no prior diagnosis exposure; manager records actual handoff.",
+      "consumer": "Original code handoff and subsequent Wiki/final/fix gates",
+      "release_observed": {
+        "at": "2026-10-04T15:12:16.187712+00:00",
+        "fresh_reviewer": "/root/s6_supervisor_candidate_1/code_handoff_review_3",
+        "raw_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/reviews/code-handoff-3.raw.md",
+        "sha256": "bbff107ed13103f59820c349cb5a8eda646c30ac728d8a491d0914653fb96baf",
+        "manager_handoff": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/evidence/first-code-handoff-acceptance.json",
+        "raw_only_boundary_attested": true,
+        "root_complete_report_and_current_pair_raw_checks_inspected": true
+      }
+    },
+    {
+      "id": "S6-RUNTIME-D03",
+      "original_SPEC_text": "All Git reads use GIT_OPTIONAL_LOCKS=0",
+      "actual_change": "Initial pwd/root-discovery shell used git rev-parse --show-toplevel without the environment prefix",
+      "reason": "Required read-only repository resolution; omitted prefix on initial call",
+      "files": [
+        "J/reviews/final-manager-1-lifecycle.json"
+      ],
+      "checks": "All subsequent Git readbacks use GIT_OPTIONAL_LOCKS=0; protected/candidate refs and physical indexes match checkpoint after review",
+      "observable_effect": "Repository root resolved; no index/ref mutation",
+      "risk": "None evidenced for pure rev-parse; mandatory flag retained for subsequent inventory",
+      "downstream_SPEC_impact": "none",
+      "classification": "accepted",
+      "consumer": "Supervisor review lifecycle",
+      "root_assessment": "Pure initial rev-parse read had no mutation; root baseline physical source index unchanged and actual current manager identity/readbacks independently inspected. Required no-lock Git reads remain in subsequent controls."
+    },
+    {
+      "id": "S6-ROOT-D4",
+      "original_spec": "Current read-only Git invocations use GIT_OPTIONAL_LOCKS=0 and preserve source/shared index/refs.",
+      "actual_change": "Root resumed repository discovery with git rev-parse --show-toplevel without the flag. No Git mutation command was issued.",
+      "reason": "Procedural omission in a pure repository-root lookup after context continuation.",
+      "files": [],
+      "tests": "Current physical source index SHA-256 read directly; equals retained f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966. Subsequent Git commands require the flag.",
+      "observable_effect": "No observed source index change; selected root remains /Users/rccurtrightjr./projects/fs-dev.",
+      "risk": "The initial invocation cannot be retroactively corrected; root lookup does not refresh index.",
+      "downstream_spec_impact": "none",
+      "classification": "accepted",
+      "at": "2026-10-04T17:08:00.426912+00:00",
+      "current_source_index_sha256": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966"
+    },
+    {
+      "id": "S6-ROOT-D5",
+      "original_spec": "Required current checks may be retained only with complete actual supporting dependencies and current equality.",
+      "actual_change": "Root initially checked all declared35 entries but did not detect six omitted executed/imported local paths; new fresh final gate found F-ALL5-01. Root independently confirmed omission and withdrew current Python-reuse acceptance.",
+      "reason": "Inspection coverage error; declared hash equality did not establish dependency completeness.",
+      "files": [
+        "J/evidence/fix-xy-unaffected-suite-reuse.json",
+        "E/S6-revised-leaf-deviation-classifications.json"
+      ],
+      "tests": "AST/import and actual discovery receipt comparisons identify all six omissions;35 entries contain30 unique paths. No historical drift or failed test established.",
+      "observable_effect": "Current revised final/runtime/owner readiness withheld; full current55 dependency binding and execution repair required. Historical receipts remain immutable and qualified.",
+      "risk": "Old35-only receipt cannot retroactively certify omitted execution-time bytes.",
+      "downstream_spec_impact": "Current S6 final/check/runtime handoff must use renewed complete evidence; final root suite must bind its full executed surface.",
+      "classification": "accepted",
+      "resolver": "actual revised Supervisor bounded check-evidence repair, followed by fresh final gate",
+      "at": "2026-10-04T17:59:36.931926+00:00",
+      "current_repair_evidence": "S6-root-renewed-python-binding-inspection.json",
+      "current_repair_fact": "Actual current-2 exit0/all55 with 3808 unique equal pre/post/current dependencies and all82 actual JS files bound; historical receipts remain qualified.",
+      "remaining_gate": "none for repaired current source/check evidence; separate actual runtime remains mandatory",
+      "repair_accepted_at": "2026-10-04T19:26:43.747621+00:00",
+      "repair_acceptance": "S6-root-revised-final3-inspection.json",
+      "historical_qualification": "Old incomplete reuse claims stay withdrawn; renewed current55 and actual fresh final3 supply current evidence only."
+    }
+  ]
+}

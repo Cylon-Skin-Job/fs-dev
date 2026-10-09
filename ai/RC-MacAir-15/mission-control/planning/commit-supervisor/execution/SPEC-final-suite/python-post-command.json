@@ -1,0 +1,26 @@
+{
+  "actor": "/root",
+  "argv": [
+    "/opt/homebrew/bin/python3.12",
+    "-B",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-python-bindings.py",
+    "python-post",
+    "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite/python-pre.json"
+  ],
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "started_at": "2026-10-05T03:21:36.412046+00:00",
+  "finished_at": "2026-10-05T03:21:37.042272+00:00",
+  "exit_code": 0,
+  "stdout": "{\"path\": \"/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-suite/python-post.json\", \"sha256\": \"a5b1c659f5c3219001c81d84cd4107e64f67f56a8201182391255f5cf3d0ef61\", \"dependency_count\": 3809, \"discovered_modules\": 3, \"test_methods\": 55, \"mismatches\": []}\n",
+  "stderr": "",
+  "environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "executable": {
+    "exists": true,
+    "kind": "symlink",
+    "mode": "0o120755",
+    "sha256": "33d8e1482d4fed91710a6cc3eceff876c4d42897ba78605e9174210f72b487cb"
+  }
+}

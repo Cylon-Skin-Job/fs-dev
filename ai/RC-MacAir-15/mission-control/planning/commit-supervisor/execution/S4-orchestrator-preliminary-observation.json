@@ -1,0 +1,70 @@
+{
+  "time": "2026-10-04T10:18:35.253Z",
+  "scope": "preliminary read-only current helper observation; not acceptance/runtime success",
+  "target": {
+    "repo": "/Users/rccurtrightjr./projects/fs-dev",
+    "client": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+    "main": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs",
+    "server": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+    "machine": "RC-MacAir-15",
+    "profile": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio",
+    "profileMode": "default",
+    "defaultProfile": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio",
+    "bin": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+    "runtime": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/fusion-restart",
+    "portFile": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server.port",
+    "dryRun": true,
+    "database": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/data/fusion.db",
+    "serverLog": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server-live.log"
+  },
+  "error": "profile renderer has unverified ancestry: 48666",
+  "protectedRecords": [
+    {
+      "pid": 48636,
+      "ppid": 1,
+      "start": "Thu Oct  1 12:36:56 2026",
+      "cwd": "/",
+      "command": "/Applications/Fusion Studio Alpha.app/Contents/MacOS/Fusion Studio",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-Alpha",
+        "FUSION_APP_USER_DATA": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha"
+      }
+    },
+    {
+      "pid": 48653,
+      "ppid": 48636,
+      "start": "Thu Oct  1 12:36:59 2026",
+      "cwd": "/",
+      "command": "/opt/homebrew/bin/node /Applications/Fusion Studio Alpha.app/Contents/Resources/fusion-studio-server/server.js",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-Alpha",
+        "FUSION_APP_USER_DATA": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha"
+      }
+    },
+    {
+      "pid": 77002,
+      "ppid": 1,
+      "start": "Mon Sep 28 01:40:07 2026",
+      "cwd": "/",
+      "command": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-MacAir-15"
+      }
+    },
+    {
+      "pid": 77007,
+      "ppid": 77002,
+      "start": "Mon Sep 28 01:40:07 2026",
+      "cwd": "/",
+      "command": "/opt/homebrew/bin/node /Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+      "env": {
+        "FUSION_LOCAL_MACHINE": "RC-MacAir-15"
+      }
+    }
+  ],
+  "helperHashes": {
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs": "176a7ba65f10473f7badbdbbc6bd39bfc4a05dcd83c0e843bf94c20acd5f420d",
+    "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs": "d887b067408de9952b0e3cabcb0c501f4f0653538935ff57b9e611e3bc8e5377"
+  },
+  "noSignalOrRuntimeMutation": true
+}

@@ -1,0 +1,30 @@
+{
+  "root": "/private/tmp/mc-s6-commit-supervisor-20261004",
+  "candidate": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+  "profile": "/private/tmp/mc-s6-commit-supervisor-20261004/profile",
+  "machine": "MC-S6",
+  "workspace": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace",
+  "baseline": "d15792920731f85e45b743519d4af2b807d95a9c",
+  "bootstrapEvidence": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/public-bootstrap.json",
+  "custom": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer",
+  "wiki": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate/rehearsal-workspace/ai/MC-S6/Wiki",
+  "sample_write_time": "2026-10-04T11:43:14Z",
+  "recovery_deleted_path": "HANDOFF.md",
+  "odd_path": "rehearsal-inputs/odd '\" $ ;\t\n -- path.bin",
+  "fixture_assets": {
+    "authority.md": "d56710db1edba2ba6ef8798975fb1fb4808a301b0ea2e46bcb81d6645e251010",
+    "index.html": "c2ba834be53b0d84b17f2e2bbcde7e3b468ae05903c3b5179ef7070f342428d2",
+    "navigation-guide.md": "4fbe50677f55e83003d8af72f2db702c9ffcea3a514f82feacf56ea3c7983970",
+    "checklist-guide.md": "e05c868a3f60d3975ce517c02ada96887d4671faed1640e203853bc545d58076",
+    "checklist.css": "6e3d4171ec9dd14bff1d521f6d9df9b6afa25bfef0b336dba791e1f7fdfc3184",
+    "checklist-view.js": "a93d17d7fe8924d9cc077f4e973c3d94743796930c05c9c24bd76fec203d6b6f",
+    "checklist-controller.js": "2b9276858645f88d423fb044816deb3b84049b1be09e74369353549d712f2412"
+  },
+  "watcherProofRelative": "ai/MC-S6/watcher-proof-runtime-1.md",
+  "job_owner": "/root/s6_supervisor_candidate_1",
+  "scope": "REHEARSAL_ONLY",
+  "derived_from": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-private-paths.json",
+  "derived_from_sha256": "4a2147669b54de1366bc6cfb7e8b7102b888990eadb2ba3760714b8464c01665",
+  "summary_format_state": "root labeled resolution validated",
+  "summaryFormat": "N remaining of 3"
+}

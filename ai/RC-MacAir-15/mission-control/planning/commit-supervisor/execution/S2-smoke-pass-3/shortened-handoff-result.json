@@ -1,0 +1,96 @@
+{
+  "agent_gate_proof": false,
+  "candidate": {
+    "authority": {
+      "SPEC": "approved"
+    },
+    "configuration": {
+      "profile": "disposable"
+    },
+    "fixtures": {
+      "oracle": "correct"
+    },
+    "owned": {
+      "adapter.py": {
+        "worktree": "still-bad"
+      },
+      "code.py": {
+        "index": "base",
+        "mode": "100644",
+        "worktree": "fixed"
+      }
+    },
+    "preparation": "replay-owned-bytes",
+    "sources": [
+      "source-1"
+    ],
+    "target": "target-1"
+  },
+  "dispatch_actions": [],
+  "dispositions": {
+    "F1": [
+      {
+        "status": "repair-reported"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "assigned_paths": [
+        "code.py",
+        "adapter.py"
+      ],
+      "authority": "approved behavior criterion",
+      "confidence": "medium",
+      "evidence": "fixture/repro.log",
+      "id": "F1",
+      "impact": "accepted input returns incorrect result",
+      "path": "code.py",
+      "severity": "high",
+      "validated": true
+    }
+  ],
+  "gaps": [
+    "unavailable/stale/non-independent reviewer: fixture-reviewer-1"
+  ],
+  "hold_packet": null,
+  "invalidated": [],
+  "raw_reports": [
+    {
+      "clean_room": true,
+      "dependencies": {
+        "authority": {
+          "SPEC": "approved"
+        },
+        "owned": {
+          "code.py": {
+            "index": "base",
+            "mode": "100644",
+            "worktree": "fixed"
+          }
+        }
+      },
+      "findings": [],
+      "identity": "fixture-reviewer-1",
+      "lenses": [
+        "Behavior & Verification",
+        "Standards Compliance",
+        "Integrations & Dependencies",
+        "Forward Compatibility",
+        "Wiki Impact"
+      ],
+      "raw_path": "fixture/review-1.md",
+      "read_only": true,
+      "result": "clean",
+      "root_inherited": true,
+      "terminal": true
+    }
+  ],
+  "repair_packet": null,
+  "result": "insufficient-evidence",
+  "return": "REVIEW_COMPLETE",
+  "state": "unmet-gate",
+  "unaffected": [
+    "behavior"
+  ]
+}

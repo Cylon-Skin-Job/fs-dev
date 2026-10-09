@@ -1,0 +1,15 @@
+{
+  "runId": "R7-R8-RUNTIME-OWNERSHIP",
+  "status": "passed",
+  "result": {
+    "code": 0,
+    "signal": null,
+    "pid": 86707,
+    "timedOut": false,
+    "interrupted": false,
+    "leakedOwnedPids": [],
+    "elapsedMs": 12438
+  },
+  "failure": null,
+  "ownedRunRootRemoved": true
+}

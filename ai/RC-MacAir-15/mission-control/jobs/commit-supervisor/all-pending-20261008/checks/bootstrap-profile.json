@@ -1,0 +1,12 @@
+{
+  "command": [
+    "node",
+    "/private/tmp/fusion-main-consolidation-95vxg0_h/bootstrap-profile.cjs"
+  ],
+  "profile": "/private/tmp/fusion-main-consolidation-95vxg0_h/profile",
+  "machine": "RC-MacAir-15",
+  "exit_code": 0,
+  "log": "/private/tmp/fusion-main-consolidation-95vxg0_h/bootstrap-profile.log",
+  "at": "2026-10-09T01:09:22.926584+00:00",
+  "scope": "Brand new candidate-owned SQLite only, production migrations seed candidate Git root. No owner DB copied or mutated."
+}

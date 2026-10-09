@@ -1,0 +1,806 @@
+{
+  "at": "2026-10-07T22:46:23.911504+00:00",
+  "scope": "Read-only identity/owned lifecycle; no owner/Alpha health claim",
+  "native": [
+    {
+      "receipt": "implementation/M3/native-01/native-receipt.json",
+      "receipt_sha256": "17299bc969e5f356465c628e455b46e92757324adcefafbf51dc31119d7c1de1",
+      "status": "FAIL",
+      "started": "2026-10-07T20:18:44.330Z",
+      "ended": "2026-10-07T20:18:52.629Z",
+      "token": "chat-architecture-owner-material-97593-af44b254-0d62-4484-985c-0a995dbb9069",
+      "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-rroot7",
+      "tempRootPresent": false,
+      "pids": [
+        97722,
+        97791,
+        97792,
+        97794,
+        97816
+      ],
+      "currentlyAlive": [],
+      "lingeringOwnedPids": [],
+      "cleanup": {
+        "dbQuickCheck": "ok",
+        "portFileRemoved": true,
+        "fixtureRootsRemoved": true
+      },
+      "error": {
+        "name": "AssertionError",
+        "message": "The expression evaluated to a falsy value:\n\n  assert.ok(report.workspace?.id)\n"
+      },
+      "nativeWindow": null,
+      "captures": 0,
+      "galleries": 0,
+      "resources": 0,
+      "sends": 0
+    },
+    {
+      "receipt": "implementation/M3/native-02/native-receipt.json",
+      "receipt_sha256": "b347272d48d5c9da5e4e73c561b1df857d2dce842bd5607d9c49bd05c44f713a",
+      "status": "FAIL",
+      "started": "2026-10-07T20:23:15.807Z",
+      "ended": "2026-10-07T20:23:52.733Z",
+      "token": "chat-architecture-owner-material-682-6f9fac40-b654-4ca6-b4d9-6fba22c836a6",
+      "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-wFHxPs",
+      "tempRootPresent": false,
+      "pids": [
+        721,
+        729,
+        730,
+        757,
+        844
+      ],
+      "currentlyAlive": [],
+      "lingeringOwnedPids": [],
+      "cleanup": {
+        "dbQuickCheck": "ok",
+        "portFileRemoved": true,
+        "fixtureRootsRemoved": true
+      },
+      "error": {
+        "name": "Error",
+        "message": "timed out waiting for native save request"
+      },
+      "nativeWindow": null,
+      "captures": 0,
+      "galleries": 0,
+      "resources": 0,
+      "sends": 0
+    },
+    {
+      "receipt": "implementation/M3/native-03/native-receipt.json",
+      "receipt_sha256": "f469567177b703a8345e79815b80918cd2fec059f452b39bb3259a4eacaa1bd5",
+      "status": "FAIL",
+      "started": "2026-10-07T20:30:17.778Z",
+      "ended": "2026-10-07T20:30:54.292Z",
+      "token": "chat-architecture-owner-material-2321-ec6295a2-dbfb-43d3-8655-1dd55f05e741",
+      "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-XgW20W",
+      "tempRootPresent": false,
+      "pids": [
+        2354,
+        2359,
+        2360,
+        2361,
+        2416
+      ],
+      "currentlyAlive": [],
+      "lingeringOwnedPids": [],
+      "cleanup": {
+        "dbQuickCheck": "ok",
+        "portFileRemoved": true,
+        "fixtureRootsRemoved": true
+      },
+      "error": {
+        "name": "Error",
+        "message": "timed out waiting for native save request"
+      },
+      "nativeWindow": null,
+      "captures": 0,
+      "galleries": 0,
+      "resources": 0,
+      "sends": 0
+    },
+    {
+      "receipt": "implementation/M3/native-04/native-receipt.json",
+      "receipt_sha256": "7d3a8cefa1e745abcc642eda976d361fe6ccc7951e05f8e24de3c7798afd9684",
+      "status": "FAIL",
+      "started": "2026-10-07T20:33:42.622Z",
+      "ended": "2026-10-07T20:34:18.019Z",
+      "token": "chat-architecture-owner-material-3889-4bfd4807-d382-4429-8fad-de709f2b598f",
+      "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-Mi1v1i",
+      "tempRootPresent": false,
+      "pids": [
+        3898,
+        3900,
+        3901,
+        3909,
+        3976
+      ],
+      "currentlyAlive": [],
+      "lingeringOwnedPids": [],
+      "cleanup": {
+        "dbQuickCheck": "ok",
+        "portFileRemoved": true,
+        "fixtureRootsRemoved": true
+      },
+      "error": {
+        "name": "Error",
+        "message": "timed out waiting for exact captured pill"
+      },
+      "nativeWindow": null,
+      "captures": 0,
+      "galleries": 0,
+      "resources": 0,
+      "sends": 0
+    },
+    {
+      "receipt": "implementation/M3/native-05/native-receipt.json",
+      "receipt_sha256": "01fe269c6b1f32db7052fceccd14ea280f511838ff3283b41997a4aeb762f337",
+      "status": "FAIL",
+      "started": "2026-10-07T20:36:07.319Z",
+      "ended": "2026-10-07T20:36:43.004Z",
+      "token": "chat-architecture-owner-material-5509-3fb0ec8c-ea65-4e6c-8cd6-cf9e3222e102",
+      "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-9BE2Cf",
+      "tempRootPresent": false,
+      "pids": [
+        5523,
+        5540,
+        5541,
+        5542,
+        5558
+      ],
+      "currentlyAlive": [],
+      "lingeringOwnedPids": [],
+      "cleanup": {
+        "dbQuickCheck": "ok",
+        "portFileRemoved": true,
+        "fixtureRootsRemoved": true
+      },
+      "error": {
+        "name": "Error",
+        "message": "timed out waiting for exact captured pill"
+      },
+      "nativeWindow": null,
+      "captures": 0,
+      "galleries": 0,
+      "resources": 0,
+      "sends": 0
+    },
+    {
+      "receipt": "implementation/M3/native-06/native-receipt.json",
+      "receipt_sha256": "cbeb90e37c64c76ed07c8b27f4e1fb6aa01edd606332db61713933dfb0a47396",
+      "status": "FAIL",
+      "started": "2026-10-07T20:37:47.625Z",
+      "ended": "2026-10-07T20:38:22.226Z",
+      "token": "chat-architecture-owner-material-5962-8462f7cd-99a0-42cb-8d7f-af66f51ef85f",
+      "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-ZVM9tA",
+      "tempRootPresent": false,
+      "pids": [
+        5976,
+        6005,
+        6006,
+        6009,
+        6036
+      ],
+      "currentlyAlive": [],
+      "lingeringOwnedPids": [],
+      "cleanup": {
+        "dbQuickCheck": "ok",
+        "portFileRemoved": true,
+        "fixtureRootsRemoved": true
+      },
+      "error": {
+        "name": "Error",
+        "message": "timed out waiting for public Main hydration"
+      },
+      "nativeWindow": null,
+      "captures": 0,
+      "galleries": 0,
+      "resources": 0,
+      "sends": 0
+    },
+    {
+      "receipt": "implementation/M3/native-07/native-receipt.json",
+      "receipt_sha256": "a419fbe381dd86c3f3f683680bcd0a03cdeea84d2ed9418fa55fad8d5413f05e",
+      "status": "FAIL",
+      "started": "2026-10-07T20:39:15.302Z",
+      "ended": "2026-10-07T20:39:49.926Z",
+      "token": "chat-architecture-owner-material-6743-511609fa-291f-4f34-99dc-1dcf9b216c79",
+      "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-SI0SbB",
+      "tempRootPresent": false,
+      "pids": [
+        6760,
+        6773,
+        6774,
+        6776,
+        6814
+      ],
+      "currentlyAlive": [],
+      "lingeringOwnedPids": [],
+      "cleanup": {
+        "dbQuickCheck": "ok",
+        "portFileRemoved": true,
+        "fixtureRootsRemoved": true
+      },
+      "error": {
+        "name": "Error",
+        "message": "timed out waiting for public Main hydration"
+      },
+      "nativeWindow": null,
+      "captures": 0,
+      "galleries": 0,
+      "resources": 0,
+      "sends": 0
+    },
+    {
+      "receipt": "implementation/M3/native-08/native-receipt.json",
+      "receipt_sha256": "d4f8c60c12a12b963dc3081918d35f016d7c1941472d3f714282da7594d54c2c",
+      "status": "FAIL",
+      "started": "2026-10-07T20:40:37.380Z",
+      "ended": "2026-10-07T20:41:15.799Z",
+      "token": "chat-architecture-owner-material-7887-f2337c55-93ff-4858-9794-e37f1616b188",
+      "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-FslQTU",
+      "tempRootPresent": false,
+      "pids": [
+        7945,
+        7962,
+        7963,
+        7964,
+        7985
+      ],
+      "currentlyAlive": [],
+      "lingeringOwnedPids": [],
+      "cleanup": {
+        "dbQuickCheck": "ok",
+        "portFileRemoved": true,
+        "fixtureRootsRemoved": true
+      },
+      "error": {
+        "name": "TimeoutError",
+        "message": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.rv-panel[data-panel=\"file-viewer\"].active').locator('.rv-file-tree-item').filter({ hasText: 'material-native.txt' }).getByRole('button', { name: 'Send file path to chat', exact: true })\u001b[22m\n"
+      },
+      "nativeWindow": null,
+      "captures": 4,
+      "galleries": 2,
+      "resources": 0,
+      "sends": 0
+    },
+    {
+      "receipt": "implementation/M3/native-09/native-receipt.json",
+      "receipt_sha256": "324e00e17a066335a80ffa1b74968092378513f9908134d4ba1aa9c6500c89a7",
+      "status": "FAIL",
+      "started": "2026-10-07T20:41:42.481Z",
+      "ended": "2026-10-07T20:42:19.552Z",
+      "token": "chat-architecture-owner-material-8521-620ad5c5-2eb6-4b12-bc7d-5c76ac989e75",
+      "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-COFQGO",
+      "tempRootPresent": false,
+      "pids": [
+        8534,
+        8545,
+        8546,
+        8547,
+        8568
+      ],
+      "currentlyAlive": [],
+      "lingeringOwnedPids": [],
+      "cleanup": {
+        "dbQuickCheck": "ok",
+        "portFileRemoved": true,
+        "fixtureRootsRemoved": true
+      },
+      "error": {
+        "name": "Error",
+        "message": "timed out waiting for global resource exact owner"
+      },
+      "nativeWindow": null,
+      "captures": 4,
+      "galleries": 2,
+      "resources": 1,
+      "sends": 0
+    },
+    {
+      "receipt": "implementation/M3/native-10/native-receipt.json",
+      "receipt_sha256": "74f6459c9a7574962d64dff80f233587026117419f31a9d6d9b72d6b92855338",
+      "status": "FAIL",
+      "started": "2026-10-07T20:45:26.180Z",
+      "ended": "2026-10-07T20:46:01.887Z",
+      "token": "chat-architecture-owner-material-9053-dc4a7289-fcb3-4ae6-8c35-8af2c3f8a3fb",
+      "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-U6CiE5",
+      "tempRootPresent": false,
+      "pids": [
+        9061,
+        9085,
+        9086,
+        9087,
+        9100
+      ],
+      "currentlyAlive": [],
+      "lingeringOwnedPids": [],
+      "cleanup": {
+        "dbQuickCheck": "ok",
+        "portFileRemoved": true,
+        "fixtureRootsRemoved": true
+      },
+      "error": {
+        "name": "Error",
+        "message": "timed out waiting for owned native capture focus"
+      },
+      "nativeWindow": null,
+      "captures": 0,
+      "galleries": 0,
+      "resources": 0,
+      "sends": 0
+    },
+    {
+      "receipt": "implementation/M3/native-11/native-receipt.json",
+      "receipt_sha256": "b426e848afa91bd8c136a8c356a4af12d00ae5b2f6dfd8ea8e08d42a0118377c",
+      "status": "FAIL",
+      "started": "2026-10-07T20:46:25.291Z",
+      "ended": "2026-10-07T20:47:01.082Z",
+      "token": "chat-architecture-owner-material-9412-2a65fe5f-f501-4e6b-9866-ee0742619b28",
+      "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-GO6F6l",
+      "tempRootPresent": false,
+      "pids": [
+        9420,
+        9424,
+        9425,
+        9426,
+        9446
+      ],
+      "currentlyAlive": [],
+      "lingeringOwnedPids": [],
+      "cleanup": {
+        "dbQuickCheck": "ok",
+        "portFileRemoved": true,
+        "fixtureRootsRemoved": true
+      },
+      "error": {
+        "name": "Error",
+        "message": "timed out waiting for owned native capture focus"
+      },
+      "nativeWindow": null,
+      "captures": 0,
+      "galleries": 0,
+      "resources": 0,
+      "sends": 0
+    },
+    {
+      "receipt": "implementation/M3/native-12/native-receipt.json",
+      "receipt_sha256": "d3d3892a23101506bced41102ab7c65f1348fe120d486f0cb2857ff6e639a83c",
+      "status": "FAIL",
+      "started": "2026-10-07T20:48:40.317Z",
+      "ended": "2026-10-07T20:49:16.116Z",
+      "token": "chat-architecture-owner-material-9891-1d354916-95da-4be4-b889-100faf5d330b",
+      "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-cGhhmT",
+      "tempRootPresent": false,
+      "pids": [
+        9899,
+        9901,
+        9902,
+        9908,
+        9930
+      ],
+      "currentlyAlive": [],
+      "lingeringOwnedPids": [],
+      "cleanup": {
+        "dbQuickCheck": "ok",
+        "portFileRemoved": true,
+        "fixtureRootsRemoved": true
+      },
+      "error": {
+        "name": "Error",
+        "message": "timed out waiting for owned native capture focus"
+      },
+      "nativeWindow": null,
+      "captures": 0,
+      "galleries": 0,
+      "resources": 0,
+      "sends": 0
+    },
+    {
+      "receipt": "implementation/M3/native-13/native-receipt.json",
+      "receipt_sha256": "34abb689fc9f3977cac4bb5a13bffef69adb5e3e42255d95468ffa5effc12e0c",
+      "status": "FAIL",
+      "started": "2026-10-07T20:51:05.565Z",
+      "ended": "2026-10-07T20:51:40.715Z",
+      "token": "chat-architecture-owner-material-10299-0998ba7e-62ce-483e-b101-293807862eea",
+      "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-0dN7gJ",
+      "tempRootPresent": false,
+      "pids": [
+        10307,
+        10309,
+        10310,
+        10312,
+        10345
+      ],
+      "currentlyAlive": [],
+      "lingeringOwnedPids": [],
+      "cleanup": {
+        "dbQuickCheck": "ok",
+        "portFileRemoved": true,
+        "fixtureRootsRemoved": true
+      },
+      "error": {
+        "name": "Error",
+        "message": "timed out waiting for owned native capture focus"
+      },
+      "nativeWindow": {
+        "appActive": false,
+        "appHidden": false,
+        "windows": [
+          {
+            "id": 1,
+            "url": "fusion-shell://app/",
+            "focused": false,
+            "visible": true,
+            "minimized": false,
+            "focusable": true,
+            "key": false
+          }
+        ]
+      },
+      "captures": 0,
+      "galleries": 0,
+      "resources": 0,
+      "sends": 0
+    },
+    {
+      "receipt": "implementation/M3/native-14/native-receipt.json",
+      "receipt_sha256": "e554e2bc1a37ab9e46a4ad6190f4c703b15bc3cb4e3952949535a8b58a79b113",
+      "status": "FAIL",
+      "started": "2026-10-07T20:58:10.073Z",
+      "ended": "2026-10-07T20:58:10.141Z",
+      "token": "chat-architecture-owner-material-13138-a9fd76a4-37cc-4e27-8d65-f23676bc163e",
+      "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-RaHAug",
+      "tempRootPresent": false,
+      "pids": [],
+      "currentlyAlive": [],
+      "lingeringOwnedPids": [],
+      "cleanup": {},
+      "error": {
+        "name": "AssertionError",
+        "message": "native desktop focus unavailable while locked\n\ntrue !== false\n"
+      },
+      "nativeWindow": null,
+      "captures": 0,
+      "galleries": 0,
+      "resources": 0,
+      "sends": 0
+    },
+    {
+      "receipt": "implementation/M3/native-15/native-receipt.json",
+      "receipt_sha256": "8719999a7488554ba9fa086806bfc559c4febc20303d145bce125b9c5a772c82",
+      "status": "FAIL",
+      "started": "2026-10-07T22:34:50.636Z",
+      "ended": "2026-10-07T22:35:28.871Z",
+      "token": "chat-architecture-owner-material-15291-c242a7d2-c816-4eeb-a394-5c185cea7d2d",
+      "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-YAbLip",
+      "tempRootPresent": false,
+      "pids": [
+        15306,
+        15313,
+        15314,
+        15324,
+        15339
+      ],
+      "currentlyAlive": [],
+      "lingeringOwnedPids": [],
+      "cleanup": {
+        "dbQuickCheck": "ok",
+        "portFileRemoved": true,
+        "fixtureRootsRemoved": true
+      },
+      "error": {
+        "name": "TimeoutError",
+        "message": "locator.evaluate: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.rv-panel[data-panel=\"wiki-viewer\"].active').locator('.rv-wiki-topic-item').filter({ hasText: 'Owned Material' }).locator('button[title=\"Send article path to chat\"]')\u001b[22m\n"
+      },
+      "nativeWindow": {
+        "appActive": false,
+        "appHidden": false,
+        "windows": [
+          {
+            "id": 1,
+            "url": "fusion-shell://app/",
+            "focused": false,
+            "visible": true,
+            "minimized": false,
+            "focusable": true,
+            "key": false
+          }
+        ]
+      },
+      "captures": 4,
+      "galleries": 2,
+      "resources": 0,
+      "sends": 0
+    },
+    {
+      "receipt": "implementation/M3/native-16/native-receipt.json",
+      "receipt_sha256": "0014a1f29011654399aa19d7a00e03ab6e5ac3c6392d25fe8f3145e3eafea296",
+      "status": "FAIL",
+      "started": "2026-10-07T22:36:10.477Z",
+      "ended": "2026-10-07T22:36:16.613Z",
+      "token": "chat-architecture-owner-material-15643-e5ad00cf-cc47-4554-8d1a-a4b2ba6f5ec9",
+      "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-szQBSU",
+      "tempRootPresent": false,
+      "pids": [
+        15659,
+        15664,
+        15665,
+        15666,
+        15680
+      ],
+      "currentlyAlive": [],
+      "lingeringOwnedPids": [],
+      "cleanup": {
+        "dbQuickCheck": "ok",
+        "portFileRemoved": true,
+        "fixtureRootsRemoved": true
+      },
+      "error": {
+        "name": "Error",
+        "message": "ENOENT: no such file or directory, lstat '/private/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-szQBSU/material-native-workspace/material-project'"
+      },
+      "nativeWindow": {
+        "appActive": true,
+        "appHidden": false,
+        "windows": [
+          {
+            "id": 1,
+            "url": "fusion-shell://app/",
+            "focused": true,
+            "visible": true,
+            "minimized": false,
+            "focusable": true,
+            "key": true
+          }
+        ]
+      },
+      "captures": 0,
+      "galleries": 0,
+      "resources": 0,
+      "sends": 0
+    },
+    {
+      "receipt": "implementation/M3/native-17/native-receipt.json",
+      "receipt_sha256": "c34ad1b005e401de3362aefa30d793d773ba79a84e4340666630847ed81d009b",
+      "status": "FAIL",
+      "started": "2026-10-07T22:37:52.547Z",
+      "ended": "2026-10-07T22:38:03.944Z",
+      "token": "chat-architecture-owner-material-16063-1ac8e1b7-124e-4148-9032-7f540fe74c20",
+      "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-IbD2fD",
+      "tempRootPresent": false,
+      "pids": [
+        16082,
+        16084,
+        16085,
+        16086,
+        16096
+      ],
+      "currentlyAlive": [],
+      "lingeringOwnedPids": [],
+      "cleanup": {
+        "dbQuickCheck": "ok",
+        "portFileRemoved": true,
+        "fixtureRootsRemoved": true
+      },
+      "error": {
+        "name": "AssertionError",
+        "message": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'MAIN issues-viewer',\n+   'SIDE issues-viewer '\n-   'SIDE issues-viewer'\n  ]\n"
+      },
+      "nativeWindow": {
+        "appActive": true,
+        "appHidden": false,
+        "windows": [
+          {
+            "id": 1,
+            "url": "fusion-shell://app/",
+            "focused": true,
+            "visible": true,
+            "minimized": false,
+            "focusable": true,
+            "key": true
+          }
+        ]
+      },
+      "captures": 4,
+      "galleries": 2,
+      "resources": 2,
+      "sends": 2
+    },
+    {
+      "receipt": "implementation/M3/native-18/native-receipt.json",
+      "receipt_sha256": "96b107e3f731294fbd35274f99ca3ca2ae272558b7ecdce2461c63cc38c485a2",
+      "status": "PASS",
+      "started": "2026-10-07T22:39:55.057Z",
+      "ended": "2026-10-07T22:40:10.345Z",
+      "token": "chat-architecture-owner-material-16487-93853716-5448-4459-9cc6-09a8bee109a3",
+      "tempRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-material-native-96QRiO",
+      "tempRootPresent": false,
+      "pids": [
+        16508,
+        16510,
+        16511,
+        16512,
+        16523
+      ],
+      "currentlyAlive": [],
+      "lingeringOwnedPids": [],
+      "cleanup": {
+        "dbQuickCheck": "ok",
+        "portFileRemoved": true,
+        "fixtureRootsRemoved": true
+      },
+      "error": null,
+      "nativeWindow": null,
+      "captures": 8,
+      "galleries": 4,
+      "resources": 2,
+      "sends": 4
+    }
+  ],
+  "protectedObservation": [
+    {
+      "pid": 12886,
+      "preNativeState": "same",
+      "stateNow": "same",
+      "sameIdentity": true,
+      "baseline": "12886     1 Mon Oct  5 08:55:21 2026     /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs --user-data-dir=/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated --remote-debugging-address=127.0.0.1 --remote-debugging-port=50699",
+      "current": "12886     1 Mon Oct  5 08:55:21 2026     /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs --user-data-dir=/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated --remote-debugging-address=127.0.0.1 --remote-debugging-port=50699"
+    },
+    {
+      "pid": 12889,
+      "preNativeState": "same",
+      "stateNow": "same",
+      "sameIdentity": true,
+      "baseline": "12889 12886 Mon Oct  5 08:55:21 2026     /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=gpu-process --user-data-dir=/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated --gpu-preferences=SAAAAAAAAAAgAQAEAAAAAAAAAAAAAGAAAwAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=1718379636,r,11852059511766355808,4803331251703815501,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5554488052210331966,1464568878525138357,4 --trace-process-track-uuid=3190708988185955192 --seatbelt-client=34",
+      "current": "12889 12886 Mon Oct  5 08:55:21 2026     /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=gpu-process --user-data-dir=/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated --gpu-preferences=SAAAAAAAAAAgAQAEAAAAAAAAAAAAAGAAAwAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=1718379636,r,11852059511766355808,4803331251703815501,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5554488052210331966,1464568878525138357,4 --trace-process-track-uuid=3190708988185955192 --seatbelt-client=34"
+    },
+    {
+      "pid": 12890,
+      "preNativeState": "same",
+      "stateNow": "same",
+      "sameIdentity": true,
+      "baseline": "12890 12886 Mon Oct  5 08:55:21 2026     /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --user-data-dir=/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --shared-files --field-trial-handle=1718379636,r,11852059511766355808,4803331251703815501,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5554488052210331966,1464568878525138357,4 --trace-process-track-uuid=3190708989122997041 --seatbelt-client=35",
+      "current": "12890 12886 Mon Oct  5 08:55:21 2026     /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --user-data-dir=/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --shared-files --field-trial-handle=1718379636,r,11852059511766355808,4803331251703815501,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5554488052210331966,1464568878525138357,4 --trace-process-track-uuid=3190708989122997041 --seatbelt-client=35"
+    },
+    {
+      "pid": 12892,
+      "preNativeState": "same",
+      "stateNow": "same",
+      "sameIdentity": true,
+      "baseline": "12892 12886 Mon Oct  5 08:55:21 2026     /opt/homebrew/bin/node /Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+      "current": "12892 12886 Mon Oct  5 08:55:21 2026     /opt/homebrew/bin/node /Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js"
+    },
+    {
+      "pid": 12904,
+      "preNativeState": "same",
+      "stateNow": "same",
+      "sameIdentity": true,
+      "baseline": "12904 12886 Mon Oct  5 08:55:22 2026     /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron --enable-sandbox --remote-debugging-port=50699 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=4 --time-ticks-at-unix-epoch=-1787605995589361 --launch-time-ticks=3609727206617 --shared-files --field-trial-handle=1718379636,r,11852059511766355808,4803331251703815501,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5554488052210331966,1464568878525138357,4 --trace-process-track-uuid=3190708990060038890 --seatbelt-client=60",
+      "current": "12904 12886 Mon Oct  5 08:55:22 2026     /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron --enable-sandbox --remote-debugging-port=50699 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=4 --time-ticks-at-unix-epoch=-1787605995589361 --launch-time-ticks=3609727206617 --shared-files --field-trial-handle=1718379636,r,11852059511766355808,4803331251703815501,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5554488052210331966,1464568878525138357,4 --trace-process-track-uuid=3190708990060038890 --seatbelt-client=60"
+    },
+    {
+      "pid": 45005,
+      "preNativeState": "absent",
+      "stateNow": "absent",
+      "sameIdentity": false,
+      "baseline": "45005 12886 Tue Oct  6 22:59:54 2026     /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron --enable-sandbox --remote-debugging-port=50699 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=22 --time-ticks-at-unix-epoch=-1787605995589361 --launch-time-ticks=3740813218439 --shared-files --field-trial-handle=1718379636,r,11852059511766355808,4803331251703815501,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5554488052210331966,1464568878525138357,4 --trace-process-track-uuid=3190709006926792172 --seatbelt-client=67",
+      "current": ""
+    },
+    {
+      "pid": 45006,
+      "preNativeState": "same",
+      "stateNow": "same",
+      "sameIdentity": true,
+      "baseline": "45006 12886 Tue Oct  6 22:59:54 2026     /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron --enable-sandbox --remote-debugging-port=50699 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=23 --time-ticks-at-unix-epoch=-1787605995589361 --launch-time-ticks=3740813219640 --shared-files --field-trial-handle=1718379636,r,11852059511766355808,4803331251703815501,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5554488052210331966,1464568878525138357,4 --trace-process-track-uuid=3190709007863834021 --seatbelt-client=67",
+      "current": "45006 12886 Tue Oct  6 22:59:54 2026     /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/private/tmp/fusion-chat-ar-smoke.wZoDy5/profile-isolated --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron --enable-sandbox --remote-debugging-port=50699 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=23 --time-ticks-at-unix-epoch=-1787605995589361 --launch-time-ticks=3740813219640 --shared-files --field-trial-handle=1718379636,r,11852059511766355808,4803331251703815501,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5554488052210331966,1464568878525138357,4 --trace-process-track-uuid=3190709007863834021 --seatbelt-client=67"
+    },
+    {
+      "pid": 50654,
+      "preNativeState": "same",
+      "stateNow": "same",
+      "sameIdentity": true,
+      "baseline": "50654     1 Wed Oct  7 01:19:25 2026     /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --remote-debugging-address=127.0.0.1 --remote-debugging-port=60949",
+      "current": "50654     1 Wed Oct  7 01:19:25 2026     /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --remote-debugging-address=127.0.0.1 --remote-debugging-port=60949"
+    },
+    {
+      "pid": 50657,
+      "preNativeState": "same",
+      "stateNow": "same",
+      "sameIdentity": true,
+      "baseline": "50657 50654 Wed Oct  7 01:19:25 2026     /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=gpu-process --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --gpu-preferences=SAAAAAAAAAAgAQAEAAAAAAAAAAAAAGAAAwAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=1718379636,r,4723662950021138952,14092727233831086506,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,13175293216465320847,6022433364601031042,4 --trace-process-track-uuid=3190708988185955192 --seatbelt-client=33",
+      "current": "50657 50654 Wed Oct  7 01:19:25 2026     /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=gpu-process --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --gpu-preferences=SAAAAAAAAAAgAQAEAAAAAAAAAAAAAGAAAwAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=1718379636,r,4723662950021138952,14092727233831086506,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,13175293216465320847,6022433364601031042,4 --trace-process-track-uuid=3190708988185955192 --seatbelt-client=33"
+    },
+    {
+      "pid": 50658,
+      "preNativeState": "same",
+      "stateNow": "same",
+      "sameIdentity": true,
+      "baseline": "50658 50654 Wed Oct  7 01:19:25 2026     /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --shared-files --field-trial-handle=1718379636,r,4723662950021138952,14092727233831086506,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,13175293216465320847,6022433364601031042,4 --trace-process-track-uuid=3190708989122997041 --seatbelt-client=35",
+      "current": "50658 50654 Wed Oct  7 01:19:25 2026     /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --shared-files --field-trial-handle=1718379636,r,4723662950021138952,14092727233831086506,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,13175293216465320847,6022433364601031042,4 --trace-process-track-uuid=3190708989122997041 --seatbelt-client=35"
+    },
+    {
+      "pid": 50659,
+      "preNativeState": "same",
+      "stateNow": "same",
+      "sameIdentity": true,
+      "baseline": "50659 50654 Wed Oct  7 01:19:25 2026     /opt/homebrew/bin/node /Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+      "current": "50659 50654 Wed Oct  7 01:19:25 2026     /opt/homebrew/bin/node /Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js"
+    },
+    {
+      "pid": 50671,
+      "preNativeState": "same",
+      "stateNow": "same",
+      "sameIdentity": true,
+      "baseline": "50671 50654 Wed Oct  7 01:19:26 2026     /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron --enable-sandbox --remote-debugging-port=60949 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=4 --time-ticks-at-unix-epoch=-1787611981705306 --launch-time-ticks=3749185235474 --shared-files --field-trial-handle=1718379636,r,4723662950021138952,14092727233831086506,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,13175293216465320847,6022433364601031042,4 --trace-process-track-uuid=3190708990060038890 --seatbelt-client=61",
+      "current": "50671 50654 Wed Oct  7 01:19:26 2026     /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron --enable-sandbox --remote-debugging-port=60949 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=4 --time-ticks-at-unix-epoch=-1787611981705306 --launch-time-ticks=3749185235474 --shared-files --field-trial-handle=1718379636,r,4723662950021138952,14092727233831086506,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,13175293216465320847,6022433364601031042,4 --trace-process-track-uuid=3190708990060038890 --seatbelt-client=61"
+    },
+    {
+      "pid": 52519,
+      "preNativeState": "same",
+      "stateNow": "same",
+      "sameIdentity": true,
+      "baseline": "52519     1 Wed Oct  7 01:24:49 2026     /Applications/Fusion Studio Alpha.app/Contents/MacOS/Fusion Studio Alpha --remote-debugging-address=127.0.0.1 --remote-debugging-port=61056",
+      "current": "52519     1 Wed Oct  7 01:24:49 2026     /Applications/Fusion Studio Alpha.app/Contents/MacOS/Fusion Studio Alpha --remote-debugging-address=127.0.0.1 --remote-debugging-port=61056"
+    },
+    {
+      "pid": 52543,
+      "preNativeState": "same",
+      "stateNow": "same",
+      "sameIdentity": true,
+      "baseline": "52543 52519 Wed Oct  7 01:24:52 2026     /Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Alpha Helper.app/Contents/MacOS/Fusion Studio Alpha Helper --type=gpu-process --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --gpu-preferences=SAAAAAAAAAAgAQAEAAAAAAAAAAAAAGAAAwAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=1718379636,r,4802480082851952972,11236632304372599803,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,3697658166456062361,2703053587300973391,4 --trace-process-track-uuid=3190708988185955192 --seatbelt-client=33",
+      "current": "52543 52519 Wed Oct  7 01:24:52 2026     /Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Alpha Helper.app/Contents/MacOS/Fusion Studio Alpha Helper --type=gpu-process --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --gpu-preferences=SAAAAAAAAAAgAQAEAAAAAAAAAAAAAGAAAwAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=1718379636,r,4802480082851952972,11236632304372599803,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,3697658166456062361,2703053587300973391,4 --trace-process-track-uuid=3190708988185955192 --seatbelt-client=33"
+    },
+    {
+      "pid": 52544,
+      "preNativeState": "same",
+      "stateNow": "same",
+      "sameIdentity": true,
+      "baseline": "52544 52519 Wed Oct  7 01:24:52 2026     /Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Alpha Helper.app/Contents/MacOS/Fusion Studio Alpha Helper --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --shared-files --field-trial-handle=1718379636,r,4802480082851952972,11236632304372599803,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,3697658166456062361,2703053587300973391,4 --trace-process-track-uuid=3190708989122997041 --seatbelt-client=35",
+      "current": "52544 52519 Wed Oct  7 01:24:52 2026     /Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Alpha Helper.app/Contents/MacOS/Fusion Studio Alpha Helper --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --shared-files --field-trial-handle=1718379636,r,4802480082851952972,11236632304372599803,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,3697658166456062361,2703053587300973391,4 --trace-process-track-uuid=3190708989122997041 --seatbelt-client=35"
+    },
+    {
+      "pid": 52545,
+      "preNativeState": "same",
+      "stateNow": "same",
+      "sameIdentity": true,
+      "baseline": "52545 52519 Wed Oct  7 01:24:52 2026     /opt/homebrew/bin/node /Applications/Fusion Studio Alpha.app/Contents/Resources/fusion-studio-server/server.js",
+      "current": "52545 52519 Wed Oct  7 01:24:52 2026     /opt/homebrew/bin/node /Applications/Fusion Studio Alpha.app/Contents/Resources/fusion-studio-server/server.js"
+    },
+    {
+      "pid": 52557,
+      "preNativeState": "same",
+      "stateNow": "same",
+      "sameIdentity": true,
+      "baseline": "52557 52519 Wed Oct  7 01:24:53 2026     /Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Alpha Helper (Renderer).app/Contents/MacOS/Fusion Studio Alpha Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Applications/Fusion Studio Alpha.app/Contents/Resources/app.asar --enable-sandbox --remote-debugging-port=61056 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=4 --time-ticks-at-unix-epoch=-1787611981703281 --launch-time-ticks=3749511799719 --shared-files --field-trial-handle=1718379636,r,4802480082851952972,11236632304372599803,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,3697658166456062361,2703053587300973391,4 --trace-process-track-uuid=3190708990060038890 --seatbelt-client=61",
+      "current": "52557 52519 Wed Oct  7 01:24:53 2026     /Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Alpha Helper (Renderer).app/Contents/MacOS/Fusion Studio Alpha Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Applications/Fusion Studio Alpha.app/Contents/Resources/app.asar --enable-sandbox --remote-debugging-port=61056 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=4 --time-ticks-at-unix-epoch=-1787611981703281 --launch-time-ticks=3749511799719 --shared-files --field-trial-handle=1718379636,r,4802480082851952972,11236632304372599803,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,3697658166456062361,2703053587300973391,4 --trace-process-track-uuid=3190708990060038890 --seatbelt-client=61"
+    },
+    {
+      "pid": 56849,
+      "preNativeState": "same",
+      "stateNow": "same",
+      "sameIdentity": true,
+      "baseline": "56849 52519 Wed Oct  7 02:18:40 2026     /Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Alpha Helper (Renderer).app/Contents/MacOS/Fusion Studio Alpha Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Applications/Fusion Studio Alpha.app/Contents/Resources/app.asar --enable-sandbox --remote-debugging-port=61056 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=9 --time-ticks-at-unix-epoch=-1787611981703281 --launch-time-ticks=3752738643649 --shared-files --field-trial-handle=1718379636,r,4802480082851952972,11236632304372599803,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,3697658166456062361,2703053587300973391,4 --trace-process-track-uuid=3190708994745248135 --seatbelt-client=67",
+      "current": "56849 52519 Wed Oct  7 02:18:40 2026     /Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Alpha Helper (Renderer).app/Contents/MacOS/Fusion Studio Alpha Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Applications/Fusion Studio Alpha.app/Contents/Resources/app.asar --enable-sandbox --remote-debugging-port=61056 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=9 --time-ticks-at-unix-epoch=-1787611981703281 --launch-time-ticks=3752738643649 --shared-files --field-trial-handle=1718379636,r,4802480082851952972,11236632304372599803,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,3697658166456062361,2703053587300973391,4 --trace-process-track-uuid=3190708994745248135 --seatbelt-client=67"
+    },
+    {
+      "pid": 56850,
+      "preNativeState": "same",
+      "stateNow": "same",
+      "sameIdentity": true,
+      "baseline": "56850 52519 Wed Oct  7 02:18:40 2026     /Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Alpha Helper (Renderer).app/Contents/MacOS/Fusion Studio Alpha Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Applications/Fusion Studio Alpha.app/Contents/Resources/app.asar --enable-sandbox --remote-debugging-port=61056 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=10 --time-ticks-at-unix-epoch=-1787611981703281 --launch-time-ticks=3752738645100 --shared-files --field-trial-handle=1718379636,r,4802480082851952972,11236632304372599803,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,3697658166456062361,2703053587300973391,4 --trace-process-track-uuid=3190708995682289984 --seatbelt-client=67",
+      "current": "56850 52519 Wed Oct  7 02:18:40 2026     /Applications/Fusion Studio Alpha.app/Contents/Frameworks/Fusion Studio Alpha Helper (Renderer).app/Contents/MacOS/Fusion Studio Alpha Helper (Renderer) --type=renderer --user-data-dir=/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha --standard-schemes=fusion-shell,fusion-studio --secure-schemes=fusion-shell,fusion-studio --cors-schemes=fusion-shell,fusion-studio --fetch-schemes=fusion-shell,fusion-studio --code-cache-schemes=fusion-shell --app-path=/Applications/Fusion Studio Alpha.app/Contents/Resources/app.asar --enable-sandbox --remote-debugging-port=61056 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=10 --time-ticks-at-unix-epoch=-1787611981703281 --launch-time-ticks=3752738645100 --shared-files --field-trial-handle=1718379636,r,4802480082851952972,11236632304372599803,262144 --enable-features=PdfUseShowSaveFilePicker,ScreenCaptureKitPickerScreen,ScreenCaptureKitStreamPickerSonoma --disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TimeoutHangingVideoCaptureStarts,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=1935764596,r,3697658166456062361,2703053587300973391,4 --trace-process-track-uuid=3190708995682289984 --seatbelt-client=67"
+    }
+  ],
+  "limit": "Old isolated renderer45005 was absent before M3 native execution; no inference about causes of independent exits. No owner/Alpha process/profile/database modified. Native controlled app focus only.",
+  "reviews": [],
+  "close_agent": "Unavailable in current tool surface; reviewer terminal disposition will be recorded; absence is lifecycle evidence only.",
+  "reviewStatus": "PENDING_FRESH_BUILDER_GATE: all required actual native and nonnative checks now complete PASS",
+  "protectedObservationCounts": {
+    "same": 18,
+    "absent": 1,
+    "changed": 0
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "phase": "worker-handoff",
+  "candidate": {
+    "target": "target-1",
+    "sources": [
+      "source-1"
+    ],
+    "owned": {
+      "code.py": {
+        "worktree": "fixed",
+        "index": "base",
+        "mode": "100644"
+      }
+    },
+    "configuration": {
+      "profile": "disposable"
+    },
+    "fixtures": {
+      "oracle": "correct"
+    },
+    "authority": {
+      "SPEC": "approved"
+    },
+    "preparation": "replay-owned-bytes"
+  },
+  "orchestrator_id": "fixture-manager",
+  "participants": [
+    "fixture-writer",
+    "fixture-reviewer-1",
+    "fixture-initial-orchestrator"
+  ],
+  "required_checks": [
+    "behavior"
+  ],
+  "evidence": [
+    {
+      "id": "behavior",
+      "dependencies": {
+        "target": "target-1",
+        "sources": [
+          "source-1"
+        ],
+        "owned": {
+          "code.py": {
+            "worktree": "fixed",
+            "index": "base",
+            "mode": "100644"
+          }
+        },
+        "configuration": {
+          "profile": "disposable"
+        },
+        "fixtures": {
+          "oracle": "correct"
+        },
+        "authority": {
+          "SPEC": "approved"
+        },
+        "preparation": "replay-owned-bytes"
+      },
+      "raw_path": "fixture/behavior.log",
+      "result": "pass"
+    }
+  ],
+  "reviews": [
+    {
+      "identity": "fixture-handoff-reviewer",
+      "terminal": true,
+      "clean_room": true,
+      "read_only": true,
+      "root_inherited": true,
+      "dependencies": {
+        "target": "target-1",
+        "sources": [
+          "source-1"
+        ],
+        "owned": {
+          "code.py": {
+            "worktree": "fixed",
+            "index": "base",
+            "mode": "100644"
+          }
+        },
+        "configuration": {
+          "profile": "disposable"
+        },
+        "fixtures": {
+          "oracle": "correct"
+        },
+        "authority": {
+          "SPEC": "approved"
+        },
+        "preparation": "replay-owned-bytes"
+      },
+      "raw_path": "fixture/review-1.md",
+      "lenses": [
+        "Behavior & Verification",
+        "Standards Compliance",
+        "Integrations & Dependencies",
+        "Forward Compatibility",
+        "Wiki Impact"
+      ],
+      "result": "clean",
+      "findings": []
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "authority": "approved behavior criterion",
+      "path": "code.py",
+      "impact": "accepted input returns incorrect result",
+      "evidence": "fixture/repro.log",
+      "severity": "high",
+      "confidence": "medium",
+      "validated": true
+    }
+  ],
+  "dispositions": {
+    "F1": [
+      {
+        "actor": "fixture-manager",
+        "evidence": "fixture/repro.log",
+        "status": "open"
+      },
+      {
+        "status": "repair-reported",
+        "actor": "fixture-writer"
+      }
+    ]
+  },
+  "assigned_paths": [
+    "code.py"
+  ]
+}

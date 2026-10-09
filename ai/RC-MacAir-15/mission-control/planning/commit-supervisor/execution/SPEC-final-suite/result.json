@@ -1,0 +1,16 @@
+{
+  "at": "2026-10-05T03:23:27.520906+00:00",
+  "result": "FINAL_SUITES_PASSED_WITH_RETAINED_REPORT_FORMAT_CORRECTION",
+  "python": 55,
+  "node": 17,
+  "python_dependencies": 3809,
+  "executed_js_bound": 82,
+  "original_suites_replayed": false,
+  "original_runner_failure": "runner-assertion-failure.json",
+  "continuation": {
+    "exists": true,
+    "kind": "file",
+    "mode": "0o100644",
+    "sha256": "9f690dc25302ff108d31ad753127dec3dea8474dc4a4c3d20c099c6a78f1d5cd"
+  }
+}

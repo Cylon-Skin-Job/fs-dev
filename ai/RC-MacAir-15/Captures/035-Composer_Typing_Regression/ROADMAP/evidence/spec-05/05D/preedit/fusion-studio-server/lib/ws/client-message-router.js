@@ -1,0 +1,905 @@
+/**
+ * Client Message Router — dispatches incoming WebSocket client messages.
+ *
+ * Extracted from server.js per SPEC-01f. Handles the client message
+ * switch for thread lifecycle (open-assistant / rename / delete /
+ * copyLink / list), file explorer (tree / content / recent), panel
+ * management (set_panel), wire protocol (initialize / prompt /
+ * response), robin system panel (fusion:*), clipboard (clipboard:*),
+ * and harness admin (harness:get_mode / set_mode / rollback / list /
+ * check_install).
+ *
+ * Also handles ws.on('close') for per-connection cleanup.
+ *
+ * Per-connection factory. Called once per WebSocket connection inside
+ * wss.on('connection'), after all the other factories have been
+ * created (wire message router, wire lifecycle, file explorer).
+ * Closes over ws, session, connectionId, projectRoot, and the
+ * per-connection helpers.
+ *
+ * Architectural note: most handlers are thin delegations to already-
+ * extracted modules. Thread, harness, workspace-request, and folder
+ * handlers are delegated via per-connection sub-factories.
+ */
+
+const path = require('path');
+const { v4: generateId } = require('uuid');
+
+const { ThreadWebSocketHandler, threadRuntimeController } = require('../thread');
+const { getWireForThread, sendToWire } = require('../wire/process-manager');
+const views = require('../views');
+const registry = require('../workspace/registry-service');
+const { redactWsMessage } = require('./redaction-map');
+const { createThreadWsHandlers, spawnAndSetupWire } = require('./thread-ws-handlers');
+const { createHarnessWsHandlers } = require('./harness-ws-handlers');
+const { createChatTurnMetadataHandlers } = require('./chat-turn-metadata-handlers');
+const { createChatTurnDiagnosticHandlers } = require('./chat-turn-diagnostic-handlers');
+const { createWorkspaceRequestHandlers } = require('./workspace-request-handlers');
+const { resolvePrompt } = require('../prompts/prompt-registry');
+const { ClientFrameError, decodeClientTextFrame } = require('./client-frame-decoder');
+const { runWithRequestDiagnosticBoundary } = require('./request-diagnostic-context');
+const { normalizePortableHarnessConfig } = require('../thread/thread-harness-config-policy');
+const {
+  denyThreadMutation,
+  requireTrustedThreadAuthority,
+} = require('./privileged-thread-guard');
+const {
+  isWorkspaceOperationLeaseError,
+  runWorkspaceOperation,
+} = require('./workspace-operation-lease');
+const { buildViewRegistryUpdatedUnderLease } = require('./connection-init');
+const { requireTrustedViewAuthority } = require('./trusted-shell-authority');
+const viewReadiness = require('../views/readiness-runtime');
+const { panelPathRequiresViewReadiness } = require('../views/panel-paths');
+
+/**
+ * Create a per-connection client message router.
+ *
+ * @param {object} deps
+ * @param {import('ws').WebSocket} deps.ws
+ * @param {object} deps.session - per-connection session state (mutated)
+ * @param {string} deps.connectionId
+ * @param {string} deps.projectRoot
+ * @param {object} deps.fileExplorer - from createFileExplorerHandlers (01a)
+ * @param {{ awaitHarnessReady: Function, initializeWire: Function, setupWireHandlers: Function }} deps.wireLifecycle - from createWireLifecycle (01c)
+ * @param {Map} deps.sessions - server.js module-level sessions Map (for close handler)
+ * @param {Function} deps.setSessionRoot
+ * @param {Function} deps.clearSessionRoot
+ * @param {(ws?: import('ws').WebSocket) => string|null} deps.getProjectRoot
+ * @param {() => object} deps.getFusionHandlers - getter closure over server.js let fusionHandlers
+ * @param {() => object} deps.getClipboardHandlers - getter closure over server.js let clipboardHandlers
+ * @param {() => object} deps.getBookmarksHandlers - getter closure over server.js let bookmarksHandlers
+ * @param {() => object} deps.getEmojiRecentsHandlers - getter closure over server.js let emojiRecentsHandlers
+ * @param {() => object} deps.getThemeHandlers - getter closure over server.js let themeHandlers
+ * @param {() => object} deps.getSecretsHandlers - getter closure over server.js let secretsHandlers
+ * @param {() => object} deps.getScreenshotHandlers - getter closure over server.js let screenshotHandlers
+ * @param {Function} [deps.handleCanonicalHarnessEvent] - handler for direct canonical harness events
+ * @returns {{ handleClientMessage: Function, handleClientClose: Function }}
+ */
+function createClientMessageRouter({
+  ws,
+  session,
+  connectionId,
+  projectRoot,
+  fileExplorer,
+  wireLifecycle,
+  sessions,
+  setSessionRoot,
+  clearSessionRoot,
+  getProjectRoot,
+  getFusionHandlers,
+  getClipboardHandlers,
+  getBookmarksHandlers,
+  getEmojiRecentsHandlers,
+  getThemeHandlers,
+  getSecretsHandlers,
+  getScreenshotHandlers,
+  getFileSaveRoute = () => null,
+  getResourceProvenanceRoute = () => null,
+  getAgentActivityRoute = () => null,
+  getFileViewerReadRoute = () => null,
+  getAgentToolFixtureRoute = () => null,
+  handleCanonicalHarnessEvent,
+}) {
+
+  // Per-connection sub-factories for larger handler groups
+  const getAllClients = (workspaceId) => Array.from(sessions.entries())
+    .filter(([client, clientSession]) => (
+      client.readyState === 1
+      && (workspaceId === undefined || clientSession.currentWorkspaceId === workspaceId)
+    ))
+    .map(([client]) => client);
+
+  // Per-recipient, workspace-qualified delivery for committed thread:action
+  // fan-out. Each recipient send is attempted independently by the handler.
+  const getWorkspaceRecipients = ({ workspaceId, projectRoot, workspaceEpoch, excludeWs } = {}) => {
+    const recipients = [];
+    for (const [client, clientSession] of sessions.entries()) {
+      if (client === excludeWs || client.readyState !== 1) continue;
+      if (clientSession.workspaceBindingState !== 'active') continue;
+      if (clientSession.currentWorkspaceId !== workspaceId) continue;
+      if (clientSession.projectRoot !== projectRoot) continue;
+      if (typeof workspaceEpoch === 'string'
+        && clientSession.workspaceEpoch !== workspaceEpoch) continue;
+      recipients.push({ ws: client, session: clientSession });
+    }
+    return recipients;
+  };
+
+  const threadHandlers = createThreadWsHandlers({
+    ws, session, wireLifecycle, projectRoot, getWorkspaceRecipients,
+  });
+  const harnessHandlers = createHarnessWsHandlers({ ws });
+  const chatTurnMetadataHandlers = createChatTurnMetadataHandlers({ ws, session });
+  const chatTurnDiagnosticHandlers = createChatTurnDiagnosticHandlers({ ws, session });
+  const workspaceRequestHandlers = createWorkspaceRequestHandlers({ ws, session, getAllClients });
+
+  function fanViewRegistryUpdated(message, binding) {
+    for (const [client, clientSession] of sessions.entries()) {
+      if (client.readyState !== 1
+        || clientSession.workspaceBindingState !== 'active'
+        || clientSession.currentWorkspaceId !== binding.workspaceId
+        || clientSession.projectRoot !== binding.projectRoot
+        || typeof clientSession.workspaceEpoch !== 'string') continue;
+      const recipientMessage = {
+        ...message,
+        workspaceEpoch: clientSession.workspaceEpoch,
+      };
+      try { client.send(JSON.stringify(recipientMessage)); } catch (_error) {}
+    }
+  }
+
+  const { awaitHarnessReady, initializeWire, setupWireHandlers } = wireLifecycle;
+
+  const runReadyViewOperation = async (operation) => {
+    const readinessContext = Object.freeze({
+      workspaceId: session.currentWorkspaceId,
+      projectRoot: session.projectRoot,
+    });
+    try {
+      await viewReadiness.ensureWorkspaceViewReadiness(readinessContext);
+      return await viewReadiness.withViewReadinessLease(
+        readinessContext,
+        (lease) => operation(readinessContext, lease),
+      );
+    } catch (error) {
+      if (error?.name === 'ViewRelocationError') {
+        const unavailable = new Error('View registry unavailable');
+        unavailable.code = 'view_registry_unavailable';
+        throw unavailable;
+      }
+      throw error;
+    }
+  };
+
+  const captureConnectionWorkspaceBinding = () => Object.freeze({
+    workspaceId: session.currentWorkspaceId,
+    projectRoot: session.projectRoot,
+    workspaceEpoch: session.workspaceEpoch,
+    workspaceBindingState: session.workspaceBindingState,
+  });
+
+  const isConnectionWorkspaceBindingCurrent = (binding) => (
+    session.currentWorkspaceId === binding.workspaceId
+    && session.projectRoot === binding.projectRoot
+    && session.workspaceEpoch === binding.workspaceEpoch
+    && session.workspaceBindingState === binding.workspaceBindingState
+  );
+
+  const runWorkspaceBoundViewOperation = (binding, operation) => runWorkspaceOperation(
+    ws,
+    () => isConnectionWorkspaceBindingCurrent(binding),
+    () => runReadyViewOperation((readinessContext, lease) => (
+      operation(readinessContext, lease, binding)
+    )),
+  );
+
+  const sendViewDiscoveryUnavailable = (responseType, message) => {
+    ws.send(JSON.stringify({
+      type: responseType,
+      panel: message.panel,
+      ...(responseType === 'recent_files_response' ? {} : { path: message.path || '' }),
+      ...(typeof message.requestId === 'string' ? { requestId: message.requestId } : {}),
+      ...(typeof message.workspaceId === 'string' || message.workspaceId === null
+        ? { workspaceId: message.workspaceId }
+        : {}),
+      ...(Number.isSafeInteger(message.generation) ? { generation: message.generation } : {}),
+      success: false,
+      error: 'View registry unavailable',
+      code: 'view_registry_unavailable',
+    }));
+  };
+
+  const runViewDiscoveryRequest = async (responseType, message, operation) => {
+    const binding = captureConnectionWorkspaceBinding();
+    try {
+      await runWorkspaceOperation(
+        ws,
+        () => isConnectionWorkspaceBindingCurrent(binding),
+        () => runReadyViewOperation(operation),
+      );
+    } catch (error) {
+      if (error?.code !== 'view_registry_unavailable' && !isWorkspaceOperationLeaseError(error)) throw error;
+      sendViewDiscoveryUnavailable(responseType, message);
+    }
+  };
+
+  const viewMutationRejection = (message, error, binding = {}) => ({
+    type: 'workspace:view_update_rejected',
+    ...(typeof binding.workspaceId === 'string' ? { workspaceId: binding.workspaceId } : {}),
+    ...(typeof binding.workspaceEpoch === 'string' ? { workspaceEpoch: binding.workspaceEpoch } : {}),
+    ...(error?.code === 'view_registry_unavailable'
+      ? { code: 'view_registry_unavailable' }
+      : {}),
+    message,
+  });
+
+  const captureOwnedProviderBinding = (requestedThreadId = null) => {
+    const binding = ThreadWebSocketHandler.captureActivationBinding(ws, session);
+    if (!binding || !ThreadWebSocketHandler.isActivationBindingCurrent(ws, binding)) return null;
+    const state = binding.state;
+    const activeThreadId = Object.prototype.hasOwnProperty.call(state, 'activatedThreadId')
+      ? state.activatedThreadId
+      : state.threadId;
+    const threadId = requestedThreadId || activeThreadId;
+    if (typeof threadId !== 'string' || !threadId) return null;
+    const manager = state.threadManager;
+    const managedSession = typeof manager?.getSession === 'function'
+      ? manager.getSession(threadId)
+      : null;
+    const wire = getWireForThread(threadId, binding);
+    if (!managedSession || managedSession.ws !== ws || !wire
+      || managedSession.wireProcess !== wire) return null;
+    return { ...binding, threadId, manager, managedSession, wire };
+  };
+
+  const runOwnedProviderOperation = async (requestedThreadId, operation) => {
+    const binding = captureOwnedProviderBinding(requestedThreadId);
+    if (!binding) {
+      denyThreadMutation(ws);
+      return null;
+    }
+    try {
+      return await runWorkspaceOperation(
+        ws,
+        () => {
+          const current = captureOwnedProviderBinding(binding.threadId);
+          return Boolean(current
+            && current.state === binding.state
+            && current.managedSession === binding.managedSession
+            && current.wire === binding.wire);
+        },
+        () => operation(binding),
+      );
+    } catch (error) {
+      if (!isWorkspaceOperationLeaseError(error)) throw error;
+      denyThreadMutation(ws);
+      return null;
+    }
+  };
+
+  async function handleClientMessageWithinBoundary(message, isBinary = false) {
+    let clientMsg;
+    try {
+      clientMsg = decodeClientTextFrame(message, isBinary).value;
+    } catch (error) {
+      if (error instanceof ClientFrameError) {
+        try { ws.close(error.closeCode, error.message.slice(0, 123)); } catch (_closeError) {}
+        return;
+      }
+      throw error;
+    }
+    try {
+      if (!clientMsg || typeof clientMsg !== 'object' || Array.isArray(clientMsg)) {
+        throw new TypeError('Client message must be an object');
+      }
+      const diagnosticType = typeof clientMsg.type === 'string' ? '[declared]' : '[invalid]';
+      // The general ingress diagnostic is deliberately value-free. A captured
+      // proof/nonce placed under a neutral key (payload, detail, value, etc.)
+      // must not become durable merely because its key is not auth-shaped.
+      console.log('[WS →]:', diagnosticType);
+      console.log('[WS] Message type:', diagnosticType, 'Conn:', session.connectionId.slice(0,8), 'Has wire:', !!session.wire, 'Wire pid:', session.wire?.pid || 'none');
+      if (typeof clientMsg.type !== 'string') {
+        throw new TypeError('Client message type is invalid');
+      }
+
+      // Client logging - forward to server logs
+      if (clientMsg.type === 'client_log') {
+        // `client_log` is the only message whose values are intentionally
+        // forwarded to diagnostics; its entire value-bearing envelope is
+        // redacted by the centralized map first.
+        const { level, message, data } = redactWsMessage(clientMsg);
+        const safeLevel = ['debug', 'info', 'warn', 'error'].includes(level)
+          ? level.toUpperCase()
+          : 'LOG';
+        console.log(`[CLIENT ${safeLevel}] ${message}`, data || '');
+        return;
+      }
+
+      // Thread Management Messages
+      // --------------------------------------------------
+
+      if (clientMsg.type.startsWith('thread:')) {
+        const handler = threadHandlers[clientMsg.type];
+        if (handler) { await handler(clientMsg); return; }
+      }
+
+      // RCC-0108 SPEC-03 Slice D: diagnostic retrieval is dispatched AHEAD
+      // OF the chat-turn metadata handlers with EXPLICITLY NO fallthrough.
+      // A diagnostic request must never reach metadata-update routing
+      // semantics; an unknown diagnostic type returns no report and no
+      // metadata handling.
+      if (clientMsg.type.startsWith('chat-turn:diagnostic:')) {
+        const handler = chatTurnDiagnosticHandlers[clientMsg.type];
+        if (handler) { await handler(clientMsg); }
+        return;
+      }
+
+      if (clientMsg.type.startsWith('chat-turn:')) {
+        const handler = chatTurnMetadataHandlers[clientMsg.type];
+        if (handler) {
+          // Chat-turn metadata is durable thread state. Keep the private-role
+          // gate at central ingress, after bounded decoding and before the
+          // handler can acquire a workspace lease or touch persistence.
+          if (!requireTrustedThreadAuthority(ws, session)) return;
+          await handler(clientMsg);
+          return;
+        }
+      }
+
+      // File Explorer Messages
+      // --------------------------------------------------
+
+      if (clientMsg.type === 'file_tree_request') {
+        if (
+          clientMsg.panel == null
+          || clientMsg.panel === 'file-viewer'
+          || Object.prototype.hasOwnProperty.call(clientMsg, 'version')
+        ) {
+          const fileViewerReadRoute = getFileViewerReadRoute();
+          if (fileViewerReadRoute) {
+            await fileViewerReadRoute.handleTree({ ws, session, message: clientMsg });
+          } else {
+            try { ws.close(1011, 'file viewer read route unavailable'); } catch (_error) {}
+          }
+          return;
+        }
+        if (panelPathRequiresViewReadiness(clientMsg.panel)) {
+          await runViewDiscoveryRequest(
+            'file_tree_response',
+            clientMsg,
+            () => fileExplorer.handleFileTreeRequest(ws, clientMsg),
+          );
+        } else {
+          await fileExplorer.handleFileTreeRequest(ws, clientMsg);
+        }
+        return;
+      }
+
+      if (clientMsg.type === 'file_content_request') {
+        if (
+          clientMsg.panel == null
+          || clientMsg.panel === 'file-viewer'
+          || Object.prototype.hasOwnProperty.call(clientMsg, 'version')
+        ) {
+          const fileViewerReadRoute = getFileViewerReadRoute();
+          if (fileViewerReadRoute) {
+            await fileViewerReadRoute.handleContent({ ws, session, message: clientMsg });
+          } else {
+            try { ws.close(1011, 'file viewer read route unavailable'); } catch (_error) {}
+          }
+          return;
+        }
+        if (panelPathRequiresViewReadiness(clientMsg.panel)) {
+          await runViewDiscoveryRequest(
+            'file_content_response',
+            clientMsg,
+            () => fileExplorer.handleFileContentRequest(ws, clientMsg),
+          );
+        } else {
+          await fileExplorer.handleFileContentRequest(ws, clientMsg);
+        }
+        return;
+      }
+
+      if (clientMsg.type === 'recent_files_request') {
+        if (panelPathRequiresViewReadiness(clientMsg.panel)) {
+          await runViewDiscoveryRequest(
+            'recent_files_response',
+            clientMsg,
+            () => fileExplorer.handleRecentFilesRequest(ws, clientMsg),
+          );
+        } else {
+          await fileExplorer.handleRecentFilesRequest(ws, clientMsg);
+        }
+        return;
+      }
+
+      if (clientMsg.type === 'prompt:resolve') {
+        try {
+          const resolved = resolvePrompt(clientMsg.promptId, clientMsg.variables || {});
+          ws.send(JSON.stringify({
+            type: 'prompt:resolved',
+            requestId: clientMsg.requestId || null,
+            promptId: resolved.promptId,
+            content: resolved.content,
+            metadata: resolved.metadata,
+            frontmatter: resolved.frontmatter,
+            path: resolved.path,
+          }));
+        } catch (err) {
+          void err;
+          ws.send(JSON.stringify({
+            type: 'prompt:resolve_error',
+            requestId: clientMsg.requestId || null,
+            promptId: null,
+            message: 'Prompt resolution failed',
+          }));
+        }
+        return;
+      }
+
+      if (clientMsg.type === 'file_save') {
+        const fileSaveRoute = getFileSaveRoute();
+        if (fileSaveRoute) {
+          await fileSaveRoute.handleFileSave({ ws, session, message: clientMsg });
+        } else {
+          try { ws.close(1011, 'file save route unavailable'); } catch (_error) {}
+        }
+        return;
+      }
+
+      if (clientMsg.type === 'resource:provenance:query') {
+        const resourceProvenanceRoute = getResourceProvenanceRoute();
+        if (resourceProvenanceRoute) {
+          await resourceProvenanceRoute.handleQuery({ ws, session, message: clientMsg });
+        } else {
+          try { ws.close(1011, 'resource provenance route unavailable'); } catch (_error) {}
+        }
+        return;
+      }
+
+      if (clientMsg.type === 'agent:activity:query') {
+        const agentActivityRoute = getAgentActivityRoute();
+        if (agentActivityRoute) {
+          await agentActivityRoute.handleQuery({ ws, session, message: clientMsg });
+        } else {
+          try { ws.close(1011, 'agent activity route unavailable'); } catch (_error) {}
+        }
+        return;
+      }
+
+      if (clientMsg.type === 'provenance:test:agent_tool') {
+        const fixtureRoute = getAgentToolFixtureRoute();
+        if (!fixtureRoute) {
+          try { ws.close(1008, 'test fixture route unavailable'); } catch (_error) {}
+          return;
+        }
+        await fixtureRoute.handle({
+          ws, session, message: clientMsg, handleCanonicalHarnessEvent,
+        });
+        return;
+      }
+
+      if (clientMsg.type === 'folder_create') {
+        await fileExplorer.handleFolderCreateRequest(ws, clientMsg);
+        return;
+      }
+
+      if (clientMsg.type === 'document_create') {
+        await fileExplorer.handleDocumentCreateRequest(ws, clientMsg);
+        return;
+      }
+
+      // Panel Management
+      // --------------------------------------------------
+
+      if (clientMsg.type === 'workspace:state_push') {
+        if (!requireTrustedViewAuthority(ws, session)) return;
+        const workspaceState = require('../workspace/workspace-state');
+        const workspace = await registry.getById(clientMsg.workspaceId);
+        if (!workspace || workspace.ribbonVisible === false) {
+          return;
+        }
+        const repoPath = workspace.repoPath || workspace.repo_path;
+        try {
+          await viewReadiness.ensureWorkspaceViewReadiness({
+            workspaceId: clientMsg.workspaceId,
+            projectRoot: repoPath,
+          });
+          await viewReadiness.withViewReadinessLease({
+            workspaceId: clientMsg.workspaceId,
+            projectRoot: repoPath,
+          }, async () => {
+            const allowedViewIds = repoPath
+              ? views.listViews(repoPath, { strictReadiness: true })
+              : [];
+            await workspaceState.save(clientMsg.workspaceId, clientMsg.state, { repoPath, allowedViewIds });
+          });
+        } catch (error) {
+          if (error?.name !== 'ViewRelocationError') throw error;
+          ws.send(JSON.stringify({
+            type: 'error',
+            code: 'view_registry_unavailable',
+            message: 'View registry unavailable',
+          }));
+        }
+        return;
+      }
+
+      if (clientMsg.type === 'workspace:view_update_requested') {
+        if (!requireTrustedViewAuthority(ws, session)) return;
+        const binding = captureConnectionWorkspaceBinding();
+        try {
+          await runWorkspaceBoundViewOperation(binding, async (readinessContext, lease) => {
+            const registry = views.updateWorkspaceViewRegistry(readinessContext.projectRoot, clientMsg);
+            fanViewRegistryUpdated(buildViewRegistryUpdatedUnderLease(
+              readinessContext.projectRoot,
+              registry,
+              lease,
+              binding,
+            ), binding);
+          });
+        } catch (err) {
+          if (isWorkspaceOperationLeaseError(err) || !isConnectionWorkspaceBindingCurrent(binding)) return;
+          ws.send(JSON.stringify(viewMutationRejection('Unable to update view', err, binding)));
+        }
+        return;
+      }
+
+      if (clientMsg.type === 'workspace:view_options_requested') {
+        const binding = captureConnectionWorkspaceBinding();
+        try {
+          await runWorkspaceBoundViewOperation(binding, async (readinessContext) => {
+            const options = views.getWorkspaceViewOptions(readinessContext.projectRoot);
+            ws.send(JSON.stringify({
+              type: 'workspace:view_options',
+              workspaceId: binding.workspaceId,
+              workspaceEpoch: binding.workspaceEpoch,
+              hiddenViews: options.hiddenViews,
+              availableTemplates: options.availableTemplates,
+            }));
+          });
+        } catch (err) {
+          if (isWorkspaceOperationLeaseError(err) || !isConnectionWorkspaceBindingCurrent(binding)) return;
+          ws.send(JSON.stringify(viewMutationRejection('Unable to load view options', err, binding)));
+        }
+        return;
+      }
+
+      if (clientMsg.type === 'workspace:view_restore_requested') {
+        if (!requireTrustedViewAuthority(ws, session)) return;
+        const binding = captureConnectionWorkspaceBinding();
+        try {
+          await runWorkspaceBoundViewOperation(binding, async (readinessContext, lease) => {
+            const registry = views.restoreWorkspaceView(readinessContext.projectRoot, clientMsg.viewId);
+            fanViewRegistryUpdated(buildViewRegistryUpdatedUnderLease(
+              readinessContext.projectRoot,
+              registry,
+              lease,
+              binding,
+            ), binding);
+          });
+        } catch (err) {
+          if (isWorkspaceOperationLeaseError(err) || !isConnectionWorkspaceBindingCurrent(binding)) return;
+          ws.send(JSON.stringify(viewMutationRejection('Unable to restore view', err, binding)));
+        }
+        return;
+      }
+
+      if (clientMsg.type === 'workspace:view_add_requested') {
+        if (!requireTrustedViewAuthority(ws, session)) return;
+        const binding = captureConnectionWorkspaceBinding();
+        try {
+          await runWorkspaceBoundViewOperation(binding, async (readinessContext, lease) => {
+            const registry = views.addWorkspaceView(readinessContext.projectRoot, clientMsg.templateId);
+            fanViewRegistryUpdated(buildViewRegistryUpdatedUnderLease(
+              readinessContext.projectRoot,
+              registry,
+              lease,
+              binding,
+            ), binding);
+          });
+        } catch (err) {
+          if (isWorkspaceOperationLeaseError(err) || !isConnectionWorkspaceBindingCurrent(binding)) return;
+          ws.send(JSON.stringify(viewMutationRejection('Unable to add view', err, binding)));
+        }
+        return;
+      }
+
+      if (clientMsg.type === 'set_panel') {
+        const { panel, rootFolder } = clientMsg;
+        if (panel) {
+          // Panel installation replaces ThreadWebSocketHandler's connection
+          // state object. Keep it on the same queue as privileged thread work
+          // and workspace binding so it cannot invalidate an admitted lease
+          // halfway through persistence or provider activation.
+          try {
+            await runWorkspaceOperation(ws, () => true, async () => {
+              const projectRoot = session.projectRoot;
+              if (!projectRoot) {
+                ws.send(JSON.stringify({ type: 'error', message: 'No active workspace' }));
+                return;
+              }
+              await runReadyViewOperation(async () => {
+              setSessionRoot(ws, panel, rootFolder || null);
+
+                // RCC-0095: chat is a workspace-level feature. Set up threads
+                // unconditionally — a missing or malformed view folder must not
+                // remove the workspace chat. resolveChatConfig() is only used
+                // below for the declarative chatType/chatPosition payload fields.
+                ThreadWebSocketHandler.setPanel(ws, panel, {
+                  projectRoot,
+                  viewName: panel,
+                  workspaceId: session.currentWorkspaceId,
+                  workspaceEpoch: session.workspaceEpoch,
+                });
+                await ThreadWebSocketHandler.sendThreadList(ws);
+
+                const chatConfig = views.resolveChatConfig(projectRoot, panel);
+
+                // Send view config to client (includes content.json + layout.json)
+                const viewConfig = views.loadView(projectRoot, panel);
+                // CLI_CONFIG_SPEC §7d: per-view override delta (may be {}).
+                const { resolveViewDelta } = require('../cli-config');
+                const cliConfigDelta = await resolveViewDelta(projectRoot, panel);
+                ws.send(JSON.stringify({
+                  type: 'panel_changed',
+                  panel,
+                  rootFolder: rootFolder || projectRoot,
+                  contentConfig: viewConfig?.content || null,
+                  layoutConfig: viewConfig?.layout || null,
+                  hasChat: !!chatConfig,
+                  chatType: chatConfig?.chatType || null,
+                  chatPosition: chatConfig?.chatPosition || null,
+                  cliConfigDelta,
+                }));
+
+                if (rootFolder) {
+                  ws.send(JSON.stringify({
+                    type: 'panel_config',
+                    panel,
+                    projectRoot: rootFolder,
+                    projectName: path.basename(rootFolder)
+                  }));
+                }
+              });
+            });
+          } catch (error) {
+            if (error?.code !== 'view_registry_unavailable') throw error;
+            ws.send(JSON.stringify({
+              type: 'error',
+              code: 'view_registry_unavailable',
+              message: 'View registry unavailable',
+            }));
+          }
+        }
+        return;
+      }
+
+      // Wire Protocol Messages
+      // --------------------------------------------------
+
+      // Initialize can be called manually (but we also auto-initialize)
+      if (clientMsg.type === 'initialize') {
+        if (!session.wire) {
+          ws.send(JSON.stringify({ type: 'error', message: 'No thread open. Create or open a thread first.' }));
+          return;
+        }
+        const id = generateId();
+        sendToWire(session.wire, 'initialize', {
+          protocol_version: '1.4',
+          client: { name: 'fusion-studio', version: '0.1.0' },
+          capabilities: { supports_question: true }
+        }, id);
+        return;
+      }
+
+      // Prompt - route through server-owned thread runtime acceptance
+      if (clientMsg.type === 'prompt') {
+        if (!requireTrustedThreadAuthority(ws, session)) return;
+        if (typeof clientMsg.requestId !== 'string'
+          || !/^[A-Za-z0-9_-]{8,128}$/.test(clientMsg.requestId)) {
+          ws.send(JSON.stringify({ type: 'error', code: 'invalid_request_id',
+            message: 'Invalid prompt request ID', threadId: clientMsg.threadId,
+            workspaceId: session.currentWorkspaceId,
+            scope: 'project' }));
+          return;
+        }
+        const harnessConfig = normalizePortableHarnessConfig(clientMsg.harnessConfig);
+        if (!harnessConfig.ok) {
+          ws.send(JSON.stringify({ type: 'error', code: 'invalid_prompt',
+            message: 'Prompt selection unavailable', threadId: clientMsg.threadId,
+            workspaceId: session.currentWorkspaceId,
+            scope: 'project',
+            ...(clientMsg.requestId ? { requestId: clientMsg.requestId } : {}) }));
+          return;
+        }
+        const acceptedPrompt = harnessConfig.value === undefined
+          ? clientMsg
+          : { ...clientMsg, harnessConfig: harnessConfig.value };
+        const threadState = ThreadWebSocketHandler.getState(ws);
+        const binding = {
+          state: threadState,
+          session,
+          projectRoot: session.projectRoot,
+          workspaceId: session.currentWorkspaceId,
+          workspaceEpoch: session.workspaceEpoch,
+        };
+        if (typeof binding.workspaceEpoch !== 'string' || !binding.workspaceEpoch
+          || !ThreadWebSocketHandler.isActivationBindingCurrent(ws, binding)) {
+          denyThreadMutation(ws);
+          return;
+        }
+        try {
+          await runWorkspaceOperation(
+            ws,
+            () => ThreadWebSocketHandler.isActivationBindingCurrent(ws, binding),
+            () => require('../thread/prompt-submission-service').withAttemptLock({
+              workspaceId: binding.workspaceId,
+              threadId: acceptedPrompt.threadId,
+              requestId: acceptedPrompt.requestId,
+            }, () => threadRuntimeController.acceptPromptThroughRuntime({
+              ws,
+              session,
+              clientMsg: acceptedPrompt,
+              wireLifecycle: { awaitHarnessReady, initializeWire, setupWireHandlers },
+              projectRoot: binding.projectRoot,
+              spawnAndSetupWire,
+              handleCanonicalHarnessEvent,
+            })),
+          );
+        } catch (error) {
+          if (!isWorkspaceOperationLeaseError(error)) throw error;
+          denyThreadMutation(ws);
+        }
+        return;
+      }
+
+      if (clientMsg.type === 'turn:stop') {
+        if (!requireTrustedThreadAuthority(ws, session)) return;
+        await runOwnedProviderOperation(clientMsg.threadId, () => (
+          threadRuntimeController.stopRuntimeTurn({
+            ws,
+            session,
+            clientMsg,
+            handleCanonicalHarnessEvent,
+          })
+        ));
+        return;
+      }
+
+      if (clientMsg.type === 'response') {
+        if (!requireTrustedThreadAuthority(ws, session)) return;
+        await runOwnedProviderOperation(clientMsg.threadId, ({ wire }) => {
+          sendToWire(wire, 'response', clientMsg.payload, clientMsg.requestId);
+        });
+        return;
+      }
+
+      // ---- Robin system panel (delegated to lib/fusion/ws-handlers.js) ----
+
+      if (clientMsg.type.startsWith('fusion:')) {
+        const handler = getFusionHandlers()[clientMsg.type];
+        if (handler) {
+          await handler(ws, clientMsg);
+          return;
+        }
+      }
+
+      // ---- Clipboard manager (delegated to lib/clipboard/ws-handlers.js) ----
+
+      if (clientMsg.type.startsWith('clipboard:')) {
+        const handler = getClipboardHandlers()[clientMsg.type];
+        if (handler) {
+          await handler(ws, clientMsg);
+          return;
+        }
+      }
+
+      // ---- Bookmarks manager ----
+
+      if (clientMsg.type.startsWith('bookmarks:')) {
+        const handler = getBookmarksHandlers()[clientMsg.type];
+        if (handler) {
+          await handler(ws, clientMsg);
+          return;
+        }
+      }
+
+      // ---- Emoji recents manager ----
+
+      if (clientMsg.type.startsWith('emoji_recents:')) {
+        const handler = getEmojiRecentsHandlers()[clientMsg.type];
+        if (handler) {
+          await handler(ws, clientMsg);
+          return;
+        }
+      }
+
+      // ---- Theme picker (delegated to lib/ws/theme-handlers.js) ----
+
+      if (clientMsg.type.startsWith('theme:')) {
+        const handler = getThemeHandlers()[clientMsg.type];
+        if (handler) {
+          await handler(ws, clientMsg);
+          return;
+        }
+      }
+
+      // ---- Secrets manager (delegated to lib/secrets/index.js) ----
+
+      if (clientMsg.type.startsWith('secrets:')) {
+        const handler = getSecretsHandlers()[clientMsg.type];
+        if (handler) {
+          await handler(ws, clientMsg);
+          return;
+        }
+      }
+
+      // ---- Harness mode management + external CLI harnesses ----
+
+      if (clientMsg.type.startsWith('harness:')) {
+        const handler = harnessHandlers[clientMsg.type];
+        if (handler) {
+          await handler(clientMsg);
+          return;
+        }
+      }
+
+      // ---- Workspace lifecycle, folder browse, view state, file:move ----
+
+      if (workspaceRequestHandlers[clientMsg.type]) {
+        await workspaceRequestHandlers[clientMsg.type](clientMsg);
+        return;
+      }
+
+      // ---- Screenshot manager (delegated to lib/screenshot/ws-handlers.js) ----
+
+      if (clientMsg.type.startsWith('screenshot:')) {
+        const handler = getScreenshotHandlers()[clientMsg.type];
+        if (handler) {
+          await handler(ws, clientMsg);
+          return;
+        }
+      }
+
+      // Unknown message type
+      console.log('[WS] Unknown message type:', diagnosticType);
+
+    } catch (err) {
+      // This boundary can catch failures derived from requester-controlled
+      // product payloads. Keep the durable diagnostic fixed rather than
+      // serializing an Error whose message/properties may echo those bytes.
+      console.error('[WS] Message handling error');
+      ws.send(JSON.stringify({ type: 'error', message: 'Message handling failed' }));
+    }
+  }
+
+  function handleClientMessage(message, isBinary = false) {
+    return runWithRequestDiagnosticBoundary(
+      () => handleClientMessageWithinBoundary(message, isBinary),
+    );
+  }
+
+  function handleClientClose() {
+    return runWithRequestDiagnosticBoundary(async () => {
+      console.log('[WS] client_disconnected');
+      try {
+        // Clean up thread state, including durable session suspension.
+        await ThreadWebSocketHandler.cleanup(ws);
+      } finally {
+        // ThreadWebSocketHandler.cleanup owns exact-session quiescence and
+        // provider termination. Do not signal session.wire a second time here:
+        // it may already have transferred to a different connection owner.
+        if (session.wire) console.log('[WS] wire_detached');
+        sessions.delete(ws);
+        clearSessionRoot(ws);
+      }
+    });
+  }
+
+  return { handleClientMessage, handleClientClose };
+}
+
+module.exports = { createClientMessageRouter };

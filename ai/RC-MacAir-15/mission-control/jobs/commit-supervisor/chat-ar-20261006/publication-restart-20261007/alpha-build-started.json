@@ -1,0 +1,16 @@
+{
+  "at": "2026-10-07T08:21:44.711960+00:00",
+  "cwd": "/Users/rccurtrightjr./Applications/Fusion-Studio-Alpha-Source/fusion-studio-client",
+  "argv": [
+    "npm",
+    "run",
+    "electron:pack",
+    "--",
+    "--config.productName=Fusion Studio Alpha"
+  ],
+  "source_commit": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb",
+  "package_sha256": "9b9e9c906358afd17eb5027af187fbe2030c537a9536d6d0d6fbcf64fb70dfb0",
+  "product_name_override": "Fusion Studio Alpha",
+  "app_id_unchanged": "com.fusionstudio.app",
+  "scope": "Established electron:pack script, Alpha naming override without tracked source edits; installation separate."
+}

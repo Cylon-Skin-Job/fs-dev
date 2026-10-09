@@ -1,0 +1,40 @@
+{
+  "name": "fusion-studio-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:native-observer": "node-gyp rebuild --directory native/secure-file-observer",
+    "pretest": "npm run build:native-observer",
+    "setup-transcription": "node lib/transcription/setup.js",
+    "wiki": "node scripts/wiki.js query",
+    "wiki:audit": "node scripts/wiki.js audit",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.66",
+    "@ai-sdk/openai": "^3.0.50",
+    "@huggingface/transformers": "^4.2.0",
+    "ai": "^6.0.146",
+    "ajv": "^8.20.0",
+    "better-sqlite3": "^12.8.0",
+    "chokidar": "^5.0.0",
+    "culori": "^4.0.2",
+    "express": "^5.2.1",
+    "gpt-tokenizer": "^3.4.0",
+    "knex": "^3.2.7",
+    "multer": "^1.4.5-lts.1",
+    "nodejs-whisper": "^0.2.9",
+    "uuid": "^13.0.0",
+    "ws": "^8.19.0"
+  },
+  "devDependencies": {
+    "@babel/parser": "^7.29.2",
+    "jest": "^30.3.0",
+    "node-gyp": "12.3.0"
+  }
+}

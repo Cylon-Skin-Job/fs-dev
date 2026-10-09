@@ -1,0 +1,20 @@
+{
+  "profile": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790498026870-9cb4fcd28a-yT6ruQ/turn-outcome-profile",
+  "electron": "42.0.1",
+  "electronPid": 82170,
+  "children": [
+    82195,
+    82196,
+    82197,
+    82316
+  ],
+  "port": 50221,
+  "stageRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790498026870-9cb4fcd28a-yT6ruQ/turn-outcome-stage",
+  "profileRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790498026870-9cb4fcd28a-yT6ruQ/turn-outcome-profile",
+  "workspaceRoot": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/chat-arch-1790498026870-9cb4fcd28a-yT6ruQ/turn-outcome-workspace",
+  "adapterSha256": "14c6dff6c5a83bd3f1c7008547efb6720527c94f88c75ebd47b1047ddd992afb",
+  "nativeFixtureSha256": "38adc396525368ef599e24049b7ad565539e389cf3adcc580d018d6f9aa67d5b",
+  "realAdapter": true,
+  "paidInference": false,
+  "canonicalFailureInjection": false
+}

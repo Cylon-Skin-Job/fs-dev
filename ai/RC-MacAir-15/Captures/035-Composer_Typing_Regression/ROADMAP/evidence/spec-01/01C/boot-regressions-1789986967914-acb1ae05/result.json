@@ -1,0 +1,17 @@
+{
+  "runId": "boot-regressions-1789986967914-acb1ae05",
+  "mode": "--all",
+  "status": "observed",
+  "port": 58183,
+  "testResult": {
+    "code": 1,
+    "signal": null,
+    "pid": 5530,
+    "timedOut": false,
+    "interrupted": false,
+    "leakedOwnedPids": [],
+    "elapsedMs": 85132
+  },
+  "failure": null,
+  "ownedRunRootRemoved": true
+}

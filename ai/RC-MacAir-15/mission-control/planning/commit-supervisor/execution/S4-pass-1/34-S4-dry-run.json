@@ -1,0 +1,17 @@
+{
+  "state": "DRY_RUN_ONLY",
+  "repo": "/Users/rccurtrightjr./projects/fs-dev",
+  "client": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+  "main": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs",
+  "server": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+  "machine": "RC-MacAir-15",
+  "profile": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio",
+  "profileMode": "default",
+  "defaultProfile": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio",
+  "bin": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+  "runtime": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/fusion-restart",
+  "portFile": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server.port",
+  "dryRun": true,
+  "database": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/data/fusion.db",
+  "serverLog": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server-live.log"
+}

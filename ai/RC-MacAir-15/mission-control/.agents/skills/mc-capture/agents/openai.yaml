@@ -1,0 +1,6 @@
+interface:
+  display_name: "MC Capture"
+  short_description: "Checkpoint the active Launchpad conversation"
+  default_prompt: "Use $mc-capture to reconcile this conversation into the active working-memory folder for later re-entry."
+policy:
+  allow_implicit_invocation: false

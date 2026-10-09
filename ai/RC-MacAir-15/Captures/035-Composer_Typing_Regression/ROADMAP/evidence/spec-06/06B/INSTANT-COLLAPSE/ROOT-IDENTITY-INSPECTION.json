@@ -1,0 +1,37 @@
+{
+  "at": "2026-09-27T09:20:27.801259+00:00",
+  "inventories": {
+    "source": {
+      "files": 1969,
+      "mismatches": [],
+      "manifestSha256": "32de225544d72a86dac75bf19926046cf57a8154d2a95550df8f7e10539d7216"
+    },
+    "build": {
+      "files": 200,
+      "mismatches": [],
+      "manifestSha256": "405fe114c4a3d734112645b1305407f74d71b93620a7e520f47f45365fd4f192"
+    }
+  },
+  "delta": [
+    {
+      "path": "fusion-studio-client/e2e/instant-collapse.spec.ts",
+      "currentMatch": true,
+      "beforeMatch": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/LiveSegmentRenderer.tsx",
+      "currentMatch": true,
+      "beforeMatch": true
+    },
+    {
+      "path": "fusion-studio-client/src/components/ToolCallBlock.tsx",
+      "currentMatch": true,
+      "beforeMatch": true
+    }
+  ],
+  "changedPaths": [
+    "fusion-studio-client/e2e/instant-collapse.spec.ts",
+    "fusion-studio-client/src/components/LiveSegmentRenderer.tsx",
+    "fusion-studio-client/src/components/ToolCallBlock.tsx"
+  ]
+}

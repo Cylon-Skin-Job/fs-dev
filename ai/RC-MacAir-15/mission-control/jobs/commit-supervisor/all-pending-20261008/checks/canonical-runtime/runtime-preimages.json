@@ -1,0 +1,433 @@
+{
+  "at": "2026-10-09T01:34:07.494979+00:00",
+  "candidate": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate",
+  "preimages": "/private/tmp/fusion-main-consolidation-95vxg0_h/runtime-preimages",
+  "paths": [
+    {
+      "path": "ai/RC-MacAir-15/System/Views/001-capture-viewer/content.json",
+      "sha256": "ce1b76a22e15c77d1cbc96e5144bbeec4b00a9f172fd4b52ec115a0a5128c0d5",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/001-capture-viewer/manifest.md",
+      "sha256": "59d3101912a853e22e167f8b35481e008946ac372dafedf3b6ab427b9ce51f54",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/001-capture-viewer/onboarding/README.md",
+      "sha256": "2628283c219c5a4371d2290962787b95d6ebad62bbb0daa018d66ebcd51ddd6a",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/001-capture-viewer/state/state.json",
+      "sha256": "e7b7587b036096da01b6ea71a2df16f0ecae3b68549ac4e46107ae14929ea375",
+      "mode": "0o600"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/001-capture-viewer/styles/icon.md",
+      "sha256": "30740f45a7e0666cc2372cff1b6fec6d9da5df976557e22378b2920c139548a6",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/001-capture-viewer/styles/layout.css",
+      "sha256": "c763ba7960a60cd552af75e54abca8ac0eb715f4b9a587b453c68ae5d700ad5d",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/001-capture-viewer/styles/layout.json",
+      "sha256": "e129a1dac5cc0f40c50d0a97ce8faa39bf4c8e98a0b4991e844985a71d63f7d7",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/002-file-viewer/content.json",
+      "sha256": "0d1dac64773c2582282fa3b54c8000ff376aee7a208417fbbf6a5f95eaaba5f7",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/002-file-viewer/manifest.md",
+      "sha256": "5568a66753ebfc3e200c78d221c75c7b00ccb54b927b87b41c4586b2aead9406",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/002-file-viewer/onboarding/README.md",
+      "sha256": "baf9bb4943bba79218c8e113bbcb6b1e7d0351a2ee0baef258068074284d1fa5",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/002-file-viewer/state/state.json",
+      "sha256": "8248d5e1918f1a25e7803d5a6ef71ccf207e1b4fc2a4764a9dca01d5adcfdb37",
+      "mode": "0o600"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/002-file-viewer/styles/icon.md",
+      "sha256": "b38bc307db63592783a6605afb5e8432d15fb93c7eac1aa6da52ffd757f17f57",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/002-file-viewer/styles/layout.css",
+      "sha256": "3dc09603cffdcf42ef94a3f338458fbe52d7d3efba68de0bf950bc73c8a1bf76",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/002-file-viewer/styles/layout.json",
+      "sha256": "cfa878c69a3b631dfaec685eb0d340272196ecd4060ef40a7534e5ef48edc991",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/003-issues-viewer/content.json",
+      "sha256": "7ab10c21d8c92642dfea5825b8f80b1469bfd0fbbf0c39e12d5d94b4e43f5110",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/003-issues-viewer/manifest.md",
+      "sha256": "f2bc28ff523fcf1daa7154de3dcf00dac47cbb2b25f3fc0023c03ce7e92a9fd1",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/003-issues-viewer/onboarding/README.md",
+      "sha256": "cec302fd1378247fe9ecb9d9e0fdb86a0b1122870ae71a690221d75e6262db62",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/003-issues-viewer/state/state.json",
+      "sha256": "45d73793864df6e5a88ba0462e451210f60788d098feb9ee34a92aaa840cb1a5",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/003-issues-viewer/styles/icon.md",
+      "sha256": "6211478685d1bd33d383fef47e3a948480c8360d8a8cf136540e8eb767ab49a6",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/003-issues-viewer/styles/layout.css",
+      "sha256": "e7cc2334a05dc1591a4936b15121779f0b7ef09c7c675febfa53e5f0b40ddb9e",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/003-issues-viewer/styles/layout.json",
+      "sha256": "6bb67f343e8393d58f718d2bccfb935e6aa1dfd1a7c98da855c1d275ab83f4a2",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/004-wiki-viewer/content.json",
+      "sha256": "4d41b0d0ac195fd8982e31bc43be47d029ecf55309881320f3f00f639b540e6c",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/004-wiki-viewer/manifest.md",
+      "sha256": "27140a3ab112c1312eb52214f755c8d68f17b9d3d0d7aa3aa7ad3bc1dc20ae03",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/004-wiki-viewer/onboarding/README.md",
+      "sha256": "3615edcac2b859dc900d638c15c1775bd0e990b9a0bdef092396807281d689c0",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/004-wiki-viewer/state/state.json",
+      "sha256": "4ff336960d867ec8393849a3bb28906d92d4ee0d39ba8c3cc21c6524920995c2",
+      "mode": "0o600"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/004-wiki-viewer/styles/icon.md",
+      "sha256": "a116b92538e893289211e2a020aa4e7aa76666cb6d80a8e19f03bff92211c78a",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/004-wiki-viewer/styles/layout.css",
+      "sha256": "7aef1c5be94f76fad2936627265b3fe612541332522332a1cec97e683cb078fd",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/004-wiki-viewer/styles/layout.json",
+      "sha256": "a32cfea6d3b36044bd49457a5f1f7218ed1eff62c372e9ba74a3a247c981d81f",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/004-wiki-viewer/styles/themes.css",
+      "sha256": "3d9af655164454a9b38638bf8a5501af196bdd2ab0655f2838561dea9da2e274",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/005-browser-viewer/content.json",
+      "sha256": "5738782cf9288269c512a7b5a8bf735a3d545a142fa9df0fe1d567dffb4a7bbc",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/005-browser-viewer/manifest.md",
+      "sha256": "42f83ca964142b31ef0fc3208a0c905466e7f7f20bab8b56c32e5aadf3515f16",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/005-browser-viewer/onboarding/README.md",
+      "sha256": "c0d883c8a347b774767a982364801737b0c521e2ea1813594b8274b5184a9cac",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/005-browser-viewer/state/state.json",
+      "sha256": "5e02543f2b286e3da21a91f77cb2d80fc4c2b1de5493dcacfc1e2a14ae93574a",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/005-browser-viewer/styles/icon.md",
+      "sha256": "8d99d8be8e990fe9a15b9fc2edf0b4a417de0c2c083882acc51912f210f543b2",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/005-browser-viewer/styles/layout.css",
+      "sha256": "a7387f4ce9f14ea6a15e34ce3eb44289aabdf3c384e7f8c2eb7dbd46e77bf03a",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/006-custom-viewer/content.json",
+      "sha256": "cbcad6c1da38cb52095c6a7971673e937377ccac335cacecdb11fd7c218121e8",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/006-custom-viewer/manifest.md",
+      "sha256": "32c6d6178f5c78ce9ceac494c37a3000c3a31481e8c038f8d0cb0a0877da5d13",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/006-custom-viewer/onboarding/README.md",
+      "sha256": "86ad57c6de581dc235aa867e51ad7fc21ca3f063b2d07c7427458b4166483444",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/006-custom-viewer/state/state.json",
+      "sha256": "9b71d7665ea7062ba50ed65d29f0b4e5c0376f6e9980d6db04995c62008c1b87",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/006-custom-viewer/styles/icon.md",
+      "sha256": "fbced767ffece92772de1219e5ea54b78e4b8b04b638549f979c2022958a1268",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/006-custom-viewer/styles/layout.css",
+      "sha256": "a36c58d25e14c23b045c986df5946ba0d1eef5048e4ce3732dbf9bfdc5f5fa11",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/007-agents-viewer/content.json",
+      "sha256": "b2a80abd5f1a532ef8ae14811c15fe4f2326cde7ad9c786b01c100f19db9dea4",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/007-agents-viewer/manifest.md",
+      "sha256": "1e00317a56694c7dca8bd921904c8c9efc8db92c66744338c104ef9d087be388",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/007-agents-viewer/onboarding/README.md",
+      "sha256": "a3269ae9cf09698dcb4a6a3ec9c3f8011968d06eee77bb5bd9628907e6f11cda",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/007-agents-viewer/state/state.json",
+      "sha256": "342e8e3cf28196a31377b4d7c1813ebd364fd90e81aab534f8d191cb9536f7a7",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/007-agents-viewer/styles/icon.md",
+      "sha256": "40c2821a16d43420ec8d4562df693ef05f4932b94063079e6e032999153c6240",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/007-agents-viewer/styles/layout.css",
+      "sha256": "96fb24411e419325c35f7f352d3276824959777a82cfcf0a85c99f0d6035b4f5",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/007-agents-viewer/styles/layout.json",
+      "sha256": "6bb67f343e8393d58f718d2bccfb935e6aa1dfd1a7c98da855c1d275ab83f4a2",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/008-contacts-viewer/content.json",
+      "sha256": "8bbf89e33ea02df8aae4efbc8ada073e8720f2cbf0cd732f931ea66041041b1b",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/008-contacts-viewer/manifest.md",
+      "sha256": "bfcbcb7af91bb0b59117a67e99e37a4702ec6be60202cf2222a1d57805e2f4a0",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/008-contacts-viewer/onboarding/README.md",
+      "sha256": "6ac35baf793b82f96d7c639c9e461c7541a8f129e8cc90de998aeec927e7490b",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/008-contacts-viewer/state/state.json",
+      "sha256": "9b71d7665ea7062ba50ed65d29f0b4e5c0376f6e9980d6db04995c62008c1b87",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/008-contacts-viewer/styles/icon.md",
+      "sha256": "9219a00ae0570f5a6e1107c8c7cc39c210e6c571ffc5b624e6b705cbdad4d3c8",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/008-contacts-viewer/styles/layout.css",
+      "sha256": "75e0e6c0386d692a3a12fb2e16b5b441f9ae57590afced1db3ead2b1f3b77d1a",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/009-office-viewer/content.json",
+      "sha256": "613a0bf9458e37d5c307cd1363aa4b324340cac20c018eced0914bec516978a7",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/009-office-viewer/manifest.md",
+      "sha256": "37809b28e412560c8716e0ca2d50b24d05e0c9f6091d2c1e2133d86a84c0ac3b",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/009-office-viewer/onboarding/README.md",
+      "sha256": "4b8c98e1e56a7ac4bc70f12c7de74a3b562762be2ad734acd3aa322d0fe46f75",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/009-office-viewer/state/state.json",
+      "sha256": "9b71d7665ea7062ba50ed65d29f0b4e5c0376f6e9980d6db04995c62008c1b87",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/009-office-viewer/styles/icon.md",
+      "sha256": "2a265c422dd350ff4cbe5a8af0c617a3ffd13caca84540b5035b4521bc13718d",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/009-office-viewer/styles/layout.css",
+      "sha256": "dd84d73b4cf95c028d828b5569ce674982e7fc099cfac6420d461aba16f83cae",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/010-email-viewer/content.json",
+      "sha256": "8bbf89e33ea02df8aae4efbc8ada073e8720f2cbf0cd732f931ea66041041b1b",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/010-email-viewer/manifest.md",
+      "sha256": "0ce3a77eb4afaaed1bcc9a23619c4acbc3b9165e7e51b64846b8ea89223ef496",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/010-email-viewer/onboarding/README.md",
+      "sha256": "09865a488924e91c7ae5e53065a4f2d3b8c61e4cb226fa96471c23b3ff4c8bd3",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/010-email-viewer/state/state.json",
+      "sha256": "9b71d7665ea7062ba50ed65d29f0b4e5c0376f6e9980d6db04995c62008c1b87",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/010-email-viewer/styles/icon.md",
+      "sha256": "0b10b51deef025cefbdc52a1e58d511088b5773acb3f5f5ca5f29c2f1cfae737",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/Views/010-email-viewer/styles/layout.css",
+      "sha256": "f8516772da9beb33188f80dd68076a5212c0cc11c2aaf86b56dd7b54998d3f98",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/config/README.md",
+      "sha256": "fdde29fac771a78a17284efc18dec3b8af8d4dee011195822952fb7c5906a794",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/config/cli.json",
+      "sha256": "8a160b32a5556218ee18a14c0d3553e074286d7d72bdc40ed59b5fd08c8e4c32",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/config/opencode-models.json",
+      "sha256": "0bb94d432cca1d3d011ab14543c9dcaa61ec75fa9aa80cc081775aa96f00007a",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/state/README.md",
+      "sha256": "f5fee53dedca69f4c7535b7d66440a47e06e4a779dc840ea87426a6f06ac6c5f",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/state/state.json",
+      "sha256": "f8db7df9c952a76360911046a6267c5e00b106eaec4b12778d13ee440bcfbe08",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/state/state.json.bak",
+      "sha256": "2a7f41137abdb581735812bf6c908eb36b70fbe1ede387f21a4467cf0fbc2f64",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/state/workspace.json",
+      "sha256": "8975552bed4cb85c1b7231187d4305dd78bc8541ba89468fc61e889c6f0046d1",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/styles/README.md",
+      "sha256": "2d0fad0cb26ac37fa4156f2eb212e87b8d72e61987c98a228f1025e3a10d8be8",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/styles/capture-viewer.css",
+      "sha256": "15e1fcba2d00ba7d619b1a8a1c60d94906846b097762e7ad62ac71040f63ef6f",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/styles/components.css",
+      "sha256": "98e572cb62787fa589d79cc821530dc4d18e9bc80088a0f413cdc15d84eb2765",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/styles/file-viewer.css",
+      "sha256": "af0ab3b6d986544c0dee8e5bae6a74ecf9ee189a5aa987c733b0bdcbf2f27d43",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/styles/office-viewer.css",
+      "sha256": "8927995223b12d63e2747ff19d80f8f9b661acd84ccf567687e2efe2e2211586",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/styles/themes.css",
+      "sha256": "de6713aa7219ba90562dc9ebe4e3e2304c0a8b30034fe841e9065550e0362996",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/styles/themes.json",
+      "sha256": "6fa7ed9b63ad8fbb64b7a2e299795d8f4bf095361f16483cd6c8b34f37b59b4a",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/styles/themes.json.bak",
+      "sha256": "e583fdd98d3b98b14b817cbed9987f9ac866953893f5c7a2874683c9f791a00f",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/styles/tints.css",
+      "sha256": "459cd03b270d580cb027db2d3622c74241d6cf7ea0e5579e4535e6e5439fdaf9",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/styles/variables.css",
+      "sha256": "e323f2686c8f30aee36395862129c0da98c655922f9f81388bed03b723dbda82",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/System/styles/views.css",
+      "sha256": "2cf9ed27a08164ca2b3683a69614d99f37b495d54fae552a3e9ab0af30d03248",
+      "mode": "0o644"
+    },
+    {
+      "path": "ai/RC-MacAir-15/Wiki/.audit-state.json",
+      "sha256": "6c128a59c08af79099271fde455914eac65216cc7407092cf98a5b52f1e1e62d",
+      "mode": "0o644"
+    }
+  ],
+  "allowed_recovery": "After verified disposable process shutdown, restore only candidate-owned startup state/config/audit bytes that drift; preserve raw drift evidence first. No primary or Alpha state/database restore."
+}

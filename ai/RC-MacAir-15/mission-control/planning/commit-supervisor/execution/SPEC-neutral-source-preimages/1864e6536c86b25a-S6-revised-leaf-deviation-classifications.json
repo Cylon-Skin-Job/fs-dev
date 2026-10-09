@@ -1,0 +1,120 @@
+{
+  "at": "2026-10-04T19:26:43.747621+00:00",
+  "actor": "/root",
+  "scope": "Root leaf-scope factual classification only; excluded from fresh domain gates; full revised candidate runtime and full S6 still pending",
+  "deviations": [
+    {
+      "id": "FIX-XY-CODE-D1",
+      "original_spec": "Original draft label Draft report; revised X supersedes only that label, retaining draft identity and all original semantics.",
+      "actual_change": "Changed draft visible label to Review report; review/send IDs and labels remain unchanged.",
+      "reason_authority": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-original-authority.md and C/planning/commit-supervisor/execution/S6-fix-xy-event.json /X.",
+      "files": [
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js"
+      ],
+      "checks": "39 current-source samples, original numerical/reversal/reload/all-states oracles; two syntax checks; four-delta readback.",
+      "observable_effect": "Current hydration and checkbox writes still use draft/review/send.",
+      "risk": "Browser-level revised label still needs manager-owned real runtime verification.",
+      "downstream_spec_impact": "Checklist iframe, Checklist Guide, fresh code/Wiki/final/runtime gates.",
+      "classification": "accepted",
+      "root_qualification": "Accepted within the explicitly revised private fixture leaf scope. The source-only check limitation remains until separate actual final/runtime evidence; this is not full S6 acceptance."
+    },
+    {
+      "id": "FIX-XY-CODE-D2",
+      "original_spec": "Y requires Reset completion to uncheck all retained rows, update exact summary, persist immediately and survive ordinary reload.",
+      "actual_change": "Added one native Reset button, explicit view callback, reset mutation in existing controller and reused persistCompletion for both completion and reset. Added variable-backed local button CSS.",
+      "reason_authority": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/fix-xy-code-1-assignment.md and C/planning/commit-supervisor/execution/S6-fix-xy-event.json /Y; existing controller owns private fixture completion state/localStorage.",
+      "files": [
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-controller.js",
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist-view.js",
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/checklist.css",
+        "rehearsal-workspace/ai/MC-S6/System/Views/006-custom-viewer/app/index.html"
+      ],
+      "checks": "Two-checked reset/reload; idempotent reset; postreset completion/reversal; all eight completion masks reset and reload; current-source module and HTML/style wiring checks.",
+      "observable_effect": "Each reset click persists [] once and synchronously renders allfalse/3 remaining of 3, retaining logical rows/IDs/labels; no listener accumulation across refresh.",
+      "risk": "Minimal DOM/in-memory storage does not establish native pointer/keyboard interaction or actual persisted browser profile behavior.",
+      "downstream_spec_impact": "Bounded Wiki rewrite and actual public-route/reset/restart smoke.",
+      "classification": "accepted",
+      "root_qualification": "Accepted within the explicitly revised private fixture leaf scope. The source-only check limitation remains until separate actual final/runtime evidence; this is not full S6 acceptance."
+    },
+    {
+      "id": "FIX-XY-CODE-D3",
+      "original_spec": "Installed named worker procedure/profile with root inherited model/effort and verified effective permissions.",
+      "actual_change": "Used assigned supported default fallback; explicitly read and acknowledged exact installed SKILL and TOML developer instructions.",
+      "reason_authority": "Assignment plus session-contract.md Runtime and portability permits supported default with explicit exact paths.",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1.md",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-checks.json"
+      ],
+      "checks": "Actual CWD, source/private Git roots, parent assignment and collaboration inventory; all loaded revisions recorded.",
+      "observable_effect": "Leaf scope retained; no children/external reviewers; effective danger-full-access/never came from host developer instructions, not local config inference.",
+      "risk": "Native TOML loader/concrete model/effort values are not exposed and no such assertion is made.",
+      "downstream_spec_impact": "Manager lifecycle and fresh independent handoff.",
+      "classification": "accepted",
+      "root_qualification": "Accepted within the explicitly revised private fixture leaf scope. The source-only check limitation remains until separate actual final/runtime evidence; this is not full S6 acceptance."
+    },
+    {
+      "id": "FIX-XY-CODE-D4",
+      "original_spec": "Meaningful current-source self-check plus retained valid required55/17 evidence; actual successful runtime must be real.",
+      "actual_change": "Added unique VM/minimal-DOM/in-memory-storage scenario and read-only postflight helpers in assigned worker output namespace; used matching35 dependencies to retain55/17 receipts.",
+      "reason_authority": "Leaf assignment explicitly separates current-source checks from later Supervisor actual runtime and directs rerun only invalidated checks.",
+      "files": [
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-scenarios.mjs",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-postflight.py",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/workers/fix-xy-code-1-commands.json"
+      ],
+      "checks": "/0 scenario, /1-/2 syntax, /3 postflight in pure raw command array.",
+      "observable_effect": "39 source scenarios and two syntax commands pass;4354 inventory and52 authority matches recorded; no profile/app effects.",
+      "risk": "VM Modules experimental warning is test-tool-only. Current app/build/reset before initializer, UI persistence, Wiki/watch/protection remain unverified by this worker.",
+      "downstream_spec_impact": "Fresh handoff may use immutable derivative of /0-/3; manager must renew original affected gates and real runtime.",
+      "classification": "accepted",
+      "root_qualification": "VM/syntax/postflight mechanics remain accepted; Python35-dependency reuse is incomplete, confirmed by F-ALL5-01. Await renewed fully bound55 and fresh final gate; no historical drift/test failure claimed.",
+      "current_repair_evidence": "S6-root-renewed-python-binding-inspection.json",
+      "current_repair_fact": "Actual current-2 exit0/all55 with 3808 unique equal pre/post/current dependencies and all82 actual JS files bound; historical receipts remain qualified.",
+      "remaining_gate": "none for repaired current source/check evidence; separate actual runtime remains mandatory",
+      "repair_accepted_at": "2026-10-04T19:26:43.747621+00:00",
+      "repair_acceptance": "S6-root-revised-final3-inspection.json",
+      "historical_qualification": "Old incomplete reuse claims stay withdrawn; renewed current55 and actual fresh final3 supply current evidence only."
+    },
+    {
+      "id": "FIX-XY-CODE-D5",
+      "original_spec": "Every Git invocation uses GIT_OPTIONAL_LOCKS=0.",
+      "actual_change": "Initial orientation command pwd; git rev-parse --show-toplevel omitted the environment flag. Every later Git read and snapshot invocation explicitly used the flag; no Git write operation occurred.",
+      "reason_authority": "Procedural oversight disclosed; revision-only command performed before mutation.",
+      "files": [],
+      "checks": "Final read-only snapshot-state protected/ref equality and source index file f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966.",
+      "observable_effect": "Source and candidate index/ref/config fingerprints remain identical to fixed-first after repair; no index refresh/write observed.",
+      "risk": "No observed state impact; this note cannot retroactively change the initial invocation.",
+      "downstream_spec_impact": "Manager procedural accounting; independent gate unaffected.",
+      "classification": "accepted",
+      "root_qualification": "Accepted within the explicitly revised private fixture leaf scope. The source-only check limitation remains until separate actual final/runtime evidence; this is not full S6 acceptance."
+    },
+    {
+      "id": "FIX-XY-WIKI-D1",
+      "original_spec": "Use exact installed Wiki Repair methods and inherited settings in a bounded integration leaf.",
+      "actual_change": "Supported default runtime actor fully read and acknowledged exact installed Wiki Repair SKILL and TOML instructions; no children/manual hierarchy.",
+      "reason_authority": "Installed session contract and explicit Supervisor leaf assignment permit supported fallback.",
+      "files": [
+        "private Checklist Guide",
+        "exact declared .versions/2026-10-04-095624.md",
+        "unique fix-xy-wiki-1 outputs"
+      ],
+      "checks": "Native terminal and full readset, exact exclusive preimage, current 130-leaf readback; fresh independent Wiki gate remains separate.",
+      "observable_effect": "Bounded Wiki edits and evidence only.",
+      "risk": "Concrete model/effort and native profile loading remain unexposed; do not assert them.",
+      "downstream_spec_impact": "none; current fresh original-coverage/final/runtime requirements unchanged",
+      "classification": "accepted"
+    },
+    {
+      "id": "FIX-XY-WIKI-D2",
+      "original_spec": "Every Git read uses GIT_OPTIONAL_LOCKS=0 and preserves candidate/source index/refs.",
+      "actual_change": "Initial pure git rev-parse root discovery omitted explicit flag; later public/helper Git reads supply it.",
+      "reason_authority": "Disclosed procedural omission, not approved relaxation.",
+      "files": [],
+      "checks": "Complete prewrite current130 union equality and postflight source/private index/ref/config equality; root independent postflight also passes.",
+      "observable_effect": "No observed index/ref/config mutation.",
+      "risk": "Initial invocation cannot be retroactively corrected; all later Git reads must use the flag.",
+      "downstream_spec_impact": "none",
+      "classification": "accepted"
+    }
+  ]
+}

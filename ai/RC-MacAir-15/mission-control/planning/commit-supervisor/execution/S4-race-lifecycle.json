@@ -1,0 +1,27 @@
+{
+  "manager": "/root/s4_builder",
+  "prior_own_reviewer": "/root/s4_builder/s4_builder_review_1",
+  "prior_confirmed_terminal": true,
+  "prior_close_agent": "unavailable",
+  "passes": [
+    {
+      "reviewer": "/root/s4_builder/s4_race_review_1",
+      "agent_type": "clean-room-reviewer",
+      "fork_turns": "none",
+      "model_effort": "Inherited root; no overrides",
+      "state": "terminal_completed",
+      "packet": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-filtered-manifest.json",
+      "assessment_consumed": false,
+      "explicit_exclusion": "entry036 manager assessment; manifest path/hash only",
+      "independence_note": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-independence-note.json",
+      "close_agent": "unavailable; no callable closure tool, terminal confirmed before handoff",
+      "result": "CLEAN",
+      "terminal_at": "2026-10-04T12:19:04Z",
+      "terminal_verified": "collaboration.list_agents completed status",
+      "raw_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S4-race-builder-review-1.md",
+      "material_findings": [],
+      "advisories": [],
+      "read_only_probe_failures": "Default Python lacked tomllib; probe assumed intentionally deleted legacy path existed; corrected read-only probe passed, no product finding. Exact raw terminal report retained."
+    }
+  ]
+}

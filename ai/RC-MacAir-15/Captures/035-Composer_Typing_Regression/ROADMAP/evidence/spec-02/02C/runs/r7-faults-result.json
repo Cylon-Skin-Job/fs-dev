@@ -1,0 +1,28 @@
+{
+  "runId": "chat-arch-1789999035563-e9a96810b0",
+  "status": "passed",
+  "results": [
+    {
+      "id": "FAULT-SERVER-ADMISSION",
+      "code": 0,
+      "signal": null,
+      "pid": 64177,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 6119
+    },
+    {
+      "id": "FAULT-SAVE-ACK",
+      "code": 0,
+      "signal": null,
+      "pid": 65004,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 6017
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

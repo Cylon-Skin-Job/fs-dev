@@ -1,0 +1,183 @@
+{
+  "at": "2026-10-04T20:51:15.208783+00:00",
+  "actor": "/root/s6_supervisor_recovery_1",
+  "criteria": [
+    {
+      "id": "REC-01",
+      "criterion": "Exact second-only authority/role loading/CWD/host/root inheritance",
+      "status": "proved",
+      "evidence": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/activation.json",
+        "sha256": "a82f500a8114e3e07268c5996e3c5bf512c8dda5723adbf16c0ef9a08130fb7d"
+      },
+      "covered_scope": "Original owner-approved S6 SECOND recovery assignment only",
+      "current_ready": false
+    },
+    {
+      "id": "REC-02",
+      "criterion": "Actual predecessor terminal/no descendants, explicit ownership transfer, no writer/schedule",
+      "status": "proved",
+      "evidence": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/independent-entry-inspection.json",
+        "sha256": "d8fa2927260991fe5def24fe625eb6140d5881c1a8c5eb693491b56094e9db49"
+      },
+      "covered_scope": "Original owner-approved S6 SECOND recovery assignment only",
+      "current_ready": false
+    },
+    {
+      "id": "REC-03",
+      "criterion": "Actual interrupted full4355 state and immutable guard exact before effects",
+      "status": "proved",
+      "evidence": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/independent-entry-inspection.json",
+        "sha256": "d8fa2927260991fe5def24fe625eb6140d5881c1a8c5eb693491b56094e9db49"
+      },
+      "covered_scope": "Original owner-approved S6 SECOND recovery assignment only",
+      "current_ready": false
+    },
+    {
+      "id": "REC-04",
+      "criterion": "Complete saved mixed staged/work binary values and declared-created control",
+      "status": "proved",
+      "evidence": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/saved-interrupted-raw-bytes-validation.json",
+        "sha256": "a07ca65b3c2e19eb220b83e7cc3a4e0f498c66fe60391ddc590525d873c12331"
+      },
+      "covered_scope": "Original owner-approved S6 SECOND recovery assignment only",
+      "current_ready": false
+    },
+    {
+      "id": "REC-05",
+      "criterion": "All original manifest/payload/guard/history evidence retained; copied controls byte-exact",
+      "status": "proved",
+      "evidence": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/public-control-copy-equality.json",
+        "sha256": "f33b3f28b122b06b70838a4c3998d5d4be58ec5e79c7eea94227a8d49e9840d3"
+      },
+      "covered_scope": "Original owner-approved S6 SECOND recovery assignment only",
+      "current_ready": false
+    },
+    {
+      "id": "REC-06",
+      "criterion": "Public fresh guard and actual binary collision restore refusal; full nonmutation",
+      "status": "proved",
+      "evidence": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/collision-nonmutation-proof.json",
+        "sha256": "90fb549af541024cd5e202c883aa94f20e6deb585695897c4a770a658f5a6a60"
+      },
+      "covered_scope": "Original owner-approved S6 SECOND recovery assignment only",
+      "current_ready": false
+    },
+    {
+      "id": "REC-07",
+      "criterion": "Undo only known collision value, then exact guarded fixed130 recovery",
+      "status": "proved",
+      "evidence": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/fixed-recovery-result.json",
+        "sha256": "646498ac1e1c90179ba8e90f710f6a7d18908b4fb3ae6eeb6ce663f0f19645e5"
+      },
+      "covered_scope": "Original owner-approved S6 SECOND recovery assignment only",
+      "current_ready": false
+    },
+    {
+      "id": "REC-08",
+      "criterion": "Full fixed base/index/work/mode/deletion/link/unusual/absence and both Wiki/watch paths exact",
+      "status": "proved",
+      "evidence": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/fixed-full-exact-readback.json",
+        "sha256": "2105172842fc57fc16e93f8114af72fb937f42e9fe617168cab27b8165485317"
+      },
+      "covered_scope": "Original owner-approved S6 SECOND recovery assignment only",
+      "current_ready": false
+    },
+    {
+      "id": "REC-09",
+      "criterion": "Actual premature original-scope public guard refusal while supplements exist",
+      "status": "proved",
+      "evidence": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/original-scope-refusal-nonmutation-proof.json",
+        "sha256": "0d93a1337afe622431b3c5465f3791487a76712229c819c3dafdcee001b26645"
+      },
+      "covered_scope": "Original owner-approved S6 SECOND recovery assignment only",
+      "current_ready": false
+    },
+    {
+      "id": "REC-10",
+      "criterion": "Restore actual X/Y union130 then actual first union129 then ORIGINAL128 LAST",
+      "status": "proved",
+      "evidence": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/actual-restore-order.json",
+        "sha256": "be79073d2b2f077c5a920f658a1f732f3efe7c6bac60a61ae7c82ba3adc9f2b0"
+      },
+      "covered_scope": "Original owner-approved S6 SECOND recovery assignment only",
+      "current_ready": false
+    },
+    {
+      "id": "REC-11",
+      "criterion": "Remove only each manifest-declared job-created initially absent paths",
+      "status": "proved",
+      "evidence": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/actual-restore-order.json",
+        "sha256": "be79073d2b2f077c5a920f658a1f732f3efe7c6bac60a61ae7c82ba3adc9f2b0"
+      },
+      "covered_scope": "Original owner-approved S6 SECOND recovery assignment only",
+      "current_ready": false
+    },
+    {
+      "id": "REC-12",
+      "criterion": "Complete original128 current staged/work byte/mode/link/index flag/deletion/unusual/absence exact",
+      "status": "proved",
+      "evidence": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/original-full-exact-readback.json",
+        "sha256": "bc86805675fd1f5494ce1ffee1266e489726594ae0438c2a84f1afedfd383b57"
+      },
+      "covered_scope": "Original owner-approved S6 SECOND recovery assignment only",
+      "current_ready": false
+    },
+    {
+      "id": "REC-13",
+      "criterion": "Actual HEAD/base blobs/modes/absence exact and4225 unrelated inputs exact",
+      "status": "proved",
+      "evidence": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/original-base-full-readback.json",
+        "sha256": "2a2dba5ee532457b419a27372bf4f3626483d4b105c24ad88b8e6859d694dff5"
+      },
+      "covered_scope": "Original owner-approved S6 SECOND recovery assignment only",
+      "current_ready": false
+    },
+    {
+      "id": "REC-14",
+      "criterion": "Source11977/cache193/old job1844/all6 archive/source physical index/refs untouched",
+      "status": "proved",
+      "evidence": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/final-preservation-proof.json",
+        "sha256": "6e1ee94dd4d3ca53f783aa1791ccd6ee814b5ce858c1f3ccc370c52269f3cd30"
+      },
+      "covered_scope": "Original owner-approved S6 SECOND recovery assignment only",
+      "current_ready": false
+    },
+    {
+      "id": "REC-15",
+      "criterion": "Private tree/server/CDP remain absent; all protected4/13 process and11 storage identities preserved",
+      "status": "proved",
+      "evidence": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/final-preservation-proof.json",
+        "sha256": "6e1ee94dd4d3ca53f783aa1791ccd6ee814b5ce858c1f3ccc370c52269f3cd30"
+      },
+      "covered_scope": "Original owner-approved S6 SECOND recovery assignment only",
+      "current_ready": false
+    },
+    {
+      "id": "REC-16",
+      "criterion": "Historical owner packets qualified/current readinessfalse/no effects/replay/children/Git publication",
+      "status": "proved",
+      "evidence": {
+        "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/lifecycle.json",
+        "sha256": "daded22d262ab11f2722288946a9ed29be4c24b10c7af02a598d8915c2f6fef0"
+      },
+      "covered_scope": "Original owner-approved S6 SECOND recovery assignment only",
+      "current_ready": false
+    }
+  ],
+  "whole_S6_acceptance": "Not granted by this recovery actor; root separately inspects and assigns factual closeout plus fresh full-S6/whole gates"
+}

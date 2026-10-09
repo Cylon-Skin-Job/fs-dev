@@ -1,0 +1,18 @@
+{
+  "runId": "chat-arch-1790002141911-fd9844fd9d",
+  "status": "passed",
+  "results": [
+    {
+      "id": "F1-PUBLIC-ROUTE",
+      "code": 0,
+      "signal": null,
+      "pid": 22613,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 6714
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

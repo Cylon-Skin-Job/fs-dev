@@ -1,0 +1,21 @@
+{
+  "actor": "/root/s6_supervisor_candidate_1",
+  "started": "2026-10-04T15:09:46.843491+00:00",
+  "finished": "2026-10-04T15:09:48.430812+00:00",
+  "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+  "command": [
+    "python3.12",
+    "-B",
+    ".agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+    "capture",
+    "--repo",
+    "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+    "--job",
+    "jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/first-wiki-1",
+    "--paths-file",
+    "jobs/commit-supervisor/rehearsal-20261004-s6/recovery-supplements/first-wiki-1/owned-paths.json"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"result\": \"CAPTURED\", \"manifest_sha256\": \"36c99f10ccdc4eed268e2859d2f737eac282181784ea0385572e64d3221c7e75\", \"paths\": 129, \"target_commit\": \"d15792920731f85e45b743519d4af2b807d95a9c\"}\n",
+  "stderr": ""
+}

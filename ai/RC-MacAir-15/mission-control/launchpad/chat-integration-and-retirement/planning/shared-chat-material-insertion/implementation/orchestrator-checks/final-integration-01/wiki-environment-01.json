@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-07T23:20:00.932674+00:00",
+  "owned_port": 52025,
+  "reuseExistingServer": false,
+  "command": [
+    "npx",
+    "--no-install",
+    "playwright",
+    "test",
+    "--config=playwright.chat-architecture.config.ts",
+    "e2e/chat-material-wiki.spec.ts",
+    "--workers=1",
+    "--output=/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/wiki-01-output"
+  ]
+}

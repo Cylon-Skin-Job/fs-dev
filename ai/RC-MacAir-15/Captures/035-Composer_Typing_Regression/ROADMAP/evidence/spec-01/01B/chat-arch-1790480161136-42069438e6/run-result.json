@@ -1,0 +1,18 @@
+{
+  "runId": "chat-arch-1790480161136-42069438e6",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R9-NATIVE-COMPOSITION-CONTROL",
+      "code": 0,
+      "signal": null,
+      "pid": 2442,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 608302
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

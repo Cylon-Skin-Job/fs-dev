@@ -1,0 +1,116 @@
+{
+  "at": "2026-10-04T12:55:40.018400+00:00",
+  "read_only": true,
+  "candidate_mutations": 0,
+  "checks": [
+    {
+      "name": "verify",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "-B",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/scripts/job_snapshot.py",
+        "verify",
+        "--job",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/final-recovery/preparation-recovery"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit": 0,
+      "expected": 0,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-orchestrator-prep-verify.log",
+      "sha256": "097ef67aa97a5ad88500bf0a6fff2b144816e4f32503231c9d4ff75fe55b3181"
+    },
+    {
+      "name": "syntax-prepare_rehearsal_shell",
+      "argv": [
+        "node",
+        "--check",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/prepare_rehearsal_shell.mjs"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit": 0,
+      "expected": 0,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-orchestrator-prep-syntax-prepare_rehearsal_shell.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "syntax-rehearsal_ui_smoke",
+      "argv": [
+        "node",
+        "--check",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit": 0,
+      "expected": 0,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-orchestrator-prep-syntax-rehearsal_ui_smoke.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "syntax-rehearsal_watcher_smoke",
+      "argv": [
+        "node",
+        "--check",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_watcher_smoke.mjs"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit": 0,
+      "expected": 0,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-orchestrator-prep-syntax-rehearsal_watcher_smoke.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "syntax-stop_rehearsal_runtime",
+      "argv": [
+        "node",
+        "--check",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/stop_rehearsal_runtime.mjs"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit": 0,
+      "expected": 0,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-orchestrator-prep-syntax-stop_rehearsal_runtime.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "ui-unknown-mode",
+      "argv": [
+        "node",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-private-paths.json",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-3RgF92/verified.json",
+        "unsupported",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-orchestrator-never-created-ui.json"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit": 1,
+      "expected": 1,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-orchestrator-prep-ui-unknown-mode.log",
+      "sha256": "8b0dc97e2637bf5aa23fa9b8eacfc34f4c7ffa482f06aea55a8d52ff3c8d5e7d"
+    },
+    {
+      "name": "ui-missing-format",
+      "argv": [
+        "node",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/rehearsal_ui_smoke.mjs",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-prep/current-private-paths.json",
+        "/private/tmp/mc-s6-commit-supervisor-20261004/profile/fusion-restart/run-3RgF92/verified.json",
+        "acceptance",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-orchestrator-never-created-ui.json"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit": 1,
+      "expected": 1,
+      "log": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-orchestrator-prep-ui-missing-format.log",
+      "sha256": "918fe05c9f3888b18fd5f880479f684aee87f9ca09a8200d344e031db473d47f"
+    }
+  ],
+  "public_verify": {
+    "result": "VERIFIED",
+    "payloads_valid": true,
+    "matches_checkpoint": true,
+    "status_equal": true,
+    "current_sha256": "7d606b465c4f2d0086b170d230a7dd26d2c2367cb961725e22dcab12a5786e59",
+    "manifest_sha256": "fb124d573bfb76944718c9784643d8a925e24d70ce7042b9455f0b56b3073975"
+  },
+  "runtime_evidence": "Builder current real canonical run and cleanup preserved; these root checks do not claim successful workflow/feature handoff"
+}

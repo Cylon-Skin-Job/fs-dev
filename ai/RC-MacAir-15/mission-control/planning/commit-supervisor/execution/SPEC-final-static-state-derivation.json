@@ -1,0 +1,16 @@
+{
+  "at": "2026-10-05T03:30:27.999919+00:00",
+  "source": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-static-continuation.py",
+  "sha256": "aaf6db63cf16a5af42735474569bad65df14d75ede293e4fae4496e0e18cf0a1",
+  "continuation": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-static-continuation-2.py",
+  "continuation_sha256": "7f8376ab2067855f6d5e29651c5f62264e9f6d246d7201f4baf8e77535824dd7",
+  "retained_original_failure": "Exact unowned comparison found later live file-viewer state hash change; no product file repaired/restored",
+  "correction": "Retain full original21:24 metadata and current22:01 state; narrow explicit known runtime state qualification only, validate all15941 other entries/68absences/caches/Git/schedules; reuse passed links/index/validator receipts",
+  "original_unowned_baseline_sha256": "f817c70bffa52149cef1db75f58ff6ca1e7c3b983e10811a800f55858a441e74",
+  "later_state_diff_receipt_sha256": "09fc1a6b9a39607b58add019fd8bd4937b7da5422131d560998bde9cf85e988f",
+  "state_source_bindings": {
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/view-state/writer.js": "29c4714ca8cf383d6324580c5b4759aafcc19339ce14c98962e19f9f1268e2c6",
+    "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/lib/view-state/resolver.js": "50607ad41264004461f75e0c73ec1445dc2e505b482d9731d7e4302951df742d"
+  },
+  "passing_suites_replayed": false
+}

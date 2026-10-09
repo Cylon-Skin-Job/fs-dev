@@ -1,0 +1,125 @@
+{
+  "client-build.json": {
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/fusion-studio-client",
+    "started": "2026-10-09T01:02:49.022163+00:00",
+    "ended": "2026-10-09T01:03:02.180164+00:00",
+    "exit_code": 0,
+    "log": "/private/tmp/fusion-main-consolidation-95vxg0_h/client-build.log",
+    "preload_before": "a87aaefb6d60425ec30013a6a1b8a2a3e21d50208a6c1727adc0be9968adef05",
+    "preload_after": "a87aaefb6d60425ec30013a6a1b8a2a3e21d50208a6c1727adc0be9968adef05"
+  },
+  "renderer.json": {
+    "command": [
+      "npx",
+      "--no-install",
+      "playwright",
+      "test",
+      "--config=playwright.chat-architecture.config.ts",
+      "e2e/chat-material-insertion.spec.ts",
+      "e2e/threaded-chat-host.spec.ts",
+      "e2e/chat-composer-screenshot-menu.spec.ts",
+      "e2e/chat-surface-identity.spec.ts",
+      "e2e/chat-surface-isolation.spec.ts",
+      "e2e/chat-component-registration.spec.ts",
+      "e2e/side-chat-isolation.spec.ts",
+      "e2e/side-chat-adapterless-native.spec.ts",
+      "e2e/side-chat-placement-recovery.spec.ts",
+      "e2e/move-chat-to-side-chat.spec.ts",
+      "e2e/prompt-ownership.slice-c.spec.ts",
+      "e2e/prompt-submission-recovery.spec.ts",
+      "e2e/chat-send-transport.spec.ts",
+      "e2e/chat-diagnostic-actions.slice-c.spec.ts",
+      "e2e/system-viewer-action-outcome.spec.ts",
+      "e2e/chat-architecture/observation-boundaries.spec.ts",
+      "--workers=1",
+      "--output=/private/tmp/fusion-main-consolidation-95vxg0_h/renderer-output"
+    ],
+    "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/fusion-studio-client",
+    "started": "2026-10-09T01:02:49.022684+00:00",
+    "ended": "2026-10-09T01:05:17.159694+00:00",
+    "exit_code": 0,
+    "log": "/private/tmp/fusion-main-consolidation-95vxg0_h/renderer.log"
+  },
+  "retained-evidence-03.json": {
+    "at": "2026-10-09T01:05:37.026817+00:00",
+    "correction": "First retained-evidence.json interpreted executable-binding rows as source paths and missing generated binary. Preserved first attempt; resolved executables correctly and copied scoped exact-hash native observer dependency from primary. No product edit. Primary currently installed generated observer differed from the historical exact binary. Retained both attempts; copied the original exact-hash accepted-worktree observer into isolated candidate only.",
+    "checks": [
+      {
+        "receipt": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/server-full-01.json",
+        "exit_code": 0,
+        "hashed_dependency_count": 16,
+        "unhashed_executable_resolution_only": [
+          "node",
+          "python3",
+          "npm"
+        ],
+        "mismatches": [],
+        "limit": "Dated retained check, not a fresh rerun; source HEAD and all65 delivered files unchanged."
+      },
+      {
+        "receipt": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/server-focused-01.json",
+        "exit_code": 0,
+        "hashed_dependency_count": 16,
+        "unhashed_executable_resolution_only": [
+          "node",
+          "python3",
+          "npm"
+        ],
+        "mismatches": [],
+        "limit": "Dated retained check, not a fresh rerun; source HEAD and all65 delivered files unchanged."
+      },
+      {
+        "receipt": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/orchestrator-checks/final-integration-01/native-01.json",
+        "exit_code": 0,
+        "hashed_dependency_count": 16,
+        "unhashed_executable_resolution_only": [
+          "node",
+          "python3",
+          "npm"
+        ],
+        "mismatches": [],
+        "limit": "Dated retained check, not a fresh rerun; source HEAD and all65 delivered files unchanged."
+      }
+    ],
+    "server_tracked_diff": []
+  },
+  "recovery-capture.json": {
+    "result": "CAPTURED",
+    "manifest_sha256": "4d4b616b5f3bd4f09d3decbd0110aef27c7055386d433f6782c53171bbe81a91",
+    "paths": 17603,
+    "target_commit": "a4a4262587a7f72f89f5b9b9c2f54878fe5381bb"
+  },
+  "recovery-verify.json": {
+    "result": "VERIFIED",
+    "payloads_valid": true,
+    "matches_checkpoint": true,
+    "status_equal": true,
+    "current_sha256": "c610b416a7070986cc76ad1ddc3c6ea6a154570121adb47fa685b4df037965ca",
+    "manifest_sha256": "4d4b616b5f3bd4f09d3decbd0110aef27c7055386d433f6782c53171bbe81a91"
+  },
+  "mc-unit": {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      ".agents/skills/mc-commit-supervisor/tests",
+      "-p",
+      "test_*.py"
+    ],
+    "cwd": "/private/tmp/fusion-main-consolidation-95vxg0_h/candidate/ai/RC-MacAir-15/mission-control",
+    "raw_log": "/private/tmp/fusion-main-consolidation-95vxg0_h/mc-unit.log",
+    "result": "55 tests OK",
+    "limit": "Shell sequential invocation did not separately record unit process exit; raw runner reports OK. Index validations separately returned pass."
+  },
+  "publication_scan": {
+    "source_intake": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/fusion-publish-all-pwf6y3bc/intake.json",
+    "result": "Only synthetic PEM test blocks and ignored compiled-parser caches matched credential detector; real runtime DB excluded. No provider/GitHub/AWS candidates."
+  }
+}

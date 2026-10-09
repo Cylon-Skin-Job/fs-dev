@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-05T03:03:50.043395+00:00",
+  "actor": "/root",
+  "manifest_sha256": "5a3cd688a30036095af7da276907543961331fe3a11bd7fa2db89486d98357aa",
+  "counts": {
+    "authority": 74,
+    "changed_documentation": 8,
+    "closeout_raw": 12,
+    "actual_domain_raw": 3309
+  },
+  "mismatches": [],
+  "scope": "Current raw fingerprints only; root S6/whole acceptance remain separate"
+}

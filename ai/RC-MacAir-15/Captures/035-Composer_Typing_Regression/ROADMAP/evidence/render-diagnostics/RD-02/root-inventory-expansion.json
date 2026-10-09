@@ -1,0 +1,13 @@
+{
+  "fusion-studio-server/lib/resources/resolver.js": "c9447adc779f9cc03412fb16aae7c3e81e987b65c15f96588454dbc6faa4e37f",
+  "fusion-studio-server/test/resources/durable-reservations.test.js": "006085214af3138e295b61821ee727048ee4a9feaedf8910b5dbb0c0a03c2459",
+  "fusion-studio-server/test/resources/file-provenance-integration.test.js": "aa1f0f316d0316a71fa0db858858b6d79572af19134fd73374f6c2d5b776de2c",
+  "fusion-studio-server/test/resources/migration.test.js": "8049d74ec4c122b0b601dceef13b364cfaa1ba645912609e3485b757186a57f3",
+  "fusion-studio-server/test/resources/path-authority-and-atomic-writer.test.js": "f8bd32e36d9b035ef309113a7a38dd795fc52eb8a25404f52e6644001b80efa0",
+  "fusion-studio-server/test/resources/reconciliation.test.js": "0b108ef13dd4a534e6b8110f3a6fcad0708ceb01e07084444efa49dcf0c5838a",
+  "fusion-studio-server/test/resources/reported-ui-context.test.js": "530d661ccca9bc07d14ec8593d23eca1af90f14c492fdaf29d8866112f2ce561",
+  "fusion-studio-server/test/resources/repositories.test.js": "43c1845bdb21a1c1b95f2496423efb99925242f461611b70519425b79b48f6b9",
+  "fusion-studio-server/test/resources/save-controller.test.js": "bd4bb14439ff1315ddca018f21a7c0ec1ea5fee8d38484529951e7ba87200600",
+  "fusion-studio-server/test/resources/test-db.js": "ad62980097a29db7a0bc34664b83483ed27c44e8b83189ab602947071b339faa",
+  "fusion-studio-server/test/resources/text-codec-and-mutex.test.js": "0dbabdb68199dfa4841e3ed090f4b696a7b210899b477baac84d296c0c04ef9b"
+}

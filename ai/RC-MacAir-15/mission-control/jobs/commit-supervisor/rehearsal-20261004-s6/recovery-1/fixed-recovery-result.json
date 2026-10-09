@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-04T20:40:25.328351+00:00",
+  "actor": "/root/s6_supervisor_recovery_1",
+  "result": "SAVED_INTERRUPTED_TURN_RECOVERED",
+  "actual_restore": {
+    "result": "RESTORED",
+    "index_worktree_equal": true,
+    "status_equal": true,
+    "restored_sha256": "5721be9a2e16d19b5f04e91c9aefba5c0a3ddcd0cf4e5e8b8e57e871d1e48c2d",
+    "manifest_sha256": "a885cde0f24e25d9cea6437edad6b9258f365d3a2db08bcb426d690195e4291a"
+  },
+  "owned130_full4355_exact": true,
+  "unrelated4225_exact": true,
+  "original_guard_retained_in_place": true,
+  "actual_original_namespace_public_verify": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/fixed-original-namespace-verify.command.json",
+  "complete_readback": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/fixed-full-exact-readback.json",
+  "current_ready": false,
+  "runtime": "Private preview remains stopped; this restores code/index/worktree only"
+}

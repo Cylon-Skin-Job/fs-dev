@@ -1,0 +1,18 @@
+{
+  "runId": "chat-arch-1790390151299-353c7fc4ec",
+  "status": "passed",
+  "results": [
+    {
+      "id": "R9-NATIVE-ACTIVATION-PROTOCOL",
+      "code": 0,
+      "signal": null,
+      "pid": 65430,
+      "timedOut": false,
+      "interrupted": false,
+      "leakedOwnedPids": [],
+      "elapsedMs": 137268
+    }
+  ],
+  "ownedRunRootRemoved": true,
+  "failure": null
+}

@@ -1,0 +1,60 @@
+{
+  "at": "2026-10-07T23:46:08.114061+00:00",
+  "authority": "Root-owned adapter cleanup after clean finalintegratedgate. Exacttarget/UID/provenance verified; unlink only symlink.",
+  "removed": "/Users/rccurtrightjr./.codex/worktrees/chat-material-01/fs-dev/fusion-studio-server/node_modules",
+  "identity_before": {
+    "uid": 501,
+    "inode": 260462703,
+    "target": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/node_modules"
+  },
+  "after_absent": true,
+  "resolved_dependency_hashes_before": {
+    "fusion-studio-client/package.json": "9b9e9c906358afd17eb5027af187fbe2030c537a9536d6d0d6fbcf64fb70dfb0",
+    "fusion-studio-client/package-lock.json": "bf84fb48fd5b41b169afea6bc23acba4a1466255dd4c8679c2119cad55f593f4",
+    "fusion-studio-server/package.json": "15113c033b6deb5622aa8a5213042bcb1b67e82d87f63df3b006efc9640717db",
+    "fusion-studio-server/package-lock.json": "33dd6068bc27b3689394c6d17b1cb2514b0d4cfa3804313dc02b9604e3dcbe7f",
+    "fusion-studio-client/node_modules/.package-lock.json": "dfe5c94d3ae739adf81e9b89d1bdc9d15dae5b79f54f8e77bf2d800cba77294b",
+    "fusion-studio-server/node_modules/.package-lock.json": "6fbc3f2e64977a2e50ccf991c71b0bb9769e542d7498bb55fcfae0c1605d8245",
+    "fusion-studio-client/node_modules/electron/package.json": "d8e71feee3508f91dbfa46214451b462ed9bb181c04099f7aeac8d544ad4c295",
+    "fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron": "c86c2701f15ca66ba460f4cdcd7ebcab0b5133a4cc299295f02108b3754e9eed",
+    "fusion-studio-server/node_modules/better-sqlite3/build/Release/better_sqlite3.node": "beaae109810a34bb2d4e9c924bd23e268ac64b6b3db4a5b5f668042a0fa77e9e",
+    "fusion-studio-server/native/secure-file-observer/index.js": "3b8c93ed7cc31cbe294b7f0a81729a458ed029726f51009029c622b26d6c6be2",
+    "fusion-studio-server/native/secure-file-observer/binding.gyp": "c660385eeefbd59db21ce1433f1a6f8eebd088cf72a8cb675c4ebeda61e0795e",
+    "fusion-studio-server/native/secure-file-observer/secure_file_observer.c": "113ddf43102c205c175ed56699b95fd03cf2857b9896231d349c16514039ffd0",
+    "fusion-studio-server/native/secure-file-observer/runtime-smoke.js": "b0eb8261146ee444981223b2e96064fb4cc0a598f0ff23f8cd21e04a9a0043f7",
+    "fusion-studio-server/native/secure-file-observer/build/Release/secure_file_observer.node": "c9aa17eb72b253235ea6eb1b4c6a639e455939d9e8b070129a25c587c9c69d11",
+    "fusion-studio-server/node_modules/node-gyp/package.json": "d19b594bcbf958f80ec6863a44be2c5bd3ad84077c1de5f57b18168014fa97bd",
+    "fusion-studio-server/node_modules/node-gyp/bin/node-gyp.js": "733bdbf2080c31a67d94cb8f7123110f44b0a3e2be24b8e575754af550eee6bf"
+  },
+  "resolved_dependency_hashes_after": {
+    "fusion-studio-client/package.json": "9b9e9c906358afd17eb5027af187fbe2030c537a9536d6d0d6fbcf64fb70dfb0",
+    "fusion-studio-client/package-lock.json": "bf84fb48fd5b41b169afea6bc23acba4a1466255dd4c8679c2119cad55f593f4",
+    "fusion-studio-server/package.json": "15113c033b6deb5622aa8a5213042bcb1b67e82d87f63df3b006efc9640717db",
+    "fusion-studio-server/package-lock.json": "33dd6068bc27b3689394c6d17b1cb2514b0d4cfa3804313dc02b9604e3dcbe7f",
+    "fusion-studio-client/node_modules/.package-lock.json": "dfe5c94d3ae739adf81e9b89d1bdc9d15dae5b79f54f8e77bf2d800cba77294b",
+    "fusion-studio-server/node_modules/.package-lock.json": "6fbc3f2e64977a2e50ccf991c71b0bb9769e542d7498bb55fcfae0c1605d8245",
+    "fusion-studio-client/node_modules/electron/package.json": "d8e71feee3508f91dbfa46214451b462ed9bb181c04099f7aeac8d544ad4c295",
+    "fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron": "c86c2701f15ca66ba460f4cdcd7ebcab0b5133a4cc299295f02108b3754e9eed",
+    "fusion-studio-server/node_modules/better-sqlite3/build/Release/better_sqlite3.node": "beaae109810a34bb2d4e9c924bd23e268ac64b6b3db4a5b5f668042a0fa77e9e",
+    "fusion-studio-server/native/secure-file-observer/index.js": "3b8c93ed7cc31cbe294b7f0a81729a458ed029726f51009029c622b26d6c6be2",
+    "fusion-studio-server/native/secure-file-observer/binding.gyp": "c660385eeefbd59db21ce1433f1a6f8eebd088cf72a8cb675c4ebeda61e0795e",
+    "fusion-studio-server/native/secure-file-observer/secure_file_observer.c": "113ddf43102c205c175ed56699b95fd03cf2857b9896231d349c16514039ffd0",
+    "fusion-studio-server/native/secure-file-observer/runtime-smoke.js": "b0eb8261146ee444981223b2e96064fb4cc0a598f0ff23f8cd21e04a9a0043f7",
+    "fusion-studio-server/native/secure-file-observer/build/Release/secure_file_observer.node": "c9aa17eb72b253235ea6eb1b4c6a639e455939d9e8b070129a25c587c9c69d11",
+    "fusion-studio-server/node_modules/node-gyp/package.json": "d19b594bcbf958f80ec6863a44be2c5bd3ad84077c1de5f57b18168014fa97bd",
+    "fusion-studio-server/node_modules/node-gyp/bin/node-gyp.js": "733bdbf2080c31a67d94cb8f7123110f44b0a3e2be24b8e575754af550eee6bf"
+  },
+  "product65_unchanged": true,
+  "native_test_profiles": "All ownedstage/profile/workspace roots alreadyremoved; no liveowner/Alpha controls",
+  "retained_ignored_artifacts": [
+    "Clientdependencylink",
+    "Localunchangedsource nativeobserverbuild",
+    "Generateddist191",
+    "Jobevidence"
+  ],
+  "final_review": {
+    "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/launchpad/chat-integration-and-retirement/planning/shared-chat-material-insertion/implementation/FINAL-INTEGRATION-REVIEW-01.md",
+    "sha256": "d77ac55af618dd5bb794b92a6c80a8c366a28d6ff7a6191ba525dcf4a66aed63"
+  },
+  "caffeinate": "PID15210 expiresnaturally2026-10-08T02:34:24Z; notterminated"
+}

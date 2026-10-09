@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-04T13:49:08.783700+00:00",
+  "actor": "/root/s6_supervisor_intent_1",
+  "read_only_candidate_source_profile": true,
+  "source_unowned_compared": 11957,
+  "source_unowned_drift": [],
+  "coordination_exclusions": [
+    "ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/",
+    "ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/"
+  ],
+  "source_build_caches_compared": 193,
+  "cache_drift": [],
+  "protected_process_count": 4,
+  "protected_process_drift": [],
+  "protected_storage_identity_drift": [],
+  "private_profile_leaf_count": 295,
+  "private_profile_matches": true,
+  "live_db_hashes": "volatile read-only observations; existence/dev/ino/mode checked, no database operations",
+  "original_current_state": {
+    "result": "VERIFIED",
+    "payloads_valid": true,
+    "matches_checkpoint": true,
+    "status_equal": true,
+    "current_sha256": "ee63a5c309a1a72dd36db462f520931e777a701acd237c9350d2d5eee4cf6d73",
+    "manifest_sha256": "f827e476bb28bc720f14537ebf6a1edf514f122e3f6705c4e9fa0590912834fb"
+  },
+  "retained_candidate_identity_sha256": "03739c79e6b7aff698d884828d1686002327c85e9be126014eaf8d00a8e518bf",
+  "candidate_identity_validation": "Original public helper semantic equality plus current source/target/index/ref checks, unchanged 41 authority hashes/modes and unchanged job config; identity remains unchanged. No new review/runtime certification."
+}

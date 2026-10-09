@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "FAULT-SERVER-ADMISSION",
+      "name": "authenticated public-route server admission throw remains distinct from transport"
+    },
+    {
+      "id": "FAULT-SAVE-ACK",
+      "name": "authenticated durable exchange with dropped saved-turn acknowledgement"
+    }
+  ],
+  "fixture": "fresh disposable profile, migrated fusion.db, fresh empty Capture workspace",
+  "adapter": "canonical deterministic OpenCode iterator at 20 text frames/second",
+  "scenarioInventory": "R1-R9 concrete IDs and later owning contracts in scenario-inventory.mjs",
+  "enforcementGroup": []
+}

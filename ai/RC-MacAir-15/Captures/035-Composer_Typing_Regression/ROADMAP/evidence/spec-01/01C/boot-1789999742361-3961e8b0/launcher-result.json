@@ -1,0 +1,16 @@
+{
+  "runId": "boot-1789999742361-3961e8b0",
+  "kind": "boot",
+  "mode": "--all",
+  "result": {
+    "code": 1,
+    "signal": null,
+    "pid": 90914,
+    "timedOut": false,
+    "interrupted": false,
+    "leakedOwnedPids": [],
+    "elapsedMs": 94587
+  },
+  "failure": null,
+  "ownedRunRootRemoved": true
+}

@@ -1,0 +1,130 @@
+{
+  "at": "2026-10-05T04:51:37.895307+00:00",
+  "owner": "/root",
+  "work": "SPEC-COMMIT-SUPERVISOR-01",
+  "scope": "Owner-approved setup and actual private S6 rehearsal only",
+  "bindings": {
+    "C": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+    "R": "/Users/rccurtrightjr./projects/fs-dev",
+    "E": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution",
+    "K": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor",
+    "J": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6",
+    "candidate": "/private/tmp/mc-s6-commit-supervisor-20261004/candidate",
+    "profile": "/private/tmp/mc-s6-commit-supervisor-20261004/profile",
+    "machine": "MC-S6"
+  },
+  "accepted_slices": [
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5",
+    "S6"
+  ],
+  "S6_preparation": "Accepted builder-owned and root fresh preparation gates; not fullS6",
+  "actual_holds": "Provider and intent actual terminal successors completed and labeled root releases independently validated. SummaryFormat N remaining of 3.",
+  "active_direct_child": null,
+  "active_phase": "Fresh whole SPEC final integration review running",
+  "next_root_action": "Inspect actual independent terminal; route validated material findings or complete owner handoff",
+  "later_inactive_drafts": [
+    "S6-supervisor-fix-xy-draft.md",
+    "S6-supervisor-negative-controls-draft.md",
+    "S6-supervisor-interruption-draft.md",
+    "S6-builder-closeout-draft.md"
+  ],
+  "later_sequence": [
+    "Second actual owner-ready terminal after fresh affected gates and real runtime",
+    "Root labeled actual selected-source/only private target-ref/current controller syntax fault/simulated operation mismatch controls; fresh actual Supervisor readonly refusal of allfour",
+    "Root restores only exact private controls; fresh actual Supervisor owned-stop/current fixed union capture/explicit private interrupted staged+unstaged binary/futureaddition/terminal unfinished checkpoint",
+    "Fresh actual replacement collision nonmutation/fixed restore/publicverify/reverse actual Wiki supplements/originalrestoreverify/continued-owned-stop/protected preservation/current readiness false",
+    "Responsible S6 builder factual central6 + bounded real restartWikiarticle + completeexclusiveexact version/fresh affected builder gate/final fullS6 handoff",
+    "Root fullS6 inspect/check/fresh fullS6 acceptance/classify all deviations",
+    "Final full55Python/17Node plus required static/link/index/profile/source preservation; fresh wholeSPEC integration; final SPEC_READY_FOR_OWNER_REVIEW report"
+  ],
+  "source_preservation_latest": "S6-root-renewed-check-source-preservation.json",
+  "candidate_code_hashes": {
+    "controller": "48ae78dfda264edb62fadf5bdd72e1f07c2f5b54b127ddb7296c41188f2d70bf",
+    "view": "55bb735409a940717d683a9256a7d55f467a92576923e26fe829518d3effa87e",
+    "index.html": "968e599ca4814c3a8e246d9d12ee985e0cf8a9ef8e3cd6d55e6b4a9a9b62f480",
+    "CSS": "f0e280d99afff67dda2c753192697d63dd74d20140794537f6cb2ae774ae8f0d"
+  },
+  "important_limits": [
+    "Root never implements product code; fault injection/fixture releases only later explicit rehearsal control assignments.",
+    "No commits/pushes/remote/Alpha/shared target move/persistent task/timer/MC/nextSPEC.",
+    "Actual role default fallback explicitly reads exact skill/TOML instructions; rootinherit/no overrides/unexposednumericvalues.",
+    "close_agent unavailable; use actual native terminal lifecycle.",
+    "Keep updates within60seconds; wait_agent45seconds; no waits over60.",
+    "Fresh gates exclude prior same-candidate diagnoses/author narratives/mixedassessmentJSON; rawcommand-only derivatives retain actual full sourcehash/pointer. OuterS6/whole gates may inspect actual DOMAIN actor reports as behavioral test artifacts after deriving currentsetup requirements; exclude prior OUTER verdicts/root assessments.",
+    "Normal/Alpha live database hashes may change normally; preserve storage identity/process ownership and never restore/copy DBs.",
+    "Real canonical Wiki article stays unchanged until later explicitly owned S6 closeout; source preservation then excludes only those newly owned article/version paths.",
+    "Both actual owner-ready packets become historical when preview stopped/restored; never claim current readiness after abandonment."
+  ],
+  "current_job_checkpoint": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/jobs/commit-supervisor/rehearsal-20261004-s6/recovery-1/checkpoint.json",
+  "root_current_checks": [
+    "S6-root-fix-code-scenarios.json:39source-only,exit0",
+    "S6-root-fix-code-postflight.json:4354inventory/exactfourdelta/indexrefs52authorities35depspreserved,exit0",
+    "S6-root-fix-code-provisional-inspection.json:full4app+source/livehelperread,excludedrootassessment",
+    "S6-root-fix-wiki-postflight-command.json",
+    "S6-root-fix-wiki-handoff-inspection.json"
+  ],
+  "later_recovery_clarification": "S6-recovery-ownership-transfer-note.md appended to inactiveinterruptiondraft; captureownerhistorical vsactual active_actor transfer/lifecycle/exactscopecurrentfacts",
+  "last_root_check": "2026-10-04T21:06:23.190513+00:00",
+  "current_progress": "191 receipts/four complete recovery readbacks/six archives/source11977/cache193/history1844/five process samples all13/11storage verified; original128 full4353 restored; privatepreview stopped/currentfalse",
+  "prepared_negative_control": "S6-root-negative-control.py actually applied and exactly restored; both immutable activation/restoration receipts retained",
+  "root_python_binding_inspection": {
+    "path": "planning/commit-supervisor/execution/S6-root-renewed-python-binding-inspection.json",
+    "55_named_pass": true,
+    "3808_equal_dependencies": true,
+    "82_executed_js_bound": true,
+    "historical_claims_qualified": true,
+    "final_gate": "pending different fresh final manager2"
+  },
+  "root_final2_independence_validation": "S6-root-final2-independence-finding.json",
+  "actual_fresh_reviewer3": {
+    "identity": "/root/s6_supervisor_fix_xy_1/fix_xy_final_manager_3/reviewer_3",
+    "native_status": "completed",
+    "return": "REVIEW_COMPLETE CLEAN, source/check only",
+    "root_full_native_read": true,
+    "pin": "17becab4ec6c19b79e0efb1c5ec817641da41c6c7dd88d3baaf2a89ded2191a7",
+    "candidate_authority_config": [
+      130,
+      77,
+      1
+    ],
+    "current55_dependencies_executedJS": [
+      55,
+      3808,
+      82
+    ],
+    "retained17_sources": 11,
+    "runtime": "pending",
+    "no_confirmation_pass": true
+  },
+  "root_revised_final3_inspection": "S6-root-revised-final3-inspection.json",
+  "second_owner_terminal": "S6-second-owner-terminal.json",
+  "root_refusal_inspection": "S6-root-refusal-inspection.json",
+  "root_recovery_inspection": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-root-recovery-inspection.json",
+  "candidate_code_hashes_qualification": "Historical revised successful fixed candidate only; current private checkout intentionally restored to original seed and preview stopped. Never infer current production readiness.",
+  "current_ready": false,
+  "actual_runtime_chain_terminal": true,
+  "closeout_builder_progress": "Actual native builder checkpoint: central statements time-qualified/current-final-report rule; all15/19 raw map; own gate packet reconciliation; narrow doc/source/private/process checks reported and root independent current handoff inspection still pending",
+  "closeout_builder_terminal": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/S6-root-builder-terminal.json",
+  "final_current_checks": {
+    "suite": "SPEC-final-suite/result.json",
+    "static": "SPEC-final-static/result.json",
+    "preservation": "SPEC-final-preservation/result.json"
+  },
+  "final_current_manifest_sha256": "4389d876a90a77f81a0543d8723f990c5b331575d6d8736c7e1bf8f202f4a248",
+  "phase": "SPEC_READY_FOR_OWNER_REVIEW",
+  "excluded_final_gate": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-review-lifecycle.json",
+  "final_review_lifecycle": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-review-2-lifecycle.json",
+  "actual_terminal_direct_child": "/root/spec_final_review_2",
+  "all_slices_accepted": true,
+  "final_integration": "CLEAN",
+  "final_report": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-report.md",
+  "final_classifications": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/planning/commit-supervisor/execution/SPEC-final-deviation-classifications-final.json",
+  "required_repairs": [],
+  "owner_rulings_required": [],
+  "next_safe_action": "Owner reviews/accepts completed setup; no next SPEC or publication authorized",
+  "next_SPEC_started": false
+}

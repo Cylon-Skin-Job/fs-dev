@@ -1,0 +1,151 @@
+{
+  "config": {
+    "configFile": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/chat-architecture/playwright.boot.config.ts",
+    "rootDir": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e",
+    "forbidOnly": true,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/boot-1790138741361-e93d0ddd-uxAUYq/playwright-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "isolated-boot-chromium",
+        "name": "isolated-boot-chromium",
+        "testDir": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 45000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/Captures/035-Composer_Typing_Regression/ROADMAP/evidence/spec-01/01C/boot-1790138741361-e93d0ddd/playwright-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "runAgents": "none",
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.58.2",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "working-activity.spec.ts",
+      "file": "working-activity.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "@working in-flight return restores original startedAt over an already-revealed baseline",
+          "ok": false,
+          "tags": [
+            "working"
+          ],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "isolated-boot-chromium",
+              "projectName": "isolated-boot-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 10646,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.rv-working-activity').first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.rv-working-activity').first()\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.rv-working-activity').first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.rv-working-activity').first()\u001b[22m\n\n    at waitForWorking (/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/support/working-activity-working-cases.ts:17:47)\n    at /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/support/working-activity-working-cases.ts:179:11",
+                    "location": {
+                      "file": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/support/working-activity-working-cases.ts",
+                      "column": 47,
+                      "line": 17
+                    },
+                    "snippet": "  15 |\n  16 | async function waitForWorking(page: Page, timeout = 10_000): Promise<void> {\n> 17 |   await expect(page.locator(WORKING).first()).toBeVisible({ timeout });\n     |                                               ^\n  18 | }\n  19 |\n  20 | async function startStep(browser: Browser, startedAt = Date.now() - 2_200) {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/support/working-activity-working-cases.ts",
+                        "column": 47,
+                        "line": 17
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.rv-working-activity').first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.rv-working-activity').first()\u001b[22m\n\n\n  15 |\n  16 | async function waitForWorking(page: Page, timeout = 10_000): Promise<void> {\n> 17 |   await expect(page.locator(WORKING).first()).toBeVisible({ timeout });\n     |                                               ^\n  18 | }\n  19 |\n  20 | async function startStep(browser: Browser, startedAt = Date.now() - 2_200) {\n    at waitForWorking (/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/support/working-activity-working-cases.ts:17:47)\n    at /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/support/working-activity-working-cases.ts:179:11"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-23T04:45:44.573Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/boot-1790138741361-e93d0ddd-uxAUYq/playwright-output/working-activity--working--d639e-n-already-revealed-baseline-isolated-boot-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/var/folders/ng/s9jvcvqs3sq9crldjc_5cvjh0000gn/T/boot-1790138741361-e93d0ddd-uxAUYq/playwright-output/working-activity--working--d639e-n-already-revealed-baseline-isolated-boot-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/e2e/support/working-activity-working-cases.ts",
+                    "column": 47,
+                    "line": 17
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "666a301bb2e3b0dbb06b-cc26ba8eb9dcaced33ce",
+          "file": "support/working-activity-working-cases.ts",
+          "line": 246,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-23T04:45:44.083Z",
+    "duration": 11850.269,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

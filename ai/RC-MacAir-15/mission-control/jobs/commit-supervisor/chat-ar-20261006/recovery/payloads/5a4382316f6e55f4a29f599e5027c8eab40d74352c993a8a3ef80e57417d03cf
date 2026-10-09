@@ -1,0 +1,59 @@
+---
+id: RCC-0102
+title: 'HANDOFF — Wiki cleanup: background agents + ticketing done, contradictions + stubs remain'
+assignee: rccurtrightjr
+created: 2026-06-13T00:00:00.000Z
+author: rccurtrightjr
+state: open
+priority: medium
+---
+
+Handoff for the wiki cleanup pass. The wiki is mid-migration from the old `Project` / `System Tools` buckets into durable domains. The Chat System tree is the current source of truth (OpenCode is the only enabled harness; the Kimi wire runtime path was removed). This pass aligned the background-agents and ticketing pages with reality and removed Kimi/wire references from them.
+
+---
+
+## Done This Pass
+
+- **Background Agents** (`Wiki/001-Project/013-Background_Agents/PAGE.md`) — full rewrite to the trigger-driven paradigm, split into *what is built*, *the paradigm*, and *long-term outlook*. Corrected the folder model to the real `ai/<machine>/Agents/Background Workers/{manager}/` structure (settings + workflows + memory files). Documented the real `TRIGGERS.md` format and the actual built-in actions. Marked trigger-started agents, ticket-edit monitoring, and @-tag resolution as not-yet-built. Added frontmatter. Removed all Kimi/wire references.
+- **Home** (`Wiki/001-Project/001-Home/PAGE.md`) — fixed the Background-Agents line ("numbered prompts, wire protocol runner" → "Trigger-driven workers, TRIGGERS.md, workflows").
+- **Ticketing System** (`Wiki/001-Project/022-Ticket_Routing/PAGE.md`) — replaced the legacy "Ticket Routing" page (dispatch, cron factories, GitLab sync, child tickets — none of which exist) with an accurate, AI-usable spec: the board renders only from `content/tickets.json`; the `.md` folder does not decide the column; columns come from `state` + `assignee`; and a step-by-step "how to create a ticket that displays." Added frontmatter.
+- **Ticket visibility fix** — RCC-0095, RCC-0096, RCC-0097 existed as `.md` files but were absent from `content/tickets.json`, so they did not render. Added them to the index.
+
+## Tickets Filed This Pass
+
+- **RCC-0100** — stale `match:` paths in live `TRIGGERS.md` worker files (file-change triggers can't fire).
+- **RCC-0101** — remove retired background-agent execution code (wire runner, dispatch watcher).
+- **RCC-0097** (pre-existing) — `create-ticket.js` writes to the wrong file; root cause of the ticket-visibility bug. Now visible.
+
+## Remaining Undone Wiki Work
+
+Contradictions found in the cross-wiki sweep but **not yet fixed**:
+
+- **Setup Wizard** (`001-Project/021`) — lists "Kimi CLI authenticated" as *required* and is framed as onboarding "for new Kimi installations." Should reflect OpenCode-first.
+- **Path Resolution** (`001-Project/004`) — references `kimi-ide-server/server.js`, `~/.kimi/sessions/`, `projects/kimi-claude/`. Paths are wrong; server is `fusion-studio-server/server.js`, project is `fs-dev`.
+- **Naming drift (verify before rewriting)** — Home H1 is still "kimi-claude Wiki"; a Getting-Started line says "How Kimi accesses screenshots." GitLab (`017`) and Hooks (`018`) use `kimi-claude` / `kimi-ide-server` / `kimi-*` assignee names. Confirm whether the GitLab project is still named `kimi-claude` before mass-renaming.
+
+Structural gaps:
+
+- **Domain stubs are dead-end nav** — `Server_And_Runtime`, `Automation_And_Agents`, `Integrations_And_Tools`, `Operations` are navigation-only pages listing "Planned Children" that don't exist. A reader following the sidebar hits nothing. Either write them or mark plainly as not-yet-migrated.
+- **Empty `description:` frontmatter** on `001-Project/001-Home` and both `002-System_Tools/*` pages breaks the description-driven sidebar/recall.
+- **Run Auditing** (`001-Project/019`) — not yet checked against current reality.
+
+Substantial code areas with **no wiki page** (from the initial survey):
+
+- SQLite persistence / `lib/db` (27 migrations, no page; "SQLite Persistence" is a planned stub).
+- Harness runtime / `lib/harness` (largest module; in flux).
+- Wire canonical event system / `lib/wire` (current chat backbone; only referenced, not documented).
+- Calendar, Office document editor, Clipboard, Fusion overlay — shipped features, no pages.
+
+## Notes / Observations
+
+- During this pass another instance created RCC-0098 and RCC-0099 (universal versioning foundation, unrelated to wiki cleanup), and **RCC-0090 disappeared** from both `inbox/` and `tickets.json` — confirm that was intentional.
+- `content/sync.json` `next_id` is stale (tracks 86; real highest is now RCC-0102). Folded into RCC-0097's scope.
+
+## Suggested Next Steps
+
+1. Fix Setup Wizard (021) and Path Resolution (004) — clear factual errors.
+2. Decide the `kimi-claude` naming question, then sweep naming drift.
+3. Resolve the domain stubs (write or mark).
+4. Then return to the undocumented code areas.

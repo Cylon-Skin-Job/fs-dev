@@ -1,5 +1,5 @@
 /** Exact-session connected composer leaf. No parent observes composer stores. */
-import { memo, useCallback, useLayoutEffect, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { usePanelStore } from '../../state/panelStore';
 import {
   chatAttachmentOwnerKey,
@@ -17,7 +17,9 @@ import { hasAcceptedPromptExecutionWatch } from '../../lib/chat/prompt-submissio
 import type { ChatLinkAttachment } from '../../lib/chat-file-links/file-link-types';
 import type { ChatSurfaceActions, ChatSurfaceComposerPresentation, ChatSurfaceRefs } from './chatSurfaceContract';
 import { ChatAreaFooter } from './ChatAreaFooter';
-import type { ScreenshotAttachmentOwner } from '../../screenshots/chatScreenshotCapture';
+import { useComposerMaterialSource } from './useComposerMaterialSource';
+import { useMountedChatBinding } from './useMountedChatBinding';
+import { captureAndAttachScreenshot } from '../../screenshots/chatScreenshotCapture';
 
 const EMPTY_ATTACHMENTS: readonly ChatLinkAttachment[] = [];
 
@@ -30,12 +32,14 @@ interface ConnectedChatComposerProps {
   threadId: string;
   surfaceId: string;
   panel: string;
+  componentInstanceId?: string;
   hasThread: boolean;
   isActive: boolean;
   isSendingForCurrentThread: boolean;
   composer: ChatSurfaceComposerPresentation;
   actions: ChatSurfaceActions;
   inputRef: ChatSurfaceRefs['inputRef'];
+  materialRef: ChatSurfaceRefs['materialRef'];
 }
 
 export const ConnectedChatComposer = memo(function ConnectedChatComposer({
@@ -47,33 +51,25 @@ export const ConnectedChatComposer = memo(function ConnectedChatComposer({
   threadId,
   surfaceId,
   panel,
+  componentInstanceId,
   hasThread,
   isActive,
   isSendingForCurrentThread,
   composer,
   actions,
   inputRef,
+  materialRef,
 }: ConnectedChatComposerProps) {
   const ownerReady = Boolean(workspaceId && hasThread && threadId);
-  const screenshotViewActive = usePanelStore(
-    (state) => viewId === null || state.currentPanel === viewId,
-  );
-  // This token owns only the committed mount's lifetime, not session state.
-  // A new owner/active view invalidates old asynchronous captures even when
-  // the same component instance is reused or the old session is reopened.
-  const screenshotMount = useMemo(() => ({ current: false }),
-    [workspaceId, viewId, threadGroupId, threadId, surfaceId, host, screenshotSelection, isActive, screenshotViewActive, ownerReady]);
-  useLayoutEffect(() => {
-    screenshotMount.current = ownerReady && isActive && screenshotViewActive;
-    return () => { screenshotMount.current = false; };
-  }, [screenshotMount, ownerReady, isActive, screenshotViewActive]);
-  const screenshotOwner = useMemo<ScreenshotAttachmentOwner | null>(() => ownerReady ? {
-    workspaceId,
-    threadId,
-    surface: host === 'side-tab' ? 'side-tab' : 'primary',
-    selection: { viewId, threadGroupId },
-    mount: { surfaceId, selectionScope: screenshotSelection, isCurrent: () => screenshotMount.current },
-  } : null, [ownerReady, workspaceId, threadId, viewId, threadGroupId, surfaceId, host, screenshotSelection, screenshotMount]);
+  const materialIdentity = useMemo(() => ownerReady && viewId ? {
+    workspaceId, viewId, threadGroupId, threadId, surfaceId, host,
+    binding: screenshotSelection, componentInstanceId,
+  } : null, [ownerReady, workspaceId, viewId, threadGroupId, threadId, surfaceId, host, screenshotSelection, componentInstanceId]);
+  const materialLease = useMountedChatBinding(materialIdentity);
+  const beginMaterial = useComposerMaterialSource(materialLease, inputRef, materialRef, isActive);
+  const handleTakeScreenshot = useCallback(() => {
+    void captureAndAttachScreenshot(materialLease.current);
+  }, [materialLease]);
   const draftKey = ownerReady ? chatComposerDraftOwnerKey(workspaceId, threadId) : '';
   const attachmentKey = ownerReady ? chatAttachmentOwnerKey(workspaceId, threadId) : '';
   const submissionKey = ownerReady ? chatSubmissionOwnerKey(workspaceId, threadId) : '';
@@ -142,8 +138,7 @@ export const ConnectedChatComposer = memo(function ConnectedChatComposer({
       submissionFeedback={submissionFeedback}
       canCheckSubmissionStatus={canCheckSubmissionStatus}
       onCheckSubmissionStatus={actions.onCheckSubmissionStatus}
-      onInsertText={actions.onInsertText}
-      onAddAttachment={actions.onAddAttachment}
+      beginMaterial={beginMaterial}
       onWarmIntent={actions.onWarmIntent}
       contextUsage={contextUsage}
       tokenUsage={tokenUsage}
@@ -154,7 +149,7 @@ export const ConnectedChatComposer = memo(function ConnectedChatComposer({
       onComposerDraftChange={handleDraftChange}
       modelSelection={composer.modelSelection}
       onModelSelectionChange={actions.onModelSelectionChange}
-      screenshotOwner={screenshotOwner}
+      onTakeScreenshot={handleTakeScreenshot}
     />
   );
 });

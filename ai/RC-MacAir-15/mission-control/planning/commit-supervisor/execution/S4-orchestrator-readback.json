@@ -1,0 +1,294 @@
+{
+  "time": "2026-10-04T10:29:57.493Z",
+  "artifacts": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh",
+      "sha256": "b855f5d829d85b6fda20864c081c25f56f73bebc54e325e70826ec5e42622952",
+      "mode": 493,
+      "lines": 5
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs",
+      "sha256": "238e53a0df75a5442ead92cc83301893459ffd2e6eb87946d94816d9daac4f4e",
+      "mode": 420,
+      "lines": 60
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs",
+      "sha256": "3f5f209457b90e1d0fd44266de7934ee3116d3f7a122a1f9d85a6d9e88d98d56",
+      "mode": 420,
+      "lines": 143
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs",
+      "sha256": "0852f2a56dd9c08b33fa8703f79ecde30494ca3e9e24967e3578699b7bd3bf2d",
+      "mode": 420,
+      "lines": 93
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs",
+      "sha256": "c16922b21b05951dc81fa6f15296f37ace628216a231e8fb09fc41bea6abe3b4",
+      "mode": 420,
+      "lines": 114
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/skills/fusion-electron-restart/SKILL.md",
+      "sha256": "ca796770a18e1833ac025c24a881a62b7b07e6ee177bb08aaf00798b7b141153",
+      "mode": 420,
+      "lines": 30
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+      "sha256": "77f805037ed1384e3a387cb246d95df95fc2e0858755a63e95228d684403c6a7",
+      "mode": 420,
+      "lines": 325
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/runtime-handoff.md",
+      "sha256": "1f32dcb413d10288ced451ba8806dfc1b325e280e6919e35165e8a8d70b50694",
+      "mode": 420,
+      "lines": 71
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs",
+      "sha256": "0031ecf01c134854a008a9946f7c9f05a8a2e676b7cb73fbe1654cc12dc767c7",
+      "mode": 420,
+      "lines": 234
+    }
+  ],
+  "commands": [
+    {
+      "command": [
+        "bash",
+        "-n",
+        "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh",
+        "--repo",
+        "/Users/rccurtrightjr./projects/fs-dev",
+        "--machine",
+        "RC-MacAir-15",
+        "--dry-run"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit_code": 0,
+      "stdout": "{\n  \"state\": \"DRY_RUN_ONLY\",\n  \"repo\": \"/Users/rccurtrightjr./projects/fs-dev\",\n  \"client\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client\",\n  \"main\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs\",\n  \"server\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js\",\n  \"machine\": \"RC-MacAir-15\",\n  \"profile\": \"/Users/rccurtrightjr./Library/Application Support/Fusion Studio\",\n  \"profileMode\": \"default\",\n  \"defaultProfile\": \"/Users/rccurtrightjr./Library/Application Support/Fusion Studio\",\n  \"bin\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron\",\n  \"runtime\": \"/Users/rccurtrightjr./Library/Application Support/Fusion Studio/fusion-restart\",\n  \"portFile\": \"/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server.port\",\n  \"dryRun\": true,\n  \"database\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/data/fusion.db\",\n  \"serverLog\": \"/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server-live.log\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs"
+      ],
+      "cwd": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "public_selector": {
+    "target": {
+      "repo": "/Users/rccurtrightjr./projects/fs-dev",
+      "client": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client",
+      "main": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs",
+      "server": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+      "machine": "RC-MacAir-15",
+      "profile": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio",
+      "profileMode": "default",
+      "defaultProfile": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio",
+      "bin": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron",
+      "runtime": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/fusion-restart",
+      "portFile": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio/server.port",
+      "dryRun": true,
+      "database": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/data/fusion.db",
+      "serverLog": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server-live.log"
+    },
+    "selected": [
+      {
+        "pid": 60871,
+        "ppid": 77002,
+        "start": "Sat Oct  3 21:22:16 2026"
+      },
+      {
+        "pid": 60874,
+        "ppid": 77002,
+        "start": "Sat Oct  3 21:22:16 2026"
+      },
+      {
+        "pid": 77002,
+        "ppid": 1,
+        "start": "Mon Sep 28 01:40:07 2026"
+      },
+      {
+        "pid": 77005,
+        "ppid": 77002,
+        "start": "Mon Sep 28 01:40:07 2026"
+      },
+      {
+        "pid": 77006,
+        "ppid": 77002,
+        "start": "Mon Sep 28 01:40:07 2026"
+      },
+      {
+        "pid": 77007,
+        "ppid": 77002,
+        "start": "Mon Sep 28 01:40:07 2026"
+      },
+      {
+        "pid": 77021,
+        "ppid": 77002,
+        "start": "Mon Sep 28 01:40:08 2026"
+      }
+    ],
+    "protectedRecords": [
+      {
+        "pid": 48636,
+        "ppid": 1,
+        "start": "Thu Oct  1 12:36:56 2026",
+        "cwd": "/",
+        "command": "/Applications/Fusion Studio Alpha.app/Contents/MacOS/Fusion Studio",
+        "env": {
+          "FUSION_LOCAL_MACHINE": "RC-Alpha",
+          "FUSION_APP_USER_DATA": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha"
+        }
+      },
+      {
+        "pid": 48653,
+        "ppid": 48636,
+        "start": "Thu Oct  1 12:36:59 2026",
+        "cwd": "/",
+        "command": "/opt/homebrew/bin/node /Applications/Fusion Studio Alpha.app/Contents/Resources/fusion-studio-server/server.js",
+        "env": {
+          "FUSION_LOCAL_MACHINE": "RC-Alpha",
+          "FUSION_APP_USER_DATA": "/Users/rccurtrightjr./Library/Application Support/Fusion Studio Alpha"
+        }
+      },
+      {
+        "pid": 77002,
+        "ppid": 1,
+        "start": "Mon Sep 28 01:40:07 2026",
+        "cwd": "/",
+        "command": "/Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron /Users/rccurtrightjr./projects/fs-dev/fusion-studio-client/electron/main.cjs",
+        "env": {
+          "FUSION_LOCAL_MACHINE": "RC-MacAir-15"
+        }
+      },
+      {
+        "pid": 77007,
+        "ppid": 77002,
+        "start": "Mon Sep 28 01:40:07 2026",
+        "cwd": "/",
+        "command": "/opt/homebrew/bin/node /Users/rccurtrightjr./projects/fs-dev/fusion-studio-server/server.js",
+        "env": {
+          "FUSION_LOCAL_MACHINE": "RC-MacAir-15"
+        }
+      }
+    ],
+    "noSignalOrRuntimeMutation": true
+  },
+  "source": {
+    "index": "f37b5bfc9a44893b132661290fe095ddafccb79bed38ca9007dc3803d2ff7966",
+    "head": "d15792920731f85e45b743519d4af2b807d95a9c"
+  },
+  "targeted_log": "S4-orchestrator-tests.log",
+  "live_success_claim": false,
+  "mode_readback": [
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/restart-fusion.sh",
+      "actual_mode": 493,
+      "expected_mode": 493
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-probe.mjs",
+      "actual_mode": 420,
+      "expected_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-processes.mjs",
+      "actual_mode": 420,
+      "expected_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart-target.mjs",
+      "actual_mode": 420,
+      "expected_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/scripts/fusion-restart.mjs",
+      "actual_mode": 420,
+      "expected_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./.codex/skills/fusion-electron-restart/SKILL.md",
+      "actual_mode": 420,
+      "expected_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/workflow.md",
+      "actual_mode": 420,
+      "expected_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/references/runtime-handoff.md",
+      "actual_mode": 420,
+      "expected_mode": 420
+    },
+    {
+      "path": "/Users/rccurtrightjr./projects/fs-dev/ai/RC-MacAir-15/mission-control/.agents/skills/mc-commit-supervisor/tests/test_restart_runtime.mjs",
+      "actual_mode": 420,
+      "expected_mode": 420
+    }
+  ]
+}
