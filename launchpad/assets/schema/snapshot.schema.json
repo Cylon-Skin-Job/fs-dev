@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "launchpad-core/1/snapshot",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "entity_kind",
+    "root_uuid",
+    "root_revision_uuid",
+    "commit_seq",
+    "current",
+    "revisions",
+    "idempotency_receipt_refs"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "launchpad-core/1"
+    },
+    "entity_kind": {
+      "type": "string",
+      "enum": [
+        "plan",
+        "ticket"
+      ]
+    },
+    "root_uuid": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "root_revision_uuid": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "commit_seq": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "current": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "entry_uuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "revision_uuid": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "entry_uuid",
+          "revision_uuid"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "revisions": {
+      "type": "array",
+      "items": {
+        "$ref": "record.schema.json"
+      }
+    },
+    "idempotency_receipt_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "record.schema.json#/$defs/ref"
+      }
+    }
+  },
+  "additionalProperties": false
+}

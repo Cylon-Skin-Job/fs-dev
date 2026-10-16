@@ -1,0 +1,123 @@
+{
+  "schema_version": "launchpad-core/1",
+  "inert": true,
+  "categories": [
+    "Ticket",
+    "Capture",
+    "Intent",
+    "Decisions",
+    "Issues",
+    "Proposals",
+    "References",
+    "Contracts",
+    "Change Surface",
+    "Checklist",
+    "Bulletin",
+    "Handoff",
+    "Source Vision"
+  ],
+  "workflow": [
+    {
+      "title": "Ticket Created",
+      "node_kind": "conversation",
+      "description": "Record the verified ticket mint and source lineage.",
+      "checkpoint": false
+    },
+    {
+      "title": "Intake Capture",
+      "node_kind": "conversation",
+      "description": "Capture the initial scope and open ToDos.",
+      "checkpoint": true
+    },
+    {
+      "title": "Shape",
+      "node_kind": "conversation",
+      "description": "Clarify intent, decisions and consequential gaps.",
+      "checkpoint": true
+    },
+    {
+      "title": "Readiness Check",
+      "node_kind": "conversation",
+      "description": "Check whether the inputs support a coherent draft.",
+      "checkpoint": true
+    },
+    {
+      "title": "Build Research Supervisor",
+      "node_kind": "autonomous",
+      "description": "Answer bounded questions that affect the draft.",
+      "checkpoint": false
+    },
+    {
+      "title": "Issues",
+      "node_kind": "conversation",
+      "description": "Resolve consequential uncertainties without inventing intent.",
+      "checkpoint": true
+    },
+    {
+      "title": "Approvals",
+      "node_kind": "owner_gate",
+      "description": "Record explicit owner choices for exact scope.",
+      "checkpoint": false
+    },
+    {
+      "title": "First Draft Supervisor",
+      "node_kind": "autonomous",
+      "description": "Shape the provisional draft through independent review.",
+      "checkpoint": false
+    },
+    {
+      "title": "Draft Review",
+      "node_kind": "conversation",
+      "description": "Discuss the reviewed draft and remaining questions.",
+      "checkpoint": true
+    },
+    {
+      "title": "Draft Approval",
+      "node_kind": "owner_gate",
+      "description": "Record owner acceptance of the exact draft.",
+      "checkpoint": false
+    },
+    {
+      "title": "Roadmap Creator",
+      "node_kind": "autonomous",
+      "description": "Create executable SPECs with source and verification contracts.",
+      "checkpoint": false
+    },
+    {
+      "title": "Pre-Flight Check",
+      "node_kind": "conversation",
+      "description": "Verify approved inputs, checkout, permissions and standards.",
+      "checkpoint": true
+    },
+    {
+      "title": "Roadmap Supervisor",
+      "node_kind": "autonomous",
+      "description": "Execute approved SPECs with independent gates.",
+      "checkpoint": false
+    },
+    {
+      "title": "Roadmap Acceptance",
+      "node_kind": "owner_gate",
+      "description": "Record owner acceptance of completed roadmap scope.",
+      "checkpoint": false
+    },
+    {
+      "title": "Merge Supervisor",
+      "node_kind": "autonomous",
+      "description": "Prepare the accepted integration for publication review.",
+      "checkpoint": false
+    },
+    {
+      "title": "Merge Review",
+      "node_kind": "owner_gate",
+      "description": "Inspect the exact prepared integration and remaining risks.",
+      "checkpoint": false
+    },
+    {
+      "title": "Commit",
+      "node_kind": "owner_gate",
+      "description": "Perform only the separately owner-authorized publication.",
+      "checkpoint": false
+    }
+  ]
+}

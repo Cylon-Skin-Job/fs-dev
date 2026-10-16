@@ -1,0 +1,1980 @@
+{
+  "status": "authored semantic conformance cases; static fixtures, not verified live identities",
+  "authority": "WA001\u2013003 correction within owner-settled engineering scope",
+  "shape_cases": [
+    {
+      "name": "WA001-first-null-root",
+      "schema": "request.schema.json",
+      "value": {
+        "interface_version": 1,
+        "tool": "db.mutate",
+        "operation": "checkpoint.prepare",
+        "args": {
+          "discussion_uuid": "00000000-0000-4000-8000-000000000005",
+          "previous_accepted_ref": null,
+          "high_water": 10,
+          "input_refs": [],
+          "next_action": "review exact first checkpoint"
+        },
+        "scope": {
+          "plan_uuid": "00000000-0000-4000-8000-000000000002",
+          "ticket_uuid": "00000000-0000-4000-8000-000000000003"
+        },
+        "actor_binding_ref": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000001",
+          "revision_uuid": "00000000-0000-4000-8000-000000000101",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "idempotency_key": "fixture-checkpoint.prepare",
+        "expected": {},
+        "expected_plan_revision_uuid": "00000000-0000-4000-8000-000000000004"
+      },
+      "expected_shape": "valid"
+    },
+    {
+      "name": "WA001-later-ref-root",
+      "schema": "request.schema.json",
+      "value": {
+        "interface_version": 1,
+        "tool": "db.mutate",
+        "operation": "checkpoint.prepare",
+        "args": {
+          "discussion_uuid": "00000000-0000-4000-8000-000000000005",
+          "previous_accepted_ref": {
+            "entry_uuid": "00000000-0000-4000-8000-000000000006",
+            "revision_uuid": "00000000-0000-4000-8000-000000000106",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "scope_item_uuids": []
+          },
+          "high_water": 10,
+          "input_refs": [],
+          "next_action": "review exact first checkpoint"
+        },
+        "scope": {
+          "plan_uuid": "00000000-0000-4000-8000-000000000002",
+          "ticket_uuid": "00000000-0000-4000-8000-000000000003"
+        },
+        "actor_binding_ref": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000001",
+          "revision_uuid": "00000000-0000-4000-8000-000000000101",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "idempotency_key": "fixture-checkpoint.prepare",
+        "expected": {},
+        "expected_plan_revision_uuid": "00000000-0000-4000-8000-000000000004"
+      },
+      "expected_shape": "valid"
+    },
+    {
+      "name": "WA001-missing-predecessor-root",
+      "schema": "request.schema.json",
+      "value": {
+        "interface_version": 1,
+        "tool": "db.mutate",
+        "operation": "checkpoint.prepare",
+        "args": {
+          "discussion_uuid": "00000000-0000-4000-8000-000000000005",
+          "high_water": 10,
+          "input_refs": [],
+          "next_action": "review exact first checkpoint"
+        },
+        "scope": {
+          "plan_uuid": "00000000-0000-4000-8000-000000000002",
+          "ticket_uuid": "00000000-0000-4000-8000-000000000003"
+        },
+        "actor_binding_ref": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000001",
+          "revision_uuid": "00000000-0000-4000-8000-000000000101",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "idempotency_key": "fixture-checkpoint.prepare",
+        "expected": {},
+        "expected_plan_revision_uuid": "00000000-0000-4000-8000-000000000004"
+      },
+      "expected_shape": "INVALID_SCHEMA"
+    },
+    {
+      "name": "WA001-first-null-nested",
+      "schema": "request.schema.json",
+      "value": {
+        "interface_version": 1,
+        "tool": "db.transaction",
+        "operation": "transaction.apply",
+        "args": {
+          "operations": [
+            {
+              "operation": "checkpoint.prepare",
+              "args": {
+                "discussion_uuid": "00000000-0000-4000-8000-000000000005",
+                "previous_accepted_ref": null,
+                "high_water": 10,
+                "input_refs": [],
+                "next_action": "review exact first checkpoint"
+              }
+            }
+          ],
+          "expected": {}
+        },
+        "scope": {
+          "plan_uuid": "00000000-0000-4000-8000-000000000002",
+          "ticket_uuid": "00000000-0000-4000-8000-000000000003"
+        },
+        "actor_binding_ref": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000001",
+          "revision_uuid": "00000000-0000-4000-8000-000000000101",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "idempotency_key": "fixture-transaction.apply",
+        "expected": {},
+        "expected_plan_revision_uuid": "00000000-0000-4000-8000-000000000004"
+      },
+      "expected_shape": "valid"
+    },
+    {
+      "name": "WA001-later-ref-nested",
+      "schema": "request.schema.json",
+      "value": {
+        "interface_version": 1,
+        "tool": "db.transaction",
+        "operation": "transaction.apply",
+        "args": {
+          "operations": [
+            {
+              "operation": "checkpoint.prepare",
+              "args": {
+                "discussion_uuid": "00000000-0000-4000-8000-000000000005",
+                "previous_accepted_ref": {
+                  "entry_uuid": "00000000-0000-4000-8000-000000000006",
+                  "revision_uuid": "00000000-0000-4000-8000-000000000106",
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "scope_item_uuids": []
+                },
+                "high_water": 10,
+                "input_refs": [],
+                "next_action": "review exact first checkpoint"
+              }
+            }
+          ],
+          "expected": {}
+        },
+        "scope": {
+          "plan_uuid": "00000000-0000-4000-8000-000000000002",
+          "ticket_uuid": "00000000-0000-4000-8000-000000000003"
+        },
+        "actor_binding_ref": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000001",
+          "revision_uuid": "00000000-0000-4000-8000-000000000101",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "idempotency_key": "fixture-transaction.apply",
+        "expected": {},
+        "expected_plan_revision_uuid": "00000000-0000-4000-8000-000000000004"
+      },
+      "expected_shape": "valid"
+    },
+    {
+      "name": "WA001-missing-predecessor-nested",
+      "schema": "request.schema.json",
+      "value": {
+        "interface_version": 1,
+        "tool": "db.transaction",
+        "operation": "transaction.apply",
+        "args": {
+          "operations": [
+            {
+              "operation": "checkpoint.prepare",
+              "args": {
+                "discussion_uuid": "00000000-0000-4000-8000-000000000005",
+                "high_water": 10,
+                "input_refs": [],
+                "next_action": "review exact first checkpoint"
+              }
+            }
+          ],
+          "expected": {}
+        },
+        "scope": {
+          "plan_uuid": "00000000-0000-4000-8000-000000000002",
+          "ticket_uuid": "00000000-0000-4000-8000-000000000003"
+        },
+        "actor_binding_ref": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000001",
+          "revision_uuid": "00000000-0000-4000-8000-000000000101",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "idempotency_key": "fixture-transaction.apply",
+        "expected": {},
+        "expected_plan_revision_uuid": "00000000-0000-4000-8000-000000000004"
+      },
+      "expected_shape": "INVALID_SCHEMA"
+    },
+    {
+      "name": "WA002-unbound-CWD-entry",
+      "schema": "request.schema.json",
+      "value": {
+        "interface_version": 1,
+        "tool": "db.context",
+        "operation": "session.entry",
+        "args": {
+          "actual_cwd": "/fixture/plan/ticket"
+        }
+      },
+      "expected_shape": "valid"
+    },
+    {
+      "name": "WA002-unbound-assignment-entry",
+      "schema": "request.schema.json",
+      "value": {
+        "interface_version": 1,
+        "tool": "db.context",
+        "operation": "session.entry",
+        "args": {
+          "actual_cwd": "/fixture/plan/ticket",
+          "assignment_ref": {
+            "entry_uuid": "00000000-0000-4000-8000-000000000007",
+            "revision_uuid": "00000000-0000-4000-8000-000000000107",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "scope_item_uuids": []
+          }
+        }
+      },
+      "expected_shape": "valid"
+    },
+    {
+      "name": "WA002-missing-CWD",
+      "schema": "request.schema.json",
+      "value": {
+        "interface_version": 1,
+        "tool": "db.context",
+        "operation": "session.entry",
+        "args": {}
+      },
+      "expected_shape": "INVALID_SCHEMA"
+    },
+    {
+      "name": "WA002-read-entry-write-fields",
+      "schema": "request.schema.json",
+      "value": {
+        "interface_version": 1,
+        "tool": "db.context",
+        "operation": "session.entry",
+        "args": {
+          "actual_cwd": "/fixture/plan/ticket"
+        },
+        "idempotency_key": "forged"
+      },
+      "expected_shape": "INVALID_SCHEMA"
+    },
+    {
+      "name": "WA002-nested-discovery",
+      "schema": "request.schema.json",
+      "value": {
+        "interface_version": 1,
+        "tool": "db.transaction",
+        "operation": "transaction.apply",
+        "args": {
+          "operations": [
+            {
+              "operation": "session.entry",
+              "args": {
+                "actual_cwd": "/fixture/plan/ticket"
+              }
+            }
+          ],
+          "expected": {}
+        },
+        "scope": {
+          "plan_uuid": "00000000-0000-4000-8000-000000000002",
+          "ticket_uuid": "00000000-0000-4000-8000-000000000003"
+        },
+        "actor_binding_ref": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000001",
+          "revision_uuid": "00000000-0000-4000-8000-000000000101",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "idempotency_key": "fixture-transaction.apply",
+        "expected": {},
+        "expected_plan_revision_uuid": "00000000-0000-4000-8000-000000000004"
+      },
+      "expected_shape": "INVALID_SCHEMA"
+    },
+    {
+      "name": "WA002-unbound-record.delete",
+      "schema": "request.schema.json",
+      "value": {
+        "interface_version": 1,
+        "tool": "db.mutate",
+        "operation": "record.delete",
+        "args": {
+          "uuid": "00000000-0000-4000-8000-000000000001",
+          "reason": "fixture",
+          "source_refs": [],
+          "authority_ref": {
+            "entry_uuid": "00000000-0000-4000-8000-000000000001",
+            "revision_uuid": "00000000-0000-4000-8000-000000000001",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "scope_item_uuids": []
+          }
+        },
+        "scope": {
+          "plan_uuid": "00000000-0000-4000-8000-000000000002",
+          "ticket_uuid": "00000000-0000-4000-8000-000000000003"
+        },
+        "idempotency_key": "fixture-record.delete",
+        "expected": {},
+        "expected_plan_revision_uuid": "00000000-0000-4000-8000-000000000004"
+      },
+      "expected_shape": "INVALID_SCHEMA"
+    },
+    {
+      "name": "WA002-unscoped-record.delete",
+      "schema": "request.schema.json",
+      "value": {
+        "interface_version": 1,
+        "tool": "db.mutate",
+        "operation": "record.delete",
+        "args": {
+          "uuid": "00000000-0000-4000-8000-000000000001",
+          "reason": "fixture",
+          "source_refs": [],
+          "authority_ref": {
+            "entry_uuid": "00000000-0000-4000-8000-000000000001",
+            "revision_uuid": "00000000-0000-4000-8000-000000000001",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "scope_item_uuids": []
+          }
+        },
+        "actor_binding_ref": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000001",
+          "revision_uuid": "00000000-0000-4000-8000-000000000101",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "idempotency_key": "fixture-record.delete",
+        "expected": {},
+        "expected_plan_revision_uuid": "00000000-0000-4000-8000-000000000004"
+      },
+      "expected_shape": "INVALID_SCHEMA"
+    },
+    {
+      "name": "WA002-unbound-assignment.claim",
+      "schema": "request.schema.json",
+      "value": {
+        "interface_version": 1,
+        "tool": "db.mutate",
+        "operation": "assignment.claim",
+        "args": {
+          "assignment_ref": {
+            "entry_uuid": "00000000-0000-4000-8000-000000000001",
+            "revision_uuid": "00000000-0000-4000-8000-000000000001",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "scope_item_uuids": []
+          },
+          "actor_uuid": "00000000-0000-4000-8000-000000000001",
+          "binding_evidence_ref": {
+            "entry_uuid": "00000000-0000-4000-8000-000000000001",
+            "revision_uuid": "00000000-0000-4000-8000-000000000001",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "scope_item_uuids": []
+          },
+          "prerequisite_refs": []
+        },
+        "scope": {
+          "plan_uuid": "00000000-0000-4000-8000-000000000002",
+          "ticket_uuid": "00000000-0000-4000-8000-000000000003"
+        },
+        "idempotency_key": "fixture-assignment.claim",
+        "expected": {},
+        "expected_plan_revision_uuid": "00000000-0000-4000-8000-000000000004"
+      },
+      "expected_shape": "INVALID_SCHEMA"
+    },
+    {
+      "name": "WA002-unscoped-assignment.claim",
+      "schema": "request.schema.json",
+      "value": {
+        "interface_version": 1,
+        "tool": "db.mutate",
+        "operation": "assignment.claim",
+        "args": {
+          "assignment_ref": {
+            "entry_uuid": "00000000-0000-4000-8000-000000000001",
+            "revision_uuid": "00000000-0000-4000-8000-000000000001",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "scope_item_uuids": []
+          },
+          "actor_uuid": "00000000-0000-4000-8000-000000000001",
+          "binding_evidence_ref": {
+            "entry_uuid": "00000000-0000-4000-8000-000000000001",
+            "revision_uuid": "00000000-0000-4000-8000-000000000001",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "scope_item_uuids": []
+          },
+          "prerequisite_refs": []
+        },
+        "actor_binding_ref": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000001",
+          "revision_uuid": "00000000-0000-4000-8000-000000000101",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "idempotency_key": "fixture-assignment.claim",
+        "expected": {},
+        "expected_plan_revision_uuid": "00000000-0000-4000-8000-000000000004"
+      },
+      "expected_shape": "INVALID_SCHEMA"
+    },
+    {
+      "name": "WA002-unbound-context.startup",
+      "schema": "request.schema.json",
+      "value": {
+        "interface_version": 1,
+        "tool": "db.context",
+        "operation": "context.startup",
+        "args": {
+          "ticket_uuid": "00000000-0000-4000-8000-000000000001",
+          "actual_cwd": "fixture"
+        },
+        "scope": {
+          "plan_uuid": "00000000-0000-4000-8000-000000000002",
+          "ticket_uuid": "00000000-0000-4000-8000-000000000003"
+        }
+      },
+      "expected_shape": "INVALID_SCHEMA"
+    },
+    {
+      "name": "WA002-unscoped-context.startup",
+      "schema": "request.schema.json",
+      "value": {
+        "interface_version": 1,
+        "tool": "db.context",
+        "operation": "context.startup",
+        "args": {
+          "ticket_uuid": "00000000-0000-4000-8000-000000000001",
+          "actual_cwd": "fixture"
+        },
+        "actor_binding_ref": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000001",
+          "revision_uuid": "00000000-0000-4000-8000-000000000101",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        }
+      },
+      "expected_shape": "INVALID_SCHEMA"
+    },
+    {
+      "name": "WA002-missing-result-no-invented-IDs",
+      "schema": "response.schema.json",
+      "value": {
+        "interface_version": 1,
+        "operation": "session.entry",
+        "result_kind": "entry",
+        "resolution": "missing",
+        "actual_cwd": "/fixture/unknown",
+        "assignment_evidence_ref": null,
+        "candidate_bindings": [],
+        "selected_scope": null,
+        "actor_binding_ref": null,
+        "context_headers": [],
+        "next_action": "supply_missing_assignment",
+        "options": [
+          "supply exact assigned ticket/plan"
+        ],
+        "gaps": [
+          "no verified binding"
+        ],
+        "remaining": 0,
+        "continuation": null
+      },
+      "expected_shape": "valid"
+    },
+    {
+      "name": "WA002-ambiguous-result-no-selected-scope",
+      "schema": "response.schema.json",
+      "value": {
+        "interface_version": 1,
+        "operation": "session.entry",
+        "result_kind": "entry",
+        "resolution": "ambiguous",
+        "actual_cwd": "/fixture/unknown",
+        "assignment_evidence_ref": null,
+        "candidate_bindings": [
+          {
+            "plan_uuid": "00000000-0000-4000-8000-000000000002",
+            "ticket_uuid": "00000000-0000-4000-8000-000000000003",
+            "current_home": "/fixture/plan/ticket",
+            "captured_plan_revision_uuid": "00000000-0000-4000-8000-000000000004",
+            "role_hint": "assigned Launchpad"
+          },
+          {
+            "plan_uuid": "00000000-0000-4000-8000-000000000002",
+            "ticket_uuid": "00000000-0000-4000-8000-000000000008",
+            "current_home": "/fixture/plan/ticket",
+            "captured_plan_revision_uuid": "00000000-0000-4000-8000-000000000004",
+            "role_hint": "assigned Launchpad"
+          }
+        ],
+        "selected_scope": null,
+        "actor_binding_ref": null,
+        "context_headers": [],
+        "next_action": "ask_scope_choice",
+        "options": [
+          "supply exact assigned ticket/plan"
+        ],
+        "gaps": [
+          "no verified binding"
+        ],
+        "remaining": 0,
+        "continuation": null
+      },
+      "expected_shape": "valid"
+    },
+    {
+      "name": "WA002-ambiguous-forged-selection",
+      "schema": "response.schema.json",
+      "value": {
+        "interface_version": 1,
+        "operation": "session.entry",
+        "result_kind": "entry",
+        "resolution": "ambiguous",
+        "actual_cwd": "/fixture/unknown",
+        "assignment_evidence_ref": null,
+        "candidate_bindings": [
+          {
+            "plan_uuid": "00000000-0000-4000-8000-000000000002",
+            "ticket_uuid": "00000000-0000-4000-8000-000000000003",
+            "current_home": "/fixture/plan/ticket",
+            "captured_plan_revision_uuid": "00000000-0000-4000-8000-000000000004",
+            "role_hint": "assigned Launchpad"
+          },
+          {
+            "plan_uuid": "00000000-0000-4000-8000-000000000002",
+            "ticket_uuid": "00000000-0000-4000-8000-000000000008",
+            "current_home": "/fixture/plan/ticket",
+            "captured_plan_revision_uuid": "00000000-0000-4000-8000-000000000004",
+            "role_hint": "assigned Launchpad"
+          }
+        ],
+        "selected_scope": {
+          "plan_uuid": "00000000-0000-4000-8000-000000000002",
+          "ticket_uuid": "00000000-0000-4000-8000-000000000003"
+        },
+        "actor_binding_ref": null,
+        "context_headers": [],
+        "next_action": "ask_scope_choice",
+        "options": [
+          "supply exact assigned ticket/plan"
+        ],
+        "gaps": [
+          "no verified binding"
+        ],
+        "remaining": 0,
+        "continuation": null
+      },
+      "expected_shape": "INVALID_SCHEMA"
+    },
+    {
+      "name": "WA002-resolved-awaiting-manager-binding",
+      "schema": "response.schema.json",
+      "value": {
+        "interface_version": 1,
+        "operation": "session.entry",
+        "result_kind": "entry",
+        "resolution": "resolved",
+        "actual_cwd": "/fixture/unknown",
+        "assignment_evidence_ref": null,
+        "candidate_bindings": [
+          {
+            "plan_uuid": "00000000-0000-4000-8000-000000000002",
+            "ticket_uuid": "00000000-0000-4000-8000-000000000003",
+            "current_home": "/fixture/plan/ticket",
+            "captured_plan_revision_uuid": "00000000-0000-4000-8000-000000000004",
+            "role_hint": "assigned Launchpad"
+          }
+        ],
+        "selected_scope": {
+          "plan_uuid": "00000000-0000-4000-8000-000000000002",
+          "ticket_uuid": "00000000-0000-4000-8000-000000000003"
+        },
+        "actor_binding_ref": null,
+        "context_headers": [],
+        "next_action": "request_manager_binding",
+        "options": [
+          "supply exact assigned ticket/plan"
+        ],
+        "gaps": [
+          "no verified binding"
+        ],
+        "remaining": 0,
+        "continuation": null
+      },
+      "expected_shape": "valid"
+    },
+    {
+      "name": "WA003-live-original",
+      "schema": "record.schema.json",
+      "value": {
+        "schema_version": "launchpad-core/1",
+        "uuid": "00000000-0000-4000-8000-000000000009",
+        "revision_uuid": "00000000-0000-4000-8000-000000000010",
+        "kind": "content",
+        "created_at": "2026-10-10T10:00:00+00:00",
+        "last_updated": "2026-10-10T10:00:00+00:00",
+        "writer": {
+          "actor_uuid": "00000000-0000-4000-8000-000000000001",
+          "runtime_kind": "thread",
+          "runtime_id": "fixture",
+          "parent_actor_uuid": "00000000-0000-4000-8000-000000000001"
+        },
+        "source_refs": [],
+        "body": {
+          "title": "fixture",
+          "category_uuid": "00000000-0000-4000-8000-000000000011",
+          "format": "plain",
+          "content": "fixture",
+          "authority": "proposal",
+          "state": "pending",
+          "item_uuids": []
+        },
+        "extensions": {
+          "source.preserved": {
+            "extra": {
+              "false_flag": false
+            }
+          }
+        },
+        "lifecycle": "live",
+        "lifecycle_evidence": {
+          "previous_live_revision_uuid": null,
+          "reason": null,
+          "authority_ref": null,
+          "changed_at": null
+        }
+      },
+      "expected_shape": "valid"
+    },
+    {
+      "name": "WA003-same-kind-deleted-tombstone",
+      "schema": "record.schema.json",
+      "value": {
+        "schema_version": "launchpad-core/1",
+        "uuid": "00000000-0000-4000-8000-000000000009",
+        "revision_uuid": "00000000-0000-4000-8000-000000000012",
+        "kind": "content",
+        "created_at": "2026-10-10T10:00:00+00:00",
+        "last_updated": "2026-10-10T10:30:00+00:00",
+        "writer": {
+          "actor_uuid": "00000000-0000-4000-8000-000000000001",
+          "runtime_kind": "thread",
+          "runtime_id": "fixture",
+          "parent_actor_uuid": "00000000-0000-4000-8000-000000000001"
+        },
+        "source_refs": [
+          {
+            "kind": "owner_decision",
+            "locator": "fixture:owner-delete-direction",
+            "revision": "fixture",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "recorded_at": "2026-10-10T10:00:00+00:00",
+            "native_ref": null
+          }
+        ],
+        "body": {
+          "title": "fixture",
+          "category_uuid": "00000000-0000-4000-8000-000000000011",
+          "format": "plain",
+          "content": "fixture",
+          "authority": "proposal",
+          "state": "pending",
+          "item_uuids": []
+        },
+        "extensions": {
+          "source.preserved": {
+            "extra": {
+              "false_flag": false
+            }
+          }
+        },
+        "lifecycle": "deleted",
+        "lifecycle_evidence": {
+          "previous_live_revision_uuid": "00000000-0000-4000-8000-000000000010",
+          "reason": "owner-directed unused draft delete",
+          "authority_ref": {
+            "entry_uuid": "00000000-0000-4000-8000-000000000013",
+            "revision_uuid": "00000000-0000-4000-8000-000000000113",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "scope_item_uuids": []
+          },
+          "changed_at": "2026-10-10T10:30:00+00:00"
+        }
+      },
+      "expected_shape": "valid"
+    },
+    {
+      "name": "WA003-same-UUID-restored-live",
+      "schema": "record.schema.json",
+      "value": {
+        "schema_version": "launchpad-core/1",
+        "uuid": "00000000-0000-4000-8000-000000000009",
+        "revision_uuid": "00000000-0000-4000-8000-000000000014",
+        "kind": "content",
+        "created_at": "2026-10-10T10:00:00+00:00",
+        "last_updated": "2026-10-10T10:31:00+00:00",
+        "writer": {
+          "actor_uuid": "00000000-0000-4000-8000-000000000001",
+          "runtime_kind": "thread",
+          "runtime_id": "fixture",
+          "parent_actor_uuid": "00000000-0000-4000-8000-000000000001"
+        },
+        "source_refs": [
+          {
+            "kind": "owner_decision",
+            "locator": "fixture:owner-delete-direction",
+            "revision": "fixture",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "recorded_at": "2026-10-10T10:00:00+00:00",
+            "native_ref": null
+          },
+          {
+            "kind": "owner_decision",
+            "locator": "fixture:owner-restore-direction",
+            "revision": "fixture",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "recorded_at": "2026-10-10T10:00:00+00:00",
+            "native_ref": null
+          }
+        ],
+        "body": {
+          "title": "fixture",
+          "category_uuid": "00000000-0000-4000-8000-000000000011",
+          "format": "plain",
+          "content": "fixture",
+          "authority": "proposal",
+          "state": "pending",
+          "item_uuids": []
+        },
+        "extensions": {
+          "source.preserved": {
+            "extra": {
+              "false_flag": false
+            }
+          }
+        },
+        "lifecycle": "live",
+        "lifecycle_evidence": {
+          "previous_live_revision_uuid": "00000000-0000-4000-8000-000000000010",
+          "reason": "explicit restore",
+          "authority_ref": {
+            "entry_uuid": "00000000-0000-4000-8000-000000000013",
+            "revision_uuid": "00000000-0000-4000-8000-000000000113",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "scope_item_uuids": []
+          },
+          "changed_at": "2026-10-10T10:31:00+00:00"
+        }
+      },
+      "expected_shape": "valid"
+    },
+    {
+      "name": "WA003-same-kind-archived",
+      "schema": "record.schema.json",
+      "value": {
+        "schema_version": "launchpad-core/1",
+        "uuid": "00000000-0000-4000-8000-000000000009",
+        "revision_uuid": "00000000-0000-4000-8000-000000000012",
+        "kind": "content",
+        "created_at": "2026-10-10T10:00:00+00:00",
+        "last_updated": "2026-10-10T10:30:00+00:00",
+        "writer": {
+          "actor_uuid": "00000000-0000-4000-8000-000000000001",
+          "runtime_kind": "thread",
+          "runtime_id": "fixture",
+          "parent_actor_uuid": "00000000-0000-4000-8000-000000000001"
+        },
+        "source_refs": [
+          {
+            "kind": "owner_decision",
+            "locator": "fixture:owner-delete-direction",
+            "revision": "fixture",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "recorded_at": "2026-10-10T10:00:00+00:00",
+            "native_ref": null
+          }
+        ],
+        "body": {
+          "title": "fixture",
+          "category_uuid": "00000000-0000-4000-8000-000000000011",
+          "format": "plain",
+          "content": "fixture",
+          "authority": "proposal",
+          "state": "pending",
+          "item_uuids": []
+        },
+        "extensions": {
+          "source.preserved": {
+            "extra": {
+              "false_flag": false
+            }
+          }
+        },
+        "lifecycle": "archived",
+        "lifecycle_evidence": {
+          "previous_live_revision_uuid": "00000000-0000-4000-8000-000000000010",
+          "reason": "explicit archive",
+          "authority_ref": {
+            "entry_uuid": "00000000-0000-4000-8000-000000000013",
+            "revision_uuid": "00000000-0000-4000-8000-000000000113",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "scope_item_uuids": []
+          },
+          "changed_at": "2026-10-10T10:30:00+00:00"
+        }
+      },
+      "expected_shape": "valid"
+    },
+    {
+      "name": "WA003-unknown-envelope-marker",
+      "schema": "record.schema.json",
+      "value": {
+        "schema_version": "launchpad-core/1",
+        "uuid": "00000000-0000-4000-8000-000000000009",
+        "revision_uuid": "00000000-0000-4000-8000-000000000012",
+        "kind": "content",
+        "created_at": "2026-10-10T10:00:00+00:00",
+        "last_updated": "2026-10-10T10:30:00+00:00",
+        "writer": {
+          "actor_uuid": "00000000-0000-4000-8000-000000000001",
+          "runtime_kind": "thread",
+          "runtime_id": "fixture",
+          "parent_actor_uuid": "00000000-0000-4000-8000-000000000001"
+        },
+        "source_refs": [
+          {
+            "kind": "owner_decision",
+            "locator": "fixture:owner-delete-direction",
+            "revision": "fixture",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "recorded_at": "2026-10-10T10:00:00+00:00",
+            "native_ref": null
+          }
+        ],
+        "body": {
+          "title": "fixture",
+          "category_uuid": "00000000-0000-4000-8000-000000000011",
+          "format": "plain",
+          "content": "fixture",
+          "authority": "proposal",
+          "state": "pending",
+          "item_uuids": []
+        },
+        "extensions": {
+          "source.preserved": {
+            "extra": {
+              "false_flag": false
+            }
+          }
+        },
+        "lifecycle": "deleted",
+        "lifecycle_evidence": {
+          "previous_live_revision_uuid": "00000000-0000-4000-8000-000000000010",
+          "reason": "owner-directed unused draft delete",
+          "authority_ref": {
+            "entry_uuid": "00000000-0000-4000-8000-000000000013",
+            "revision_uuid": "00000000-0000-4000-8000-000000000113",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "scope_item_uuids": []
+          },
+          "changed_at": "2026-10-10T10:30:00+00:00"
+        },
+        "tombstone": true
+      },
+      "expected_shape": "INVALID_SCHEMA"
+    },
+    {
+      "name": "WA003-invented-kind",
+      "schema": "record.schema.json",
+      "value": {
+        "schema_version": "launchpad-core/1",
+        "uuid": "00000000-0000-4000-8000-000000000009",
+        "revision_uuid": "00000000-0000-4000-8000-000000000012",
+        "kind": "tombstone",
+        "created_at": "2026-10-10T10:00:00+00:00",
+        "last_updated": "2026-10-10T10:30:00+00:00",
+        "writer": {
+          "actor_uuid": "00000000-0000-4000-8000-000000000001",
+          "runtime_kind": "thread",
+          "runtime_id": "fixture",
+          "parent_actor_uuid": "00000000-0000-4000-8000-000000000001"
+        },
+        "source_refs": [
+          {
+            "kind": "owner_decision",
+            "locator": "fixture:owner-delete-direction",
+            "revision": "fixture",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "recorded_at": "2026-10-10T10:00:00+00:00",
+            "native_ref": null
+          }
+        ],
+        "body": {
+          "title": "fixture",
+          "category_uuid": "00000000-0000-4000-8000-000000000011",
+          "format": "plain",
+          "content": "fixture",
+          "authority": "proposal",
+          "state": "pending",
+          "item_uuids": []
+        },
+        "extensions": {
+          "source.preserved": {
+            "extra": {
+              "false_flag": false
+            }
+          }
+        },
+        "lifecycle": "deleted",
+        "lifecycle_evidence": {
+          "previous_live_revision_uuid": "00000000-0000-4000-8000-000000000010",
+          "reason": "owner-directed unused draft delete",
+          "authority_ref": {
+            "entry_uuid": "00000000-0000-4000-8000-000000000013",
+            "revision_uuid": "00000000-0000-4000-8000-000000000113",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "scope_item_uuids": []
+          },
+          "changed_at": "2026-10-10T10:30:00+00:00"
+        }
+      },
+      "expected_shape": "INVALID_SCHEMA"
+    },
+    {
+      "name": "WA003-invented-body-state",
+      "schema": "record.schema.json",
+      "value": {
+        "schema_version": "launchpad-core/1",
+        "uuid": "00000000-0000-4000-8000-000000000009",
+        "revision_uuid": "00000000-0000-4000-8000-000000000012",
+        "kind": "content",
+        "created_at": "2026-10-10T10:00:00+00:00",
+        "last_updated": "2026-10-10T10:30:00+00:00",
+        "writer": {
+          "actor_uuid": "00000000-0000-4000-8000-000000000001",
+          "runtime_kind": "thread",
+          "runtime_id": "fixture",
+          "parent_actor_uuid": "00000000-0000-4000-8000-000000000001"
+        },
+        "source_refs": [
+          {
+            "kind": "owner_decision",
+            "locator": "fixture:owner-delete-direction",
+            "revision": "fixture",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "recorded_at": "2026-10-10T10:00:00+00:00",
+            "native_ref": null
+          }
+        ],
+        "body": {
+          "title": "fixture",
+          "category_uuid": "00000000-0000-4000-8000-000000000011",
+          "format": "plain",
+          "content": "fixture",
+          "authority": "proposal",
+          "state": "deleted",
+          "item_uuids": []
+        },
+        "extensions": {
+          "source.preserved": {
+            "extra": {
+              "false_flag": false
+            }
+          }
+        },
+        "lifecycle": "deleted",
+        "lifecycle_evidence": {
+          "previous_live_revision_uuid": "00000000-0000-4000-8000-000000000010",
+          "reason": "owner-directed unused draft delete",
+          "authority_ref": {
+            "entry_uuid": "00000000-0000-4000-8000-000000000013",
+            "revision_uuid": "00000000-0000-4000-8000-000000000113",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "scope_item_uuids": []
+          },
+          "changed_at": "2026-10-10T10:30:00+00:00"
+        }
+      },
+      "expected_shape": "INVALID_SCHEMA"
+    },
+    {
+      "name": "WA003-missing-prior-live",
+      "schema": "record.schema.json",
+      "value": {
+        "schema_version": "launchpad-core/1",
+        "uuid": "00000000-0000-4000-8000-000000000009",
+        "revision_uuid": "00000000-0000-4000-8000-000000000012",
+        "kind": "content",
+        "created_at": "2026-10-10T10:00:00+00:00",
+        "last_updated": "2026-10-10T10:30:00+00:00",
+        "writer": {
+          "actor_uuid": "00000000-0000-4000-8000-000000000001",
+          "runtime_kind": "thread",
+          "runtime_id": "fixture",
+          "parent_actor_uuid": "00000000-0000-4000-8000-000000000001"
+        },
+        "source_refs": [
+          {
+            "kind": "owner_decision",
+            "locator": "fixture:owner-delete-direction",
+            "revision": "fixture",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "recorded_at": "2026-10-10T10:00:00+00:00",
+            "native_ref": null
+          }
+        ],
+        "body": {
+          "title": "fixture",
+          "category_uuid": "00000000-0000-4000-8000-000000000011",
+          "format": "plain",
+          "content": "fixture",
+          "authority": "proposal",
+          "state": "pending",
+          "item_uuids": []
+        },
+        "extensions": {
+          "source.preserved": {
+            "extra": {
+              "false_flag": false
+            }
+          }
+        },
+        "lifecycle": "deleted",
+        "lifecycle_evidence": {
+          "previous_live_revision_uuid": null,
+          "reason": "owner-directed unused draft delete",
+          "authority_ref": {
+            "entry_uuid": "00000000-0000-4000-8000-000000000013",
+            "revision_uuid": "00000000-0000-4000-8000-000000000113",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "scope_item_uuids": []
+          },
+          "changed_at": "2026-10-10T10:30:00+00:00"
+        }
+      },
+      "expected_shape": "INVALID_SCHEMA"
+    },
+    {
+      "name": "WA003-missing-delete-authority",
+      "schema": "record.schema.json",
+      "value": {
+        "schema_version": "launchpad-core/1",
+        "uuid": "00000000-0000-4000-8000-000000000009",
+        "revision_uuid": "00000000-0000-4000-8000-000000000012",
+        "kind": "content",
+        "created_at": "2026-10-10T10:00:00+00:00",
+        "last_updated": "2026-10-10T10:30:00+00:00",
+        "writer": {
+          "actor_uuid": "00000000-0000-4000-8000-000000000001",
+          "runtime_kind": "thread",
+          "runtime_id": "fixture",
+          "parent_actor_uuid": "00000000-0000-4000-8000-000000000001"
+        },
+        "source_refs": [
+          {
+            "kind": "owner_decision",
+            "locator": "fixture:owner-delete-direction",
+            "revision": "fixture",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "recorded_at": "2026-10-10T10:00:00+00:00",
+            "native_ref": null
+          }
+        ],
+        "body": {
+          "title": "fixture",
+          "category_uuid": "00000000-0000-4000-8000-000000000011",
+          "format": "plain",
+          "content": "fixture",
+          "authority": "proposal",
+          "state": "pending",
+          "item_uuids": []
+        },
+        "extensions": {
+          "source.preserved": {
+            "extra": {
+              "false_flag": false
+            }
+          }
+        },
+        "lifecycle": "deleted",
+        "lifecycle_evidence": {
+          "previous_live_revision_uuid": "00000000-0000-4000-8000-000000000010",
+          "reason": "owner-directed unused draft delete",
+          "authority_ref": null,
+          "changed_at": "2026-10-10T10:30:00+00:00"
+        }
+      },
+      "expected_shape": "INVALID_SCHEMA"
+    },
+    {
+      "name": "WA003-bound-record.delete",
+      "schema": "request.schema.json",
+      "value": {
+        "interface_version": 1,
+        "tool": "db.mutate",
+        "operation": "record.delete",
+        "args": {
+          "uuid": "00000000-0000-4000-8000-000000000001",
+          "reason": "fixture",
+          "source_refs": [],
+          "authority_ref": {
+            "entry_uuid": "00000000-0000-4000-8000-000000000001",
+            "revision_uuid": "00000000-0000-4000-8000-000000000001",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "scope_item_uuids": []
+          }
+        },
+        "scope": {
+          "plan_uuid": "00000000-0000-4000-8000-000000000002",
+          "ticket_uuid": "00000000-0000-4000-8000-000000000003"
+        },
+        "actor_binding_ref": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000001",
+          "revision_uuid": "00000000-0000-4000-8000-000000000101",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "idempotency_key": "fixture-record.delete",
+        "expected": {},
+        "expected_plan_revision_uuid": "00000000-0000-4000-8000-000000000004"
+      },
+      "expected_shape": "valid"
+    },
+    {
+      "name": "WA003-nested-record.delete",
+      "schema": "request.schema.json",
+      "value": {
+        "interface_version": 1,
+        "tool": "db.transaction",
+        "operation": "transaction.apply",
+        "args": {
+          "operations": [
+            {
+              "operation": "record.delete",
+              "args": {
+                "uuid": "00000000-0000-4000-8000-000000000001",
+                "reason": "fixture",
+                "source_refs": [],
+                "authority_ref": {
+                  "entry_uuid": "00000000-0000-4000-8000-000000000001",
+                  "revision_uuid": "00000000-0000-4000-8000-000000000001",
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "scope_item_uuids": []
+                }
+              }
+            }
+          ],
+          "expected": {}
+        },
+        "scope": {
+          "plan_uuid": "00000000-0000-4000-8000-000000000002",
+          "ticket_uuid": "00000000-0000-4000-8000-000000000003"
+        },
+        "actor_binding_ref": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000001",
+          "revision_uuid": "00000000-0000-4000-8000-000000000101",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "idempotency_key": "fixture-transaction.apply",
+        "expected": {},
+        "expected_plan_revision_uuid": "00000000-0000-4000-8000-000000000004"
+      },
+      "expected_shape": "valid"
+    },
+    {
+      "name": "WA003-missing-authority-record.delete",
+      "schema": "request.schema.json",
+      "value": {
+        "interface_version": 1,
+        "tool": "db.mutate",
+        "operation": "record.delete",
+        "args": {
+          "uuid": "00000000-0000-4000-8000-000000000001",
+          "reason": "fixture",
+          "source_refs": []
+        },
+        "scope": {
+          "plan_uuid": "00000000-0000-4000-8000-000000000002",
+          "ticket_uuid": "00000000-0000-4000-8000-000000000003"
+        },
+        "actor_binding_ref": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000001",
+          "revision_uuid": "00000000-0000-4000-8000-000000000101",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "idempotency_key": "fixture-record.delete",
+        "expected": {},
+        "expected_plan_revision_uuid": "00000000-0000-4000-8000-000000000004"
+      },
+      "expected_shape": "INVALID_SCHEMA"
+    },
+    {
+      "name": "WA003-bound-record.restore",
+      "schema": "request.schema.json",
+      "value": {
+        "interface_version": 1,
+        "tool": "db.mutate",
+        "operation": "record.restore",
+        "args": {
+          "uuid": "00000000-0000-4000-8000-000000000001",
+          "reason": "fixture",
+          "source_refs": [],
+          "authority_ref": {
+            "entry_uuid": "00000000-0000-4000-8000-000000000001",
+            "revision_uuid": "00000000-0000-4000-8000-000000000001",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "scope_item_uuids": []
+          }
+        },
+        "scope": {
+          "plan_uuid": "00000000-0000-4000-8000-000000000002",
+          "ticket_uuid": "00000000-0000-4000-8000-000000000003"
+        },
+        "actor_binding_ref": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000001",
+          "revision_uuid": "00000000-0000-4000-8000-000000000101",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "idempotency_key": "fixture-record.restore",
+        "expected": {},
+        "expected_plan_revision_uuid": "00000000-0000-4000-8000-000000000004"
+      },
+      "expected_shape": "valid"
+    },
+    {
+      "name": "WA003-nested-record.restore",
+      "schema": "request.schema.json",
+      "value": {
+        "interface_version": 1,
+        "tool": "db.transaction",
+        "operation": "transaction.apply",
+        "args": {
+          "operations": [
+            {
+              "operation": "record.restore",
+              "args": {
+                "uuid": "00000000-0000-4000-8000-000000000001",
+                "reason": "fixture",
+                "source_refs": [],
+                "authority_ref": {
+                  "entry_uuid": "00000000-0000-4000-8000-000000000001",
+                  "revision_uuid": "00000000-0000-4000-8000-000000000001",
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "scope_item_uuids": []
+                }
+              }
+            }
+          ],
+          "expected": {}
+        },
+        "scope": {
+          "plan_uuid": "00000000-0000-4000-8000-000000000002",
+          "ticket_uuid": "00000000-0000-4000-8000-000000000003"
+        },
+        "actor_binding_ref": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000001",
+          "revision_uuid": "00000000-0000-4000-8000-000000000101",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "idempotency_key": "fixture-transaction.apply",
+        "expected": {},
+        "expected_plan_revision_uuid": "00000000-0000-4000-8000-000000000004"
+      },
+      "expected_shape": "valid"
+    },
+    {
+      "name": "WA003-missing-authority-record.restore",
+      "schema": "request.schema.json",
+      "value": {
+        "interface_version": 1,
+        "tool": "db.mutate",
+        "operation": "record.restore",
+        "args": {
+          "uuid": "00000000-0000-4000-8000-000000000001",
+          "reason": "fixture",
+          "source_refs": []
+        },
+        "scope": {
+          "plan_uuid": "00000000-0000-4000-8000-000000000002",
+          "ticket_uuid": "00000000-0000-4000-8000-000000000003"
+        },
+        "actor_binding_ref": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000001",
+          "revision_uuid": "00000000-0000-4000-8000-000000000101",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "idempotency_key": "fixture-record.restore",
+        "expected": {},
+        "expected_plan_revision_uuid": "00000000-0000-4000-8000-000000000004"
+      },
+      "expected_shape": "INVALID_SCHEMA"
+    }
+  ],
+  "semantic_cases": [
+    {
+      "name": "WA001-first-null",
+      "guard": "latest accepted same-ticket/phase predecessor, selected open discussion interval",
+      "inputs": {
+        "discussion_open": true,
+        "opened_seq": 5,
+        "high_water": 10,
+        "latest": null,
+        "supplied": null,
+        "foreign_ticket": false,
+        "foreign_phase": false,
+        "predecessor_closed_reviewed": true
+      },
+      "expected": "valid"
+    },
+    {
+      "name": "WA001-later-current",
+      "guard": "latest accepted same-ticket/phase predecessor, selected open discussion interval",
+      "inputs": {
+        "discussion_open": true,
+        "opened_seq": 5,
+        "high_water": 10,
+        "latest": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000006",
+          "revision_uuid": "00000000-0000-4000-8000-000000000106",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "supplied": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000006",
+          "revision_uuid": "00000000-0000-4000-8000-000000000106",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "foreign_ticket": false,
+        "foreign_phase": false,
+        "predecessor_closed_reviewed": true
+      },
+      "expected": "valid"
+    },
+    {
+      "name": "WA001-null-reset",
+      "guard": "latest accepted same-ticket/phase predecessor, selected open discussion interval",
+      "inputs": {
+        "discussion_open": true,
+        "opened_seq": 5,
+        "high_water": 10,
+        "latest": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000006",
+          "revision_uuid": "00000000-0000-4000-8000-000000000106",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "supplied": null,
+        "foreign_ticket": false,
+        "foreign_phase": false,
+        "predecessor_closed_reviewed": true
+      },
+      "expected": "REVISION_CONFLICT"
+    },
+    {
+      "name": "WA001-stale",
+      "guard": "latest accepted same-ticket/phase predecessor, selected open discussion interval",
+      "inputs": {
+        "discussion_open": true,
+        "opened_seq": 5,
+        "high_water": 10,
+        "latest": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000006",
+          "revision_uuid": "00000000-0000-4000-8000-000000000106",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "supplied": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000015",
+          "revision_uuid": "00000000-0000-4000-8000-000000000115",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "foreign_ticket": false,
+        "foreign_phase": false,
+        "predecessor_closed_reviewed": true
+      },
+      "expected": "REVISION_CONFLICT"
+    },
+    {
+      "name": "WA001-foreign-ticket",
+      "guard": "latest accepted same-ticket/phase predecessor, selected open discussion interval",
+      "inputs": {
+        "discussion_open": true,
+        "opened_seq": 5,
+        "high_water": 10,
+        "latest": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000006",
+          "revision_uuid": "00000000-0000-4000-8000-000000000106",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "supplied": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000006",
+          "revision_uuid": "00000000-0000-4000-8000-000000000106",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "foreign_ticket": true,
+        "foreign_phase": false,
+        "predecessor_closed_reviewed": true
+      },
+      "expected": "INVALID_TRANSITION"
+    },
+    {
+      "name": "WA001-foreign-phase",
+      "guard": "latest accepted same-ticket/phase predecessor, selected open discussion interval",
+      "inputs": {
+        "discussion_open": true,
+        "opened_seq": 5,
+        "high_water": 10,
+        "latest": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000006",
+          "revision_uuid": "00000000-0000-4000-8000-000000000106",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "supplied": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000006",
+          "revision_uuid": "00000000-0000-4000-8000-000000000106",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "foreign_ticket": false,
+        "foreign_phase": true,
+        "predecessor_closed_reviewed": true
+      },
+      "expected": "INVALID_TRANSITION"
+    },
+    {
+      "name": "WA001-unreviewed",
+      "guard": "latest accepted same-ticket/phase predecessor, selected open discussion interval",
+      "inputs": {
+        "discussion_open": true,
+        "opened_seq": 5,
+        "high_water": 10,
+        "latest": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000006",
+          "revision_uuid": "00000000-0000-4000-8000-000000000106",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "supplied": {
+          "entry_uuid": "00000000-0000-4000-8000-000000000006",
+          "revision_uuid": "00000000-0000-4000-8000-000000000106",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "scope_item_uuids": []
+        },
+        "foreign_ticket": false,
+        "foreign_phase": false,
+        "predecessor_closed_reviewed": false
+      },
+      "expected": "INVALID_TRANSITION"
+    },
+    {
+      "name": "WA001-closed-discussion",
+      "guard": "latest accepted same-ticket/phase predecessor, selected open discussion interval",
+      "inputs": {
+        "discussion_open": false,
+        "opened_seq": 5,
+        "high_water": 10,
+        "latest": null,
+        "supplied": null,
+        "foreign_ticket": false,
+        "foreign_phase": false,
+        "predecessor_closed_reviewed": true
+      },
+      "expected": "INVALID_TRANSITION"
+    },
+    {
+      "name": "WA001-bad-interval",
+      "guard": "latest accepted same-ticket/phase predecessor, selected open discussion interval",
+      "inputs": {
+        "discussion_open": true,
+        "opened_seq": 5,
+        "high_water": 4,
+        "latest": null,
+        "supplied": null,
+        "foreign_ticket": false,
+        "foreign_phase": false,
+        "predecessor_closed_reviewed": true
+      },
+      "expected": "INVALID_TRANSITION"
+    },
+    {
+      "name": "WA001-no-sibling-or-tail-coverage",
+      "guard": "selected discussion only, frozen interval inclusive",
+      "inputs": {
+        "discussion_uuid": "00000000-0000-4000-8000-000000000005",
+        "lower": 5,
+        "high": 10,
+        "journal": [
+          {
+            "discussion_uuid": "00000000-0000-4000-8000-000000000005",
+            "seq": 6
+          },
+          {
+            "discussion_uuid": "00000000-0000-4000-8000-000000000008",
+            "seq": 7
+          },
+          {
+            "discussion_uuid": "00000000-0000-4000-8000-000000000005",
+            "seq": 11
+          }
+        ]
+      },
+      "expected_covered": [
+        {
+          "discussion_uuid": "00000000-0000-4000-8000-000000000005",
+          "seq": 6
+        }
+      ]
+    },
+    {
+      "name": "WA003-eligible-draft",
+      "guard": "narrow prior-live deletion eligibility and evidenced same-UUID restoration",
+      "inputs": {
+        "operation": "record.delete",
+        "authorized": true,
+        "state": "live",
+        "kind": "content",
+        "authority": "proposal",
+        "body_state": "pending",
+        "prior_evidence": false,
+        "substantive_refs": false,
+        "used_in_gate": false,
+        "retained_prior_valid": true
+      },
+      "expected": "valid"
+    },
+    {
+      "name": "WA003-referenced",
+      "guard": "narrow prior-live deletion eligibility and evidenced same-UUID restoration",
+      "inputs": {
+        "operation": "record.delete",
+        "authorized": true,
+        "state": "live",
+        "kind": "content",
+        "authority": "proposal",
+        "body_state": "pending",
+        "prior_evidence": false,
+        "substantive_refs": true,
+        "used_in_gate": false,
+        "retained_prior_valid": true
+      },
+      "expected": "FORBIDDEN"
+    },
+    {
+      "name": "WA003-evidenced",
+      "guard": "narrow prior-live deletion eligibility and evidenced same-UUID restoration",
+      "inputs": {
+        "operation": "record.delete",
+        "authorized": true,
+        "state": "live",
+        "kind": "content",
+        "authority": "proposal",
+        "body_state": "pending",
+        "prior_evidence": true,
+        "substantive_refs": false,
+        "used_in_gate": false,
+        "retained_prior_valid": true
+      },
+      "expected": "FORBIDDEN"
+    },
+    {
+      "name": "WA003-gate-used",
+      "guard": "narrow prior-live deletion eligibility and evidenced same-UUID restoration",
+      "inputs": {
+        "operation": "record.delete",
+        "authorized": true,
+        "state": "live",
+        "kind": "content",
+        "authority": "proposal",
+        "body_state": "pending",
+        "prior_evidence": false,
+        "substantive_refs": false,
+        "used_in_gate": true,
+        "retained_prior_valid": true
+      },
+      "expected": "FORBIDDEN"
+    },
+    {
+      "name": "WA003-owner-decision",
+      "guard": "narrow prior-live deletion eligibility and evidenced same-UUID restoration",
+      "inputs": {
+        "operation": "record.delete",
+        "authorized": true,
+        "state": "live",
+        "kind": "content",
+        "authority": "owner_decision",
+        "body_state": "pending",
+        "prior_evidence": false,
+        "substantive_refs": false,
+        "used_in_gate": false,
+        "retained_prior_valid": true
+      },
+      "expected": "FORBIDDEN"
+    },
+    {
+      "name": "WA003-already-deleted",
+      "guard": "narrow prior-live deletion eligibility and evidenced same-UUID restoration",
+      "inputs": {
+        "operation": "record.delete",
+        "authorized": true,
+        "state": "deleted",
+        "kind": "content",
+        "authority": "proposal",
+        "body_state": "pending",
+        "prior_evidence": false,
+        "substantive_refs": false,
+        "used_in_gate": false,
+        "retained_prior_valid": true
+      },
+      "expected": "INVALID_TRANSITION"
+    },
+    {
+      "name": "WA003-unauthorized",
+      "guard": "narrow prior-live deletion eligibility and evidenced same-UUID restoration",
+      "inputs": {
+        "operation": "record.delete",
+        "authorized": false,
+        "state": "live",
+        "kind": "content",
+        "authority": "proposal",
+        "body_state": "pending",
+        "prior_evidence": false,
+        "substantive_refs": false,
+        "used_in_gate": false,
+        "retained_prior_valid": true
+      },
+      "expected": "FORBIDDEN"
+    },
+    {
+      "name": "WA003-restore-tombstone",
+      "guard": "narrow prior-live deletion eligibility and evidenced same-UUID restoration",
+      "inputs": {
+        "operation": "record.restore",
+        "authorized": true,
+        "state": "deleted",
+        "kind": "content",
+        "authority": "proposal",
+        "body_state": "pending",
+        "prior_evidence": false,
+        "substantive_refs": false,
+        "used_in_gate": false,
+        "retained_prior_valid": true
+      },
+      "expected": "valid"
+    },
+    {
+      "name": "WA003-restore-archive",
+      "guard": "narrow prior-live deletion eligibility and evidenced same-UUID restoration",
+      "inputs": {
+        "operation": "record.restore",
+        "authorized": true,
+        "state": "archived",
+        "kind": "content",
+        "authority": "proposal",
+        "body_state": "pending",
+        "prior_evidence": false,
+        "substantive_refs": false,
+        "used_in_gate": false,
+        "retained_prior_valid": true
+      },
+      "expected": "valid"
+    },
+    {
+      "name": "WA003-restore-live",
+      "guard": "narrow prior-live deletion eligibility and evidenced same-UUID restoration",
+      "inputs": {
+        "operation": "record.restore",
+        "authorized": true,
+        "state": "live",
+        "kind": "content",
+        "authority": "proposal",
+        "body_state": "pending",
+        "prior_evidence": false,
+        "substantive_refs": false,
+        "used_in_gate": false,
+        "retained_prior_valid": true
+      },
+      "expected": "INVALID_TRANSITION"
+    },
+    {
+      "name": "WA003-restore-missing-pin",
+      "guard": "narrow prior-live deletion eligibility and evidenced same-UUID restoration",
+      "inputs": {
+        "operation": "record.restore",
+        "authorized": true,
+        "state": "deleted",
+        "kind": "content",
+        "authority": "proposal",
+        "body_state": "pending",
+        "prior_evidence": false,
+        "substantive_refs": false,
+        "used_in_gate": false,
+        "retained_prior_valid": false
+      },
+      "expected": "MISSING_EVIDENCE"
+    },
+    {
+      "name": "WA003-protected-actor-restore",
+      "guard": "generic lifecycle excludes protected control records",
+      "inputs": {
+        "operation": "record.restore",
+        "authorized": true,
+        "state": "archived",
+        "kind": "actor",
+        "authority": "proposal",
+        "body_state": "pending",
+        "prior_evidence": false,
+        "substantive_refs": false,
+        "used_in_gate": false,
+        "retained_prior_valid": true
+      },
+      "expected": "FORBIDDEN"
+    },
+    {
+      "name": "WA003-metadata-history-query-restore",
+      "guard": "same UUID/creation/body/extensions; new revisions; tombstone hidden current/live restore visible; all retained pins and invalidated approvals unchanged",
+      "inputs": {
+        "history": [
+          {
+            "schema_version": "launchpad-core/1",
+            "uuid": "00000000-0000-4000-8000-000000000009",
+            "revision_uuid": "00000000-0000-4000-8000-000000000010",
+            "kind": "content",
+            "created_at": "2026-10-10T10:00:00+00:00",
+            "last_updated": "2026-10-10T10:00:00+00:00",
+            "writer": {
+              "actor_uuid": "00000000-0000-4000-8000-000000000001",
+              "runtime_kind": "thread",
+              "runtime_id": "fixture",
+              "parent_actor_uuid": "00000000-0000-4000-8000-000000000001"
+            },
+            "source_refs": [],
+            "body": {
+              "title": "fixture",
+              "category_uuid": "00000000-0000-4000-8000-000000000011",
+              "format": "plain",
+              "content": "fixture",
+              "authority": "proposal",
+              "state": "pending",
+              "item_uuids": []
+            },
+            "extensions": {
+              "source.preserved": {
+                "extra": {
+                  "false_flag": false
+                }
+              }
+            },
+            "lifecycle": "live",
+            "lifecycle_evidence": {
+              "previous_live_revision_uuid": null,
+              "reason": null,
+              "authority_ref": null,
+              "changed_at": null
+            }
+          },
+          {
+            "schema_version": "launchpad-core/1",
+            "uuid": "00000000-0000-4000-8000-000000000009",
+            "revision_uuid": "00000000-0000-4000-8000-000000000012",
+            "kind": "content",
+            "created_at": "2026-10-10T10:00:00+00:00",
+            "last_updated": "2026-10-10T10:30:00+00:00",
+            "writer": {
+              "actor_uuid": "00000000-0000-4000-8000-000000000001",
+              "runtime_kind": "thread",
+              "runtime_id": "fixture",
+              "parent_actor_uuid": "00000000-0000-4000-8000-000000000001"
+            },
+            "source_refs": [
+              {
+                "kind": "owner_decision",
+                "locator": "fixture:owner-delete-direction",
+                "revision": "fixture",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "recorded_at": "2026-10-10T10:00:00+00:00",
+                "native_ref": null
+              }
+            ],
+            "body": {
+              "title": "fixture",
+              "category_uuid": "00000000-0000-4000-8000-000000000011",
+              "format": "plain",
+              "content": "fixture",
+              "authority": "proposal",
+              "state": "pending",
+              "item_uuids": []
+            },
+            "extensions": {
+              "source.preserved": {
+                "extra": {
+                  "false_flag": false
+                }
+              }
+            },
+            "lifecycle": "deleted",
+            "lifecycle_evidence": {
+              "previous_live_revision_uuid": "00000000-0000-4000-8000-000000000010",
+              "reason": "owner-directed unused draft delete",
+              "authority_ref": {
+                "entry_uuid": "00000000-0000-4000-8000-000000000013",
+                "revision_uuid": "00000000-0000-4000-8000-000000000113",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "scope_item_uuids": []
+              },
+              "changed_at": "2026-10-10T10:30:00+00:00"
+            }
+          },
+          {
+            "schema_version": "launchpad-core/1",
+            "uuid": "00000000-0000-4000-8000-000000000009",
+            "revision_uuid": "00000000-0000-4000-8000-000000000014",
+            "kind": "content",
+            "created_at": "2026-10-10T10:00:00+00:00",
+            "last_updated": "2026-10-10T10:31:00+00:00",
+            "writer": {
+              "actor_uuid": "00000000-0000-4000-8000-000000000001",
+              "runtime_kind": "thread",
+              "runtime_id": "fixture",
+              "parent_actor_uuid": "00000000-0000-4000-8000-000000000001"
+            },
+            "source_refs": [
+              {
+                "kind": "owner_decision",
+                "locator": "fixture:owner-delete-direction",
+                "revision": "fixture",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "recorded_at": "2026-10-10T10:00:00+00:00",
+                "native_ref": null
+              },
+              {
+                "kind": "owner_decision",
+                "locator": "fixture:owner-restore-direction",
+                "revision": "fixture",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "recorded_at": "2026-10-10T10:00:00+00:00",
+                "native_ref": null
+              }
+            ],
+            "body": {
+              "title": "fixture",
+              "category_uuid": "00000000-0000-4000-8000-000000000011",
+              "format": "plain",
+              "content": "fixture",
+              "authority": "proposal",
+              "state": "pending",
+              "item_uuids": []
+            },
+            "extensions": {
+              "source.preserved": {
+                "extra": {
+                  "false_flag": false
+                }
+              }
+            },
+            "lifecycle": "live",
+            "lifecycle_evidence": {
+              "previous_live_revision_uuid": "00000000-0000-4000-8000-000000000010",
+              "reason": "explicit restore",
+              "authority_ref": {
+                "entry_uuid": "00000000-0000-4000-8000-000000000013",
+                "revision_uuid": "00000000-0000-4000-8000-000000000113",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "scope_item_uuids": []
+              },
+              "changed_at": "2026-10-10T10:31:00+00:00"
+            }
+          }
+        ],
+        "invalidated_approval": "remains invalidated"
+      },
+      "expected": "valid"
+    },
+    {
+      "name": "WA002-known-CWD",
+      "guard": "verified exact CWD only, unique routing binding",
+      "inputs": {
+        "actual_cwd_matches": true,
+        "candidate_count": 1,
+        "valid_actor_binding": false
+      },
+      "expected": "resolved/request_manager_binding"
+    },
+    {
+      "name": "WA002-missing-CWD",
+      "guard": "no selected scope or fabricated IDs",
+      "inputs": {
+        "actual_cwd_matches": true,
+        "candidate_count": 0
+      },
+      "expected": "missing/supply_missing_assignment"
+    },
+    {
+      "name": "WA002-ambiguous-CWD",
+      "guard": "bounded candidate headers, selected_scope null",
+      "inputs": {
+        "actual_cwd_matches": true,
+        "candidate_count": 2
+      },
+      "expected": "ambiguous/ask_scope_choice"
+    },
+    {
+      "name": "WA002-CWD-mismatch",
+      "guard": "actual CLI/host path differs from caller declaration",
+      "inputs": {
+        "actual_cwd_matches": false
+      },
+      "expected": "SOURCE_UNVERIFIED"
+    },
+    {
+      "name": "WA002-forged-binding",
+      "guard": "presented optional binding does not match current registered actor/evidence",
+      "inputs": {
+        "binding_supplied": true,
+        "binding_verified": false
+      },
+      "expected": "FORBIDDEN"
+    },
+    {
+      "name": "WA002-manager-transition",
+      "guard": "discovery grants no writes; assigned manager saves actual actor binding before bound context/claim",
+      "inputs": {
+        "discovery": {
+          "interface_version": 1,
+          "tool": "db.context",
+          "operation": "session.entry",
+          "args": {
+            "actual_cwd": "/fixture/plan/ticket"
+          }
+        },
+        "actor_bind": "verified assigned manager operation",
+        "actual_native_identity": "separately verified or explicitly unavailable"
+      },
+      "expected": "no discovery write/claim side effect"
+    }
+  ],
+  "implementation_requirement": "Execute these scenarios through actual public CLI/canonical readback tests in A04/A07/A08/A14/A15, including authority/source guards. Author finite model checks are not implementation results."
+}

@@ -1,0 +1,1028 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/entry"
+    },
+    {
+      "$ref": "#/$defs/read"
+    },
+    {
+      "$ref": "#/$defs/preview"
+    },
+    {
+      "$ref": "#/$defs/mutation"
+    },
+    {
+      "$ref": "#/$defs/validation"
+    },
+    {
+      "$ref": "#/$defs/state_check"
+    },
+    {
+      "$ref": "#/$defs/error"
+    }
+  ],
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "properties": {
+        "interface_version": {
+          "const": 1
+        },
+        "operation": {
+          "const": "session.entry"
+        },
+        "result_kind": {
+          "const": "entry"
+        },
+        "resolution": {
+          "enum": [
+            "resolved",
+            "missing",
+            "ambiguous"
+          ]
+        },
+        "actual_cwd": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assignment_evidence_ref": {
+          "anyOf": [
+            {
+              "$ref": "record.schema.json#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "candidate_bindings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "plan_uuid": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "ticket_uuid": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "current_home": {
+                "type": "string",
+                "minLength": 1
+              },
+              "captured_plan_revision_uuid": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "role_hint": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "plan_uuid",
+              "ticket_uuid",
+              "current_home",
+              "captured_plan_revision_uuid",
+              "role_hint"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 100
+        },
+        "selected_scope": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "plan_uuid": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "ticket_uuid": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "include_history": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "plan_uuid"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actor_binding_ref": {
+          "anyOf": [
+            {
+              "$ref": "record.schema.json#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "context_headers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "uuid": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "revision_uuid": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "kind": {
+                "type": "string",
+                "minLength": 1
+              },
+              "fields": {
+                "type": "object"
+              },
+              "omitted_fields": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "uuid",
+              "revision_uuid",
+              "kind",
+              "fields",
+              "omitted_fields"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "next_action": {
+          "enum": [
+            "request_manager_binding",
+            "use_existing_binding",
+            "ask_scope_choice",
+            "supply_missing_assignment"
+          ]
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "gaps": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "remaining": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "continuation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "interface_version",
+        "operation",
+        "result_kind",
+        "resolution",
+        "actual_cwd",
+        "assignment_evidence_ref",
+        "candidate_bindings",
+        "selected_scope",
+        "actor_binding_ref",
+        "context_headers",
+        "next_action",
+        "options",
+        "gaps",
+        "remaining",
+        "continuation"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "resolution": {
+                "const": "missing"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "selected_scope": {
+                "const": null
+              },
+              "actor_binding_ref": {
+                "const": null
+              },
+              "candidate_bindings": {
+                "maxItems": 0
+              },
+              "context_headers": {
+                "maxItems": 0
+              },
+              "next_action": {
+                "const": "supply_missing_assignment"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "resolution": {
+                "const": "ambiguous"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "selected_scope": {
+                "const": null
+              },
+              "actor_binding_ref": {
+                "const": null
+              },
+              "candidate_bindings": {
+                "minItems": 2
+              },
+              "context_headers": {
+                "maxItems": 0
+              },
+              "next_action": {
+                "const": "ask_scope_choice"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "resolution": {
+                "const": "resolved"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "selected_scope": {
+                "type": "object",
+                "properties": {
+                  "plan_uuid": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "ticket_uuid": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "include_history": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "plan_uuid"
+                ],
+                "additionalProperties": false
+              },
+              "candidate_bindings": {
+                "minItems": 1,
+                "maxItems": 1
+              },
+              "next_action": {
+                "enum": [
+                  "request_manager_binding",
+                  "use_existing_binding"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "resolution": {
+                "const": "resolved"
+              },
+              "actor_binding_ref": {
+                "const": null
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "next_action": {
+                "const": "request_manager_binding"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "resolution": {
+                "const": "resolved"
+              },
+              "actor_binding_ref": {
+                "$ref": "record.schema.json#/$defs/ref"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "next_action": {
+                "const": "use_existing_binding"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "read": {
+      "type": "object",
+      "properties": {
+        "interface_version": {
+          "const": 1
+        },
+        "operation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "captured_plan_revision_uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "high_water": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "scope": {
+          "type": "object",
+          "properties": {
+            "plan_uuid": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "ticket_uuid": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "include_history": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "plan_uuid"
+          ],
+          "additionalProperties": false
+        },
+        "gaps": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "continuation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "result_kind": {
+          "const": "read"
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "uuid": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "revision_uuid": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "kind": {
+                "type": "string",
+                "minLength": 1
+              },
+              "fields": {
+                "type": "object"
+              },
+              "omitted_fields": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "uuid",
+              "revision_uuid",
+              "kind",
+              "fields",
+              "omitted_fields"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "details": {
+          "type": [
+            "object",
+            "array",
+            "string",
+            "boolean",
+            "number",
+            "null"
+          ]
+        },
+        "remaining": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "interface_version",
+        "operation",
+        "captured_plan_revision_uuid",
+        "high_water",
+        "scope",
+        "gaps",
+        "continuation",
+        "result_kind",
+        "rows",
+        "details",
+        "remaining"
+      ],
+      "additionalProperties": false
+    },
+    "preview": {
+      "type": "object",
+      "properties": {
+        "interface_version": {
+          "const": 1
+        },
+        "operation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "captured_plan_revision_uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "high_water": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "scope": {
+          "type": "object",
+          "properties": {
+            "plan_uuid": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "ticket_uuid": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "include_history": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "plan_uuid"
+          ],
+          "additionalProperties": false
+        },
+        "gaps": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "continuation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "result_kind": {
+          "const": "preview"
+        },
+        "preview_digest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "proposed_operations": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 100,
+          "items": {
+            "$ref": "request.schema.json#/$defs/subrequest"
+          }
+        },
+        "expected": {
+          "type": "object",
+          "propertyNames": {
+            "format": "uuid"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "coverage_rows": {
+          "type": "array",
+          "items": {
+            "$ref": "record.schema.json#/$defs/coverage"
+          }
+        },
+        "authority_impacts": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "recovery_prerequisites": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "interface_version",
+        "operation",
+        "captured_plan_revision_uuid",
+        "high_water",
+        "scope",
+        "gaps",
+        "continuation",
+        "result_kind",
+        "preview_digest",
+        "proposed_operations",
+        "expected",
+        "coverage_rows",
+        "authority_impacts",
+        "recovery_prerequisites"
+      ],
+      "additionalProperties": false
+    },
+    "mutation": {
+      "type": "object",
+      "properties": {
+        "interface_version": {
+          "const": 1
+        },
+        "operation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "captured_plan_revision_uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "high_water": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "scope": {
+          "type": "object",
+          "properties": {
+            "plan_uuid": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "ticket_uuid": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "include_history": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "plan_uuid"
+          ],
+          "additionalProperties": false
+        },
+        "gaps": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "continuation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "result_kind": {
+          "const": "mutation"
+        },
+        "commit_state": {
+          "enum": [
+            "committed",
+            "rejected",
+            "unknown"
+          ]
+        },
+        "receipt_ref": {
+          "$ref": "record.schema.json#/$defs/ref"
+        },
+        "changed_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "record.schema.json#/$defs/ref"
+          }
+        },
+        "changed_fields": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "generated_view_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "record.schema.json#/$defs/ref"
+          }
+        }
+      },
+      "required": [
+        "interface_version",
+        "operation",
+        "captured_plan_revision_uuid",
+        "high_water",
+        "scope",
+        "gaps",
+        "continuation",
+        "result_kind",
+        "commit_state",
+        "receipt_ref",
+        "changed_refs",
+        "changed_fields",
+        "generated_view_refs"
+      ],
+      "additionalProperties": false
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "interface_version": {
+          "const": 1
+        },
+        "operation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "captured_plan_revision_uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "high_water": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "scope": {
+          "type": "object",
+          "properties": {
+            "plan_uuid": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "ticket_uuid": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "include_history": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "plan_uuid"
+          ],
+          "additionalProperties": false
+        },
+        "gaps": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "continuation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "result_kind": {
+          "const": "validation"
+        },
+        "verdict": {
+          "enum": [
+            "pass",
+            "fail",
+            "incomplete"
+          ]
+        },
+        "checked_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "record.schema.json#/$defs/ref"
+          }
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "uncovered_scope": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "interface_version",
+        "operation",
+        "captured_plan_revision_uuid",
+        "high_water",
+        "scope",
+        "gaps",
+        "continuation",
+        "result_kind",
+        "verdict",
+        "checked_refs",
+        "findings",
+        "uncovered_scope"
+      ],
+      "additionalProperties": false
+    },
+    "state_check": {
+      "type": "object",
+      "properties": {
+        "interface_version": {
+          "const": 1
+        },
+        "operation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "captured_plan_revision_uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "high_water": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "scope": {
+          "type": "object",
+          "properties": {
+            "plan_uuid": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "ticket_uuid": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "include_history": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "plan_uuid"
+          ],
+          "additionalProperties": false
+        },
+        "gaps": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "continuation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "result_kind": {
+          "const": "state_check"
+        },
+        "check_ref": {
+          "$ref": "record.schema.json#/$defs/ref"
+        },
+        "previous_checked_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "checked_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "elapsed_seconds": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "prior_snapshot_sha256": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "current_snapshot_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "added_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "record.schema.json#/$defs/ref"
+          }
+        },
+        "changed_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "record.schema.json#/$defs/ref"
+          }
+        },
+        "removed_uuids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "unchanged_run_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "record.schema.json#/$defs/ref"
+          }
+        },
+        "acknowledged_high_water": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "clock_anomaly": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "interface_version",
+        "operation",
+        "captured_plan_revision_uuid",
+        "high_water",
+        "scope",
+        "gaps",
+        "continuation",
+        "result_kind",
+        "check_ref",
+        "previous_checked_at",
+        "checked_at",
+        "elapsed_seconds",
+        "prior_snapshot_sha256",
+        "current_snapshot_sha256",
+        "added_refs",
+        "changed_refs",
+        "removed_uuids",
+        "unchanged_run_refs",
+        "acknowledged_high_water",
+        "clock_anomaly"
+      ],
+      "additionalProperties": false
+    },
+    "error": {
+      "type": "object",
+      "properties": {
+        "interface_version": {
+          "const": 1
+        },
+        "operation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "commit_state": {
+          "enum": [
+            "nonmutation",
+            "committed_unknown"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "affected_uuids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "actual_revisions": {
+          "type": "object",
+          "propertyNames": {
+            "format": "uuid"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "changed_fields": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "event_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "record.schema.json#/$defs/ref"
+          }
+        },
+        "continuation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reconciliation": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "interface_version",
+        "operation",
+        "code",
+        "commit_state",
+        "message",
+        "affected_uuids",
+        "actual_revisions",
+        "changed_fields",
+        "event_refs",
+        "continuation",
+        "reconciliation"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

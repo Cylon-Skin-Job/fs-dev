@@ -1,0 +1,14 @@
+{
+  "schema_version": "launchpad-core/1",
+  "status": "authored core registry; not installed",
+  "namespaces": {
+    "source.preserved": {
+      "schema": {"type": "object"},
+      "meaning": "Verbatim normalized supported extra source fields not owned by a core field. Migration preserves original field names/values within this object and records the explicit mapping in its preview. It never grants state/claim/approval authority.",
+      "writer": "assigned import/routing maintainer with pinned source evidence",
+      "read_rule": "bounded explicit field projection; no execution"
+    }
+  },
+  "unknown_namespace": "INVALID_SCHEMA; preserve original input in failed-preview evidence, never drop it",
+  "new_namespace": "requires maintained schema-registry change and affected review/adoption evidence"
+}
