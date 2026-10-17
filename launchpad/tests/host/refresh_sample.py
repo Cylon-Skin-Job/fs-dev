@@ -4,7 +4,7 @@ import json
 import sys
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from support import Fixture, read_generation, current, load, ref, uid, now, file_hash
+from support import Fixture, read_generation, current, load, ref, uid, now, file_hash, verify_retained_read
 
 root=Path(sys.argv[1]).resolve();manifest=load(root/'sample-manifest.json')
 fx=object.__new__(Fixture);fx.root=root;fx.home=root/'work-tickets/sample';fx.plan_id=manifest['plan_uuid']
@@ -22,8 +22,14 @@ code,result=fx.run(request)
 if code:raise SystemExit(str(result))
 old_pin=fx.request('record.get',{'uuid':record['uuid'],'revision_uuid':record['revision_uuid'],'fields':list(record)});old_pin['scope']['ticket_uuid']=record['uuid']
 pin_code,pin_result=fx.run(old_pin)
-if pin_code or pin_result['rows'][0]['fields']!=record:raise SystemExit('Original root pin not retained exactly')
+# The oversize ticket body exceeds the public 16 KiB single-row budget and is
+# legitimately omitted-and-disclosed by the product. Prove the original root pin
+# is still retained exactly under the public contract instead of demanding an
+# undisclosed full-record echo.
 _,latest_tickets,_=read_generation(fx.home);new_record=next(x for x in current(latest_tickets[record['uuid']]) if x['kind']=='ticket')
+retained=next((x for x in latest_tickets[record['uuid']]['revisions'] if x['revision_uuid']==record['revision_uuid']),None)
+try:verify_retained_read(record,pin_code,pin_result,retained,selector='pinned')
+except AssertionError as error:raise SystemExit('Original root pin not retained exactly: '+str(error))
 if new_record['revision_uuid']==record['revision_uuid']:raise SystemExit('Changed root reused revision UUID')
 (root/'refresh-public-evidence.json').write_text(json.dumps(dict(request=request,exit=code,response=result,
    original_root=record,new_root=new_record,pinned_read_request=old_pin,pinned_read_exit=pin_code,pinned_read_response=pin_result),indent=2)+'\n')

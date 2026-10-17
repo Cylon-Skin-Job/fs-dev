@@ -14,6 +14,11 @@ from core.commands import INSTALLED,REGISTRY
 import test_lp02_records as records_tests
 
 
+# Live checkout HEAD, so the source oracle matches sources.py's runtime observation
+# rather than a frozen revision literal (HEAD-independent).
+HEAD=subprocess.check_output(['git','rev-parse','HEAD'],cwd=CHECKOUT,text=True).strip()
+
+
 class CoverageTests(unittest.TestCase):
     ok=records_tests.RecordsTests.ok;refresh=records_tests.RecordsTests.refresh;request=records_tests.RecordsTests.request
     create=records_tests.RecordsTests.create;reject=records_tests.RecordsTests.reject;inspect=records_tests.RecordsTests.inspect
@@ -261,7 +266,7 @@ class CoverageTests(unittest.TestCase):
             path=Path(name)/'PAGE.md';path.write_text('---\nname: Controlled Wiki\nmetadata:\n  last-modified: "2026-10-11T20:00:00Z"\n---\nA current explicit test rule\n')
             # Establish a real assigned checkout/ref before plan creation, then use
             # a fresh controlled binding rather than forge the current actor.
-            other=CoverageTests();other.fx=Fixture(Path(name)/'store');other.extra=[];other.fx.assignment['body'].update(source_checkout=str(CHECKOUT),source_branch='codex/build-workflow-and-tickets',source_head='a0e7ed050e638149407d5bb6a8edc4ecbfb4cafd');other.fx.save(other.fx.assignment);other.fx.actor['body']['assignment_refs']=[ref(other.fx.assignment)];other.fx.actor['body']['granted_operations']=sorted(INSTALLED);other.fx.save(other.fx.actor)
+            other=CoverageTests();other.fx=Fixture(Path(name)/'store');other.extra=[];other.fx.assignment['body'].update(source_checkout=str(CHECKOUT),source_branch='codex/build-workflow-and-tickets',source_head=HEAD);other.fx.save(other.fx.assignment);other.fx.actor['body']['assignment_refs']=[ref(other.fx.assignment)];other.fx.actor['body']['granted_operations']=sorted(INSTALLED);other.fx.save(other.fx.actor)
             savedrun=other.fx.run
             def audited(req):
                 result=savedrun(req);self.raw.append(dict(request=copy.deepcopy(req),exit=result[0],response=copy.deepcopy(result[1]),fixture='actual Wiki Git checkout'));return result

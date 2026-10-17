@@ -64,3 +64,27 @@ class Fixture:
                   scope_items=[dict(source=ref(source),text=x,source_alias='scope-'+str(i)) for i,x in enumerate(scope or ['Retain initial scope'])],
                   checklist_items=[dict(source=ref(source),text=x,source_alias='todo-'+str(i)) for i,x in enumerate(todo or ['Discuss readiness'])])
         return self.request('ticket.create',args,uid())
+
+
+def verify_retained_read(record,code,response,retained,selector=None):
+    """Prove a bounded record.get retained the original pin exactly.
+
+    The public single-row budget may legitimately omit an oversize field while
+    disclosing it. This keeps the oracle independent of product projection logic:
+    it requires the read to succeed with the expected selector, the returned
+    revision identity and every returned field to match the original record byte
+    for byte, every requested-but-missing field to be disclosed in both
+    omitted_fields and the response gaps, and the omitted field bytes to be proven
+    unchanged against the immutable retained canonical revision on disk.
+    """
+    if code:raise AssertionError('Retained read exited non-zero: '+str(response))
+    details=response.get('details') or {}
+    if selector is not None and details.get('selector')!=selector:raise AssertionError('Retained read selector is not '+str(selector))
+    rows=response.get('rows') or []
+    if len(rows)!=1 or rows[0]['revision_uuid']!=record['revision_uuid']:raise AssertionError('Retained read revision identity mismatch')
+    returned=rows[0]['fields'];omitted=set(rows[0]['omitted_fields']);requested=set(record);missing=requested-set(returned)
+    if missing!=omitted:raise AssertionError('Undisclosed omitted fields: '+str(sorted(missing^omitted)))
+    if any(key not in record or record[key]!=value for key,value in returned.items()):raise AssertionError('Returned field differs from the retained original')
+    if omitted and not any('Oversize fields omitted for '+record['uuid'] in gap for gap in response.get('gaps',[])):raise AssertionError('Omitted fields not disclosed in the response gaps')
+    if retained is None:raise AssertionError('Original revision not retained in the canonical generation')
+    if any(key not in retained or retained[key]!=record[key] for key in requested):raise AssertionError('Retained canonical generation differs from the original pin')

@@ -14,6 +14,12 @@ from core.commands import INSTALLED,REGISTRY
 import test_lp02_records as records_tests
 
 
+# Derive the expected source revision from the live checkout instead of a frozen
+# HEAD literal: sources.py observes the real checkout HEAD, so the oracle must
+# compare against the same runtime revision (HEAD-independent).
+HEAD=subprocess.check_output(['git','rev-parse','HEAD'],cwd=CHECKOUT,text=True).strip()
+
+
 class SourcesTests(unittest.TestCase):
     ok=records_tests.RecordsTests.ok
     refresh=records_tests.RecordsTests.refresh
@@ -25,7 +31,7 @@ class SourcesTests(unittest.TestCase):
 
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory(prefix='.s2-',dir=CHECKOUT/'launchpad/tests')
-        self.fx=Fixture(self.tmp.name);self.fx.assignment['body'].update(source_checkout=str(CHECKOUT),source_branch='codex/build-workflow-and-tickets',source_head='a0e7ed050e638149407d5bb6a8edc4ecbfb4cafd');self.fx.save(self.fx.assignment)
+        self.fx=Fixture(self.tmp.name);self.fx.assignment['body'].update(source_checkout=str(CHECKOUT),source_branch='codex/build-workflow-and-tickets',source_head=HEAD);self.fx.save(self.fx.assignment)
         self.fx.actor['body']['assignment_refs']=[ref(self.fx.assignment)];self.fx.actor['body']['granted_operations']=sorted(INSTALLED);self.fx.save(self.fx.actor)
         self.raw=[];run=self.fx.run
         def audited(request):
@@ -146,7 +152,7 @@ class SourcesTests(unittest.TestCase):
 
 
     def test_wiki_trusted_assigned_branch_and_exact_ref_not_caller_selected(self):
-        actual='a0e7ed050e638149407d5bb6a8edc4ecbfb4cafd'
+        actual=HEAD
         older=subprocess.check_output(['git','rev-parse','HEAD^'],cwd=CHECKOUT,text=True).strip()
         for label,assigned,head,selected,expected_status in [('wrong-branch','main',actual,'codex/build-workflow-and-tickets','unverified'),('wrong-commit','0'*40,'0'*40,'codex/build-workflow-and-tickets','unverified'),('exact-head',actual,actual,actual,'current'),('named-newer-head','codex/build-workflow-and-tickets',older,'codex/build-workflow-and-tickets','changed')]:
             self.fx=Fixture(self.fx.root/label);self.fx.assignment['body'].update(source_checkout=str(CHECKOUT),source_branch=assigned,source_head=head);self.fx.save(self.fx.assignment);self.fx.actor['body']['assignment_refs']=[ref(self.fx.assignment)];self.fx.actor['body']['granted_operations']=sorted(INSTALLED);self.fx.save(self.fx.actor)

@@ -1,15 +1,20 @@
 """Public A05 host fixture with controlled Wiki bytes in assigned Git checkout."""
 import json
+import subprocess
 import sys
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from support import Fixture,CHECKOUT,current,read_generation,uid,ref,file_hash,encode,now
 from core.commands import INSTALLED,REGISTRY
 
+# Derive the assigned/used source revision from the live checkout HEAD so the
+# host fixture matches sources.py's runtime observation (HEAD-independent).
+HEAD=subprocess.check_output(['git','rev-parse','HEAD'],cwd=CHECKOUT,text=True).strip()
+
 root=Path(sys.argv[1]).resolve();mode=sys.argv[2];root.mkdir(parents=True,exist_ok=True)
 if mode=='prepare':
     fx=Fixture(root);fx.sources=CHECKOUT/'launchpad/tests'/('.s2-host-'+uid());fx.sources.mkdir()
-    fx.assignment['body'].update(source_checkout=str(CHECKOUT),source_branch='codex/build-workflow-and-tickets',source_head='a0e7ed050e638149407d5bb6a8edc4ecbfb4cafd');fx.save(fx.assignment)
+    fx.assignment['body'].update(source_checkout=str(CHECKOUT),source_branch='codex/build-workflow-and-tickets',source_head=HEAD);fx.save(fx.assignment)
     fx.actor['body']['assignment_refs']=[ref(fx.assignment)];fx.actor['body']['granted_operations']=sorted(INSTALLED);fx.save(fx.actor)
 else:
     data=json.loads((root/'fixture.json').read_text());fx=Fixture.__new__(Fixture)

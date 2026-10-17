@@ -4,7 +4,7 @@ import json
 import sys
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from support import Fixture,load,read_generation,current,uid,file_hash,ref
+from support import Fixture,load,read_generation,current,uid,file_hash,ref,verify_retained_read
 
 root=Path(sys.argv[1]).resolve();manifest=load(root/'sample-manifest.json')
 fx=object.__new__(Fixture);fx.root=root;fx.home=root/'work-tickets/sample';fx.plan_id=manifest['plan_uuid']
@@ -37,10 +37,13 @@ assert result['receipt_ref'] in new_plan['idempotency_receipt_refs']
 replay_code,replayed=fx.run(request);assert replay_code==0 and replayed==result
 assert read_generation(fx.home)[0]==new_plan
 reads=[]
+# Prove the current and original-pinned ticket root reads retain the record exactly,
+# tolerating the public contract's disclosed omission of an oversize field.
+retained=next(x for x in new_tickets[record['uuid']]['revisions'] if x['revision_uuid']==record['revision_uuid'])
 for revision in (None,record['revision_uuid']):
     command=fx.request('record.get',{'uuid':record['uuid'],'fields':list(record)});command['scope']['ticket_uuid']=record['uuid']
     if revision:command['args']['revision_uuid']=revision
-    read_code,response=fx.run(command);assert read_code==0 and response['rows'][0]['fields']==record
+    read_code,response=fx.run(command);verify_retained_read(record,read_code,response,retained,selector='pinned' if revision else 'current')
     reads.append(dict(request=command,exit=read_code,response=response))
 evidence=dict(request=request,exit=code,response=result,replay_exit=replay_code,replay_response=replayed,
     original_plan_business=business,current_plan_business=next(x for x in current(new_plan) if x['kind']=='plan'),
